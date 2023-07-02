@@ -43,70 +43,70 @@ test_that("blavaan, all", {
 
   x <- point_estimate(bfit, centrality = "all", dispersion = TRUE)
   expect_true(all(c("Median", "MAD", "Mean", "SD", "MAP", "Component") %in% colnames(x)))
-  expect_equal(nrow(x), 14)
+  expect_identical(nrow(x), 14L)
 
   x <- eti(bfit)
-  expect_equal(nrow(x), 14)
+  expect_identical(nrow(x), 14L)
 
   x <- hdi(bfit)
-  expect_equal(nrow(x), 14)
+  expect_identical(nrow(x), 14L)
 
   x <- p_direction(bfit)
-  expect_equal(nrow(x), 14)
+  expect_identical(nrow(x), 14L)
 
-  x <- rope(bfit, range = c(-.1, .1))
-  expect_equal(nrow(x), 14)
+  x <- rope(bfit, range = c(-0.1, 0.1))
+  expect_identical(nrow(x), 14L)
 
-  x <- p_rope(bfit, range = c(-.1, .1))
-  expect_equal(nrow(x), 14)
+  x <- p_rope(bfit, range = c(-0.1, 0.1))
+  expect_identical(nrow(x), 14L)
 
   x <- p_map(bfit)
-  expect_equal(nrow(x), 14)
+  expect_identical(nrow(x), 14L)
 
-  x <- p_significance(bfit, threshold = c(-.1, .1))
-  expect_equal(nrow(x), 14)
+  x <- p_significance(bfit, threshold = c(-0.1, 0.1))
+  expect_identical(nrow(x), 14L)
 
-  x <- equivalence_test(bfit, range = c(-.1, .1))
-  expect_equal(nrow(x), 14)
+  x <- equivalence_test(bfit, range = c(-0.1, 0.1))
+  expect_identical(nrow(x), 14L)
 
   x <- estimate_density(bfit)
-  expect_equal(length(unique(x$Parameter)), 14)
+  expect_length(unique(x$Parameter), 14)
 
 
   ## Bayes factors ----
   expect_warning(bayesfactor_models(bfit, bfit2))
   x <- suppressWarnings(bayesfactor_models(bfit, bfit2))
-  expect_true(x$log_BF[2] < 0)
+  expect_lt(x$log_BF[2], 0)
 
   expect_warning(weighted_posteriors(bfit, bfit2))
   x <- suppressWarnings(weighted_posteriors(bfit, bfit2))
-  expect_equal(ncol(x), 14)
+  expect_identical(ncol(x), 14L)
 
   # bfit_prior <- unupdate(bfit)
   # capture.output(x <- expect_warning(bayesfactor_parameters(bfit, prior = bfit_prior)))
-  # expect_equal(nrow(x), 14)
+  # expect_identical(nrow(x), 14L)
   #
   # x <- expect_warning(si(bfit, prior = bfit_prior))
-  # expect_equal(nrow(x), 14)
+  # expect_identical(nrow(x), 14L)
   #
   # ## Prior/posterior checks ----
   # suppressWarnings(x <- check_prior(bfit))
   # expect_equal(nrow(x), 13)
   #
   # x <- check_prior(bfit, simulate_priors = FALSE)
-  # expect_equal(nrow(x), 14)
+  # expect_identical(nrow(x), 14L)
 
   x <- diagnostic_posterior(bfit)
-  expect_equal(nrow(x), 14)
+  expect_identical(nrow(x), 14L)
 
   x <- simulate_prior(bfit)
-  expect_equal(ncol(x), 13)
+  expect_identical(ncol(x), 13L)
   # YES this is 13! We have two parameters with the same prior.
 
   x <- describe_prior(bfit)
-  expect_equal(nrow(x), 13)
+  expect_identical(nrow(x), 13L)
   # YES this is 13! We have two parameters with the same prior.
 
-  # x <- describe_posterior(bfit, test = "all", rope_range = c(-.1, .1))
-  # expect_equal(nrow(x), 14)
+  # x <- describe_posterior(bfit, test = "all", rope_range = c(-0.1, 0.1))
+  # expect_identical(nrow(x), 14L)
 })
