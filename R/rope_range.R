@@ -44,16 +44,18 @@
 #' @examples
 #' \dontrun{
 #' if (require("rstanarm")) {
-#'   model <- stan_glm(
+#'   model <- suppressWarnings(stan_glm(
 #'     mpg ~ wt + gear,
 #'     data = mtcars,
 #'     chains = 2,
 #'     iter = 200,
 #'     refresh = 0
-#'   )
+#'   ))
 #'   rope_range(model)
 #'
-#'   model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh = 0)
+#'   model <- suppressWarnings(
+#'     stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh = 0)
+#'   )
 #'   rope_range(model)
 #' }
 #'
