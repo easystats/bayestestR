@@ -139,21 +139,21 @@ library(rstanarm)
 model <- suppressWarnings(
   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
-hdi(model)
-hdi(model, ci = c(0.80, 0.90, 0.95))
+bayestestR::hdi(model)
+bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 
 library(emmeans)
-hdi(emtrends(model, ~1, "wt", data = mtcars))
+bayestestR::hdi(emtrends(model, ~1, "wt", data = mtcars))
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-hdi(model)
-hdi(model, ci = c(0.80, 0.90, 0.95))
+bayestestR::hdi(model)
+bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
-hdi(bf)
-hdi(bf, ci = c(0.80, 0.90, 0.95))
+bayestestR::hdi(bf)
+bayestestR::hdi(bf, ci = c(0.80, 0.90, 0.95))
 }
 }
 \references{
