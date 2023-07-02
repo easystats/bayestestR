@@ -108,9 +108,12 @@ test_that("describe_posterior", {
   set.seed(333)
   # Rstanarm
   x <- rstanarm::stan_glm(mpg ~ wt, data = mtcars, refresh = 0, iter = 500)
-  expect_warning({
-    rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-  }, regex = "not be precise")
+  expect_warning(
+    {
+      rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
+    },
+    regex = "not be precise"
+  )
   expect_identical(dim(rez), c(2L, 21L))
   expect_identical(colnames(rez), c(
     "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
@@ -269,9 +272,12 @@ test_that("describe_posterior w/ BF+SI", {
   # test si
   set.seed(555)
   suppressMessages(
-    expect_warning({
-      rez_si <- si(x)
-    }, regex = "not be precise")
+    expect_warning(
+      {
+        rez_si <- si(x)
+      },
+      regex = "not be precise"
+    )
   )
   expect_equal(rez$CI_low, rez_si$CI_low, tolerance = 0.1)
   expect_equal(rez$CI_high, rez_si$CI_high, tolerance = 0.1)

@@ -5,9 +5,12 @@ test_that("si.numeric", {
   prior <- distribution_normal(1000, mean = 0, sd = 1)
   posterior <- distribution_normal(1000, mean = 0.5, sd = 0.3)
 
-  expect_warning({
-    res <- si(posterior, prior)
-  }, regexp = "40")
+  expect_warning(
+    {
+      res <- si(posterior, prior)
+    },
+    regexp = "40"
+  )
   expect_equal(res$CI_low, 0.043, tolerance = 0.02)
   expect_equal(res$CI_high, 1.053103, tolerance = 0.02)
   expect_s3_class(res, "bayestestR_si")
