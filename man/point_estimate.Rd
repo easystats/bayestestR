@@ -99,7 +99,7 @@ point_estimate(model, centrality = c("median", "MAP"))
 # -----------------------------------------------
 library(emmeans)
 point_estimate(
-  emtrends(model, ~1, "wt", data = mtcars),
+  suppressWarnings(emtrends(model, ~1, "wt", data = mtcars)),
   centrality = c("median", "MAP")
 )
 
