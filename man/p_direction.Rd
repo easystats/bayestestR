@@ -163,9 +163,7 @@ if (require("rstanarm")) {
 # emmeans
 # -----------------------------------------------
 if (require("emmeans")) {
-  p_direction(suppressWarnings(
-    emtrends(model, ~1, "wt", data = mtcars)
-  ))
+  p_direction(emtrends(model, ~1, "wt", data = mtcars))
 }
 
 # brms models

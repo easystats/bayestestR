@@ -31,22 +31,24 @@
 #' from each tail of the distribution and always include the median, the HDI is
 #' *not* equal-tailed and therefore always includes the mode(s) of posterior
 #' distributions. While this can be useful to better represent the credibility
-#' mass of a distribution, the HDI also has some limitations. See [spi()] for
+#' mass of a distribution, the HDI also has some limitations. See [`spi()`] for
 #' details.
-#' \cr \cr
+#'
 #' The [`95%` or `89%` Credible Intervals (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-#' are two reasonable ranges to characterize the uncertainty related to the estimation (see [here](https://easystats.github.io/bayestestR/articles/credible_interval.html) for a discussion about the differences between these two values).
-#' \cr
+#' are two reasonable ranges to characterize the uncertainty related to the
+#' estimation (see [here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+#' for a discussion about the differences between these two values).
+#'
 #' The `89%` intervals (`ci = 0.89`) are deemed to be more stable than, for
-#' instance, `95%` intervals (\cite{Kruschke, 2014}). An effective sample size
+#' instance, `95%` intervals (_Kruschke, 2014_). An effective sample size
 #' of at least 10.000 is recommended if one wants to estimate `95%` intervals
-#' with high precision (\cite{Kruschke, 2014, p. 183ff}). Unfortunately, the
+#' with high precision (_Kruschke, 2014, p. 183ff_). Unfortunately, the
 #' default number of posterior samples for most Bayes packages (e.g., `rstanarm`
 #' or `brms`) is only 4.000 (thus, you might want to increase it when fitting
 #' your model). Moreover, 89 indicates the arbitrariness of interval limits -
 #' its only remarkable property is being the highest prime number that does not
-#' exceed the already unstable `95%` threshold (\cite{McElreath, 2015}).
-#' \cr
+#' exceed the already unstable `95%` threshold (_McElreath, 2015_).
+#'
 #' However, `95%` has some [advantages
 #' too](https://easystats.github.io/blog/posts/bayestestr_95/). For instance, it
 #' shares (in the case of a normal posterior distribution) an intuitive
@@ -55,17 +57,17 @@
 #' makes analyses more conservative (i.e., the probability of covering 0 is
 #' larger for the `95%` CI than for lower ranges such as `89%`), which is a good
 #' thing in the context of the reproducibility crisis.
-#' \cr \cr
+#'
 #' A `95%` equal-tailed interval (ETI) has `2.5%` of the distribution on either
 #' side of its limits. It indicates the 2.5th percentile and the 97.5h
 #' percentile. In symmetric distributions, the two methods of computing credible
 #' intervals, the ETI and the [HDI][hdi], return similar results.
-#' \cr \cr
+#'
 #' This is not the case for skewed distributions. Indeed, it is possible that
 #' parameter values in the ETI have lower credibility (are less probable) than
 #' parameter values outside the ETI. This property seems undesirable as a summary
 #' of the credible values in a distribution.
-#' \cr \cr
+#'
 #' On the other hand, the ETI range does change when transformations are applied
 #' to the distribution (for instance, for a log odds scale to probabilities):
 #' the lower and higher bounds of the transformed distribution will correspond
@@ -96,9 +98,7 @@
 #' bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 #'
 #' library(emmeans)
-#' bayestestR::hdi(suppressWarnings(
-#'   emtrends(model, ~1, "wt", data = mtcars)
-#' ))
+#' bayestestR::hdi(emtrends(model, ~1, "wt", data = mtcars))
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

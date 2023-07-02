@@ -92,7 +92,7 @@
 #'
 #'   # emmeans estimates
 #'   # -----------------------------------------------
-#'   describe_posterior(suppressWarnings(emtrends(model, ~1, "wt")))
+#'   describe_posterior(emtrends(model, ~1, "wt"))
 #' }
 #'
 #' # BayesFactor objects

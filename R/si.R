@@ -79,7 +79,8 @@
 #' si(brms_model)
 #' }
 #' @references
-#' Wagenmakers, E., Gronau, Q. F., Dablander, F., & Etz, A. (2018, November 22). The Support Interval. \doi{10.31234/osf.io/zwnxb}
+#' Wagenmakers, E., Gronau, Q. F., Dablander, F., & Etz, A. (2018, November 22).
+#' The Support Interval. \doi{10.31234/osf.io/zwnxb}
 #'
 #' @export
 si <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {

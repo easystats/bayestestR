@@ -31,7 +31,7 @@
 #' eti(model, ci = c(0.80, 0.89, 0.95))
 #'
 #' library(emmeans)
-#' eti(suppressWarnings(emtrends(model, ~1, "wt", data = mtcars)))
+#' eti(emtrends(model, ~1, "wt", data = mtcars))
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

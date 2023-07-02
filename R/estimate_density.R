@@ -82,9 +82,7 @@
 #' head(estimate_density(model))
 #'
 #' library(emmeans)
-#' head(estimate_density(suppressWarnings(
-#'   emtrends(model, ~1, "wt", data = mtcars)
-#' )))
+#' head(estimate_density(emtrends(model, ~1, "wt", data = mtcars)))
 #'
 #' # brms models
 #' # -----------------------------------------------

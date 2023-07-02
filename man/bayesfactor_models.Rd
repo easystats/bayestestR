@@ -22,7 +22,7 @@ bf_models(..., denominator = 1, verbose = TRUE)
 \item{...}{Fitted models (see details), all fit on the same data, or a single
 \code{BFBayesFactor} object (see 'Details'). Ignored in \code{as.matrix()},
 \code{update()}. If the following named arguments are present, they are passed
-to \link[insight:get_loglikelihood]{insight::get_loglikelihood} (see details):
+to \code{\link[insight:get_loglikelihood]{insight::get_loglikelihood()}} (see details):
 \itemize{
 \item \code{estimator} (defaults to \code{"ML"})
 \item \code{check_response}  (defaults to \code{FALSE})
@@ -53,9 +53,9 @@ This function computes or extracts Bayes factors from fitted models.
 The \verb{bf_*} function is an alias of the main function.
 }
 \details{
-If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
-(else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
-analysis with \code{bayesfactor_inclusion}).
+If the passed models are supported by \strong{insight} the DV of all models will
+be tested for equality (else this is assumed to be true), and the models'
+terms will be extracted (allowing for follow-up analysis with \code{bayesfactor_inclusion}).
 \itemize{
 \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 \itemize{
@@ -74,9 +74,9 @@ are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
 testing is substantially larger than for estimation (the default of 4000
 samples may not be enough in many cases). A conservative rule of thumb is to
 obtain 10 times more samples than would be required for estimation
-(\cite{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000 samples
+(\emph{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000 samples
 are detected, \code{bayesfactor_models()} gives a warning.
-\cr \cr
+
 See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \note{

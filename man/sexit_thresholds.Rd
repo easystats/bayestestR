@@ -7,7 +7,8 @@
 sexit_thresholds(x, ...)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a
+\code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 }

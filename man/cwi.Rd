@@ -24,7 +24,8 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 \value{
 A data frame with following columns:
 \itemize{
-\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a
+vector, this column is missing.
 \item \code{CI} The probability of the credible interval.
 \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
 }

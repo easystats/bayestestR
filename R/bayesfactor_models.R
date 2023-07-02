@@ -9,13 +9,13 @@
 #' @param ... Fitted models (see details), all fit on the same data, or a single
 #'   `BFBayesFactor` object (see 'Details'). Ignored in `as.matrix()`,
 #'   `update()`. If the following named arguments are present, they are passed
-#'   to [insight::get_loglikelihood] (see details):
+#'   to [`insight::get_loglikelihood()`] (see details):
 #'   - `estimator` (defaults to `"ML"`)
 #'   - `check_response`  (defaults to `FALSE`)
 #' @param denominator Either an integer indicating which of the models to use as
 #'   the denominator, or a model to be used as a denominator. Ignored for
 #'   `BFBayesFactor`.
-#' @param object,x A [bayesfactor_models()] object.
+#' @param object,x A [`bayesfactor_models()`] object.
 #' @param subset Vector of model indices to keep or remove.
 #' @param reference Index of model to reference to, or `"top"` to
 #'   reference to the best model, or `"bottom"` to reference to the worst
@@ -26,9 +26,9 @@
 #' implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @details
-#' If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
-#' (else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
-#' analysis with `bayesfactor_inclusion`).
+#' If the passed models are supported by **insight** the DV of all models will
+#' be tested for equality (else this is assumed to be true), and the models'
+#' terms will be extracted (allowing for follow-up analysis with `bayesfactor_inclusion`).
 #'
 #' - For `brmsfit` or `stanreg` models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 #'   - `brmsfit` models must have been fitted with `save_pars = save_pars(all = TRUE)`.
@@ -44,9 +44,9 @@
 #' testing is substantially larger than for estimation (the default of 4000
 #' samples may not be enough in many cases). A conservative rule of thumb is to
 #' obtain 10 times more samples than would be required for estimation
-#' (\cite{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000 samples
+#' (_Gronau, Singmann, & Wagenmakers, 2017_). If less than 40,000 samples
 #' are detected, `bayesfactor_models()` gives a warning.
-#' \cr \cr
+#'
 #' See also [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
