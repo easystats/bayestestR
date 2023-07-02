@@ -16,7 +16,7 @@ print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, exact = 
   models <- colnames(df)
   models[models == "1"] <- "(Intercept only)"
   models <- paste0("[", seq_along(models), "] ", models)
-  k <- max(sapply(c(models, "Denominator"), nchar)) + 2
+  k <- max(vapply(c(models, "Denominator"), nchar, numeric(1))) + 2
 
   rownames(df) <- colnames(df) <- NULL
   df <- cbind(Model = models, df)
@@ -25,7 +25,7 @@ print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, exact = 
   out <- insight::export_table(
     df,
     caption = c("# Bayes Factors for Model Comparison", "blue"),
-    subtitle = c(sprintf("\n\n%sNumerator\nDenominator", strrep(" ", k)), "cyan"),,
+    subtitle = c(sprintf("\n\n%sNumerator\nDenominator", strrep(" ", k)), "cyan"),
     footer = if (log) c("\nBayes Factors are on the log-scale.\n", "red")
   )
   out <- sub("placeholder", "\b\b", out, fixed = TRUE)

@@ -97,8 +97,8 @@
 #'
 #' library(emmeans)
 #' bayestestR::hdi(suppressWarnings(
-#'   emtrends(model, ~1, "wt", data = mtcars))
-#' )
+#'   emtrends(model, ~1, "wt", data = mtcars)
+#' ))
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
