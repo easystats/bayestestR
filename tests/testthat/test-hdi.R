@@ -13,9 +13,9 @@ test_that("hdi", {
   expect_length(capture.output(print(hdi(distribution_normal(1000), ci = c(0.80, 0.90)))), 5)
 
   expect_message(hdi(c(2, 3, NA)))
-  expect_message(hdi(c(2, 3)))
+  expect_warning(hdi(c(2, 3)))
   expect_message(hdi(distribution_normal(1000), ci = 0.0000001))
-  expect_message(hdi(distribution_normal(1000), ci = 950))
+  expect_warning(hdi(distribution_normal(1000), ci = 950))
   expect_message(hdi(c(0, 0, 0)))
 })
 
