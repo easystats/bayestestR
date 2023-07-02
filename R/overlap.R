@@ -52,7 +52,7 @@ overlap <- function(x, y, method_density = "kernel", method_auc = "trapezoid", p
 #' @export
 print.overlap <- function(x, ...) {
   insight::print_color("# Overlap\n\n", "blue")
-  cat(sprintf("%.2f", as.numeric(x)))
+  cat(sprintf("%.1f%%\n", 100 * as.numeric(x)))
 }
 
 
