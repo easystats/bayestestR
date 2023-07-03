@@ -135,8 +135,9 @@ if (require("BayesFactor")) {
 
   wp <- weighted_posteriors(extra_sleep, verbose = FALSE)
 
-  describe_posterior(extra_sleep, test = NULL)
-  describe_posterior(wp$delta, test = NULL) # also considers the null
+  describe_posterior(extra_sleep, test = NULL, verbose = FALSE)
+  # also considers the null
+  describe_posterior(wp$delta, test = NULL, verbose = FALSE)
 }
 
 
