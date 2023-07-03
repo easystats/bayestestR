@@ -13,14 +13,12 @@ simulate_simpson(
 )
 }
 \arguments{
-\item{n}{The number of observations for each group to be generated (minimum
-4).}
+\item{n}{The number of observations for each group to be generated (minimum 4).}
 
 \item{r}{A value or vector corresponding to the desired correlation
 coefficients.}
 
-\item{groups}{Number of groups (groups can be participants, clusters,
-anything).}
+\item{groups}{Number of groups (groups can be participants, clusters, anything).}
 
 \item{difference}{Difference between groups.}
 

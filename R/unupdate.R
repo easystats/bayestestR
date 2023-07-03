@@ -4,7 +4,7 @@
 #' the goal of this function is to un-update the posteriors to obtain models
 #' representing the priors. These models can then be used to examine the prior
 #' predictive distribution, or to compare priors with posteriors.
-#' \cr\cr
+#'
 #' This function in used internally to compute Bayes factors.
 #'
 #' @param model A fitted Bayesian model.
