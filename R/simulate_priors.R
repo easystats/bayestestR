@@ -12,7 +12,9 @@
 #' \dontrun{
 #' library(bayestestR)
 #' if (require("rstanarm")) {
-#'   model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
+#'   model <- suppressWarnings(
+#'     stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
+#'   )
 #'   simulate_prior(model)
 #' }
 #' }
