@@ -221,14 +221,11 @@ example, the parameter <code>A</code> plays a different role in the model <code>
 (where it is a simple effect). In many cases centering of predictors (mean
 subtracting for continuous variables, and effects coding via <code>contr.sum</code> or
 orthonormal coding via <code><a href="contr.equalprior.html">contr.equalprior_pairs</a></code> for factors) can reduce this
-issue. In any case you should be mindful of this issue.
-<br><br>
-See <code><a href="bayesfactor_models.html">bayesfactor_models()</a></code> details for more info on passed models.
-<br><br>
-Note that for <code>BayesFactor</code> models, posterior samples cannot be generated
-from intercept only models.
-<br><br>
-This function is similar in function to <code><a href="https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html" class="external-link">brms::posterior_average</a></code>.</p>
+issue. In any case you should be mindful of this issue.</p>
+<p>See <code><a href="bayesfactor_models.html">bayesfactor_models()</a></code> details for more info on passed models.</p>
+<p>Note that for <code>BayesFactor</code> models, posterior samples cannot be generated
+from intercept only models.</p>
+<p>This function is similar in function to <code><a href="https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html" class="external-link">brms::posterior_average</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -259,78 +256,71 @@ E. J. (2019). A cautionary note on estimating effect size.</p></li>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">stan_m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">extra</span> <span class="op">~</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">stan_m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">extra</span> <span class="op">~</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">sleep</span>,</span></span>
 <span class="r-in"><span>    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    refresh <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>    diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df0.csv"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">stan_m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">extra</span> <span class="op">~</span> <span class="va">group</span>,</span></span>
+<span class="r-in"><span>  <span class="va">stan_m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">extra</span> <span class="op">~</span> <span class="va">group</span>,</span></span>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">sleep</span>,</span></span>
 <span class="r-in"><span>    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    refresh <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>    diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df1.csv"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">weighted_posteriors</span><span class="op">(</span><span class="va">stan_m0</span>, <span class="va">stan_m1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">weighted_posteriors</span><span class="op">(</span><span class="va">stan_m0</span>, <span class="va">stan_m1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="eti.html">eti</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bayes factors might not be precise.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   For precise Bayes factors, sampling at least 40,000 posterior samples is</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   recommended.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computation of Marginal Likelihood: estimating marginal likelihood,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   please wait...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computation of Marginal Likelihood: estimating marginal likelihood,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   please wait...</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Failed at retrieving data :( Please provide original model or data</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   through the `data` argument</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## With BayesFactor</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://richarddmorey.github.io/BayesFactor/" class="external-link">"BayesFactor"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">extra_sleep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">extra</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">sleep</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">wp</span> <span class="op">&lt;-</span> <span class="fu">weighted_posteriors</span><span class="op">(</span><span class="va">extra_sleep</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">wp</span> <span class="op">&lt;-</span> <span class="fu">weighted_posteriors</span><span class="op">(</span><span class="va">extra_sleep</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">extra_sleep</span>, test <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">wp</span><span class="op">$</span><span class="va">delta</span>, test <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="co"># also considers the null</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">extra_sleep</span>, test <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># also considers the null</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">wp</span><span class="op">$</span><span class="va">delta</span>, test <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.10 | [-1.41, 0.03]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.08 | [-1.39, 0.08]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## weighted prediction distributions via data.frames</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">mpg</span> <span class="op">~</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">mtcars</span>,</span></span>
 <span class="r-in"><span>    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df0.csv"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    refresh <span class="op">=</span> <span class="fl">0</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">mpg</span> <span class="op">~</span> <span class="va">carb</span>,</span></span>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">mtcars</span>,</span></span>
 <span class="r-in"><span>    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df1.csv"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    refresh <span class="op">=</span> <span class="fl">0</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Predictions:</span></span></span>
 <span class="r-in"><span>  <span class="va">pred_m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://mc-stan.org/rstantools/reference/posterior_predict.html" class="external-link">posterior_predict</a></span><span class="op">(</span><span class="va">m0</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">pred_m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://mc-stan.org/rstantools/reference/posterior_predict.html" class="external-link">posterior_predict</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">BFmods</span> <span class="op">&lt;-</span> <span class="fu"><a href="bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m0</span>, <span class="va">m1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">BFmods</span> <span class="op">&lt;-</span> <span class="fu"><a href="bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m0</span>, <span class="va">m1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">wp</span> <span class="op">&lt;-</span> <span class="fu">weighted_posteriors</span><span class="op">(</span><span class="va">pred_m0</span>, <span class="va">pred_m1</span>,</span></span>
-<span class="r-in"><span>    prior_odds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">BFmods</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></span>
+<span class="r-in"><span>  <span class="va">wp</span> <span class="op">&lt;-</span> <span class="fu">weighted_posteriors</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">pred_m0</span>, <span class="va">pred_m1</span>,</span></span>
+<span class="r-in"><span>    prior_odds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">BFmods</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>    verbose <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># look at first 5 prediction intervals</span></span></span>
@@ -338,14 +328,6 @@ E. J. (2019). A cautionary note on estimating effect size.</p></li>
 <span class="r-in"><span>  <span class="fu"><a href="hdi.html">hdi</a></span><span class="op">(</span><span class="va">pred_m1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="hdi.html">hdi</a></span><span class="op">(</span><span class="va">wp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span> <span class="co"># between, but closer to pred_m1</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bayes factors might not be precise.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   For precise Bayes factors, sampling at least 40,000 posterior samples is</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   recommended.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computation of Marginal Likelihood: estimating marginal likelihood,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   please wait...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computation of Marginal Likelihood: estimating marginal likelihood,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   please wait...</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in UseMethod("hdi_"):</span> no applicable method for 'hdi_' applied to an object of class "data.frame"</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
