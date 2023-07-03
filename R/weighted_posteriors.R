@@ -22,12 +22,12 @@
 #' subtracting for continuous variables, and effects coding via `contr.sum` or
 #' orthonormal coding via [`contr.equalprior_pairs`] for factors) can reduce this
 #' issue. In any case you should be mindful of this issue.
-#' \cr\cr
+#'
 #' See [bayesfactor_models()] details for more info on passed models.
-#' \cr\cr
+#'
 #' Note that for `BayesFactor` models, posterior samples cannot be generated
 #' from intercept only models.
-#' \cr\cr
+#'
 #' This function is similar in function to `brms::posterior_average`.
 #'
 #' @note For `BayesFactor < 0.9.12-4.3`, in some instances there might be
@@ -36,7 +36,7 @@
 #'
 #' @return A data frame with posterior distributions (weighted across models) .
 #'
-#' @seealso [bayesfactor_inclusion()] for Bayesian model averaging.
+#' @seealso [`bayesfactor_inclusion()`] for Bayesian model averaging.
 #'
 #' @examples
 #' \donttest{

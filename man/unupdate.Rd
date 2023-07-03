@@ -36,7 +36,8 @@ As posteriors are priors that have been updated after observing some data,
 the goal of this function is to un-update the posteriors to obtain models
 representing the priors. These models can then be used to examine the prior
 predictive distribution, or to compare priors with posteriors.
-\cr\cr
+}
+\details{
 This function in used internally to compute Bayes factors.
 }
 \keyword{internal}

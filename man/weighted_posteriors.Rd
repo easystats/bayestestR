@@ -94,12 +94,12 @@ example, the parameter \code{A} plays a different role in the model \code{Y ~ A 
 subtracting for continuous variables, and effects coding via \code{contr.sum} or
 orthonormal coding via \code{\link{contr.equalprior_pairs}} for factors) can reduce this
 issue. In any case you should be mindful of this issue.
-\cr\cr
+
 See \code{\link[=bayesfactor_models]{bayesfactor_models()}} details for more info on passed models.
-\cr\cr
+
 Note that for \code{BayesFactor} models, posterior samples cannot be generated
 from intercept only models.
-\cr\cr
+
 This function is similar in function to \code{brms::posterior_average}.
 }
 \note{
