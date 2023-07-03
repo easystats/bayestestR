@@ -220,7 +220,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
       any(vapply(mods, insight::is_mixed_model, TRUE)) &&
       !isTRUE(attr(objects, "same_fixef")) &&
       verbose) {
-      insight::format_warning(paste0(
+      insight::format_warning(paste(
         "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
         "are not recommended for comparison between models with different fixed effects.",
         "Concider setting `estimator=\"ML\"`."

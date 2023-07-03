@@ -62,7 +62,7 @@
         results <- results[results$corr > 0.9, ]
         if (nrow(results) > 0) {
           where <- paste0("between ", toString(paste0(results$where, " (r = ", round(results$corr, 2), ")")), "")
-          insight::format_warning(paste0(
+          insight::format_alert(paste0(
             "Probable multicollinearity ",
             where,
             ". This might lead to inappropriate results. See 'Details' in '?",
