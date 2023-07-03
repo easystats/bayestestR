@@ -40,7 +40,7 @@
 #'
 #' @examples
 #' \donttest{
-#' if (require("rstanarm") && require("see")) {
+#' if (require("rstanarm") && require("see") && interactive()) {
 #'   stan_m0 <- suppressWarnings(stan_glm(extra ~ 1,
 #'     data = sleep,
 #'     family = gaussian(),
@@ -72,7 +72,7 @@
 #'
 #'
 #' ## weighted prediction distributions via data.frames
-#' if (require("rstanarm")) {
+#' if (require("rstanarm") && interactive()) {
 #'   m0 <- suppressWarnings(stan_glm(
 #'     mpg ~ 1,
 #'     data = mtcars,
