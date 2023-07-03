@@ -27,7 +27,7 @@
 #' underlining ROPE is to let the user define an area around the null value
 #' enclosing values that are *equivalent to the null* value for practical
 #' purposes (_Kruschke 2010, 2011, 2014_).
-#' 
+#'
 #' Kruschke (2018) suggests that such null value could be set, by default,
 #' to the -0.1 to 0.1 range of a standardized parameter (negligible effect
 #' size according to Cohen, 1988). This could be generalized: For instance,
@@ -39,7 +39,7 @@
 #' (or `89%`, considered more stable) [HDI][hdi] that falls within the
 #' ROPE as an index for "null-hypothesis" testing (as understood under the
 #' Bayesian framework, see [`equivalence_test()`][equivalence_test]).
-#' 
+#'
 #' @section Sensitivity to parameter's scale:
 #' It is important to consider the unit (i.e., the scale) of the predictors
 #' when using an index based on the ROPE, as the correct interpretation of the

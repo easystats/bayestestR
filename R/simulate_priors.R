@@ -68,7 +68,7 @@ simulate_prior.brmsfit <- function(model,
     effects = effects,
     component = component,
     parameters = parameters,
-    verbose = verbose,
+    verbose = verbose
   )
 
   .simulate_prior(priors, n = n, verbose = verbose)
