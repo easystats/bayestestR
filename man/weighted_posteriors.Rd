@@ -124,7 +124,7 @@ if (require("rstanarm") && require("see")) {
     diagnostic_file = file.path(tempdir(), "df1.csv")
   )
 
-  res <- weighted_posteriors(stan_m0, stan_m1)
+  res <- weighted_posteriors(stan_m0, stan_m1, verbose = FALSE)
 
   plot(eti(res))
 }
@@ -133,7 +133,7 @@ if (require("rstanarm") && require("see")) {
 if (require("BayesFactor")) {
   extra_sleep <- ttestBF(formula = extra ~ group, data = sleep)
 
-  wp <- weighted_posteriors(extra_sleep)
+  wp <- weighted_posteriors(extra_sleep, verbose = FALSE)
 
   describe_posterior(extra_sleep, test = NULL)
   describe_posterior(wp$delta, test = NULL) # also considers the null
@@ -162,10 +162,12 @@ if (require("rstanarm")) {
   pred_m0 <- data.frame(posterior_predict(m0))
   pred_m1 <- data.frame(posterior_predict(m1))
 
-  BFmods <- bayesfactor_models(m0, m1)
+  BFmods <- bayesfactor_models(m0, m1, verbose = FALSE)
 
-  wp <- weighted_posteriors(pred_m0, pred_m1,
-    prior_odds = as.numeric(BFmods)[2]
+  wp <- weighted_posteriors(
+    pred_m0, pred_m1,
+    prior_odds = as.numeric(BFmods)[2],
+    verbose = FALSE
   )
 
   # look at first 5 prediction intervals
