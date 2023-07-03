@@ -94,12 +94,12 @@ example, the parameter \code{A} plays a different role in the model \code{Y ~ A 
 subtracting for continuous variables, and effects coding via \code{contr.sum} or
 orthonormal coding via \code{\link{contr.equalprior_pairs}} for factors) can reduce this
 issue. In any case you should be mindful of this issue.
-\cr\cr
+
 See \code{\link[=bayesfactor_models]{bayesfactor_models()}} details for more info on passed models.
-\cr\cr
+
 Note that for \code{BayesFactor} models, posterior samples cannot be generated
 from intercept only models.
-\cr\cr
+
 This function is similar in function to \code{brms::posterior_average}.
 }
 \note{
@@ -109,22 +109,22 @@ frame.
 }
 \examples{
 \donttest{
-if (require("rstanarm") && require("see")) {
-  stan_m0 <- stan_glm(extra ~ 1,
+if (require("rstanarm") && require("see") && interactive()) {
+  stan_m0 <- suppressWarnings(stan_glm(extra ~ 1,
     data = sleep,
     family = gaussian(),
     refresh = 0,
     diagnostic_file = file.path(tempdir(), "df0.csv")
-  )
+  ))
 
-  stan_m1 <- stan_glm(extra ~ group,
+  stan_m1 <- suppressWarnings(stan_glm(extra ~ group,
     data = sleep,
     family = gaussian(),
     refresh = 0,
     diagnostic_file = file.path(tempdir(), "df1.csv")
-  )
+  ))
 
-  res <- weighted_posteriors(stan_m0, stan_m1)
+  res <- weighted_posteriors(stan_m0, stan_m1, verbose = FALSE)
 
   plot(eti(res))
 }
@@ -133,39 +133,42 @@ if (require("rstanarm") && require("see")) {
 if (require("BayesFactor")) {
   extra_sleep <- ttestBF(formula = extra ~ group, data = sleep)
 
-  wp <- weighted_posteriors(extra_sleep)
+  wp <- weighted_posteriors(extra_sleep, verbose = FALSE)
 
-  describe_posterior(extra_sleep, test = NULL)
-  describe_posterior(wp$delta, test = NULL) # also considers the null
+  describe_posterior(extra_sleep, test = NULL, verbose = FALSE)
+  # also considers the null
+  describe_posterior(wp$delta, test = NULL, verbose = FALSE)
 }
 
 
 ## weighted prediction distributions via data.frames
-if (require("rstanarm")) {
-  m0 <- stan_glm(
+if (require("rstanarm") && interactive()) {
+  m0 <- suppressWarnings(stan_glm(
     mpg ~ 1,
     data = mtcars,
     family = gaussian(),
     diagnostic_file = file.path(tempdir(), "df0.csv"),
     refresh = 0
-  )
+  ))
 
-  m1 <- stan_glm(
+  m1 <- suppressWarnings(stan_glm(
     mpg ~ carb,
     data = mtcars,
     family = gaussian(),
     diagnostic_file = file.path(tempdir(), "df1.csv"),
     refresh = 0
-  )
+  ))
 
   # Predictions:
   pred_m0 <- data.frame(posterior_predict(m0))
   pred_m1 <- data.frame(posterior_predict(m1))
 
-  BFmods <- bayesfactor_models(m0, m1)
+  BFmods <- bayesfactor_models(m0, m1, verbose = FALSE)
 
-  wp <- weighted_posteriors(pred_m0, pred_m1,
-    prior_odds = as.numeric(BFmods)[2]
+  wp <- weighted_posteriors(
+    pred_m0, pred_m1,
+    prior_odds = as.numeric(BFmods)[2],
+    verbose = FALSE
   )
 
   # look at first 5 prediction intervals

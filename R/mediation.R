@@ -35,27 +35,27 @@
 #'   samples (use `centrality` for other centrality indices).
 #'
 #' @details `mediation()` returns a data frame with information on the
-#'       *direct effect* (mean value of posterior samples from `treatment`
-#'       of the outcome model), *mediator effect* (mean value of posterior
-#'       samples from `mediator` of the outcome model), *indirect effect*
-#'       (mean value of the multiplication of the posterior samples from
-#'       `mediator` of the outcome model and the posterior samples from
-#'       `treatment` of the mediation model) and the total effect (mean
-#'       value of sums of posterior samples used for the direct and indirect
-#'       effect). The *proportion mediated* is the indirect effect divided
-#'       by the total effect.
-#'       \cr \cr
-#'       For all values, the `89%` credible intervals are calculated by default.
-#'       Use `ci` to calculate a different interval.
-#'       \cr \cr
-#'       The arguments `treatment` and `mediator` do not necessarily
-#'       need to be specified. If missing, `mediation()` tries to find the
-#'       treatment and mediator variable automatically. If this does not work,
-#'       specify these variables.
-#'       \cr \cr
-#'       The direct effect is also called *average direct effect* (ADE),
-#'       the indirect effect is also called *average causal mediation effects*
-#'       (ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
+#'  *direct effect* (mean value of posterior samples from `treatment`
+#'  of the outcome model), *mediator effect* (mean value of posterior
+#'  samples from `mediator` of the outcome model), *indirect effect*
+#'  (mean value of the multiplication of the posterior samples from
+#'  `mediator` of the outcome model and the posterior samples from
+#'  `treatment` of the mediation model) and the total effect (mean
+#'  value of sums of posterior samples used for the direct and indirect
+#'  effect). The *proportion mediated* is the indirect effect divided
+#'  by the total effect.
+#'
+#'  For all values, the `89%` credible intervals are calculated by default.
+#'  Use `ci` to calculate a different interval.
+#'
+#'  The arguments `treatment` and `mediator` do not necessarily
+#'  need to be specified. If missing, `mediation()` tries to find the
+#'  treatment and mediator variable automatically. If this does not work,
+#'  specify these variables.
+#'
+#'  The direct effect is also called *average direct effect* (ADE),
+#'  the indirect effect is also called *average causal mediation effects*
+#'  (ACME). See also _Tingley et al. 2014_ and _Imai et al. 2010_.
 #'
 #' @note There is an `as.data.frame()` method that returns the posterior
 #'   samples of the effects, which can be used for further processing in the
@@ -97,7 +97,7 @@
 #' m2 <- brm(f1 + f2 + set_rescor(FALSE), data = jobs, cores = 4, refresh = 0)
 #'
 #' # Fit Bayesian mediation model in rstanarm
-#' m3 <- stan_mvmer(
+#' m3 <- suppressWarnings(stan_mvmer(
 #'   list(
 #'     job_seek ~ treat + econ_hard + sex + age + (1 | occp),
 #'     depress2 ~ treat + job_seek + econ_hard + sex + age + (1 | occp)
@@ -105,7 +105,7 @@
 #'   data = jobs,
 #'   cores = 4,
 #'   refresh = 0
-#' )
+#' ))
 #'
 #' summary(m1)
 #' mediation(m2, centrality = "mean", ci = 0.95)

@@ -4,10 +4,8 @@
 #' and statistics, in which a trend appears in several different groups of data
 #' but disappears or reverses when these groups are combined.
 #'
-#' @param n The number of observations for each group to be generated (minimum
-#'   4).
-#' @param groups Number of groups (groups can be participants, clusters,
-#'   anything).
+#' @param n The number of observations for each group to be generated (minimum 4).
+#' @param groups Number of groups (groups can be participants, clusters, anything).
 #' @param difference Difference between groups.
 #' @param group_prefix The prefix of the group name (e.g., "G_1", "G_2", "G_3", ...).
 #' @inheritParams simulate_correlation

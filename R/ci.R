@@ -4,36 +4,37 @@
 #' (SI) for Bayesian and frequentist models. The Documentation is accessible
 #' for:
 #'
-#' \itemize{
-#'  \item [Bayesian models](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-#'  \item [Frequentist models](https://easystats.github.io/parameters/reference/ci.default.html)
-#' }
+#' - [Bayesian models](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+#' - [Frequentist models](https://easystats.github.io/parameters/reference/ci.default.html)
 #'
-#' @param x A `stanreg` or `brmsfit` model, or a vector representing a posterior distribution.
-#' @param method Can be ['ETI'][eti] (default), ['HDI'][hdi], ['BCI'][bci], ['SPI'][spi] or ['SI'][si].
+#' @param x A `stanreg` or `brmsfit` model, or a vector representing a posterior
+#' distribution.
+#' @param method Can be ["ETI"][eti] (default), ["HDI"][hdi], ["BCI"][bci],
+#' ["SPI"][spi] or ["SI"][si].
 #' @param ci Value or vector of probability of the CI (between 0 and 1)
-#'   to be estimated. Default to `.95` (`95%`).
+#'   to be estimated. Default to `0.95` (`95%`).
 #' @inheritParams hdi
 #' @inheritParams si
 #' @inherit hdi seealso
 #' @family ci
 #'
 #' @return A data frame with following columns:
-#'   \itemize{
-#'     \item `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
-#'     \item `CI` The probability of the credible interval.
-#'     \item `CI_low`, `CI_high` The lower and upper credible interval limits for the parameters.
-#'   }
+#'
+#' - `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a
+#'   vector, this column is missing.
+#' - `CI` The probability of the credible interval.
+#' - `CI_low`, `CI_high` The lower and upper credible interval limits for the parameters.
 #'
 #' @note When it comes to interpretation, we recommend thinking of the CI in terms of
 #'   an "uncertainty" or "compatibility" interval, the latter being defined as
-#'   \dQuote{Given any value in the interval and the background assumptions,
-#'   the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
-#'   \cr \cr
+#'   "Given any value in the interval and the background assumptions,
+#'   the data should not seem very surprising" (_Gelman & Greenland 2019_).
+#'
 #'   There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @references Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381
-#'
+#' @references
+#' Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
+#' intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381
 #'
 #' @examplesIf require("rstanarm", quietly = TRUE)
 #' library(bayestestR)
@@ -58,7 +59,7 @@
 #' ci(bf, method = "HDI")
 #'
 #' @examplesIf require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)
-#' model <- suppressWarnings(emtrends(model, ~1, "wt", data = mtcars))
+#' model <- emtrends(model, ~1, "wt", data = mtcars)
 #' ci(model, method = "ETI")
 #' ci(model, method = "HDI")
 #' @export
@@ -138,9 +139,12 @@ ci <- function(x, ...) {
       )
     )
   } else {
-    insight::format_error(
-      "`method` should be 'ETI' (for equal-tailed interval),'HDI' (for highest density interval), 'BCI' (for bias corrected and accelerated bootstrap intervals), 'SPI' (for shortest probability interval) or 'SI' (for support interval)."
-    )
+    insight::format_error(paste0(
+      "`method` should be 'ETI' (for equal-tailed interval), ",
+      "'HDI' (for highest density interval), 'BCI' (for bias corrected and ",
+      "accelerated bootstrap intervals), 'SPI' (for shortest probability ",
+      "interval) or 'SI' (for support interval)."
+    ))
   }
 }
 
@@ -155,7 +159,6 @@ ci.numeric <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...
 #' @rdname ci
 #' @export
 ci.data.frame <- ci.numeric
-
 
 
 #' @export
@@ -185,7 +188,6 @@ ci.emmGrid <- function(x, ci = NULL, ...) {
 ci.emm_list <- ci.emmGrid
 
 
-
 #' @rdname ci
 #' @export
 ci.sim.merMod <- function(x,
@@ -207,7 +209,6 @@ ci.sim.merMod <- function(x,
 }
 
 
-
 #' @rdname ci
 #' @export
 ci.sim <- function(x,
@@ -225,7 +226,6 @@ ci.sim <- function(x,
     ...
   )
 }
-
 
 
 #' @rdname ci
@@ -285,20 +285,15 @@ ci.brmsfit <- function(x,
   )
 }
 
-
 #' @export
 ci.stanfit <- ci.stanreg
-
 
 #' @export
 ci.blavaan <- ci.stanreg
 
-
 #' @rdname ci
 #' @export
 ci.BFBayesFactor <- ci.numeric
-
-
 
 
 #' @rdname ci
@@ -338,22 +333,17 @@ ci.bcplm <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, ...) {
   ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
 }
 
-
 #' @export
 ci.blrm <- ci.bcplm
-
 
 #' @export
 ci.mcmc <- ci.bcplm
 
-
 #' @export
 ci.mcmc.list <- ci.bcplm
 
-
 #' @export
 ci.BGGM <- ci.bcplm
-
 
 #' @export
 ci.get_predicted <- ci.data.frame

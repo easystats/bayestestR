@@ -37,17 +37,19 @@ rope(x, ...)
 )
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a
+\code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 
 \item{range}{ROPE's lower and higher bounds. Should be \code{"default"} or
-depending on the number of outcome variables a vector or a list. In models with one response,
-\code{range} should be a vector of length two (e.g., \code{c(-0.1, 0.1)}). In
-multivariate models, \code{range} should be a list with a numeric vectors for
-each response variable. Vector names should correspond to the name of the response
-variables. If \code{"default"} and input is a vector, the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
-\code{\link[=rope_range]{rope_range()}} is used.}
+depending on the number of outcome variables a vector or a list. In
+models with one response, \code{range} should be a vector of length two (e.g.,
+\code{c(-0.1, 0.1)}). In multivariate models, \code{range} should be a list with a
+numeric vectors for each response variable. Vector names should correspond
+to the name of the response variables. If \code{"default"} and input is a vector,
+the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian
+model, \code{\link[=rope_range]{rope_range()}} is used.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
@@ -71,30 +73,36 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \description{
-Compute the proportion of the HDI (default to the \verb{89\%} HDI) of a posterior distribution that lies within a region of practical equivalence.
+Compute the proportion of the HDI (default to the \verb{89\%} HDI) of a posterior
+distribution that lies within a region of practical equivalence.
 }
-\details{
-\subsection{ROPE}{
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
+\section{ROPE}{
+
 Statistically, the probability of a posterior distribution of being
 different from 0 does not make much sense (the probability of a single value
 null hypothesis in a continuous distribution is 0). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are \emph{equivalent to the null} value for practical
-purposes (\cite{Kruschke 2010, 2011, 2014}).
-\cr \cr
+purposes (\emph{Kruschke 2010, 2011, 2014}).
+
 Kruschke (2018) suggests that such null value could be set, by default,
 to the -0.1 to 0.1 range of a standardized parameter (negligible effect
 size according to Cohen, 1988). This could be generalized: For instance,
 for linear models, the ROPE could be set as \verb{0 +/- .1 * sd(y)}.
 This ROPE range can be automatically computed for models using the
 \link{rope_range} function.
-\cr \cr
+
 Kruschke (2010, 2011, 2014) suggests using the proportion of  the \verb{95\%}
 (or \verb{89\%}, considered more stable) \link[=hdi]{HDI} that falls within the
 ROPE as an index for "null-hypothesis" testing (as understood under the
 Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
 }
-\subsection{Sensitivity to parameter's scale}{
+
+\section{Sensitivity to parameter's scale}{
+
 It is important to consider the unit (i.e., the scale) of the predictors
 when using an index based on the ROPE, as the correct interpretation of the
 ROPE as representing a region of practical equivalence to zero is dependent
@@ -103,7 +111,9 @@ the unit of its parameter. In other words, as the ROPE represents a fixed
 portion of the response's scale, its proximity with a coefficient depends
 on the scale of the coefficient itself.
 }
-\subsection{Multicollinearity: Non-independent covariates}{
+
+\section{Multicollinearity - Non-independent covariates}{
+
 When parameters show strong correlations, i.e. when covariates are not
 independent, the joint parameter distributions may shift towards or
 away from the ROPE. Collinearity invalidates ROPE and hypothesis
@@ -112,63 +122,80 @@ on independence. Most problematic are parameters that only have partial
 overlap with the ROPE region. In case of collinearity, the (joint) distributions
 of these parameters may either get an increased or decreased ROPE, which
 means that inferences based on \code{rope()} are inappropriate
-(\cite{Kruschke 2014, 340f}).
-\cr \cr
+(\emph{Kruschke 2014, 340f}).
+
 \code{rope()} performs a simple check for pairwise correlations between
 parameters, but as there can be collinearity between more than two variables,
 a first step to check the assumptions of this hypothesis testing is to look
 at different pair plots. An even more sophisticated check is the projection
-predictive variable selection (\cite{Piironen and Vehtari 2017}).
+predictive variable selection (\emph{Piironen and Vehtari 2017}).
 }
-\subsection{Strengths and Limitations}{
-\strong{Strengths:} Provides information related to the practical relevance of the effects.
-\cr \cr
-\strong{Limitations:} A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.
+
+\section{Strengths and Limitations}{
+
+\strong{Strengths:} Provides information related to the practical relevance of
+the effects.
+
+\strong{Limitations:} A ROPE range needs to be arbitrarily defined. Sensitive to
+the scale (the unit) of the predictors. Not sensitive to highly significant
+effects.
 }
-}
-\note{
-There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
-}
+
 \examples{
 library(bayestestR)
 
 rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
-rope(x = rnorm(1000, 1, 1), ci = c(.90, .95))
+rope(x = rnorm(1000, 1, 1), ci = c(0.90, 0.95))
 \dontrun{
 library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+model <- suppressWarnings(
+  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+)
 rope(model)
-rope(model, ci = c(.90, .95))
+rope(model, ci = c(0.90, 0.95))
 
 library(emmeans)
-rope(emtrends(model, ~1, "wt"), ci = c(.90, .95))
+rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 
 library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+model <- brm(mpg ~ wt + cyl, data = mtcars)
 rope(model)
-rope(model, ci = c(.90, .95))
+rope(model, ci = c(0.90, 0.95))
 
 library(brms)
-model <- brms::brm(brms::mvbind(mpg, disp) ~ wt + cyl, data = mtcars)
+model <- brm(
+  bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
+  data = mtcars
+)
 rope(model)
-rope(model, ci = c(.90, .95))
+rope(model, ci = c(0.90, 0.95))
 
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
 rope(bf)
-rope(bf, ci = c(.90, .95))
+rope(bf, ci = c(0.90, 0.95))
 }
 }
 \references{
 \itemize{
 \item Cohen, J. (1988). Statistical power analysis for the behavioural sciences.
-\item Kruschke, J. K. (2010). What to believe: Bayesian methods for data analysis. Trends in cognitive sciences, 14(7), 293-300. \doi{10.1016/j.tics.2010.05.001}.
-\item Kruschke, J. K. (2011). Bayesian assessment of null values via parameter estimation and model comparison. Perspectives on Psychological Science, 6(3), 299-312. \doi{10.1177/1745691611406925}.
-\item Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press. \doi{10.1177/2515245918771304}.
-\item Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
-\item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
-\item Piironen, J., & Vehtari, A. (2017). Comparison of Bayesian predictive methods for model selection. Statistics and Computing, 27(3), 711–735. \doi{10.1007/s11222-016-9649-y}
+\item Kruschke, J. K. (2010). What to believe: Bayesian methods for data analysis.
+Trends in cognitive sciences, 14(7), 293-300. \doi{10.1016/j.tics.2010.05.001}.
+\item Kruschke, J. K. (2011). Bayesian assessment of null values via parameter
+estimation and model comparison. Perspectives on Psychological Science,
+6(3), 299-312. \doi{10.1177/1745691611406925}.
+\item Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R,
+JAGS, and Stan. Academic Press. \doi{10.1177/2515245918771304}.
+\item Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian
+estimation. Advances in Methods and Practices in Psychological Science,
+1(2), 270-280. \doi{10.1177/2515245918771304}.
+\item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect
+Existence and Significance in the Bayesian Framework. Frontiers in
+Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+\item Piironen, J., & Vehtari, A. (2017). Comparison of Bayesian predictive
+methods for model selection. Statistics and Computing, 27(3), 711–735.
+\doi{10.1007/s11222-016-9649-y}
 }
 }

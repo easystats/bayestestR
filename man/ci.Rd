@@ -60,14 +60,16 @@ ci(x, ...)
 \method{ci}{MCMCglmm}(x, ci = 0.95, method = "ETI", verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.}
+\item{x}{A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior
+distribution.}
 
 \item{...}{Currently not used.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.95} (\verb{95\%}).}
+to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
-\item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'}, \link[=bci]{'BCI'}, \link[=spi]{'SPI'} or \link[=si]{'SI'}.}
+\item{method}{Can be \link[=eti]{"ETI"} (default), \link[=hdi]{"HDI"}, \link[=bci]{"BCI"},
+\link[=spi]{"SPI"} or \link[=si]{"SI"}.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -89,7 +91,8 @@ be abbreviated. Only applies to \pkg{brms}-models.}
 \value{
 A data frame with following columns:
 \itemize{
-\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a
+vector, this column is missing.
 \item \code{CI} The probability of the credible interval.
 \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
 }
@@ -108,9 +111,9 @@ for:
 \note{
 When it comes to interpretation, we recommend thinking of the CI in terms of
 an "uncertainty" or "compatibility" interval, the latter being defined as
-\dQuote{Given any value in the interval and the background assumptions,
-the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
-\cr \cr
+"Given any value in the interval and the background assumptions,
+the data should not seem very surprising" (\emph{Gelman & Greenland 2019}).
+
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
@@ -137,13 +140,14 @@ ci(bf, method = "ETI")
 ci(bf, method = "HDI")
 \dontshow{\}) # examplesIf}
 \dontshow{if (require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-model <- suppressWarnings(emtrends(model, ~1, "wt", data = mtcars))
+model <- emtrends(model, ~1, "wt", data = mtcars)
 ci(model, method = "ETI")
 ci(model, method = "HDI")
 \dontshow{\}) # examplesIf}
 }
 \references{
-Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381
+Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
+intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381
 }
 \seealso{
 Other ci: 

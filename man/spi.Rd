@@ -62,7 +62,8 @@ for the output.}
 \value{
 A data frame with following columns:
 \itemize{
-\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a
+vector, this column is missing.
 \item \code{CI} The probability of the credible interval.
 \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
 }
@@ -98,7 +99,9 @@ spi(df)
 spi(df, ci = c(0.80, 0.89, 0.95))
 \dontrun{
 library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+model <- suppressWarnings(
+  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+)
 spi(model)
 }
 \dontshow{\}) # examplesIf}

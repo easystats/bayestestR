@@ -35,7 +35,9 @@
 #' spi(df, ci = c(0.80, 0.89, 0.95))
 #' \dontrun{
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' model <- suppressWarnings(
+#'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' )
 #' spi(model)
 #' }
 #'

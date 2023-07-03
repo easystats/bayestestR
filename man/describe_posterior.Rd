@@ -84,7 +84,7 @@ to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, 
 Dispersion is not available for \code{"MAP"} or \code{"mode"} centrality indices.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.95} (\verb{95\%}).}
+to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"ETI"} (default, see \code{\link[=eti]{eti()}}), \code{"HDI"}
@@ -187,7 +187,7 @@ if (require("rstanarm") && require("emmeans")) {
 
   # emmeans estimates
   # -----------------------------------------------
-  describe_posterior(suppressWarnings(emtrends(model, ~1, "wt")))
+  describe_posterior(emtrends(model, ~1, "wt"))
 }
 
 # BayesFactor objects

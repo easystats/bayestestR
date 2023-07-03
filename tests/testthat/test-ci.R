@@ -1,11 +1,19 @@
 test_that("ci", {
-  skip_if_offline()
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr")
-  skip_if_not_or_load_if_installed("brms")
+  skip_on_os(c("mac", "linux"))
+  skip_if_not_or_load_if_installed("quadprog")
+  set.seed(123)
+  x <- rnorm(1000, 3, 2)
+  expect_error(ci(x, method = "FDI"), regex = "`method` should be 'ETI'")
+  out <- capture.output(print(ci(x, method = "SPI")))
+  expect_identical(out, "95% SPI: [-1.16, 6.76]")
+  out <- capture.output(print(ci(x, method = "BCI")))
+  expect_identical(out, "95% ETI: [-0.88, 7.08]")
+})
 
-  expect_equal(ci(distribution_normal(1000), ci = .90)$CI_low[1], -1.6361, tolerance = 0.02)
-  expect_equal(nrow(ci(distribution_normal(1000), ci = c(.80, .90, .95))), 3, tolerance = 0.01)
+
+test_that("ci", {
+  expect_equal(ci(distribution_normal(1000), ci = 0.90)$CI_low[1], -1.6361, tolerance = 0.02)
+  expect_equal(nrow(ci(distribution_normal(1000), ci = c(0.80, 0.90, 0.95))), 3, tolerance = 0.01)
   expect_equal(ci(distribution_normal(1000), ci = 1)$CI_low[1], -3.29, tolerance = 0.02)
   # expect_equal(length(capture.output(print(ci(distribution_normal(1000))))))
   # expect_equal(length(capture.output(print(ci(distribution_normal(1000), ci = c(.80, .90))))))
@@ -17,10 +25,9 @@ test_that("ci", {
   x <- data.frame(replicate(4, rnorm(100)))
   x <- ci(x, ci = c(0.68, 0.89, 0.95))
   a <- datawizard::reshape_ci(x)
-  expect_equal(c(nrow(x), ncol(x)), c(12, 4))
+  expect_identical(c(nrow(x), ncol(x)), c(12L, 4L))
   expect_true(all(datawizard::reshape_ci(a) == x))
 })
-
 
 
 test_that("ci", {

@@ -5,9 +5,9 @@
 #' updating factor greater or equal than *k*. From the perspective of the Savage-Dickey Bayes factor, testing
 #' against a point null hypothesis for any value within the support interval will yield a Bayes factor smaller
 #' than *1/k*.
-#' \cr \cr
-#' \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
-#' see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
+#'
+#' **For more info, in particular on specifying correct priors for factors with more than 2 levels,
+#' see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
 #'
 #' @param BF The amount of support required to be included in the support interval.
 #' @inheritParams bayesfactor_parameters
@@ -20,16 +20,17 @@
 #' they should be *not flat*, and it is preferable that they be *informative* - note
 #' that by default, `brms::brm()` uses flat priors for fixed-effects; see example below).
 #'
-#' \subsection{Choosing a value of `BF`}{
-#' The choice of `BF` (the level of support) depends on what we want our interval to represent:
-#' \itemize{
-#'   \item A `BF` = 1 contains values whose credibility is not decreased by observing the data.
-#'   \item A `BF` > 1 contains values who received more impressive support from the data.
-#'   \item A `BF` < 1 contains values whose credibility has *not* been impressively decreased by observing the data.
-#'   Testing against values outside this interval will produce a Bayes factor larger than 1/`BF` in support of
-#'   the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.
-#' }
-#' }
+#' @section Choosing a value of `BF`:
+#' The choice of `BF` (the level of support) depends on what we want our interval
+#' to represent:
+#'
+#' - A `BF` = 1 contains values whose credibility is not decreased by observing the data.
+#' - A `BF` > 1 contains values who received more impressive support from the data.
+#' - A `BF` < 1 contains values whose credibility has *not* been impressively
+#'   decreased by observing the data. Testing against values outside this interval
+#'   will produce a Bayes factor larger than 1/`BF` in support of the alternative.
+#'   E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null
+#'   will be larger than 3.
 #'
 #' @inheritSection bayesfactor_parameters Setting the correct `prior`
 #'
@@ -37,7 +38,7 @@
 #'
 #' @return
 #' A data frame containing the lower and upper bounds of the SI.
-#' \cr
+#'
 #' Note that if the level of requested support is higher than observed in the data, the
 #' interval will be `[NA,NA]`.
 #'
@@ -45,23 +46,23 @@
 #' library(bayestestR)
 #'
 #' prior <- distribution_normal(1000, mean = 0, sd = 1)
-#' posterior <- distribution_normal(1000, mean = .5, sd = .3)
+#' posterior <- distribution_normal(1000, mean = 0.5, sd = 0.3)
 #'
-#' si(posterior, prior)
+#' si(posterior, prior, verbose = FALSE)
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
 #' contrasts(sleep$group) <- contr.equalprior_pairs # see vignette
 #' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
-#' si(stan_model)
-#' si(stan_model, BF = 3)
+#' si(stan_model, verbose = FALSE)
+#' si(stan_model, BF = 3, verbose = FALSE)
 #'
 #' # emmGrid objects
 #' # ---------------
 #' library(emmeans)
 #' group_diff <- pairs(emmeans(stan_model, ~group))
-#' si(group_diff, prior = stan_model)
+#' si(group_diff, prior = stan_model, verbose = FALSE)
 #'
 #' # brms models
 #' # -----------
@@ -76,10 +77,11 @@
 #'   prior = my_custom_priors,
 #'   refresh = 0
 #' ))
-#' si(brms_model)
+#' si(brms_model, verbose = FALSE)
 #' }
 #' @references
-#' Wagenmakers, E., Gronau, Q. F., Dablander, F., & Etz, A. (2018, November 22). The Support Interval. \doi{10.31234/osf.io/zwnxb}
+#' Wagenmakers, E., Gronau, Q. F., Dablander, F., & Etz, A. (2018, November 22).
+#' The Support Interval. \doi{10.31234/osf.io/zwnxb}
 #'
 #' @export
 si <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {

@@ -4,7 +4,7 @@
 #' the goal of this function is to un-update the posteriors to obtain models
 #' representing the priors. These models can then be used to examine the prior
 #' predictive distribution, or to compare priors with posteriors.
-#' \cr\cr
+#'
 #' This function in used internally to compute Bayes factors.
 #'
 #' @param model A fitted Bayesian model.
@@ -117,8 +117,7 @@ unupdate.brmsfit_multiple <- function(model,
   if (methods::is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior, fixed = TRUE)) {
       insight::format_error(
-        "Cannot sample from flat priors (such as the default ",
-        "priors for fixed-effects in a 'brmsfit' model).",
+        "Cannot sample from flat priors (such as the default priors for fixed-effects in a 'brmsfit' model)."
       )
     } else {
       insight::format_error(model_prior)
