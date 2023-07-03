@@ -157,23 +157,23 @@ It is important to provide the correct \code{prior} for meaningful results.
 library(bayestestR)
 
 prior <- distribution_normal(1000, mean = 0, sd = 1)
-posterior <- distribution_normal(1000, mean = .5, sd = .3)
+posterior <- distribution_normal(1000, mean = 0.5, sd = 0.3)
 
-si(posterior, prior)
+si(posterior, prior, verbose = FALSE)
 \dontrun{
 # rstanarm models
 # ---------------
 library(rstanarm)
 contrasts(sleep$group) <- contr.equalprior_pairs # see vignette
 stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
-si(stan_model)
-si(stan_model, BF = 3)
+si(stan_model, verbose = FALSE)
+si(stan_model, BF = 3, verbose = FALSE)
 
 # emmGrid objects
 # ---------------
 library(emmeans)
 group_diff <- pairs(emmeans(stan_model, ~group))
-si(group_diff, prior = stan_model)
+si(group_diff, prior = stan_model, verbose = FALSE)
 
 # brms models
 # -----------
@@ -188,7 +188,7 @@ brms_model <- suppressWarnings(brm(extra ~ group + (1 | ID),
   prior = my_custom_priors,
   refresh = 0
 ))
-si(brms_model)
+si(brms_model, verbose = FALSE)
 }
 \dontshow{\}) # examplesIf}
 }
