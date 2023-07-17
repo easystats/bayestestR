@@ -234,13 +234,18 @@ It is important to provide the correct \code{prior} for meaningful results.
 \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 \item When \code{posterior} is a \code{stanreg}, \code{brmsfit} or other supported Bayesian model: \itemize{
 \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-\item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
+\item \code{prior} can also be a model equivalent to \code{posterior} but with samples from
+the priors \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
 \item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
 }
 \item When \code{posterior} is an \code{emmGrid} / \code{emm_list} object: \itemize{
-\item \code{prior} should also be an \code{emmGrid} / \code{emm_list} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
-\item \code{prior} can also be the original (posterior) \emph{model}. If so, the function will try to update the \code{emmGrid} / \code{emm_list} to use the \code{\link[=unupdate]{unupdate()}}d prior-model. (\emph{This cannot be done for \code{brmsfit} models.})
-\item \strong{Note}: When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
+\item \code{prior} should also be an \code{emmGrid} / \code{emm_list} object equivalent to \code{posterior} but
+created with a model of priors samples \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
+\item \code{prior} can also be the original (posterior) \emph{model}. If so, the function will try to
+update the \code{emmGrid} / \code{emm_list} to use the \code{\link[=unupdate]{unupdate()}}d prior-model.
+(\emph{This cannot be done for \code{brmsfit} models.})
+\item \strong{Note}: When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.),
+or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
 }
 }
 }

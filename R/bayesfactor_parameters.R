@@ -91,13 +91,18 @@
 #'   \item When `posterior` is a `data.frame`, `prior` should also be a `data.frame`, with matching column order.
 #'   \item When `posterior` is a `stanreg`, `brmsfit` or other supported Bayesian model: \itemize{
 #'     \item `prior` can be set to `NULL`, in which case prior samples are drawn internally.
-#'     \item `prior` can also be a model equivalent to `posterior` but with samples from the priors *only*. See [unupdate()].
+#'     \item `prior` can also be a model equivalent to `posterior` but with samples from
+#'     the priors *only*. See [unupdate()].
 #'     \item **Note:** When `posterior` is a `brmsfit_multiple` model, `prior` **must** be provided.
 #'   }
 #'   \item When `posterior` is an `emmGrid` / `emm_list` object: \itemize{
-#'     \item `prior` should also be an `emmGrid` / `emm_list` object equivalent to `posterior` but created with a model of priors samples *only*. See [unupdate()].
-#'     \item `prior` can also be the original (posterior) *model*. If so, the function will try to update the `emmGrid` / `emm_list` to use the [unupdate()]d prior-model. (*This cannot be done for `brmsfit` models.*)
-#'     \item **Note**: When the `emmGrid` has undergone any transformations (`"log"`, `"response"`, etc.), or `regrid`ing, then `prior` must be an `emmGrid` object, as stated above.
+#'     \item `prior` should also be an `emmGrid` / `emm_list` object equivalent to `posterior` but
+#'     created with a model of priors samples *only*. See [unupdate()].
+#'     \item `prior` can also be the original (posterior) *model*. If so, the function will try to
+#'     update the `emmGrid` / `emm_list` to use the [unupdate()]d prior-model.
+#'     (*This cannot be done for `brmsfit` models.*)
+#'     \item **Note**: When the `emmGrid` has undergone any transformations (`"log"`, `"response"`, etc.),
+#'     or `regrid`ing, then `prior` must be an `emmGrid` object, as stated above.
 #'   }
 #' }
 #'
@@ -198,7 +203,7 @@ bayesfactor_pointnull <- function(posterior,
                                   null = 0,
                                   verbose = TRUE,
                                   ...) {
-  if (length(null) > 1 && verbose) {
+  if (length(null) > 1L && verbose) {
     insight::format_alert("`null` is a range - computing a ROPE based Bayes factor.")
   }
 
@@ -248,7 +253,12 @@ bf_rope <- bayesfactor_rope
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+bayesfactor_parameters.numeric <- function(posterior,
+                                           prior = NULL,
+                                           direction = "two-sided",
+                                           null = 0,
+                                           verbose = TRUE,
+                                           ...) {
   # nm <- insight::safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
@@ -306,7 +316,8 @@ bayesfactor_parameters.stanreg <- function(posterior,
 
   class(bf_val) <- class(temp)
   attr(bf_val, "clean_parameters") <- cleaned_parameters
-  attr(bf_val, "hypothesis") <- attr(temp, "hypothesis") # don't change the name of this attribute - it is used only internally for "see" and printing
+  # don't change the name of this attribute - it is used only internally for "see" and printing
+  attr(bf_val, "hypothesis") <- attr(temp, "hypothesis")
   attr(bf_val, "direction") <- attr(temp, "direction")
   attr(bf_val, "plot_data") <- attr(temp, "plot_data")
 
@@ -345,7 +356,8 @@ bayesfactor_parameters.blavaan <- function(posterior,
 
   class(bf_val) <- class(temp)
   attr(bf_val, "clean_parameters") <- cleaned_parameters
-  attr(bf_val, "hypothesis") <- attr(temp, "hypothesis") # don't change the name of this attribute - it is used only internally for "see" and printing
+  # don't change the name of this attribute - it is used only internally for "see" and printing
+  attr(bf_val, "hypothesis") <- attr(temp, "hypothesis")
   attr(bf_val, "direction") <- attr(temp, "direction")
   attr(bf_val, "plot_data") <- attr(temp, "plot_data")
 
@@ -360,15 +372,20 @@ bayesfactor_parameters.emmGrid <- function(posterior,
                                            null = 0,
                                            verbose = TRUE,
                                            ...) {
-  samps <- .clean_priors_and_posteriors(posterior, prior,
+  samps <- .clean_priors_and_posteriors(
+    posterior,
+    prior,
     verbose = verbose
   )
 
   # Get BFs
   bayesfactor_parameters.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
-    direction = direction, null = null,
-    verbose = verbose, ...
+    posterior = samps$posterior,
+    prior = samps$prior,
+    direction = direction,
+    null = null,
+    verbose = verbose,
+    ...
   )
 }
 
