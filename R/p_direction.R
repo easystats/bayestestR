@@ -1,81 +1,91 @@
 #' Probability of Direction (pd)
 #'
-#' Compute the **Probability of Direction** (***pd***, also known
-#' as the Maximum Probability of Effect - *MPE*). It varies between `50%`
-#' and `100%` (*i.e.*, `0.5` and `1`) and can be interpreted as
-#' the probability (expressed in percentage) that a parameter (described by its
-#' posterior distribution) is strictly positive or negative (whichever is the
-#' most probable). It is mathematically defined as the proportion of the
-#' posterior distribution that is of the median's sign. Although differently
-#' expressed, this index is fairly similar (*i.e.*, is strongly correlated)
-#' to the frequentist **p-value**.
-#' \cr\cr
-#' Note that in some (rare) cases, especially when used with model averaged
-#' posteriors (see [weighted_posteriors()] or
-#' `brms::posterior_average`), `pd` can be smaller than `0.5`,
-#' reflecting high credibility of `0`.
+#' Compute the **Probability of Direction** (***pd***, also known as the Maximum
+#' Probability of Effect - *MPE*). This can be interpreted as the probability
+#' that a parameter (described by its posterior distribution) is strictly
+#' positive or negative (whichever is the most probable). Although differently
+#' expressed, this index is fairly similar (*i.e.*, is strongly correlated) to
+#' the frequentist **p-value** (see details).
 #'
-#' @param x Vector representing a posterior distribution. Can also be a Bayesian model (`stanreg`, `brmsfit` or `BayesFactor`).
-#' @param method Can be `"direct"` or one of methods of [density estimation][estimate_density], such as `"kernel"`, `"logspline"` or `"KernSmooth"`. If `"direct"` (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the [Area under the Curve (AUC)][auc] of the estimated [density][estimate_density] function.
-#' @param null The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.
+#' @param x A vector representing a posterior distribution, a data frame of
+#'   posterior draws (samples be parameter). Can also be a Bayesian model.
+#' @param method Can be `"direct"` or one of methods of [`estimate_density()`],
+#'   such as `"kernel"`, `"logspline"` or `"KernSmooth"`. See details.
+#' @param null The value considered as a "null" effect. Traditionally 0, but
+#'   could also be 1 in the case of ratios of change (OR, IRR, ...).
 #' @inheritParams hdi
 #'
 #' @details
-#' \subsection{What is the *pd*?}{
+#' ## What is the *pd*?
 #' The Probability of Direction (pd) is an index of effect existence, ranging
-#' from `50%` to `100%`, representing the certainty with which an effect goes in
-#' a particular direction (*i.e.*, is positive or negative). Beyond its
-#' simplicity of interpretation, understanding and computation, this index also
-#' presents other interesting properties:
-#' \itemize{
-#'   \item It is independent from the model: It is solely based on the posterior
-#'   distributions and does not require any additional information from the data
-#'   or the model.
-#'   \item It is robust to the scale of both the response variable and the predictors.
-#'   \item It is strongly correlated with the frequentist p-value, and can thus
+#' from 0 to 1, representing the certainty with which an effect goes in a
+#' particular direction (*i.e.*, is positive or negative / has a sign). Beyond
+#' its simplicity of interpretation, understanding and computation, this index
+#' also presents other interesting properties:
+#' - It is robust to the scale of both the response variable and the predictors.
+#' - It is strongly correlated with the frequentist p-value, and can thus
 #'   be used to draw parallels and give some reference to readers non-familiar
-#'   with Bayesian statistics.
-#' }
-#' }
-#' \subsection{Relationship with the p-value}{
-#' In most cases, it seems that the *pd* has a direct correspondence with the frequentist one-sided *p*-value through the formula \ifelse{html}{\out{p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>}}{\eqn{p_{one sided}=1-\frac{p_{d}}{100}}} and to the two-sided p-value (the most commonly reported one) through the formula \ifelse{html}{\out{p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>)}}{\eqn{p_{two sided}=2*(1-\frac{p_{d}}{100})}}. Thus, a two-sided p-value of respectively `.1`, `.05`, `.01` and `.001` would correspond approximately to a *pd* of `95%`, `97.5%`, `99.5%` and `99.95%`. See also [pd_to_p()].
-#' }
-#' \subsection{Methods of computation}{
-#'  The most simple and direct way to compute the *pd* is to 1) look at the
-#'  median's sign, 2) select the portion of the posterior of the same sign and
-#'  3) compute the percentage that this portion represents. This "simple" method
-#'  is the most straightforward, but its precision is directly tied to the
-#'  number of posterior draws. The second approach relies on [density
-#'  estimation][estimate_density]. It starts by estimating the density function
-#'  (for which many methods are available), and then computing the [area under
-#'  the curve][area_under_curve] (AUC) of the density curve on the other side of
-#'  0.
-#' }
-#' \subsection{Strengths and Limitations}{
-#' **Strengths:** Straightforward computation and interpretation. Objective
-#' property of the posterior distribution. 1:1 correspondence with the
-#' frequentist p-value.
-#' \cr \cr
-#' **Limitations:** Limited information favoring the null hypothesis.
-#' }
+#'   with Bayesian statistics (Makowski et al., 2019). See also [`pd_to_p()`].
+#'
+#' ## Possible Range of Values
+#' The largest value *pd* can take is 1 - the posterior is strictly directional.
+#' However, the smallest value *pd* can take depends on the parameter space
+#' represented by the posterior.
+#' \cr\cr
+#' **For a continuous parameter space**, exact values of 0 (or any point null
+#' value) are not possible, and so 100% of the posterior has _some_ sign, some
+#' positive, some negative. Therefore, the smallest the *pd* can be is 0.5 -
+#' with an equal posterior mass of positive and negative values. Values close to
+#' 0.5 _cannot_ be used to support the null hypothesis (that the parameter does
+#' _not_ have a direction) is a similar why to how large p-values cannot be used
+#' to support the null hypothesis (see [`pd_tp_p()`]; Makowski et al., 2019).
+#' \cr\cr
+#' **For a discrete parameter space or a parameter space that is a mixture
+#' between discrete and continuous spaces**, exact values of 0 (or any point
+#' null value) _are_ possible! Therefore, the smallest the *pd* can be is 0 -
+#' with 100% of the posterior mass on 0. Thus values close to 0 can be used to
+#' support the null hypothesis (see van den Bergh et al., 2021).
+#' \cr\cr
+#' Examples of posteriors representing discrete parameter space:
+#' - When a parameter can only take discrete values.
+#' - When a mixture prior/posterior is used (such as the spike-and-slab prior;
+#'   see van den Bergh et al., 2021).
+#' - When conducting Bayesian model averaging (e.g., [weighted_posteriors()] or
+#'   `brms::posterior_average`).
+#'
+#' ## Methods of computation
+#' The *pd* is defined as:
+#' \deqn{p_d = max({Pr(\hat{\theta} < \theta_{null}), Pr(\hat{\theta} > \theta_{null})})}{pd = max(mean(x < null), mean(x > null))}
+#' \cr\cr
+#' The most simple and direct way to compute the *pd* is to compute the
+#' proportion of positive (or larger than `null`) posterior samples, the
+#' proportion of negative (or smaller than `null`) posterior samples, and take
+#' the larger of the two. This "simple" method is the most straightforward, but
+#' its precision is directly tied to the number of posterior draws.
+#' \cr\cr
+#' The second approach relies on [`density estimation()`]: It starts by
+#' estimating the continuous-smooth density function (for which many methods are
+#' available), and then computing the [area under the curve][area_under_curve]
+#' (AUC) of the density curve on either side of `null` and taking the maximum
+#' between them. Note the this approach assumes a continuous density function,
+#' and so **when the posterior represents a (partially) discrete parameter
+#' space, only the direct method _must_ be used** (see above).
 #'
 #' @return
-#' Values between 0.5 and 1 corresponding to the probability of direction (pd).
-#' \cr\cr
-#' Note that in some (rare) cases, especially when used with model averaged
-#' posteriors (see [weighted_posteriors()] or
-#' `brms::posterior_average`), `pd` can be smaller than `0.5`,
-#' reflecting high credibility of `0`. To detect such cases, the
-#' `method = "direct"` must be used.
+#' Values between 0.5 and 1 *or* between 0 and 1 (see above) corresponding to
+#' the probability of direction (pd).
 #'
 #' @seealso [pd_to_p()] to convert between Probability of Direction (pd) and p-value.
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @references
-#' Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect
-#' Existence and Significance in the Bayesian Framework. Frontiers in Psychology
-#' 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+#' - Makowski, D., Ben-Shachar, M. S., Chen, S. A., & Lüdecke, D. (2019).
+#'   Indices of effect existence and significance in the Bayesian framework.
+#'   Frontiers in psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+#' - van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers, E. J.
+#'   (2021). A cautionary note on estimating effect size. Advances in Methods
+#'   and Practices in Psychological Science, 4(1). \doi{10.1177/2515245921992035}
 #'
 #' @examples
 #' library(bayestestR)

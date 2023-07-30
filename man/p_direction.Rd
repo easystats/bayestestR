@@ -48,13 +48,16 @@ pd(x, ...)
 \method{p_direction}{BFBayesFactor}(x, method = "direct", null = 0, ...)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
+\item{x}{A vector representing a posterior distribution, a data frame of
+posterior draws (samples be parameter). Can also be a Bayesian model.}
 
 \item{...}{Currently not used.}
 
-\item{method}{Can be \code{"direct"} or one of methods of \link[=estimate_density]{density estimation}, such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. If \code{"direct"} (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the \link[=auc]{Area under the Curve (AUC)} of the estimated \link[=estimate_density]{density} function.}
+\item{method}{Can be \code{"direct"} or one of methods of \code{\link[=estimate_density]{estimate_density()}},
+such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. See details.}
 
-\item{null}{The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.}
+\item{null}{The value considered as a "null" effect. Traditionally 0, but
+could also be 1 in the case of ratios of change (OR, IRR, ...).}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
@@ -70,65 +73,81 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \value{
-Values between 0.5 and 1 corresponding to the probability of direction (pd).
-\cr\cr
-Note that in some (rare) cases, especially when used with model averaged
-posteriors (see \code{\link[=weighted_posteriors]{weighted_posteriors()}} or
-\code{brms::posterior_average}), \code{pd} can be smaller than \code{0.5},
-reflecting high credibility of \code{0}. To detect such cases, the
-\code{method = "direct"} must be used.
+Values between 0.5 and 1 \emph{or} between 0 and 1 (see above) corresponding to
+the probability of direction (pd).
 }
 \description{
-Compute the \strong{Probability of Direction} (\emph{\strong{pd}}, also known
-as the Maximum Probability of Effect - \emph{MPE}). It varies between \verb{50\%}
-and \verb{100\%} (\emph{i.e.}, \code{0.5} and \code{1}) and can be interpreted as
-the probability (expressed in percentage) that a parameter (described by its
-posterior distribution) is strictly positive or negative (whichever is the
-most probable). It is mathematically defined as the proportion of the
-posterior distribution that is of the median's sign. Although differently
-expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated)
-to the frequentist \strong{p-value}.
-\cr\cr
-Note that in some (rare) cases, especially when used with model averaged
-posteriors (see \code{\link[=weighted_posteriors]{weighted_posteriors()}} or
-\code{brms::posterior_average}), \code{pd} can be smaller than \code{0.5},
-reflecting high credibility of \code{0}.
+Compute the \strong{Probability of Direction} (\emph{\strong{pd}}, also known as the Maximum
+Probability of Effect - \emph{MPE}). This can be interpreted as the probability
+that a parameter (described by its posterior distribution) is strictly
+positive or negative (whichever is the most probable). Although differently
+expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated) to
+the frequentist \strong{p-value} (see details).
 }
 \details{
 \subsection{What is the \emph{pd}?}{
+
 The Probability of Direction (pd) is an index of effect existence, ranging
-from \verb{50\%} to \verb{100\%}, representing the certainty with which an effect goes in
-a particular direction (\emph{i.e.}, is positive or negative). Beyond its
-simplicity of interpretation, understanding and computation, this index also
-presents other interesting properties:
+from 0 to 1, representing the certainty with which an effect goes in a
+particular direction (\emph{i.e.}, is positive or negative / has a sign). Beyond
+its simplicity of interpretation, understanding and computation, this index
+also presents other interesting properties:
 \itemize{
-\item It is independent from the model: It is solely based on the posterior
-distributions and does not require any additional information from the data
-or the model.
 \item It is robust to the scale of both the response variable and the predictors.
 \item It is strongly correlated with the frequentist p-value, and can thus
 be used to draw parallels and give some reference to readers non-familiar
-with Bayesian statistics.
+with Bayesian statistics (Makowski et al., 2019). See also \code{\link[=pd_to_p]{pd_to_p()}}.
 }
 }
-\subsection{Relationship with the p-value}{
-In most cases, it seems that the \emph{pd} has a direct correspondence with the frequentist one-sided \emph{p}-value through the formula \ifelse{html}{\out{p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>}}{\eqn{p_{one sided}=1-\frac{p_{d}}{100}}} and to the two-sided p-value (the most commonly reported one) through the formula \ifelse{html}{\out{p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>)}}{\eqn{p_{two sided}=2*(1-\frac{p_{d}}{100})}}. Thus, a two-sided p-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001} would correspond approximately to a \emph{pd} of \verb{95\%}, \verb{97.5\%}, \verb{99.5\%} and \verb{99.95\%}. See also \code{\link[=pd_to_p]{pd_to_p()}}.
+
+\subsection{Possible Range of Values}{
+
+The largest value \emph{pd} can take is 1 - the posterior is strictly directional.
+However, the smallest value \emph{pd} can take depends on the parameter space
+represented by the posterior.
+\cr\cr
+\strong{For a continuous parameter space}, exact values of 0 (or any point null
+value) are not possible, and so 100\% of the posterior has \emph{some} sign, some
+positive, some negative. Therefore, the smallest the \emph{pd} can be is 0.5 -
+with an equal posterior mass of positive and negative values. Values close to
+0.5 \emph{cannot} be used to support the null hypothesis (that the parameter does
+\emph{not} have a direction) is a similar why to how large p-values cannot be used
+to support the null hypothesis (see \code{\link[=pd_tp_p]{pd_tp_p()}}; Makowski et al., 2019).
+\cr\cr
+\strong{For a discrete parameter space or a parameter space that is a mixture
+between discrete and continuous spaces}, exact values of 0 (or any point
+null value) \emph{are} possible! Therefore, the smallest the \emph{pd} can be is 0 -
+with 100\% of the posterior mass on 0. Thus values close to 0 can be used to
+support the null hypothesis (see van den Bergh et al., 2021).
+\cr\cr
+Examples of posteriors representing discrete parameter space:
+\itemize{
+\item When a parameter can only take discrete values.
+\item When a mixture prior/posterior is used (such as the spike-and-slab prior;
+see van den Bergh et al., 2021).
+\item When conducting Bayesian model averaging (e.g., \code{\link[=weighted_posteriors]{weighted_posteriors()}} or
+\code{brms::posterior_average}).
 }
+}
+
 \subsection{Methods of computation}{
-The most simple and direct way to compute the \emph{pd} is to 1) look at the
-median's sign, 2) select the portion of the posterior of the same sign and
-3) compute the percentage that this portion represents. This "simple" method
-is the most straightforward, but its precision is directly tied to the
-number of posterior draws. The second approach relies on \link[=estimate_density]{density estimation}. It starts by estimating the density function
-(for which many methods are available), and then computing the \link[=area_under_curve]{area under the curve} (AUC) of the density curve on the other side of
-0.
-}
-\subsection{Strengths and Limitations}{
-\strong{Strengths:} Straightforward computation and interpretation. Objective
-property of the posterior distribution. 1:1 correspondence with the
-frequentist p-value.
-\cr \cr
-\strong{Limitations:} Limited information favoring the null hypothesis.
+
+The \emph{pd} is defined as:
+\deqn{p_d = max({Pr(\hat{\theta} < \theta_{null}), Pr(\hat{\theta} > \theta_{null})})}{pd = max(mean(x < null), mean(x > null))}
+\cr\cr
+The most simple and direct way to compute the \emph{pd} is to compute the
+proportion of positive (or larger than \code{null}) posterior samples, the
+proportion of negative (or smaller than \code{null}) posterior samples, and take
+the larger of the two. This "simple" method is the most straightforward, but
+its precision is directly tied to the number of posterior draws.
+\cr\cr
+The second approach relies on \code{\link[=density estimation]{density estimation()}}: It starts by
+estimating the continuous-smooth density function (for which many methods are
+available), and then computing the \link[=area_under_curve]{area under the curve}
+(AUC) of the density curve on either side of \code{null} and taking the maximum
+between them. Note the this approach assumes a continuous density function,
+and so \strong{when the posterior represents a (partially) discrete parameter
+space, only the direct method \emph{must} be used} (see above).
 }
 }
 \note{
@@ -184,9 +203,14 @@ if (require("BayesFactor")) {
 }
 }
 \references{
-Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect
-Existence and Significance in the Bayesian Framework. Frontiers in Psychology
-2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+\itemize{
+\item Makowski, D., Ben-Shachar, M. S., Chen, S. A., & Lüdecke, D. (2019).
+Indices of effect existence and significance in the Bayesian framework.
+Frontiers in psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+\item van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers, E. J.
+(2021). A cautionary note on estimating effect size. Advances in Methods
+and Practices in Psychological Science, 4(1). \doi{10.1177/2515245921992035}
+}
 }
 \seealso{
 \code{\link[=pd_to_p]{pd_to_p()}} to convert between Probability of Direction (pd) and p-value.
