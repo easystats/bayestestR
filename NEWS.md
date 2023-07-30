@@ -3,6 +3,9 @@
 ## Breaking Changes
 
 * `pd_to_p()` now returns 1 and a warning for pds smaller than 0.5.
+* `map_estimate()`, `p_direction()`, `p_map()`, and `p_significance()` now 
+  return a data-frame when the input is a numeric vector. (making the output 
+  consistently a data frame for all inputs.)
 
 ## Changes
 
