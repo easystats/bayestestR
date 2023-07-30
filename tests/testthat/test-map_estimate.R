@@ -1,13 +1,12 @@
 # numeric ----------------------
 test_that("map_estimate", {
-  skip_if_offline()
-  skip_if_not_or_load_if_installed("rstanarm")
-
-  expect_equal(
-    as.numeric(map_estimate(distribution_normal(1000))),
-    0,
-    tolerance = 0.01
-  )
+  x <- distribution_normal(1000, 1)
+  MAP <- map_estimate(x)
+  expect_equal(as.numeric(MAP), 0.997, tolerance = 0.001)
+  expect_s3_class(MAP, "map_estimate")
+  expect_s3_class(MAP, "data.frame")
+  expect_equal(dim(MAP), c(1, 1))
+  expect_output(print(MAP), "MAP Estimate: 1.00")
 })
 
 # stanreg ----------------------

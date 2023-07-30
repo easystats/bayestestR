@@ -49,21 +49,20 @@ map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
 #' @rdname map_estimate
 #' @export
 map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
-  d <- estimate_density(x, precision = precision, method = method, ...)
-
-  hdp_x <- d$x[which.max(d$y)]
-  hdp_y <- max(d$y)
-
-  out <- hdp_x
-  attr(out, "MAP_density") <- hdp_y
-
+  out <- map_estimate(data.frame(x = x),
+                      precision, method = method, ...)
+  out[[1]] <- NULL
   attr(out, "data") <- x
-  attr(out, "centrality") <- "map"
-  class(out) <- unique(c("map_estimate", "see_point_estimate", class(out)))
-
   out
 }
 
+.map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
+  d <- estimate_density(x, precision = precision, method = method, ...)
+
+  out <- d$x[which.max(d$y)]
+  attr(out, "MAP_density") <- max(d$y)
+  out
+}
 
 
 # other models -----------------------
@@ -98,7 +97,7 @@ map_estimate.mcmc.list <- map_estimate.bayesQR
 
 #' @keywords internal
 .map_estimate_models <- function(x, precision, method, ...) {
-  l <- sapply(x, map_estimate, precision = precision, method = method, simplify = FALSE, ...)
+  l <- sapply(x, .map_estimate, precision = precision, method = method, simplify = FALSE, ...)
 
   out <- data.frame(
     Parameter = colnames(x),
