@@ -1,6 +1,11 @@
 test_that("p_map", {
-  skip_if_offline()
-  skip_if_not_or_load_if_installed("rstanarm")
+  x <- distribution_normal(1000, 0.4)
+  pmap <- p_map(x)
+  expect_equal(as.numeric(pmap), 0.9285376, tolerance = 0.001)
+  expect_s3_class(pmap, "p_map")
+  expect_s3_class(pmap, "data.frame")
+  expect_equal(dim(pmap), c(1, 1))
+  expect_output(print(pmap), "MAP-based p-value: 0.929")
 
   expect_equal(as.numeric(p_map(distribution_normal(1000))), 1, tolerance = 0.1)
   expect_equal(as.numeric(p_map(distribution_normal(1000, 1, 1))), 0.62, tolerance = 0.1)
