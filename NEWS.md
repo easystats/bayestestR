@@ -1,5 +1,9 @@
 # bayestestR 0.13.2
 
+## Breaking Changes
+
+* `pd_to_p()` now returns 1 and a warning for pds smaller than 0.5.
+
 ## Changes
 
 * Retrieving models from the environment was improved.
