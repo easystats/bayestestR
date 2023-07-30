@@ -25,7 +25,15 @@
 #' - It is robust to the scale of both the response variable and the predictors.
 #' - It is strongly correlated with the frequentist p-value, and can thus
 #'   be used to draw parallels and give some reference to readers non-familiar
-#'   with Bayesian statistics (Makowski et al., 2019). See also [`pd_to_p()`].
+#'   with Bayesian statistics (Makowski et al., 2019).
+#'
+#' ## Relationship with the p-value
+#' In most cases, it seems that the *pd* has a direct correspondence with the
+#' frequentist one-sided *p*-value through the formula (for two-sided *p*):
+#' \deqn{p = 2 \times (1 - p_d)}{p = 2 * (1 - pd)}
+#' Thus, a two-sided p-value of respectively `.1`, `.05`, `.01` and `.001` would
+#' correspond approximately to a *pd* of `95%`, `97.5%`, `99.5%` and `99.95%`.
+#' See [pd_to_p()] for details.
 #'
 #' ## Possible Range of Values
 #' The largest value *pd* can take is 1 - the posterior is strictly directional.
