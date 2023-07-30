@@ -144,52 +144,10 @@ p_direction.default <- function(x, ...) {
 #' @rdname p_direction
 #' @export
 p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
-  if (method == "direct") {
-    pdir <- max(
-      c(
-        length(x[x > null]) / length(x), # pd positive
-        length(x[x < null]) / length(x) # pd negative
-      )
-    )
-  } else {
-    dens <- estimate_density(x, method = method, precision = 2^10, extend = TRUE, ...)
-    if (length(x[x > null]) > length(x[x < null])) {
-      dens <- dens[dens$x > null, ]
-    } else {
-      dens <- dens[dens$x < null, ]
-    }
-    pdir <- area_under_curve(dens$x, dens$y, method = "spline")
-    if (pdir >= 1) pdir <- 1 # Enforce bounds
-  }
-
-  attr(pdir, "method") <- method
-  attr(pdir, "data") <- x
-
-  class(pdir) <- unique(c("p_direction", "see_p_direction", class(pdir)))
-
-  pdir
-}
-
-
-
-
-
-#' @export
-p_direction.parameters_model <- function(x, ...) {
-  out <- data.frame(
-    "Parameter" = x$Parameter,
-    "pd" = p_to_pd(p = x[["p"]]),
-    row.names = NULL,
-    stringsAsFactors = FALSE
-  )
-
-  if (!is.null(x$Component)) {
-    out$Component <- x$Component
-  }
-
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
-  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
-
+  obj_name <- insight::safe_deparse_symbol(substitute(x))
+  out <- p_direction(data.frame(x = x), method = method, null = null, ...)
+  out <- out[-1]
+  attr(out, "object_name") <- obj_name
   out
 }
 
@@ -201,9 +159,9 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
-    pd <- p_direction(x[[1]], method = method, null = null, ...)
+    pd <- .p_direction(x[[1]], method = method, null = null, ...)
   } else {
-    pd <- sapply(x, p_direction, method = method, null = null, simplify = TRUE, ...)
+    pd <- sapply(x, .p_direction, method = method, null = null, simplify = TRUE, ...)
   }
 
   out <- data.frame(
@@ -463,6 +421,49 @@ p_direction.get_predicted <- function(x, ...) {
   }
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
+}
+
+#' @export
+p_direction.parameters_model <- function(x, ...) {
+  out <- data.frame(
+    "Parameter" = x$Parameter,
+    "pd" = p_to_pd(p = x[["p"]]),
+    row.names = NULL,
+    stringsAsFactors = FALSE
+  )
+
+  if (!is.null(x$Component)) {
+    out$Component <- x$Component
+  }
+
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
+
+  out
+}
+
+#' @keywords internal
+.p_direction <- function(x, method = "direct", null = 0, ...) {
+  if (method == "direct") {
+    pdir <- max(
+      length(x[x > null]), # pd positive
+      length(x[x < null]) # pd negative
+    ) / length(x)
+  } else {
+    dens <- estimate_density(x, method = method, precision = 2^10, extend = TRUE, ...)
+    if (length(x[x > null]) > length(x[x < null])) {
+      dens <- dens[dens$x > null, ]
+    } else {
+      dens <- dens[dens$x < null, ]
+    }
+    pdir <- area_under_curve(dens$x, dens$y, method = "spline")
+    if (pdir >= 1) {
+      # Enforce bounds
+      pdir <- 1
+    }
+  }
+
+  pdir
 }
 
 # Methods -----------------------------------------------------------------
