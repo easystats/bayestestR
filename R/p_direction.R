@@ -146,7 +146,7 @@ p_direction.default <- function(x, ...) {
 p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
   out <- p_direction(data.frame(x = x), method = method, null = null, ...)
-  out <- out[-1]
+  out[[1]] <- NULL
   attr(out, "object_name") <- obj_name
   out
 }
