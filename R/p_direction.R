@@ -17,11 +17,15 @@
 #'
 #' @details
 #' ## What is the *pd*?
-#' The Probability of Direction (pd) is an index of effect existence, ranging
-#' from 0 to 1, representing the certainty with which an effect goes in a
-#' particular direction (*i.e.*, is positive or negative / has a sign). Beyond
+#' The Probability of Direction (pd) is an index of effect existence, representing
+#' the certainty with which an effect goes in a particular direction (i.e., is
+#' positive or negative / has a sign), typically ranging from 0.5 to 1 (but see
+#' next section for cases where it can range between 0 and 1). Beyond
 #' its simplicity of interpretation, understanding and computation, this index
 #' also presents other interesting properties:
+#' - Like other posterior-based indices, *pd* is solely based on the posterior
+#'   distributions and does not require any additional information from the data
+#'   or the model (e.g., such as priors, as in the case of Bayes factors).
 #' - It is robust to the scale of both the response variable and the predictors.
 #' - It is strongly correlated with the frequentist p-value, and can thus
 #'   be used to draw parallels and give some reference to readers non-familiar
