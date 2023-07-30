@@ -23,12 +23,12 @@ test_that("p_significance", {
   )
   expect_equal(
     format(p_direction(x)),
-    data.frame(x = "0.51", stringsAsFactors = FALSE),
+    data.frame(x = "51.00%", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
   expect_equal(
     format(p_map(x)),
-    data.frame(x = "0.97", stringsAsFactors = FALSE),
+    data.frame(x = "0.973", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
   expect_equal(
