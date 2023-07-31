@@ -6,6 +6,7 @@
 #' @param p A p-value.
 #' @param direction What type of p-value is requested or provided. Can be
 #'   `"two-sided"` (default, two tailed) or `"one-sided"` (one tailed).
+#' @param verbose Toggle off warnings.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
@@ -33,7 +34,7 @@
 #' pd_to_p(pd = 0.95, direction = "one-sided")
 #'
 #' @export
-pd_to_p <- function(pd, direction = "two-sided", ...) {
+pd_to_p <- function(pd, direction = "two-sided", verbose = TRUE, ...) {
   p <- 1 - pd
   if (.get_direction(direction) == 0) {
     p <- 2 * p
@@ -41,9 +42,13 @@ pd_to_p <- function(pd, direction = "two-sided", ...) {
 
   less_than_0.5 <- pd < 0.5
   if (any(less_than_0.5)) {
-    insight::format_warning("pd values smaller than 0.5 detected.",
-                            "pd-to-p conversion assumes a continious parameter space;",
-                            "see help('p_direction') for more info.")
+    if (verbose) {
+      insight::format_warning(paste(
+        "pd values smaller than 0.5 detected.",
+        "pd-to-p conversion assumes a continious parameter space;",
+        "see help('p_direction') for more info."
+      ))
+    }
     p[less_than_0.5] <- 1
   }
 
