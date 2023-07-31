@@ -82,19 +82,19 @@ test_that("blavaan, all", {
   x <- suppressWarnings(weighted_posteriors(bfit, bfit2))
   expect_identical(ncol(x), 14L)
 
-  # bfit_prior <- unupdate(bfit)
-  # capture.output(x <- expect_warning(bayesfactor_parameters(bfit, prior = bfit_prior)))
-  # expect_identical(nrow(x), 14L)
-  #
-  # x <- expect_warning(si(bfit, prior = bfit_prior))
-  # expect_identical(nrow(x), 14L)
-  #
-  # ## Prior/posterior checks ----
-  # suppressWarnings(x <- check_prior(bfit))
-  # expect_equal(nrow(x), 13)
-  #
-  # x <- check_prior(bfit, simulate_priors = FALSE)
-  # expect_identical(nrow(x), 14L)
+  bfit_prior <- unupdate(bfit)
+  capture.output(x <- expect_warning(bayesfactor_parameters(bfit, prior = bfit_prior)))
+  expect_identical(nrow(x), 14L)
+
+  x <- expect_warning(si(bfit, prior = bfit_prior))
+  expect_identical(nrow(x), 14L)
+
+  ## Prior/posterior checks ----
+  suppressWarnings(x <- check_prior(bfit))
+  expect_equal(nrow(x), 13)
+
+  x <- check_prior(bfit, simulate_priors = FALSE)
+  expect_identical(nrow(x), 14L)
 
   x <- diagnostic_posterior(bfit)
   expect_identical(nrow(x), 14L)
@@ -107,6 +107,6 @@ test_that("blavaan, all", {
   expect_identical(nrow(x), 13L)
   # YES this is 13! We have two parameters with the same prior.
 
-  # x <- describe_posterior(bfit, test = "all", rope_range = c(-0.1, 0.1))
-  # expect_identical(nrow(x), 14L)
+  x <- describe_posterior(bfit, test = "all", rope_range = c(-0.1, 0.1))
+  expect_identical(nrow(x), 14L)
 })

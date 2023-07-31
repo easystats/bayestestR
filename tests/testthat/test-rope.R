@@ -18,7 +18,6 @@ test_that("rope", {
 
   expect_equal(equivalence_test(distribution_normal(1000, 0, 0.001), ci = 1)$ROPE_Equivalence, "Accepted")
 
-  # print(rope(rnorm(1000, mean = 0, sd = 3), ci = .5))
   expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(.1, .5, .9), verbose = FALSE)$CI, c(.1, .5, .9))
 
   x <- equivalence_test(distribution_normal(1000, 1, 1), ci = c(.50, .99))
@@ -71,31 +70,31 @@ test_that("rope", {
 })
 
 
-# if ( skip_if_not_or_load_if_installed("brms")) {
-#   set.seed(123)
-#   model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
-#   rope <- rope(model, verbose = FALSE)
-#
-#   test_that("rope (brms)", {
-#     expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
-#     expect_equal(rope$ROPE_high[1], 0.6026948)
-#     expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
-#   })
-#
-#   model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 500)
-#   rope <- rope(model, verbose = FALSE)
-#
-#   test_that("rope (brms, multivariate)", {
-#     expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
-#     expect_equal(rope$ROPE_high[1], 0.6026948, tolerance = 0.01)
-#     expect_equal(rope$ROPE_high[4], 12.3938694, tolerance = 0.01)
-#     expect_equal(
-#       rope$ROPE_Percentage,
-#       c(0, 0, 0.493457, 0.072897, 0, 0.508411),
-#       tolerance = 0.1
-#     )
-#   })
-# }
+skip_if_not_or_load_if_installed("brms")
+set.seed(123)
+model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
+rope <- rope(model, verbose = FALSE)
+
+test_that("rope (brms)", {
+  expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
+  expect_equal(rope$ROPE_high[1], 0.6026948)
+  expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
+})
+
+model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 500)
+rope <- rope(model, verbose = FALSE)
+
+test_that("rope (brms, multivariate)", {
+  expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
+  expect_equal(rope$ROPE_high[1], 0.6026948, tolerance = 0.01)
+  expect_equal(rope$ROPE_high[4], 12.3938694, tolerance = 0.01)
+  expect_equal(
+    rope$ROPE_Percentage,
+    c(0, 0, 0.493457, 0.072897, 0, 0.508411),
+    tolerance = 0.1
+  )
+})
+
 
 test_that("BayesFactor", {
   skip_if_not_or_load_if_installed("BayesFactor")
