@@ -7,19 +7,21 @@
 \alias{convert_pd_to_p}
 \title{Convert between Probability of Direction (pd) and p-value.}
 \usage{
-pd_to_p(pd, direction = "two-sided", ...)
+pd_to_p(pd, direction = "two-sided", verbose = TRUE, ...)
 
 p_to_pd(p, direction = "two-sided", ...)
 
 convert_p_to_pd(p, direction = "two-sided", ...)
 
-convert_pd_to_p(pd, direction = "two-sided", ...)
+convert_pd_to_p(pd, direction = "two-sided", verbose = TRUE, ...)
 }
 \arguments{
 \item{pd}{A Probability of Direction (pd) value (between 0 and 1).}
 
 \item{direction}{What type of p-value is requested or provided. Can be
 \code{"two-sided"} (default, two tailed) or \code{"one-sided"} (one tailed).}
+
+\item{verbose}{Toggle off warnings.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -28,7 +30,28 @@ convert_pd_to_p(pd, direction = "two-sided", ...)
 \description{
 Enables a conversion between Probability of Direction (pd) and p-value.
 }
+\details{
+Conversion is done using the following equation (see Makowski et al., 2019):
+\cr\cr
+When \code{direction = "two-sided"} -
+\cr\cr
+\deqn{p = 2 \times (1 - p_d)}{p = 2 * (1 - pd)}
+When \code{direction = "one-sided"} -
+\cr\cr
+\deqn{p = 1 - p_d}{p = 1 - pd}
+\cr\cr
+Note that this conversion is only valid when the lowest possible values of pd
+is 0.5 - i.e., when the posterior represents continuous parameter space (see
+\link{p_direction}). If any pd < 0.5 are detected, they are converted to a p of 1,
+and a warning is given.
+}
 \examples{
 pd_to_p(pd = 0.95)
 pd_to_p(pd = 0.95, direction = "one-sided")
+
+}
+\references{
+Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+\emph{Indices of Effect Existence and Significance in the Bayesian Framework}.
+Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 }

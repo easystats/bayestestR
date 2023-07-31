@@ -118,8 +118,6 @@ test_that("bayesfactor_models BRMS", {
   skip_on_cran()
   skip_on_ci()
 
-  skip_if_not_or_load_if_installed("lme4")
-  skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("bridgesampling")
   skip_if_not_or_load_if_installed("brms")
 

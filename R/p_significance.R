@@ -60,20 +60,10 @@ p_significance.default <- function(x, ...) {
 #' @export
 p_significance.numeric <- function(x, threshold = "default", ...) {
   threshold <- .select_threshold_ps(threshold = threshold)
-
-  psig <- max(
-    c(
-      length(x[x > abs(threshold)]) / length(x), # ps positive
-      length(x[x < -abs(threshold)]) / length(x) # ps negative
-    )
-  )
-
-  attr(psig, "threshold") <- threshold
-  attr(psig, "data") <- x
-
-  class(psig) <- unique(c("p_significance", "see_p_significance", class(psig)))
-
-  psig
+  out <- p_significance(data.frame(x = x), threshold = threshold)
+  out[[1]] <- NULL
+  attr(out, "data") <- x
+  out
 }
 
 
@@ -84,9 +74,9 @@ p_significance.data.frame <- function(x, threshold = "default", ...) {
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
-    ps <- p_significance(x[, 1], threshold = threshold, ...)
+    ps <- .p_significance(x[, 1], threshold = threshold, ...)
   } else {
-    ps <- sapply(x, p_significance, threshold = threshold, simplify = TRUE, ...)
+    ps <- sapply(x, .p_significance, threshold = threshold, simplify = TRUE, ...)
   }
 
   out <- data.frame(
@@ -260,7 +250,16 @@ p_significance.brmsfit <- function(x,
   out
 }
 
+.p_significance <- function(x, threshold, ...) {
+  psig <- max(
+    c(
+      length(x[x > abs(threshold)]) / length(x), # ps positive
+      length(x[x < -abs(threshold)]) / length(x) # ps negative
+    )
+  )
 
+  psig
+}
 
 # methods ---------------------------
 

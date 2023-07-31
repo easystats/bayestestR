@@ -82,17 +82,9 @@ p_pointnull <- p_map
 
 #' @export
 p_map.numeric <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
-  # Density at MAP
-  map <- attributes(map_estimate(x, precision = precision, method = method, ...))$MAP_density
-
-  # Density at 0
-  d_0 <- density_at(x, null, precision = precision, method = method, ...)
-  if (is.na(d_0)) d_0 <- 0
-
-  # Odds
-  p <- d_0 / map
-  class(p) <- c("p_map", class(p))
-  p
+  out <- p_map(data.frame(x = x), null = null, precision = precision, method = method, ...)
+  out[[1]] <- NULL
+  out
 }
 
 
@@ -102,9 +94,9 @@ p_map.data.frame <- function(x, null = 0, precision = 2^10, method = "kernel", .
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
-    p_MAP <- p_map(x[, 1], null = null, precision = precision, method = method, ...)
+    p_MAP <- .p_map(x[, 1], null = null, precision = precision, method = method, ...)
   } else {
-    p_MAP <- sapply(x, p_map, null = null, precision = precision, method = method, simplify = TRUE, ...)
+    p_MAP <- sapply(x, .p_map, null = null, precision = precision, method = method, simplify = TRUE, ...)
   }
 
   out <- data.frame(
@@ -364,7 +356,19 @@ p_map.bayesQR <- function(x, null = 0, precision = 2^10, method = "kernel", ...)
   out
 }
 
+#' @keywords internal
+.p_map <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
+  # Density at MAP
+  map <- attributes(map_estimate(x, precision = precision, method = method, ...))$MAP_density
 
+  # Density at 0
+  d_0 <- density_at(x, null, precision = precision, method = method, ...)
+  if (is.na(d_0)) d_0 <- 0
+
+  # Odds
+  p <- d_0 / map
+  p
+}
 
 
 #' @rdname as.numeric.p_direction

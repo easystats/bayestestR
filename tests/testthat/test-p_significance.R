@@ -1,15 +1,17 @@
 test_that("p_significance", {
-  skip_if_offline()
-  skip_if_not_or_load_if_installed("rstanarm")
-
   # numeric
   set.seed(333)
   x <- distribution_normal(10000, 1, 1)
   ps <- p_significance(x)
   expect_equal(as.numeric(ps), 0.816, tolerance = 0.1)
-  expect_equal(nrow(p_significance(data.frame(replicate(4, rnorm(100))))), 4)
   expect_s3_class(ps, "p_significance")
-  expect_equal(tail(capture.output(print(ps)), 1), "Practical Significance (threshold: 0.10): 0.82")
+  expect_s3_class(ps, "data.frame")
+  expect_equal(dim(ps), c(1, 1))
+  expect_output(print(ps), "Practical Significance \\(threshold: 0.10\\): 0.82")
+
+  x <- data.frame(replicate(4, rnorm(100)))
+  pd <- p_significance(x)
+  expect_equal(dim(pd), c(4, 2))
 })
 
 test_that("stanreg", {

@@ -41,7 +41,8 @@ of models (see, for example, \code{methods("hdi")}) and not all of those are
 documented in the 'Usage' section, because methods for other classes mostly
 resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
-\item{null}{The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.}
+\item{null}{The value considered as a "null" effect. Traditionally 0, but
+could also be 1 in the case of ratios of change (OR, IRR, ...).}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 
