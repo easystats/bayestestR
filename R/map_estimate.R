@@ -49,11 +49,10 @@ map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
 #' @rdname map_estimate
 #' @export
 map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
-  out <- map_estimate(data.frame(x = x),
+  out <- map_estimate(data.frame(Posterior = x),
     precision,
     method = method, ...
   )
-  out[[1]] <- NULL
   attr(out, "data") <- x
   out
 }

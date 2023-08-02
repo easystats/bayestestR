@@ -60,8 +60,7 @@ p_significance.default <- function(x, ...) {
 #' @export
 p_significance.numeric <- function(x, threshold = "default", ...) {
   threshold <- .select_threshold_ps(threshold = threshold)
-  out <- p_significance(data.frame(x = x), threshold = threshold)
-  out[[1]] <- NULL
+  out <- p_significance(data.frame(Posterior = x), threshold = threshold)
   attr(out, "data") <- x
   out
 }

@@ -101,8 +101,8 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
       )
     }
   }
-  prior <- data.frame(X = prior)
-  posterior <- data.frame(X = posterior)
+  prior <- data.frame(Posterior = prior)
+  posterior <- data.frame(Posterior = posterior)
 
   # Get SIs
   out <- si.data.frame(

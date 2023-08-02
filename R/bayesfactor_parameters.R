@@ -259,7 +259,6 @@ bayesfactor_parameters.numeric <- function(posterior,
                                            null = 0,
                                            verbose = TRUE,
                                            ...) {
-  # nm <- insight::safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
     prior <- posterior
@@ -269,9 +268,8 @@ bayesfactor_parameters.numeric <- function(posterior,
       )
     }
   }
-  prior <- data.frame(X = prior)
-  posterior <- data.frame(X = posterior)
-  # colnames(posterior) <- colnames(prior) <- nm
+  prior <- data.frame("Posterior" = prior)
+  posterior <- data.frame("Posterior" = posterior)
 
   # Get BFs
   sdbf <- bayesfactor_parameters.data.frame(
