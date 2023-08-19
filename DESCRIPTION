@@ -126,5 +126,5 @@ Config/Needs/website:
     r-lib/pkgdown,
     easystats/easystatstemplate
 Remotes: 
-  rvlenth/emmeans
+  rvlenth/emmeans,
   easystats/insight
