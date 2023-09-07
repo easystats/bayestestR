@@ -172,6 +172,7 @@ contr.equalprior <- function(n, contrasts = TRUE, sparse = FALSE) {
 #' @rdname contr.equalprior
 contr.equalprior_pairs <- function(n, contrasts = TRUE, sparse = FALSE) {
   contr <- contr.equalprior(n, contrasts, sparse) / sqrt(2)
+  contr
 }
 
 #' @export
