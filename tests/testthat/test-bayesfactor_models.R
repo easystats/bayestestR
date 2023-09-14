@@ -195,7 +195,7 @@ test_that("bayesfactor_inclusion | LMM", {
   expect_equal(bfinc_all$p_posterior, c(1, 1, 0.12, 0.01, 0), tolerance = 0.1)
   expect_equal(bfinc_all$log_BF, c(NaN, 57.651, -2.352, -4.064, -4.788), tolerance = 0.1)
 
-  # + match_models
+  # plus match_models
   bfinc_matched <- bayesfactor_inclusion(BFM4, match_models = TRUE)
   expect_equal(bfinc_matched$p_prior, c(1, 0.2, 0.6, 0.2, 0.2), tolerance = 0.1)
   expect_equal(bfinc_matched$p_posterior, c(1, 0.875, 0.125, 0.009, 0.002), tolerance = 0.1)

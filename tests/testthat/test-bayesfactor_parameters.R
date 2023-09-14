@@ -91,26 +91,27 @@ test_that("bayesfactor_parameters RSTANARM", {
 
 
 # bayesfactor_parameters BRMS ---------------------------------------------
-#
-#   test_that("bayesfactor_parameters BRMS", {
-#     skip_if_offline()
-#     skip_if_not_or_load_if_installed("rstanarm")
-#     skip_if_not_or_load_if_installed("BayesFactor")
-#     skip_if_not_or_load_if_installed("httr")
-#     skip_if_not_or_load_if_installed("brms")
-#
-#     brms_mixed_6 <- insight::download_model("brms_mixed_6")
-#
-#     set.seed(222)
-#     brms_mixed_6_p <- unupdate(brms_mixed_6)
-#     bfsd1 <- bayesfactor_parameters(brms_mixed_6, brms_mixed_6_p, effects = "fixed")
-#
-#     set.seed(222)
-#     bfsd2 <- bayesfactor_parameters(brms_mixed_6, effects = "fixed")
-#
-#     expect_equal(log(bfsd1$BF), log(bfsd2$BF), tolerance = .11)
-#
-#
-#     brms_mixed_1 <- insight::download_model("brms_mixed_1")
-#     expect_error(bayesfactor_parameters(brms_mixed_1))
-#   })
+
+test_that("bayesfactor_parameters BRMS", {
+  skip_if_offline()
+  skip_if_not_or_load_if_installed("rstanarm")
+  skip_if_not_or_load_if_installed("BayesFactor")
+  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("cmdstanr")
+
+  brms_mixed_6 <- insight::download_model("brms_mixed_6")
+
+  set.seed(222)
+  brms_mixed_6_p <- unupdate(brms_mixed_6)
+  bfsd1 <- bayesfactor_parameters(brms_mixed_6, brms_mixed_6_p, effects = "fixed")
+
+  set.seed(222)
+  bfsd2 <- bayesfactor_parameters(brms_mixed_6, effects = "fixed")
+
+  expect_equal(log(bfsd1$BF), log(bfsd2$BF), tolerance = .11)
+
+
+  brms_mixed_1 <- insight::download_model("brms_mixed_1")
+  expect_error(bayesfactor_parameters(brms_mixed_1))
+})

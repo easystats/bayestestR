@@ -31,38 +31,38 @@ test_that("p_direction: BF t.test meta-analytic", {
   expect_equal(as.numeric(p_direction(x)), 0.99975, tolerance = 1)
 })
 
-# # ---------------------------
-# # "BF ANOVA"
-# data(ToothGrowth)
-# ToothGrowth$dose <- factor(ToothGrowth$dose)
-# levels(ToothGrowth$dose) <- c("Low", "Medium", "High")
-# x <- BayesFactor::anovaBF(len ~ supp*dose, data=ToothGrowth)
-# test_that("p_direction", {
-#   expect_equal(as.numeric(p_direction(x)), 91.9, tol=0.1)
-# })
-#
-# # ---------------------------
-# # "BF ANOVA Random"
-# data(puzzles)
-# x <- BayesFactor::anovaBF(RT ~ shape*color + ID, data = puzzles, whichRandom="ID")
-# test_that("p_direction", {
-#   expect_equal(as.numeric(p_direction(x)), 91.9, tol=0.1)
-# })
-#
-#
-# # ---------------------------
-# # "BF lm"
-# x <- BayesFactor::lmBF(len ~ supp + dose, data = ToothGrowth)
-# test_that("p_direction", {
-#   expect_equal(as.numeric(p_direction(x)), 91.9, tol=0.1)
-# })
-#
-#
-# x2 <- BayesFactor::lmBF(len ~ supp + dose + supp:dose, data = ToothGrowth)
-# x <- x / x2
-# test_that("p_direction", {
-#   expect_equal(as.numeric(p_direction(x)), 91.9, tol=0.1)
-# })
+# ---------------------------
+# "BF ANOVA"
+data(ToothGrowth)
+ToothGrowth$dose <- factor(ToothGrowth$dose)
+levels(ToothGrowth$dose) <- c("Low", "Medium", "High")
+x <- BayesFactor::anovaBF(len ~ supp * dose, data = ToothGrowth)
+test_that("p_direction", {
+  expect_equal(as.numeric(p_direction(x)), 91.9, tol = 0.1)
+})
+
+# BF ANOVA Random ---------------------------
+
+data(puzzles)
+x <- BayesFactor::anovaBF(RT ~ shape * color + ID, data = puzzles, whichRandom = "ID")
+test_that("p_direction", {
+  expect_equal(as.numeric(p_direction(x)), 91.9, tol = 0.1)
+})
+
+
+# ---------------------------
+# "BF lm"
+x <- BayesFactor::lmBF(len ~ supp + dose, data = ToothGrowth)
+test_that("p_direction", {
+  expect_equal(as.numeric(p_direction(x)), 91.9, tol = 0.1)
+})
+
+
+x2 <- BayesFactor::lmBF(len ~ supp + dose + supp:dose, data = ToothGrowth)
+x <- x / x2
+test_that("p_direction", {
+  expect_equal(as.numeric(p_direction(x)), 91.9, tol = 0.1)
+})
 
 
 test_that("rope_range", {

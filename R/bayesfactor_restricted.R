@@ -5,9 +5,11 @@
 #' \cr \cr
 #' The `bf_*` function is an alias of the main function.
 #' \cr \cr
-#' \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
+#' \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
+#' see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
-#' @param posterior A `stanreg` / `brmsfit` object, `emmGrid` or a data frame - representing a posterior distribution(s) from (see Details).
+#' @param posterior A `stanreg` / `brmsfit` object, `emmGrid` or a data frame - representing
+#' a posterior distribution(s) from (see Details).
 #' @param hypothesis A character vector specifying the restrictions as logical conditions (see examples below).
 #' @param prior An object representing a prior distribution (see Details).
 #' @inheritParams hdi
@@ -107,9 +109,12 @@
 #' }
 #'
 #' @references
-#' - Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
-#' - Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
-#' - Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions. Retrieved from https://richarddmorey.org/category/order-restrictions/.
+#' - Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and
+#' point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
+#' - Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses.
+#' Psychological methods, 16(4), 406.
+#' - Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions.
+#' Retrieved from https://richarddmorey.org/category/order-restrictions/.
 #'
 #' @export
 bayesfactor_restricted <- function(posterior, hypothesis, prior = NULL, verbose = TRUE, ...) {

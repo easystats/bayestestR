@@ -38,8 +38,8 @@ test_that("insight::get_predicted", {
   rez <- describe_posterior(x)
   expect_equal(c(nrow(rez), ncol(rez)), c(32, 5))
 
-  # rez <- estimate_density(x)
-  # expect_equal(c(nrow(rez), ncol(rez)), c(2048, 3))
+  rez <- estimate_density(x)
+  expect_equal(c(nrow(rez), ncol(rez)), c(2048, 3))
 })
 
 test_that("bayesQR", {

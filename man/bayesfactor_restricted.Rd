@@ -59,7 +59,8 @@ bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
 \method{as.logical}{bayesfactor_restricted}(x, which = c("posterior", "prior"), ...)
 }
 \arguments{
-\item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).}
+\item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing
+a posterior distribution(s) from (see Details).}
 
 \item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
 
@@ -93,7 +94,8 @@ with the fully unrestricted model. \emph{Note that this method should only be us
 \cr \cr
 The \verb{bf_*} function is an alias of the main function.
 \cr \cr
-\strong{For more info, in particular on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+\strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
+see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
 This method is used to compute Bayes factors for order-restricted models vs un-restricted
@@ -228,8 +230,11 @@ bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
 }
 \references{
 \itemize{
-\item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
-\item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
-\item Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions. Retrieved from https://richarddmorey.org/category/order-restrictions/.
+\item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and
+point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
+\item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses.
+Psychological methods, 16(4), 406.
+\item Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions.
+Retrieved from https://richarddmorey.org/category/order-restrictions/.
 }
 }

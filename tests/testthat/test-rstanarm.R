@@ -38,13 +38,12 @@ test_that("rstanarm", {
   expect_s3_class(hdi(model), "data.frame")
   expect_s3_class(ci(model), "data.frame")
   expect_s3_class(rope(model, verbose = FALSE), "data.frame")
-  # expect_true("equivalence_test" %in% class(equivalence_test(model)))
+  expect_true("equivalence_test" %in% class(equivalence_test(model)))
   expect_s3_class(map_estimate(model), "data.frame")
   expect_s3_class(p_map(model), "data.frame")
   expect_s3_class(p_direction(model), "data.frame")
 
-  # expect_error(equivalence_test(model, range = c(.1, .3, .5)))
-  # print(equivalence_test(model, ci = c(.1, .3, .5)))
+  expect_error(equivalence_test(model, range = c(0.1, 0.3, 0.5)))
 })
 
 test_that("rstanarm", {
