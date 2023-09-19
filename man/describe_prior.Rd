@@ -38,7 +38,7 @@ for the output.}
 Returns a summary of the priors used in the model.
 }
 \examples{
-\dontrun{
+\donttest{
 library(bayestestR)
 
 # rstanarm models

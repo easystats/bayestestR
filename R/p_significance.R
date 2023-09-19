@@ -31,7 +31,7 @@
 #' # -----------------------------------------------
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' p_significance(df)
-#' \dontrun{
+#' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
 #' if (require("rstanarm")) {

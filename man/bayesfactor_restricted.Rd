@@ -189,7 +189,7 @@ see::plots(
 )
 \dontshow{\}) # examplesIf}
 \dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\dontrun{
+\donttest{
 # rstanarm models
 # ---------------
 data("mtcars")
@@ -207,7 +207,7 @@ bayesfactor_restricted(fit_stan, hypothesis = hyps)
 }
 \dontshow{\}) # examplesIf}
 \dontshow{if (require("rstanarm") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\dontrun{
+\donttest{
 # emmGrid objects
 # ---------------
 # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html

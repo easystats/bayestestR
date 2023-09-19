@@ -268,7 +268,7 @@ if (require("logspline")) {
 
   as.numeric(BF_pars)
 }
-\dontrun{
+\donttest{
 # rstanarm models
 # ---------------
 if (require("rstanarm") && require("emmeans") && require("logspline")) {

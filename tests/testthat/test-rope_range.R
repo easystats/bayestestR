@@ -31,7 +31,7 @@ test_that("rope_range logistic", {
 
 test_that("rope_range", {
   skip_if_not_or_load_if_installed("brms")
-  model <- brm(mpg ~ wt + gear, data = mtcars, iter = 300)
+  model <- brms::brm(mpg ~ wt + gear, data = mtcars, iter = 300)
 
   expect_equal(
     rope_range(model),
@@ -41,7 +41,7 @@ test_that("rope_range", {
 })
 
 test_that("rope_range (multivariate)", {
-  model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 300)
+  model <- brms::brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 300)
 
   expect_equal(
     rope_range(model),

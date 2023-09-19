@@ -19,7 +19,7 @@
 #' - `MAP_Estimate`: The MAP estimate for the posterior or each model parameter.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(10000)

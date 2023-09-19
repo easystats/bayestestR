@@ -86,7 +86,7 @@ point_estimate(rnorm(1000), centrality = c("median", "MAP"))
 df <- data.frame(replicate(4, rnorm(100)))
 point_estimate(df, centrality = "all", dispersion = TRUE)
 point_estimate(df, centrality = c("median", "MAP"))
-\dontrun{
+\donttest{
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)

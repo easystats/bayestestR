@@ -16,7 +16,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(rstanarm)
 #' model <- suppressWarnings(
 #'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)

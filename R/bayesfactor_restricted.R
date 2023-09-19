@@ -70,7 +70,7 @@
 #' )
 #'
 #' @examplesIf require("rstanarm")
-#' \dontrun{
+#' \donttest{
 #' # rstanarm models
 #' # ---------------
 #' data("mtcars")
@@ -88,7 +88,7 @@
 #' }
 #'
 #' @examplesIf require("rstanarm") && require("emmeans")
-#' \dontrun{
+#' \donttest{
 #' # emmGrid objects
 #' # ---------------
 #' # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html

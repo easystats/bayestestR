@@ -102,7 +102,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(bayestestR)
 #'
 #' s <- sexit(rnorm(1000, -1, 1))

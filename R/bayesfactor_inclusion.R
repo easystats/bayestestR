@@ -52,7 +52,7 @@
 #'
 #' as.numeric(bf_inc)
 #'
-#' \dontrun{
+#' \donttest{
 #' # BayesFactor
 #' # -------------------------------
 #' library(BayesFactor)

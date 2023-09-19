@@ -113,7 +113,7 @@ lm2b <- lm(sqrt(mpg) ~ hp, data = mtcars)
 # Set check_response = TRUE for transformed responses
 bayesfactor_models(lm2b, denominator = lm2, check_response = TRUE)
 
-\dontrun{
+\donttest{
 # With lmerMod objects:
 # ---------------------
 if (require("lme4")) {

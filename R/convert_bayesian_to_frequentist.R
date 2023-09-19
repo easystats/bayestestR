@@ -20,7 +20,7 @@
 #' }
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 #' if (require("rstanarm")) {
 #'   model <- stan_glm(vs ~ mpg,
 #'     family = "binomial",

@@ -76,7 +76,7 @@
 #'   the frequentist framework.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(mediation)
 #' library(brms)
 #' library(rstanarm)

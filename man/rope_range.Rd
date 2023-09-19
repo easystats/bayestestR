@@ -58,7 +58,7 @@ ROPE limits, but it is strongly advised to specify it manually.
 }
 }
 \examples{
-\dontrun{
+\donttest{
 if (require("rstanarm")) {
   model <- suppressWarnings(stan_glm(
     mpg ~ wt + gear,

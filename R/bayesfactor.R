@@ -30,7 +30,7 @@
 #'
 #'   bayesfactor(posterior, prior = prior, verbose = FALSE)
 #' }
-#' \dontrun{
+#' \donttest{
 #' # rstanarm models
 #' # ---------------
 #' if (require("rstanarm")) {

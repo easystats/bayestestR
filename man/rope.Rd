@@ -148,7 +148,7 @@ rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 1, 1), ci = c(0.90, 0.95))
-\dontrun{
+\donttest{
 library(rstanarm)
 model <- suppressWarnings(
   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)

@@ -9,7 +9,7 @@
 #'   distribution (useful for complex priors and designs).
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(bayestestR)
 #' if (require("rstanarm")) {
 #'   model <- suppressWarnings(

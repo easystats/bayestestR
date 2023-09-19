@@ -27,7 +27,7 @@ antagonistic prior (a prior of same shape located on the opposite of the
 effect).
 }
 \examples{
-\dontrun{
+\donttest{
 library(bayestestR)
 
 # rstanarm models

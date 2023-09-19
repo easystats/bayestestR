@@ -111,7 +111,7 @@ The three values for existence, significance and size provide a useful descripti
 \item{The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).}}}
 }
 \examples{
-\dontrun{
+\donttest{
 library(bayestestR)
 
 s <- sexit(rnorm(1000, -1, 1))

@@ -49,7 +49,7 @@
 #' posterior <- distribution_normal(1000, mean = 0.5, sd = 0.3)
 #'
 #' si(posterior, prior, verbose = FALSE)
-#' \dontrun{
+#' \donttest{
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)

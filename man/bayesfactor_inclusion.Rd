@@ -73,7 +73,7 @@ BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
 
 as.numeric(bf_inc)
 
-\dontrun{
+\donttest{
 # BayesFactor
 # -------------------------------
 library(BayesFactor)

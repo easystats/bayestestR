@@ -45,7 +45,7 @@ from Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative
 suggestion of how big the estimation noise is}.
 }
 \examples{
-\dontrun{
+\donttest{
 library(bayestestR)
 library(rstanarm)
 

@@ -28,7 +28,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
 #' if (require("rstanarm", quietly = TRUE)) {

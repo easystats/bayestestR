@@ -42,7 +42,7 @@
 #' @inheritParams rope
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' if (require("rstanarm")) {
 #'   model <- suppressWarnings(stan_glm(
 #'     mpg ~ wt + gear,

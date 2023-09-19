@@ -81,7 +81,7 @@ effective sample size (the formula for \code{mcse()} is from Kruschke 2015, p.
 estimation noise is}.
 }
 \examples{
-\dontrun{
+\donttest{
 # rstanarm models
 # -----------------------------------------------
 if (require("rstanarm", quietly = TRUE)) {

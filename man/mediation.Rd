@@ -109,7 +109,7 @@ samples of the effects, which can be used for further processing in the
 different \pkg{bayestestR} package.
 }
 \examples{
-\dontrun{
+\donttest{
 library(mediation)
 library(brms)
 library(rstanarm)

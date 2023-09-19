@@ -16,7 +16,7 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(bayestestR)
 #'
 #' # rstanarm models

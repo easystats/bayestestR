@@ -72,7 +72,7 @@
 #' # Grouped data
 #' head(estimate_density(iris, at = "Species"))
 #' head(estimate_density(iris$Petal.Width, at = iris$Species))
-#' \dontrun{
+#' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)

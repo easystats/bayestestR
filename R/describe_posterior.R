@@ -79,7 +79,7 @@
 #'     describe_posterior(df, keep_iterations = TRUE, verbose = FALSE)
 #'   ))
 #' }
-#' \dontrun{
+#' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
 #' if (require("rstanarm") && require("emmeans")) {

@@ -81,7 +81,7 @@ of the \emph{mode} for continuous parameters. Note that this function relies on
 function (\code{"nrd0"}).
 }
 \examples{
-\dontrun{
+\donttest{
 library(bayestestR)
 
 posterior <- rnorm(10000)

@@ -17,7 +17,7 @@ simulate_prior(model, n = 1000, ...)
 Transforms priors information to actual distributions.
 }
 \examples{
-\dontrun{
+\donttest{
 library(bayestestR)
 if (require("rstanarm")) {
   model <- suppressWarnings(

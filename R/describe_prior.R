@@ -7,7 +7,7 @@
 #' @inheritParams describe_posterior
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(bayestestR)
 #'
 #' # rstanarm models

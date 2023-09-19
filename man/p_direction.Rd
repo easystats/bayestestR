@@ -181,7 +181,7 @@ p_direction(posterior, method = "kernel")
 df <- data.frame(replicate(4, rnorm(100)))
 p_direction(df)
 p_direction(df, method = "kernel")
-\dontrun{
+\donttest{
 # rstanarm models
 # -----------------------------------------------
 if (require("rstanarm")) {

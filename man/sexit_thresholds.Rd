@@ -21,7 +21,7 @@ information.
 }
 \examples{
 sexit_thresholds(rnorm(1000))
-\dontrun{
+\donttest{
 if (require("rstanarm")) {
   model <- suppressWarnings(stan_glm(
     mpg ~ wt + gear,

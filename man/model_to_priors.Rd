@@ -17,7 +17,7 @@ model_to_priors(model, scale_multiply = 3, ...)
 Convert model's posteriors to (normal) priors.
 }
 \examples{
-\dontrun{
+\donttest{
 # brms models
 # -----------------------------------------------
 if (require("brms")) {

@@ -7,7 +7,7 @@
 #' @param ... Other arguments for \code{insight::get_prior()} or \code{\link{describe_posterior}}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # brms models
 #' # -----------------------------------------------
 #' if (require("brms")) {
