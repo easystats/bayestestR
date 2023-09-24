@@ -1,10 +1,3 @@
-# Reexports models ------------------------
-
-#' @importFrom insight print_md
-#' @export
-insight::print_md
-
-
 #' @export
 print_md.describe_posterior <- function(x, digits = 2, caption = "Summary of Posterior Distribution", ...) {
   .print_md_default(x = x, digits = digits, caption = caption, ...)
