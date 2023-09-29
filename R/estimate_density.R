@@ -345,6 +345,12 @@ estimate_density.grouped_df <- function(x,
   do.call(rbind, out)
 }
 
+# to avoid class conflicts - e.g., numeric variables imported with the
+# haven package are of class "haven_labelled" and "double", which causes
+# problems with the generic or numeric method.
+
+#' @export
+estimate_density.double <- estimate_density.numeric
 
 #' @export
 estimate_density.emmGrid <- function(x,
