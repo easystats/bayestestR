@@ -98,6 +98,6 @@ plot.describe_posterior <- function(x, stack = FALSE, ...) {
     graphics::plot(estimate_density(model), stack = stack, ...) +
       ggplot2::labs(title = "Posterior Samples", x = NULL, y = NULL)
   } else {
-    insight::format_warning("Could not find model-object. Try `plot(estimate_density(model))` instead.")
+    insight::format_alert("Could not find model-object. Try `plot(estimate_density(model))` instead.")
   }
 }
