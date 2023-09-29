@@ -16,6 +16,9 @@
 * Fixed issues in various `format()` methods, which did not work properly for
   some few functions (like `p_direction()`).
 
+* Fixed issue in `estimate_density()` for double vectors that also had other
+  class attributes.
+
 # bayestestR 0.13.1
 
 ## Changes
