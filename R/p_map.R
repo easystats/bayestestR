@@ -82,9 +82,7 @@ p_pointnull <- p_map
 
 #' @export
 p_map.numeric <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
-  out <- p_map(data.frame(x = x), null = null, precision = precision, method = method, ...)
-  out[[1]] <- NULL
-  out
+  p_map(data.frame(Posterior = x), null = null, precision = precision, method = method, ...)
 }
 
 

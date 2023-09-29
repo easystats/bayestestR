@@ -167,8 +167,7 @@ p_direction.default <- function(x, ...) {
 #' @export
 p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
-  out <- p_direction(data.frame(x = x), method = method, null = null, ...)
-  out[[1]] <- NULL
+  out <- p_direction(data.frame(Posterior = x), method = method, null = null, ...)
   attr(out, "object_name") <- obj_name
   out
 }
