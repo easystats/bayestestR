@@ -167,10 +167,10 @@ for (the_mean in runif(25, 0, 4)) {
     data <- rbind(
       data,
       data.frame(
-        "direct" = pd(x),
-        "kernel" = pd(x, method = "kernel"),
-        "logspline" = pd(x, method = "logspline"),
-        "KernSmooth" = pd(x, method = "KernSmooth")
+        direct = as.numeric(pd(x)),
+        kernel = as.numeric(pd(x, method = "kernel")),
+        logspline = as.numeric(pd(x, method = "logspline")),
+        KernSmooth = as.numeric(pd(x, method = "KernSmooth"))
       )
     )
   }
@@ -194,10 +194,10 @@ for (the_mean in runif(25, 0, 4)) {
     data <- rbind(
       data,
       data.frame(
-        "direct" = pd(x),
-        "kernel" = pd(x, method = "kernel"),
-        "logspline" = pd(x, method = "logspline"),
-        "KernSmooth" = pd(x, method = "KernSmooth")
+        direct = as.numeric(pd(x)),
+        kernel = as.numeric(pd(x, method = "kernel")),
+        logspline = as.numeric(pd(x, method = "logspline")),
+        KernSmooth = as.numeric(pd(x, method = "KernSmooth"))
       )
     )
   }
