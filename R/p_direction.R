@@ -463,6 +463,11 @@ p_direction.parameters_model <- function(x, ...) {
   out
 }
 
+
+
+# Definition --------------------------------------------------------------
+
+
 #' @keywords internal
 .p_direction <- function(x, method = "direct", null = 0, ...) {
   if (method == "direct") {
