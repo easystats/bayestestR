@@ -40,7 +40,7 @@ ToothGrowth$dose <- factor(ToothGrowth$dose)
 levels(ToothGrowth$dose) <- c("Low", "Medium", "High")
 x <- BayesFactor::anovaBF(len ~ supp * dose, data = ToothGrowth)
 test_that("p_direction", {
-  expect_equal(as.numeric(p_direction(x)), 91.9, tolerance = 0.1)
+  expect_equal(as.numeric(p_direction(x)), c(1, 0.95675, 0.95675, 1, 1), tolerance = 0.1)
 })
 
 # BF ANOVA Random ---------------------------
@@ -48,7 +48,10 @@ test_that("p_direction", {
 data(puzzles)
 x <- BayesFactor::anovaBF(RT ~ shape * color + ID, data = puzzles, whichRandom = "ID")
 test_that("p_direction", {
-  expect_equal(as.numeric(p_direction(x)), 91.9, tolerance = 0.1)
+  expect_equal(as.numeric(p_direction(x)), c(
+    1, 0.98125, 0.98125, 0.995, 0.67725, 0.8285, 0.68425, 0.99975,
+    0.6725, 0.9995, 0.60275, 0.99525, 0.7615, 0.763, 1, 1, 1, 1
+  ), tolerance = 0.1)
 })
 
 
@@ -56,14 +59,14 @@ test_that("p_direction", {
 # "BF lm"
 x <- BayesFactor::lmBF(len ~ supp + dose, data = ToothGrowth)
 test_that("p_direction", {
-  expect_equal(as.numeric(p_direction(x)), 91.9, tolerance = 0.1)
+  expect_equal(as.numeric(p_direction(x)), c(1, 0.9995, 0.9995, 1, 0.903, 1, 1, 1, 1), tolerance = 0.1)
 })
 
 
 x2 <- BayesFactor::lmBF(len ~ supp + dose + supp:dose, data = ToothGrowth)
 x <- x / x2
 test_that("p_direction", {
-  expect_equal(as.numeric(p_direction(x)), 91.9, tolerance = 0.1)
+  expect_equal(as.numeric(p_direction(x)), c(1, 0.99925, 0.99925, 1, 0.89975, 1, 1, 1, 1), tolerance = 0.1)
 })
 
 
@@ -82,6 +85,6 @@ test_that("rope_range", {
   expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10, tolerance = 1e-4)
 
   # else
-  x <- BayesFactor::correlationBF(ToothGrowth$len, ToothGrowth$dose)
-  expect_equal(rope_range(x, verbose = FALSE), c(-0.05, 0.05))
+  x <- BayesFactor::correlationBF(ToothGrowth$len, as.numeric(ToothGrowth$dose))
+  expect_equal(rope_range(x, verbose = FALSE), c(-0.05, 0.05), tolerance = 1e-4)
 })

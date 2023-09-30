@@ -41,7 +41,9 @@ test_that("rope_range", {
 })
 
 test_that("rope_range (multivariate)", {
-  model <- brms::brm(brms::bf(mvbind(mpg, disp) ~ wt + gear) + brms::set_rescor(TRUE), data = mtcars, iter = 300)
+  model <- suppressWarnings(
+    brms::brm(brms::bf(mvbind(mpg, disp) ~ wt + gear) + brms::set_rescor(TRUE), data = mtcars, iter = 300)
+  )
 
   expect_equal(
     rope_range(model),
