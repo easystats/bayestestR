@@ -27,7 +27,7 @@ test_that("insight::get_predicted", {
   expect_equal(c(nrow(rez), ncol(rez)), c(32, 2))
 
   rez <- p_map(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+  expect_equal(c(nrow(rez), ncol(rez)), c(1, 2))
 
   rez <- p_significance(x)
   expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))

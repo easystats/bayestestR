@@ -86,6 +86,11 @@ p_map.numeric <- function(x, null = 0, precision = 2^10, method = "kernel", ...)
 }
 
 
+#' @export
+p_map.get_predicted <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
+  p_map(as.numeric(x), null = null, precision = precision, method = method, ...)
+}
+
 
 #' @export
 p_map.data.frame <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
