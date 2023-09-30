@@ -243,7 +243,7 @@ describe_posterior.default <- function(posteriors, ...) {
       if (!is.data.frame(test_pmap)) {
         test_pmap <- data.frame(
           Parameter = "Posterior",
-          p_map = test_pmap,
+          p_MAP = test_pmap,
           stringsAsFactors = FALSE
         )
       }
