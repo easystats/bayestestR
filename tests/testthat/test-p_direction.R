@@ -6,14 +6,20 @@ test_that("p_direction", {
   expect_equal(as.numeric(p_direction(x, method = "kernel")), 0.842, tolerance = 0.1)
   expect_s3_class(pd, "p_direction")
   expect_s3_class(pd, "data.frame")
-  expect_equal(dim(pd), c(1L, 1L))
-  expect_output(print(pd), regexp = "Probability of Direction: 84.13%", fixed = TRUE)
+  expect_identical(dim(pd), c(1L, 2L))
+  expect_identical(
+    capture.output(print(pd)),
+    c(
+      "Probability of Direction", "", "Parameter |     pd", "------------------",
+      "Posterior | 84.13%"
+    )
+  )
 
   df <- data.frame(replicate(4, rnorm(100)))
   pd <- p_direction(df)
   expect_s3_class(pd, "p_direction")
   expect_s3_class(pd, "data.frame")
-  expect_equal(dim(pd), c(4, 2))
+  expect_identical(dim(pd), c(4L, 2L))
 })
 
 
