@@ -178,13 +178,13 @@ test_that("describe_posterior", {
 
   expect_equal(dim(rez), c(2, 4))
 
-  model <- brms::brm(
+  model <- suppressWarnings(brms::brm(
     mpg ~ drat,
     data = mtcars,
     chains = 2,
     algorithm = "meanfield",
     refresh = 0
-  )
+  ))
 
   expect_equal(nrow(describe_posterior(model)), 2)
 
