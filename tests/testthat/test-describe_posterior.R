@@ -31,7 +31,7 @@ test_that("describe_posterior", {
   expect_identical(dim(rez), c(1L, 19L))
   expect_identical(colnames(rez), c(
     "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
-    "CI_high", "p_map", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
+    "CI_high", "p_MAP", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
     "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "log_BF"
   ))
 
