@@ -79,8 +79,8 @@ p_significance.data.frame <- function(x, threshold = "default", ...) {
   }
 
   out <- data.frame(
-    "Parameter" = names(x),
-    "ps" = as.numeric(ps),
+    Parameter = names(x),
+    ps = as.numeric(ps),
     row.names = NULL,
     stringsAsFactors = FALSE
   )
@@ -294,10 +294,10 @@ as.double.p_significance <- as.numeric.p_significance
   }
   # If default
   if (all(threshold == "default")) {
-    if (!is.null(model)) {
-      threshold <- rope_range(model, verbose = verbose)[2]
-    } else {
+    if (is.null(model)) {
       threshold <- 0.1
+    } else {
+      threshold <- rope_range(model, verbose = verbose)[2]
     }
   } else if (!all(is.numeric(threshold))) {
     insight::format_error("`threshold` should be 'default' or a numeric value (e.g., 0.1).")

@@ -98,8 +98,8 @@ p_map.data.frame <- function(x, null = 0, precision = 2^10, method = "kernel", .
   }
 
   out <- data.frame(
-    "Parameter" = names(x),
-    "p_MAP" = p_MAP,
+    Parameter = names(x),
+    p_MAP = p_MAP,
     row.names = NULL,
     stringsAsFactors = FALSE
   )

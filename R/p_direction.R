@@ -186,8 +186,8 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
   }
 
   out <- data.frame(
-    "Parameter" = names(x),
-    "pd" = pd,
+    Parameter = names(x),
+    pd = pd,
     row.names = NULL,
     stringsAsFactors = FALSE
   )
