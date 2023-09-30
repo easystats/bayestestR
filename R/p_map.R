@@ -49,9 +49,9 @@
 #' for (iteration in 1:250) {
 #'   x <- rnorm(1000, 1, 1)
 #'   result <- data.frame(
-#'     "Kernel" = p_map(x, method = "kernel"),
-#'     "KernSmooth" = p_map(x, method = "KernSmooth"),
-#'     "logspline" = p_map(x, method = "logspline")
+#'     "Kernel" = as.numeric(p_map(x, method = "kernel")),
+#'     "KernSmooth" = as.numeric(p_map(x, method = "KernSmooth")),
+#'     "logspline" = as.numeric(p_map(x, method = "logspline"))
 #'   )
 #'   data <- rbind(data, result)
 #' }

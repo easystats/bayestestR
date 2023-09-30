@@ -6,7 +6,7 @@ test_that("p_significance", {
   expect_equal(as.numeric(ps), 0.816, tolerance = 0.1)
   expect_s3_class(ps, "p_significance")
   expect_s3_class(ps, "data.frame")
-  expect_identical(dim(ps), c(1L, 1L))
+  expect_identical(dim(ps), c(1L, 2L))
   expect_identical(
     capture.output(print(ps)),
     c(

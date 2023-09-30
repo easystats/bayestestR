@@ -41,6 +41,7 @@ test_that("rope_range", {
 })
 
 test_that("rope_range (multivariate)", {
+  skip_if_not_or_load_if_installed("brms")
   model <- suppressWarnings(
     brms::brm(brms::bf(mvbind(mpg, disp) ~ wt + gear) + brms::set_rescor(TRUE), data = mtcars, iter = 300)
   )
