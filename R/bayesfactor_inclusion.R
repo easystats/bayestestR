@@ -37,7 +37,7 @@
 #'
 #' @seealso [weighted_posteriors()] for Bayesian parameter averaging.
 #'
-#' @examples
+#' @examplesIf require("BayesFactor")
 #' library(bayestestR)
 #'
 #' # Using bayesfactor_models:
@@ -55,10 +55,7 @@
 #' \donttest{
 #' # BayesFactor
 #' # -------------------------------
-#' library(BayesFactor)
-#'
-#' BF <- generalTestBF(len ~ supp * dose, ToothGrowth, progress = FALSE)
-#'
+#' BF <- BayesFactor::generalTestBF(len ~ supp * dose, ToothGrowth, progress = FALSE)
 #' bayesfactor_inclusion(BF)
 #'
 #' # compare only matched models:
