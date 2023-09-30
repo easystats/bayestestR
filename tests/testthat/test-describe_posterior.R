@@ -157,11 +157,11 @@ test_that("describe_posterior", {
 
   # brms -------------------------------------------------
 
-  x <- brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0)
+  x <- suppressWarnings(brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, ci = c(0.8, 0.9))
 
   expect_equal(dim(rez), c(4, 16))
-  expect_equal(colnames(rez), c(
+  expect_identical(colnames(rez), c(
     "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
     "CI_high", "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
     "Rhat", "ESS"
