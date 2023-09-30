@@ -4,8 +4,14 @@ test_that("p_map", {
   expect_equal(as.numeric(pmap), 0.9285376, tolerance = 0.001)
   expect_s3_class(pmap, "p_map")
   expect_s3_class(pmap, "data.frame")
-  expect_equal(dim(pmap), c(1, 1))
-  expect_output(print(pmap), "MAP-based p-value: 0.929")
+  expect_identical(dim(pmap), c(1L, 2L))
+  expect_identical(
+    capture.output(print(pmap)),
+    c(
+      "MAP-based p-value", "", "Parameter | p (MAP)",
+      "-------------------", "Posterior |   0.929"
+    )
+  )
 
   expect_equal(as.numeric(p_map(distribution_normal(1000))), 1, tolerance = 0.1)
   expect_equal(as.numeric(p_map(distribution_normal(1000, 1, 1))), 0.62, tolerance = 0.1)

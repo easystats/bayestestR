@@ -7,8 +7,8 @@ test_that("p_significance", {
   expect_s3_class(ps, "p_significance")
   expect_s3_class(ps, "data.frame")
   expect_identical(dim(ps), c(1L, 1L))
-  expect_output(
-    print(ps),
+  expect_identical(
+    capture.output(print(ps)),
     c(
       "Practical Significance (threshold: 0.10)",
       "",
