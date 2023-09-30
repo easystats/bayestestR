@@ -134,6 +134,7 @@ the amount of digits in the output, and there is a
 to visualize the results from the equivalence-test (for models only).
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
@@ -145,7 +146,6 @@ equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 test <- equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 print(test, digits = 4)
 \donttest{
-library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
 
@@ -153,17 +153,15 @@ equivalence_test(model)
 test <- equivalence_test(model)
 plot(test)
 
-library(emmeans)
-equivalence_test(emtrends(model, ~1, "wt", data = mtcars))
+equivalence_test(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 
-library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
 
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 # equivalence_test(bf)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
