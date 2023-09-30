@@ -1,4 +1,5 @@
 test_that("describe_posterior", {
+  skip_if(getRversion() < "4.2")
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
