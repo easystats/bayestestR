@@ -4,21 +4,19 @@ test_that("rope", {
   skip_if_not_or_load_if_installed("brms")
 
   expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1), verbose = FALSE)), 0.084, tolerance = 0.01)
-  expect_equal(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")
-  expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000))))), 9)
-  expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000),
-    ci = c(0.8, 0.9)
-  )))), 14)
+  expect_identical(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")
+  expect_length(capture.output(print(equivalence_test(distribution_normal(1000)))), 9)
+  expect_length(capture.output(print(equivalence_test(distribution_normal(1000), ci = c(0.8, 0.9)))), 14)
 
   expect_equal(as.numeric(rope(distribution_normal(1000, 2, 0.01), verbose = FALSE)), 0, tolerance = 0.01)
-  expect_equal(equivalence_test(distribution_normal(1000, 2, 0.01))$ROPE_Equivalence, "Rejected")
+  expect_identical(equivalence_test(distribution_normal(1000, 2, 0.01))$ROPE_Equivalence, "Rejected")
 
   expect_equal(as.numeric(rope(distribution_normal(1000, 0, 0.001), verbose = FALSE)), 1, tolerance = 0.01)
-  expect_equal(equivalence_test(distribution_normal(1000, 0, 0.001))$ROPE_Equivalence, "Accepted")
+  expect_identical(equivalence_test(distribution_normal(1000, 0, 0.001))$ROPE_Equivalence, "Accepted")
 
-  expect_equal(equivalence_test(distribution_normal(1000, 0, 0.001), ci = 1)$ROPE_Equivalence, "Accepted")
+  expect_identical(equivalence_test(distribution_normal(1000, 0, 0.001), ci = 1)$ROPE_Equivalence, "Accepted")
 
-  expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(0.1, 0.5, 0.9), verbose = FALSE)$CI, c(.1, .5, .9))
+  expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(0.1, 0.5, 0.9), verbose = FALSE)$CI, c(0.1, 0.5, 0.9))
 
   x <- equivalence_test(distribution_normal(1000, 1, 1), ci = c(0.50, 0.99))
   expect_equal(x$ROPE_Percentage[2], 0.0484, tolerance = 0.01)
