@@ -18,11 +18,11 @@ test_that("rope", {
 
   expect_equal(equivalence_test(distribution_normal(1000, 0, 0.001), ci = 1)$ROPE_Equivalence, "Accepted")
 
-  expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(.1, .5, .9), verbose = FALSE)$CI, c(.1, .5, .9))
+  expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(0.1, 0.5, 0.9), verbose = FALSE)$CI, c(.1, .5, .9))
 
-  x <- equivalence_test(distribution_normal(1000, 1, 1), ci = c(.50, .99))
+  x <- equivalence_test(distribution_normal(1000, 1, 1), ci = c(0.50, 0.99))
   expect_equal(x$ROPE_Percentage[2], 0.0484, tolerance = 0.01)
-  expect_equal(x$ROPE_Equivalence[2], "Undecided")
+  expect_identical(x$ROPE_Equivalence[2], "Undecided")
 
   expect_error(rope(distribution_normal(1000, 0, 1), range = c(0.0, 0.1, 0.2)))
 
@@ -47,7 +47,7 @@ test_that("rope", {
   p <- insight::get_parameters(m, effects = "all")
   expect_equal(
     # fix range to -.1/.1, to compare to data frame method
-    rope(m, range = c(-.1, .1), effects = "all", verbose = FALSE)$ROPE_Percentage,
+    rope(m, range = c(-0.1, 0.1), effects = "all", verbose = FALSE)$ROPE_Percentage,
     rope(p, verbose = FALSE)$ROPE_Percentage,
     tolerance = 1e-3
   )
@@ -81,7 +81,7 @@ test_that("rope (brms)", {
   expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
 })
 
-model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 500)
+model <- brm(bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE), data = mtcars, iter = 500, refresh = 0)
 rope <- rope(model, verbose = FALSE)
 
 test_that("rope (brms, multivariate)", {
