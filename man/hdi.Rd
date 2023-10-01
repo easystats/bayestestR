@@ -129,6 +129,7 @@ the resulting HDI.
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 posterior <- rnorm(1000)
@@ -138,26 +139,23 @@ hdi(posterior, ci = c(0.80, 0.90, 0.95))
 bayestestR::hdi(iris[1:4])
 bayestestR::hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
 \donttest{
-library(rstanarm)
 model <- suppressWarnings(
-  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
 bayestestR::hdi(model)
 bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 
-library(emmeans)
-bayestestR::hdi(emtrends(model, ~1, "wt", data = mtcars))
+bayestestR::hdi(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 
-library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 bayestestR::hdi(model)
 bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 bayestestR::hdi(bf)
 bayestestR::hdi(bf, ci = c(0.80, 0.90, 0.95))
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
