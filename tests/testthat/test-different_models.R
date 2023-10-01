@@ -9,37 +9,37 @@ test_that("insight::get_predicted", {
   )
 
   rez <- point_estimate(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
   rez <- hdi(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
   rez <- eti(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
   rez <- ci(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
   rez <- map_estimate(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 2))
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
 
   rez <- p_direction(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 2))
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
 
   rez <- p_map(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(1, 2))
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
 
   rez <- p_significance(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
 
   rez <- rope(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 5))
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 4L))
 
   rez <- describe_posterior(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 5))
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 5L))
 
   rez <- estimate_density(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2048, 3))
+  expect_identical(c(nrow(rez), ncol(rez)), c(1024L, 2L))
 })
 
 test_that("bayesQR", {

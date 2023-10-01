@@ -184,6 +184,11 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
 }
 
 
+#' @export
+rope.get_predicted <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
+  rope(as.numeric(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+}
+
 
 #' @export
 rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
