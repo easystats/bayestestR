@@ -154,37 +154,13 @@ Let's compare the 4 available methods, the **direct** method and 3
 
 Let's start by testing the proximity and similarity of the results obtained by different methods.
 
-```{r message=FALSE, warning=FALSE, fig.align='center', eval=FALSE}
-library(bayestestR)
-library(logspline)
-library(KernSmooth)
 
-# Compute the correlations
-data <- data.frame()
-for (the_mean in runif(25, 0, 4)) {
-  for (the_sd in runif(25, 0.5, 4)) {
-    x <- rnorm(100, the_mean, abs(the_sd))
-    data <- rbind(
-      data,
-      data.frame(
-        direct = as.numeric(pd(x)),
-        kernel = as.numeric(pd(x, method = "kernel")),
-        logspline = as.numeric(pd(x, method = "logspline")),
-        KernSmooth = as.numeric(pd(x, method = "KernSmooth"))
-      )
-    )
-  }
-}
-data <- as.data.frame(sapply(data, as.numeric))
-
-# Visualize the correlations
-bayesplot::mcmc_pairs(data) +
-  theme_classic()
-```
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 library(bayestestR)
 library(logspline)
 library(KernSmooth)
+library(correlation)
+library(patchwork)
 
 # Compute the correlations
 data <- data.frame()
@@ -205,8 +181,9 @@ for (the_mean in runif(25, 0, 4)) {
 data <- as.data.frame(sapply(data, as.numeric))
 
 # Visualize the correlations
-suppressWarnings(bayesplot::mcmc_pairs(data)) +
-  theme_classic()
+plot(correlation::cor_test(data, "direct", "kernel")) |
+  plot(correlation::cor_test(data, "direct", "logspline")) |
+  plot(correlation::cor_test(data, "direct", "KernSmooth"))
 ```
 
 All methods give are highly correlated and give very similar results. That means
