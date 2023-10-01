@@ -46,12 +46,12 @@ test_that("bayesQR", {
   skip_on_os("mac")
   skip_if_not_or_load_if_installed("bayesQR")
 
-  invisible(capture.output(
+  invisible(capture.output({
     x <- bayesQR(Sepal.Length ~ Petal.Width,
       data = iris, quantile = 0.1,
       alasso = TRUE, ndraw = 500
     )
-  ))
+  }))
 
   rez <- p_direction(x)
   expect_identical(c(nrow(rez), ncol(rez)), c(2L, 2L))
