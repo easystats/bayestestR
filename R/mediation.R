@@ -75,7 +75,7 @@
 #' @seealso The \pkg{mediation} package for a causal mediation analysis in
 #'   the frequentist framework.
 #'
-#' @examples
+#' @examplesIf require("mediation") && require("brms") && require("rstanarm")
 #' \donttest{
 #' library(mediation)
 #' library(brms)

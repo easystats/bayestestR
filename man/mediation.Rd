@@ -109,6 +109,7 @@ samples of the effects, which can be used for further processing in the
 different \pkg{bayestestR} package.
 }
 \examples{
+\dontshow{if (require("mediation") && require("brms") && require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(mediation)
 library(brms)
@@ -143,6 +144,7 @@ summary(m1)
 mediation(m2, centrality = "mean", ci = 0.95)
 mediation(m3, centrality = "mean", ci = 0.95)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
