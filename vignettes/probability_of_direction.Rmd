@@ -205,7 +205,7 @@ for (i in 1:25) {
   the_mean <- runif(1, 0, 4)
   the_sd <- abs(runif(1, 0.5, 4))
   parent_distribution <- rnorm(100000, the_mean, the_sd)
-  true_pd <- pd(parent_distribution)
+  true_pd <- as.numeric(pd(parent_distribution))
 
   for (j in 1:25) {
     sample_size <- round(runif(1, 25, 5000))

@@ -81,6 +81,7 @@ of the \emph{mode} for continuous parameters. Note that this function relies on
 function (\code{"nrd0"}).
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("brms")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(bayestestR)
 
@@ -90,13 +91,11 @@ map_estimate(posterior)
 plot(density(posterior))
 abline(v = map_estimate(posterior), col = "red")
 
-library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 map_estimate(model)
 
-library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 map_estimate(model)
 }
-
+\dontshow{\}) # examplesIf}
 }

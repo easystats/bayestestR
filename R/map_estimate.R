@@ -18,7 +18,7 @@
 #'   vector, this column is missing.
 #' - `MAP_Estimate`: The MAP estimate for the posterior or each model parameter.
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("brms")
 #' \donttest{
 #' library(bayestestR)
 #'
@@ -28,11 +28,9 @@
 #' plot(density(posterior))
 #' abline(v = map_estimate(posterior), col = "red")
 #'
-#' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
 #'
-#' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
 #' }
