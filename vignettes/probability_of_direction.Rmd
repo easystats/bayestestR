@@ -28,6 +28,8 @@ if (!requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("datawizard", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("logspline", quietly = TRUE) ||
+  !requireNamespace("correlation", quietly = TRUE) ||
+  !requireNamespace("patchwork", quietly = TRUE) ||
   !requireNamespace("KernSmooth", quietly = TRUE) ||
   !requireNamespace("bayesplot", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
@@ -157,9 +159,6 @@ Let's start by testing the proximity and similarity of the results obtained by d
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 library(bayestestR)
-library(logspline)
-library(KernSmooth)
-library(correlation)
 library(patchwork)
 
 # Compute the correlations
