@@ -65,6 +65,11 @@ p_significance.numeric <- function(x, threshold = "default", ...) {
   out
 }
 
+#' @export
+p_significance.get_predicted <- function(x, threshold = "default", ...) {
+  p_significance(as.numeric(x), threshold=threshold, ...)
+}
+
 
 #' @export
 p_significance.data.frame <- function(x, threshold = "default", ...) {
