@@ -136,7 +136,6 @@ m3 <- suppressWarnings(stan_mvmer(
     depress2 ~ treat + job_seek + econ_hard + sex + age + (1 | occp)
   ),
   data = jobs,
-  cores = 4,
   refresh = 0
 ))
 

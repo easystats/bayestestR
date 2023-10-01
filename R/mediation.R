@@ -103,7 +103,6 @@
 #'     depress2 ~ treat + job_seek + econ_hard + sex + age + (1 | occp)
 #'   ),
 #'   data = jobs,
-#'   cores = 4,
 #'   refresh = 0
 #' ))
 #'
