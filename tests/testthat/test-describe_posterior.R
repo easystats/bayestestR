@@ -108,7 +108,7 @@ test_that("describe_posterior", {
 
 
 test_that("describe_posterior", {
-  skip_if(Sys.info()["sysname"] == "Darwin", "Don't run on Darwin")
+  skip_on_os(c("mac", "linux"))
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
