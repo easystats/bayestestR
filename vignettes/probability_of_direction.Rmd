@@ -213,12 +213,12 @@ for (i in 1:25) {
     data <- rbind(
       data,
       data.frame(
-        "sample_size" = sample_size,
-        "true" = true_pd,
-        "direct" = as.numeric(pd(subsample)) - true_pd,
-        "kernel" = as.numeric(pd(subsample, method = "kernel")) - true_pd,
-        "logspline" = as.numeric(pd(subsample, method = "logspline")) - true_pd,
-        "KernSmooth" = as.numeric(pd(subsample, method = "KernSmooth")) - true_pd
+        sample_size = sample_size,
+        true = true_pd,
+        direct = as.numeric(pd(subsample)) - true_pd,
+        kernel = as.numeric(pd(subsample, method = "kernel")) - true_pd,
+        logspline = as.numeric(pd(subsample, method = "logspline")) - true_pd,
+        KernSmooth = as.numeric(pd(subsample, method = "KernSmooth")) - true_pd
       )
     )
   }
