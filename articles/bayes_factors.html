@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.2</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -243,7 +243,7 @@ answer the question:</p>
 effect become more or less credible?”</p>
 </blockquote>
 <div class="figure" style="text-align: center">
-<img src="https://github.com/easystats/bayestestR/raw/master/man/figures/deathsticks.jpg" alt="Bayesian analysis of the Students' (1908) Sleep data set." width="80%"><p class="caption">
+<img src="https://github.com/easystats/bayestestR/raw/main/man/figures/deathsticks.jpg" alt="Bayesian analysis of the Students' (1908) Sleep data set." width="80%"><p class="caption">
 Bayesian analysis of the Students’ (1908) Sleep data set.
 </p>
 </div>
@@ -582,60 +582,60 @@ predict <code>Sepal.Length</code>:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># intercept only model</span></span>
-<span><span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="fl">1</span>,</span>
+<span><span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="fl">1</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">iris</span>,</span>
 <span>  prior <span class="op">=</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span>,</span>
 <span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Petal.Length only</span></span>
-<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>,</span>
+<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">iris</span>,</span>
 <span>  prior <span class="op">=</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span>,</span>
 <span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Species only</span></span>
-<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
+<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">iris</span>,</span>
 <span>  prior <span class="op">=</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Species + Petal.Length model</span></span>
-<span><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,</span>
+<span><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">iris</span>,</span>
 <span>  prior <span class="op">=</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># full interactive model</span></span>
-<span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>,</span>
+<span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">iris</span>,</span>
 <span>  prior <span class="op">=</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 2)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor:Petal.Length"</span>, <span class="st">"Speciesvirginica:Petal.Length"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/set_prior.html" class="external-link">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 2)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor:Petal.Length"</span>, <span class="st">"Speciesvirginica:Petal.Length"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  save_pars <span class="op">=</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/save_pars.html" class="external-link">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>We can now compare these models with the
 <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the
@@ -948,7 +948,7 @@ Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP1.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP1.jpg" width="100%"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>
 <strong>Across matched models</strong>:</li>
@@ -964,7 +964,7 @@ Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP2.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP2.jpg" width="100%"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>
 <strong>With Nuisance Effects</strong>:</li>
@@ -997,7 +997,7 @@ same in <code>R</code>:</p>
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP3.jpg" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="weighted_posteriors">Averaging posteriors<a class="anchor" aria-label="anchor" href="#weighted_posteriors"></a>
@@ -1303,8 +1303,8 @@ restriction):</p>
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 2.3e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
+&gt; Chain 1: Gradient evaluation took 1.9e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -1321,15 +1321,15 @@ restriction):</p>
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.043 seconds (Warm-up)
-&gt; Chain 1:                0.071 seconds (Sampling)
-&gt; Chain 1:                0.114 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.036 seconds (Warm-up)
+&gt; Chain 1:                0.062 seconds (Sampling)
+&gt; Chain 1:                0.098 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.1e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+&gt; Chain 2: Gradient evaluation took 1.5e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -1346,15 +1346,15 @@ restriction):</p>
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.044 seconds (Warm-up)
-&gt; Chain 2:                0.067 seconds (Sampling)
-&gt; Chain 2:                0.111 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.037 seconds (Warm-up)
+&gt; Chain 2:                0.057 seconds (Sampling)
+&gt; Chain 2:                0.094 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 2.9e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.29 seconds.
+&gt; Chain 3: Gradient evaluation took 1.4e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -1371,15 +1371,15 @@ restriction):</p>
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.049 seconds (Warm-up)
-&gt; Chain 3:                0.064 seconds (Sampling)
-&gt; Chain 3:                0.113 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.037 seconds (Warm-up)
+&gt; Chain 3:                0.054 seconds (Sampling)
+&gt; Chain 3:                0.091 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 4.4e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.
+&gt; Chain 4: Gradient evaluation took 1.3e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -1396,9 +1396,9 @@ restriction):</p>
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.042 seconds (Warm-up)
-&gt; Chain 4:                0.073 seconds (Sampling)
-&gt; Chain 4:                0.115 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.035 seconds (Warm-up)
+&gt; Chain 4:                0.056 seconds (Sampling)
+&gt; Chain 4:                0.091 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
@@ -1464,7 +1464,7 @@ the difference or the order of 3 (or more) means is balanced.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-van2019cautionary" class="csl-entry">
 Bergh, D. van den, Haaf, J. M., Ly, A., Rouder, J. N., &amp;
 Wagenmakers, E.-J. (2019). <em>A cautionary note on estimating effect

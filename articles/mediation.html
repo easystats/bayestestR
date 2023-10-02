@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.2</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,9 +173,9 @@ comparison with <em>brms</em> and <em>rstanarm</em>.</p>
 <span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mediation/man/mediate.html" class="external-link">mediate</a></span><span class="op">(</span><span class="va">b1</span>, <span class="va">b2</span>, sims <span class="op">=</span> <span class="fl">1000</span>, treat <span class="op">=</span> <span class="st">"treat"</span>, mediator <span class="op">=</span> <span class="st">"job_seek"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fit Bayesian mediation model in brms</span></span>
-<span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">job_seek</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span></span>
-<span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span></span>
-<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">f1</span> <span class="op">+</span> <span class="va">f2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula-helpers.html" class="external-link">set_rescor</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">jobs</span>, cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">job_seek</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span></span>
+<span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span></span>
+<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">f1</span> <span class="op">+</span> <span class="va">f2</span> <span class="op">+</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brmsformula-helpers.html" class="external-link">set_rescor</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">jobs</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fit Bayesian mediation model in rstanarm</span></span>
 <span><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_mvmer.html" class="external-link">stan_mvmer</a></span><span class="op">(</span></span>
@@ -184,7 +184,6 @@ comparison with <em>brms</em> and <em>rstanarm</em>.</p>
 <span>    <span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">occp</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">jobs</span>,</span>
-<span>  cores <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  refresh <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="../reference/mediation.html">mediation()</a></code> is a summary function, especially for
