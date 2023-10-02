@@ -84,7 +84,7 @@
 #' The Support Interval. \doi{10.31234/osf.io/zwnxb}
 #'
 #' @export
-si <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
+si <- function(posterior, ...) {
   UseMethod("si")
 }
 

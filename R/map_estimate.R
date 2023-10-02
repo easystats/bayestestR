@@ -26,7 +26,7 @@
 #' map_estimate(posterior)
 #'
 #' plot(density(posterior))
-#' abline(v = map_estimate(posterior), col = "red")
+#' abline(v = as.numeric(map_estimate(posterior)), col = "red")
 #'
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)

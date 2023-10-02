@@ -2,8 +2,9 @@
 #'
 #' Compute the probability of **Practical Significance** (***ps***), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
 #'
-#' @inheritParams rope
 #' @param threshold The threshold value that separates significant from negligible effect. If `"default"`, the range is set to `0.1` if input is a vector, and based on [`rope_range()`][rope_range] if a Bayesian model is provided.
+#' @inheritParams rope
+#' @inheritParams hdi
 #'
 #' @return Values between 0 and 1 corresponding to the probability of practical significance (ps).
 #'

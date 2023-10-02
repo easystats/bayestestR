@@ -11,7 +11,7 @@
 \alias{si.data.frame}
 \title{Compute Support Intervals}
 \usage{
-si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
+si(posterior, ...)
 
 \method{si}{numeric}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
@@ -69,14 +69,14 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 \code{emmGrid} or a data frame - representing a posterior distribution(s)
 from (see 'Details').}
 
+\item{...}{Arguments passed to and from other methods. (Can be used to pass
+arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
+
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
 \item{BF}{The amount of support required to be included in the support interval.}
 
 \item{verbose}{Toggle off warnings.}
-
-\item{...}{Arguments passed to and from other methods. (Can be used to pass
-arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

@@ -49,6 +49,11 @@ p_significance(x, ...)
 
 \item{threshold}{The threshold value that separates significant from negligible effect. If \code{"default"}, the range is set to \code{0.1} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
 
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
+
 \item{verbose}{Toggle off warnings.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
