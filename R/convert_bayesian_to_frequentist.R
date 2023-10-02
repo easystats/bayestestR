@@ -84,10 +84,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   # subset,
   # knots,
   # meta-analysis
-  if (info$is_dispersion ||
-    info$is_zero_inflated ||
-    info$is_zeroinf ||
-    info$is_hurdle) {
+  if (info$is_dispersion || info$is_zero_inflated || info$is_zeroinf || info$is_hurdle) {
     insight::check_if_installed("glmmTMB")
 
     cond_formula <- .rebuild_cond_formula(formula)
@@ -124,6 +121,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
     )
   } else if (info$is_mixed) {
     insight::check_if_installed("lme4")
+    insight::check_if_installed("glmmTMB")
 
     cond_formula <- .rebuild_cond_formula(formula)
     if (info$is_linear) {
@@ -135,6 +133,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
         error = function(e) e
       )
     } else {
+      ## TODO: check if beta/Gamma are correctly captured
       freq <- tryCatch(
         lme4::glmer(
           formula = cond_formula,
@@ -143,6 +142,16 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
         ),
         error = function(e) e
       )
+      if (inherits(freq, "error")) {
+        freq <- tryCatch(
+          glmmTMB::glmmTMB(
+            formula = cond_formula,
+            family = family,
+            data = data
+          ),
+          error = function(e) e
+        )
+      }
     }
   } else {
     if (info$is_linear) {
