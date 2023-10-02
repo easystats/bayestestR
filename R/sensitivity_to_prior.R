@@ -15,34 +15,26 @@
 #'   standard deviations from its original location.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @examples
+#' @examplesIf require("rstanarm")
 #' \donttest{
 #' library(bayestestR)
 #'
 #' # rstanarm models
 #' # -----------------------------------------------
-#' if (require("rstanarm")) {
-#'   model <- rstanarm::stan_glm(mpg ~ wt, data = mtcars)
-#'   sensitivity_to_prior(model)
+#' model <- rstanarm::stan_glm(mpg ~ wt, data = mtcars)
+#' sensitivity_to_prior(model)
 #'
-#'   model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-#'   sensitivity_to_prior(model, index = c("Median", "MAP"))
-#' }
-#'
-#' # brms models
-#' # -----------------------------------------------
-#' if (require("brms")) {
-#'   model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#'   # sensitivity_to_prior(model)
-#' }
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' sensitivity_to_prior(model, index = c("Median", "MAP"))
 #' }
 #' @seealso DescTools
 #' @export
-sensitivity_to_prior <- function(model, index = "Median", magnitude = 10, ...) {
+sensitivity_to_prior <- function(model, ...) {
   UseMethod("sensitivity_to_prior")
 }
 
 
+#' @rdname sensitivity_to_prior
 #' @export
 sensitivity_to_prior.stanreg <- function(model, index = "Median", magnitude = 10, ...) {
   # Original
@@ -68,7 +60,10 @@ sensitivity_to_prior.stanreg <- function(model, index = "Median", magnitude = 10
 }
 
 
-
+#' @export
+sensitivity_to_prior.default <- function(model, ...) {
+  insight::format_error(sprintf("Models of class '%s' are not yet supported.", class(model)[1]))
+}
 
 
 #' @keywords internal

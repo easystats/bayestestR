@@ -2,12 +2,17 @@
 % Please edit documentation in R/sensitivity_to_prior.R
 \name{sensitivity_to_prior}
 \alias{sensitivity_to_prior}
+\alias{sensitivity_to_prior.stanreg}
 \title{Sensitivity to Prior}
 \usage{
-sensitivity_to_prior(model, index = "Median", magnitude = 10, ...)
+sensitivity_to_prior(model, ...)
+
+\method{sensitivity_to_prior}{stanreg}(model, index = "Median", magnitude = 10, ...)
 }
 \arguments{
 \item{model}{A Bayesian model (\code{stanreg} or \code{brmsfit}).}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{index}{The indices from which to compute the sensitivity. Can be one or
 multiple names of the columns returned by \code{describe_posterior}. The case is
@@ -17,8 +22,6 @@ important here (e.g., write 'Median' instead of 'median').}
 antagonistic prior (to test the sensitivity). For instance, a magnitude of
 10 (default) means that the mode wil be updated with a prior located at 10
 standard deviations from its original location.}
-
-\item{...}{Arguments passed to or from other methods.}
 }
 \description{
 Computes the sensitivity to priors specification. This represents the
