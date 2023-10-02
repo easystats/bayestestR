@@ -395,9 +395,9 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
       insight::format_alert("`ci` is too small or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci,
-      "CI_low" = NA,
-      "CI_high" = NA
+      CI = ci,
+      CI_low = NA,
+      CI_high = NA
     ))
   }
 
@@ -408,9 +408,9 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
       insight::format_alert("`ci` is too large or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci,
-      "CI_low" = NA,
-      "CI_high" = NA
+      CI = ci,
+      CI_low = NA,
+      CI_high = NA
     ))
   }
 
@@ -432,8 +432,8 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   }
 
   data.frame(
-    "CI" = ci,
-    "CI_low" = x_sorted[min_i],
-    "CI_high" = x_sorted[min_i + window_size]
+    CI = ci,
+    CI_low = x_sorted[min_i],
+    CI_high = x_sorted[min_i + window_size]
   )
 }

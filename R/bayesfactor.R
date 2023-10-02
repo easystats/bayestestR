@@ -70,13 +70,7 @@ bayesfactor <- function(...,
     } else {
       bayesfactor_models(...)
     }
-  } else if (!is.null(hypothesis)) {
-    bayesfactor_restricted(...,
-      prior = prior,
-      verbose = verbose,
-      effects = effects
-    )
-  } else {
+  } else if (is.null(hypothesis)) {
     bayesfactor_parameters(
       ...,
       prior = prior,
@@ -84,6 +78,12 @@ bayesfactor <- function(...,
       null = null,
       effects = effects,
       verbose = verbose
+    )
+  } else {
+    bayesfactor_restricted(...,
+      prior = prior,
+      verbose = verbose,
+      effects = effects
     )
   }
 }

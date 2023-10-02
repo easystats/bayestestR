@@ -380,45 +380,45 @@ describe_posterior.default <- function(posterior, ...) {
     }
   } else {
     test_pd <- data.frame(
-      "Parameter" = NA,
-      "Effects" = NA,
-      "Component" = NA,
-      "Response" = NA
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
     )
 
     test_rope <- data.frame(
-      "Parameter" = NA,
-      "Effects" = NA,
-      "Component" = NA,
-      "Response" = NA
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
     )
 
     test_prope <- data.frame(
-      "Parameter" = NA,
-      "Effects" = NA,
-      "Component" = NA,
-      "Response" = NA
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
     )
 
     test_psig <- data.frame(
-      "Parameter" = NA,
-      "Effects" = NA,
-      "Component" = NA,
-      "Response" = NA
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
     )
 
     test_bf <- data.frame(
-      "Parameter" = NA,
-      "Effects" = NA,
-      "Component" = NA,
-      "Response" = NA
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
     )
 
     test_pmap <- data.frame(
-      "Parameter" = NA,
-      "Effects" = NA,
-      "Component" = NA,
-      "Response" = NA
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
     )
   }
 
