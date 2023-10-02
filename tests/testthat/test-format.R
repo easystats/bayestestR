@@ -18,7 +18,7 @@ test_that("p_significance", {
   )
   expect_equal(
     format(map_estimate(x)),
-    data.frame(MAP_Estimate = "0.13", stringsAsFactors = FALSE),
+    data.frame(Parameter = "x", MAP_Estimate = "0.13", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
   expect_equal(
