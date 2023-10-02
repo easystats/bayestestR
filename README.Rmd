@@ -146,18 +146,16 @@ describe_posterior(
 )
 ```
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=curl::has_internet()}
+```{r message=FALSE, warning=FALSE, echo=FALSE}
 model <- insight::download_model("brms_zi_3")
-if (!is.null(model)) {
-  describe_posterior(
-    model,
-    effects = "all",
-    component = "all",
-    test = c("p_direction", "p_significance"),
-    centrality = "all",
-    verbose = FALSE
-  )
-}
+describe_posterior(
+  model,
+  effects = "all",
+  component = "all",
+  test = c("p_direction", "p_significance"),
+  centrality = "all",
+  verbose = FALSE
+)
 ```
 
 

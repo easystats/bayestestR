@@ -41,7 +41,7 @@ You can reference the package and its documentation as follows:
 [![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
 [![insight status
 badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-universe.dev)
-[![R-CMD-check](https://github.com/easystats/datawizard/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/datawizard/actions)
+[![R-CMD-check](https://github.com/easystats/bayestestR/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/bayestestR/actions)
 
 The *bayestestR* package is available on CRAN, while its latest
 development version is available on R-universe (from *rOpenSci*).
@@ -161,7 +161,7 @@ describe_posterior(
 ## 
 ## Parameter | Median |        95% CI |     pd |   ps
 ## --------------------------------------------------
-## Posterior |   0.02 | [-1.98, 1.97] | 50.74% | 0.46
+## Posterior |  -0.01 | [-1.98, 1.93] | 50.52% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -325,7 +325,11 @@ guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 ``` r
 posterior <- distribution_normal(10000, 0.4, 0.2)
 p_direction(posterior)
-## Probability of Direction: 0.98
+## Probability of Direction
+## 
+## Parameter |     pd
+## ------------------
+## Posterior | 97.72%
 ```
 
 ![](man/figures/unnamed-chunk-12-1.png)<!-- -->
@@ -460,7 +464,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.37
+## [1] 0.41
 ```
 
 ## Code of Conduct
