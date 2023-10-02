@@ -104,12 +104,12 @@ test_that("bayesfactor_parameters BRMS", {
 
   set.seed(222)
   brms_mixed_6_p <- unupdate(brms_mixed_6)
-  bfsd1 <- bayesfactor_parameters(brms_mixed_6, brms_mixed_6_p, effects = "fixed")
+  bfsd1 <- suppressWarnings(bayesfactor_parameters(brms_mixed_6, brms_mixed_6_p, effects = "fixed"))
 
   set.seed(222)
-  bfsd2 <- bayesfactor_parameters(brms_mixed_6, effects = "fixed")
+  bfsd2 <- suppressWarnings(bayesfactor_parameters(brms_mixed_6, effects = "fixed"))
 
-  expect_equal(log(bfsd1$BF), log(bfsd2$BF), tolerance = .11)
+  expect_equal(log(bfsd1$BF), log(bfsd2$BF), tolerance = 0.11)
 
 
   brms_mixed_1 <- insight::download_model("brms_mixed_1")

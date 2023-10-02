@@ -141,12 +141,12 @@ test_that("bayesfactor_models BRMS", {
   ))
 
   set.seed(444)
-  suppressMessages(
+  suppressWarnings(suppressMessages(
     expect_message(
       bfm <- bayesfactor_models(stan_brms_model_0, stan_brms_model_1),
       regexp = "marginal"
     )
-  )
+  ))
 
   set.seed(444)
   stan_brms_model_0wc <- brms::add_criterion(
@@ -163,7 +163,7 @@ test_that("bayesfactor_models BRMS", {
     silent = 2
   )
 
-  expect_message(bfmwc <- bayesfactor_models(stan_brms_model_0wc, stan_brms_model_1wc), regexp = NA)
+  suppressWarnings(expect_message(bfmwc <- bayesfactor_models(stan_brms_model_0wc, stan_brms_model_1wc), regexp = NA))
   expect_equal(bfmwc$log_BF, bfm$log_BF, tolerance = 0.01)
 })
 
