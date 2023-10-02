@@ -7,12 +7,12 @@
 \alias{diagnostic_posterior.brmsfit}
 \title{Posteriors Sampling Diagnostic}
 \usage{
-diagnostic_posterior(posteriors, ...)
+diagnostic_posterior(posterior, ...)
 
-\method{diagnostic_posterior}{default}(posteriors, diagnostic = c("ESS", "Rhat"), ...)
+\method{diagnostic_posterior}{default}(posterior, diagnostic = c("ESS", "Rhat"), ...)
 
 \method{diagnostic_posterior}{stanreg}(
-  posteriors,
+  posterior,
   diagnostic = "all",
   effects = c("fixed", "random", "all"),
   component = c("location", "all", "conditional", "smooth_terms", "sigma",
@@ -22,7 +22,7 @@ diagnostic_posterior(posteriors, ...)
 )
 
 \method{diagnostic_posterior}{brmsfit}(
-  posteriors,
+  posterior,
   diagnostic = "all",
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
@@ -31,7 +31,7 @@ diagnostic_posterior(posteriors, ...)
 )
 }
 \arguments{
-\item{posteriors}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
+\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
 
 \item{...}{Currently not used.}
 
@@ -59,45 +59,46 @@ Carlo Standard Error \code{MCSE}).
 \details{
 \strong{Effective Sample (ESS)} should be as large as possible, although for
 most applications, an effective sample size greater than 1000 is sufficient
-for stable estimates (Bürkner, 2017). The ESS corresponds to the number of
+for stable estimates (\emph{Bürkner, 2017}). The ESS corresponds to the number of
 independent samples with the same estimation power as the N autocorrelated
-samples. It is is a measure of \dQuote{how much independent information
-there is in autocorrelated chains} (\cite{Kruschke 2015, p182-3}).
-\cr \cr
+samples. It is is a measure of "how much independent information there is
+in autocorrelated chains" (\emph{Kruschke 2015, p182-3}).
+
 \strong{Rhat} should be the closest to 1. It should not be larger than 1.1
-(\cite{Gelman and Rubin, 1992}) or 1.01 (\cite{Vehtari et al., 2019}). The
-split Rhat statistic quantifies the consistency of an ensemble of Markov
-chains.
-\cr \cr
+(\emph{Gelman and Rubin, 1992}) or 1.01 (\emph{Vehtari et al., 2019}). The split
+Rhat statistic quantifies the consistency of an ensemble of Markov chains.
+
 \strong{Monte Carlo Standard Error (MCSE)} is another measure of accuracy of the
 chains. It is defined as standard deviation of the chains divided by their
 effective sample size (the formula for \code{mcse()} is from Kruschke 2015, p.
-187). The MCSE \dQuote{provides a quantitative suggestion of how big the
-estimation noise is}.
+187). The MCSE "provides a quantitative suggestion of how big the estimation
+noise is".
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("brms")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 # rstanarm models
 # -----------------------------------------------
-if (require("rstanarm", quietly = TRUE)) {
-  model <- suppressWarnings(
-    stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-  )
-  diagnostic_posterior(model)
-}
+model <- suppressWarnings(
+  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+)
+diagnostic_posterior(model)
 
 # brms models
 # -----------------------------------------------
-if (require("brms", quietly = TRUE)) {
-  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-  diagnostic_posterior(model)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+diagnostic_posterior(model)
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
-\item Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation using multiple sequences. Statistical science, 7(4), 457-472.
-\item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., and Bürkner, P. C. (2019). Rank-normalization, folding, and localization: An improved Rhat for assessing convergence of MCMC. arXiv preprint arXiv:1903.08008.
-\item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
+\item Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation
+using multiple sequences. Statistical science, 7(4), 457-472.
+\item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., and Bürkner, P. C.
+(2019). Rank-normalization, folding, and localization: An improved Rhat
+for assessing convergence of MCMC. arXiv preprint arXiv:1903.08008.
+\item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R,
+JAGS, and Stan. Academic Press.
 }
 }

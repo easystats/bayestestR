@@ -4,10 +4,10 @@
 \alias{diagnostic_draws}
 \title{Diagnostic values for each iteration}
 \usage{
-diagnostic_draws(posteriors, ...)
+diagnostic_draws(posterior, ...)
 }
 \arguments{
-\item{posteriors}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
+\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
 
 \item{...}{Currently not used.}
 }
