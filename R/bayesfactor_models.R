@@ -160,6 +160,7 @@ bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
 #' @export
 bf_models <- bayesfactor_models
 
+
 #' @export
 #' @rdname bayesfactor_models
 bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
@@ -280,6 +281,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   )
 }
 
+
 #' @keywords internal
 .bayesfactor_models_stan_REG <- function(mods, denominator, verbose = TRUE) {
   insight::check_if_installed("bridgesampling")
@@ -347,6 +349,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
   .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
 }
 
+
 #' @export
 bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
   insight::check_if_installed("brms")
@@ -365,6 +368,7 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
   .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
 }
 
+
 #' @export
 bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
   insight::check_if_installed("blavaan")
@@ -382,6 +386,7 @@ bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
 
   .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
 }
+
 
 #' @export
 bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
