@@ -12,6 +12,7 @@
 \alias{bci.stanreg}
 \alias{bci.brmsfit}
 \alias{bci.BFBayesFactor}
+\alias{bci.get_predicted}
 \title{Bias Corrected and Accelerated Interval (BCa)}
 \usage{
 bci(x, ...)
@@ -59,6 +60,8 @@ bcai(x, ...)
 )
 
 \method{bci}{BFBayesFactor}(x, ci = 0.95, verbose = TRUE, ...)
+
+\method{bci}{get_predicted}(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
@@ -86,6 +89,11 @@ for the output.}
 \item{component}{Should results for all parameters, parameters for the
 conditional model or the zero-inflated part of the model be returned? May
 be abbreviated. Only applies to \pkg{brms}-models.}
+
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
 }
 \value{
 A data frame with following columns:

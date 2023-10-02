@@ -189,10 +189,26 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
   out
 }
 
+
+#' @rdname si
 #' @export
-si.get_predicted <- function(posterior, ...) {
-  out <- si(as.data.frame(t(posterior)), ...)
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
+si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = FALSE, verbose = TRUE, ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(posterior))) {
+      out <- si(
+        as.data.frame(t(attributes(posterior)$iterations)),
+        prior = prior,
+        BF = BF,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
+  } else {
+    out <- si(insight::get_parameters(posterior), prior = prior, BF = BF, verbose = verbose, ...)
+  }
   out
 }
 

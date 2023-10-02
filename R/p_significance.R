@@ -63,9 +63,30 @@ p_significance.numeric <- function(x, threshold = "default", ...) {
   out
 }
 
+
+#' @rdname p_significance
 #' @export
-p_significance.get_predicted <- function(x, threshold = "default", ...) {
-  p_significance(as.numeric(x), threshold = threshold, ...)
+p_significance.get_predicted <- function(x, threshold = "default", use_iterations = FALSE, verbose = TRUE, ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- p_significance(
+        as.data.frame(t(attributes(x)$iterations)),
+        threshold = threshold,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  } else {
+    out <- p_significance(as.numeric(x),
+      threshold = threshold,
+      verbose = verbose,
+      ...
+    )
+  }
+  out
 }
 
 

@@ -433,14 +433,35 @@ p_direction.BFBayesFactor <- function(x, method = "direct", null = 0, ...) {
   out
 }
 
+#' @rdname p_direction
 #' @export
-p_direction.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    out <- p_direction(as.data.frame(t(attributes(x)$iterations)), ...)
+p_direction.get_predicted <- function(x,
+                                      method = "direct",
+                                      null = 0,
+                                      use_iterations = FALSE,
+                                      verbose = TRUE,
+                                      ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- p_direction(
+        as.data.frame(t(attributes(x)$iterations)),
+        method = method,
+        null = null,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    insight::format_error("No iterations present in the output.")
+    out <- p_direction(as.numeric(x),
+      method = method,
+      null = null,
+      verbose = verbose,
+      ...
+    )
   }
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 

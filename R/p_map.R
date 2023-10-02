@@ -86,9 +86,39 @@ p_map.numeric <- function(x, null = 0, precision = 2^10, method = "kernel", ...)
 }
 
 
+#' @rdname p_map
 #' @export
-p_map.get_predicted <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
-  p_map(as.numeric(x), null = null, precision = precision, method = method, ...)
+p_map.get_predicted <- function(x,
+                                null = 0,
+                                precision = 2^10,
+                                method = "kernel",
+                                use_iterations = FALSE,
+                                verbose = TRUE,
+                                ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- p_map(
+        as.data.frame(t(attributes(x)$iterations)),
+        null = null,
+        precision = precision,
+        method = method,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  } else {
+    out <- p_map(as.numeric(x),
+      null = null,
+      precision = precision,
+      method = method,
+      verbose = verbose,
+      ...
+    )
+  }
+  out
 }
 
 

@@ -223,14 +223,19 @@ spi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
+#' @rdname spi
 #' @export
-spi.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    out <- spi(as.data.frame(t(attributes(x)$iterations)), ...)
+spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- spi(as.data.frame(t(attributes(x)$iterations)), ci = ci, verbose = verbose, ...)
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    insight::format_error("No iterations present in the output.")
+    out <- spi(as.numeric(x), ci = ci, verbose = verbose, ...)
   }
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 

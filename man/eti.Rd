@@ -5,6 +5,7 @@
 \alias{eti.numeric}
 \alias{eti.stanreg}
 \alias{eti.brmsfit}
+\alias{eti.get_predicted}
 \title{Equal-Tailed Interval (ETI)}
 \usage{
 eti(x, ...)
@@ -31,6 +32,8 @@ eti(x, ...)
   verbose = TRUE,
   ...
 )
+
+\method{eti}{get_predicted}(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
@@ -58,6 +61,11 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
 }
 \value{
 A data frame with following columns:

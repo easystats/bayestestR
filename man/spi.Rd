@@ -5,6 +5,7 @@
 \alias{spi.numeric}
 \alias{spi.stanreg}
 \alias{spi.brmsfit}
+\alias{spi.get_predicted}
 \title{Shortest Probability Interval (SPI)}
 \usage{
 spi(x, ...)
@@ -31,6 +32,8 @@ spi(x, ...)
   verbose = TRUE,
   ...
 )
+
+\method{spi}{get_predicted}(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
@@ -58,6 +61,11 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
 }
 \value{
 A data frame with following columns:

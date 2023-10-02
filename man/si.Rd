@@ -7,6 +7,7 @@
 \alias{si.brmsfit}
 \alias{si.blavaan}
 \alias{si.emmGrid}
+\alias{si.get_predicted}
 \alias{si.data.frame}
 \title{Compute Support Intervals}
 \usage{
@@ -52,6 +53,15 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
 \method{si}{emmGrid}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
+\method{si}{get_predicted}(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+)
+
 \method{si}{data.frame}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 }
 \arguments{
@@ -80,6 +90,11 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
 }
 \value{
 A data frame containing the lower and upper bounds of the SI.

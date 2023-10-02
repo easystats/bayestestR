@@ -22,6 +22,10 @@
 #'   filtered by default, so only parameters that typically appear in the
 #'   `summary()` are returned. Use `parameters` to select specific parameters
 #'   for the output.
+#' @param use_iterations Logical, if `TRUE` and `x` is a `get_predicted` object,
+#' (returned by [`insight::get_predicted()`]), the function is applied to the
+#' iterations instead of the predictions. This only applies to models that return
+#' iterations for predicted values (e.g., `brmsfit` models).
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
 #'
@@ -353,14 +357,19 @@ hdi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
+#' @rdname hdi
 #' @export
-hdi.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    out <- hdi(as.data.frame(t(attributes(x)$iterations)), ...)
+hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- hdi(as.data.frame(t(attributes(x)$iterations)), ci = ci, verbose = verbose, ...)
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    insight::format_error("No iterations present in the output.")
+    out <- hdi(as.numeric(x), ci = ci, verbose = verbose, ...)
   }
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 

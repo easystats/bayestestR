@@ -185,8 +185,31 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
 
 
 #' @export
-rope.get_predicted <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
-  rope(as.numeric(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+rope.get_predicted <- function(x,
+                               range = "default",
+                               ci = 0.95,
+                               ci_method = "ETI",
+                               use_iterations = FALSE,
+                               verbose = TRUE,
+                               ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- rope(
+        as.data.frame(t(attributes(x)$iterations)),
+        range = range,
+        ci = ci,
+        ci_method = ci_method,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  } else {
+    out <- rope(as.numeric(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  }
+  out
 }
 
 

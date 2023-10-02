@@ -3,6 +3,7 @@
 \name{p_map}
 \alias{p_map}
 \alias{p_pointnull}
+\alias{p_map.get_predicted}
 \alias{p_map.stanreg}
 \alias{p_map.brmsfit}
 \title{Bayesian p-value based on the density at the Maximum A Posteriori (MAP)}
@@ -10,6 +11,16 @@
 p_map(x, null = 0, precision = 2^10, method = "kernel", ...)
 
 p_pointnull(x, null = 0, precision = 2^10, method = "kernel", ...)
+
+\method{p_map}{get_predicted}(
+  x,
+  null = 0,
+  precision = 2^10,
+  method = "kernel",
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 \method{p_map}{stanreg}(
   x,
@@ -50,6 +61,13 @@ could also be 1 in the case of ratios of change (OR, IRR, ...).}
 or \code{"KernSmooth"}.}
 
 \item{...}{Currently not used.}
+
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
+
+\item{verbose}{Toggle off warnings.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

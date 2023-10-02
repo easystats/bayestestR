@@ -338,13 +338,36 @@ point_estimate.matrix <- function(x, ...) {
 }
 
 
+#' @rdname point_estimate
 #' @export
-point_estimate.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    point_estimate(as.data.frame(t(attributes(x)$iterations)), ...)
+point_estimate.get_predicted <- function(x,
+                                         centrality = "all",
+                                         dispersion = FALSE,
+                                         use_iterations = FALSE,
+                                         verbose = TRUE,
+                                         ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- point_estimate(
+        as.data.frame(t(attributes(x)$iterations)),
+        centrality = centrality,
+        dispersion = dispersion,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    as.numeric(x)
+    out <- point_estimate(as.numeric(x),
+      centrality = centrality,
+      dispersion = dispersion,
+      verbose = verbose,
+      ...
+    )
   }
+  out
 }
 
 

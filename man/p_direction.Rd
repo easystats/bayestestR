@@ -10,6 +10,7 @@
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
 \alias{p_direction.BFBayesFactor}
+\alias{p_direction.get_predicted}
 \title{Probability of Direction (pd)}
 \usage{
 p_direction(x, ...)
@@ -46,6 +47,15 @@ pd(x, ...)
 )
 
 \method{p_direction}{BFBayesFactor}(x, method = "direct", null = 0, ...)
+
+\method{p_direction}{get_predicted}(
+  x,
+  method = "direct",
+  null = 0,
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{A vector representing a posterior distribution, a data frame of
@@ -71,6 +81,13 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
+
+\item{verbose}{Toggle off warnings.}
 }
 \value{
 Values between 0.5 and 1 \emph{or} between 0 and 1 (see above) corresponding to
