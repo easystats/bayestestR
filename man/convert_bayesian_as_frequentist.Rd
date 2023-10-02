@@ -23,37 +23,33 @@ likelihood (\code{FALSE})?}
 Refit Bayesian model as frequentist. Can be useful for comparisons.
 }
 \examples{
+\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 # Rstanarm ----------------------
-if (require("rstanarm")) {
-  # Simple regressions
-  model <- stan_glm(Sepal.Length ~ Species,
-    data = iris, chains = 2, refresh = 0
-  )
-  bayesian_as_frequentist(model)
-}
-}
+# Simple regressions
+model <- rstanarm::stan_glm(Sepal.Length ~ Species,
+  data = iris, chains = 2, refresh = 0
+)
+bayesian_as_frequentist(model)
 
-\donttest{
-if (require("rstanarm")) {
-  model <- stan_glm(vs ~ mpg,
-    family = "binomial",
-    data = mtcars, chains = 2, refresh = 0
-  )
-  bayesian_as_frequentist(model)
+model <- rstanarm::stan_glm(vs ~ mpg,
+  family = "binomial",
+  data = mtcars, chains = 2, refresh = 0
+)
+bayesian_as_frequentist(model)
 
-  # Mixed models
-  model <- stan_glmer(Sepal.Length ~ Petal.Length + (1 | Species),
-    data = iris, chains = 2, refresh = 0
-  )
-  bayesian_as_frequentist(model)
+# Mixed models
+model <- rstanarm::stan_glmer(
+  Sepal.Length ~ Petal.Length + (1 | Species),
+  data = iris, chains = 2, refresh = 0
+)
+bayesian_as_frequentist(model)
 
-  model <- stan_glmer(vs ~ mpg + (1 | cyl),
-    family = "binomial",
-    data = mtcars, chains = 2, refresh = 0
-  )
-  bayesian_as_frequentist(model)
+model <- rstanarm::stan_glmer(vs ~ mpg + (1 | cyl),
+  family = "binomial",
+  data = mtcars, chains = 2, refresh = 0
+)
+bayesian_as_frequentist(model)
 }
-}
-
+\dontshow{\}) # examplesIf}
 }
