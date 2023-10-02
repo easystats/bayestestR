@@ -90,7 +90,7 @@ correspond approximately to a *pd* of **95\%**, **97.5\%**, **99.5\%** and
 library(ggplot2)
 library(see)
 
-raw <- read.csv("https://raw.github.com/easystats/easystats/master/publications/makowski_2019_bayesian/data/data.csv")
+raw <- read.csv("https://raw.github.com/easystats/easystats/main/publications/makowski_2019_bayesian/data/data.csv")
 dat <- transform(
   raw,
   effect_existence = ifelse(true_effect == 1, "Presence of true effect", "Absence of true effect"),

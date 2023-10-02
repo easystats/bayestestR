@@ -98,7 +98,7 @@ library(datawizard)
 library(see)
 library(parameters)
 
-df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv")
+df <- read.csv("https://raw.github.com/easystats/circus/main/data/bayesSim_study1.csv")
 ```
 
 
@@ -236,7 +236,7 @@ The code used for generation is avaible
 (please note that it takes usually several days/weeks to complete).
 
 ```{r message=FALSE, warning=FALSE}
-df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study2.csv")
+df <- read.csv("https://raw.github.com/easystats/circus/main/data/bayesSim_study2.csv")
 ```
 
 ### Results
