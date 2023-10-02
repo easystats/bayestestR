@@ -224,7 +224,7 @@ test_that("describe_posterior", {
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
   expect_equal(dim(rez), c(1, 23))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
-  expect_equal(dim(rez), c(2, 16))
+  expect_equal(dim(rez), c(2, 23))
   rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
   expect_equal(dim(rez), c(1, 7))
 })
