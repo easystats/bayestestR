@@ -36,7 +36,7 @@
 #' }
 #'
 #' @export
-map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
+map_estimate <- function(x, ...) {
   UseMethod("map_estimate")
 }
 

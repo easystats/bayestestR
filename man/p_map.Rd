@@ -3,14 +3,17 @@
 \name{p_map}
 \alias{p_map}
 \alias{p_pointnull}
+\alias{p_map.numeric}
 \alias{p_map.get_predicted}
 \alias{p_map.stanreg}
 \alias{p_map.brmsfit}
 \title{Bayesian p-value based on the density at the Maximum A Posteriori (MAP)}
 \usage{
-p_map(x, null = 0, precision = 2^10, method = "kernel", ...)
+p_map(x, ...)
 
-p_pointnull(x, null = 0, precision = 2^10, method = "kernel", ...)
+p_pointnull(x, ...)
+
+\method{p_map}{numeric}(x, null = 0, precision = 2^10, method = "kernel", ...)
 
 \method{p_map}{get_predicted}(
   x,
@@ -52,6 +55,8 @@ of models (see, for example, \code{methods("hdi")}) and not all of those are
 documented in the 'Usage' section, because methods for other classes mostly
 resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
+\item{...}{Currently not used.}
+
 \item{null}{The value considered as a "null" effect. Traditionally 0, but
 could also be 1 in the case of ratios of change (OR, IRR, ...).}
 
@@ -59,8 +64,6 @@ could also be 1 in the case of ratios of change (OR, IRR, ...).}
 
 \item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"}
 or \code{"KernSmooth"}.}
-
-\item{...}{Currently not used.}
 
 \item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
 (returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the

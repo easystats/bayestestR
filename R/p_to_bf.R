@@ -48,7 +48,7 @@
 #' @seealso [bic_to_bf()] for more accurate approximate Bayes factors.
 #'
 #' @export
-p_to_bf <- function(x, log = FALSE, ...) {
+p_to_bf <- function(x, ...) {
   UseMethod("p_to_bf")
 }
 

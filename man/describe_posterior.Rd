@@ -7,10 +7,10 @@
 \alias{describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
 \usage{
-describe_posterior(posteriors, ...)
+describe_posterior(posterior, ...)
 
 \method{describe_posterior}{numeric}(
-  posteriors,
+  posterior,
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
@@ -25,7 +25,7 @@ describe_posterior(posteriors, ...)
 )
 
 \method{describe_posterior}{stanreg}(
-  posteriors,
+  posterior,
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
@@ -46,7 +46,7 @@ describe_posterior(posteriors, ...)
 )
 
 \method{describe_posterior}{brmsfit}(
-  posteriors,
+  posterior,
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
@@ -67,7 +67,7 @@ describe_posterior(posteriors, ...)
 )
 }
 \arguments{
-\item{posteriors}{A vector, data frame or model of posterior draws.
+\item{posterior}{A vector, data frame or model of posterior draws.
 \strong{bayestestR} supports a wide range of models (see \code{methods("describe_posterior")})
 and not all of those are documented in the 'Usage' section, because methods
 for other classes mostly resemble the arguments of the \code{.numeric} method.}

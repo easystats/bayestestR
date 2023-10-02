@@ -9,7 +9,7 @@
 \alias{map_estimate.get_predicted}
 \title{Maximum A Posteriori probability estimate (MAP)}
 \usage{
-map_estimate(x, precision = 2^10, method = "kernel", ...)
+map_estimate(x, ...)
 
 \method{map_estimate}{numeric}(x, precision = 2^10, method = "kernel", ...)
 
@@ -52,12 +52,12 @@ of models (see, for example, \code{methods("hdi")}) and not all of those are
 documented in the 'Usage' section, because methods for other classes mostly
 resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
+\item{...}{Currently not used.}
+
 \item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 
 \item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"}
 or \code{"KernSmooth"}.}
-
-\item{...}{Currently not used.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

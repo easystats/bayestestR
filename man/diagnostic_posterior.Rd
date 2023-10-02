@@ -2,11 +2,14 @@
 % Please edit documentation in R/diagnostic_posterior.R
 \name{diagnostic_posterior}
 \alias{diagnostic_posterior}
+\alias{diagnostic_posterior.default}
 \alias{diagnostic_posterior.stanreg}
 \alias{diagnostic_posterior.brmsfit}
 \title{Posteriors Sampling Diagnostic}
 \usage{
-diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
+diagnostic_posterior(posteriors, ...)
+
+\method{diagnostic_posterior}{default}(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
 \method{diagnostic_posterior}{stanreg}(
   posteriors,
@@ -30,10 +33,10 @@ diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 \arguments{
 \item{posteriors}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
 
+\item{...}{Currently not used.}
+
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
-
-\item{...}{Currently not used.}
 
 \item{effects}{Should parameters for fixed effects, random effects
 or both be returned? Only applies to mixed models. May be abbreviated.}

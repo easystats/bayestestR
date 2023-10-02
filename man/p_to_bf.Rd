@@ -6,7 +6,7 @@
 \alias{p_to_bf.default}
 \title{Convert p-values to (pseudo) Bayes Factors}
 \usage{
-p_to_bf(x, log = FALSE, ...)
+p_to_bf(x, ...)
 
 \method{p_to_bf}{numeric}(x, log = FALSE, n_obs = NULL, ...)
 
@@ -15,11 +15,11 @@ p_to_bf(x, log = FALSE, ...)
 \arguments{
 \item{x}{A (frequentist) model object, or a (numeric) vector of p-values.}
 
+\item{...}{Other arguments to be passed (not used for now).}
+
 \item{log}{Wether to return log Bayes Factors. \strong{Note:} The \code{print()} method
 always shows \code{BF} - the \code{"log_BF"} column is only accessible from the returned
 data frame.}
-
-\item{...}{Other arguments to be passed (not used for now).}
 
 \item{n_obs}{Number of observations. Either length 1, or same length as \code{p}.}
 }

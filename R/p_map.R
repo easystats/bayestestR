@@ -70,7 +70,7 @@
 #' - Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.
 #'
 #' @export
-p_map <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
+p_map <- function(x, ...) {
   UseMethod("p_map")
 }
 
@@ -80,6 +80,7 @@ p_pointnull <- p_map
 
 
 
+#' @rdname p_map
 #' @export
 p_map.numeric <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
   p_map(data.frame(Posterior = x), null = null, precision = precision, method = method, ...)

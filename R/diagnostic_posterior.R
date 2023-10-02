@@ -52,11 +52,12 @@
 #'   \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' }
 #' @export
-diagnostic_posterior <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
+diagnostic_posterior <- function(posteriors, ...) {
   UseMethod("diagnostic_posterior")
 }
 
 
+#' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.default <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
   insight::format_error("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.")
