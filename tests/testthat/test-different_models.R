@@ -8,37 +8,64 @@ test_that("insight::get_predicted", {
     )
   )
 
-  rez <- point_estimate(x)
+  rez <- point_estimate(x, use_iterations = TRUE)
   expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
-  rez <- hdi(x)
+  rez <- point_estimate(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 3L))
+
+  rez <- hdi(x, use_iterations = TRUE)
   expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
-  rez <- eti(x)
+  rez <- hdi(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 3L))
+
+  rez <- eti(x, use_iterations = TRUE)
   expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
-  rez <- ci(x)
+  rez <- eti(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 3L))
+
+  rez <- ci(x, use_iterations = TRUE)
   expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
-  rez <- map_estimate(x)
+  rez <- ci(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 3L))
+
+  rez <- map_estimate(x, use_iterations = TRUE)
   expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
 
-  rez <- p_direction(x)
+  rez <- map_estimate(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
+
+  rez <- p_direction(x, use_iterations = TRUE)
   expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
 
-  rez <- p_map(x)
+  rez <- p_direction(x, use_iterations = FALSE)
   expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
 
-  rez <- p_significance(x)
+  rez <- p_map(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
+
+  rez <- p_map(x, use_iterations = FALSE)
   expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
 
-  rez <- rope(x)
-  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 4L))
+  rez <- p_significance(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
 
-  rez <- describe_posterior(x)
+  rez <- p_significance(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
+
+  rez <- rope(x, use_iterations = TRUE)
   expect_identical(c(nrow(rez), ncol(rez)), c(32L, 5L))
 
-  rez <- estimate_density(x)
+  rez <- rope(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 4L))
+
+  rez <- describe_posterior(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 5L))
+
+  rez <- estimate_density(x, use_iterations = TRUE)
   expect_identical(c(nrow(rez), ncol(rez)), c(1024L, 2L))
 })
 
