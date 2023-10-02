@@ -15,7 +15,7 @@ test_that("ci", {
   expect_equal(ci(distribution_normal(1000), ci = 0.90)$CI_low[1], -1.6361, tolerance = 0.02)
   expect_equal(nrow(ci(distribution_normal(1000), ci = c(0.80, 0.90, 0.95))), 3, tolerance = 0.01)
   expect_equal(ci(distribution_normal(1000), ci = 1)$CI_low[1], -3.29, tolerance = 0.02)
-  expect_equal(length(capture.output(print(ci(distribution_normal(1000), ci = c(.80, .90))))))
+  expect_length(capture.output(print(ci(distribution_normal(1000), ci = c(0.80, 0.90)))), 5)
 
   expect_equal(ci(c(2, 3, NA))$CI_low, 2.02, tolerance = 1e-2)
   expect_warning(ci(c(2, 3)))

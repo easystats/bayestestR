@@ -7,10 +7,11 @@
 \alias{si.brmsfit}
 \alias{si.blavaan}
 \alias{si.emmGrid}
+\alias{si.get_predicted}
 \alias{si.data.frame}
 \title{Compute Support Intervals}
 \usage{
-si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
+si(posterior, ...)
 
 \method{si}{numeric}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
@@ -52,6 +53,15 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
 \method{si}{emmGrid}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
+\method{si}{get_predicted}(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+)
+
 \method{si}{data.frame}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 }
 \arguments{
@@ -59,14 +69,14 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 \code{emmGrid} or a data frame - representing a posterior distribution(s)
 from (see 'Details').}
 
+\item{...}{Arguments passed to and from other methods. (Can be used to pass
+arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
+
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
 \item{BF}{The amount of support required to be included in the support interval.}
 
 \item{verbose}{Toggle off warnings.}
-
-\item{...}{Arguments passed to and from other methods. (Can be used to pass
-arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
@@ -80,6 +90,11 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
 }
 \value{
 A data frame containing the lower and upper bounds of the SI.
@@ -158,7 +173,7 @@ or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stat
 }
 
 \examples{
-\dontshow{if (requireNamespace("logspline", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("logspline") && require("rstanarm") && require("brms") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 prior <- distribution_normal(1000, mean = 0, sd = 1)

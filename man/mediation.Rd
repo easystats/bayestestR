@@ -109,6 +109,7 @@ samples of the effects, which can be used for further processing in the
 different \pkg{bayestestR} package.
 }
 \examples{
+\dontshow{if (require("mediation") && require("brms") && require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(mediation)
 library(brms)
@@ -127,7 +128,7 @@ m1 <- mediate(b1, b2, sims = 1000, treat = "treat", mediator = "job_seek")
 # Fit Bayesian mediation model in brms
 f1 <- bf(job_seek ~ treat + econ_hard + sex + age)
 f2 <- bf(depress2 ~ treat + job_seek + econ_hard + sex + age)
-m2 <- brm(f1 + f2 + set_rescor(FALSE), data = jobs, cores = 4, refresh = 0)
+m2 <- brm(f1 + f2 + set_rescor(FALSE), data = jobs, refresh = 0)
 
 # Fit Bayesian mediation model in rstanarm
 m3 <- suppressWarnings(stan_mvmer(
@@ -136,7 +137,6 @@ m3 <- suppressWarnings(stan_mvmer(
     depress2 ~ treat + job_seek + econ_hard + sex + age + (1 | occp)
   ),
   data = jobs,
-  cores = 4,
   refresh = 0
 ))
 
@@ -144,6 +144,7 @@ summary(m1)
 mediation(m2, centrality = "mean", ci = 0.95)
 mediation(m3, centrality = "mean", ci = 0.95)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

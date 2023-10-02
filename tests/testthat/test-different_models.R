@@ -8,78 +8,105 @@ test_that("insight::get_predicted", {
     )
   )
 
-  rez <- point_estimate(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+  rez <- point_estimate(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
-  rez <- hdi(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+  rez <- point_estimate(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 3L))
 
-  rez <- eti(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+  rez <- hdi(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
-  rez <- ci(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+  rez <- hdi(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 3L))
 
-  rez <- map_estimate(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 2))
+  rez <- eti(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
-  rez <- p_direction(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 2))
+  rez <- eti(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 3L))
 
-  rez <- p_map(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+  rez <- ci(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 4L))
 
-  rez <- p_significance(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+  rez <- ci(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 3L))
 
-  rez <- rope(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 5))
+  rez <- map_estimate(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
 
-  rez <- describe_posterior(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(32, 5))
+  rez <- map_estimate(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
 
-  rez <- estimate_density(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2048, 3))
+  rez <- p_direction(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
+
+  rez <- p_direction(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
+
+  rez <- p_map(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
+
+  rez <- p_map(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
+
+  rez <- p_significance(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 2L))
+
+  rez <- p_significance(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 2L))
+
+  rez <- rope(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 5L))
+
+  rez <- rope(x, use_iterations = FALSE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1L, 4L))
+
+  rez <- describe_posterior(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(32L, 5L))
+
+  rez <- estimate_density(x, use_iterations = TRUE)
+  expect_identical(c(nrow(rez), ncol(rez)), c(1024L, 2L))
 })
 
 test_that("bayesQR", {
   skip_on_os("mac")
   skip_if_not_or_load_if_installed("bayesQR")
 
-  invisible(capture.output(
+  invisible(capture.output({
     x <- bayesQR(Sepal.Length ~ Petal.Width,
       data = iris, quantile = 0.1,
       alasso = TRUE, ndraw = 500
     )
-  ))
+  }))
 
   rez <- p_direction(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 2L))
 
   rez <- p_map(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 2L))
 
   rez <- p_significance(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 2L))
 
   rez <- rope(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 5))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 5L))
 
   rez <- hdi(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 4))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 4L))
 
   rez <- eti(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 4))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 4L))
 
   rez <- map_estimate(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 2L))
 
   rez <- point_estimate(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 4))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 4L))
 
   rez <- describe_posterior(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2, 10))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2L, 10L))
 
   rez <- estimate_density(x)
-  expect_equal(c(nrow(rez), ncol(rez)), c(2048, 3))
+  expect_identical(c(nrow(rez), ncol(rez)), c(2048L, 3L))
 })

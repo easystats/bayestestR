@@ -21,7 +21,7 @@
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
 #' library(bayestestR)
 #'
 #' point_estimate(rnorm(1000))
@@ -34,7 +34,6 @@
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
-#' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' point_estimate(model, centrality = "all", dispersion = TRUE)
 #' point_estimate(model, centrality = c("median", "MAP"))
@@ -42,23 +41,20 @@
 #'
 #' # emmeans estimates
 #' # -----------------------------------------------
-#' library(emmeans)
 #' point_estimate(
-#'   emtrends(model, ~1, "wt", data = mtcars),
+#'   emmeans::emtrends(model, ~1, "wt", data = mtcars),
 #'   centrality = c("median", "MAP")
 #' )
 #'
 #' # brms models
 #' # -----------------------------------------------
-#' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' point_estimate(model, centrality = "all", dispersion = TRUE)
 #' point_estimate(model, centrality = c("median", "MAP"))
 #'
 #' # BayesFactor objects
 #' # -----------------------------------------------
-#' library(BayesFactor)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' point_estimate(bf, centrality = "all", dispersion = TRUE)
 #' point_estimate(bf, centrality = c("median", "MAP"))
 #' }
@@ -342,13 +338,36 @@ point_estimate.matrix <- function(x, ...) {
 }
 
 
+#' @rdname point_estimate
 #' @export
-point_estimate.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    point_estimate(as.data.frame(t(attributes(x)$iterations)), ...)
+point_estimate.get_predicted <- function(x,
+                                         centrality = "all",
+                                         dispersion = FALSE,
+                                         use_iterations = FALSE,
+                                         verbose = TRUE,
+                                         ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- point_estimate(
+        as.data.frame(t(attributes(x)$iterations)),
+        centrality = centrality,
+        dispersion = dispersion,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    as.numeric(x)
+    out <- point_estimate(as.numeric(x),
+      centrality = centrality,
+      dispersion = dispersion,
+      verbose = verbose,
+      ...
+    )
   }
+  out
 }
 
 

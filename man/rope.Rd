@@ -142,6 +142,7 @@ effects.
 }
 
 \examples{
+\dontshow{if (require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
@@ -177,6 +178,7 @@ bf <- ttestBF(x = rnorm(100, 1, 1))
 rope(bf)
 rope(bf, ci = c(0.90, 0.95))
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

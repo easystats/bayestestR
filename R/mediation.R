@@ -75,7 +75,7 @@
 #' @seealso The \pkg{mediation} package for a causal mediation analysis in
 #'   the frequentist framework.
 #'
-#' @examples
+#' @examplesIf require("mediation") && require("brms") && require("rstanarm")
 #' \donttest{
 #' library(mediation)
 #' library(brms)
@@ -94,7 +94,7 @@
 #' # Fit Bayesian mediation model in brms
 #' f1 <- bf(job_seek ~ treat + econ_hard + sex + age)
 #' f2 <- bf(depress2 ~ treat + job_seek + econ_hard + sex + age)
-#' m2 <- brm(f1 + f2 + set_rescor(FALSE), data = jobs, cores = 4, refresh = 0)
+#' m2 <- brm(f1 + f2 + set_rescor(FALSE), data = jobs, refresh = 0)
 #'
 #' # Fit Bayesian mediation model in rstanarm
 #' m3 <- suppressWarnings(stan_mvmer(
@@ -103,7 +103,6 @@
 #'     depress2 ~ treat + job_seek + econ_hard + sex + age + (1 | occp)
 #'   ),
 #'   data = jobs,
-#'   cores = 4,
 #'   refresh = 0
 #' ))
 #'

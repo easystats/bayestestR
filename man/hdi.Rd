@@ -6,6 +6,7 @@
 \alias{hdi.data.frame}
 \alias{hdi.stanreg}
 \alias{hdi.brmsfit}
+\alias{hdi.get_predicted}
 \title{Highest Density Interval (HDI)}
 \usage{
 hdi(x, ...)
@@ -34,6 +35,8 @@ hdi(x, ...)
   verbose = TRUE,
   ...
 )
+
+\method{hdi}{get_predicted}(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
@@ -61,6 +64,11 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
 }
 \value{
 A data frame with following columns:
@@ -129,6 +137,7 @@ the resulting HDI.
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 posterior <- rnorm(1000)
@@ -138,26 +147,23 @@ hdi(posterior, ci = c(0.80, 0.90, 0.95))
 bayestestR::hdi(iris[1:4])
 bayestestR::hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
 \donttest{
-library(rstanarm)
 model <- suppressWarnings(
-  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
 bayestestR::hdi(model)
 bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 
-library(emmeans)
-bayestestR::hdi(emtrends(model, ~1, "wt", data = mtcars))
+bayestestR::hdi(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 
-library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 bayestestR::hdi(model)
 bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 bayestestR::hdi(bf)
 bayestestR::hdi(bf, ci = c(0.80, 0.90, 0.95))
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

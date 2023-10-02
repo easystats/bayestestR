@@ -17,40 +17,38 @@
 #' and sample size: The 3p(sqrt(n)) rule. Preprint available on ArXiv:
 #' https://psyarxiv.com/egydq
 #'
-#' @examples
-#' if (requireNamespace("parameters", quietly = TRUE)) {
-#'   data(iris)
-#'   model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
-#'   p_to_bf(model)
+#' @examplesIf require("parameters")
+#' data(iris)
+#' model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
+#' p_to_bf(model)
 #'
-#'   # Examples that demonstrate comparison between
-#'   # BIC-approximated and pseudo BF
-#'   # --------------------------------------------
-#'   m0 <- lm(mpg ~ 1, mtcars)
-#'   m1 <- lm(mpg ~ am, mtcars)
-#'   m2 <- lm(mpg ~ factor(cyl), mtcars)
+#' # Examples that demonstrate comparison between
+#' # BIC-approximated and pseudo BF
+#' # --------------------------------------------
+#' m0 <- lm(mpg ~ 1, mtcars)
+#' m1 <- lm(mpg ~ am, mtcars)
+#' m2 <- lm(mpg ~ factor(cyl), mtcars)
 #'
-#'   # In this first example, BIC-approximated BF and
-#'   # pseudo-BF based on p-values are close...
+#' # In this first example, BIC-approximated BF and
+#' # pseudo-BF based on p-values are close...
 #'
-#'   # BIC-approximated BF, m1 against null model
-#'   bic_to_bf(BIC(m1), denominator = BIC(m0))
+#' # BIC-approximated BF, m1 against null model
+#' bic_to_bf(BIC(m1), denominator = BIC(m0))
 #'
-#'   # pseudo-BF based on p-values - dropping intercept
-#'   p_to_bf(m1)[-1, ]
+#' # pseudo-BF based on p-values - dropping intercept
+#' p_to_bf(m1)[-1, ]
 #'
-#'   # The second example shows that results from pseudo-BF are less accurate
-#'   # and should be handled wit caution!
-#'   bic_to_bf(BIC(m2), denominator = BIC(m0))
-#'   p_to_bf(anova(m2), n_obs = nrow(mtcars))
-#' }
+#' # The second example shows that results from pseudo-BF are less accurate
+#' # and should be handled wit caution!
+#' bic_to_bf(BIC(m2), denominator = BIC(m0))
+#' p_to_bf(anova(m2), n_obs = nrow(mtcars))
 #'
 #' @return A data frame with the p-values and pseudo-Bayes factors (against the null).
 #'
 #' @seealso [bic_to_bf()] for more accurate approximate Bayes factors.
 #'
 #' @export
-p_to_bf <- function(x, log = FALSE, ...) {
+p_to_bf <- function(x, ...) {
   UseMethod("p_to_bf")
 }
 

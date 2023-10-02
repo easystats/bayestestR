@@ -42,7 +42,7 @@
 #' Note that if the level of requested support is higher than observed in the data, the
 #' interval will be `[NA,NA]`.
 #'
-#' @examplesIf requireNamespace("logspline", quietly = TRUE)
+#' @examplesIf require("logspline") && require("rstanarm") && require("brms") && require("emmeans")
 #' library(bayestestR)
 #'
 #' prior <- distribution_normal(1000, mean = 0, sd = 1)
@@ -84,7 +84,7 @@
 #' The Support Interval. \doi{10.31234/osf.io/zwnxb}
 #'
 #' @export
-si <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
+si <- function(posterior, ...) {
   UseMethod("si")
 }
 
@@ -189,10 +189,26 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
   out
 }
 
+
+#' @rdname si
 #' @export
-si.get_predicted <- function(posterior, ...) {
-  out <- si(as.data.frame(t(posterior)), ...)
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
+si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = FALSE, verbose = TRUE, ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(posterior))) {
+      out <- si(
+        as.data.frame(t(attributes(posterior)$iterations)),
+        prior = prior,
+        BF = BF,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
+  } else {
+    out <- si(insight::get_parameters(posterior), prior = prior, BF = BF, verbose = verbose, ...)
+  }
   out
 }
 

@@ -2,8 +2,9 @@
 #'
 #' Compute the probability of **Practical Significance** (***ps***), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
 #'
-#' @inheritParams rope
 #' @param threshold The threshold value that separates significant from negligible effect. If `"default"`, the range is set to `0.1` if input is a vector, and based on [`rope_range()`][rope_range] if a Bayesian model is provided.
+#' @inheritParams rope
+#' @inheritParams hdi
 #'
 #' @return Values between 0 and 1 corresponding to the probability of practical significance (ps).
 #'
@@ -19,7 +20,7 @@
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @examples
+#' @examplesIf require("rstanarm")
 #' library(bayestestR)
 #'
 #' # Simulate a posterior distribution of mean 1 and SD 1
@@ -34,13 +35,11 @@
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
-#' if (require("rstanarm")) {
-#'   model <- rstanarm::stan_glm(mpg ~ wt + cyl,
-#'     data = mtcars,
-#'     chains = 2, refresh = 0
-#'   )
-#'   p_significance(model)
-#' }
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl,
+#'   data = mtcars,
+#'   chains = 2, refresh = 0
+#' )
+#' p_significance(model)
 #' }
 #' @export
 p_significance <- function(x, ...) {
@@ -60,9 +59,34 @@ p_significance.default <- function(x, ...) {
 #' @export
 p_significance.numeric <- function(x, threshold = "default", ...) {
   threshold <- .select_threshold_ps(threshold = threshold)
-  out <- p_significance(data.frame(x = x), threshold = threshold)
-  out[[1]] <- NULL
+  out <- p_significance(data.frame(Posterior = x), threshold = threshold)
   attr(out, "data") <- x
+  out
+}
+
+
+#' @rdname p_significance
+#' @export
+p_significance.get_predicted <- function(x, threshold = "default", use_iterations = FALSE, verbose = TRUE, ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- p_significance(
+        as.data.frame(t(attributes(x)$iterations)),
+        threshold = threshold,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  } else {
+    out <- p_significance(as.numeric(x),
+      threshold = threshold,
+      verbose = verbose,
+      ...
+    )
+  }
   out
 }
 
@@ -80,8 +104,8 @@ p_significance.data.frame <- function(x, threshold = "default", ...) {
   }
 
   out <- data.frame(
-    "Parameter" = names(x),
-    "ps" = as.numeric(ps),
+    Parameter = names(x),
+    ps = as.numeric(ps),
     row.names = NULL,
     stringsAsFactors = FALSE
   )
@@ -295,10 +319,10 @@ as.double.p_significance <- as.numeric.p_significance
   }
   # If default
   if (all(threshold == "default")) {
-    if (!is.null(model)) {
-      threshold <- rope_range(model, verbose = verbose)[2]
-    } else {
+    if (is.null(model)) {
       threshold <- 0.1
+    } else {
+      threshold <- rope_range(model, verbose = verbose)[2]
     }
   } else if (!all(is.numeric(threshold))) {
     insight::format_error("`threshold` should be 'default' or a numeric value (e.g., 0.1).")

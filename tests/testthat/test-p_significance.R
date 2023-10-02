@@ -6,12 +6,21 @@ test_that("p_significance", {
   expect_equal(as.numeric(ps), 0.816, tolerance = 0.1)
   expect_s3_class(ps, "p_significance")
   expect_s3_class(ps, "data.frame")
-  expect_equal(dim(ps), c(1, 1))
-  expect_output(print(ps), "Practical Significance \\(threshold: 0.10\\): 0.82")
+  expect_identical(dim(ps), c(1L, 2L))
+  expect_identical(
+    capture.output(print(ps)),
+    c(
+      "Practical Significance (threshold: 0.10)",
+      "",
+      "Parameter |   ps",
+      "----------------",
+      "Posterior | 0.82"
+    )
+  )
 
   x <- data.frame(replicate(4, rnorm(100)))
   pd <- p_significance(x)
-  expect_equal(dim(pd), c(4, 2))
+  expect_identical(dim(pd), c(4L, 2L))
 })
 
 test_that("stanreg", {

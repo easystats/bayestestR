@@ -3,6 +3,7 @@
 \name{p_significance}
 \alias{p_significance}
 \alias{p_significance.numeric}
+\alias{p_significance.get_predicted}
 \alias{p_significance.stanreg}
 \alias{p_significance.brmsfit}
 \title{Practical Significance (ps)}
@@ -10,6 +11,14 @@
 p_significance(x, ...)
 
 \method{p_significance}{numeric}(x, threshold = "default", ...)
+
+\method{p_significance}{get_predicted}(
+  x,
+  threshold = "default",
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 \method{p_significance}{stanreg}(
   x,
@@ -40,6 +49,13 @@ p_significance(x, ...)
 
 \item{threshold}{The threshold value that separates significant from negligible effect. If \code{"default"}, the range is set to \code{0.1} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
 
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
+
+\item{verbose}{Toggle off warnings.}
+
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
 
@@ -52,8 +68,6 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
-
-\item{verbose}{Toggle off warnings.}
 }
 \value{
 Values between 0 and 1 corresponding to the probability of practical significance (ps).
@@ -76,6 +90,7 @@ will be less than 0.5, which indicates no clear practical significance.
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 # Simulate a posterior distribution of mean 1 and SD 1
@@ -90,12 +105,11 @@ p_significance(df)
 \donttest{
 # rstanarm models
 # -----------------------------------------------
-if (require("rstanarm")) {
-  model <- rstanarm::stan_glm(mpg ~ wt + cyl,
-    data = mtcars,
-    chains = 2, refresh = 0
-  )
-  p_significance(model)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl,
+  data = mtcars,
+  chains = 2, refresh = 0
+)
+p_significance(model)
 }
-}
+\dontshow{\}) # examplesIf}
 }

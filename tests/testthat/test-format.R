@@ -18,22 +18,22 @@ test_that("p_significance", {
   )
   expect_equal(
     format(map_estimate(x)),
-    data.frame(x = "0.13", stringsAsFactors = FALSE),
+    data.frame(Parameter = "x", MAP_Estimate = "0.13", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
   expect_equal(
     format(p_direction(x)),
-    data.frame(x = "51.00%", stringsAsFactors = FALSE),
+    data.frame(Parameter = "Posterior", pd = "51.00%", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
   expect_equal(
     format(p_map(x)),
-    data.frame(x = "0.973", stringsAsFactors = FALSE),
+    data.frame(Parameter = "Posterior", p_MAP = "0.973", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
   expect_equal(
     format(p_significance(x)),
-    data.frame(x = "0.46", stringsAsFactors = FALSE),
+    data.frame(Parameter = "Posterior", ps = "0.46", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
   expect_equal(

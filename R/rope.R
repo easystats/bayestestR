@@ -95,7 +95,7 @@
 #'   methods for model selection. Statistics and Computing, 27(3), 711–735.
 #'   \doi{10.1007/s11222-016-9649-y}
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
 #' library(bayestestR)
 #'
 #' rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
@@ -183,6 +183,34 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
   out
 }
 
+
+#' @export
+rope.get_predicted <- function(x,
+                               range = "default",
+                               ci = 0.95,
+                               ci_method = "ETI",
+                               use_iterations = FALSE,
+                               verbose = TRUE,
+                               ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- rope(
+        as.data.frame(t(attributes(x)$iterations)),
+        range = range,
+        ci = ci,
+        ci_method = ci_method,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  } else {
+    out <- rope(as.numeric(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  }
+  out
+}
 
 
 #' @export

@@ -28,6 +28,8 @@ if (!requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("datawizard", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("logspline", quietly = TRUE) ||
+  !requireNamespace("correlation", quietly = TRUE) ||
+  !requireNamespace("patchwork", quietly = TRUE) ||
   !requireNamespace("KernSmooth", quietly = TRUE) ||
   !requireNamespace("bayesplot", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
@@ -88,7 +90,7 @@ correspond approximately to a *pd* of **95\%**, **97.5\%**, **99.5\%** and
 library(ggplot2)
 library(see)
 
-raw <- read.csv("https://raw.github.com/easystats/easystats/master/publications/makowski_2019_bayesian/data/data.csv")
+raw <- read.csv("https://raw.github.com/easystats/easystats/main/publications/makowski_2019_bayesian/data/data.csv")
 dat <- transform(
   raw,
   effect_existence = ifelse(true_effect == 1, "Presence of true effect", "Absence of true effect"),
@@ -154,37 +156,10 @@ Let's compare the 4 available methods, the **direct** method and 3
 
 Let's start by testing the proximity and similarity of the results obtained by different methods.
 
-```{r message=FALSE, warning=FALSE, fig.align='center', eval=FALSE}
-library(bayestestR)
-library(logspline)
-library(KernSmooth)
 
-# Compute the correlations
-data <- data.frame()
-for (the_mean in runif(25, 0, 4)) {
-  for (the_sd in runif(25, 0.5, 4)) {
-    x <- rnorm(100, the_mean, abs(the_sd))
-    data <- rbind(
-      data,
-      data.frame(
-        "direct" = pd(x),
-        "kernel" = pd(x, method = "kernel"),
-        "logspline" = pd(x, method = "logspline"),
-        "KernSmooth" = pd(x, method = "KernSmooth")
-      )
-    )
-  }
-}
-data <- as.data.frame(sapply(data, as.numeric))
-
-# Visualize the correlations
-bayesplot::mcmc_pairs(data) +
-  theme_classic()
-```
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 library(bayestestR)
-library(logspline)
-library(KernSmooth)
+library(patchwork)
 
 # Compute the correlations
 data <- data.frame()
@@ -194,10 +169,10 @@ for (the_mean in runif(25, 0, 4)) {
     data <- rbind(
       data,
       data.frame(
-        "direct" = pd(x),
-        "kernel" = pd(x, method = "kernel"),
-        "logspline" = pd(x, method = "logspline"),
-        "KernSmooth" = pd(x, method = "KernSmooth")
+        direct = as.numeric(pd(x)),
+        kernel = as.numeric(pd(x, method = "kernel")),
+        logspline = as.numeric(pd(x, method = "logspline")),
+        KernSmooth = as.numeric(pd(x, method = "KernSmooth"))
       )
     )
   }
@@ -205,8 +180,9 @@ for (the_mean in runif(25, 0, 4)) {
 data <- as.data.frame(sapply(data, as.numeric))
 
 # Visualize the correlations
-suppressWarnings(bayesplot::mcmc_pairs(data)) +
-  theme_classic()
+plot(correlation::cor_test(data, "direct", "kernel")) |
+  plot(correlation::cor_test(data, "direct", "logspline")) |
+  plot(correlation::cor_test(data, "direct", "KernSmooth"))
 ```
 
 All methods give are highly correlated and give very similar results. That means
@@ -228,7 +204,7 @@ for (i in 1:25) {
   the_mean <- runif(1, 0, 4)
   the_sd <- abs(runif(1, 0.5, 4))
   parent_distribution <- rnorm(100000, the_mean, the_sd)
-  true_pd <- pd(parent_distribution)
+  true_pd <- as.numeric(pd(parent_distribution))
 
   for (j in 1:25) {
     sample_size <- round(runif(1, 25, 5000))
@@ -236,12 +212,12 @@ for (i in 1:25) {
     data <- rbind(
       data,
       data.frame(
-        "sample_size" = sample_size,
-        "true" = true_pd,
-        "direct" = pd(subsample) - true_pd,
-        "kernel" = pd(subsample, method = "kernel") - true_pd,
-        "logspline" = pd(subsample, method = "logspline") - true_pd,
-        "KernSmooth" = pd(subsample, method = "KernSmooth") - true_pd
+        sample_size = sample_size,
+        true = true_pd,
+        direct = as.numeric(pd(subsample)) - true_pd,
+        kernel = as.numeric(pd(subsample, method = "kernel")) - true_pd,
+        logspline = as.numeric(pd(subsample, method = "logspline")) - true_pd,
+        KernSmooth = as.numeric(pd(subsample, method = "KernSmooth")) - true_pd
       )
     )
   }

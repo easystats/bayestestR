@@ -3,13 +3,27 @@
 \name{p_map}
 \alias{p_map}
 \alias{p_pointnull}
+\alias{p_map.numeric}
+\alias{p_map.get_predicted}
 \alias{p_map.stanreg}
 \alias{p_map.brmsfit}
 \title{Bayesian p-value based on the density at the Maximum A Posteriori (MAP)}
 \usage{
-p_map(x, null = 0, precision = 2^10, method = "kernel", ...)
+p_map(x, ...)
 
-p_pointnull(x, null = 0, precision = 2^10, method = "kernel", ...)
+p_pointnull(x, ...)
+
+\method{p_map}{numeric}(x, null = 0, precision = 2^10, method = "kernel", ...)
+
+\method{p_map}{get_predicted}(
+  x,
+  null = 0,
+  precision = 2^10,
+  method = "kernel",
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 \method{p_map}{stanreg}(
   x,
@@ -41,6 +55,8 @@ of models (see, for example, \code{methods("hdi")}) and not all of those are
 documented in the 'Usage' section, because methods for other classes mostly
 resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
+\item{...}{Currently not used.}
+
 \item{null}{The value considered as a "null" effect. Traditionally 0, but
 could also be 1 in the case of ratios of change (OR, IRR, ...).}
 
@@ -49,7 +65,12 @@ could also be 1 in the case of ratios of change (OR, IRR, ...).}
 \item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"}
 or \code{"KernSmooth"}.}
 
-\item{...}{Currently not used.}
+\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
+(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
+iterations instead of the predictions. This only applies to models that return
+iterations for predicted values (e.g., \code{brmsfit} models).}
+
+\item{verbose}{Toggle off warnings.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
@@ -72,36 +93,38 @@ Testing} framework. It corresponds to the density value at the null (e.g., 0)
 divided by the density at the Maximum A Posteriori (MAP).
 }
 \details{
-Note that this method is sensitive to the density estimation \code{method} (see the section in the examples below).
+Note that this method is sensitive to the density estimation \code{method}
+(see the section in the examples below).
 \subsection{Strengths and Limitations}{
-\strong{Strengths:} Straightforward computation. Objective property of the posterior distribution.
-\cr \cr
-\strong{Limitations:} Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation. Only suitable for weak / very diffused priors.
+
+\strong{Strengths:} Straightforward computation. Objective property of the posterior
+distribution.
+
+\strong{Limitations:} Limited information favoring the null hypothesis. Relates
+on density approximation. Indirect relationship between mathematical
+definition and interpretation. Only suitable for weak / very diffused priors.
 }
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 p_map(rnorm(1000, 0, 1))
 p_map(rnorm(1000, 10, 1))
 \donttest{
-library(rstanarm)
 model <- suppressWarnings(
-  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
 p_map(model)
 
-library(emmeans)
 p_map(suppressWarnings(
-  emtrends(model, ~1, "wt", data = mtcars)
+  emmeans::emtrends(model, ~1, "wt", data = mtcars)
 ))
 
-library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 p_map(model)
 
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 p_map(bf)
 
 # ---------------------------------------
@@ -111,9 +134,9 @@ data <- data.frame()
 for (iteration in 1:250) {
   x <- rnorm(1000, 1, 1)
   result <- data.frame(
-    "Kernel" = p_map(x, method = "kernel"),
-    "KernSmooth" = p_map(x, method = "KernSmooth"),
-    "logspline" = p_map(x, method = "logspline")
+    Kernel = as.numeric(p_map(x, method = "kernel")),
+    KernSmooth = as.numeric(p_map(x, method = "KernSmooth")),
+    logspline = as.numeric(p_map(x, method = "logspline"))
   )
   data <- rbind(data, result)
 }
@@ -124,6 +147,7 @@ summary(data$KernSmooth)
 summary(data$logspline)
 boxplot(data[c("KernSmooth", "logspline")])
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

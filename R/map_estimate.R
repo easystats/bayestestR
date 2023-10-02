@@ -18,7 +18,7 @@
 #'   vector, this column is missing.
 #' - `MAP_Estimate`: The MAP estimate for the posterior or each model parameter.
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("brms")
 #' \donttest{
 #' library(bayestestR)
 #'
@@ -26,19 +26,17 @@
 #' map_estimate(posterior)
 #'
 #' plot(density(posterior))
-#' abline(v = map_estimate(posterior), col = "red")
+#' abline(v = as.numeric(map_estimate(posterior)), col = "red")
 #'
-#' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
 #'
-#' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
 #' }
 #'
 #' @export
-map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
+map_estimate <- function(x, ...) {
   UseMethod("map_estimate")
 }
 
@@ -53,7 +51,6 @@ map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
     precision,
     method = method, ...
   )
-  out[[1]] <- NULL
   attr(out, "data") <- x
   out
 }
@@ -176,13 +173,36 @@ map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
 map_estimate.emm_list <- map_estimate.emmGrid
 
 
+#' @rdname map_estimate
 #' @export
-map_estimate.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    map_estimate(as.data.frame(t(attributes(x)$iterations)), ...)
+map_estimate.get_predicted <- function(x,
+                                       precision = 2^10,
+                                       method = "kernel",
+                                       use_iterations = FALSE,
+                                       verbose = TRUE,
+                                       ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- map_estimate(
+        as.data.frame(t(attributes(x)$iterations)),
+        precision = precision,
+        method = method,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    insight::format_error("No iterations present in the output.")
+    out <- map_estimate(as.numeric(x),
+      precision = precision,
+      method = method,
+      verbose = verbose,
+      ...
+    )
   }
+  out
 }
 
 

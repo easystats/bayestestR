@@ -45,15 +45,16 @@ from Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative
 suggestion of how big the estimation noise is}.
 }
 \examples{
+\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(bayestestR)
-library(rstanarm)
 
 model <- suppressWarnings(
-  stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
+  rstanarm::stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
 )
 mcse(model)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.

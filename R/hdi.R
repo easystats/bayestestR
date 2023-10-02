@@ -22,6 +22,10 @@
 #'   filtered by default, so only parameters that typically appear in the
 #'   `summary()` are returned. Use `parameters` to select specific parameters
 #'   for the output.
+#' @param use_iterations Logical, if `TRUE` and `x` is a `get_predicted` object,
+#' (returned by [`insight::get_predicted()`]), the function is applied to the
+#' iterations instead of the predictions. This only applies to models that return
+#' iterations for predicted values (e.g., `brmsfit` models).
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
 #'
@@ -80,7 +84,7 @@
 #' @family ci
 #' @seealso Other interval functions, such as [hdi()], [eti()], [bci()], [spi()], [si()], [cwi()].
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(1000)
@@ -90,23 +94,19 @@
 #' bayestestR::hdi(iris[1:4])
 #' bayestestR::hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
 #' \donttest{
-#' library(rstanarm)
 #' model <- suppressWarnings(
-#'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#'   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' )
 #' bayestestR::hdi(model)
 #' bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 #'
-#' library(emmeans)
-#' bayestestR::hdi(emtrends(model, ~1, "wt", data = mtcars))
+#' bayestestR::hdi(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 #'
-#' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' bayestestR::hdi(model)
 #' bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 #'
-#' library(BayesFactor)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' bayestestR::hdi(bf)
 #' bayestestR::hdi(bf, ci = c(0.80, 0.90, 0.95))
 #' }
@@ -357,14 +357,19 @@ hdi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
+#' @rdname hdi
 #' @export
-hdi.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    out <- hdi(as.data.frame(t(attributes(x)$iterations)), ...)
+hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- hdi(as.data.frame(t(attributes(x)$iterations)), ci = ci, verbose = verbose, ...)
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    insight::format_error("No iterations present in the output.")
+    out <- hdi(as.numeric(x), ci = ci, verbose = verbose, ...)
   }
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -390,9 +395,9 @@ hdi.get_predicted <- function(x, ...) {
       insight::format_alert("`ci` is too small or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci,
-      "CI_low" = NA,
-      "CI_high" = NA
+      CI = ci,
+      CI_low = NA,
+      CI_high = NA
     ))
   }
 
@@ -403,9 +408,9 @@ hdi.get_predicted <- function(x, ...) {
       insight::format_alert("`ci` is too large or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci,
-      "CI_low" = NA,
-      "CI_high" = NA
+      CI = ci,
+      CI_low = NA,
+      CI_high = NA
     ))
   }
 
@@ -427,8 +432,8 @@ hdi.get_predicted <- function(x, ...) {
   }
 
   data.frame(
-    "CI" = ci,
-    "CI_low" = x_sorted[min_i],
-    "CI_high" = x_sorted[min_i + window_size]
+    CI = ci,
+    CI_low = x_sorted[min_i],
+    CI_high = x_sorted[min_i + window_size]
   )
 }

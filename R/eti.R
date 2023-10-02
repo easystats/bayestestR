@@ -12,7 +12,7 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(1000)
@@ -23,23 +23,19 @@
 #' eti(df)
 #' eti(df, ci = c(0.80, 0.89, 0.95))
 #' \donttest{
-#' library(rstanarm)
 #' model <- suppressWarnings(
-#'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#'   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' )
 #' eti(model)
 #' eti(model, ci = c(0.80, 0.89, 0.95))
 #'
-#' library(emmeans)
-#' eti(emtrends(model, ~1, "wt", data = mtcars))
+#' eti(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 #'
-#' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' eti(model)
 #' eti(model, ci = c(0.80, 0.89, 0.95))
 #'
-#' library(BayesFactor)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' eti(bf)
 #' eti(bf, ci = c(0.80, 0.89, 0.95))
 #' }
@@ -253,16 +249,22 @@ eti.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
+#' @rdname eti
 #' @export
-eti.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    out <- eti(as.data.frame(t(attributes(x)$iterations)), ...)
+eti.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- eti(as.data.frame(t(attributes(x)$iterations)), ci = ci, verbose = verbose, ...)
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    insight::format_error("No iterations present in the output.")
+    out <- eti(as.numeric(x), ci = ci, verbose = verbose, ...)
   }
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
+
 
 # Helper ------------------------------------------------------------------
 

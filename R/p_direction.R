@@ -167,8 +167,7 @@ p_direction.default <- function(x, ...) {
 #' @export
 p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
-  out <- p_direction(data.frame(x = x), method = method, null = null, ...)
-  out[[1]] <- NULL
+  out <- p_direction(data.frame(Posterior = x), method = method, null = null, ...)
   attr(out, "object_name") <- obj_name
   out
 }
@@ -187,8 +186,8 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
   }
 
   out <- data.frame(
-    "Parameter" = names(x),
-    "pd" = pd,
+    Parameter = names(x),
+    pd = pd,
     row.names = NULL,
     stringsAsFactors = FALSE
   )
@@ -434,14 +433,35 @@ p_direction.BFBayesFactor <- function(x, method = "direct", null = 0, ...) {
   out
 }
 
+#' @rdname p_direction
 #' @export
-p_direction.get_predicted <- function(x, ...) {
-  if ("iterations" %in% names(attributes(x))) {
-    out <- p_direction(as.data.frame(t(attributes(x)$iterations)), ...)
+p_direction.get_predicted <- function(x,
+                                      method = "direct",
+                                      null = 0,
+                                      use_iterations = FALSE,
+                                      verbose = TRUE,
+                                      ...) {
+  if (isTRUE(use_iterations)) {
+    if ("iterations" %in% names(attributes(x))) {
+      out <- p_direction(
+        as.data.frame(t(attributes(x)$iterations)),
+        method = method,
+        null = null,
+        verbose = verbose,
+        ...
+      )
+    } else {
+      insight::format_error("No iterations present in the output.")
+    }
+    attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    insight::format_error("No iterations present in the output.")
+    out <- p_direction(as.numeric(x),
+      method = method,
+      null = null,
+      verbose = verbose,
+      ...
+    )
   }
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -463,6 +483,11 @@ p_direction.parameters_model <- function(x, ...) {
 
   out
 }
+
+
+
+# Definition --------------------------------------------------------------
+
 
 #' @keywords internal
 .p_direction <- function(x, method = "direct", null = 0, ...) {

@@ -35,7 +35,7 @@ test_that("si.rstanarm", {
 
   data(sleep)
   contrasts(sleep$group) <- contr.equalprior_pairs # See vignette
-  stan_model <- rstanarm::stan_glmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
+  stan_model <- suppressWarnings(rstanarm::stan_glmer(extra ~ group + (1 | ID), data = sleep, refresh = 0))
 
   set.seed(333)
   stan_model_p <- update(stan_model, prior_PD = TRUE)

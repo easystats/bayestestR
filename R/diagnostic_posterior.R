@@ -3,62 +3,60 @@
 #' Extract diagnostic metrics (Effective Sample Size (`ESS`), `Rhat` and Monte
 #' Carlo Standard Error `MCSE`).
 #'
-#' @param posteriors A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object.
+#' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object.
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
 #'   with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
 #'
 #' @details
 #'   **Effective Sample (ESS)** should be as large as possible, although for
 #'   most applications, an effective sample size greater than 1000 is sufficient
-#'   for stable estimates (Bürkner, 2017). The ESS corresponds to the number of
+#'   for stable estimates (_Bürkner, 2017_). The ESS corresponds to the number of
 #'   independent samples with the same estimation power as the N autocorrelated
-#'   samples. It is is a measure of \dQuote{how much independent information
-#'   there is in autocorrelated chains} (\cite{Kruschke 2015, p182-3}).
-#'   \cr \cr
+#'   samples. It is is a measure of "how much independent information there is
+#'   in autocorrelated chains" (_Kruschke 2015, p182-3_).
+#'
 #'   **Rhat** should be the closest to 1. It should not be larger than 1.1
-#'   (\cite{Gelman and Rubin, 1992}) or 1.01 (\cite{Vehtari et al., 2019}). The
-#'   split Rhat statistic quantifies the consistency of an ensemble of Markov
-#'   chains.
-#'   \cr \cr
+#'   (_Gelman and Rubin, 1992_) or 1.01 (_Vehtari et al., 2019_). The split
+#'   Rhat statistic quantifies the consistency of an ensemble of Markov chains.
+#'
 #'   **Monte Carlo Standard Error (MCSE)** is another measure of accuracy of the
 #'   chains. It is defined as standard deviation of the chains divided by their
 #'   effective sample size (the formula for `mcse()` is from Kruschke 2015, p.
-#'   187). The MCSE \dQuote{provides a quantitative suggestion of how big the
-#'   estimation noise is}.
+#'   187). The MCSE "provides a quantitative suggestion of how big the estimation
+#'   noise is".
 #'
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("brms")
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
-#' if (require("rstanarm", quietly = TRUE)) {
-#'   model <- suppressWarnings(
-#'     stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-#'   )
-#'   diagnostic_posterior(model)
-#' }
+#' model <- suppressWarnings(
+#'   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' )
+#' diagnostic_posterior(model)
 #'
 #' # brms models
 #' # -----------------------------------------------
-#' if (require("brms", quietly = TRUE)) {
-#'   model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#'   diagnostic_posterior(model)
-#' }
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' diagnostic_posterior(model)
 #' }
 #' @references
-#' \itemize{
-#'   \item Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation using multiple sequences. Statistical science, 7(4), 457-472.
-#'   \item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., and Bürkner, P. C. (2019). Rank-normalization, folding, and localization: An improved Rhat for assessing convergence of MCMC. arXiv preprint arXiv:1903.08008.
-#'   \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
-#' }
+#' - Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation
+#'   using multiple sequences. Statistical science, 7(4), 457-472.
+#' - Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., and Bürkner, P. C.
+#'   (2019). Rank-normalization, folding, and localization: An improved Rhat
+#'   for assessing convergence of MCMC. arXiv preprint arXiv:1903.08008.
+#' - Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R,
+#'   JAGS, and Stan. Academic Press.
 #' @export
-diagnostic_posterior <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
+diagnostic_posterior <- function(posterior, ...) {
   UseMethod("diagnostic_posterior")
 }
 
 
+#' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.default <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
+diagnostic_posterior.default <- function(posterior, diagnostic = c("ESS", "Rhat"), ...) {
   insight::format_error("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.")
 }
 
@@ -66,12 +64,12 @@ diagnostic_posterior.default <- function(posteriors, diagnostic = c("ESS", "Rhat
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
+diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   # Find parameters
   effects <- match.arg(effects)
   component <- match.arg(component)
   params <- insight::find_parameters(
-    posteriors,
+    posterior,
     effects = effects,
     component = component,
     parameters = parameters,
@@ -92,13 +90,13 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
   }
 
   # Get indices and rename
-  diagnostic_df <- as.data.frame(posteriors$stan_summary)
+  diagnostic_df <- as.data.frame(posterior$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   if ("n_eff" %in% names(diagnostic_df)) {
     diagnostic_df$ESS <- diagnostic_df$n_eff
   }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posteriors, effects = "all")
+  MCSE <- mcse(posterior, effects = "all")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
@@ -117,7 +115,7 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.stanmvreg <- function(posteriors,
+diagnostic_posterior.stanmvreg <- function(posterior,
                                            diagnostic = "all",
                                            effects = c("fixed", "random", "all"),
                                            parameters = NULL,
@@ -125,7 +123,7 @@ diagnostic_posterior.stanmvreg <- function(posteriors,
   # Find parameters
   effects <- match.arg(effects)
   all_params <- insight::find_parameters(
-    posteriors,
+    posterior,
     effects = effects,
     parameters = parameters,
     flatten = FALSE
@@ -150,13 +148,13 @@ diagnostic_posterior.stanmvreg <- function(posteriors,
   }
 
   # Get indices and rename
-  diagnostic_df <- as.data.frame(posteriors$stan_summary)
+  diagnostic_df <- as.data.frame(posterior$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   if ("n_eff" %in% names(diagnostic_df)) {
     diagnostic_df$ESS <- diagnostic_df$n_eff
   }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posteriors, effects = effects)
+  MCSE <- mcse(posterior, effects = effects)
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
@@ -181,7 +179,7 @@ diagnostic_posterior.stanmvreg <- function(posteriors,
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.brmsfit <- function(posteriors,
+diagnostic_posterior.brmsfit <- function(posterior,
                                          diagnostic = "all",
                                          effects = c("fixed", "random", "all"),
                                          component = c("conditional", "zi", "zero_inflated", "all"),
@@ -190,7 +188,7 @@ diagnostic_posterior.brmsfit <- function(posteriors,
   # Find parameters
   effects <- match.arg(effects)
   component <- match.arg(component)
-  params <- insight::find_parameters(posteriors,
+  params <- insight::find_parameters(posterior,
     effects = effects,
     component = component,
     parameters = parameters,
@@ -213,11 +211,11 @@ diagnostic_posterior.brmsfit <- function(posteriors,
   insight::check_if_installed("rstan")
 
   # Get indices and rename
-  diagnostic_df <- as.data.frame(rstan::summary(posteriors$fit)$summary)
+  diagnostic_df <- as.data.frame(rstan::summary(posterior$fit)$summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   diagnostic_df$ESS <- diagnostic_df$n_eff
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posteriors, effects = "all", component = "all")
+  MCSE <- mcse(posterior, effects = "all", component = "all")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
@@ -236,10 +234,10 @@ diagnostic_posterior.brmsfit <- function(posteriors,
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   # Find parameters
   effects <- match.arg(effects)
-  params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten = TRUE)
+  params <- insight::find_parameters(posterior, effects = effects, parameters = parameters, flatten = TRUE)
 
   # If no diagnostic
   if (is.null(diagnostic)) {
@@ -254,7 +252,7 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
 
   insight::check_if_installed("rstan")
 
-  all_params <- insight::find_parameters(posteriors,
+  all_params <- insight::find_parameters(posterior,
     effects = effects,
     flatten = TRUE
   )
@@ -265,15 +263,15 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
   )
 
   if ("ESS" %in% diagnostic) {
-    diagnostic_df$ESS <- effective_sample(posteriors, effects = effects)$ESS
+    diagnostic_df$ESS <- effective_sample(posterior, effects = effects)$ESS
   }
 
   if ("MCSE" %in% diagnostic) {
-    diagnostic_df$MCSE <- mcse(posteriors, effects = effects)$MCSE
+    diagnostic_df$MCSE <- mcse(posterior, effects = effects)$MCSE
   }
 
   if ("Rhat" %in% diagnostic) {
-    s <- as.data.frame(rstan::summary(posteriors)$summary)
+    s <- as.data.frame(rstan::summary(posterior)$summary)
     diagnostic_df$Rhat <- s[rownames(s) %in% all_params, ]$Rhat
   }
 
@@ -286,9 +284,9 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
 
 
 #' @export
-diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
+diagnostic_posterior.blavaan <- function(posterior, diagnostic = "all", ...) {
   # Find parameters
-  params <- suppressWarnings(insight::find_parameters(posteriors, flatten = TRUE))
+  params <- suppressWarnings(insight::find_parameters(posterior, flatten = TRUE))
 
   out <- data.frame("Parameter" = params)
 
@@ -309,22 +307,22 @@ diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
   if ("Rhat" %in% diagnostic) {
     insight::check_if_installed("blavaan")
 
-    Rhat <- blavaan::blavInspect(posteriors, what = "psrf")
+    Rhat <- blavaan::blavInspect(posterior, what = "psrf")
     Rhat <- data.frame(
-      Parameter = colnames(insight::get_parameters(posteriors)),
+      Parameter = colnames(insight::get_parameters(posterior)),
       Rhat = Rhat
     )
     out <- merge(out, Rhat, by = "Parameter", all = TRUE)
   }
 
   if ("ESS" %in% diagnostic) {
-    ESS <- effective_sample(posteriors)
+    ESS <- effective_sample(posterior)
     out <- merge(out, ESS, by = "Parameter", all = TRUE)
   }
 
 
   if ("MCSE" %in% diagnostic) {
-    MCSE <- mcse(posteriors)
+    MCSE <- mcse(posterior)
     out <- merge(out, MCSE, by = "Parameter", all = TRUE)
   }
 

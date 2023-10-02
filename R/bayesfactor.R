@@ -21,35 +21,30 @@
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("logspline")
 #' library(bayestestR)
 #'
-#' if (require("logspline")) {
-#'   prior <- distribution_normal(1000, mean = 0, sd = 1)
-#'   posterior <- distribution_normal(1000, mean = .5, sd = .3)
+#' prior <- distribution_normal(1000, mean = 0, sd = 1)
+#' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
-#'   bayesfactor(posterior, prior = prior, verbose = FALSE)
-#' }
+#' bayesfactor(posterior, prior = prior, verbose = FALSE)
+#'
 #' \donttest{
 #' # rstanarm models
 #' # ---------------
-#' if (require("rstanarm")) {
-#'   model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
-#'   bayesfactor(model, verbose = FALSE)
-#' }
-#' }
+#' model <- suppressWarnings(rstanarm::stan_lmer(extra ~ group + (1 | ID), data = sleep))
+#' bayesfactor(model, verbose = FALSE)
 #'
-#' if (require("logspline")) {
-#'   # Frequentist models
-#'   # ---------------
-#'   m0 <- lm(extra ~ 1, data = sleep)
-#'   m1 <- lm(extra ~ group, data = sleep)
-#'   m2 <- lm(extra ~ group + ID, data = sleep)
+#' # Frequentist models
+#' # ---------------
+#' m0 <- lm(extra ~ 1, data = sleep)
+#' m1 <- lm(extra ~ group, data = sleep)
+#' m2 <- lm(extra ~ group + ID, data = sleep)
 #'
-#'   comparison <- bayesfactor(m0, m1, m2)
-#'   comparison
+#' comparison <- bayesfactor(m0, m1, m2)
+#' comparison
 #'
-#'   bayesfactor(comparison)
+#' bayesfactor(comparison)
 #' }
 #' @export
 bayesfactor <- function(...,
@@ -75,13 +70,7 @@ bayesfactor <- function(...,
     } else {
       bayesfactor_models(...)
     }
-  } else if (!is.null(hypothesis)) {
-    bayesfactor_restricted(...,
-      prior = prior,
-      verbose = verbose,
-      effects = effects
-    )
-  } else {
+  } else if (is.null(hypothesis)) {
     bayesfactor_parameters(
       ...,
       prior = prior,
@@ -89,6 +78,12 @@ bayesfactor <- function(...,
       null = null,
       effects = effects,
       verbose = verbose
+    )
+  } else {
+    bayesfactor_restricted(...,
+      prior = prior,
+      verbose = verbose,
+      effects = effects
     )
   }
 }
