@@ -77,6 +77,7 @@ Compute various point-estimates, such as the mean, the median or the MAP, to des
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 point_estimate(rnorm(1000))
@@ -89,7 +90,6 @@ point_estimate(df, centrality = c("median", "MAP"))
 \donttest{
 # rstanarm models
 # -----------------------------------------------
-library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 point_estimate(model, centrality = "all", dispersion = TRUE)
 point_estimate(model, centrality = c("median", "MAP"))
@@ -97,27 +97,24 @@ point_estimate(model, centrality = c("median", "MAP"))
 
 # emmeans estimates
 # -----------------------------------------------
-library(emmeans)
 point_estimate(
-  emtrends(model, ~1, "wt", data = mtcars),
+  emmeans::emtrends(model, ~1, "wt", data = mtcars),
   centrality = c("median", "MAP")
 )
 
 # brms models
 # -----------------------------------------------
-library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 point_estimate(model, centrality = "all", dispersion = TRUE)
 point_estimate(model, centrality = c("median", "MAP"))
 
 # BayesFactor objects
 # -----------------------------------------------
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 point_estimate(bf, centrality = "all", dispersion = TRUE)
 point_estimate(bf, centrality = c("median", "MAP"))
 }
-
+\dontshow{\}) # examplesIf}
 }
 \references{
 Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D.

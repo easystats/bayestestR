@@ -55,7 +55,7 @@
 #'   random effects) and their `log(BF)`s  (Use `as.numeric()` to extract the
 #'   non-log Bayes factors; see examples), that prints nicely.
 #'
-#' @examples
+#' @examplesIf require("lme4") && require("BayesFactor") && require("rstanarm") && require("brms")
 #' # With lm objects:
 #' # ----------------
 #' lm1 <- lm(mpg ~ 1, data = mtcars)
@@ -66,11 +66,9 @@
 #' # bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
 #' # bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
 #'
-#'
 #' update(BFM, reference = "bottom")
 #' as.matrix(BFM)
 #' as.numeric(BFM)
-#'
 #'
 #' lm2b <- lm(sqrt(mpg) ~ hp, data = mtcars)
 #' # Set check_response = TRUE for transformed responses
@@ -79,68 +77,61 @@
 #' \donttest{
 #' # With lmerMod objects:
 #' # ---------------------
-#' if (require("lme4")) {
-#'   lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-#'   lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-#'   lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
-#'     data = iris
-#'   )
-#'   bayesfactor_models(lmer1, lmer2, lmer3,
-#'     denominator = 1,
-#'     estimator = "REML"
-#'   )
-#' }
+#' lmer1 <- lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+#' lmer2 <- lme4::lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
+#' lmer3 <- lme4::lmer(
+#'   Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
+#'   data = iris
+#' )
+#' bayesfactor_models(lmer1, lmer2, lmer3,
+#'   denominator = 1,
+#'   estimator = "REML"
+#' )
 #'
 #' # rstanarm models
 #' # ---------------------
 #' # (note that a unique diagnostic_file MUST be specified in order to work)
-#' if (require("rstanarm")) {
-#'   stan_m0 <- stan_glm(Sepal.Length ~ 1,
-#'     data = iris,
-#'     family = gaussian(),
-#'     diagnostic_file = file.path(tempdir(), "df0.csv")
-#'   )
-#'   stan_m1 <- stan_glm(Sepal.Length ~ Species,
-#'     data = iris,
-#'     family = gaussian(),
-#'     diagnostic_file = file.path(tempdir(), "df1.csv")
-#'   )
-#'   stan_m2 <- stan_glm(Sepal.Length ~ Species + Petal.Length,
-#'     data = iris,
-#'     family = gaussian(),
-#'     diagnostic_file = file.path(tempdir(), "df2.csv")
-#'   )
-#'   bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0, verbose = FALSE)
-#' }
+#' stan_m0 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ 1,
+#'   data = iris,
+#'   family = gaussian(),
+#'   diagnostic_file = file.path(tempdir(), "df0.csv")
+#' ))
+#' stan_m1 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species,
+#'   data = iris,
+#'   family = gaussian(),
+#'   diagnostic_file = file.path(tempdir(), "df1.csv")
+#' ))
+#' stan_m2 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Length,
+#'   data = iris,
+#'   family = gaussian(),
+#'   diagnostic_file = file.path(tempdir(), "df2.csv")
+#' ))
+#' bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0, verbose = FALSE)
 #'
 #'
 #' # brms models
 #' # --------------------
 #' # (note the save_pars MUST be set to save_pars(all = TRUE) in order to work)
-#' if (require("brms")) {
-#'   brm1 <- brm(Sepal.Length ~ 1, data = iris, save_pars = save_pars(all = TRUE))
-#'   brm2 <- brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all = TRUE))
-#'   brm3 <- brm(
-#'     Sepal.Length ~ Species + Petal.Length,
-#'     data = iris,
-#'     save_pars = save_pars(all = TRUE)
-#'   )
+#' brm1 <- brms::brm(Sepal.Length ~ 1, data = iris, save_pars = save_pars(all = TRUE))
+#' brm2 <- brms::brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all = TRUE))
+#' brm3 <- brms::brm(
+#'   Sepal.Length ~ Species + Petal.Length,
+#'   data = iris,
+#'   save_pars = save_pars(all = TRUE)
+#' )
 #'
-#'   bayesfactor_models(brm1, brm2, brm3, denominator = 1, verbose = FALSE)
-#' }
+#' bayesfactor_models(brm1, brm2, brm3, denominator = 1, verbose = FALSE)
 #'
 #'
 #' # BayesFactor
 #' # ---------------------------
-#' if (require("BayesFactor")) {
-#'   data(puzzles)
-#'   BF <- anovaBF(RT ~ shape * color + ID,
-#'     data = puzzles,
-#'     whichRandom = "ID", progress = FALSE
-#'   )
-#'   BF
-#'   bayesfactor_models(BF) # basically the same
-#' }
+#' data(puzzles)
+#' BF <- BayesFactor::anovaBF(RT ~ shape * color + ID,
+#'   data = puzzles,
+#'   whichRandom = "ID", progress = FALSE
+#' )
+#' BF
+#' bayesfactor_models(BF) # basically the same
 #' }
 #'
 #' @references

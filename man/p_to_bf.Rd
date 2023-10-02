@@ -33,33 +33,32 @@ It might therefore be not reliable. Use at your own risks. For more accurate
 approximate Bayes factors, use \code{\link[=bic_to_bf]{bic_to_bf()}} instead.
 }
 \examples{
-if (requireNamespace("parameters", quietly = TRUE)) {
-  data(iris)
-  model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
-  p_to_bf(model)
+\dontshow{if (require("parameters")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(iris)
+model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
+p_to_bf(model)
 
-  # Examples that demonstrate comparison between
-  # BIC-approximated and pseudo BF
-  # --------------------------------------------
-  m0 <- lm(mpg ~ 1, mtcars)
-  m1 <- lm(mpg ~ am, mtcars)
-  m2 <- lm(mpg ~ factor(cyl), mtcars)
+# Examples that demonstrate comparison between
+# BIC-approximated and pseudo BF
+# --------------------------------------------
+m0 <- lm(mpg ~ 1, mtcars)
+m1 <- lm(mpg ~ am, mtcars)
+m2 <- lm(mpg ~ factor(cyl), mtcars)
 
-  # In this first example, BIC-approximated BF and
-  # pseudo-BF based on p-values are close...
+# In this first example, BIC-approximated BF and
+# pseudo-BF based on p-values are close...
 
-  # BIC-approximated BF, m1 against null model
-  bic_to_bf(BIC(m1), denominator = BIC(m0))
+# BIC-approximated BF, m1 against null model
+bic_to_bf(BIC(m1), denominator = BIC(m0))
 
-  # pseudo-BF based on p-values - dropping intercept
-  p_to_bf(m1)[-1, ]
+# pseudo-BF based on p-values - dropping intercept
+p_to_bf(m1)[-1, ]
 
-  # The second example shows that results from pseudo-BF are less accurate
-  # and should be handled wit caution!
-  bic_to_bf(BIC(m2), denominator = BIC(m0))
-  p_to_bf(anova(m2), n_obs = nrow(mtcars))
-}
-
+# The second example shows that results from pseudo-BF are less accurate
+# and should be handled wit caution!
+bic_to_bf(BIC(m2), denominator = BIC(m0))
+p_to_bf(anova(m2), n_obs = nrow(mtcars))
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

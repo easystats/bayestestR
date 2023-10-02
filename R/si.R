@@ -42,7 +42,7 @@
 #' Note that if the level of requested support is higher than observed in the data, the
 #' interval will be `[NA,NA]`.
 #'
-#' @examplesIf requireNamespace("logspline", quietly = TRUE)
+#' @examplesIf require("logspline") && require("rstanarm") && require("brms") && require("emmeans")
 #' library(bayestestR)
 #'
 #' prior <- distribution_normal(1000, mean = 0, sd = 1)

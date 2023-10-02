@@ -95,7 +95,7 @@
 #'   methods for model selection. Statistics and Computing, 27(3), 711–735.
 #'   \doi{10.1007/s11222-016-9649-y}
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
 #' library(bayestestR)
 #'
 #' rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))

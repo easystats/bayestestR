@@ -158,7 +158,7 @@ or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stat
 }
 
 \examples{
-\dontshow{if (requireNamespace("logspline", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("logspline") && require("rstanarm") && require("brms") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 prior <- distribution_normal(1000, mean = 0, sd = 1)

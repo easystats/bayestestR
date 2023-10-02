@@ -72,36 +72,38 @@ Testing} framework. It corresponds to the density value at the null (e.g., 0)
 divided by the density at the Maximum A Posteriori (MAP).
 }
 \details{
-Note that this method is sensitive to the density estimation \code{method} (see the section in the examples below).
+Note that this method is sensitive to the density estimation \code{method}
+(see the section in the examples below).
 \subsection{Strengths and Limitations}{
-\strong{Strengths:} Straightforward computation. Objective property of the posterior distribution.
-\cr \cr
-\strong{Limitations:} Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation. Only suitable for weak / very diffused priors.
+
+\strong{Strengths:} Straightforward computation. Objective property of the posterior
+distribution.
+
+\strong{Limitations:} Limited information favoring the null hypothesis. Relates
+on density approximation. Indirect relationship between mathematical
+definition and interpretation. Only suitable for weak / very diffused priors.
 }
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 p_map(rnorm(1000, 0, 1))
 p_map(rnorm(1000, 10, 1))
 \donttest{
-library(rstanarm)
 model <- suppressWarnings(
-  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
 p_map(model)
 
-library(emmeans)
 p_map(suppressWarnings(
-  emtrends(model, ~1, "wt", data = mtcars)
+  emmeans::emtrends(model, ~1, "wt", data = mtcars)
 ))
 
-library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 p_map(model)
 
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 p_map(bf)
 
 # ---------------------------------------
@@ -111,9 +113,9 @@ data <- data.frame()
 for (iteration in 1:250) {
   x <- rnorm(1000, 1, 1)
   result <- data.frame(
-    "Kernel" = as.numeric(p_map(x, method = "kernel")),
-    "KernSmooth" = as.numeric(p_map(x, method = "KernSmooth")),
-    "logspline" = as.numeric(p_map(x, method = "logspline"))
+    Kernel = as.numeric(p_map(x, method = "kernel")),
+    KernSmooth = as.numeric(p_map(x, method = "KernSmooth")),
+    logspline = as.numeric(p_map(x, method = "logspline"))
   )
   data <- rbind(data, result)
 }
@@ -124,6 +126,7 @@ summary(data$KernSmooth)
 summary(data$logspline)
 boxplot(data[c("KernSmooth", "logspline")])
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

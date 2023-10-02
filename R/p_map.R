@@ -6,40 +6,41 @@
 #' Testing* framework. It corresponds to the density value at the null (e.g., 0)
 #' divided by the density at the Maximum A Posteriori (MAP).
 #'
-#' @details Note that this method is sensitive to the density estimation `method` (see the section in the examples below).
-#' \subsection{Strengths and Limitations}{
-#' **Strengths:** Straightforward computation. Objective property of the posterior distribution.
-#' \cr \cr
-#' **Limitations:** Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation. Only suitable for weak / very diffused priors.
-#' }
+#' @details Note that this method is sensitive to the density estimation `method`
+#' (see the section in the examples below).
+#'
+#' ## Strengths and Limitations
+#'
+#' **Strengths:** Straightforward computation. Objective property of the posterior
+#' distribution.
+#'
+#' **Limitations:** Limited information favoring the null hypothesis. Relates
+#' on density approximation. Indirect relationship between mathematical
+#' definition and interpretation. Only suitable for weak / very diffused priors.
 #'
 #' @inheritParams hdi
 #' @inheritParams density_at
 #' @inheritParams pd
 #'
-#' @examples
+#' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
 #' library(bayestestR)
 #'
 #' p_map(rnorm(1000, 0, 1))
 #' p_map(rnorm(1000, 10, 1))
 #' \donttest{
-#' library(rstanarm)
 #' model <- suppressWarnings(
-#'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#'   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' )
 #' p_map(model)
 #'
-#' library(emmeans)
 #' p_map(suppressWarnings(
-#'   emtrends(model, ~1, "wt", data = mtcars)
+#'   emmeans::emtrends(model, ~1, "wt", data = mtcars)
 #' ))
 #'
-#' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_map(model)
 #'
-#' library(BayesFactor)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' p_map(bf)
 #'
 #' # ---------------------------------------
@@ -49,9 +50,9 @@
 #' for (iteration in 1:250) {
 #'   x <- rnorm(1000, 1, 1)
 #'   result <- data.frame(
-#'     "Kernel" = as.numeric(p_map(x, method = "kernel")),
-#'     "KernSmooth" = as.numeric(p_map(x, method = "KernSmooth")),
-#'     "logspline" = as.numeric(p_map(x, method = "logspline"))
+#'     Kernel = as.numeric(p_map(x, method = "kernel")),
+#'     KernSmooth = as.numeric(p_map(x, method = "KernSmooth")),
+#'     logspline = as.numeric(p_map(x, method = "logspline"))
 #'   )
 #'   data <- rbind(data, result)
 #' }
@@ -64,10 +65,9 @@
 #' }
 #' @seealso [Jeff Mill's talk](https://www.youtube.com/watch?v=Ip8Ci5KUVRc)
 #'
-#' @references \itemize{
-#'   \item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
-#'   \item Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.
-#' }
+#' @references
+#' - Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+#' - Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.
 #'
 #' @export
 p_map <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {

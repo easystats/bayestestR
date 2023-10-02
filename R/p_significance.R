@@ -19,7 +19,7 @@
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @examples
+#' @examplesIf require("rstanarm")
 #' library(bayestestR)
 #'
 #' # Simulate a posterior distribution of mean 1 and SD 1
@@ -34,13 +34,11 @@
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
-#' if (require("rstanarm")) {
-#'   model <- rstanarm::stan_glm(mpg ~ wt + cyl,
-#'     data = mtcars,
-#'     chains = 2, refresh = 0
-#'   )
-#'   p_significance(model)
-#' }
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl,
+#'   data = mtcars,
+#'   chains = 2, refresh = 0
+#' )
+#' p_significance(model)
 #' }
 #' @export
 p_significance <- function(x, ...) {
