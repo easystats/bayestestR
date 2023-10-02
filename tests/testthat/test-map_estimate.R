@@ -6,7 +6,7 @@ test_that("map_estimate", {
   expect_s3_class(MAP, "map_estimate")
   expect_s3_class(MAP, "data.frame")
   expect_identical(dim(MAP), c(1L, 2L))
-  expect_output(
+  expect_identical(
     capture.output(print(MAP)),
     c(
       "MAP Estimate",
