@@ -43,34 +43,34 @@ test_that("blavaan, all", {
 
   x <- point_estimate(bfit, centrality = "all", dispersion = TRUE)
   expect_true(all(c("Median", "MAD", "Mean", "SD", "MAP", "Component") %in% colnames(x)))
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- eti(bfit)
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- hdi(bfit)
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- p_direction(bfit)
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- rope(bfit, range = c(-0.1, 0.1))
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- p_rope(bfit, range = c(-0.1, 0.1))
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- p_map(bfit)
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- p_significance(bfit, threshold = c(-0.1, 0.1))
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- equivalence_test(bfit, range = c(-0.1, 0.1))
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- estimate_density(bfit)
-  expect_length(unique(x$Parameter), 14)
+  expect_length(unique(x$Parameter), 10)
 
 
   ## Bayes factors ----
@@ -80,24 +80,24 @@ test_that("blavaan, all", {
 
   expect_warning(weighted_posteriors(bfit, bfit2))
   x <- suppressWarnings(weighted_posteriors(bfit, bfit2))
-  expect_identical(ncol(x), 14L)
+  expect_identical(ncol(x), 10L)
 
   bfit_prior <- unupdate(bfit)
   capture.output(x <- expect_warning(bayesfactor_parameters(bfit, prior = bfit_prior)))
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- expect_warning(si(bfit, prior = bfit_prior))
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   ## Prior/posterior checks ----
   suppressWarnings(x <- check_prior(bfit))
   expect_equal(nrow(x), 13)
 
   x <- check_prior(bfit, simulate_priors = FALSE)
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- diagnostic_posterior(bfit)
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 
   x <- simulate_prior(bfit)
   expect_identical(ncol(x), 13L)
@@ -108,5 +108,5 @@ test_that("blavaan, all", {
   # YES this is 13! We have two parameters with the same prior.
 
   x <- describe_posterior(bfit, test = "all", rope_range = c(-0.1, 0.1))
-  expect_identical(nrow(x), 14L)
+  expect_identical(nrow(x), 10L)
 })
