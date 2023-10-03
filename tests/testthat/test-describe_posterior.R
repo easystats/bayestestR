@@ -158,6 +158,7 @@ test_that("describe_posterior", {
 
   # brms -------------------------------------------------
 
+  skip_on_os("windows")
   x <- suppressWarnings(brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, ci = c(0.8, 0.9))
 

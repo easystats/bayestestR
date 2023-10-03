@@ -69,6 +69,8 @@ test_that("rope", {
 
 
 skip_if_not_or_load_if_installed("brms")
+skip_on_os("windows")
+
 set.seed(123)
 model <- suppressWarnings(brms::brm(mpg ~ wt + gear, data = mtcars, iter = 500))
 rope <- rope(model, verbose = FALSE)
