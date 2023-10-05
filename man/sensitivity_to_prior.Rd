@@ -30,26 +30,19 @@ antagonistic prior (a prior of same shape located on the opposite of the
 effect).
 }
 \examples{
+\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(bayestestR)
 
 # rstanarm models
 # -----------------------------------------------
-if (require("rstanarm")) {
-  model <- rstanarm::stan_glm(mpg ~ wt, data = mtcars)
-  sensitivity_to_prior(model)
+model <- rstanarm::stan_glm(mpg ~ wt, data = mtcars)
+sensitivity_to_prior(model)
 
-  model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-  sensitivity_to_prior(model, index = c("Median", "MAP"))
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+sensitivity_to_prior(model, index = c("Median", "MAP"))
 }
-
-# brms models
-# -----------------------------------------------
-if (require("brms")) {
-  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-  # sensitivity_to_prior(model)
-}
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 DescTools

@@ -113,54 +113,51 @@
 #' Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
 #' null-model) (\cite{Wetzels et al. 2011}).
 #'
-#' @examples
+#' @examplesIf require("logspline")
 #' library(bayestestR)
-#' if (require("logspline")) {
-#'   prior <- distribution_normal(1000, mean = 0, sd = 1)
-#'   posterior <- distribution_normal(1000, mean = .5, sd = .3)
-#'   (BF_pars <- bayesfactor_parameters(posterior, prior, verbose = FALSE))
+#' prior <- distribution_normal(1000, mean = 0, sd = 1)
+#' posterior <- distribution_normal(1000, mean = .5, sd = .3)
+#' (BF_pars <- bayesfactor_parameters(posterior, prior, verbose = FALSE))
 #'
-#'   as.numeric(BF_pars)
-#' }
+#' as.numeric(BF_pars)
+#'
+#' @examplesIf require("rstanarm") && require("emmeans") && require("logspline")
 #' \donttest{
 #' # rstanarm models
 #' # ---------------
-#' if (require("rstanarm") && require("emmeans") && require("logspline")) {
-#'   contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
-#'   stan_model <- suppressWarnings(stan_lmer(
-#'     extra ~ group + (1 | ID),
-#'     data = sleep,
-#'     refresh = 0
-#'   ))
-#'   bayesfactor_parameters(stan_model, verbose = FALSE)
-#'   bayesfactor_parameters(stan_model, null = rope_range(stan_model))
+#' contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
+#' stan_model <- suppressWarnings(stan_lmer(
+#'   extra ~ group + (1 | ID),
+#'   data = sleep,
+#'   refresh = 0
+#' ))
+#' bayesfactor_parameters(stan_model, verbose = FALSE)
+#' bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 #'
-#'   # emmGrid objects
-#'   # ---------------
-#'   group_diff <- pairs(emmeans(stan_model, ~group, data = sleep))
-#'   bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
+#' # emmGrid objects
+#' # ---------------
+#' group_diff <- pairs(emmeans(stan_model, ~group, data = sleep))
+#' bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
 #'
-#'   # Or
-#'   # group_diff_prior <- pairs(emmeans(unupdate(stan_model), ~group))
-#'   # bayesfactor_parameters(group_diff, prior = group_diff_prior, verbose = FALSE)
+#' # Or
+#' # group_diff_prior <- pairs(emmeans(unupdate(stan_model), ~group))
+#' # bayesfactor_parameters(group_diff, prior = group_diff_prior, verbose = FALSE)
 #' }
-#'
+#' @examplesIf require("brms") && require("logspline")
 #' # brms models
 #' # -----------
-#' if (require("brms") && require("logspline")) {
-#'   contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
-#'   my_custom_priors <-
-#'     set_prior("student_t(3, 0, 1)", class = "b") +
-#'     set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
+#' contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
+#' my_custom_priors <-
+#'   set_prior("student_t(3, 0, 1)", class = "b") +
+#'   set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
 #'
-#'   brms_model <- suppressWarnings(brm(extra ~ group + (1 | ID),
-#'     data = sleep,
-#'     prior = my_custom_priors,
-#'     refresh = 0
-#'   ))
-#'   bayesfactor_parameters(brms_model, verbose = FALSE)
-#' }
-#' }
+#' brms_model <- suppressWarnings(brm(extra ~ group + (1 | ID),
+#'   data = sleep,
+#'   prior = my_custom_priors,
+#'   refresh = 0
+#' ))
+#' bayesfactor_parameters(brms_model, verbose = FALSE)
+#'
 #' @references
 #' \itemize{
 #' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010).
