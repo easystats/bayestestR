@@ -243,13 +243,13 @@ to Ying Liu for the original SPI algorithm and R implementation.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95% SPI: [-1.69, 2.01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% SPI: [-1.96, 1.96]</span>
 <span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">posterior</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Shortest Probability Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 80% SPI       |       89% SPI |       95% SPI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [-1.20, 1.18] | [-1.60, 1.40] | [-1.69, 2.01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [-1.17, 1.34] | [-1.50, 1.70] | [-1.96, 1.96]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
@@ -257,19 +257,19 @@ to Ying Liu for the original SPI algorithm and R implementation.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       95% SPI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.68, 1.90]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.75, 1.95]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-2.39, 1.68]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.73, 2.01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-2.04, 1.89]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.65, 1.96]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-2.09, 1.74]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-2.11, 1.97]</span>
 <span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">df</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Shortest Probability Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       80% SPI |       89% SPI |       95% SPI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.45, 0.76] | [-1.52, 1.45] | [-1.68, 1.90]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-0.76, 1.61] | [-1.50, 1.61] | [-1.75, 1.95]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.22, 0.86] | [-1.24, 1.68] | [-2.39, 1.68]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-0.73, 1.35] | [-1.65, 1.35] | [-1.73, 2.01]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.05, 1.49] | [-1.41, 1.76] | [-2.04, 1.89]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-0.90, 1.09] | [-1.33, 1.41] | [-1.65, 1.96]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.38, 1.44] | [-1.84, 1.49] | [-2.09, 1.74]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.27, 1.40] | [-1.61, 1.56] | [-2.11, 1.97]</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
@@ -280,9 +280,9 @@ to Ying Liu for the original SPI algorithm and R implementation.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        95% SPI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [30.62, 47.80]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.54, -4.28]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | [-1.64,  1.61]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [29.08, 47.70]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.75, -4.12]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | [-1.74,  1.70]</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
