@@ -108,7 +108,7 @@ check_prior.blavaan <- check_prior.brmsfit
                          method = "gelman",
                          verbose = TRUE,
                          cleaned_parameters = NULL) {
-  # sanity check for matching parameters. Some weird priors like
+  # validation check for matching parameters. Some weird priors like
   # rstanarm's R2 prior might cause problems
 
   if (!is.null(cleaned_parameters) && ncol(priors) != ncol(posteriors)) {

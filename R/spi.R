@@ -261,7 +261,7 @@ spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   n.sims <- length(x)
   conf <- 1 - ci
   nn <- round(n.sims * conf)
-  # sanity check for very low CI levels
+  # validation check for very low CI levels
   if (nn >= n.sims) {
     nn <- n.sims <- 1
   }

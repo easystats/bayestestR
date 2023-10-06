@@ -104,7 +104,7 @@ p_to_bf.default <- function(x, log = FALSE, ...) {
     params <- parameters::p_value(x)
     p <- params$p
     n_obs <- insight::n_obs(x)
-    # sanity check
+    # validation check
     if (is.null(n_obs)) {
       # user may also pass n_obs via dots...
       n_obs <- list(...)$n_obs

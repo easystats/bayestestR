@@ -14,7 +14,7 @@ format.describe_posterior <- function(x,
     attributes(x) <- utils::modifyList(att, attributes(x))
   }
 
-  # sanity check
+  # validation check
   if (is.null(digits)) {
     digits <- 2
   }
