@@ -169,7 +169,9 @@ describe_posterior.default <- function(posterior, ...) {
 
   # Point-estimates
 
-  if (!is.null(centrality)) {
+  if (is.null(centrality)) {
+    estimates <- data.frame(Parameter = NA)
+  } else {
     estimates <- .prepare_output(
       point_estimate(x_df, centrality = centrality, dispersion = dispersion, ...),
       cleaned_parameters,
@@ -181,14 +183,14 @@ describe_posterior.default <- function(posterior, ...) {
         estimates
       )
     }
-  } else {
-    estimates <- data.frame(Parameter = NA)
   }
 
 
   # Uncertainty
 
-  if (!is.null(ci)) {
+  if (is.null(ci)) {
+    uncertainty <- data.frame(Parameter = NA)
+  } else {
     ci_method <- match.arg(tolower(ci_method), c("hdi", "spi", "quantile", "ci", "eti", "si", "bci", "bcai"))
     # not sure why "si" requires the model object
     if (ci_method == "si") {
@@ -208,14 +210,54 @@ describe_posterior.default <- function(posterior, ...) {
         uncertainty
       )
     }
-  } else {
-    uncertainty <- data.frame(Parameter = NA)
   }
 
 
   # Effect Existence
 
-  if (!is.null(test)) {
+  if (is.null(test)) {
+    test_pd <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_rope <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_prope <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_psig <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_bf <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_pmap <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+  } else {
     test <- .check_test_values(test)
     if ("all" %in% test) {
       test <- c("pd", "p_map", "p_rope", "p_significance", "rope", "equivalence", "bf")
@@ -384,48 +426,6 @@ describe_posterior.default <- function(posterior, ...) {
     } else {
       test_bf <- data.frame("Parameter" = NA)
     }
-  } else {
-    test_pd <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_rope <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_prope <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_psig <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_bf <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_pmap <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
   }
 
 
