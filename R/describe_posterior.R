@@ -194,9 +194,9 @@ describe_posterior.default <- function(posterior, ...) {
     ci_method <- match.arg(tolower(ci_method), c("hdi", "spi", "quantile", "ci", "eti", "si", "bci", "bcai"))
     # not sure why "si" requires the model object
     if (ci_method == "si") {
-      uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, ...)
+      uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, verbose = verbose, ...)
     } else {
-      uncertainty <- ci(x_df, ci = ci, method = ci_method, ...)
+      uncertainty <- ci(x_df, ci = ci, method = ci_method, verbose = verbose, ...)
     }
     uncertainty <- .prepare_output(
       uncertainty,
@@ -323,7 +323,7 @@ describe_posterior.default <- function(posterior, ...) {
 
     if ("p_rope" %in% test) {
       test_prope <- .prepare_output(
-        p_rope(x_df, range = rope_range, ...),
+        p_rope(x_df, range = rope_range, verbose = verbose, ...),
         cleaned_parameters,
         is_stanmvreg
       )

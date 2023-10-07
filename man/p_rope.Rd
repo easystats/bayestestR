@@ -9,7 +9,7 @@
 \usage{
 p_rope(x, ...)
 
-\method{p_rope}{numeric}(x, range = "default", ...)
+\method{p_rope}{numeric}(x, range = "default", verbose = TRUE, ...)
 
 \method{p_rope}{stanreg}(
   x,
@@ -18,6 +18,7 @@ p_rope(x, ...)
   component = c("location", "all", "conditional", "smooth_terms", "sigma",
     "distributional", "auxiliary"),
   parameters = NULL,
+  verbose = verbose,
   ...
 )
 
@@ -27,6 +28,7 @@ p_rope(x, ...)
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,
+  verbose = verbose,
   ...
 )
 }
@@ -44,6 +46,8 @@ numeric vectors for each response variable. Vector names should correspond
 to the name of the response variables. If \code{"default"} and input is a vector,
 the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian
 model, \code{\link[=rope_range]{rope_range()}} is used.}
+
+\item{verbose}{Toggle off warnings.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
