@@ -411,7 +411,7 @@ describe_posterior.default <- function(posterior, ...) {
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
       test_bf <- tryCatch(
         .prepare_output(
-          bayesfactor_parameters(x, prior = bf_prior, ...),
+          bayesfactor_parameters(x, prior = bf_prior, verbose = verbose, ...),
           cleaned_parameters,
           is_stanmvreg
         ),

@@ -12,14 +12,14 @@ test_that("describe_posterior", {
 
   x <- distribution_normal(4000)
 
-  describe_posterior(
+  expect_silent(describe_posterior(
     x,
     centrality = "all",
     dispersion = TRUE,
     test = "all",
     ci = 0.89,
     verbose = FALSE
-  )
+  ))
 
   rez <- as.data.frame(suppressWarnings(describe_posterior(
     x,
