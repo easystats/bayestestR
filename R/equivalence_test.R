@@ -249,7 +249,15 @@ equivalence_test.stanreg <- function(x,
                                      range = "default",
                                      ci = 0.95,
                                      effects = c("fixed", "random", "all"),
-                                     component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                     component = c(
+                                       "location",
+                                       "all",
+                                       "conditional",
+                                       "smooth_terms",
+                                       "sigma",
+                                       "distributional",
+                                       "auxiliary"
+                                     ),
                                      parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
