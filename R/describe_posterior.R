@@ -415,7 +415,7 @@ describe_posterior.default <- function(posterior, ...) {
           cleaned_parameters,
           is_stanmvreg
         ),
-        error = function(e) data.frame("Parameter" = NA)
+        error = function(e) data.frame(Parameter = NA)
       )
       if (!"Parameter" %in% names(test_bf)) {
         test_bf <- cbind(
@@ -424,7 +424,7 @@ describe_posterior.default <- function(posterior, ...) {
         )
       }
     } else {
-      test_bf <- data.frame("Parameter" = NA)
+      test_bf <- data.frame(Parameter = NA)
     }
   }
 
@@ -515,9 +515,9 @@ describe_posterior.default <- function(posterior, ...) {
 
 #' @keywords internal
 .add_effects_component_column <- function(x) {
-  if (!"Effects" %in% names(x)) x <- cbind(x, data.frame("Effects" = NA))
-  if (!"Component" %in% names(x)) x <- cbind(x, data.frame("Component" = NA))
-  if (!"Response" %in% names(x)) x <- cbind(x, data.frame("Response" = NA))
+  if (!"Effects" %in% names(x)) x <- cbind(x, data.frame(Effects = NA))
+  if (!"Component" %in% names(x)) x <- cbind(x, data.frame(Component = NA))
+  if (!"Response" %in% names(x)) x <- cbind(x, data.frame(Response = NA))
   x
 }
 
