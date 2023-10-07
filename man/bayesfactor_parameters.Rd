@@ -36,7 +36,7 @@ bayesfactor_rope(
   posterior,
   prior = NULL,
   direction = "two-sided",
-  null = rope_range(posterior),
+  null = rope_range(posterior, verbose = FALSE),
   verbose = TRUE,
   ...
 )
@@ -63,7 +63,7 @@ bf_rope(
   posterior,
   prior = NULL,
   direction = "two-sided",
-  null = rope_range(posterior),
+  null = rope_range(posterior, verbose = FALSE),
   verbose = TRUE,
   ...
 )

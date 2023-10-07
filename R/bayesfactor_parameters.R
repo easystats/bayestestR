@@ -219,7 +219,7 @@ bayesfactor_pointnull <- function(posterior,
 bayesfactor_rope <- function(posterior,
                              prior = NULL,
                              direction = "two-sided",
-                             null = rope_range(posterior),
+                             null = rope_range(posterior, verbose = FALSE),
                              verbose = TRUE,
                              ...) {
   if (length(null) < 2 && verbose) {
