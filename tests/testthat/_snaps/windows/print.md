@@ -1,9 +1,7 @@
 # print.describe_posterior
 
     Code
-      describe_posterior(m)
-    Warning <simpleWarning>
-      Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.
+      describe_posterior(m, verbose = FALSE)
     Output
       Summary of Posterior Distribution
       
@@ -16,9 +14,7 @@
 ---
 
     Code
-      describe_posterior(m, effects = "all", component = "all")
-    Warning <simpleWarning>
-      Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.
+      describe_posterior(m, effects = "all", component = "all", verbose = FALSE)
     Output
       Summary of Posterior Distribution
       

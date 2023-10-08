@@ -21,6 +21,7 @@ describe_posterior(posterior, ...)
   keep_iterations = FALSE,
   bf_prior = NULL,
   BF = 1,
+  verbose = TRUE,
   ...
 )
 
@@ -42,6 +43,7 @@ describe_posterior(posterior, ...)
     "distributional", "auxiliary"),
   parameters = NULL,
   BF = 1,
+  verbose = TRUE,
   ...
 )
 
@@ -63,6 +65,7 @@ describe_posterior(posterior, ...)
   parameters = NULL,
   BF = 1,
   priors = FALSE,
+  verbose = TRUE,
   ...
 )
 }
@@ -117,6 +120,8 @@ Bayes factors / SI. Used if the input is a posterior, otherwise (in the
 case of models) ignored.}
 
 \item{BF}{The amount of support required to be included in the support interval.}
+
+\item{verbose}{Toggle off warnings.}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}

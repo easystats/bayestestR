@@ -110,7 +110,7 @@ equivalence_test.default <- function(x, ...) {
 
 #' @export
 equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
-  rope_data <- rope(x, range = range, ci = ci)
+  rope_data <- rope(x, range = range, ci = ci, verbose = verbose)
   out <- as.data.frame(rope_data)
 
   if (all(ci < 1)) {
@@ -208,7 +208,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
                                      parameters = NULL,
                                      verbose = TRUE) {
   if (all(range == "default")) {
-    range <- rope_range(x)
+    range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2L) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
@@ -249,7 +249,15 @@ equivalence_test.stanreg <- function(x,
                                      range = "default",
                                      ci = 0.95,
                                      effects = c("fixed", "random", "all"),
-                                     component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                     component = c(
+                                       "location",
+                                       "all",
+                                       "conditional",
+                                       "smooth_terms",
+                                       "sigma",
+                                       "distributional",
+                                       "auxiliary"
+                                     ),
                                      parameters = NULL,
                                      verbose = TRUE,
                                      ...) {

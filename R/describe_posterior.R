@@ -35,6 +35,7 @@
 #' @inheritParams point_estimate
 #' @inheritParams ci
 #' @inheritParams si
+#' @inheritParams hdi
 #'
 #' @details
 #' One or more components of point estimates (like posterior mean or median),
@@ -130,15 +131,18 @@ describe_posterior.default <- function(posterior, ...) {
                                 keep_iterations = FALSE,
                                 bf_prior = NULL,
                                 BF = 1,
+                                verbose = TRUE,
                                 ...) {
   if (is.null(x)) {
-    insight::format_warning("Could not extract posterior samples.")
+    if (verbose) {
+      insight::format_warning("Could not extract posterior samples.")
+    }
     return(NULL)
   }
 
   # we need this information from the original object
   if (all(rope_range == "default")) {
-    rope_range <- rope_range(x, ...)
+    rope_range <- rope_range(x, verbose = verbose, ...)
   }
 
   if (!is.data.frame(x) && !is.numeric(x)) {
@@ -165,7 +169,9 @@ describe_posterior.default <- function(posterior, ...) {
 
   # Point-estimates
 
-  if (!is.null(centrality)) {
+  if (is.null(centrality)) {
+    estimates <- data.frame(Parameter = NA)
+  } else {
     estimates <- .prepare_output(
       point_estimate(x_df, centrality = centrality, dispersion = dispersion, ...),
       cleaned_parameters,
@@ -177,20 +183,20 @@ describe_posterior.default <- function(posterior, ...) {
         estimates
       )
     }
-  } else {
-    estimates <- data.frame(Parameter = NA)
   }
 
 
   # Uncertainty
 
-  if (!is.null(ci)) {
+  if (is.null(ci)) {
+    uncertainty <- data.frame(Parameter = NA)
+  } else {
     ci_method <- match.arg(tolower(ci_method), c("hdi", "spi", "quantile", "ci", "eti", "si", "bci", "bcai"))
     # not sure why "si" requires the model object
     if (ci_method == "si") {
-      uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, ...)
+      uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, verbose = verbose, ...)
     } else {
-      uncertainty <- ci(x_df, ci = ci, method = ci_method, ...)
+      uncertainty <- ci(x_df, ci = ci, method = ci_method, verbose = verbose, ...)
     }
     uncertainty <- .prepare_output(
       uncertainty,
@@ -204,14 +210,54 @@ describe_posterior.default <- function(posterior, ...) {
         uncertainty
       )
     }
-  } else {
-    uncertainty <- data.frame(Parameter = NA)
   }
 
 
   # Effect Existence
 
-  if (!is.null(test)) {
+  if (is.null(test)) {
+    test_pd <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_rope <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_prope <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_psig <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_bf <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+
+    test_pmap <- data.frame(
+      Parameter = NA,
+      Effects = NA,
+      Component = NA,
+      Response = NA
+    )
+  } else {
     test <- .check_test_values(test)
     if ("all" %in% test) {
       test <- c("pd", "p_map", "p_rope", "p_significance", "rope", "equivalence", "bf")
@@ -227,9 +273,11 @@ describe_posterior.default <- function(posterior, ...) {
     # no ROPE for multi-response models
     if (insight::is_multivariate(x)) {
       test <- setdiff(test, c("rope", "p_rope"))
-      insight::format_warning(
-        "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
-      )
+      if (verbose) {
+        insight::format_warning(
+          "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
+        )
+      }
     }
 
     # MAP-based p-value
@@ -275,7 +323,7 @@ describe_posterior.default <- function(posterior, ...) {
 
     if ("p_rope" %in% test) {
       test_prope <- .prepare_output(
-        p_rope(x_df, range = rope_range, ...),
+        p_rope(x_df, range = rope_range, verbose = verbose, ...),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -363,11 +411,11 @@ describe_posterior.default <- function(posterior, ...) {
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
       test_bf <- tryCatch(
         .prepare_output(
-          bayesfactor_parameters(x, prior = bf_prior, ...),
+          bayesfactor_parameters(x, prior = bf_prior, verbose = verbose, ...),
           cleaned_parameters,
           is_stanmvreg
         ),
-        error = function(e) data.frame("Parameter" = NA)
+        error = function(e) data.frame(Parameter = NA)
       )
       if (!"Parameter" %in% names(test_bf)) {
         test_bf <- cbind(
@@ -376,50 +424,8 @@ describe_posterior.default <- function(posterior, ...) {
         )
       }
     } else {
-      test_bf <- data.frame("Parameter" = NA)
+      test_bf <- data.frame(Parameter = NA)
     }
-  } else {
-    test_pd <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_rope <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_prope <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_psig <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_bf <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
-
-    test_pmap <- data.frame(
-      Parameter = NA,
-      Effects = NA,
-      Component = NA,
-      Response = NA
-    )
   }
 
 
@@ -509,9 +515,9 @@ describe_posterior.default <- function(posterior, ...) {
 
 #' @keywords internal
 .add_effects_component_column <- function(x) {
-  if (!"Effects" %in% names(x)) x <- cbind(x, data.frame("Effects" = NA))
-  if (!"Component" %in% names(x)) x <- cbind(x, data.frame("Component" = NA))
-  if (!"Response" %in% names(x)) x <- cbind(x, data.frame("Response" = NA))
+  if (!"Effects" %in% names(x)) x <- cbind(x, data.frame(Effects = NA))
+  if (!"Component" %in% names(x)) x <- cbind(x, data.frame(Component = NA))
+  if (!"Response" %in% names(x)) x <- cbind(x, data.frame(Response = NA))
   x
 }
 
@@ -534,6 +540,7 @@ describe_posterior.numeric <- function(posterior,
                                        keep_iterations = FALSE,
                                        bf_prior = NULL,
                                        BF = 1,
+                                       verbose = TRUE,
                                        ...) {
   out <- .describe_posterior(
     posterior,
@@ -547,6 +554,7 @@ describe_posterior.numeric <- function(posterior,
     keep_iterations = keep_iterations,
     bf_prior = bf_prior,
     BF = BF,
+    verbose = verbose,
     ...
   )
 
@@ -582,6 +590,7 @@ describe_posterior.bayesQR <- function(posterior,
                                        rope_ci = 0.95,
                                        keep_iterations = FALSE,
                                        parameters = NULL,
+                                       verbose = TRUE,
                                        ...) {
   out <- .describe_posterior(
     insight::get_parameters(posterior),
@@ -595,6 +604,7 @@ describe_posterior.bayesQR <- function(posterior,
     keep_iterations = keep_iterations,
     effects = "fixed",
     parameters = parameters,
+    verbose = verbose,
     ...
   )
 
@@ -633,6 +643,7 @@ describe_posterior.draws <- function(posterior,
                                      keep_iterations = FALSE,
                                      bf_prior = NULL,
                                      BF = 1,
+                                     verbose = TRUE,
                                      ...) {
   out <- .describe_posterior(
     .posterior_draws_to_df(posterior),
@@ -646,6 +657,7 @@ describe_posterior.draws <- function(posterior,
     keep_iterations = keep_iterations,
     bf_prior = bf_prior,
     BF = BF,
+    verbose = verbose,
     ...
   )
 
@@ -673,6 +685,7 @@ describe_posterior.effectsize_std_params <- function(posterior,
                                                      keep_iterations = FALSE,
                                                      bf_prior = NULL,
                                                      BF = 1,
+                                                     verbose = TRUE,
                                                      ...) {
   class(posterior) <- "data.frame"
 
@@ -695,6 +708,7 @@ describe_posterior.effectsize_std_params <- function(posterior,
       keep_iterations = keep_iterations,
       bf_prior = bf_prior,
       BF = BF,
+      verbose = verbose,
       ...
     )
 
@@ -720,6 +734,7 @@ describe_posterior.effectsize_std_params <- function(posterior,
     keep_iterations = keep_iterations,
     bf_prior = bf_prior,
     BF = BF,
+    verbose = verbose,
     ...
   )
 }
@@ -732,6 +747,7 @@ describe_posterior.get_predicted <- function(posterior,
                                              ci = 0.95,
                                              ci_method = "eti",
                                              test = NULL,
+                                             verbose = TRUE,
                                              ...) {
   if ("iterations" %in% names(attributes(posterior))) {
     describe_posterior(
@@ -741,6 +757,7 @@ describe_posterior.get_predicted <- function(posterior,
       ci = ci,
       ci_method = ci_method,
       test = test,
+      verbose = verbose,
       ...
     )
   } else {
@@ -766,6 +783,7 @@ describe_posterior.emmGrid <- function(posterior,
                                        keep_iterations = FALSE,
                                        bf_prior = NULL,
                                        BF = 1,
+                                       verbose = TRUE,
                                        ...) {
   if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
     "si" %in% tolower(ci_method)) {
@@ -789,6 +807,7 @@ describe_posterior.emmGrid <- function(posterior,
     keep_iterations = keep_iterations,
     bf_prior = bf_prior,
     BF = BF,
+    verbose = verbose,
     ...
   )
 
@@ -835,6 +854,7 @@ describe_posterior.stanreg <- function(posterior,
                                        ),
                                        parameters = NULL,
                                        BF = 1,
+                                       verbose = TRUE,
                                        ...) {
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
     "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
@@ -859,6 +879,7 @@ describe_posterior.stanreg <- function(posterior,
     effects = effects,
     component = component,
     parameters = parameters,
+    verbose = verbose,
     ...
   )
 
@@ -907,6 +928,7 @@ describe_posterior.stanmvreg <- function(posterior,
                                            "auxiliary"
                                          ),
                                          parameters = NULL,
+                                         verbose = TRUE,
                                          ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -924,6 +946,7 @@ describe_posterior.stanmvreg <- function(posterior,
     bf_prior = bf_prior,
     effects = effects,
     parameters = parameters,
+    verbose = verbose,
     ...
   )
 
@@ -970,6 +993,7 @@ describe_posterior.stanfit <- function(posterior,
                                        effects = c("fixed", "random", "all"),
                                        parameters = NULL,
                                        priors = FALSE,
+                                       verbose = TRUE,
                                        ...) {
   effects <- match.arg(effects)
   out <- .describe_posterior(
@@ -984,6 +1008,7 @@ describe_posterior.stanfit <- function(posterior,
     keep_iterations = keep_iterations,
     effects = effects,
     parameters = parameters,
+    verbose = verbose,
     ...
   )
 
@@ -1030,6 +1055,7 @@ describe_posterior.brmsfit <- function(posterior,
                                        parameters = NULL,
                                        BF = 1,
                                        priors = FALSE,
+                                       verbose = TRUE,
                                        ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -1054,6 +1080,7 @@ describe_posterior.brmsfit <- function(posterior,
     effects = effects,
     component = component,
     parameters = parameters,
+    verbose = verbose,
     ...
   )
 
@@ -1104,6 +1131,7 @@ describe_posterior.MCMCglmm <- function(posterior,
                                         keep_iterations = FALSE,
                                         diagnostic = "ESS",
                                         parameters = NULL,
+                                        verbose = TRUE,
                                         ...) {
   out <- .describe_posterior(
     posterior,
@@ -1117,6 +1145,7 @@ describe_posterior.MCMCglmm <- function(posterior,
     keep_iterations = keep_iterations,
     effects = "fixed",
     parameters = parameters,
+    verbose = verbose,
     ...
   )
 
@@ -1141,6 +1170,7 @@ describe_posterior.bcplm <- function(posterior,
                                      keep_iterations = FALSE,
                                      priors = TRUE,
                                      parameters = NULL,
+                                     verbose = TRUE,
                                      ...) {
   out <- .describe_posterior(
     insight::get_parameters(posterior),
@@ -1154,6 +1184,7 @@ describe_posterior.bcplm <- function(posterior,
     keep_iterations = keep_iterations,
     effects = "fixed",
     parameters = parameters,
+    verbose = verbose,
     ...
   )
   if (isTRUE(priors)) {
@@ -1180,6 +1211,7 @@ describe_posterior.bamlss <- function(posterior,
                                       keep_iterations = FALSE,
                                       component = c("all", "conditional", "location"),
                                       parameters = NULL,
+                                      verbose = TRUE,
                                       ...) {
   component <- match.arg(component)
   out <- .describe_posterior(
@@ -1194,6 +1226,7 @@ describe_posterior.bamlss <- function(posterior,
     keep_iterations = keep_iterations,
     component = component,
     parameters = parameters,
+    verbose = verbose,
     ...
   )
 
@@ -1255,6 +1288,7 @@ describe_posterior.BFBayesFactor <- function(posterior,
     rope_range = rope_range,
     rope_ci = rope_ci,
     keep_iterations = keep_iterations,
+    verbose = verbose,
     ...
   )
 
