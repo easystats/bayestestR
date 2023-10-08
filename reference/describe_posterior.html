@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.5</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,6 +126,7 @@
 <span>  keep_iterations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  bf_prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -148,6 +149,7 @@
 <span>    <span class="st">"distributional"</span>, <span class="st">"auxiliary"</span><span class="op">)</span>,</span>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -170,6 +172,7 @@
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  priors <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -249,6 +252,10 @@ case of models) ignored.</p></dd>
 
 <dt>BF</dt>
 <dd><p>The amount of support required to be included in the support interval.</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>Toggle off warnings.</p></dd>
 
 
 <dt>diagnostic</dt>

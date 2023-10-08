@@ -62,7 +62,7 @@ the Bayes factors vignette."><meta property="og:image" content="https://easystat
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.5</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -209,7 +209,7 @@ with more than 2 levels, see
 <span>  <span class="va">posterior</span>,</span>
 <span>  prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  direction <span class="op">=</span> <span class="st">"two-sided"</span>,</span>
-<span>  null <span class="op">=</span> <span class="fu"><a href="rope_range.html">rope_range</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>,</span>
+<span>  null <span class="op">=</span> <span class="fu"><a href="rope_range.html">rope_range</a></span><span class="op">(</span><span class="va">posterior</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -236,7 +236,7 @@ with more than 2 levels, see
 <span>  <span class="va">posterior</span>,</span>
 <span>  prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  direction <span class="op">=</span> <span class="st">"two-sided"</span>,</span>
-<span>  null <span class="op">=</span> <span class="fu"><a href="rope_range.html">rope_range</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>,</span>
+<span>  null <span class="op">=</span> <span class="fu"><a href="rope_range.html">rope_range</a></span><span class="op">(</span><span class="va">posterior</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -489,8 +489,8 @@ Science, 6(3), 291–298. <a href="https://doi.org/10.1177/1745691611406923" cla
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |   BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 3.38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 3.61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 3.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 3.91</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -500,8 +500,8 @@ Science, 6(3), 291–298. <a href="https://doi.org/10.1177/1745691611406923" cla
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |   BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 3.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 3.39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 2.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 3.73</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">[-0.202, 0.202]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -514,7 +514,7 @@ Science, 6(3), 291–298. <a href="https://doi.org/10.1177/1745691611406923" cla
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter       |   BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1 - group2 | 3.64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1 - group2 | 3.81</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -542,8 +542,8 @@ Science, 6(3), 291–298. <a href="https://doi.org/10.1177/1745691611406923" cla
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |    BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  6.42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 10.45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  5.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 12.31</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
