@@ -11,7 +11,12 @@ print.equivalence_test <- function(x, digits = 2, ...) {
     if (!is.null(cp$Group) && any(startsWith(cp$Group, "SD/Cor"))) {
       cp <- cp[startsWith(cp$Group, "SD/Cor"), ]
       matches <- match(cp$Parameter, x$Parameter)
-      if (length(matches)) x$Parameter[matches] <- paste0("SD/Cor: ", cp$Cleaned_Parameter[stats::na.omit(match(x$Parameter, cp$Parameter))])
+      if (length(matches)) {
+        x$Parameter[matches] <- paste0(
+          "SD/Cor: ",
+          cp$Cleaned_Parameter[unique(stats::na.omit(match(x$Parameter, cp$Parameter)))]
+        )
+      }
     }
   }
 
