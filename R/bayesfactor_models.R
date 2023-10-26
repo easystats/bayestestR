@@ -333,10 +333,16 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 #' @export
 bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
-  insight::check_if_installed("rstanarm")
+  mods <- list(...)
+  if (inherits(mods[[1]], "stanreg")) {
+    insight::check_if_installed("rstanarm")
+  } else if (inherits(mods[[1]], "brmsfit")) {
+    insight::check_if_installed("brms")
+  } else if (inherits(mods[[1]], "blavaan")) {
+    insight::check_if_installed("blavaan")
+  }
 
   # Organize the models and their names
-  mods <- list(...)
   denominator <- list(denominator)
 
   cl <- match.call(expand.dots = FALSE)
@@ -351,41 +357,11 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
 
 
 #' @export
-bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
-  insight::check_if_installed("brms")
-
-  # Organize the models and their names
-  mods <- list(...)
-  denominator <- list(denominator)
-
-  cl <- match.call(expand.dots = FALSE)
-  names(mods) <- sapply(cl$`...`, insight::safe_deparse)
-  names(denominator) <- insight::safe_deparse(cl$denominator)
-
-  mods <- .cleanup_BF_models(mods, denominator, cl)
-  denominator <- attr(mods, "denominator", exact = TRUE)
-
-  .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
-}
+bayesfactor_models.brmsfit <- bayesfactor_models.stanreg
 
 
 #' @export
-bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
-  insight::check_if_installed("blavaan")
-
-  # Organize the models and their names
-  mods <- list(...)
-  denominator <- list(denominator)
-
-  cl <- match.call(expand.dots = FALSE)
-  names(mods) <- sapply(cl$`...`, insight::safe_deparse)
-  names(denominator) <- insight::safe_deparse(cl$denominator)
-
-  mods <- .cleanup_BF_models(mods, denominator, cl)
-  denominator <- attr(mods, "denominator", exact = TRUE)
-
-  .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
-}
+bayesfactor_models.blavaan <- bayesfactor_models.stanreg
 
 
 #' @export
