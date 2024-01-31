@@ -15,10 +15,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><script src="../deps/bslib-component-js-0.5.1.9000/components.min.js"></script><script src="../deps/bslib-component-js-0.5.1.9000/web-components.min.js" type="module"></script><link href="../deps/bslib-component-css-0.5.1.9000/components.css" rel="stylesheet">
-<link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.8/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Bayes Factors">
@@ -40,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.7</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -339,8 +338,8 @@ each of the model’s parameters:</p>
 &gt; 
 &gt; Parameter   |    BF
 &gt; -------------------
-&gt; (Intercept) | 0.103
-&gt; group2      | 0.891
+&gt; (Intercept) | 0.102
+&gt; group2      | 0.883
 &gt; 
 &gt; * Evidence Against The Null: [-1.000, 1.000]</code></pre>
 <p>We can also plot using the <code>see</code> package:</p>
@@ -352,7 +351,7 @@ each of the model’s parameters:</p>
 can be found in the <code>effectsize</code> package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_bf.html" class="external-link">interpret_bf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">My_first_BF</span><span class="op">$</span><span class="va">log_BF</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, include_value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code>&gt; [1] "anecdotal evidence (BF = 1/1.12) against"
+<pre><code>&gt; [1] "anecdotal evidence (BF = 1/1.13) against"
 &gt; (Rules: jeffreys1961)</code></pre>
 </div>
 <div class="section level4">
@@ -389,7 +388,7 @@ Kuriyal, &amp; Grasman, 2010)</span></p>
 &gt; 
 &gt; Parameter |   BF
 &gt; ----------------
-&gt; group2    | 1.27
+&gt; group2    | 1.24
 &gt; 
 &gt; * Evidence Against The Null: 0</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -415,7 +414,7 @@ the right of the null (point or interval):</p>
 &gt; 
 &gt; Parameter |   BF
 &gt; ----------------
-&gt; group2    | 2.44
+&gt; group2    | 2.37
 &gt; 
 &gt; * Evidence Against The Null: 0
 &gt; *                 Direction: Right-Sided test</code></pre>
@@ -448,7 +447,7 @@ effects</em>.</p>
 &gt; 
 &gt; Parameter |    BF
 &gt; -----------------
-&gt; group2    | 20.93
+&gt; group2    | 20.53
 &gt; 
 &gt; * Evidence Against The Null: [-Inf, 0.000]</code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -937,15 +936,19 @@ Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ToothGrowth</span><span class="op">)</span></span>
 <span><span class="va">ToothGrowth</span><span class="op">$</span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">ToothGrowth</span><span class="op">$</span><span class="va">dose</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">BF_ToothGrowth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/anovaBF.html" class="external-link">anovaBF</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">dose</span> <span class="op">*</span> <span class="va">supp</span>, <span class="va">ToothGrowth</span>, progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">BF_ToothGrowth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/anovaBF.html" class="external-link">anovaBF</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">dose</span> <span class="op">*</span> <span class="va">supp</span>, <span class="va">ToothGrowth</span>, progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>&gt; Error in validObject(.Object) : 
+&gt;   invalid class "ddenseModelMatrix" object: superclass "xMatrix" not defined in the environment of the object's class
+&gt; Error in validObject(.Object) : 
+&gt;   invalid class "ddenseModelMatrix" object: superclass "xMatrix" not defined in the environment of the object's class</code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
-&gt; supp          0.60         1.00       140.99
-&gt; dose          0.60         1.00     3.21e+14
-&gt; dose:supp     0.20         0.72        10.12
+&gt; supp          0.60            0             
+&gt; dose          0.60            0             
+&gt; dose:supp     0.20            0             
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -954,14 +957,14 @@ Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
 <li>
 <strong>Across matched models</strong>:</li>
 </ol>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth</span>, match_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
-&gt; supp          0.40         0.28        59.19
-&gt; dose          0.40         0.28     1.36e+14
-&gt; dose:supp     0.20         0.72         2.57
+&gt; supp          0.40            0             
+&gt; dose          0.40            0             
+&gt; dose:supp     0.20            0             
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -972,7 +975,7 @@ Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
 </ol>
 <p>We’ll add <code>dose</code> to the null model in JASP, and do the
 same in <code>R</code>:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BF_ToothGrowth_against_dose</span> <span class="op">&lt;-</span> <span class="va">BF_ToothGrowth</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">/</span> <span class="va">BF_ToothGrowth</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="co"># OR:</span></span>
 <span><span class="co"># update(bayesfactor_models(BF_ToothGrowth),</span></span>
 <span><span class="co">#        subset = c(4, 5),</span></span>
@@ -980,21 +983,21 @@ same in <code>R</code>:</p>
 <span><span class="va">BF_ToothGrowth_against_dose</span></span></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
 &gt; --------------
-&gt; [1] supp + dose             : 59  ±4.5%
-&gt; [2] supp + dose + supp:dose : 152 ±1.5%
+&gt; [1] supp + dose             : NA ±NA%
+&gt; [2] supp + dose + supp:dose : NA ±NA%
 &gt; 
 &gt; Against denominator:
 &gt;   len ~ dose 
 &gt; ---
 &gt; Bayes factor type: BFlinearModel, JZS</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth_against_dose</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
-&gt; dose          1.00         1.00             
-&gt; supp          0.67         1.00       105.74
-&gt; dose:supp     0.33         0.72         5.06
+&gt; dose          1.00            0             
+&gt; supp          0.67            0             
+&gt; dose:supp     0.33            0             
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -1014,7 +1017,7 @@ null value (also see <code><a href="../reference/si.html">si()</a></code> descri
 (<code>wt</code>), but what about number of carburetors
 (<code>carb</code>)? Is this a good predictor?</p>
 <p>We can determine this by comparing the following models:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">mtcars</span>,</span>
 <span>  prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html" class="external-link">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
@@ -1036,7 +1039,7 @@ null value (also see <code><a href="../reference/si.html">si()</a></code> descri
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model             BF
-&gt; [1] wt + am + carb 0.810
+&gt; [1] wt + am + carb 0.820
 &gt; 
 &gt; * Against Denominator: [2] wt + am
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -1046,16 +1049,16 @@ model <em>with</em> <code>carb</code> as a predictor. We might then
 assume that in the latter model, the <code>HDI</code> will include the
 point-null value of 0 effect, to also indicate the credibility of the
 null in the posterior. However, this is not the case:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">mod_carb</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Highest Density Interval
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
-&gt; (Intercept) | [27.90, 39.96]
-&gt; wt          | [-5.54, -1.74]
-&gt; am          | [-1.05,  5.65]
-&gt; carb        | [-2.03, -0.36]</code></pre>
+&gt; (Intercept) | [28.08, 39.93]
+&gt; wt          | [-5.55, -1.83]
+&gt; am          | [-0.79,  5.78]
+&gt; carb        | [-1.97, -0.32]</code></pre>
 <p>How can this be? By estimating the HDI of the effect for
 <code>carb</code> in the full model, we are acting under the assumption
 that this model is correct. However, as we’ve just seen, both models are
@@ -1072,7 +1075,7 @@ across several models, which we can now treat like any posterior
 distribution, and estimate the HDI.</p>
 <p>In <code>bayestestR</code>, we can do this with the
 <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> function:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BMA_draws</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weighted_posteriors.html">weighted_posteriors</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_carb</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">BMA_hdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">BMA_draws</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
@@ -1083,10 +1086,10 @@ distribution, and estimate the HDI.</p>
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
-&gt; (Intercept) | [29.23, 42.37]
-&gt; wt          | [-6.72, -2.20]
-&gt; am          | [-2.74,  5.04]
-&gt; carb        | [-1.69,  0.00]</code></pre>
+&gt; (Intercept) | [28.50, 42.20]
+&gt; wt          | [-6.86, -2.30]
+&gt; am          | [-2.51,  5.49]
+&gt; carb        | [-1.70,  0.00]</code></pre>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-24-1.png" width="100%"></p>
 <p>We can see that across both models under consideration, the posterior
 of the <code>carb</code> effect is almost equally weighted between the
@@ -1120,7 +1123,7 @@ to <a href="https://easystats.github.io/blog/posts/bayestestr_emmeans/" class="e
 Bayesian contrasts</a>.</p>
 <p>For example, in the <code>sleep</code> example from above, we can
 estimate the group means and the difference between them:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">group_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">sleep</span><span class="op">)</span><span class="op">)</span></span>
@@ -1145,8 +1148,8 @@ estimate the group means and the difference between them:</p>
 &gt; 
 &gt; Parameter       |    BF
 &gt; -----------------------
-&gt; 1               | 0.287
-&gt; 2               | 19.77
+&gt; 1               | 0.286
+&gt; 2               | 21.18
 &gt; group1 - group2 |  1.26
 &gt; 
 &gt; * Evidence Against The Null: 0</code></pre>
@@ -1156,7 +1159,7 @@ between them being not 0. Conflict? Uncertainty? That is the Bayesian
 way!</p>
 <p>We can also use the <code>easystats</code>’ <a href="https://cran.r-project.org/package=modelbased" class="external-link"><strong><code>modelbased</code></strong></a>
 package to compute Bayes factors for contrasts:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/modelbased/" class="external-link">modelbased</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://easystats.github.io/modelbased/reference/estimate_contrasts.html" class="external-link">estimate_contrasts</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="st">"bf"</span>, bf_prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></span></code></pre></div>
@@ -1184,7 +1187,7 @@ differences to have the same distribution, but…</p>
 <p>For our example, we will be test all <strong><em>prior</em></strong>
 pairwise differences between the 3 species in the <code>iris</code>
 dataset.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">iris</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.sum</span></span>
 <span></span>
@@ -1196,7 +1199,7 @@ dataset.</p>
 <span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  refresh <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">pairs_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">pairs_sum</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1225,14 +1228,14 @@ understating evidence for some contrasts over others!</strong></p>
 <p>The solution is to use <em>equal-prior</em> factor coding, a-la the
 <code>contr.equalprior*</code> family, which can either specify this
 factor coding per-factor:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.equalprior_pairs</span></span></code></pre></div>
 <p>Or you can set it globally:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"contr.equalprior_pairs"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s again estimate the <strong><em>prior</em></strong>
 differences:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">df</span>,</span>
 <span>  prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html" class="external-link">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
@@ -1241,7 +1244,7 @@ differences:</p>
 <span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  refresh <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">pairs_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_bayes</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">pairs_bayes</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1275,7 +1278,7 @@ is 1/6 (reach back to <em>intro to stats</em> year 1), but…</p>
 <p>For our example, we will be interested in the following order
 restrictions in the <code>iris</code> dataset (each line is a separate
 restriction):</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hyp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="co"># comparing 2 levels</span></span>
 <span>  <span class="st">"setosa &lt; versicolor"</span>,</span>
@@ -1288,7 +1291,7 @@ restriction):</p>
 <span>  <span class="st">"setosa    &lt; versicolor &amp; versicolor &lt; virginica"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>With the default factor coding, this looks like this:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.sum</span></span>
 <span></span>
 <span><span class="va">fit_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
@@ -1322,15 +1325,15 @@ restriction):</p>
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.035 seconds (Warm-up)
-&gt; Chain 1:                0.059 seconds (Sampling)
-&gt; Chain 1:                0.094 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)
+&gt; Chain 1:                0.055 seconds (Sampling)
+&gt; Chain 1:                0.085 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.7e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+&gt; Chain 2: Gradient evaluation took 1.6e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -1347,15 +1350,15 @@ restriction):</p>
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.036 seconds (Warm-up)
-&gt; Chain 2:                0.054 seconds (Sampling)
-&gt; Chain 2:                0.09 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.032 seconds (Warm-up)
+&gt; Chain 2:                0.05 seconds (Sampling)
+&gt; Chain 2:                0.082 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 1.6e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
+&gt; Chain 3: Gradient evaluation took 1.1e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -1372,15 +1375,15 @@ restriction):</p>
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.035 seconds (Warm-up)
-&gt; Chain 3:                0.052 seconds (Sampling)
-&gt; Chain 3:                0.087 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.031 seconds (Warm-up)
+&gt; Chain 3:                0.046 seconds (Sampling)
+&gt; Chain 3:                0.077 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1.5e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+&gt; Chain 4: Gradient evaluation took 1.1e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -1397,9 +1400,9 @@ restriction):</p>
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.034 seconds (Warm-up)
-&gt; Chain 4:                0.054 seconds (Sampling)
-&gt; Chain 4:                0.088 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.03 seconds (Warm-up)
+&gt; Chain 4:                0.047 seconds (Sampling)
+&gt; Chain 4:                0.077 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
@@ -1424,7 +1427,7 @@ likely than others!!!</strong>
 </ol>
 <p>Again, this is solved by using the <em>equal prior</em> factor coding
 (from above).</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.equalprior_pairs</span></span>
 <span></span>
 <span><span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
