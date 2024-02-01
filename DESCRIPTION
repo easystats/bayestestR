@@ -66,8 +66,8 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.6)
 Imports:
-    insight (>= 0.19.5),
-    datawizard (>= 0.9.0),
+    insight (>= 0.19.8),
+    datawizard (>= 0.9.1),
     graphics,
     methods,
     stats,
