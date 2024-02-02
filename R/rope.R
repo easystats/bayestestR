@@ -328,10 +328,10 @@ rope.mcmc.list <- rope.bcplm
 
 
   rope <- data.frame(
-    "CI" = ci,
-    "ROPE_low" = range[1],
-    "ROPE_high" = range[2],
-    "ROPE_Percentage" = rope_percentage
+    CI = ci,
+    ROPE_low = range[1],
+    ROPE_high = range[2],
+    ROPE_Percentage = rope_percentage
   )
 
   attr(rope, "HDI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
@@ -493,7 +493,9 @@ rope.sim.merMod <- function(x,
     tmp <- getropedata$tmp
     HDI_area <- getropedata$HDI_area
 
-    if (!insight::is_empty_object(tmp)) {
+    if (insight::is_empty_object(tmp)) {
+      tmp <- NULL
+    } else {
       tmp <- .clean_up_tmp_stanreg(
         tmp,
         group = .x,
@@ -504,8 +506,6 @@ rope.sim.merMod <- function(x,
       if (!insight::is_empty_object(HDI_area)) {
         attr(tmp, "HDI_area") <- HDI_area
       }
-    } else {
-      tmp <- NULL
     }
 
     tmp
@@ -552,7 +552,9 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
   dat <- getropedata$tmp
   HDI_area <- getropedata$HDI_area
 
-  if (!insight::is_empty_object(dat)) {
+  if (insight::is_empty_object(dat)) {
+    dat <- NULL
+  } else {
     dat <- .clean_up_tmp_stanreg(
       dat,
       group = "fixed",
@@ -563,8 +565,6 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
     if (!insight::is_empty_object(HDI_area)) {
       attr(dat, "HDI_area") <- HDI_area
     }
-  } else {
-    dat <- NULL
   }
 
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
