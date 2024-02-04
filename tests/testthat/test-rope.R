@@ -81,7 +81,9 @@ test_that("rope (brms)", {
   expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
 })
 
-model <- brm(bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE), data = mtcars, iter = 500, refresh = 0)
+skip_on_os("mac")
+
+model <- suppressWarnings(brm(bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE), data = mtcars, iter = 500, refresh = 0))
 rope <- rope(model, verbose = FALSE)
 
 test_that("rope (brms, multivariate)", {
