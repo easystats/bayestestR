@@ -3,7 +3,6 @@
 \docType{package}
 \name{bayestestR-package}
 \alias{bayestestR-package}
-\alias{_PACKAGE}
 \alias{bayestestR}
 \title{bayestestR: Describing Effects and their Uncertainty, Existence and
 Significance within the Bayesian Framework}
