@@ -137,7 +137,7 @@ bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
     effects = effects, component = component,
-    parameters = parameters, verbose = verbose
+    verbose = verbose
   )
 
   # Get savage-dickey BFs
@@ -217,7 +217,7 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
 
   posterior_l <- as.data.frame(lapply(p_hypothesis, .test_hypothesis, data = posterior))
   prior_l <- as.data.frame(lapply(p_hypothesis, .test_hypothesis, data = prior))
-  colnames(posterior_l) <- colnames(prior_l) <- if (!is.null(names(hypothesis))) names(hypothesis) else hypothesis
+  colnames(posterior_l) <- colnames(prior_l) <- if (is.null(names(hypothesis))) hypothesis else names(hypothesis)
 
   posterior_p <- sapply(posterior_l, mean)
   prior_p <- sapply(prior_l, mean)

@@ -190,11 +190,10 @@
 
   # Prior and post odds
   Modelnames <- BFGrid$Model
-  if (!is.null(priorOdds)) {
-    priorOdds <- c(1, priorOdds)
-  } else {
-    priorOdds <- rep(1, length(Modelnames))
+  if (is.null(priorOdds)) {
+    priorOdds <- rep(1, length(Modelnames) - 1)
   }
+  priorOdds <- c(1, priorOdds)
 
   prior_logodds <- log(priorOdds)
   posterior_logodds <- prior_logodds + BFGrid$log_BF
