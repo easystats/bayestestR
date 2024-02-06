@@ -7,8 +7,6 @@
 
 #' @keywords internal
 .clean_priors_and_posteriors.stanreg <- function(posterior, prior,
-                                                 effects, component,
-                                                 parameters = NULL,
                                                  verbose = TRUE,
                                                  ...) {
   # Get Priors
@@ -30,8 +28,8 @@
     insight::format_error(prior)
   }
 
-  prior <- insight::get_parameters(prior, effects = effects, component = component, ...)
-  posterior <- insight::get_parameters(posterior, effects = effects, component = component, ...)
+  prior <- insight::get_parameters(prior, ...)
+  posterior <- insight::get_parameters(posterior, ...)
 
   list(
     posterior = posterior,

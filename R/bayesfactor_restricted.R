@@ -136,8 +136,8 @@ bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
   component <- match.arg(component)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
-    effects, component,
-    verbose = verbose
+    effects = effects, component = component,
+    parameters = parameters, verbose = verbose
   )
 
   # Get savage-dickey BFs
