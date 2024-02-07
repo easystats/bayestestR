@@ -83,10 +83,10 @@ rope_range.default <- function(x, verbose = TRUE, ...) {
     ret <- Map(
       function(i, j, ...) .rope_range(x, i, j), information, response, response_transform, verbose
     )
-    return(ret)
   } else {
-    .rope_range(x, information, response, response_transform, verbose)
+    ret <- .rope_range(x, information, response, response_transform, verbose)
   }
+  ret
 }
 
 
@@ -114,44 +114,42 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
 .rope_range <- function(x, information = NULL, response = NULL, response_transform = NULL, verbose = TRUE) {
   negligible_value <- tryCatch(
-    {
-      if (!is.null(response_transform) && grepl("log", response_transform, fixed = TRUE)) {
-        # for log-transform, we assume that a 1% change represents the ROPE adequately
-        # see https://github.com/easystats/bayestestR/issues/487
-        0.01
-      } else if (information$is_linear && information$link_function == "log") {
-        # for log-transform, we assume that a 1% change represents the ROPE adequately
-        # see https://github.com/easystats/bayestestR/issues/487
-        0.01
-      } else if (information$family == "lognormal") {
-        # for log-transform, we assume that a 1% change represents the ROPE adequately
-        # see https://github.com/easystats/bayestestR/issues/487
-        0.01
-      } else if (!is.null(response) && information$link_function == "identity") {
-        # Linear Models
-        0.1 * stats::sd(response, na.rm = TRUE)
-        # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
-      } else if (information$is_logit) {
-        # Logistic Models (any)
-        # Sigma==pi / sqrt(3)
-        0.1 * pi / sqrt(3)
-      } else if (information$is_probit) {
-        # Probit models
-        # Sigma==1
-        0.1 * 1
-      } else if (information$is_correlation) {
-        # Correlations
-        # https://github.com/easystats/bayestestR/issues/121
-        0.05
-      } else if (information$is_count) {
-        # Not sure about this
-        sig <- stats::sigma(x)
-        if (is.null(sig) || length(sig) == 0 || is.na(sig)) stop()
-        0.1 * sig
-      } else {
-        # Default
-        stop()
-      }
+    if (!is.null(response_transform) && grepl("log", response_transform, fixed = TRUE)) {
+      # for log-transform, we assume that a 1% change represents the ROPE adequately
+      # see https://github.com/easystats/bayestestR/issues/487
+      0.01
+    } else if (information$is_linear && information$link_function == "log") {
+      # for log-transform, we assume that a 1% change represents the ROPE adequately
+      # see https://github.com/easystats/bayestestR/issues/487
+      0.01
+    } else if (information$family == "lognormal") {
+      # for log-transform, we assume that a 1% change represents the ROPE adequately
+      # see https://github.com/easystats/bayestestR/issues/487
+      0.01
+    } else if (!is.null(response) && information$link_function == "identity") {
+      # Linear Models
+      0.1 * stats::sd(response, na.rm = TRUE)
+      # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
+    } else if (information$is_logit) {
+      # Logistic Models (any)
+      # Sigma==pi / sqrt(3)
+      0.1 * pi / sqrt(3)
+    } else if (information$is_probit) {
+      # Probit models
+      # Sigma==1
+      0.1 * 1
+    } else if (information$is_correlation) {
+      # Correlations
+      # https://github.com/easystats/bayestestR/issues/121
+      0.05
+    } else if (information$is_count) {
+      # Not sure about this
+      sig <- stats::sigma(x)
+      if (is.null(sig) || length(sig) == 0 || is.na(sig)) stop(call. = FALSE)
+      0.1 * sig
+    } else {
+      # Default
+      stop(call. = FALSE)
     },
     error = function(e) {
       if (isTRUE(verbose)) {

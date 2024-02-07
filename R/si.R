@@ -126,9 +126,8 @@ si.stanreg <- function(posterior, prior = NULL,
   component <- match.arg(component)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
-    verbose = verbose,
     effects = effects, component = component,
-    parameters = parameters
+    parameters = parameters, verbose = verbose
   )
 
   # Get SIs
@@ -318,7 +317,7 @@ si.rvar <- si.draws
   x_supported <- stats::na.omit(x_axis[crit])
   if (length(x_supported) < 2) {
     return(c(NA, NA))
-  } else {
-    range(x_supported)
   }
+
+  range(x_supported)
 }

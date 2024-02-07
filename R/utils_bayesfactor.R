@@ -1,15 +1,16 @@
 # clean priors and posteriors ---------------------------------------------
 
 #' @keywords internal
-.clean_priors_and_posteriors <- function(posterior, prior,
-                                         verbose = TRUE, ...) {
+.clean_priors_and_posteriors <- function(posterior, prior, ...) {
   UseMethod(".clean_priors_and_posteriors")
 }
 
 #' @keywords internal
 .clean_priors_and_posteriors.stanreg <- function(posterior, prior,
+                                                 effects, component,
+                                                 parameters = NULL,
                                                  verbose = TRUE,
-                                                 effects, component, ...) {
+                                                 ...) {
   # Get Priors
   if (is.null(prior)) {
     prior <- posterior
@@ -65,7 +66,8 @@
 #' @keywords internal
 .clean_priors_and_posteriors.emmGrid <- function(posterior,
                                                  prior,
-                                                 verbose = TRUE) {
+                                                 verbose = TRUE,
+                                                 ...) {
   insight::check_if_installed("emmeans")
 
   if (is.null(prior)) {
@@ -126,7 +128,7 @@
 }
 
 .clean_priors_and_posteriors.emm_list <- function(posterior, prior,
-                                                  verbose = TRUE) {
+                                                  verbose = TRUE, ...) {
   if (is.null(prior)) {
     prior <- posterior
     insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")

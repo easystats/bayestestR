@@ -297,9 +297,8 @@ bayesfactor_parameters.stanreg <- function(posterior,
   component <- match.arg(component)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
-    verbose = verbose,
     effects = effects, component = component,
-    parameters = parameters
+    parameters = parameters, verbose = verbose
   )
 
   # Get BFs
