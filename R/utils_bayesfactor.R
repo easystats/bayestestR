@@ -7,8 +7,6 @@
 
 #' @keywords internal
 .clean_priors_and_posteriors.stanreg <- function(posterior, prior,
-                                                 effects, component,
-                                                 parameters = NULL,
                                                  verbose = TRUE,
                                                  ...) {
   # Get Priors
@@ -30,8 +28,8 @@
     insight::format_error(prior)
   }
 
-  prior <- insight::get_parameters(prior, effects = effects, component = component, ...)
-  posterior <- insight::get_parameters(posterior, effects = effects, component = component, ...)
+  prior <- insight::get_parameters(prior, ...)
+  posterior <- insight::get_parameters(posterior, ...)
 
   list(
     posterior = posterior,
@@ -192,11 +190,10 @@
 
   # Prior and post odds
   Modelnames <- BFGrid$Model
-  if (!is.null(priorOdds)) {
-    priorOdds <- c(1, priorOdds)
-  } else {
-    priorOdds <- rep(1, length(Modelnames))
+  if (is.null(priorOdds)) {
+    priorOdds <- rep(1, length(Modelnames) - 1)
   }
+  priorOdds <- c(1, priorOdds)
 
   prior_logodds <- log(priorOdds)
   posterior_logodds <- prior_logodds + BFGrid$log_BF
