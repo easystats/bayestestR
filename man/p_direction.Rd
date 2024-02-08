@@ -143,7 +143,7 @@ positive, some negative. Therefore, the smallest the \emph{pd} can be is 0.5 -
 with an equal posterior mass of positive and negative values. Values close to
 0.5 \emph{cannot} be used to support the null hypothesis (that the parameter does
 \emph{not} have a direction) is a similar why to how large p-values cannot be used
-to support the null hypothesis (see \code{\link[=pd_tp_p]{pd_tp_p()}}; Makowski et al., 2019).
+to support the null hypothesis (see \code{\link[=pd_to_p]{pd_to_p()}}; Makowski et al., 2019).
 \cr\cr
 \strong{For a discrete parameter space or a parameter space that is a mixture
 between discrete and continuous spaces}, exact values of 0 (or any point
@@ -172,7 +172,7 @@ proportion of negative (or smaller than \code{null}) posterior samples, and take
 the larger of the two. This "simple" method is the most straightforward, but
 its precision is directly tied to the number of posterior draws.
 \cr\cr
-The second approach relies on \code{\link[=density estimation]{density estimation()}}: It starts by
+The second approach relies on \link[=estimate_density]{density estimation}: It starts by
 estimating the continuous-smooth density function (for which many methods are
 available), and then computing the \link[=area_under_curve]{area under the curve}
 (AUC) of the density curve on either side of \code{null} and taking the maximum
