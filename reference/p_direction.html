@@ -283,7 +283,7 @@ positive, some negative. Therefore, the smallest the <em>pd</em> can be is 0.5 -
 with an equal posterior mass of positive and negative values. Values close to
 0.5 <em>cannot</em> be used to support the null hypothesis (that the parameter does
 <em>not</em> have a direction) is a similar why to how large p-values cannot be used
-to support the null hypothesis (see <code>pd_tp_p()</code>; Makowski et al., 2019).
+to support the null hypothesis (see <code><a href="pd_to_p.html">pd_to_p()</a></code>; Makowski et al., 2019).
 <br><br><strong>For a discrete parameter space or a parameter space that is a mixture
 between discrete and continuous spaces</strong>, exact values of 0 (or any point
 null value) <em>are</em> possible! Therefore, the smallest the <em>pd</em> can be is 0 -
@@ -310,7 +310,7 @@ proportion of negative (or smaller than <code>null</code>) posterior samples, an
 the larger of the two. This "simple" method is the most straightforward, but
 its precision is directly tied to the number of posterior draws.
 <br><br>
-The second approach relies on <code>density estimation()</code>: It starts by
+The second approach relies on <a href="estimate_density.html">density estimation</a>: It starts by
 estimating the continuous-smooth density function (for which many methods are
 available), and then computing the <a href="area_under_curve.html">area under the curve</a>
 (AUC) of the density curve on either side of <code>null</code> and taking the maximum
@@ -440,9 +440,9 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.025 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.023 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.048 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.028 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.028 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.056 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span>
