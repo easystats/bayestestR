@@ -1,9 +1,5 @@
 test_that("bayesfactor_parameters data frame", {
-  skip_if_offline()
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("BayesFactor")
-  skip_if_not_or_load_if_installed("httr")
-  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("logspline", "2.1.21")
 
   Xprior <- data.frame(
     x = distribution_normal(1e4),
@@ -59,10 +55,9 @@ test_that("bayesfactor_parameters data frame", {
 test_that("bayesfactor_parameters RSTANARM", {
   skip_on_cran()
   skip_if_offline()
+  skip_if_not_or_load_if_installed("logspline", "2.1.21")
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("BayesFactor")
   skip_if_not_or_load_if_installed("httr")
-  skip_if_not_or_load_if_installed("brms")
 
   fit <- suppressMessages(stan_glm(mpg ~ ., data = mtcars, refresh = 0))
 
@@ -72,8 +67,11 @@ test_that("bayesfactor_parameters RSTANARM", {
 
   set.seed(333)
   BF1 <- bayesfactor_parameters(fit, verbose = FALSE)
+  BF3 <- bayesfactor_parameters(insight::get_parameters(fit), insight::get_parameters(fit_p), verbose = FALSE)
 
   expect_equal(BF1, BF2)
+  expect_equal(BF1[["Parameter"]], BF3[["Parameter"]])
+  expect_equal(BF1[["log_BF"]], BF3[["log_BF"]])
 
   model_flat <- suppressMessages(
     stan_glm(extra ~ group, data = sleep, prior = NULL, refresh = 0)
@@ -94,8 +92,7 @@ test_that("bayesfactor_parameters RSTANARM", {
 
 test_that("bayesfactor_parameters BRMS", {
   skip_if_offline()
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("BayesFactor")
+  skip_if_not_or_load_if_installed("logspline", "2.1.21")
   skip_if_not_or_load_if_installed("httr")
   skip_if_not_or_load_if_installed("brms")
   skip_if_not_or_load_if_installed("cmdstanr")

@@ -417,9 +417,9 @@ bayesfactor_parameters.data.frame <- function(posterior,
   }
 
 
-  sdbf <- numeric(ncol(posterior))
+  sdlogbf <- numeric(ncol(posterior))
   for (par in seq_along(posterior)) {
-    sdbf[par] <- .bayesfactor_parameters(
+    sdlogbf[par] <- .logbayesfactor_parameters(
       posterior[[par]],
       prior[[par]],
       direction = direction,
@@ -430,7 +430,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
   bf_val <- data.frame(
     Parameter = colnames(posterior),
-    log_BF = log(sdbf),
+    log_BF = sdlogbf,
     stringsAsFactors = FALSE
   )
 
@@ -470,23 +470,23 @@ bayesfactor_parameters.rvar <- bayesfactor_parameters.draws
 
 
 #' @keywords internal
-.bayesfactor_parameters <- function(posterior,
-                                    prior,
-                                    direction = 0,
-                                    null = 0,
-                                    ...) {
+.logbayesfactor_parameters <- function(posterior,
+                                       prior,
+                                       direction = 0,
+                                       null = 0,
+                                       ...) {
   stopifnot(length(null) %in% c(1, 2))
 
   if (isTRUE(all.equal(posterior, prior))) {
-    return(1)
+    return(0)
   }
 
   insight::check_if_installed("logspline")
 
   if (length(null) == 1) {
-    relative_density <- function(samples) {
+    relative_loglikelihood <- function(samples) {
       f_samples <- .logspline(samples, ...)
-      d_samples <- logspline::dlogspline(null, f_samples)
+      d_samples <- logspline::dlogspline(null, f_samples, log = TRUE)
 
       if (direction < 0) {
         norm_samples <- logspline::plogspline(null, f_samples)
@@ -496,36 +496,29 @@ bayesfactor_parameters.rvar <- bayesfactor_parameters.draws
         norm_samples <- 1
       }
 
-      d_samples / norm_samples
+      d_samples - log(norm_samples)
     }
-
-    return(relative_density(prior) / relative_density(posterior))
   } else if (length(null) == 2) {
     null <- sort(null)
     null[is.infinite(null)] <- 1.797693e+308 * sign(null[is.infinite(null)])
 
-    f_prior <- .logspline(prior, ...)
-    f_posterior <- .logspline(posterior, ...)
+    relative_loglikelihood <- function(samples) {
+      f_samples <- .logspline(samples, ...)
+      p_samples <- diff(logspline::plogspline(null, f_samples))
 
-    h0_prior <- diff(logspline::plogspline(null, f_prior))
-    h0_post <- diff(logspline::plogspline(null, f_posterior))
+      if (direction < 0) {
+        norm_samples <- logspline::plogspline(min(null), f_samples)
+      } else if (direction > 0) {
+        norm_samples <- 1 - logspline::plogspline(max(null), f_samples)
+      } else {
+        norm_samples <- 1 - p_samples
+      }
 
-    BF_null_full <- h0_post / h0_prior
-
-    if (direction < 0) {
-      h1_prior <- logspline::plogspline(min(null), f_prior)
-      h1_post <- logspline::plogspline(min(null), f_posterior)
-    } else if (direction > 0) {
-      h1_prior <- 1 - logspline::plogspline(max(null), f_prior)
-      h1_post <- 1 - logspline::plogspline(max(null), f_posterior)
-    } else {
-      h1_prior <- 1 - h0_prior
-      h1_post <- 1 - h0_post
+      log(p_samples) - log(norm_samples)
     }
-    BF_alt_full <- h1_post / h1_prior
-
-    return(BF_alt_full / BF_null_full)
   }
+
+  relative_loglikelihood(prior) - relative_loglikelihood(posterior)
 }
 
 # Bad Methods -------------------------------------------------------------

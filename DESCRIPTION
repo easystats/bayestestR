@@ -92,7 +92,7 @@ Suggests:
     knitr,
     lavaan,
     lme4,
-    logspline,
+    logspline (>= 2.1.21),
     MASS,
     mclust,
     mediation,
