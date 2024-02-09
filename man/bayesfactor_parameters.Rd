@@ -294,6 +294,7 @@ bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
 \dontshow{if (require("brms") && require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # brms models
 # -----------
+\dontrun{
 contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
 my_custom_priors <-
   set_prior("student_t(3, 0, 1)", class = "b") +
@@ -305,6 +306,7 @@ brms_model <- suppressWarnings(brm(extra ~ group + (1 | ID),
   refresh = 0
 ))
 bayesfactor_parameters(brms_model, verbose = FALSE)
+}
 \dontshow{\}) # examplesIf}
 }
 \references{

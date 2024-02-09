@@ -146,6 +146,7 @@
 #' @examplesIf require("brms") && require("logspline")
 #' # brms models
 #' # -----------
+#' \dontrun{
 #' contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
 #' my_custom_priors <-
 #'   set_prior("student_t(3, 0, 1)", class = "b") +
@@ -157,6 +158,7 @@
 #'   refresh = 0
 #' ))
 #' bayesfactor_parameters(brms_model, verbose = FALSE)
+#' }
 #'
 #' @references
 #' \itemize{
