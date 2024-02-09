@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.13.1.9
+Version: 0.13.2
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -125,6 +125,3 @@ Config/Needs/website:
     rstudio/bslib,
     r-lib/pkgdown,
     easystats/easystatstemplate
-Remotes: 
-  rvlenth/emmeans,
-  easystats/insight
