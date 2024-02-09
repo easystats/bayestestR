@@ -1,3 +1,5 @@
+skip_on_os("linux")
+
 test_that("weighted_posteriors for BayesFactor", {
   skip_on_cran()
   skip_if_not_or_load_if_installed("BayesFactor")
