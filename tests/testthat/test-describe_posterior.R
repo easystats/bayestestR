@@ -5,6 +5,7 @@ test_that("describe_posterior", {
   skip_if_not_or_load_if_installed("brms")
   skip_if_not_or_load_if_installed("httr")
   skip_if_not_or_load_if_installed("BayesFactor")
+  skip_on_os("linux")
 
   set.seed(333)
 

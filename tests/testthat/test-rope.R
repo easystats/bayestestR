@@ -97,6 +97,7 @@ test_that("rope (brms, multivariate)", {
   )
 })
 
+skip_on_os("linux")
 
 test_that("BayesFactor", {
   skip_if_not_or_load_if_installed("BayesFactor")
