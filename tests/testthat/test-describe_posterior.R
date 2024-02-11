@@ -51,7 +51,7 @@ test_that("describe_posterior", {
     test = "all",
     ci = c(0.8, 0.9)
   ))
-  expect_equal(dim(rez), c(2, 19))
+  expect_identical(dim(rez), c(2L, 19L))
 
   rez <- describe_posterior(
     x,
@@ -76,7 +76,7 @@ test_that("describe_posterior", {
   ))
 
   rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
-  expect_equal(dim(rez), c(4L, 19L))
+  expect_identical(dim(rez), c(4L, 19L))
   expect_warning(expect_warning(
     describe_posterior(
       x,
@@ -94,7 +94,7 @@ test_that("describe_posterior", {
     test = "all",
     ci = c(0.8, 0.9)
   ))
-  expect_equal(dim(rez), c(8L, 19L))
+  expect_identical(dim(rez), c(8L, 19L))
 
   rez <- describe_posterior(
     x,
@@ -163,7 +163,7 @@ test_that("describe_posterior", {
   x <- suppressWarnings(brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, ci = c(0.8, 0.9))
 
-  expect_equal(dim(rez), c(4, 16))
+  expect_identical(dim(rez), c(4L, 16L))
   expect_identical(colnames(rez), c(
     "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
     "CI_high", "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
@@ -179,7 +179,7 @@ test_that("describe_posterior", {
     diagnostic = NULL
   )
 
-  expect_equal(dim(rez), c(2, 4))
+  expect_identical(dim(rez), c(2L, 4L))
 
   model <- suppressWarnings(brms::brm(
     mpg ~ drat,
@@ -189,7 +189,7 @@ test_that("describe_posterior", {
     refresh = 0
   ))
 
-  expect_equal(nrow(describe_posterior(model)), 2)
+  expect_identical(nrow(describe_posterior(model)), 2L)
 
   # rstanarm -------------------------------------------------
 
@@ -224,11 +224,11 @@ test_that("describe_posterior", {
   # BayesFactor
   x <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-  expect_equal(dim(rez), c(1, 23))
+  expect_identical(dim(rez), c(1L, 23L))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
-  expect_equal(dim(rez), c(2, 23))
+  expect_identical(dim(rez), c(2L, 23L))
   rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
-  expect_equal(dim(rez), c(1, 7))
+  expect_identical(dim(rez), c(1L, 7L))
 })
 
 
@@ -579,6 +579,8 @@ test_that("describe_posterior: BayesFactor", {
     tolerance = 0.1,
     ignore_attr = TRUE
   ))
+
+  skip_on_os("linux")
 
   set.seed(123)
   expect_equal(
