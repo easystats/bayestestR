@@ -179,16 +179,8 @@ contr.equalprior_pairs <- function(n, contrasts = TRUE, sparse = FALSE) {
 #' @rdname contr.equalprior
 contr.equalprior_deviations <- function(n, contrasts = TRUE, sparse = FALSE) {
   contr <- contr.equalprior(n, contrasts, sparse)
-  k <- nrow(contr)
-
-  r <- -1 / (k - 1)
-  V <- 1 - 1 / k
-  VCOV <- matrix(r * V, k, k)
-  diag(VCOV) <- V
-  wts <- c(1 - 1 / k, rep(-1 / k, k - 1))
-  scale <- as.vector(sqrt(wts %*% VCOV %*% wts))
-
-  contr / scale
+  n <- nrow(contr)
+  contr / sqrt(1 - 1 / n)
 }
 
 
