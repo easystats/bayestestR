@@ -1,30 +1,35 @@
 #' Sequential Effect eXistence and sIgnificance Testing (SEXIT)
 #'
+#' @description
+#'
 #' The SEXIT is a new framework to describe Bayesian effects, guiding which
 #' indices to use. Accordingly, the `sexit()` function returns the minimal (and
 #' optimal) required information to describe models' parameters under a Bayesian
 #' framework. It includes the following indices:
-#' \itemize{
-#'   \item{Centrality: the median of the posterior distribution. In
+#'
+#'   - Centrality: the median of the posterior distribution. In
 #'   probabilistic terms, there is `50%` of probability that the effect is higher
-#'   and lower. See [`point_estimate()`][point_estimate].}
-#'   \item{Uncertainty: the `95%` Highest Density Interval (HDI). In
+#'   and lower. See [`point_estimate()`][point_estimate].
+#'
+#'   - Uncertainty: the `95%` Highest Density Interval (HDI). In
 #'   probabilistic terms, there is `95%` of probability that the effect is
-#'   within this confidence interval. See [`ci()`][ci].}
-#'   \item{Existence: The probability of direction allows to quantify the
+#'   within this confidence interval. See [`ci()`][ci].
+#'
+#'   - Existence: The probability of direction allows to quantify the
 #'   certainty by which an effect is positive or negative. It is a critical
 #'   index to show that an effect of some manipulation is not harmful (for
 #'   instance in clinical studies) or to assess the direction of a link. See
-#'   [`p_direction()`][p_direction].}
-#'   \item{Significance: Once existence is demonstrated with high certainty, we
+#'   [`p_direction()`][p_direction].
+#'
+#'   - Significance: Once existence is demonstrated with high certainty, we
 #'   can assess whether the effect is of sufficient size to be considered as
 #'   significant (i.e., not negligible). This is a useful index to determine
 #'   which effects are actually important and worthy of discussion in a given
-#'   process. See [`p_significance()`][p_significance].}
-#'   \item{Size: Finally, this index gives an idea about the strength of an
+#'   process. See [`p_significance()`][p_significance].
+#'
+#'   - Size: Finally, this index gives an idea about the strength of an
 #'   effect. However, beware, as studies have shown that a big effect size can
-#'   be also suggestive of low statistical power (see details section).}
-#' }
+#'   be also suggestive of low statistical power (see details section).
 #'
 #' @inheritParams p_direction
 #' @inheritParams hdi
@@ -77,29 +82,31 @@
 #'  option, and might not be adapted to your case. Thus, they are to be handled
 #'  with care, and the chosen thresholds should always be explicitly reported
 #'  and justified.
-#'   \itemize{
-#'     \item For **linear models (lm)**, this can be generalised to \ifelse{html}{\out{0.05 * SD<sub>y</sub>}}{\eqn{[0.05*SD_{y}]}} and \ifelse{html}{\out{0.3 * SD<sub>y</sub>}}{\eqn{[0.3*SD_{y}]}} for significant and large effects, respectively.
-#'     \item For **logistic models**, the parameters expressed in log odds ratio can be converted to standardized difference through the formula \ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting a threshold of `0.09` and `0.54`.
-#'     \item For other models with **binary outcome**, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
-#'     \item For models from **count data**, the residual variance is used. This is a rather experimental threshold and is probably often similar to `0.05` and `0.3`, but should be used with care!
-#'     \item For **t-tests**, the standard deviation of the response is used, similarly to linear models (see above).
-#'     \item For **correlations**,`0.05` and `0.3` are used.
-#'     \item For all other models, `0.05` and `0.3` are used, but it is strongly advised to specify it manually.
-#'   }
+#'
+#'    - For **linear models (lm)**, this can be generalised to \ifelse{html}{\out{0.05 * SD<sub>y</sub>}}{\eqn{[0.05*SD_{y}]}} and \ifelse{html}{\out{0.3 * SD<sub>y</sub>}}{\eqn{[0.3*SD_{y}]}} for significant and large effects, respectively.
+#'    - For **logistic models**, the parameters expressed in log odds ratio can be converted to standardized difference through the formula \ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting a threshold of `0.09` and `0.54`.
+#'    - For other models with **binary outcome**, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
+#'    - For models from **count data**, the residual variance is used. This is a rather experimental threshold and is probably often similar to `0.05` and `0.3`, but should be used with care!
+#'    - For **t-tests**, the standard deviation of the response is used, similarly to linear models (see above).
+#'    - For **correlations**,`0.05` and `0.3` are used.
+#'    - For all other models, `0.05` and `0.3` are used, but it is strongly advised to specify it manually.
 #' }
+#'
 #' \subsection{Examples}{
 #' The three values for existence, significance and size provide a useful description of the posterior distribution of the effects. Some possible scenarios include:
-#' \itemize{
-#'   \item{The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.}
-#'   \item{The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).}
-#'   \item{The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).}}}
+#'
+#'   - The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.
+#'   - The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).
+#'   - The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).
+#' }
 #'
 #' @return A dataframe and text as attribute.
 #'
-#' @references \itemize{
-#'   \item{Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. \doi{10.21105/joss.01541}}
-#'   \item{Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}}
-#' }
+#' @references
+#'
+#' - Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. \doi{10.21105/joss.01541}
+#'
+#' - Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 #'
 #' @examples
 #' \donttest{

@@ -177,21 +177,19 @@ if (require("rstanarm") && interactive()) {
   hdi(wp[1:5]) # between, but closer to pred_m1
 }
 }
+
 }
 \references{
 \itemize{
 \item Clyde, M., Desimone, H., & Parmigiani, G. (1996). Prediction via
 orthogonalized model mixing. Journal of the American Statistical
 Association, 91(435), 1197-1208.
-
 \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E.
 (2019, March 25). A conceptual introduction to Bayesian Model Averaging.
 \doi{10.31234/osf.io/wgb64}
-
 \item Rouder, J. N., Haaf, J. M., & Vandekerckhove, J. (2018). Bayesian
 inference for psychology, part IV: Parameter estimation and Bayes factors.
 Psychonomic bulletin & review, 25(1), 102-113.
-
 \item van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers,
 E. J. (2019). A cautionary note on estimating effect size.
 }

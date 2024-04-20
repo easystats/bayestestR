@@ -3,13 +3,17 @@
 #' Perform a **Test for Practical Equivalence** for Bayesian and frequentist models.
 #'
 #' Documentation is accessible for:
-#' \itemize{
-#'   \item [Bayesian models](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
-#'   \item [Frequentist models](https://easystats.github.io/parameters/reference/equivalence_test.lm.html)
-#' }
 #'
-#' For Bayesian models, the **Test for Practical Equivalence** is based on the *"HDI+ROPE decision rule"* (\cite{Kruschke, 2014, 2018}) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the percentage of the `89%` [HDI][hdi] that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.
+#'   - [Bayesian models](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
+#'   - [Frequentist models](https://easystats.github.io/parameters/reference/equivalence_test.lm.html)
 #'
+#' For Bayesian models, the **Test for Practical Equivalence** is based on the
+#' *"HDI+ROPE decision rule"* (\cite{Kruschke, 2014, 2018}) to check whether
+#' parameter values should be accepted or rejected against an explicitly
+#' formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the
+#' percentage of the `89%` [HDI][hdi] that is the null region (the ROPE). If
+#' this percentage is sufficiently low, the null hypothesis is rejected. If this
+#' percentage is sufficiently high, the null hypothesis is accepted.
 #'
 #' @inheritParams rope
 #'
@@ -54,14 +58,13 @@
 #' - Piironen, J., & Vehtari, A. (2017). Comparison of Bayesian predictive methods for model selection. Statistics and Computing, 27(3), 711–735. \doi{10.1007/s11222-016-9649-y}
 #'
 #' @return A data frame with following columns:
-#'   \itemize{
-#'     \item `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
-#'     \item `CI` The probability of the HDI.
-#'     \item `ROPE_low`, `ROPE_high` The limits of the ROPE. These values are identical for all parameters.
-#'     \item `ROPE_Percentage` The proportion of the HDI that lies inside the ROPE.
-#'     \item `ROPE_Equivalence` The "test result", as character. Either "rejected", "accepted" or "undecided".
-#'     \item `HDI_low` , `HDI_high` The lower and upper HDI limits for the parameters.
-#'   }
+#'
+#'  - `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
+#'  - `CI` The probability of the HDI.
+#'  - `ROPE_low`, `ROPE_high` The limits of the ROPE. These values are identical for all parameters.
+#'  - `ROPE_Percentage` The proportion of the HDI that lies inside the ROPE.
+#'  - `ROPE_Equivalence` The "test result", as character. Either "rejected", "accepted" or "undecided".
+#'  - `HDI_low` , `HDI_high` The lower and upper HDI limits for the parameters.
 #'
 #' @note There is a `print()`-method with a `digits`-argument to control
 #'   the amount of digits in the output, and there is a

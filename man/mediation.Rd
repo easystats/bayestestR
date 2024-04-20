@@ -151,7 +151,6 @@ mediation(m3, centrality = "mean", ci = 0.95)
 \item Imai, K., Keele, L. and Tingley, D. (2010) A General Approach to Causal
 Mediation Analysis, Psychological Methods, Vol. 15, No. 4 (December), pp.
 309-334.
-
 \item Tingley, D., Yamamoto, T., Hirose, K., Imai, K. and Keele, L. (2014).
 mediation: R package for Causal Mediation Analysis, Journal of Statistical
 Software, Vol. 59, No. 5, pp. 1-38.

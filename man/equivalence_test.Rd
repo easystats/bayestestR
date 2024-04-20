@@ -91,7 +91,13 @@ Documentation is accessible for:
 \item \href{https://easystats.github.io/parameters/reference/equivalence_test.lm.html}{Frequentist models}
 }
 
-For Bayesian models, the \strong{Test for Practical Equivalence} is based on the \emph{"HDI+ROPE decision rule"} (\cite{Kruschke, 2014, 2018}) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the percentage of the \verb{89\%} \link[=hdi]{HDI} that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.
+For Bayesian models, the \strong{Test for Practical Equivalence} is based on the
+\emph{"HDI+ROPE decision rule"} (\cite{Kruschke, 2014, 2018}) to check whether
+parameter values should be accepted or rejected against an explicitly
+formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the
+percentage of the \verb{89\%} \link[=hdi]{HDI} that is the null region (the ROPE). If
+this percentage is sufficiently low, the null hypothesis is rejected. If this
+percentage is sufficiently high, the null hypothesis is accepted.
 
 Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, \cite{Kruschke (2018)}
 suggests using the percentage of the \verb{95\%} (or \verb{89\%}, considered more stable)

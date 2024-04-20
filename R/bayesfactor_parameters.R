@@ -86,25 +86,22 @@
 #' See example below.)
 #' \cr\cr
 #' It is important to provide the correct `prior` for meaningful results.
-#' \itemize{
-#'   \item When `posterior` is a numerical vector, `prior` should also be a numerical vector.
-#'   \item When `posterior` is a `data.frame`, `prior` should also be a `data.frame`, with matching column order.
-#'   \item When `posterior` is a `stanreg`, `brmsfit` or other supported Bayesian model: \itemize{
-#'     \item `prior` can be set to `NULL`, in which case prior samples are drawn internally.
-#'     \item `prior` can also be a model equivalent to `posterior` but with samples from
-#'     the priors *only*. See [unupdate()].
-#'     \item **Note:** When `posterior` is a `brmsfit_multiple` model, `prior` **must** be provided.
-#'   }
-#'   \item When `posterior` is an `emmGrid` / `emm_list` object: \itemize{
-#'     \item `prior` should also be an `emmGrid` / `emm_list` object equivalent to `posterior` but
-#'     created with a model of priors samples *only*. See [unupdate()].
-#'     \item `prior` can also be the original (posterior) *model*. If so, the function will try to
-#'     update the `emmGrid` / `emm_list` to use the [unupdate()]d prior-model.
-#'     (*This cannot be done for `brmsfit` models.*)
-#'     \item **Note**: When the `emmGrid` has undergone any transformations (`"log"`, `"response"`, etc.),
-#'     or `regrid`ing, then `prior` must be an `emmGrid` object, as stated above.
-#'   }
-#' }
+#'
+#'   - When `posterior` is a numerical vector, `prior` should also be a numerical vector.
+#'   - When `posterior` is a `data.frame`, `prior` should also be a `data.frame`, with matching column order.
+#'   - When `posterior` is a `stanreg`, `brmsfit` or other supported Bayesian model:
+#'       - `prior` can be set to `NULL`, in which case prior samples are drawn internally.
+#'       - `prior` can also be a model equivalent to `posterior` but with samples from
+#'         the priors *only*. See [unupdate()].
+#'       - **Note:** When `posterior` is a `brmsfit_multiple` model, `prior` **must** be provided.
+#'   - When `posterior` is an `emmGrid` / `emm_list` object:
+#'       - `prior` should also be an `emmGrid` / `emm_list` object equivalent to `posterior` but
+#'        created with a model of priors samples *only*. See [unupdate()].
+#'       - `prior` can also be the original (posterior) *model*. If so, the function will try to
+#'        update the `emmGrid` / `emm_list` to use the [unupdate()]d prior-model.
+#'        (*This cannot be done for `brmsfit` models.*)
+#'       - **Note**: When the `emmGrid` has undergone any transformations (`"log"`, `"response"`, etc.),
+#'         or `regrid`ing, then `prior` must be an `emmGrid` object, as stated above.
 #'
 #' @section Interpreting Bayes Factors:
 #' A Bayes factor greater than 1 can be interpreted as evidence against the
@@ -161,26 +158,30 @@
 #' }
 #'
 #' @references
-#' \itemize{
-#' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010).
+#'
+#' - Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010).
 #' Bayesian hypothesis testing for psychologists: A tutorial on the
 #' Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
-#' \item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The
+#'
+#' - Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The
 #' case of computing Bayes factors for regression parameters. British Journal of
 #' Mathematical and Statistical Psychology, 72(2), 316-333.
-#' \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between
+#'
+#' - Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between
 #' Bayesian order-restricted and point-null hypothesis tests. Statistics &
 #' Probability Letters, 92, 121-124.
-#' \item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for
+#'
+#' - Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for
 #' testing interval null hypotheses. Psychological methods, 16(4), 406.
-#' \item Liao, J. G., Midya, V., & Berg, A. (2020). Connecting and contrasting
+#'
+#' - Liao, J. G., Midya, V., & Berg, A. (2020). Connecting and contrasting
 #' the Bayes factor and a modified ROPE procedure for testing interval null
 #' hypotheses. The American Statistician, 1-19.
-#' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and
+#'
+#' - Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and
 #' Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology:
 #' An Empirical Comparison Using 855 t Tests. Perspectives on Psychological
 #' Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
-#' }
 #'
 #' @author Mattan S. Ben-Shachar
 #'

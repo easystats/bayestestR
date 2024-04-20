@@ -28,25 +28,25 @@ indices to use. Accordingly, the \code{sexit()} function returns the minimal (an
 optimal) required information to describe models' parameters under a Bayesian
 framework. It includes the following indices:
 \itemize{
-\item{Centrality: the median of the posterior distribution. In
+\item Centrality: the median of the posterior distribution. In
 probabilistic terms, there is \verb{50\%} of probability that the effect is higher
-and lower. See \code{\link[=point_estimate]{point_estimate()}}.}
-\item{Uncertainty: the \verb{95\%} Highest Density Interval (HDI). In
+and lower. See \code{\link[=point_estimate]{point_estimate()}}.
+\item Uncertainty: the \verb{95\%} Highest Density Interval (HDI). In
 probabilistic terms, there is \verb{95\%} of probability that the effect is
-within this confidence interval. See \code{\link[=ci]{ci()}}.}
-\item{Existence: The probability of direction allows to quantify the
+within this confidence interval. See \code{\link[=ci]{ci()}}.
+\item Existence: The probability of direction allows to quantify the
 certainty by which an effect is positive or negative. It is a critical
 index to show that an effect of some manipulation is not harmful (for
 instance in clinical studies) or to assess the direction of a link. See
-\code{\link[=p_direction]{p_direction()}}.}
-\item{Significance: Once existence is demonstrated with high certainty, we
+\code{\link[=p_direction]{p_direction()}}.
+\item Significance: Once existence is demonstrated with high certainty, we
 can assess whether the effect is of sufficient size to be considered as
 significant (i.e., not negligible). This is a useful index to determine
 which effects are actually important and worthy of discussion in a given
-process. See \code{\link[=p_significance]{p_significance()}}.}
-\item{Size: Finally, this index gives an idea about the strength of an
+process. See \code{\link[=p_significance]{p_significance()}}.
+\item Size: Finally, this index gives an idea about the strength of an
 effect. However, beware, as studies have shown that a big effect size can
-be also suggestive of low statistical power (see details section).}
+be also suggestive of low statistical power (see details section).
 }
 }
 \details{
@@ -103,12 +103,15 @@ and justified.
 \item For all other models, \code{0.05} and \code{0.3} are used, but it is strongly advised to specify it manually.
 }
 }
+
 \subsection{Examples}{
 The three values for existence, significance and size provide a useful description of the posterior distribution of the effects. Some possible scenarios include:
 \itemize{
-\item{The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.}
-\item{The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).}
-\item{The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).}}}
+\item The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.
+\item The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).
+\item The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).
+}
+}
 }
 \examples{
 \donttest{
@@ -135,7 +138,7 @@ if (require("rstanarm")) {
 }
 \references{
 \itemize{
-\item{Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. \doi{10.21105/joss.01541}}
-\item{Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}}
+\item Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. \doi{10.21105/joss.01541}
+\item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 }
 }
