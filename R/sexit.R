@@ -93,7 +93,9 @@
 #' }
 #'
 #' \subsection{Examples}{
-#' The three values for existence, significance and size provide a useful description of the posterior distribution of the effects. Some possible scenarios include:
+#' The three values for existence, significance and size provide a useful
+#' description of the posterior distribution of the effects. Some possible
+#' scenarios include:
 #'
 #'   - The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.
 #'   - The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).
@@ -104,9 +106,13 @@
 #'
 #' @references
 #'
-#' - Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. \doi{10.21105/joss.01541}
+#' - Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). bayestestR:
+#' Describing Effects and their Uncertainty, Existence and Significance within
+#' the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. \doi{10.21105/joss.01541}
 #'
-#' - Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+#' - Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect
+#' Existence and Significance in the Bayesian Framework. Frontiers in Psychology
+#' 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 #'
 #' @examples
 #' \donttest{
