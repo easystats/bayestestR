@@ -78,7 +78,7 @@ diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects 
 
   # If no diagnostic
   if (is.null(diagnostic)) {
-    return(data.frame("Parameter" = params))
+    return(data.frame(Parameter = params))
   }
 
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
@@ -136,7 +136,7 @@ diagnostic_posterior.stanmvreg <- function(posterior,
 
   # If no diagnostic
   if (is.null(diagnostic)) {
-    return(data.frame("Parameter" = params))
+    return(data.frame(Parameter = params))
   }
 
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
@@ -197,15 +197,15 @@ diagnostic_posterior.brmsfit <- function(posterior,
 
   # If no diagnostic
   if (is.null(diagnostic)) {
-    return(data.frame("Parameter" = params))
+    return(data.frame(Parameter = params))
   }
 
   # Get diagnostic
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat") # Add MCSE
-  } else {
-    if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+  } else if ("Rhat" %in% diagnostic) {
+    diagnostic <- c(diagnostic, "khat")
   }
 
   insight::check_if_installed("rstan")
@@ -241,7 +241,7 @@ diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects 
 
   # If no diagnostic
   if (is.null(diagnostic)) {
-    return(data.frame("Parameter" = params))
+    return(data.frame(Parameter = params))
   }
 
   # Get diagnostic
@@ -288,7 +288,7 @@ diagnostic_posterior.blavaan <- function(posterior, diagnostic = "all", ...) {
   # Find parameters
   params <- suppressWarnings(insight::find_parameters(posterior, flatten = TRUE))
 
-  out <- data.frame("Parameter" = params)
+  out <- data.frame(Parameter = params)
 
   # If no diagnostic
   if (is.null(diagnostic)) {
