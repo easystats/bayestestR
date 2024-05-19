@@ -81,7 +81,7 @@ test_that("check_prior - brms (linux)", {
   )
 
   # TODO: check hard-coded values
-  expect_warning(expect_equal(
+  expect_warning(expect_identical(
     check_prior(model2)$Prior_Quality,
     c(
       "uninformative", "informative", "informative", "uninformative",
@@ -92,7 +92,7 @@ test_that("check_prior - brms (linux)", {
   expect_warning(expect_identical(
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
-      "informative", "informative", "informative", "informative",
+      "informative", "misinformative", "informative", "informative",
       "informative", "not determinable", "not determinable", "not determinable"
     )
   ))

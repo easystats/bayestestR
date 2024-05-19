@@ -258,7 +258,7 @@ estimate_density.data.frame <- function(x,
   } else {
     # Deal with at- grouping --------
 
-    groups <- insight::get_datagrid(x[, at, drop = FALSE], at = at) # Get combinations
+    groups <- insight::get_datagrid(x[, at, drop = FALSE], by = at) # Get combinations
     out <- data.frame()
     for (row in seq_len(nrow(groups))) {
       subdata <- datawizard::data_match(x, groups[row, , drop = FALSE])
@@ -607,8 +607,8 @@ as.data.frame.density <- function(x, ...) {
 #' density_at(posterior, c(0, 1))
 #' @export
 density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
-  density <- estimate_density(posterior, precision = precision, method = method, ...)
-  stats::approx(density$x, density$y, xout = x)$y
+  posterior_density <- estimate_density(posterior, precision = precision, method = method, ...)
+  stats::approx(posterior_density$x, posterior_density$y, xout = x)$y
 }
 
 
@@ -620,7 +620,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
   dots[c("effects", "component", "parameters")] <- NULL
 
   # Get the kernel density estimation (KDE)
-  args <- c(dots, list(
+  my_args <- c(dots, list(
     x = x,
     n = precision,
     bw = bw,
@@ -628,8 +628,8 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
     to = x_range[2]
   ))
   fun <- get("density", asNamespace("stats"))
-  kde <- suppressWarnings(do.call("fun", args))
-  df <- as.data.frame(kde)
+  kde <- suppressWarnings(do.call("fun", my_args))
+  my_df <- as.data.frame(kde)
 
   # Get CI (https://bookdown.org/egarpor/NP-UC3M/app-kde-ci.html)
   if (!is.null(ci)) {
@@ -637,13 +637,13 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
     # R(K) for a normal
     Rk <- 1 / (2 * sqrt(pi))
     # Estimate the SD
-    sd_kde <- sqrt(df$y * Rk / (length(x) * h))
+    sd_kde <- sqrt(my_df$y * Rk / (length(x) * h))
     # CI with estimated variance
     z_alpha <- stats::qnorm(ci)
-    df$CI_low <- df$y - z_alpha * sd_kde
-    df$CI_high <- df$y + z_alpha * sd_kde
+    my_df$CI_low <- my_df$y - z_alpha * sd_kde
+    my_df$CI_high <- my_df$y + z_alpha * sd_kde
   }
-  df
+  my_df
 }
 
 

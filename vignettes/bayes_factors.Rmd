@@ -217,7 +217,7 @@ ggplot(mapping = aes(x_vals, d_vals, fill = in_null, group = range_groups)) +
   labs(x = "Drug effect", y = "Density") +
   coord_cartesian(ylim = c(0, 0.45)) +
   theme_modern() +
-  theme(legend.position = c(0.2, 0.8))
+  theme(legend.position.inside = c(0.2, 0.8))
 
 pnull <- diff(pnorm(null, sd = 3))
 prior_odds <- (1 - pnull) / pnull
@@ -249,7 +249,7 @@ ggplot(mapping = aes(x_vals, d_vals_post, fill = in_null, group = range_groups))
   labs(x = "Drug effect", y = "Density") +
   coord_cartesian(ylim = c(0, 0.45)) +
   theme_modern() +
-  theme(legend.position = c(0.2, 0.8))
+  theme(legend.position.inside = c(0.2, 0.8))
 
 My_first_BF <- bayesfactor_parameters(model, null = c(-1, 1), prior = model_prior)
 
@@ -721,7 +721,7 @@ virginica actually have shorter sepals!
 ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) +
   geom_point() +
   scale_color_flat() +
-  theme(legend.position = c(0.2, 0.8))
+  theme(legend.position.inside = c(0.2, 0.8))
 ```
 
 Note that these Bayes factors compare the restricted model to the unrestricted
