@@ -311,8 +311,7 @@ estimate_density.draws <- function(x,
     extend_scale = extend_scale,
     bw = bw,
     select = select,
-    by = by,
-    group_by = group_by
+    by = by
   )
 }
 
