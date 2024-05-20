@@ -16,8 +16,8 @@ estimate_density(x, ...)
   bw = "SJ",
   ci = NULL,
   select = NULL,
+  by = NULL,
   at = NULL,
-  group_by = NULL,
   ...
 )
 }
@@ -47,14 +47,14 @@ changed for \code{"SJ"}, which is recommended.}
 This feature is experimental, use with caution.}
 
 \item{select}{Character vector of column names. If NULL (the default), all
-numeric variables will be selected. Other arguments from \code{\link[datawizard:find_columns]{datawizard::find_columns()}}
+numeric variables will be selected. Other arguments from \code{\link[datawizard:extract_column_names]{datawizard::find_columns()}}
 (such as \code{exclude}) can also be used.}
 
-\item{at}{Optional character vector. If not \code{NULL} and input is a data frame,
-density estimation is performed for each group (subsets) indicated by \code{at}.
+\item{by}{Optional character vector. If not \code{NULL} and input is a data frame,
+density estimation is performed for each group (subsets) indicated by \code{by}.
 See examples.}
 
-\item{group_by}{Deprecated in favour of \code{at}.}
+\item{at}{Deprecated in favour of \code{by}.}
 }
 \description{
 This function is a wrapper over different methods of density estimation. By
@@ -109,8 +109,8 @@ head(estimate_density(iris))
 head(estimate_density(iris, select = "Sepal.Width"))
 
 # Grouped data
-head(estimate_density(iris, at = "Species"))
-head(estimate_density(iris$Petal.Width, at = iris$Species))
+head(estimate_density(iris, by = "Species"))
+head(estimate_density(iris$Petal.Width, by = iris$Species))
 \donttest{
 # rstanarm models
 # -----------------------------------------------
