@@ -30,30 +30,32 @@ determined).
 \description{
 Performs a simple test to check whether the prior is informative to the
 posterior. This idea, and the accompanying heuristics, were discussed in
-\href{https://statmodeling.stat.columbia.edu/2019/08/10/}{this blogpost}.
+\emph{Gelman et al. 2017}.
 }
 \examples{
+\dontshow{if (require("rstanarm") && require("see")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(bayestestR)
-if (require("rstanarm")) {
-  model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
-  check_prior(model, method = "gelman")
-  check_prior(model, method = "lakeland")
+model <- rstanarm::stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
+check_prior(model, method = "gelman")
+check_prior(model, method = "lakeland")
 
-  # An extreme example where both methods diverge:
-  model <- stan_glm(mpg ~ wt,
-    data = mtcars[1:3, ],
-    prior = normal(-3.3, 1, FALSE),
-    prior_intercept = normal(0, 1000, FALSE),
-    refresh = 0
-  )
-  check_prior(model, method = "gelman")
-  check_prior(model, method = "lakeland")
-  # can provide visual confirmation to the Lakeland method
-  plot(si(model, verbose = FALSE))
+# An extreme example where both methods diverge:
+model <- rstanarm::stan_glm(mpg ~ wt,
+  data = mtcars[1:3, ],
+  prior = normal(-3.3, 1, FALSE),
+  prior_intercept = normal(0, 1000, FALSE),
+  refresh = 0
+)
+check_prior(model, method = "gelman")
+check_prior(model, method = "lakeland")
+# can provide visual confirmation to the Lakeland method
+plot(si(model, verbose = FALSE))
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
-https://statmodeling.stat.columbia.edu/2019/08/10/
+Gelman, A., Simpson, D., and Betancourt, M. (2017). The Prior Can Often Only
+Be Understood in the Context of the Likelihood. Entropy, 19(10), 555.
+\doi{10.3390/e19100555}
 }
