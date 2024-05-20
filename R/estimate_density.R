@@ -21,10 +21,10 @@
 #' @param select Character vector of column names. If NULL (the default), all
 #' numeric variables will be selected. Other arguments from [datawizard::find_columns()]
 #' (such as `exclude`) can also be used.
-#' @param at Optional character vector. If not `NULL` and input is a data frame,
-#' density estimation is performed for each group (subsets) indicated by `at`.
+#' @param by Optional character vector. If not `NULL` and input is a data frame,
+#' density estimation is performed for each group (subsets) indicated by `by`.
 #' See examples.
-#' @param group_by Deprecated in favour of `at`.
+#' @param at Deprecated in favour of `by`.
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -70,8 +70,8 @@
 #' head(estimate_density(iris, select = "Sepal.Width"))
 #'
 #' # Grouped data
-#' head(estimate_density(iris, at = "Species"))
-#' head(estimate_density(iris$Petal.Width, at = iris$Species))
+#' head(estimate_density(iris, by = "Species"))
+#' head(estimate_density(iris$Petal.Width, by = iris$Species))
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -172,34 +172,34 @@ estimate_density.numeric <- function(x,
                                      extend_scale = 0.1,
                                      bw = "SJ",
                                      ci = NULL,
+                                     by = NULL,
                                      at = NULL,
-                                     group_by = NULL,
                                      ...) {
   # TODO remove deprecation warning
   # Sanity
-  if (!is.null(group_by)) {
+  if (!is.null(at)) {
     insight::format_warning(
-      "The `group_by` argument is deprecated and might be removed in a future update. Please replace by `at`."
+      "The `at` argument is deprecated and might be removed in a future update. Please replace by `by`."
     )
-    at <- group_by
+    by <- at
   }
 
-  if (!is.null(at)) {
-    if (length(at) == 1) {
+  if (!is.null(by)) {
+    if (length(by) == 1) {
       insight::format_error(paste0(
-        "`at` must be either the name of a group column if a data frame is entered as input,",
+        "`by` must be either the name of a group column if a data frame is entered as input,",
         " or in this case (where a single vector was passed) a vector of same length."
       ))
     }
     out <- estimate_density(
-      data.frame(V1 = x, Group = at, stringsAsFactors = FALSE),
+      data.frame(V1 = x, Group = by, stringsAsFactors = FALSE),
       method = method,
       precision = precision,
       extend = extend,
       extend_scale = extend_scale,
       bw = bw,
       ci = ci,
-      at = "Group",
+      by = "Group",
       ...
     )
     out$Parameter <- NULL
@@ -230,19 +230,19 @@ estimate_density.data.frame <- function(x,
                                         bw = "SJ",
                                         ci = NULL,
                                         select = NULL,
+                                        by = NULL,
                                         at = NULL,
-                                        group_by = NULL,
                                         ...) {
   # Sanity
-  if (!is.null(group_by)) {
+  if (!is.null(at)) {
     insight::format_warning(paste0(
-      "The `group_by` argument is deprecated and might be removed in a future update.",
-      " Please replace by `at`."
+      "The `at` argument is deprecated and might be removed in a future update.",
+      " Please replace by `by`."
     ))
-    at <- group_by
+    by <- at
   }
 
-  if (is.null(at)) {
+  if (is.null(by)) {
     # No grouping -------------------
     out <- .estimate_density_df(
       x = x,
@@ -256,9 +256,9 @@ estimate_density.data.frame <- function(x,
       ...
     )
   } else {
-    # Deal with at- grouping --------
+    # Deal with by- grouping --------
 
-    groups <- insight::get_datagrid(x[, at, drop = FALSE], by = at) # Get combinations
+    groups <- insight::get_datagrid(x[, by, drop = FALSE], by = by) # Get combinations
     out <- data.frame()
     for (row in seq_len(nrow(groups))) {
       subdata <- datawizard::data_match(x, groups[row, , drop = FALSE])
@@ -292,9 +292,17 @@ estimate_density.draws <- function(x,
                                    bw = "SJ",
                                    ci = NULL,
                                    select = NULL,
+                                   by = NULL,
                                    at = NULL,
-                                   group_by = NULL,
                                    ...) {
+  if (!is.null(at)) {
+    insight::format_warning(paste0(
+      "The `at` argument is deprecated and might be removed in a future update.",
+      " Please replace by `by`."
+    ))
+    by <- at
+  }
+
   estimate_density(
     .posterior_draws_to_df(x),
     method = method,
@@ -303,7 +311,7 @@ estimate_density.draws <- function(x,
     extend_scale = extend_scale,
     bw = bw,
     select = select,
-    at = at,
+    by = by,
     group_by = group_by
   )
 }
@@ -577,7 +585,7 @@ as.data.frame.density <- function(x, ...) {
 
   for (i in names(out)) {
     if (nrow(out[[i]]) == 0) {
-      insight::format_warning(paste0("'", i, "', or one of its 'at' groups, is empty and has no density information."))
+      insight::format_warning(paste0("`", i, "`, or one of its groups specified in `by`, is empty and has no density information."))
     } else {
       out[[i]]$Parameter <- i
     }

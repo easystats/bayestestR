@@ -31,14 +31,14 @@ simulate_simpson <- function(n = 100,
     insight::format_error("The number of observations `n` should be larger than 3.")
   }
 
-  data <- data.frame()
+  out <- data.frame()
   for (i in 1:groups) {
     dat <- simulate_correlation(n = n, r = r)
     dat$V1 <- dat$V1 + difference * i # (i * -sign(r))
     dat$V2 <- dat$V2 + difference * (i * -sign(r))
     dat$Group <- sprintf(paste0(group_prefix, "%0", nchar(trunc(abs(groups))), "d"), i)
-    data <- rbind(data, dat)
+    out <- rbind(out, dat)
   }
 
-  data
+  out
 }
