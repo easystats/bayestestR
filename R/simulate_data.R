@@ -11,7 +11,7 @@
 #' @param sd A value or vector corresponding to the SD of the variables.
 #' @param names A character vector of desired variable names.
 #' @param ... Arguments passed to or from other methods.
-#' @examples
+#' @examplesIf requireNamespace("MASS", quietly = TRUE)
 #'
 #' # Correlation --------------------------------
 #' data <- simulate_correlation(r = 0.5)
@@ -70,7 +70,7 @@ simulate_correlation <- function(n = 100,
       if (any(r > 1)) {
         insight::format_error("`r` should only contain values between -1 and 1.")
       } else {
-        sigma <- r
+        dispersion <- r
       }
     } else {
       insight::format_error("`r` should be a symetric matrix (relative to the diagonal).")
@@ -79,7 +79,7 @@ simulate_correlation <- function(n = 100,
     if (abs(r) > 1) {
       insight::format_error("`r` should only contain values between -1 and 1.")
     } else {
-      sigma <- matrix(c(1, r, r, 1), nrow = 2)
+      dispersion <- matrix(c(1, r, r, 1), nrow = 2)
     }
   } else {
     insight::format_error("`r` should be a value (e.g., r = 0.5) or a square matrix.")
@@ -87,30 +87,30 @@ simulate_correlation <- function(n = 100,
 
 
   # Get data
-  data <- MASS::mvrnorm(
+  out <- MASS::mvrnorm(
     n = n,
-    mu = rep_len(0, ncol(sigma)), # Means of variables
-    Sigma = sigma,
+    mu = rep_len(0, ncol(dispersion)), # Means of variables
+    Sigma = dispersion,
     empirical = TRUE
   )
 
   # Adjust scale
   if (any(sd != 1)) {
-    data <- t(t(data) * rep_len(sd, ncol(sigma)))
+    out <- t(t(out) * rep_len(sd, ncol(dispersion)))
   }
 
   # Adjust mean
   if (any(mean != 0)) {
-    data <- t(t(data) + rep_len(mean, ncol(sigma)))
+    out <- t(t(out) + rep_len(mean, ncol(dispersion)))
   }
 
-  data <- as.data.frame(data)
+  out <- as.data.frame(out)
 
   # Rename
-  if (!is.null(names) && length(names) == ncol(data)) {
-    names(data) <- names
+  if (!is.null(names) && length(names) == ncol(out)) {
+    names(out) <- names
   }
-  data
+  out
 }
 
 
@@ -123,13 +123,13 @@ simulate_ttest <- function(n = 100, d = 0.5, names = NULL, ...) {
   pr <- 1 / (1 + exp(-z)) # Pass it through an inverse logit function
   y <- distribution_binomial(n, 1, pr, random = 3) # Bernoulli response variable
 
-  data <- data.frame(y = as.factor(y), x = x)
-  names(data) <- paste0("V", 0:(ncol(data) - 1))
+  out <- data.frame(y = as.factor(y), x = x)
+  names(out) <- paste0("V", 0:(ncol(out) - 1))
 
-  if (!is.null(names) && length(names) == ncol(data)) {
-    names(data) <- names
+  if (!is.null(names) && length(names) == ncol(out)) {
+    names(out) <- names
   }
-  data
+  out
 }
 
 
@@ -139,16 +139,16 @@ simulate_difference <- function(n = 100, d = 0.5, names = NULL, ...) {
   x <- distribution_normal(round(n / 2), -d / 2, 1)
   y <- distribution_normal(round(n / 2), d / 2, 1)
 
-  data <- data.frame(
+  out <- data.frame(
     y = as.factor(rep(c(0, 1), each = round(n / 2))),
     x = c(x, y)
   )
-  names(data) <- paste0("V", 0:(ncol(data) - 1))
+  names(out) <- paste0("V", 0:(ncol(out) - 1))
 
-  if (!is.null(names) && length(names) == ncol(data)) {
-    names(data) <- names
+  if (!is.null(names) && length(names) == ncol(out)) {
+    names(out) <- names
   }
-  data
+  out
 }
 
 

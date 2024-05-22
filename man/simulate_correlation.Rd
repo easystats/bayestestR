@@ -33,6 +33,7 @@ the groups.}
 Simulate data with specific characteristics.
 }
 \examples{
+\dontshow{if (requireNamespace("MASS", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # Correlation --------------------------------
 data <- simulate_correlation(r = 0.5)
@@ -76,4 +77,5 @@ round(c(mean(data$V1), sd(data$V1)), 1)
 diff(t.test(data$V1 ~ data$V0)$estimate)
 summary(lm(V1 ~ V0, data = data))
 summary(glm(V0 ~ V1, data = data, family = "binomial"))
+\dontshow{\}) # examplesIf}
 }

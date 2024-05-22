@@ -1,3 +1,5 @@
+skip_if_not_installed("MASS")
+
 test_that("simulate_correlation", {
   set.seed(333)
   data <- simulate_correlation(r = 0.5, n = 50)
