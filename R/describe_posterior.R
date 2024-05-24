@@ -787,7 +787,7 @@ describe_posterior.emmGrid <- function(posterior,
                                        ...) {
   if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
     "si" %in% tolower(ci_method)) {
-    samps <- .clean_priors_and_posteriors(posterior, bf_prior)
+    samps <- .clean_priors_and_posteriors(posterior, bf_prior, verbose = verbose)
     bf_prior <- samps$prior
     posterior_samples <- samps$posterior
   } else {

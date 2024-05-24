@@ -160,9 +160,7 @@ si.blavaan <- si.stanreg
 #' @export
 si.emmGrid <- function(posterior, prior = NULL,
                        BF = 1, verbose = TRUE, ...) {
-  samps <- .clean_priors_and_posteriors(posterior, prior,
-    verbose = verbose
-  )
+  samps <- .clean_priors_and_posteriors(posterior, prior, verbose = verbose)
 
   # Get SIs
   out <- si.data.frame(
