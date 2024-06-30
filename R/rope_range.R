@@ -138,13 +138,22 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
       # Probit models
       # Sigma==1
       0.1 * 1
+    } else if (information$is_exponential) {
+      # Gamma models
+      sig <- insight::get_sigma(x)
+      if (is.null(sig) || length(sig) == 0 || is.na(sig)) stop(call. = FALSE)
+      switch(information$link_function,
+        inverse = ,
+        identity = stats::family(x)$variance(sig),
+        log = 0.1 * log1p(1 / sig^-2)
+      )      
     } else if (information$is_correlation) {
       # Correlations
       # https://github.com/easystats/bayestestR/issues/121
       0.05
     } else if (information$is_count) {
       # Not sure about this
-      sig <- stats::sigma(x)
+      sig <- insight::get_sigma(x)
       if (is.null(sig) || length(sig) == 0 || is.na(sig)) stop(call. = FALSE)
       0.1 * sig
     } else {
