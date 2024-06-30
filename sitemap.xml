@@ -1,246 +1,84 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://easystats.github.io/bayestestR/404.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/PULL_REQUEST_TEMPLATE.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/SUPPORT.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/bayes_factors.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/bayestestR.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/credible_interval.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/example1.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/example2.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/example3.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/guidelines.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/mediation.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/overview_of_vignettes.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/probability_of_direction.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/index.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/area_under_curve.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/as.data.frame.density.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/as.numeric.p_direction.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/bayesfactor.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/bayesfactor_inclusion.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/bayesfactor_models.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/bayestestR-package.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/bci.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/bic_to_bf.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/check_prior.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/ci.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/contr.equalprior.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/convert_bayesian_as_frequentist.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/cwi.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/density_at.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/describe_posterior.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/describe_prior.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/diagnostic_draws.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/disgust.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/distribution.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/dot-extract_priors_rstanarm.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/dot-prior_new_location.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/dot-select_nums.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/effective_sample.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/equivalence_test.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/estimate_density.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/eti.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/hdi.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/map_estimate.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/mcse.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/mediation.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/model_to_priors.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/overlap.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/p_direction.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/p_map.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/p_rope.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/p_significance.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/p_to_bf.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/pd_to_p.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/point_estimate.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/reshape_iterations.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/rope.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/rope_range.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/sensitivity_to_prior.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/sexit.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/sexit_thresholds.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/si.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/simulate_correlation.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/simulate_prior.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/simulate_simpson.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/spi.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/unupdate.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/bayestestR/reference/weighted_posteriors.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://easystats.github.io/bayestestR/404.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/CONTRIBUTING.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/LICENSE-text.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/PULL_REQUEST_TEMPLATE.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/SUPPORT.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/bayes_factors.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/bayestestR.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/credible_interval.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/example1.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/example2.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/example3.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/guidelines.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/index.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/mediation.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/overview_of_vignettes.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/probability_of_direction.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/authors.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/index.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/news/index.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/area_under_curve.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/as.data.frame.density.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/as.numeric.p_direction.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/bayesfactor.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/bayesfactor_inclusion.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/bayesfactor_models.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/bayestestR-package.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/bci.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/bic_to_bf.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/check_prior.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/ci.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/contr.equalprior.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/convert_bayesian_as_frequentist.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/cwi.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/density_at.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/describe_posterior.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/describe_prior.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/diagnostic_draws.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/disgust.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/distribution.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/dot-extract_priors_rstanarm.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/dot-prior_new_location.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/dot-select_nums.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/effective_sample.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/equivalence_test.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/estimate_density.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/eti.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/hdi.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/index.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/map_estimate.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/mcse.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/mediation.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/model_to_priors.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/overlap.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/p_direction.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/p_map.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/p_rope.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/p_significance.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/p_to_bf.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/pd_to_p.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/point_estimate.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/reexports.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/reshape_iterations.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/rope.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/rope_range.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/sensitivity_to_prior.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/sexit.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/sexit_thresholds.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/si.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/simulate_correlation.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/simulate_prior.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/simulate_simpson.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/spi.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/unupdate.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/weighted_posteriors.html</loc></url>
 </urlset>
+
