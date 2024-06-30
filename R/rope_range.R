@@ -114,7 +114,7 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
 .rope_range <- function(x, information = NULL, response = NULL, response_transform = NULL, verbose = TRUE) {
   negligible_value <- tryCatch(
-    if (!is.null(response_transform) && grepl("log", response_transform, fixed = TRUE)) {
+    if (!is.null(response_transform) && all(grepl("log", response_transform, fixed = TRUE))) {
       # for log-transform, we assume that a 1% change represents the ROPE adequately
       # see https://github.com/easystats/bayestestR/issues/487
       0.01
