@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.13.2.4
+Version: 0.13.2.5
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -76,6 +76,7 @@ Suggests:
     BayesFactor (>= 0.9.12-4.4),
     bayesQR,
     bayesplot,
+    betareg,
     BH,
     blavaan,
     bridgesampling,
@@ -88,6 +89,7 @@ Suggests:
     ggplot2,
     glmmTMB,
     httr,
+    httr2,
     KernSmooth,
     knitr,
     lavaan,

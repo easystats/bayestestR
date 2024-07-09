@@ -13,6 +13,11 @@
 * `bayesian_as_frequentist()` now supports more model families from Bayesian
   models that can be successfully converted to their frequentists counterparts.
 
+## Bug fixes
+
+* Fixed issue in `bayesian_as_frequentist()` for *brms* models with `0 + Intercept`
+  specification in the model formula.
+
 # bayestestR 0.13.2
 
 ## Breaking Changes

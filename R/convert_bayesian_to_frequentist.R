@@ -47,6 +47,14 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   model_formula <- insight::find_formula(model)
   model_family <- insight::get_family(model)
 
+  # fix exception: The 0 + Intercept syntax in brms can be used to facilitate
+  # prior specification for the intercept, but but it leads to issues where it
+  # wrongly can be believed that Intercept is a variable and not a special term.
+  f_string <- insight::safe_deparse(model_formula$conditional)
+  if (grepl("0 + Intercept", f_string, fixed = TRUE)) {
+    model_formula$conditional <- stats::as.formula(gsub("0 + Intercept", "1", f_string, fixed = TRUE))
+  }
+
   if (inherits(model_family, "brmsfamily")) {
     insight::check_if_installed("glmmTMB")
     # exception: ordbetareg()
@@ -200,12 +208,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   }
 
   fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
-  cond_formula <- stats::as.formula(paste(
-    fixed_formula, random_formula,
-    sep = " + "
-  ))
-
-  cond_formula
+  stats::as.formula(paste(fixed_formula, random_formula, sep = " + "))
 }
 
 #' @rdname convert_bayesian_as_frequentist
