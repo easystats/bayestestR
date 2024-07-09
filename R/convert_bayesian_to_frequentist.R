@@ -46,6 +46,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   info <- insight::model_info(model, verbose = FALSE)
   model_formula <- insight::find_formula(model)
   model_family <- insight::get_family(model)
+
   if (inherits(model_family, "brmsfamily")) {
     insight::check_if_installed("glmmTMB")
     # exception: ordbetareg()
@@ -63,17 +64,21 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
         student = glmmTMB::t_family(link = model_family$link),
         get(model_family$family)(link = model_family$link)
       ))
-      if (is.null(model_family)) {
-        insight::format_error("Model could not be automatically converted to frequentist model.")
-      }
     }
   }
 
+  # if family could not be identified, stop here
+  if (is.null(model_family)) {
+    insight::format_error("Model could not be automatically converted to frequentist model.")
+  }
+
+  # first attempt
   freq <- tryCatch(.convert_bayesian_as_frequentist(
     info = info, formula = model_formula, data = data, family = model_family, REML = REML
   ), error = function(e) e)
 
   if (inherits(freq, "error")) {
+    # try again to extract family, using generic approach
     model_family <- get(model_family$family)(link = model_family$link)
     freq <- .convert_bayesian_as_frequentist(
       info = info, formula = model_formula, data = data, family = model_family, REML = REML
@@ -82,9 +87,9 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
 
   if (inherits(freq, "error")) {
     insight::format_error("Model could not be automatically converted to frequentist model.")
-  } else {
-    freq
   }
+
+  freq
 }
 
 # internal
