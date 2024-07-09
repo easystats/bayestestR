@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
     <li><a class="dropdown-item" href="../articles/example3.html">3. Become a Bayesian master</a></li>
   </ul>
 </li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/credible_interval.html">Credible Intervals (CI)</a></li>
@@ -182,9 +182,8 @@ by the total effect.</p>
 <span><span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span></span>
 <span><span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></span>
+<span></span>
 <span><span class="co"># for rstanarm</span></span>
 <span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
@@ -214,7 +213,7 @@ interval.</p>
 <p>Here is a comparison with the <em>mediation</em> package. Note that
 the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>-output of the <em>mediation</em> package
 shows the indirect effect first, followed by the direct effect.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Causal Mediation Analysis </span></span>
@@ -230,9 +229,8 @@ shows the indirect effect first, followed by the direct effect.</p>
 <span><span class="co">#&gt; Sample Size Used: 899 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Simulations: 1000</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Simulations: 1000</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -247,9 +245,8 @@ shows the indirect effect first, followed by the direct effect.</p>
 <span><span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span></span>
 <span><span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -269,7 +266,7 @@ shows the indirect effect first, followed by the direct effect.</p>
 posterior samples, use the <code>centrality</code>-argument.
 Furthermore, there is a <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>-method, which allows to
 print more digits.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, centrality <span class="op">=</span> <span class="st">"mean"</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">m</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
@@ -295,7 +292,7 @@ print more digits.</p>
 <p>Finally, we also compare the results to a SEM model, using
 <em>lavaan</em>. This example should demonstrate how to “translate” the
 same model in different packages or modeling approached.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">jobs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
@@ -367,9 +364,8 @@ same model in different packages or modeling approached.</p>
 <span><span class="co">#&gt;     total_treat      -0.056    0.045   -1.244    0.214</span></span>
 <span><span class="co">#&gt;     total_econ_hrd    0.136    0.022    6.309    0.000</span></span>
 <span><span class="co">#&gt;     total_sex         0.109    0.043    2.548    0.011</span></span>
-<span><span class="co">#&gt;     total_age        -0.000    0.002   -0.223    0.824</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt;     total_age        -0.000    0.002   -0.223    0.824</span></span>
+<span></span>
 <span><span class="co"># just to have the numbers right at hand and you don't need to scroll up</span></span>
 <span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
@@ -414,7 +410,7 @@ which is <code>-0.040</code>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
 </div>
 
     </footer>
