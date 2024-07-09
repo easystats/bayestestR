@@ -45,26 +45,45 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
 
   info <- insight::model_info(model, verbose = FALSE)
   formula <- insight::find_formula(model)
-  family <- insight::get_family(model)
-  if (inherits(family, "brmsfamily")) {
-    family <- get(family$family)(link = family$link)
+  model_family <- insight::get_family(model)
+  if (inherits(model_family, "brmsfamily")) {
+    insight::check_if_installed("glmmTMB")
+    # exception: ordbetareg()
+    if ("custom" %in% model_family$family && all(model_family$name == "ord_beta_reg")) {
+      model_family <- glmmTMB::ordbeta()
+    } else {
+      # not all families return proper objects from "get", so we capture
+      # some families via switch here...
+      model_family <- .safe(switch(
+        model_family$family,
+        "beta" = glmmTMB::beta_family(link = model_family$link),
+        "beta_binomial" = glmmTMB::betabinomial(link = model_family$link),
+        "negbinomial" = glmmTMB::nbinom1(link = model_family$link),
+        "lognormal" = glmmTMB::lognormal(link = model_family$link),
+        "student" = glmmTMB::t_family(link = model_family$link),
+        get(model_family$family)(link = model_family$link)
+      ))
+      if (is.null(model_family)) {
+        insight::format_error("Model could not be automatically converted to frequentist model.")
+      }
+    }
   }
 
   freq <- tryCatch(.convert_bayesian_as_frequentist(
-    info = info, formula = formula, data = data, family = family, REML = REML
+    info = info, formula = formula, data = data, family = model_family, REML = REML
   ), error = function(e) e)
 
   if (inherits(freq, "error")) {
-    family <- get(family$family)(link = family$link)
+    model_family <- get(model_family$family)(link = model_family$link)
     freq <- .convert_bayesian_as_frequentist(
-      info = info, formula = formula, data = data, family = family, REML = REML
+      info = info, formula = formula, data = data, family = model_family, REML = REML
     )
   }
 
   if (inherits(freq, "error")) {
     insight::format_error("Model could not be automatically converted to frequentist model.")
   } else {
-    return(freq)
+    freq
   }
 }
 
@@ -79,7 +98,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   # subset,
   # knots,
   # meta-analysis
-  if (info$is_dispersion || info$is_zero_inflated || info$is_zeroinf || info$is_hurdle) {
+  if (info$is_dispersion || info$is_beta || info$is_zero_inflated || info$is_zeroinf || info$is_hurdle) {
     insight::check_if_installed("glmmTMB")
 
     cond_formula <- .rebuild_cond_formula(formula)
