@@ -97,6 +97,7 @@ Suggests:
     mclust,
     mediation,
     modelbased,
+    ordbetareg,
     parameters,
     patchwork,
     performance,
