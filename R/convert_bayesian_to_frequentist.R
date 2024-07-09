@@ -44,7 +44,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   }
 
   info <- insight::model_info(model, verbose = FALSE)
-  formula <- insight::find_formula(model)
+  model_formula <- insight::find_formula(model)
   model_family <- insight::get_family(model)
   if (inherits(model_family, "brmsfamily")) {
     insight::check_if_installed("glmmTMB")
@@ -56,11 +56,11 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
       # some families via switch here...
       model_family <- .safe(switch(
         model_family$family,
-        "beta" = glmmTMB::beta_family(link = model_family$link),
-        "beta_binomial" = glmmTMB::betabinomial(link = model_family$link),
-        "negbinomial" = glmmTMB::nbinom1(link = model_family$link),
-        "lognormal" = glmmTMB::lognormal(link = model_family$link),
-        "student" = glmmTMB::t_family(link = model_family$link),
+        beta = glmmTMB::beta_family(link = model_family$link),
+        beta_binomial = glmmTMB::betabinomial(link = model_family$link),
+        negbinomial = glmmTMB::nbinom1(link = model_family$link),
+        lognormal = glmmTMB::lognormal(link = model_family$link),
+        student = glmmTMB::t_family(link = model_family$link),
         get(model_family$family)(link = model_family$link)
       ))
       if (is.null(model_family)) {
@@ -70,13 +70,13 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   }
 
   freq <- tryCatch(.convert_bayesian_as_frequentist(
-    info = info, formula = formula, data = data, family = model_family, REML = REML
+    info = info, formula = model_formula, data = data, family = model_family, REML = REML
   ), error = function(e) e)
 
   if (inherits(freq, "error")) {
     model_family <- get(model_family$family)(link = model_family$link)
     freq <- .convert_bayesian_as_frequentist(
-      info = info, formula = formula, data = data, family = model_family, REML = REML
+      info = info, formula = model_formula, data = data, family = model_family, REML = REML
     )
   }
 
@@ -98,7 +98,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   # subset,
   # knots,
   # meta-analysis
-  if (info$is_dispersion || info$is_beta || info$is_zero_inflated || info$is_zeroinf || info$is_hurdle) {
+  if (info$is_dispersion || info$is_orderedbeta || info$is_beta || info$is_betabinomial || info$is_zero_inflated || info$is_zeroinf || info$is_hurdle || info$is_negbin) { # nolint
     insight::check_if_installed("glmmTMB")
 
     cond_formula <- .rebuild_cond_formula(formula)
@@ -167,40 +167,40 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
         )
       }
     }
+  } else if (info$is_linear) {
+    freq <- stats::lm(formula$conditional, data = data)
   } else {
-    if (info$is_linear) {
-      freq <- stats::lm(formula$conditional, data = data)
-    } else {
-      freq <- stats::glm(formula$conditional, data = data, family = family)
-    }
+    freq <- stats::glm(formula$conditional, data = data, family = family)
   }
 
-  return(freq)
+  freq
 }
 
 .rebuild_cond_formula <- function(formula) {
   if (is.null(formula$random)) {
     return(formula$conditional)
-  } else {
-    if (is.list(formula$random)) {
-      random_formula <- paste(
-        lapply(
-          formula$random, function(x) {
-            paste0("(", as.character(x)[-1], ")")
-          }
-        ),
-        collapse = " + "
-      )
-    } else {
-      random_formula <- paste0("(", as.character(formula$random)[-1], ")")
-    }
-    fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
-    cond_formula <- stats::as.formula(paste(
-      fixed_formula, random_formula,
-      sep = " + "
-    ))
-    return(cond_formula)
   }
+
+  if (is.list(formula$random)) {
+    random_formula <- paste(
+      lapply(
+        formula$random, function(x) {
+          paste0("(", as.character(x)[-1], ")")
+        }
+      ),
+      collapse = " + "
+    )
+  } else {
+    random_formula <- paste0("(", as.character(formula$random)[-1], ")")
+  }
+
+  fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
+  cond_formula <- stats::as.formula(paste(
+    fixed_formula, random_formula,
+    sep = " + "
+  ))
+
+  cond_formula
 }
 
 #' @rdname convert_bayesian_as_frequentist
