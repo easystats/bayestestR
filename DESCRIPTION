@@ -76,6 +76,7 @@ Suggests:
     BayesFactor (>= 0.9.12-4.4),
     bayesQR,
     bayesplot,
+    betareg,
     BH,
     blavaan,
     bridgesampling,
