@@ -208,12 +208,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   }
 
   fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
-  cond_formula <- stats::as.formula(paste(
-    fixed_formula, random_formula,
-    sep = " + "
-  ))
-
-  cond_formula
+  stats::as.formula(paste(fixed_formula, random_formula, sep = " + "))
 }
 
 #' @rdname convert_bayesian_as_frequentist
