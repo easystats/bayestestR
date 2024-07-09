@@ -80,3 +80,15 @@ test_that("brms 0 + Intercept to freq", {
 
   expect_equal(coef(m1), coef(m2), tolerance = 1e-2)
 })
+
+
+test_that("brms Interaction terms to freq", {
+  skip_if_not_or_load_if_installed("brms")
+
+  set.seed(333)
+  m <- brms::brm(qsec ~ mpg * as.factor(am), data = mtcars, refresh = 0)
+  m1 <- lm(qsec ~ mpg * as.factor(am), data = mtcars)
+  m2 <- convert_bayesian_as_frequentist(m)
+
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-2)
+})
