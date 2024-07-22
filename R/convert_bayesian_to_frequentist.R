@@ -63,8 +63,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
     } else {
       # not all families return proper objects from "get", so we capture
       # some families via switch here...
-      model_family <- .safe(switch(
-        model_family$family,
+      model_family <- .safe(switch(model_family$family,
         beta = glmmTMB::beta_family(link = model_family$link),
         beta_binomial = glmmTMB::betabinomial(link = model_family$link),
         negbinomial = glmmTMB::nbinom1(link = model_family$link),
