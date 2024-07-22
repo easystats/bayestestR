@@ -109,7 +109,7 @@ Suggests:
     rmarkdown,
     rstan,
     rstanarm,
-    see (>= 0.7.5),
+    see (>= 0.8.5),
     testthat,
     tweedie
 License: GPL-3
