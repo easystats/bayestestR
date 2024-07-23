@@ -6,14 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>2. Confirmation of Bayesian skills • bayestestR</title>
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="2. Confirmation of Bayesian skills">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><link href="../deps/KaTex-0.16.10/katex.min.css" rel="stylesheet">
+<script src="../deps/KaTex-0.16.10/katex.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="2. Confirmation of Bayesian skills">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -164,8 +165,8 @@ object called <code>result</code>, and then display it:</p>
 hypothesis</strong> (<em>h1</em>; a non-null correlation).</p>
 <p>Based on the <em>p</em>-value, the null hypothesis cannot be
 rejected: the correlation between the two variables is <strong>negative
-but non-significant</strong>
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mi>−</mi><mn>.12</mn><mo>,</mo><mi>p</mi><mo>&gt;</mo><mn>.05</mn></mrow><annotation encoding="application/x-tex">r = -.12, p &gt; .05</annotation></semantics></math>).</p>
+but non-significant</strong> (<span class="math inline">r = -.12, p &gt;
+.05</span>).</p>
 </div>
 <div class="section level3">
 <h3 id="bayesian-correlation">Bayesian correlation<a class="anchor" aria-label="anchor" href="#bayesian-correlation"></a>
@@ -208,14 +209,10 @@ factor (BF)</strong></a> allows the same comparison and determines
 probable</strong>: a model with the effect of interest, and a null model
 without the effect of interest. So, in the context of our correlation
 example, the null hypothesis would be no correlation between the two
-variables
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mn>0</mn><mo>:</mo><mi>ρ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h0: \rho = 0</annotation></semantics></math>;
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
-stands for Bayesian correlation coefficient), while the alternative
-hypothesis would be that there is a correlation
-<strong>different</strong> than 0 - positive or negative
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mn>1</mn><mo>:</mo><mi>ρ</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h1: \rho \neq 0</annotation></semantics></math>).</p>
+variables (<span class="math inline">h0: \rho = 0</span>; where <span class="math inline">\rho</span> stands for Bayesian correlation
+coefficient), while the alternative hypothesis would be that there is a
+correlation <strong>different</strong> than 0 - positive or negative
+(<span class="math inline">h1: \rho \neq 0</span>).</p>
 <p>We can use <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> to specifically compute
 the Bayes factor comparing those models:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -249,9 +246,8 @@ but not that there is <strong>evidence for the absence of the
 effect</strong>. In Bayesian framework, we can do the latter. This is
 important since sometimes our hypotheses are about no effect.</p>
 <p>BFs representing evidence for the alternative against the null can be
-reversed using
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><msub><mi>F</mi><mn>01</mn></msub><mo>=</mo><mn>1</mn><mi>/</mi><mi>B</mi><msub><mi>F</mi><mn>10</mn></msub></mrow><annotation encoding="application/x-tex">BF_{01}=1/BF_{10}</annotation></semantics></math>
-(the <em>01</em> and <em>10</em> correspond to <em>h0</em> against
+reversed using <span class="math inline">BF_{01}=1/BF_{10}</span> (the
+<em>01</em> and <em>10</em> correspond to <em>h0</em> against
 <em>h1</em> and <em>h1</em> against <em>h0</em>, respectively) to
 provide evidence of the null against the alternative. This improves
 human readability<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;If the effect is really strong, the BF values can be

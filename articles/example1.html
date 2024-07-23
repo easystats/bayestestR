@@ -6,14 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>1. Initiation to Bayesian models • bayestestR</title>
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="1. Initiation to Bayesian models">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><link href="../deps/KaTex-0.16.10/katex.min.css" rel="stylesheet">
+<script src="../deps/KaTex-0.16.10/katex.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="1. Initiation to Bayesian models">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -174,8 +175,7 @@ model, just to have a reference point:</p>
 &gt; 2 Petal.Length     0.41</code></pre>
 <p>In this model, the linear relationship between
 <code>Petal.Length</code> and <code>Sepal.Length</code> is
-<strong>positive and significant</strong>
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>=</mo><mn>0.41</mn><mo>,</mo><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>148</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>21.6</mn><mo>,</mo><mi>p</mi><mo>&lt;</mo><mn>.001</mn></mrow><annotation encoding="application/x-tex">\beta = 0.41, t(148) = 21.6, p &lt; .001</annotation></semantics></math>).
+<strong>positive and significant</strong> (<span class="math inline">\beta = 0.41, t(148) = 21.6, p &lt; .001</span>).
 This means that for each one-unit increase in <code>Petal.Length</code>
 (the predictor), you can expect <code>Sepal.Length</code> (the response)
 to increase by <strong>0.41</strong>. This effect can be visualized by
@@ -287,13 +287,11 @@ distribution.</strong></p>
 <strong>Everything we need is contained within this posterior
 distribution</strong>.</p>
 <p>Our description above is consistent with the values obtained from the
-frequentist regression (which resulted in a
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>
-of <strong>0.41</strong>). This is reassuring! Indeed, <strong>in most
-cases, Bayesian analysis does not drastically differ from the
-frequentist results</strong> or their interpretation. Rather, it makes
-the results more interpretable and intuitive, and easier to understand
-and describe.</p>
+frequentist regression (which resulted in a <span class="math inline">\beta</span> of <strong>0.41</strong>). This is
+reassuring! Indeed, <strong>in most cases, Bayesian analysis does not
+drastically differ from the frequentist results</strong> or their
+interpretation. Rather, it makes the results more interpretable and
+intuitive, and easier to understand and describe.</p>
 <p>We can now go ahead and <strong>precisely characterize</strong> this
 posterior distribution.</p>
 </div>
@@ -307,9 +305,8 @@ to summarize it</strong>. We recommend to describe the posterior
 distribution with <strong>3 elements</strong>:</p>
 <ol style="list-style-type: decimal">
 <li>A <strong>point-estimate</strong> which is a one-value summary
-(similar to the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mi>e</mi><mi>t</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">beta</annotation></semantics></math>
-in frequentist regressions).</li>
+(similar to the <span class="math inline">beta</span> in frequentist
+regressions).</li>
 <li>A <strong>credible interval</strong> representing the associated
 uncertainty.</li>
 <li>Some <strong>indices of significance</strong>, giving information
@@ -327,10 +324,9 @@ difference between them?</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; [1] 0.41</code></pre>
-<p>This is close to the frequentist
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>.
-But, as we know, the mean is quite sensitive to outliers or extremes
-values. Maybe the <strong>median</strong> could be more robust?</p>
+<p>This is close to the frequentist <span class="math inline">\beta</span>. But, as we know, the mean is quite
+sensitive to outliers or extremes values. Maybe the
+<strong>median</strong> could be more robust?</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; [1] 0.41</code></pre>
@@ -610,8 +606,7 @@ approximately observe an effect with a <em>p</em>-value of 0.04.
 &gt; Multiple R-squared:  0.185,   Adjusted R-squared:  0.146 
 &gt; F-statistic: 4.77 on 1 and 21 DF,  p-value: 0.0405</code></pre>
 <p>The frequentist model tells us that the difference is
-<strong>positive and significant</strong>
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>=</mo><mn>52</mn><mo>,</mo><mi>p</mi><mo>=</mo><mn>0.04</mn></mrow><annotation encoding="application/x-tex">\beta = 52, p = 0.04</annotation></semantics></math>).</p>
+<strong>positive and significant</strong> (<span class="math inline">\beta = 52, p = 0.04</span>).</p>
 <p><strong>Although we arrived to a similar conclusion, the Bayesian
 framework allowed us to develop a more profound and intuitive
 understanding of our effect, and of the uncertainty of its

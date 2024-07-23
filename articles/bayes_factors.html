@@ -6,14 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Bayes Factors • bayestestR</title>
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Bayes Factors">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><link href="../deps/KaTex-0.16.10/katex.min.css" rel="stylesheet">
+<script src="../deps/KaTex-0.16.10/katex.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Bayes Factors">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -143,39 +144,28 @@ them, and decide for yourself</strong>.</p>
 <p><strong>Bayes Factors (BFs) are indices of <em>relative</em> evidence
 of one “model” over another</strong>.</p>
 <p>In their role as a hypothesis testing index, they are to Bayesian
-framework what a
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value
-is to the <strong>classical/frequentist framework</strong>. In
-significance-based testing,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-values
-are used to assess how unlikely are the observed data if the
-<strong>null hypothesis</strong> were true, while in the
-<strong>Bayesian model selection framework</strong>, Bayes factors
-assess evidence for different models, each model corresponding to a
-specific hypothesis.</p>
+framework what a <span class="math inline">p</span>-value is to the
+<strong>classical/frequentist framework</strong>. In significance-based
+testing, <span class="math inline">p</span>-values are used to assess
+how unlikely are the observed data if the <strong>null
+hypothesis</strong> were true, while in the <strong>Bayesian model
+selection framework</strong>, Bayes factors assess evidence for
+different models, each model corresponding to a specific hypothesis.</p>
 <p>According to Bayes’ theorem, we can update prior probabilities of
-some model
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>M</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P(M)</annotation></semantics></math>)
-to posterior probabilities
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>M</mi><mo stretchy="false" form="prefix">|</mo><mi>D</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P(M|D)</annotation></semantics></math>)
-after observing some datum
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
-by accounting for the probability of observing that datum given the
-model
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P(D|M)</annotation></semantics></math>,
-also known as the <em>likelihood</em>):</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>M</mi><mo stretchy="false" form="prefix">|</mo><mi>D</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>×</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>M</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+some model <span class="math inline">M</span> (<span class="math inline">P(M)</span>) to posterior probabilities (<span class="math inline">P(M|D)</span>) after observing some datum <span class="math inline">D</span> by accounting for the probability of
+observing that datum given the model (<span class="math inline">P(D|M)</span>, also known as the
+<em>likelihood</em>):</p>
+<p><span class="math display">
 P(M|D) = \frac{P(D|M)\times P(M)}{P(D)}
-</annotation></semantics></math></p>
+</span></p>
 <p>Using this equation, we can compare the probability-odds of two
 models:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><munder><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>M</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">|</mo><mi>D</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>M</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">|</mo><mi>D</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">Posterior Odds</mtext></munder><mo>=</mo><munder><munder><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>M</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>M</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">Likelihood Ratio</mtext></munder><mo>×</mo><munder><munder><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>M</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>M</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">Prior Odds</mtext></munder></mrow><annotation encoding="application/x-tex">
-\underbrace{\frac{P(M_1|D)}{P(M_2|D)}}_{\text{Posterior Odds}} = 
-\underbrace{\frac{P(D|M_1)}{P(D|M_2)}}_{\text{Likelihood Ratio}} 
+<p><span class="math display">
+\underbrace{\frac{P(M_1|D)}{P(M_2|D)}}_{\text{Posterior Odds}} =
+\underbrace{\frac{P(D|M_1)}{P(D|M_2)}}_{\text{Likelihood Ratio}}
 \times
 \underbrace{\frac{P(M_1)}{P(M_2)}}_{\text{Prior Odds}}
-</annotation></semantics></math></p>
+</span></p>
 <p>Where the <em>likelihood ratio</em> (the middle term) is the
 <em>Bayes factor</em> - it is the <strong><em>factor</em></strong> by
 which some <strong>prior odds</strong> have been updated after observing
@@ -186,17 +176,17 @@ the data to <strong>posterior odds</strong>.</p>
 observed data under each of the two models</strong>. (In some contexts,
 these probabilities are also called <em>marginal likelihoods</em>.)</li>
 </ul>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><msub><mi>F</mi><mn>12</mn></msub><mo>=</mo><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>M</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="false" form="prefix">|</mo><msub><mi>M</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><span class="math display">
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
-</annotation></semantics></math></p>
+</span></p>
 <ul>
 <li>As <strong>the degree of shift in prior beliefs</strong> about the
 relative credibility of two models (since they can be computed by
 dividing posterior odds by prior odds).</li>
 </ul>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><msub><mi>F</mi><mn>12</mn></msub><mo>=</mo><mfrac><mrow><mi>P</mi><mi>o</mi><mi>s</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>r</mi><mspace width="0.222em"></mspace><mi>O</mi><mi>d</mi><mi>d</mi><msub><mi>s</mi><mn>12</mn></msub></mrow><mrow><mi>P</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>r</mi><mspace width="0.222em"></mspace><mi>O</mi><mi>d</mi><mi>d</mi><msub><mi>s</mi><mn>12</mn></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><span class="math display">
 BF_{12}=\frac{Posterior~Odds_{12}}{Prior~Odds_{12}}
-</annotation></semantics></math></p>
+</span></p>
 <p>Here we provide functions for computing Bayes factors in two
 different contexts:</p>
 <ul>
@@ -234,13 +224,10 @@ credible?</strong></p>
 <p>The <strong>boxplot</strong> suggests that the second group has a
 higher number of hours of extra sleep. <em>By how much?</em></p>
 <p>Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1.html">Bayesian
-linear model</a>, with a prior of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mrow><mi>g</mi><mi>r</mi><mi>o</mi><mi>u</mi><mi>p</mi></mrow></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">b_{group} \sim N(0, 3)</annotation></semantics></math>
-(i.e. the prior follows a Gaussian/normal distribution with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>e</mi><mi>a</mi><mi>n</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">mean = 0</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>D</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">SD = 3</annotation></semantics></math>),
-using <code>rstanarm</code> package:</p>
+linear model</a>, with a prior of <span class="math inline">b_{group}
+\sim N(0, 3)</span> (i.e. the prior follows a Gaussian/normal
+distribution with <span class="math inline">mean = 0</span> and <span class="math inline">SD = 3</span>), using <code>rstanarm</code>
+package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span></span>
@@ -264,11 +251,11 @@ probability of the drug’s effect falling <em>within the null-region</em>
 to get our <em>prior odds</em>. Say any effect smaller than an hour of
 extra sleep is practically equivalent to being no effect at all, we
 would define our prior odds as:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>b</mi><mrow><mi>d</mi><mi>r</mi><mi>u</mi><mi>g</mi></mrow></msub><mo>∉</mo><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>b</mi><mrow><mi>d</mi><mi>r</mi><mi>u</mi><mi>g</mi></mrow></msub><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><annotation encoding="application/x-tex">
+<p><span class="math display">
 \frac
 {P(b_{drug} \notin [-1, 1])}
 {P(b_{drug} \in [-1, 1])}
-</annotation></semantics></math></p>
+</span></p>
 <p>Given our prior has a normal distribution centered at 0 hours with a
 scale (an SD) of 3 hours, our priors would look like this:</p>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
@@ -278,11 +265,11 @@ posterior probability of the drug’s effect falling <em>outside the
 null-region</em>, and the posterior probability of the drug’s effect
 falling <em>within the null-region</em> to get our <em>posterior
 odds</em>:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>b</mi><mrow><mi>d</mi><mi>r</mi><mi>u</mi><mi>g</mi></mrow></msub><mo>∉</mo><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="false" form="prefix">|</mo><mi>D</mi><mi>a</mi><mi>t</mi><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>b</mi><mrow><mi>d</mi><mi>r</mi><mi>u</mi><mi>g</mi></mrow></msub><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="false" form="prefix">|</mo><mi>D</mi><mi>a</mi><mi>t</mi><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><annotation encoding="application/x-tex">
+<p><span class="math display">
 \frac
 {P(b_{drug} \notin [-1,1] | Data)}
 {P(b_{drug} \in [-1,1] | Data)}
-</annotation></semantics></math></p>
+</span></p>
 <p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" width="100%"></p>
 <p>We can see that the center of the posterior distribution has shifted
 away from 0 (to ~1.5). Likewise, the posterior odds are 2.5, which seems
@@ -292,17 +279,16 @@ over the null? Hard to say, since even before the data were observed,
 the priors already favored the alternative - so we need to take our
 priors into account here!</p>
 <p>Let’s compute the Bayes factor as the change from the prior odds to
-the posterior odds:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><msub><mi>F</mi><mn>10</mn></msub><mo>=</mo><mi>O</mi><mi>d</mi><mi>d</mi><msub><mi>s</mi><mrow><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>r</mi></mrow></msub><mi>/</mi><mi>O</mi><mi>d</mi><mi>d</mi><msub><mi>s</mi><mrow><mi>p</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>r</mi></mrow></msub><mo>=</mo><mn>0.9</mn></mrow><annotation encoding="application/x-tex">BF_{10} = Odds_{posterior} / Odds_{prior} = 0.9</annotation></semantics></math>!
-This BF indicates that the data provide 1/0.9 = 1.1 times more evidence
-for the effect of the drug being practically nothing than it does for
-the drug having some clinically significant effect. Thus, although the
-center of distribution has shifted away from 0, and the posterior
-distribution seems to favor a non-null effect of the drug, it seems that
-given the observed data, the probability mass has <em>overall</em>
-shifted closer to the null interval, making the values in the null
-interval more probable! <span class="citation">(see <em>Non-overlapping
-Hypotheses</em> in Morey &amp; Rouder, 2011)</span></p>
+the posterior odds: <span class="math inline">BF_{10} = Odds_{posterior}
+/ Odds_{prior} = 0.9</span>! This BF indicates that the data provide
+1/0.9 = 1.1 times more evidence for the effect of the drug being
+practically nothing than it does for the drug having some clinically
+significant effect. Thus, although the center of distribution has
+shifted away from 0, and the posterior distribution seems to favor a
+non-null effect of the drug, it seems that given the observed data, the
+probability mass has <em>overall</em> shifted closer to the null
+interval, making the values in the null interval more probable! <span class="citation">(see <em>Non-overlapping Hypotheses</em> in Morey &amp;
+Rouder, 2011)</span></p>
 <p>All of this can be achieved with the function
 <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>, which computes a Bayes factor for
 each of the model’s parameters:</p>
@@ -347,20 +333,14 @@ benefit of also being an approximation of a Bayes factor comparing the
 estimated model against a model in which the parameter of interest has
 been restricted to a point-null:</p>
 <blockquote>
-<p>“[…] the Bayes factor for
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>
-versus
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>1</mn></msub><annotation encoding="application/x-tex">H_1</annotation></semantics></math>
-could be obtained by analytically integrating out the model parameter
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>.
-However, the Bayes factor may likewise be obtained by only considering
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>1</mn></msub><annotation encoding="application/x-tex">H_1</annotation></semantics></math>,
-and dividing the height of the posterior for
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
-by the height of the prior for
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>,
-at the point of interest.” <span class="citation">(Wagenmakers,
-Lodewyckx, Kuriyal, &amp; Grasman, 2010)</span></p>
+<p>“[…] the Bayes factor for <span class="math inline">H_0</span> versus
+<span class="math inline">H_1</span> could be obtained by analytically
+integrating out the model parameter <span class="math inline">\theta</span>. However, the Bayes factor may
+likewise be obtained by only considering <span class="math inline">H_1</span>, and dividing the height of the posterior
+for <span class="math inline">\theta</span> by the height of the prior
+for <span class="math inline">\theta</span>, at the point of interest.”
+<span class="citation">(Wagenmakers, Lodewyckx, Kuriyal, &amp; Grasman,
+2010)</span></p>
 </blockquote>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">My_second_BF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">model</span>, null <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
@@ -406,28 +386,22 @@ the right of the null (point or interval):</p>
 about the direction of the effect (that the effect is positive),
 <strong>the presence of an effect is 2.8 times more likely than the
 absence of an effect</strong>, given the observed data (or that the data
-are 2.8 time more probable under
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>1</mn></msub><annotation encoding="application/x-tex">H_1</annotation></semantics></math>
-than
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>).
-This indicates that, given the observed data, and a priori hypothesis,
-the posterior mass has shifted away from the null value, giving some
-evidence against the null (note that a Bayes factor of 2.8 is still
-considered quite <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html" class="external-link">weak
+are 2.8 time more probable under <span class="math inline">H_1</span>
+than <span class="math inline">H_0</span>). This indicates that, given
+the observed data, and a priori hypothesis, the posterior mass has
+shifted away from the null value, giving some evidence against the null
+(note that a Bayes factor of 2.8 is still considered quite <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html" class="external-link">weak
 evidence</a>).</p>
 <p>Thanks to the flexibility of Bayesian framework, it is also possible
 to compute a Bayes factor for <strong>dividing</strong> hypotheses -
 that is, for a null and alternative that are <em>complementary</em>,
 opposing one-sided hypotheses <span class="citation">(Morey &amp;
 Wagenmakers, 2014)</span>.</p>
-<p>For example, above we compared an alternative of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mi>A</mi></msub><annotation encoding="application/x-tex">H_A</annotation></semantics></math>:
-<em>the drug has a positive effects</em> to the null
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mn>0</mn></msub><annotation encoding="application/x-tex">H_0</annotation></semantics></math>:
-<em>the drug has no effect</em>. But we can also compare instead the
-same alternative to its <em>complementary</em> hypothesis:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>H</mi><mrow><mi>−</mi><mi>A</mi></mrow></msub><annotation encoding="application/x-tex">H_{-A}</annotation></semantics></math>:
-<em>the drug has a negative effects</em>.</p>
+<p>For example, above we compared an alternative of <span class="math inline">H_A</span>: <em>the drug has a positive effects</em>
+to the null <span class="math inline">H_0</span>: <em>the drug has no
+effect</em>. But we can also compare instead the same alternative to its
+<em>complementary</em> hypothesis: <span class="math inline">H_{-A}</span>: <em>the drug has a negative
+effects</em>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_group2_dividing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">model</span>, null <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">test_group2_dividing</span></span></code></pre></div>
@@ -450,13 +424,14 @@ talk by Richard D. Morey, minute 48&lt;/a&gt;&lt;/p&gt;'><sup>2</sup></a></p>
 <p>Thanks to the transitivity of Bayes factors, we can also use
 <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> to compare even more types of
 hypotheses, with some trickery. For example:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><munder><mrow><mi>B</mi><msub><mi>F</mi><mrow><mn>0</mn><mo>&lt;</mo><mi>b</mi><mo>&lt;</mo><mn>1</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> vs. </mtext><mspace width="0.333em"></mspace></mrow><mi>b</mi><mo>=</mo><mn>0</mn></mrow></msub></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">range vs. point</mtext></munder><mo>=</mo><munder><munder><mrow><mi>B</mi><msub><mi>F</mi><mrow><mi>b</mi><mo>&lt;</mo><mn>0</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> vs. </mtext><mspace width="0.333em"></mspace></mrow><mi>b</mi><mo>=</mo><mn>0</mn></mrow></msub></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">directional vs. point</mtext></munder><mi>/</mi><munder><munder><mrow><mi>B</mi><msub><mi>F</mi><mrow><mi>b</mi><mo>&lt;</mo><mn>0</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> vs. </mtext><mspace width="0.333em"></mspace></mrow><mn>0</mn><mo>&lt;</mo><mi>b</mi><mo>&lt;</mo><mn>1</mn></mrow></msub></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">directional vs. range</mtext></munder></mrow><annotation encoding="application/x-tex">
+<p><span class="math display">
 \underbrace{BF_{0&lt;b&lt;1\text{ vs. }b=0}}_{\text{range vs. point}}
-= 
-\underbrace{BF_{b&lt;0\text{ vs. }b=0}}_{\text{directional vs. point}} 
+=
+\underbrace{BF_{b&lt;0\text{ vs. }b=0}}_{\text{directional vs. point}}
 /
-\underbrace{BF_{b&lt;0\text{ vs. }0&lt;b&lt;1}}_{\text{directional vs. range}} 
-</annotation></semantics></math></p>
+\underbrace{BF_{b&lt;0\text{ vs. }0&lt;b&lt;1}}_{\text{directional vs.
+range}}
+</span></p>
 <p><strong>NOTE</strong>: See the <em>Testing Contrasts</em> appendix
 below.</p>
 </div>
@@ -510,30 +485,24 @@ interval and the Bayes factor:</p>
 <blockquote>
 <p>“The interpretation of such intervals would be analogous to how a
 frequentist confidence interval contains all the parameter values that
-would not have been rejected if tested at level
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>.
-For instance, a BF = 1/3 support interval encloses all values of theta
-for which the updating factor is not stronger than 3 against.” <span class="citation">(Wagenmakers et al., 2018)</span></p>
+would not have been rejected if tested at level <span class="math inline">\alpha</span>. For instance, a BF = 1/3 support
+interval encloses all values of theta for which the updating factor is
+not stronger than 3 against.” <span class="citation">(Wagenmakers et
+al., 2018)</span></p>
 </blockquote>
 <p>Thus, the choice of BF (the level of support the interval should
 indicate) depends on what we want our interval to represent:</p>
 <ul>
-<li>A
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>F</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">BF = 1</annotation></semantics></math>
-contains values whose credibility has merely not decreased by observing
-the data.</li>
-<li>A
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>F</mi><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">BF &gt; 1</annotation></semantics></math>
-contains values who received more impressive support from the
-data.<br>
+<li>A <span class="math inline">BF = 1</span> contains values whose
+credibility has merely not decreased by observing the data.</li>
+<li>A <span class="math inline">BF &gt; 1</span> contains values who
+received more impressive support from the data.<br>
 </li>
-<li>A
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>F</mi><mo>&lt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">BF &lt; 1</annotation></semantics></math>
-contains values whose credibility has <em>not</em> been impressively
-decreased by observing the data. Testing against values outside this
-interval will produce a Bayes factor larger than
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>B</mi><mi>F</mi></mrow><annotation encoding="application/x-tex">1/BF</annotation></semantics></math>
-in support of the alternative.</li>
+<li>A <span class="math inline">BF &lt; 1</span> contains values whose
+credibility has <em>not</em> been impressively decreased by observing
+the data. Testing against values outside this interval will produce a
+Bayes factor larger than <span class="math inline">1/BF</span> in
+support of the alternative.</li>
 </ul>
 </div>
 </div>
@@ -652,8 +621,7 @@ model):</p>
 &gt; * Against Denominator: [5] (Intercept only)
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>We can see that the <code>Species + Petal.Length</code> model is the
-best model - with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>F</mi><mo>=</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mn>53</mn></msup></mrow><annotation encoding="application/x-tex">BF=2\times 10^{53}</annotation></semantics></math>
+best model - with <span class="math inline">BF=2\times 10^{53}</span>
 compared to the null (intercept only).</p>
 <p>Due to the transitive property of Bayes factors, we can easily change
 the reference model to the full <code>Species * Petal.Length</code>
@@ -756,10 +724,9 @@ models</strong>:</p>
 create new models by imposing order restrictions on a given model. For
 example, consider the following model, in which we predict the length of
 an iris’ sepal from the length of its petal, as well as from its
-species, with priors: -
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mrow><mi>p</mi><mi>e</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">b_{petal} \sim N(0,2)</annotation></semantics></math>
--
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mrow><mi>v</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>i</mi><mi>c</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>r</mi><mi>s</mi></mrow></msub><mspace width="0.222em"></mspace><mi>&amp;</mi><mspace width="0.222em"></mspace><msub><mi>b</mi><mrow><mi>v</mi><mi>i</mi><mi>r</mi><mi>g</mi><mi>i</mi><mi>n</mi><mi>i</mi><mi>c</mi><mi>a</mi></mrow></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1.2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">b_{versicolors}\ \&amp;\  b_{virginica} \sim N(0,1.2)</annotation></semantics></math></p>
+species, with priors: - <span class="math inline">b_{petal} \sim
+N(0,2)</span> - <span class="math inline">b_{versicolors}\
+\&amp;\  b_{virginica} \sim N(0,1.2)</span></p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">iris</span>,</span>
@@ -767,16 +734,14 @@ species, with priors: -
 <span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>These priors are <strong>unrestricted</strong> - that is, <strong>all
-values</strong> between
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>∞</mi></mrow><annotation encoding="application/x-tex">-\infty</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>∞</mi><annotation encoding="application/x-tex">\infty</annotation></semantics></math>
-of all parameters in the model have some non-zero credibility (no matter
-how small; this is true for both the prior and posterior distribution).
-Subsequently, <em>a priori</em> the ordering of the parameters relating
-to the iris species can have any ordering, such that <em>a priori</em>
-setosa can have larger sepals than virginica, but it is also possible
-for virginica to have larger sepals than setosa!</p>
+values</strong> between <span class="math inline">-\infty</span> and
+<span class="math inline">\infty</span> of all parameters in the model
+have some non-zero credibility (no matter how small; this is true for
+both the prior and posterior distribution). Subsequently, <em>a
+priori</em> the ordering of the parameters relating to the iris species
+can have any ordering, such that <em>a priori</em> setosa can have
+larger sepals than virginica, but it is also possible for virginica to
+have larger sepals than setosa!</p>
 <p>Does it make sense to let our priors cover all of these
 possibilities? That depends on our <em>prior</em> knowledge or
 hypotheses. For example, even a novice botanist will assume that it is
@@ -789,11 +754,11 @@ virginica.</p>
 <span class="citation">(Morey, 2015; Morey &amp; Rouder,
 2011)</span>:</p>
 <ol style="list-style-type: decimal">
-<li>The novice botanist:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mrow><mi>p</mi><mi>e</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow></msub><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">b_{petal} &gt; 0</annotation></semantics></math>
+<li>The novice botanist: <span class="math inline">b_{petal} &gt;
+0</span>
 </li>
-<li>The expert botanist:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mrow><mi>v</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>i</mi><mi>c</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>r</mi><mi>s</mi></mrow></msub><mo>&gt;</mo><mn>0</mn><mspace width="0.222em"></mspace><mi>&amp;</mi><mspace width="0.222em"></mspace><msub><mi>b</mi><mrow><mi>v</mi><mi>i</mi><mi>r</mi><mi>g</mi><mi>i</mi><mi>n</mi><mi>i</mi><mi>c</mi><mi>a</mi></mrow></msub><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">b_{versicolors} &gt; 0\ \&amp;\ b_{virginica} &gt; 0</annotation></semantics></math>
+<li>The expert botanist: <span class="math inline">b_{versicolors} &gt;
+0\ \&amp;\ b_{virginica} &gt; 0</span>
 </li>
 </ol>
 <p>By testing these restrictions on prior and posterior samples, we can
@@ -838,11 +803,11 @@ length</em>, versicolor and virginica actually have shorter sepals!</p>
 unrestricted model. If we wanted to compare the restricted model to the
 null model, we could use the transitive property of Bayes factors like
 so:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><msub><mi>F</mi><mtext mathvariant="normal">restricted vs. NULL</mtext></msub><mo>=</mo><mfrac><mrow><mi>B</mi><msub><mi>F</mi><mtext mathvariant="normal">restricted vs. un-restricted</mtext></msub></mrow><mrow><mi>B</mi><msub><mi>F</mi><mtext mathvariant="normal">un-restricted vs NULL</mtext></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><span class="math display">
 BF_{\text{restricted vs. NULL}} = \frac
 {BF_{\text{restricted vs. un-restricted}}}
 {BF_{\text{un-restricted vs NULL}}}
-</annotation></semantics></math></p>
+</span></p>
 <p><strong>Because these restrictions are on the prior distribution,
 they are only appropriate for testing pre-planned (<em>a priori</em>)
 hypotheses, and should not be used for any post hoc comparisons <span class="citation">(Morey, 2015)</span>.</strong></p>
@@ -869,14 +834,10 @@ parameter or term across many models.</p>
 particular predictor, than they are under models without that particular
 predictor?</strong></p>
 </blockquote>
-<p>In other words, on average, are models with predictor
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
-more likely to have produced the observed data than models without
-predictor
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>?<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;A model without predictor
-&lt;math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;annotation encoding="application/x-tex"&gt;X&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;
-can be thought of as a model in which the parameter(s) of the predictor
-have been restricted to a null-point of 0.&lt;/p&gt;'><sup>5</sup></a></p>
+<p>In other words, on average, are models with predictor <span class="math inline">X</span> more likely to have produced the observed
+data than models without predictor <span class="math inline">X</span>?<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;A model without predictor &lt;span class="math inline"&gt;X&lt;/span&gt; can be thought of as a model in which the
+parameter(s) of the predictor have been restricted to a null-point of
+0.&lt;/p&gt;'><sup>5</sup></a></p>
 <p>Since each model has a prior probability, it is possible to sum the
 prior probability of all models that include a predictor of interest
 (the <em>prior inclusion probability</em>), and of all models that do
@@ -886,9 +847,7 @@ probability, we can similarly consider the sums of the posterior models’
 probabilities to obtain the <em>posterior inclusion probability</em> and
 the <em>posterior exclusion probability</em>. Once again, the change
 from prior inclusion odds to the posterior inclusion odds is the
-<strong>Inclusion Bayes factor</strong>
-[“<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><msub><mi>F</mi><mrow><mi>I</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>u</mi><mi>s</mi><mi>i</mi><mi>o</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">BF_{Inclusion}</annotation></semantics></math>”;
-<span class="citation">Clyde, Ghosh, &amp; Littman (2011)</span>].</p>
+<strong>Inclusion Bayes factor</strong> [“<span class="math inline">BF_{Inclusion}</span>”; <span class="citation">Clyde, Ghosh, &amp; Littman (2011)</span>].</p>
 <p>Lets use the <code>brms</code> example from above:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></span></code></pre></div>
@@ -1044,12 +1003,11 @@ null value (also see <code><a href="../reference/si.html">si()</a></code> descri
 &gt; * Against Denominator: [2] wt + am
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>It seems that the model without <code>carb</code> as a predictor is
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>B</mi><mi>F</mi><mo>=</mo><mn>1.2</mn></mrow><annotation encoding="application/x-tex">1/BF=1.2</annotation></semantics></math>
-times more likely than the model <em>with</em> <code>carb</code> as a
-predictor. We might then assume that in the latter model, the
-<code>HDI</code> will include the point-null value of 0 effect, to also
-indicate the credibility of the null in the posterior. However, this is
-not the case:</p>
+<span class="math inline">1/BF=1.2</span> times more likely than the
+model <em>with</em> <code>carb</code> as a predictor. We might then
+assume that in the latter model, the <code>HDI</code> will include the
+point-null value of 0 effect, to also indicate the credibility of the
+null in the posterior. However, this is not the case:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">mod_carb</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Highest Density Interval
@@ -1333,8 +1291,8 @@ restriction):</p>
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.1e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+&gt; Chain 2: Gradient evaluation took 1.2e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -1358,8 +1316,8 @@ restriction):</p>
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 1e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+&gt; Chain 3: Gradient evaluation took 1.1e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -1383,8 +1341,8 @@ restriction):</p>
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1.1e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+&gt; Chain 4: Gradient evaluation took 1e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -1402,8 +1360,8 @@ restriction):</p>
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
 &gt; Chain 4:  Elapsed Time: 0.03 seconds (Warm-up)
-&gt; Chain 4:                0.044 seconds (Sampling)
-&gt; Chain 4:                0.074 seconds (Total)
+&gt; Chain 4:                0.043 seconds (Sampling)
+&gt; Chain 4:                0.073 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 

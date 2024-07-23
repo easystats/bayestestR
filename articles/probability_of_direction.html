@@ -6,14 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Probability of Direction (pd) • bayestestR</title>
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Probability of Direction (pd)">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><link href="../deps/KaTex-0.16.10/katex.min.css" rel="stylesheet">
+<script src="../deps/KaTex-0.16.10/katex.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Probability of Direction (pd)">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -164,16 +165,14 @@ its magnitude, relevance and importance.</p>
 </h2>
 <p>In most cases, it seems that the <em>pd</em> has a direct
 correspondence with the frequentist <strong>one-sided
-<em>p</em>-value</strong> through the formula:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>o</mi><mi>n</mi><mi>e</mi><mo>−</mo><mi>s</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>d</mi></mrow></msub><mo>=</mo><mn>1</mn><mo>−</mo><msub><mi>p</mi><mi>d</mi></msub></mrow><annotation encoding="application/x-tex">p_{one-sided} =
-1-p_d</annotation></semantics></math> Similarly, the <strong>two-sided
-<em>p</em>-value</strong> (the most commonly reported one) is equivalent
-through the formula:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>t</mi><mi>w</mi><mi>o</mi><mo>−</mo><mi>s</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>d</mi></mrow></msub><mo>=</mo><mn>2</mn><mo>*</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msub><mi>p</mi><mi>d</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">p_{two-sided} = 2*(1-p_d)</annotation></semantics></math>
-Thus, the two-sided <em>p</em>-value of respectively
-<strong>.1</strong>, <strong>.05</strong>, <strong>.01</strong> and
-<strong>.001</strong> would correspond approximately to a <em>pd</em> of
-<strong>95%</strong>, <strong>97.5%</strong>, <strong>99.5%</strong> and
+<em>p</em>-value</strong> through the formula: <span class="math display">p_{one-sided} =
+1-p_d</span> Similarly, the <strong>two-sided <em>p</em>-value</strong>
+(the most commonly reported one) is equivalent through the formula:
+<span class="math display">p_{two-sided} = 2*(1-p_d)</span> Thus, the
+two-sided <em>p</em>-value of respectively <strong>.1</strong>,
+<strong>.05</strong>, <strong>.01</strong> and <strong>.001</strong>
+would correspond approximately to a <em>pd</em> of <strong>95%</strong>,
+<strong>97.5%</strong>, <strong>99.5%</strong> and
 <strong>99.95%</strong> .</p>
 <div class="figure" style="text-align: center">
 <img src="probability_of_direction_files/figure-html/unnamed-chunk-2-1.png" alt="Correlation between the frequentist p-value and the probability of direction (pd)" width="700"><p class="caption">
