@@ -75,15 +75,8 @@ test_that("blavaan, all", {
 
   ## Bayes factors ----
 
-  ## FIXME: test fails
-  # expect_warning(bayesfactor_models(bfit, bfit2))
-  # x <- suppressWarnings(bayesfactor_models(bfit, bfit2))
-  # expect_lt(x$log_BF[2], 0)
-
-  ## FIXME: test fails
-  # expect_warning(weighted_posteriors(bfit, bfit2))
-  # x <- suppressWarnings(weighted_posteriors(bfit, bfit2))
-  # expect_identical(ncol(x), 10L)
+  # For these models, no BF available, see #627
+  expect_error(bayesfactor_models(bfit, bfit2), regex = "Could not calculate Bayes")
 
   bfit_prior <- unupdate(bfit)
   capture.output(x <- expect_warning(bayesfactor_parameters(bfit, prior = bfit_prior)))
