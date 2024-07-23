@@ -146,7 +146,7 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
         inverse = ,
         identity = stats::family(x)$variance(sig),
         log = 0.1 * log1p(1 / sig^-2)
-      )      
+      )
     } else if (information$is_correlation) {
       # Correlations
       # https://github.com/easystats/bayestestR/issues/121
