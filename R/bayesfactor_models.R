@@ -483,6 +483,10 @@ as.matrix.bayesfactor_models <- function(x, ...) {
                               bf_method = "method",
                               unsupported_models = FALSE,
                               model_names = NULL) {
+  # sanity check - are all BF NA?
+  if (!is.null(res$log_BF) && all(is.na(res$log_BF))) {
+    insight::format_error("Could not calculate Bayes Factor for these models. You may report this problem at {https://github.com/easystats/bayestestR/issues/}.") # nolint
+  }
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- bf_method
   attr(res, "unsupported_models") <- unsupported_models
