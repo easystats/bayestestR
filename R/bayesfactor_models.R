@@ -196,12 +196,12 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     supported_models[!has_terms] <- FALSE
   }
 
-  objects <- .safe(do.call(insight::ellipsis_info, c(mods, verbose = FALSE)))
-  if (!is.null(objects)) {
-    were_checked <- inherits(objects, "ListModels")
+  model_objects <- .safe(do.call(insight::ellipsis_info, c(mods, verbose = FALSE)))
+  if (!is.null(model_objects)) {
+    were_checked <- inherits(model_objects, "ListModels")
 
     # Validate response
-    if (were_checked && verbose && !isTRUE(attr(objects, "same_response"))) {
+    if (were_checked && verbose && !isTRUE(attr(model_objects, "same_response"))) {
       insight::format_warning(
         "When comparing models, please note that probably not all models were fit from same data."
       )
@@ -210,7 +210,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     # Get BIC
     if (were_checked && estimator == "REML" &&
       any(vapply(mods, insight::is_mixed_model, TRUE)) &&
-      !isTRUE(attr(objects, "same_fixef")) &&
+      !isTRUE(attr(model_objects, "same_fixef")) &&
       verbose) {
       insight::format_warning(paste(
         "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
@@ -373,10 +373,10 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   mBFs <- c(0, BayesFactor::extractBF(models, TRUE, TRUE))
   mforms <- sapply(c(models@denominator, models@numerator), function(x) x@shortName)
 
-  if (!inherits(models@denominator, "BFlinearModel")) {
-    mforms <- .clean_non_linBF_mods(mforms)
-  } else {
+  if (inherits(models@denominator, "BFlinearModel")) {
     mforms[mforms == "Intercept only"] <- "1"
+  } else {
+    mforms <- .clean_non_linBF_mods(mforms)
   }
 
   res <- data.frame(
@@ -446,20 +446,16 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 .cleanup_BF_models <- function(mods, denominator, cl) {
   if (length(mods) == 1 && inherits(mods[[1]], "list")) {
     mods <- mods[[1]]
-    mod_names <- tryCatch(
-      {
-        sapply(cl$`...`[[1]][-1], insight::safe_deparse)
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    mod_names <- .safe(sapply(cl$`...`[[1]][-1], insight::safe_deparse))
+
     if (!is.null(mod_names) && length(mod_names) == length(mods)) {
       names(mods) <- mod_names
     }
   }
 
-  if (!is.numeric(denominator[[1]])) {
+  if (is.numeric(denominator[[1]])) {
+    denominator <- denominator[[1]]
+  } else {
     denominator_model <- which(names(mods) == names(denominator))
 
     if (length(denominator_model) == 0) {
@@ -468,8 +464,6 @@ as.matrix.bayesfactor_models <- function(x, ...) {
     } else {
       denominator <- denominator_model
     }
-  } else {
-    denominator <- denominator[[1]]
   }
 
   attr(mods, "denominator") <- denominator

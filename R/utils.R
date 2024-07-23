@@ -27,12 +27,12 @@
   }
 
   Value <- c(
-    "left" = -1,
-    "right" = 1,
+    left = -1,
+    right = 1,
     "two-sided" = 0,
-    "twosided" = 0,
+    twosided = 0,
     "one-sided" = 1,
-    "onesided" = 1,
+    onesided = 1,
     "<" = -1,
     ">" = 1,
     "=" = 0,
