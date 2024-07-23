@@ -13,6 +13,9 @@
 * `bayesian_as_frequentist()` now supports more model families from Bayesian
   models that can be successfully converted to their frequentists counterparts.
 
+* `bayesfactor_models()` now throws an informative error when Bayes factors for
+  comparisons could not be calculated.
+
 ## Bug fixes
 
 * Fixed issue in `bayesian_as_frequentist()` for *brms* models with `0 + Intercept`
