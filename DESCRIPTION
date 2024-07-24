@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.13.2.5
+Version: 0.14.0
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -109,7 +109,7 @@ Suggests:
     rmarkdown,
     rstan,
     rstanarm,
-    see (>= 0.7.5),
+    see (>= 0.8.5),
     testthat,
     tweedie
 License: GPL-3
@@ -119,12 +119,10 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Config/Needs/website:
-    rstudio/bslib,
-    r-lib/pkgdown,
-    easystats/easystatstemplate
+Config/Needs/website: easystats/easystatstemplate
+Config/Needs/check: stan-dev/cmdstanr
