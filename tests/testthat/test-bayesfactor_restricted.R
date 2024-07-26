@@ -8,9 +8,9 @@ test_that("bayesfactor_restricted df", {
   )
 
   posterior <- data.frame(
-    X = distribution_normal(100, .4, .2),
-    X1 = distribution_normal(100, -.2, .2),
-    X3 = distribution_normal(100, .2)
+    X = distribution_normal(100, 0.4, 0.2),
+    X1 = distribution_normal(100, -0.2, 0.2),
+    X3 = distribution_normal(100, 0.2)
   )
 
   hyps <- c(

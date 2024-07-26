@@ -11,7 +11,7 @@ test_that("effective_sample", {
     data.frame(
       Parameter = c("b_Intercept", "b_wt", "b_cyl"),
       ESS = c(5242, 2071, 1951),
-      stringsAsFactors = F
+      stringsAsFactors = FALSE
     )
   )
 
@@ -22,7 +22,7 @@ test_that("effective_sample", {
     data.frame(
       Parameter = c("b_Intercept"),
       ESS = c(2888),
-      stringsAsFactors = F
+      stringsAsFactors = FALSE
     )
   )
 
@@ -33,7 +33,7 @@ test_that("effective_sample", {
     data.frame(
       Parameter = c("b_Intercept"),
       ESS = c(1059),
-      stringsAsFactors = F
+      stringsAsFactors = FALSE
     )
   )
 })

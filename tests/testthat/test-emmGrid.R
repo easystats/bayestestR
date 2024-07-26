@@ -94,7 +94,7 @@ test_that("emmGrid p_significance", {
 })
 
 test_that("emmGrid rope", {
-  xrope <- rope(all_, range = "default", ci = .9)
+  xrope <- rope(all_, range = "default", ci = 0.9)
   expect_equal(length(xrope$ROPE_Percentage), 3)
 })
 

@@ -10,7 +10,7 @@ test_that("brms", {
   expect_s3_class(hdi(model), "data.frame")
   expect_s3_class(ci(model), "data.frame")
   expect_s3_class(rope(model, verbose = FALSE), "data.frame")
-  expect_true("equivalence_test" %in% class(equivalence_test(model)))
+  expect_true(inherits(equivalence_test(model), "equivalence_test"))
   expect_s3_class(map_estimate(model), "data.frame")
   expect_s3_class(p_map(model), "data.frame")
   expect_s3_class(p_direction(model), "data.frame")
