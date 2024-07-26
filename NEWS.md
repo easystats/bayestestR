@@ -1,3 +1,5 @@
+# bayestestR (development version)
+
 # bayestestR 0.14.0
 
 ## Breaking Changes
@@ -6,7 +8,7 @@
   in future releases of _easystats_ packages. Please use `by` instead. This
   affects following functions in *bayestestR*:
 
-  * `estimate_density()`
+* `estimate_density()`
 
 ## Changes
 

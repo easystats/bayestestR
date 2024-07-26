@@ -2,8 +2,9 @@ test_that("blavaan, all", {
   skip_on_cran()
   skip_if_not_or_load_if_installed("blavaan")
   skip_if_not_or_load_if_installed("lavaan")
-  skip_if_not_or_load_if_installed("cmdstanr")
   skip_if_not_or_load_if_installed("rstan")
+  skip_if_not_or_load_if_installed("cmdstanr")
+  skip_if_not(dir.exists(cmdstanr::cmdstan_default_install_path()))
 
   data("PoliticalDemocracy", package = "lavaan")
 

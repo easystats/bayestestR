@@ -96,6 +96,7 @@ test_that("bayesfactor_parameters BRMS", {
   skip_if_not_or_load_if_installed("httr")
   skip_if_not_or_load_if_installed("brms")
   skip_if_not_or_load_if_installed("cmdstanr")
+  skip_if_not(dir.exists(cmdstanr::cmdstan_default_install_path()))
 
   brms_mixed_6 <- insight::download_model("brms_mixed_6")
 
