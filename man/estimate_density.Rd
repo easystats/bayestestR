@@ -48,7 +48,7 @@ This feature is experimental, use with caution.}
 
 \item{select}{Character vector of column names. If \code{NULL} (the default), all
 numeric variables will be selected. Other arguments from
-\code{\link[datawizard:extract_column_names]{datawizard::extract_column_names()}} (such as \code{exclude}) can also be used.}
+\code{datawizard::extract_column_names()} (such as \code{exclude}) can also be used.}
 
 \item{by}{Optional character vector. If not \code{NULL} and input is a data frame,
 density estimation is performed for each group (subsets) indicated by \code{by}.

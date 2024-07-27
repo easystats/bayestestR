@@ -1,5 +1,9 @@
 # bayestestR (development version)
 
+## Bug fixes
+
+* Fixed warning in CRAN check results.
+
 # bayestestR 0.14.0
 
 ## Breaking Changes
