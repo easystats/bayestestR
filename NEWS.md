@@ -6,9 +6,7 @@
 
 * Arguments named `group`, `at`, `group_by` and `split_by` will be deprecated
   in future releases of _easystats_ packages. Please use `by` instead. This
-  affects following functions in *bayestestR*:
-
-* `estimate_density()`
+  affects following functions in *bayestestR*: `estimate_density()`.
 
 ## Changes
 
