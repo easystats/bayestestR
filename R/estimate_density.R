@@ -20,7 +20,7 @@
 #' means that the x axis will be extended by `1/10` of the range of the data.
 #' @param select Character vector of column names. If `NULL` (the default), all
 #' numeric variables will be selected. Other arguments from
-#' [`datawizard::extract_column_names()`] (such as `exclude`) can also be used.
+#' `datawizard::extract_column_names()` (such as `exclude`) can also be used.
 #' @param by Optional character vector. If not `NULL` and input is a data frame,
 #' density estimation is performed for each group (subsets) indicated by `by`.
 #' See examples.

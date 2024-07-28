@@ -1,6 +1,6 @@
 ---
 title: "Probability of Direction (pd)"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{Probability of Direction (pd)}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 csl: apa.csl
@@ -98,10 +98,10 @@ dat <- transform(
 )
 ggplot(dat, aes(x = p_direction, y = p_value, color = effect_existence)) +
   geom_point2(alpha = 0.1) +
-  geom_segment(aes(x = 95, y = Inf, xend = 95, yend = 0.1), color = "black", linetype = "longdash") +
-  geom_segment(aes(x = -Inf, y = 0.1, xend = 95, yend = 0.1), color = "black", linetype = "longdash") +
-  geom_segment(aes(x = 97.5, y = Inf, xend = 97.5, yend = 0.05), color = "black", linetype = "dashed") +
-  geom_segment(aes(x = -Inf, y = 0.05, xend = 97.5, yend = 0.05), color = "black", linetype = "dashed") +
+  annotate("segment", x = 95, y = Inf, xend = 95, yend = 0.1, color = "black", linetype = "longdash") +
+  annotate("segment", x = -Inf, y = 0.1, xend = 95, yend = 0.1, color = "black", linetype = "longdash") +
+  annotate("segment", x = 97.5, y = Inf, xend = 97.5, yend = 0.05, color = "black", linetype = "dashed") +
+  annotate("segment", x = -Inf, y = 0.05, xend = 97.5, yend = 0.05, color = "black", linetype = "dashed") +
   theme_modern() +
   scale_y_reverse(breaks = c(0.05, round(seq(0, 1, length.out = 11), digits = 2))) +
   scale_x_continuous(breaks = c(95, 97.5, round(seq(50, 100, length.out = 6)))) +
