@@ -174,8 +174,26 @@ p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
 
 
 #' @rdname p_direction
+#' @param rvar_col Name of an `rvar`-type column. If `NULL`, each column in the
+#'   data frame is assumed to represent draws from a posterior distribution.
 #' @export
-p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
+p_direction.data.frame <- function(x, method = "direct", null = 0, rvar_col = NULL, ...) {
+  if (is.null(rvar_col)) {
+    return(.p_direction_df(x, method = method, null = null, ...))
+  }
+
+  stopifnot(length(rvar_col) == 1L,
+            is.character(rvar_col),
+            rvar_col %in% colnames(x))
+
+
+  out <- p_direction(x[[rvar_col]], method = method, null = null, ...)
+  x[["pd"]] <- out[["pd"]]
+  x
+}
+
+#' @keywords internal
+.p_direction_df <- function(x, method = "direct", null = 0, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
   x <- .select_nums(x)
 
