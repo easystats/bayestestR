@@ -486,8 +486,8 @@ p_direction.get_predicted <- function(x,
 #' @export
 p_direction.parameters_model <- function(x, ...) {
   out <- data.frame(
-    "Parameter" = x$Parameter,
-    "pd" = p_to_pd(p = x[["p"]]),
+    Parameter = x$Parameter,
+    pd = p_to_pd(p = x[["p"]]),
     row.names = NULL,
     stringsAsFactors = FALSE
   )
@@ -541,9 +541,9 @@ p_direction.parameters_model <- function(x, ...) {
 #' @export
 as.numeric.p_direction <- function(x, ...) {
   if (inherits(x, "data.frame")) {
-    return(as.numeric(as.vector(x$pd)))
+    as.numeric(as.vector(x$pd))
   } else {
-    return(as.vector(x))
+    as.vector(x)
   }
 }
 
