@@ -1,5 +1,11 @@
 # bayestestR (development version)
 
+## Changes
+
+* Usability improvements for `p_direction()`:
+
+  - Results from `p_direction()` can directly be used in `pd_to_p()`.
+
 ## Bug fixes
 
 * Fixed warning in CRAN check results.

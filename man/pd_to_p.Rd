@@ -19,7 +19,10 @@ convert_p_to_pd(p, direction = "two-sided", ...)
 convert_pd_to_p(pd, ...)
 }
 \arguments{
-\item{pd}{A Probability of Direction (pd) value (between 0 and 1).}
+\item{pd}{A Probability of Direction (pd) value (between 0 and 1). Can also
+be a data frame with a column named \code{pd}, \code{p_direction}, or \code{PD}, as returned
+by \code{\link[=p_direction]{p_direction()}}. In this case, the column is converted to p-values and
+the new data frame is returned.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -30,23 +33,27 @@ convert_pd_to_p(pd, ...)
 
 \item{p}{A p-value.}
 }
+\value{
+A p-value or a data frame with a p-value column.
+}
 \description{
 Enables a conversion between Probability of Direction (pd) and p-value.
 }
 \details{
-Conversion is done using the following equation (see Makowski et al., 2019):
-\cr\cr
-When \code{direction = "two-sided"} -
-\cr\cr
+Conversion is done using the following equation (see \emph{Makowski et al., 2019}):
+
+When \code{direction = "two-sided"}
+
 \deqn{p = 2 \times (1 - p_d)}{p = 2 * (1 - pd)}
-When \code{direction = "one-sided"} -
-\cr\cr
+
+When \code{direction = "one-sided"}
+
 \deqn{p = 1 - p_d}{p = 1 - pd}
-\cr\cr
+
 Note that this conversion is only valid when the lowest possible values of pd
 is 0.5 - i.e., when the posterior represents continuous parameter space (see
-\link{p_direction}). If any pd < 0.5 are detected, they are converted to a p of 1,
-and a warning is given.
+\code{\link[=p_direction]{p_direction()}}). If any pd < 0.5 are detected, they are converted to a p
+of 1, and a warning is given.
 }
 \examples{
 pd_to_p(pd = 0.95)
