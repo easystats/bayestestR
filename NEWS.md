@@ -9,6 +9,9 @@
   - `p_direction()` gets an `as_p` argument, to directly convert pd-values into
     frequentist p-values.
 
+  - `p_direction()` gets a `remove_na` argument, which defaults to `TRUE`, to
+    remove `NA` values from the input before calculating the pd-values.
+
 ## Bug fixes
 
 * Fixed warning in CRAN check results.
