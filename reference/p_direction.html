@@ -17,7 +17,7 @@ the frequentist p-value (see details)."><meta property="og:image" content="https
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,16 +97,45 @@ the frequentist <strong>p-value</strong> (see details).</p>
 <span><span class="fu">pd</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'numeric'</span></span>
-<span><span class="fu">p_direction</span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"direct"</span>, null <span class="op">=</span> <span class="fl">0</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">p_direction</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"direct"</span>,</span>
+<span>  null <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'data.frame'</span></span>
-<span><span class="fu">p_direction</span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"direct"</span>, null <span class="op">=</span> <span class="fl">0</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">p_direction</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"direct"</span>,</span>
+<span>  null <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rvar_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'MCMCglmm'</span></span>
-<span><span class="fu">p_direction</span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"direct"</span>, null <span class="op">=</span> <span class="fl">0</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">p_direction</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"direct"</span>,</span>
+<span>  null <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'emmGrid'</span></span>
-<span><span class="fu">p_direction</span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"direct"</span>, null <span class="op">=</span> <span class="fl">0</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">p_direction</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"direct"</span>,</span>
+<span>  null <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'stanreg'</span></span>
 <span><span class="fu">p_direction</span><span class="op">(</span></span>
@@ -117,6 +146,8 @@ the frequentist <strong>p-value</strong> (see details).</p>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"direct"</span>,</span>
 <span>  null <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -128,17 +159,28 @@ the frequentist <strong>p-value</strong> (see details).</p>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"direct"</span>,</span>
 <span>  null <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'BFBayesFactor'</span></span>
-<span><span class="fu">p_direction</span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"direct"</span>, null <span class="op">=</span> <span class="fl">0</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">p_direction</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"direct"</span>,</span>
+<span>  null <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'get_predicted'</span></span>
 <span><span class="fu">p_direction</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"direct"</span>,</span>
 <span>  null <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  as_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  use_iterations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -166,6 +208,21 @@ such as <code>"kernel"</code>, <code>"logspline"</code> or <code>"KernSmooth"</c
 <dt id="arg-null">null<a class="anchor" aria-label="anchor" href="#arg-null"></a></dt>
 <dd><p>The value considered as a "null" effect. Traditionally 0, but
 could also be 1 in the case of ratios of change (OR, IRR, ...).</p></dd>
+
+
+<dt id="arg-as-p">as_p<a class="anchor" aria-label="anchor" href="#arg-as-p"></a></dt>
+<dd><p>If <code>TRUE</code>, the p-direction (pd) values are converted to a
+frequentist p-value using <code><a href="pd_to_p.html">pd_to_p()</a></code>.</p></dd>
+
+
+<dt id="arg-remove-na">remove_na<a class="anchor" aria-label="anchor" href="#arg-remove-na"></a></dt>
+<dd><p>Should missing values be removed before computation? Note
+that <code>Inf</code> (infinity) are <em>not</em> removed.</p></dd>
+
+
+<dt id="arg-rvar-col">rvar_col<a class="anchor" aria-label="anchor" href="#arg-rvar-col"></a></dt>
+<dd><p>Name of an <code>rvar</code>-type column. If <code>NULL</code>, each column in the
+data frame is assumed to represent draws from a posterior distribution.</p></dd>
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
@@ -204,10 +261,12 @@ iterations for predicted values (e.g., <code>brmsfit</code> models).</p></dd>
 the probability of direction (pd).</p>
     </div>
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>There is also a <a href="https://easystats.github.io/see/articles/bayestestR.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="what-is-the-pd-">What is the <em>pd</em>?<a class="anchor" aria-label="anchor" href="#what-is-the-pd-"></a></h2>
 
-<div class="section">
-<h3 id="what-is-the-pd-">What is the <em>pd</em>?<a class="anchor" aria-label="anchor" href="#what-is-the-pd-"></a></h3>
 
 
 <p>The Probability of Direction (pd) is an index of effect existence, representing
@@ -223,9 +282,9 @@ or the model (e.g., such as priors, as in the case of Bayes factors).</p></li>
 be used to draw parallels and give some reference to readers non-familiar
 with Bayesian statistics (Makowski et al., 2019).</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="relationship-with-the-p-value">Relationship with the p-value<a class="anchor" aria-label="anchor" href="#relationship-with-the-p-value"></a></h2>
 
-<div class="section">
-<h3 id="relationship-with-the-p-value">Relationship with the p-value<a class="anchor" aria-label="anchor" href="#relationship-with-the-p-value"></a></h3>
 
 
 <p>In most cases, it seems that the <em>pd</em> has a direct correspondence with the
@@ -234,61 +293,52 @@ $$p = 2 \times (1 - p_d)$$
 Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would
 correspond approximately to a <em>pd</em> of <code>95%</code>, <code>97.5%</code>, <code>99.5%</code> and <code>99.95%</code>.
 See <code><a href="pd_to_p.html">pd_to_p()</a></code> for details.</p>
-</div>
+    </div>
+    <div class="section level2">
+    <h2 id="possible-range-of-values">Possible Range of Values<a class="anchor" aria-label="anchor" href="#possible-range-of-values"></a></h2>
 
-<div class="section">
-<h3 id="possible-range-of-values">Possible Range of Values<a class="anchor" aria-label="anchor" href="#possible-range-of-values"></a></h3>
 
 
 <p>The largest value <em>pd</em> can take is 1 - the posterior is strictly directional.
 However, the smallest value <em>pd</em> can take depends on the parameter space
-represented by the posterior.
-<br><br><strong>For a continuous parameter space</strong>, exact values of 0 (or any point null
+represented by the posterior.</p>
+<p><strong>For a continuous parameter space</strong>, exact values of 0 (or any point null
 value) are not possible, and so 100% of the posterior has <em>some</em> sign, some
 positive, some negative. Therefore, the smallest the <em>pd</em> can be is 0.5 -
 with an equal posterior mass of positive and negative values. Values close to
 0.5 <em>cannot</em> be used to support the null hypothesis (that the parameter does
 <em>not</em> have a direction) is a similar why to how large p-values cannot be used
-to support the null hypothesis (see <code><a href="pd_to_p.html">pd_to_p()</a></code>; Makowski et al., 2019).
-<br><br><strong>For a discrete parameter space or a parameter space that is a mixture
+to support the null hypothesis (see <code><a href="pd_to_p.html">pd_to_p()</a></code>; Makowski et al., 2019).</p>
+<p><strong>For a discrete parameter space or a parameter space that is a mixture
 between discrete and continuous spaces</strong>, exact values of 0 (or any point
 null value) <em>are</em> possible! Therefore, the smallest the <em>pd</em> can be is 0 -
 with 100% of the posterior mass on 0. Thus values close to 0 can be used to
-support the null hypothesis (see van den Bergh et al., 2021).
-<br><br>
-Examples of posteriors representing discrete parameter space:</p><ul><li><p>When a parameter can only take discrete values.</p></li>
+support the null hypothesis (see van den Bergh et al., 2021).</p>
+<p>Examples of posteriors representing discrete parameter space:</p><ul><li><p>When a parameter can only take discrete values.</p></li>
 <li><p>When a mixture prior/posterior is used (such as the spike-and-slab prior;
 see van den Bergh et al., 2021).</p></li>
 <li><p>When conducting Bayesian model averaging (e.g., <code><a href="weighted_posteriors.html">weighted_posteriors()</a></code> or
 <code><a href="https://paul-buerkner.github.io/brms/reference/posterior_average.brmsfit.html" class="external-link">brms::posterior_average</a></code>).</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="methods-of-computation">Methods of computation<a class="anchor" aria-label="anchor" href="#methods-of-computation"></a></h2>
 
-<div class="section">
-<h3 id="methods-of-computation">Methods of computation<a class="anchor" aria-label="anchor" href="#methods-of-computation"></a></h3>
 
 
 <p>The <em>pd</em> is defined as:
-$$p_d = max({Pr(\hat{\theta} &lt; \theta_{null}), Pr(\hat{\theta} &gt; \theta_{null})})$$
-<br><br>
-The most simple and direct way to compute the <em>pd</em> is to compute the
+$$p_d = max({Pr(\hat{\theta} &lt; \theta_{null}), Pr(\hat{\theta} &gt; \theta_{null})})$$</p>
+<p>The most simple and direct way to compute the <em>pd</em> is to compute the
 proportion of positive (or larger than <code>null</code>) posterior samples, the
 proportion of negative (or smaller than <code>null</code>) posterior samples, and take
 the larger of the two. This "simple" method is the most straightforward, but
-its precision is directly tied to the number of posterior draws.
-<br><br>
-The second approach relies on <a href="estimate_density.html">density estimation</a>: It starts by
+its precision is directly tied to the number of posterior draws.</p>
+<p>The second approach relies on <a href="estimate_density.html">density estimation</a>: It starts by
 estimating the continuous-smooth density function (for which many methods are
 available), and then computing the <a href="area_under_curve.html">area under the curve</a>
 (AUC) of the density curve on either side of <code>null</code> and taking the maximum
 between them. Note the this approach assumes a continuous density function,
 and so <strong>when the posterior represents a (partially) discrete parameter
 space, only the direct method <em>must</em> be used</strong> (see above).</p>
-</div>
-
-    </div>
-    <div class="section level2">
-    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>There is also a <a href="https://easystats.github.io/see/articles/bayestestR.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -349,14 +399,19 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># rstanarm models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>,</span></span>
-<span class="r-in"><span>    data <span class="op">=</span> <span class="va">mtcars</span>,</span></span>
-<span class="r-in"><span>    chains <span class="op">=</span> <span class="fl">2</span>, refresh <span class="op">=</span> <span class="fl">0</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">p_direction</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">p_direction</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"kernel"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">mtcars</span>,</span></span>
+<span class="r-in"><span>  chains <span class="op">=</span> <span class="fl">2</span>, refresh <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">p_direction</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Probability of Direction</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |   pd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | 100%</span>
+<span class="r-in"><span><span class="fu">p_direction</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"kernel"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Probability of Direction</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |      pd</span>
@@ -367,9 +422,7 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># emmeans</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://rvlenth.github.io/emmeans/" class="external-link">"emmeans"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">p_direction</span><span class="op">(</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu">p_direction</span><span class="op">(</span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probability of Direction</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |   pd</span>
@@ -378,18 +431,14 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># brms models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/paul-buerkner/brms" class="external-link">"brms"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">p_direction</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">p_direction</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"kernel"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Compiling Stan program...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start sampling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 7e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 8e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -406,15 +455,15 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.026 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.029 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.055 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.025 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.023 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.048 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 4e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 3e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
@@ -456,15 +505,15 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.024 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.031 seconds (Warm-up)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.019 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.043 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.05 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 3e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 4e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
@@ -485,6 +534,15 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.019 seconds (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.042 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
+<span class="r-in"><span><span class="fu">p_direction</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Probability of Direction</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |     pd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |   100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |   100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | 99.98%</span>
+<span class="r-in"><span><span class="fu">p_direction</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"kernel"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Probability of Direction</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |     pd</span>
@@ -495,11 +553,14 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># BayesFactor objects</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://richarddmorey.github.io/BayesFactor/" class="external-link">"BayesFactor"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">p_direction</span><span class="op">(</span><span class="va">bf</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">p_direction</span><span class="op">(</span><span class="va">bf</span>, method <span class="op">=</span> <span class="st">"kernel"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">p_direction</span><span class="op">(</span><span class="va">bf</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Probability of Direction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |   pd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | 100%</span>
+<span class="r-in"><span><span class="fu">p_direction</span><span class="op">(</span><span class="va">bf</span>, method <span class="op">=</span> <span class="st">"kernel"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Probability of Direction</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |   pd</span>
