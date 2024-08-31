@@ -2,28 +2,31 @@
 % Please edit documentation in R/convert_pd_to_p.R
 \name{pd_to_p}
 \alias{pd_to_p}
+\alias{pd_to_p.numeric}
 \alias{p_to_pd}
 \alias{convert_p_to_pd}
 \alias{convert_pd_to_p}
 \title{Convert between Probability of Direction (pd) and p-value.}
 \usage{
-pd_to_p(pd, direction = "two-sided", verbose = TRUE, ...)
+pd_to_p(pd, ...)
+
+\method{pd_to_p}{numeric}(pd, direction = "two-sided", verbose = TRUE, ...)
 
 p_to_pd(p, direction = "two-sided", ...)
 
 convert_p_to_pd(p, direction = "two-sided", ...)
 
-convert_pd_to_p(pd, direction = "two-sided", verbose = TRUE, ...)
+convert_pd_to_p(pd, ...)
 }
 \arguments{
 \item{pd}{A Probability of Direction (pd) value (between 0 and 1).}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{direction}{What type of p-value is requested or provided. Can be
 \code{"two-sided"} (default, two tailed) or \code{"one-sided"} (one tailed).}
 
 \item{verbose}{Toggle off warnings.}
-
-\item{...}{Arguments passed to or from other methods.}
 
 \item{p}{A p-value.}
 }

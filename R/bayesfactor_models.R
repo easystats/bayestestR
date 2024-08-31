@@ -562,10 +562,10 @@ as.matrix.bayesfactor_models <- function(x, ...) {
       is_wrapped <- grepl("(", m_txt, fixed = TRUE)
       m_txt[!is_wrapped] <- paste0("(", m_txt[!is_wrapped], ")")
 
-      return(m_txt)
+      m_txt
     },
     error = function(e) {
-      return(m_names)
+      m_names
     }
   )
 }

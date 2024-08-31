@@ -34,7 +34,14 @@
 #' pd_to_p(pd = 0.95, direction = "one-sided")
 #'
 #' @export
-pd_to_p <- function(pd, direction = "two-sided", verbose = TRUE, ...) {
+pd_to_p <- function(pd, ...) {
+  UseMethod("pd_to_p")
+}
+
+
+#' @export
+#' @rdname pd_to_p
+pd_to_p.numeric <- function(pd, direction = "two-sided", verbose = TRUE, ...) {
   p <- 1 - pd
   if (.get_direction(direction) == 0) {
     p <- 2 * p
@@ -53,6 +60,22 @@ pd_to_p <- function(pd, direction = "two-sided", verbose = TRUE, ...) {
   }
 
   p
+}
+
+
+#' @export
+pd_to_p.data.frame <- function(pd, direction = "two-sided", verbose = TRUE, ...) {
+  # check if data frame has an appropriate column
+  pd_column <- intersect(c("pd", "p_direction", "PD"), colnames(pd))[1]
+  if (is.na(pd_column) || length(pd_column) == 0) {
+    insight::format_error("No column named `pd`, `p_direction`, or `PD` found.")
+  }
+
+  # add p-value column
+  pd$p <- pd_to_p(as.numeric(pd[[pd_column]]))
+  # remove pd-column
+  pd[[pd_column]] <- NULL
+  pd
 }
 
 
