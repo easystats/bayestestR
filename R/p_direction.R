@@ -474,6 +474,7 @@ p_direction.stanreg <- function(x,
   attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "as_p") <- as_p
   out
 }
 
@@ -519,6 +520,7 @@ p_direction.brmsfit <- function(x,
   attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "as_p") <- as_p
   out
 }
 
@@ -668,7 +670,7 @@ p_direction.parameters_model <- function(x, ...) {
 as.numeric.p_direction <- function(x, ...) {
   if (inherits(x, "data.frame")) {
     # check if we have frequentist p-values
-    if (attributes(x)$as_p && "p" %in% colnames(x)) {
+    if (isTRUE(attributes(x)$as_p) && "p" %in% colnames(x)) {
       as.numeric(as.vector(x$p))
     } else {
       as.numeric(as.vector(x$pd))

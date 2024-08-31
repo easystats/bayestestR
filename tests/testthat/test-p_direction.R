@@ -45,7 +45,19 @@ test_that("p_direction", {
     p_direction(p)$pd,
     tolerance = 1e-3
   )
+  # converstion into frequentist p-value works
+  expect_equal(
+    p_direction(m, effects = "all", as_p = TRUE)$p,
+    pd_to_p(p_direction(m, effects = "all")$pd),
+    tolerance = 1e-3
+  )
+  expect_equal(
+    p_direction(m, effects = "all", as_p = TRUE)$p,
+    as.numeric(p_direction(m, effects = "all", as_p = TRUE)),
+    tolerance = 1e-3
+  )
 })
+
 
 test_that("p_direction", {
   skip_if_offline()
