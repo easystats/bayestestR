@@ -6,10 +6,12 @@ test_that("p_direction", {
   # converstion into frequentist p-value works
   p <- p_direction(x, as_p = TRUE)
   expect_equal(as.numeric(p), pd_to_p(pd$pd), tolerance = 0.1)
+  expect_equal(as.vector(p), pd_to_p(pd$pd), tolerance = 0.1)
   # return NA
   expect_true(is.na(as.numeric(p_direction(c(x, NA), remove_na = FALSE))))
   # works
   expect_equal(as.numeric(p_direction(c(x, NA))), 0.8413, tolerance = 0.1)
+  expect_equal(as.vector(p_direction(c(x, NA))), 0.8413, tolerance = 0.1)
   # error if only NA
   expect_error(p_direction(c(NA_real_, NA_real_)), regex = "No valid values found")
   expect_equal(as.numeric(p_direction(x, method = "kernel")), 0.842, tolerance = 0.1)
@@ -54,6 +56,11 @@ test_that("p_direction", {
   expect_equal(
     p_direction(m, effects = "all", as_p = TRUE)$p,
     as.numeric(p_direction(m, effects = "all", as_p = TRUE)),
+    tolerance = 1e-3
+  )
+  expect_equal(
+    p_direction(m, effects = "all", as_p = TRUE)$p,
+    as.vector(p_direction(m, effects = "all", as_p = TRUE)),
     tolerance = 1e-3
   )
 })
