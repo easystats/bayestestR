@@ -35,9 +35,23 @@ pd(x, ...)
   ...
 )
 
-\method{p_direction}{MCMCglmm}(x, method = "direct", null = 0, as_p = FALSE, ...)
+\method{p_direction}{MCMCglmm}(
+  x,
+  method = "direct",
+  null = 0,
+  as_p = FALSE,
+  remove_na = TRUE,
+  ...
+)
 
-\method{p_direction}{emmGrid}(x, method = "direct", null = 0, as_p = FALSE, ...)
+\method{p_direction}{emmGrid}(
+  x,
+  method = "direct",
+  null = 0,
+  as_p = FALSE,
+  remove_na = TRUE,
+  ...
+)
 
 \method{p_direction}{stanreg}(
   x,
@@ -48,6 +62,7 @@ pd(x, ...)
   method = "direct",
   null = 0,
   as_p = FALSE,
+  remove_na = TRUE,
   ...
 )
 
@@ -59,16 +74,25 @@ pd(x, ...)
   method = "direct",
   null = 0,
   as_p = FALSE,
+  remove_na = TRUE,
   ...
 )
 
-\method{p_direction}{BFBayesFactor}(x, method = "direct", null = 0, as_p = FALSE, ...)
+\method{p_direction}{BFBayesFactor}(
+  x,
+  method = "direct",
+  null = 0,
+  as_p = FALSE,
+  remove_na = TRUE,
+  ...
+)
 
 \method{p_direction}{get_predicted}(
   x,
   method = "direct",
   null = 0,
   as_p = FALSE,
+  remove_na = TRUE,
   use_iterations = FALSE,
   verbose = TRUE,
   ...

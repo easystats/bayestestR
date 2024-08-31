@@ -3,6 +3,15 @@ test_that("p_direction", {
   x <- distribution_normal(10000, 1, 1)
   pd <- p_direction(x)
   expect_equal(as.numeric(pd), 0.842, tolerance = 0.1)
+  # converstion into frequentist p-value works
+  p <- p_direction(x, as_p = TRUE)
+  expect_equal(as.numeric(p), pd_to_p(pd$pd), tolerance = 0.1)
+  # return NA
+  expect_true(is.na(as.numeric(p_direction(c(x, NA), remove_na = FALSE))))
+  # works
+  expect_equal(as.numeric(p_direction(c(x, NA))), 0.8413, tolerance = 0.1)
+  # error if only NA
+  expect_error(p_direction(c(NA_real_, NA_real_)), regex = "No valid values found")
   expect_equal(as.numeric(p_direction(x, method = "kernel")), 0.842, tolerance = 0.1)
   expect_s3_class(pd, "p_direction")
   expect_s3_class(pd, "data.frame")
