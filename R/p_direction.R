@@ -182,15 +182,15 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, rvar_col = NU
     return(.p_direction_df(x, method = method, null = null, ...))
   }
 
-  stopifnot(length(rvar_col) == 1L,
-            is.character(rvar_col),
-            rvar_col %in% colnames(x))
-
+  if (length(rvar_col) != 1L && !rvar_col %in% colnames(x)) {
+    insight::format_error("The `rvar_col` argument must be a single, valid column name.")
+  }
 
   out <- p_direction(x[[rvar_col]], method = method, null = null, ...)
   x[["pd"]] <- out[["pd"]]
   x
 }
+
 
 #' @keywords internal
 .p_direction_df <- function(x, method = "direct", null = 0, ...) {
