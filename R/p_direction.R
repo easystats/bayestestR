@@ -15,6 +15,8 @@
 #'   could also be 1 in the case of ratios of change (OR, IRR, ...).
 #' @param as_p If `TRUE`, the p-direction (pd) values are converted to a
 #' frequentist p-value using [`pd_to_p()`].
+#' @param remove_na Should missing values be removed before computation? Note
+#' that `Inf` (infinity) are *not* removed.
 #' @inheritParams hdi
 #'
 #' @details
@@ -167,9 +169,21 @@ p_direction.default <- function(x, ...) {
 
 #' @rdname p_direction
 #' @export
-p_direction.numeric <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
+p_direction.numeric <- function(x,
+                                method = "direct",
+                                null = 0,
+                                as_p = FALSE,
+                                remove_na = TRUE,
+                                ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
-  out <- p_direction(data.frame(Posterior = x), method = method, null = null, as_p = as_p, ...)
+  out <- p_direction(
+    data.frame(Posterior = x),
+    method = method,
+    null = null,
+    as_p = as_p,
+    remove_na = remove_na,
+    ...
+  )
   attr(out, "object_name") <- obj_name
   out
 }
@@ -177,14 +191,35 @@ p_direction.numeric <- function(x, method = "direct", null = 0, as_p = FALSE, ..
 
 #' @rdname p_direction
 #' @export
-p_direction.data.frame <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
+p_direction.data.frame <- function(x,
+                                   method = "direct",
+                                   null = 0,
+                                   as_p = FALSE,
+                                   remove_na = TRUE,
+                                   ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
-    pd <- .p_direction(x[[1]], method = method, null = null, as_p = as_p, ...)
+    pd <- .p_direction(
+      x[[1]],
+      method = method,
+      null = null,
+      as_p = as_p,
+      remove_na = remove_na,
+      ...
+    )
   } else {
-    pd <- sapply(x, .p_direction, method = method, null = null, as_p = as_p, simplify = TRUE, ...)
+    pd <- sapply(
+      x,
+      .p_direction,
+      method = method,
+      null = null,
+      as_p = as_p,
+      remove_na = remove_na,
+      simplify = TRUE,
+      ...
+    )
   }
 
   out <- data.frame(
@@ -207,8 +242,20 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, as_p = FALSE,
 
 
 #' @export
-p_direction.draws <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
-  p_direction(.posterior_draws_to_df(x), method = method, null = null, as_p = as_p, ...)
+p_direction.draws <- function(x,
+                              method = "direct",
+                              null = 0,
+                              as_p = FALSE,
+                              remove_na = TRUE,
+                              ...) {
+  p_direction(
+    .posterior_draws_to_df(x),
+    method = method,
+    null = null,
+    as_p = as_p,
+    remove_na = remove_na,
+    ...
+  )
 }
 
 #' @export
@@ -513,7 +560,26 @@ p_direction.parameters_model <- function(x, ...) {
 
 
 #' @keywords internal
-.p_direction <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
+.p_direction <- function(x,
+                         method = "direct",
+                         null = 0,
+                         as_p = FALSE,
+                         remove_na = TRUE,
+                         ...) {
+  # handle missing values
+  if (remove_na) {
+    x <- x[!is.na(x)]
+  }
+  # sanity check
+  if (length(x) == 0) {
+    insight::format_error("No valid values found. Maybe the data contains only missing values.")
+  }
+
+  # any inf values? then warn...
+  if (any(is.infinite(x))) {
+    insight::format_warning("Infinite values detected. These are not removed. Please check your results carefully!")
+  }
+
   if (method == "direct") {
     pdir <- max(
       length(x[x > null]), # pd positive

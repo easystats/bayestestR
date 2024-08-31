@@ -17,9 +17,23 @@ p_direction(x, ...)
 
 pd(x, ...)
 
-\method{p_direction}{numeric}(x, method = "direct", null = 0, as_p = FALSE, ...)
+\method{p_direction}{numeric}(
+  x,
+  method = "direct",
+  null = 0,
+  as_p = FALSE,
+  remove_na = TRUE,
+  ...
+)
 
-\method{p_direction}{data.frame}(x, method = "direct", null = 0, as_p = FALSE, ...)
+\method{p_direction}{data.frame}(
+  x,
+  method = "direct",
+  null = 0,
+  as_p = FALSE,
+  remove_na = TRUE,
+  ...
+)
 
 \method{p_direction}{MCMCglmm}(x, method = "direct", null = 0, as_p = FALSE, ...)
 
@@ -74,6 +88,9 @@ could also be 1 in the case of ratios of change (OR, IRR, ...).}
 
 \item{as_p}{If \code{TRUE}, the p-direction (pd) values are converted to a
 frequentist p-value using \code{\link[=pd_to_p]{pd_to_p()}}.}
+
+\item{remove_na}{Should missing values be removed before computation? Note
+that \code{Inf} (infinity) are \emph{not} removed.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
