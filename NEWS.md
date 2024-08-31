@@ -12,6 +12,9 @@
   - `p_direction()` gets a `remove_na` argument, which defaults to `TRUE`, to
     remove `NA` values from the input before calculating the pd-values.
 
+  - The `data.frame` method for `p_direction()` gets an `rvar_col` argument, to
+    specify the column that contains the `rvar` objects.
+
 ## Bug fixes
 
 * Fixed warning in CRAN check results.
