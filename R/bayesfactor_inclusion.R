@@ -163,7 +163,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models,
   attr(df.effect, "matched") <- match_models
   attr(df.effect, "priorOdds") <- prior_odds
 
-  return(df.effect)
+  df.effect
 }
 
 
@@ -185,8 +185,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models,
   eff_b <- strsplit(eff, ":", fixed = TRUE)
   effnames_b <- strsplit(effnames, ":", fixed = TRUE)
 
-  is_int <- vapply(effnames_b, function(x) length(x) > 1, TRUE)
-
+  is_int <- lengths(effnames_b) > 1
   temp <- logical(length(effnames))
 
   for (rr in seq_along(effnames)) {

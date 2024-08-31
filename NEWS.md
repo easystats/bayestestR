@@ -1,5 +1,30 @@
 # bayestestR (development version)
 
+## Changes
+
+* Usability improvements for `p_direction()`:
+
+  - Results from `p_direction()` can directly be used in `pd_to_p()`.
+
+  - `p_direction()` gets an `as_p` argument, to directly convert pd-values into
+    frequentist p-values.
+
+  - `p_direction()` gets a `remove_na` argument, which defaults to `TRUE`, to
+    remove `NA` values from the input before calculating the pd-values.
+
+  - The `data.frame` method for `p_direction()` gets an `rvar_col` argument, to
+    specify the column that contains the `rvar` objects.
+
+  - Besides the existing `as.numeric()` method, `p_direction()` now also has an
+    `as.vector()` method.
+
+* `p_to_pd()` now also works with data frames returned by `p_direction()`. If
+  a data frame contains a `pd`, `p_direction` or `PD` column name, this is assumed
+  to be the pd-values, which are then converted to p-values.
+
+* `p_to_pd()` for data frame inputs gets a `as.numeric()` and `as.vector()`
+  method.
+
 ## Bug fixes
 
 * Fixed warning in CRAN check results.
