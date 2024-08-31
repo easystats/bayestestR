@@ -17,13 +17,13 @@ p_direction(x, ...)
 
 pd(x, ...)
 
-\method{p_direction}{numeric}(x, method = "direct", null = 0, ...)
+\method{p_direction}{numeric}(x, method = "direct", null = 0, as_p = FALSE, ...)
 
-\method{p_direction}{data.frame}(x, method = "direct", null = 0, ...)
+\method{p_direction}{data.frame}(x, method = "direct", null = 0, as_p = FALSE, ...)
 
-\method{p_direction}{MCMCglmm}(x, method = "direct", null = 0, ...)
+\method{p_direction}{MCMCglmm}(x, method = "direct", null = 0, as_p = FALSE, ...)
 
-\method{p_direction}{emmGrid}(x, method = "direct", null = 0, ...)
+\method{p_direction}{emmGrid}(x, method = "direct", null = 0, as_p = FALSE, ...)
 
 \method{p_direction}{stanreg}(
   x,
@@ -33,6 +33,7 @@ pd(x, ...)
   parameters = NULL,
   method = "direct",
   null = 0,
+  as_p = FALSE,
   ...
 )
 
@@ -43,15 +44,17 @@ pd(x, ...)
   parameters = NULL,
   method = "direct",
   null = 0,
+  as_p = FALSE,
   ...
 )
 
-\method{p_direction}{BFBayesFactor}(x, method = "direct", null = 0, ...)
+\method{p_direction}{BFBayesFactor}(x, method = "direct", null = 0, as_p = FALSE, ...)
 
 \method{p_direction}{get_predicted}(
   x,
   method = "direct",
   null = 0,
+  as_p = FALSE,
   use_iterations = FALSE,
   verbose = TRUE,
   ...
@@ -68,6 +71,9 @@ such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. See details.
 
 \item{null}{The value considered as a "null" effect. Traditionally 0, but
 could also be 1 in the case of ratios of change (OR, IRR, ...).}
+
+\item{as_p}{If \code{TRUE}, the p-direction (pd) values are converted to a
+frequentist p-value using \code{\link[=pd_to_p]{pd_to_p()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

@@ -6,6 +6,9 @@
 
   - Results from `p_direction()` can directly be used in `pd_to_p()`.
 
+  - `p_direction()` gets an `as_p` argument, to directly convert pd-values into
+    frequentist p-values.
+
 ## Bug fixes
 
 * Fixed warning in CRAN check results.

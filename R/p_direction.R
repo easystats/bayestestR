@@ -13,6 +13,8 @@
 #'   such as `"kernel"`, `"logspline"` or `"KernSmooth"`. See details.
 #' @param null The value considered as a "null" effect. Traditionally 0, but
 #'   could also be 1 in the case of ratios of change (OR, IRR, ...).
+#' @param as_p If `TRUE`, the p-direction (pd) values are converted to a
+#' frequentist p-value using [`pd_to_p()`].
 #' @inheritParams hdi
 #'
 #' @details
@@ -165,9 +167,9 @@ p_direction.default <- function(x, ...) {
 
 #' @rdname p_direction
 #' @export
-p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
+p_direction.numeric <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
-  out <- p_direction(data.frame(Posterior = x), method = method, null = null, ...)
+  out <- p_direction(data.frame(Posterior = x), method = method, null = null, as_p = as_p, ...)
   attr(out, "object_name") <- obj_name
   out
 }
@@ -175,14 +177,14 @@ p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
 
 #' @rdname p_direction
 #' @export
-p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
+p_direction.data.frame <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
-    pd <- .p_direction(x[[1]], method = method, null = null, ...)
+    pd <- .p_direction(x[[1]], method = method, null = null, as_p = as_p, ...)
   } else {
-    pd <- sapply(x, .p_direction, method = method, null = null, simplify = TRUE, ...)
+    pd <- sapply(x, .p_direction, method = method, null = null, as_p = as_p, simplify = TRUE, ...)
   }
 
   out <- data.frame(
@@ -192,6 +194,11 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
     stringsAsFactors = FALSE
   )
 
+  # rename column
+  if (as_p) {
+    colnames(out)[2] <- "p"
+  }
+
   attr(out, "object_name") <- obj_name
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
 
@@ -200,8 +207,8 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
 
 
 #' @export
-p_direction.draws <- function(x, method = "direct", null = 0, ...) {
-  p_direction(.posterior_draws_to_df(x), method = method, null = null, ...)
+p_direction.draws <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
+  p_direction(.posterior_draws_to_df(x), method = method, null = null, as_p = as_p, ...)
 }
 
 #' @export
@@ -210,11 +217,12 @@ p_direction.rvar <- p_direction.draws
 
 #' @rdname p_direction
 #' @export
-p_direction.MCMCglmm <- function(x, method = "direct", null = 0, ...) {
+p_direction.MCMCglmm <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
   nF <- x$Fixed$nfl
   out <- p_direction(as.data.frame(x$Sol[, 1:nF, drop = FALSE]),
     method = method,
     null = null,
+    as_p = as_p,
     ...
   )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -223,20 +231,20 @@ p_direction.MCMCglmm <- function(x, method = "direct", null = 0, ...) {
 
 
 #' @export
-p_direction.mcmc <- function(x, method = "direct", null = 0, ...) {
-  p_direction(as.data.frame(x), method = method, null = null, ...)
+p_direction.mcmc <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
+  p_direction(as.data.frame(x), method = method, null = null, as_p = as_p, ...)
 }
 
 
 #' @export
-p_direction.BGGM <- function(x, method = "direct", null = 0, ...) {
-  p_direction(as.data.frame(x), method = method, null = null, ...)
+p_direction.BGGM <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
+  p_direction(as.data.frame(x), method = method, null = null, as_p = as_p, ...)
 }
 
 
 #' @export
-p_direction.bcplm <- function(x, method = "direct", null = 0, ...) {
-  p_direction(insight::get_parameters(x), method = method, null = null, ...)
+p_direction.bcplm <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
+  p_direction(insight::get_parameters(x), method = method, null = null, as_p = as_p, ...)
 }
 
 #' @export
@@ -253,6 +261,7 @@ p_direction.bayesQR <- p_direction.bcplm
 p_direction.bamlss <- function(x,
                                method = "direct",
                                null = 0,
+                               as_p = FALSE,
                                component = c("all", "conditional", "location"),
                                ...) {
   component <- match.arg(component)
@@ -260,6 +269,7 @@ p_direction.bamlss <- function(x,
     insight::get_parameters(x, component = component),
     method = method,
     null = null,
+    as_p = as_p,
     ...
   )
   out <- .add_clean_parameters_attribute(out, x)
@@ -269,10 +279,10 @@ p_direction.bamlss <- function(x,
 
 #' @rdname p_direction
 #' @export
-p_direction.emmGrid <- function(x, method = "direct", null = 0, ...) {
+p_direction.emmGrid <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
   xdf <- insight::get_parameters(x)
 
-  out <- p_direction(xdf, method = method, null = null, ...)
+  out <- p_direction(xdf, method = method, null = null, as_p = as_p, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -289,6 +299,7 @@ p_direction.emm_list <- p_direction.emmGrid
                                 parameters,
                                 method = "direct",
                                 null = 0,
+                                as_p = FALSE,
                                 ...) {
   p_direction(
     insight::get_parameters(
@@ -299,6 +310,7 @@ p_direction.emm_list <- p_direction.emmGrid
     ),
     method = method,
     null = null,
+    as_p = as_p,
     ...
   )
 }
@@ -310,6 +322,7 @@ p_direction.sim.merMod <- function(x,
                                    parameters = NULL,
                                    method = "direct",
                                    null = 0,
+                                   as_p = FALSE,
                                    ...) {
   effects <- match.arg(effects)
 
@@ -320,6 +333,7 @@ p_direction.sim.merMod <- function(x,
     parameters = parameters,
     method = method,
     null = null,
+    as_p = as_p,
     ...
   )
   attr(out, "data") <- insight::get_parameters(x, effects = effects, parameters = parameters)
@@ -332,6 +346,7 @@ p_direction.sim <- function(x,
                             parameters = NULL,
                             method = "direct",
                             null = 0,
+                            as_p = FALSE,
                             ...) {
   out <- .p_direction_models(
     x = x,
@@ -340,6 +355,7 @@ p_direction.sim <- function(x,
     parameters = parameters,
     method = method,
     null = null,
+    as_p = as_p,
     ...
   )
   attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
@@ -356,6 +372,7 @@ p_direction.stanreg <- function(x,
                                 parameters = NULL,
                                 method = "direct",
                                 null = 0,
+                                as_p = FALSE,
                                 ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -371,6 +388,7 @@ p_direction.stanreg <- function(x,
       ),
       method = method,
       null = null,
+      as_p = as_p,
       ...
     ),
     cleaned_parameters,
@@ -398,6 +416,7 @@ p_direction.brmsfit <- function(x,
                                 parameters = NULL,
                                 method = "direct",
                                 null = 0,
+                                as_p = FALSE,
                                 ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -413,6 +432,7 @@ p_direction.brmsfit <- function(x,
       ),
       method = method,
       null = null,
+      as_p = as_p,
       ...
     ),
     cleaned_parameters
@@ -427,8 +447,8 @@ p_direction.brmsfit <- function(x,
 
 #' @rdname p_direction
 #' @export
-p_direction.BFBayesFactor <- function(x, method = "direct", null = 0, ...) {
-  out <- p_direction(insight::get_parameters(x), method = method, null = null, ...)
+p_direction.BFBayesFactor <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
+  out <- p_direction(insight::get_parameters(x), method = method, null = null, as_p = as_p, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -438,6 +458,7 @@ p_direction.BFBayesFactor <- function(x, method = "direct", null = 0, ...) {
 p_direction.get_predicted <- function(x,
                                       method = "direct",
                                       null = 0,
+                                      as_p = FALSE,
                                       use_iterations = FALSE,
                                       verbose = TRUE,
                                       ...) {
@@ -447,6 +468,7 @@ p_direction.get_predicted <- function(x,
         as.data.frame(t(attributes(x)$iterations)),
         method = method,
         null = null,
+        as_p = as_p,
         verbose = verbose,
         ...
       )
@@ -458,6 +480,7 @@ p_direction.get_predicted <- function(x,
     out <- p_direction(as.numeric(x),
       method = method,
       null = null,
+      as_p = as_p,
       verbose = verbose,
       ...
     )
@@ -490,7 +513,7 @@ p_direction.parameters_model <- function(x, ...) {
 
 
 #' @keywords internal
-.p_direction <- function(x, method = "direct", null = 0, ...) {
+.p_direction <- function(x, method = "direct", null = 0, as_p = FALSE, ...) {
   if (method == "direct") {
     pdir <- max(
       length(x[x > null]), # pd positive
@@ -508,6 +531,11 @@ p_direction.parameters_model <- function(x, ...) {
       # Enforce bounds
       pdir <- 1
     }
+  }
+
+  # convert to frequentist p?
+  if (as_p) {
+    pdir <- pd_to_p(pdir)
   }
 
   pdir
