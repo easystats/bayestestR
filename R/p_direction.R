@@ -17,10 +17,12 @@
 #' frequentist p-value using [`pd_to_p()`].
 #' @param remove_na Should missing values be removed before computation? Note
 #' that `Inf` (infinity) are *not* removed.
+#' @param rvar_col Name of an `rvar`-type column. If `NULL`, each column in the
+#' data frame is assumed to represent draws from a posterior distribution.
 #' @inheritParams hdi
 #'
-#' @details
-#' ## What is the *pd*?
+#' @section What is the *pd*?:
+#'
 #' The Probability of Direction (pd) is an index of effect existence, representing
 #' the certainty with which an effect goes in a particular direction (i.e., is
 #' positive or negative / has a sign), typically ranging from 0.5 to 1 (but see
@@ -35,7 +37,8 @@
 #'   be used to draw parallels and give some reference to readers non-familiar
 #'   with Bayesian statistics (Makowski et al., 2019).
 #'
-#' ## Relationship with the p-value
+#' @section Relationship with the p-value:
+#'
 #' In most cases, it seems that the *pd* has a direct correspondence with the
 #' frequentist one-sided *p*-value through the formula (for two-sided *p*):
 #' \deqn{p = 2 \times (1 - p_d)}{p = 2 * (1 - pd)}
@@ -43,11 +46,12 @@
 #' correspond approximately to a *pd* of `95%`, `97.5%`, `99.5%` and `99.95%`.
 #' See [pd_to_p()] for details.
 #'
-#' ## Possible Range of Values
+#' @section Possible Range of Values:
+#'
 #' The largest value *pd* can take is 1 - the posterior is strictly directional.
 #' However, the smallest value *pd* can take depends on the parameter space
 #' represented by the posterior.
-#' \cr\cr
+#'
 #' **For a continuous parameter space**, exact values of 0 (or any point null
 #' value) are not possible, and so 100% of the posterior has _some_ sign, some
 #' positive, some negative. Therefore, the smallest the *pd* can be is 0.5 -
@@ -55,13 +59,13 @@
 #' 0.5 _cannot_ be used to support the null hypothesis (that the parameter does
 #' _not_ have a direction) is a similar why to how large p-values cannot be used
 #' to support the null hypothesis (see [`pd_to_p()`]; Makowski et al., 2019).
-#' \cr\cr
+#'
 #' **For a discrete parameter space or a parameter space that is a mixture
 #' between discrete and continuous spaces**, exact values of 0 (or any point
 #' null value) _are_ possible! Therefore, the smallest the *pd* can be is 0 -
 #' with 100% of the posterior mass on 0. Thus values close to 0 can be used to
 #' support the null hypothesis (see van den Bergh et al., 2021).
-#' \cr\cr
+#'
 #' Examples of posteriors representing discrete parameter space:
 #' - When a parameter can only take discrete values.
 #' - When a mixture prior/posterior is used (such as the spike-and-slab prior;
@@ -69,16 +73,17 @@
 #' - When conducting Bayesian model averaging (e.g., [weighted_posteriors()] or
 #'   `brms::posterior_average`).
 #'
-#' ## Methods of computation
+#' @section Methods of computation:
+#'
 #' The *pd* is defined as:
 #' \deqn{p_d = max({Pr(\hat{\theta} < \theta_{null}), Pr(\hat{\theta} > \theta_{null})})}{pd = max(mean(x < null), mean(x > null))}
-#' \cr\cr
+#'
 #' The most simple and direct way to compute the *pd* is to compute the
 #' proportion of positive (or larger than `null`) posterior samples, the
 #' proportion of negative (or smaller than `null`) posterior samples, and take
 #' the larger of the two. This "simple" method is the most straightforward, but
 #' its precision is directly tied to the number of posterior draws.
-#' \cr\cr
+#'
 #' The second approach relies on [density estimation][estimate_density]: It starts by
 #' estimating the continuous-smooth density function (for which many methods are
 #' available), and then computing the [area under the curve][area_under_curve]
@@ -103,7 +108,7 @@
 #'   (2021). A cautionary note on estimating effect size. Advances in Methods
 #'   and Practices in Psychological Science, 4(1). \doi{10.1177/2515245921992035}
 #'
-#' @examples
+#' @examplesIf requireNamespace("rstanarm", quietly = TRUE) && requireNamespace("emmeans", quietly = TRUE) && requireNamespace("brms", quietly = TRUE) && requireNamespace("BayesFactor", quietly = TRUE)
 #' library(bayestestR)
 #'
 #' # Simulate a posterior distribution of mean 1 and SD 1
@@ -120,36 +125,28 @@
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
-#' if (require("rstanarm")) {
-#'   model <- rstanarm::stan_glm(mpg ~ wt + cyl,
-#'     data = mtcars,
-#'     chains = 2, refresh = 0
-#'   )
-#'   p_direction(model)
-#'   p_direction(model, method = "kernel")
-#' }
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl,
+#'   data = mtcars,
+#'   chains = 2, refresh = 0
+#' )
+#' p_direction(model)
+#' p_direction(model, method = "kernel")
 #'
 #' # emmeans
 #' # -----------------------------------------------
-#' if (require("emmeans")) {
-#'   p_direction(emtrends(model, ~1, "wt", data = mtcars))
-#' }
+#' p_direction(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 #'
 #' # brms models
 #' # -----------------------------------------------
-#' if (require("brms")) {
-#'   model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#'   p_direction(model)
-#'   p_direction(model, method = "kernel")
-#' }
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' p_direction(model)
+#' p_direction(model, method = "kernel")
 #'
 #' # BayesFactor objects
 #' # -----------------------------------------------
-#' if (require("BayesFactor")) {
-#'   bf <- ttestBF(x = rnorm(100, 1, 1))
-#'   p_direction(bf)
-#'   p_direction(bf, method = "kernel")
-#' }
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
+#' p_direction(bf)
+#' p_direction(bf, method = "kernel")
 #' }
 #' @export
 p_direction <- function(x, ...) {
@@ -196,8 +193,51 @@ p_direction.data.frame <- function(x,
                                    null = 0,
                                    as_p = FALSE,
                                    remove_na = TRUE,
+                                   rvar_col = NULL,
                                    ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
+
+  if (is.null(rvar_col)) {
+    return(.p_direction_df(
+      x,
+      method = method,
+      null = null,
+      as_p = as_p,
+      remove_na = remove_na,
+      obj_name = obj_name,
+      ...
+    ))
+  }
+
+  if (length(rvar_col) != 1L && !rvar_col %in% colnames(x)) {
+    insight::format_error("The `rvar_col` argument must be a single, valid column name.")
+  }
+
+  out <- p_direction(
+    x[[rvar_col]],
+    method = method,
+    null = null,
+    as_p = as_p,
+    remove_na = remove_na,
+    ...
+  )
+
+  x[["pd"]] <- out[["pd"]]
+  attr(x, "object_name") <- obj_name
+  attr(x, "as_p") <- as_p
+
+  x
+}
+
+
+#' @keywords internal
+.p_direction_df <- function(x,
+                            method = "direct",
+                            null = 0,
+                            as_p = FALSE,
+                            remove_na = TRUE,
+                            obj_name = NULL,
+                            ...) {
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {

@@ -32,6 +32,7 @@ pd(x, ...)
   null = 0,
   as_p = FALSE,
   remove_na = TRUE,
+  rvar_col = NULL,
   ...
 )
 
@@ -116,6 +117,9 @@ frequentist p-value using \code{\link[=pd_to_p]{pd_to_p()}}.}
 \item{remove_na}{Should missing values be removed before computation? Note
 that \code{Inf} (infinity) are \emph{not} removed.}
 
+\item{rvar_col}{Name of an \code{rvar}-type column. If \code{NULL}, each column in the
+data frame is assumed to represent draws from a posterior distribution.}
+
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
 
@@ -148,8 +152,11 @@ positive or negative (whichever is the most probable). Although differently
 expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated) to
 the frequentist \strong{p-value} (see details).
 }
-\details{
-\subsection{What is the \emph{pd}?}{
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
+\section{What is the \emph{pd}?}{
+
 
 The Probability of Direction (pd) is an index of effect existence, representing
 the certainty with which an effect goes in a particular direction (i.e., is
@@ -168,7 +175,8 @@ with Bayesian statistics (Makowski et al., 2019).
 }
 }
 
-\subsection{Relationship with the p-value}{
+\section{Relationship with the p-value}{
+
 
 In most cases, it seems that the \emph{pd} has a direct correspondence with the
 frequentist one-sided \emph{p}-value through the formula (for two-sided \emph{p}):
@@ -178,12 +186,13 @@ correspond approximately to a \emph{pd} of \verb{95\%}, \verb{97.5\%}, \verb{99.
 See \code{\link[=pd_to_p]{pd_to_p()}} for details.
 }
 
-\subsection{Possible Range of Values}{
+\section{Possible Range of Values}{
+
 
 The largest value \emph{pd} can take is 1 - the posterior is strictly directional.
 However, the smallest value \emph{pd} can take depends on the parameter space
 represented by the posterior.
-\cr\cr
+
 \strong{For a continuous parameter space}, exact values of 0 (or any point null
 value) are not possible, and so 100\% of the posterior has \emph{some} sign, some
 positive, some negative. Therefore, the smallest the \emph{pd} can be is 0.5 -
@@ -191,13 +200,13 @@ with an equal posterior mass of positive and negative values. Values close to
 0.5 \emph{cannot} be used to support the null hypothesis (that the parameter does
 \emph{not} have a direction) is a similar why to how large p-values cannot be used
 to support the null hypothesis (see \code{\link[=pd_to_p]{pd_to_p()}}; Makowski et al., 2019).
-\cr\cr
+
 \strong{For a discrete parameter space or a parameter space that is a mixture
 between discrete and continuous spaces}, exact values of 0 (or any point
 null value) \emph{are} possible! Therefore, the smallest the \emph{pd} can be is 0 -
 with 100\% of the posterior mass on 0. Thus values close to 0 can be used to
 support the null hypothesis (see van den Bergh et al., 2021).
-\cr\cr
+
 Examples of posteriors representing discrete parameter space:
 \itemize{
 \item When a parameter can only take discrete values.
@@ -208,17 +217,18 @@ see van den Bergh et al., 2021).
 }
 }
 
-\subsection{Methods of computation}{
+\section{Methods of computation}{
+
 
 The \emph{pd} is defined as:
 \deqn{p_d = max({Pr(\hat{\theta} < \theta_{null}), Pr(\hat{\theta} > \theta_{null})})}{pd = max(mean(x < null), mean(x > null))}
-\cr\cr
+
 The most simple and direct way to compute the \emph{pd} is to compute the
 proportion of positive (or larger than \code{null}) posterior samples, the
 proportion of negative (or smaller than \code{null}) posterior samples, and take
 the larger of the two. This "simple" method is the most straightforward, but
 its precision is directly tied to the number of posterior draws.
-\cr\cr
+
 The second approach relies on \link[=estimate_density]{density estimation}: It starts by
 estimating the continuous-smooth density function (for which many methods are
 available), and then computing the \link[=area_under_curve]{area under the curve}
@@ -227,11 +237,9 @@ between them. Note the this approach assumes a continuous density function,
 and so \strong{when the posterior represents a (partially) discrete parameter
 space, only the direct method \emph{must} be used} (see above).
 }
-}
-\note{
-There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
-}
+
 \examples{
+\dontshow{if (requireNamespace("rstanarm", quietly = TRUE) && requireNamespace("emmeans", quietly = TRUE) && requireNamespace("brms", quietly = TRUE) && requireNamespace("BayesFactor", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 # Simulate a posterior distribution of mean 1 and SD 1
@@ -248,37 +256,30 @@ p_direction(df, method = "kernel")
 \donttest{
 # rstanarm models
 # -----------------------------------------------
-if (require("rstanarm")) {
-  model <- rstanarm::stan_glm(mpg ~ wt + cyl,
-    data = mtcars,
-    chains = 2, refresh = 0
-  )
-  p_direction(model)
-  p_direction(model, method = "kernel")
-}
+model <- rstanarm::stan_glm(mpg ~ wt + cyl,
+  data = mtcars,
+  chains = 2, refresh = 0
+)
+p_direction(model)
+p_direction(model, method = "kernel")
 
 # emmeans
 # -----------------------------------------------
-if (require("emmeans")) {
-  p_direction(emtrends(model, ~1, "wt", data = mtcars))
-}
+p_direction(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 
 # brms models
 # -----------------------------------------------
-if (require("brms")) {
-  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-  p_direction(model)
-  p_direction(model, method = "kernel")
-}
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+p_direction(model)
+p_direction(model, method = "kernel")
 
 # BayesFactor objects
 # -----------------------------------------------
-if (require("BayesFactor")) {
-  bf <- ttestBF(x = rnorm(100, 1, 1))
-  p_direction(bf)
-  p_direction(bf, method = "kernel")
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
+p_direction(bf)
+p_direction(bf, method = "kernel")
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
