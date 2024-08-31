@@ -177,7 +177,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   cl$...$estimator <- cl$...$check_response <- NULL
 
 
-  names(mods) <- sapply(cl$`...`, insight::safe_deparse)
+  names(mods) <- sapply(cl[["..."]], insight::safe_deparse)
   names(denominator) <- insight::safe_deparse(cl$denominator)
 
   mods <- .cleanup_BF_models(mods, denominator, cl)
@@ -346,7 +346,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
   denominator <- list(denominator)
 
   cl <- match.call(expand.dots = FALSE)
-  names(mods) <- sapply(cl$`...`, insight::safe_deparse)
+  names(mods) <- sapply(cl[["..."]], insight::safe_deparse)
   names(denominator) <- insight::safe_deparse(cl$denominator)
 
   mods <- .cleanup_BF_models(mods, denominator, cl)
@@ -446,7 +446,7 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 .cleanup_BF_models <- function(mods, denominator, cl) {
   if (length(mods) == 1 && inherits(mods[[1]], "list")) {
     mods <- mods[[1]]
-    mod_names <- .safe(sapply(cl$`...`[[1]][-1], insight::safe_deparse))
+    mod_names <- .safe(sapply(cl[["..."]][[1]][-1], insight::safe_deparse))
 
     if (!is.null(mod_names) && length(mod_names) == length(mods)) {
       names(mods) <- mod_names
