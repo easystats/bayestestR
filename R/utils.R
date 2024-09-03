@@ -160,11 +160,20 @@
   # results is assumed to be a data frame with "Parameter" column
   # object is an emmeans that results is based on
 
+  all_attrs <- attributes(results) # save attributes for later
+
   grid <- insight::get_datagrid(object)
   grid_names <- colnames(grid)
 
   results[colnames(grid)] <- grid
   results$Parameter <- NULL
-  results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
+  results <- results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
+
+  # add back attributes
+  most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(grid)))]
+  attributes(results)[names(most_attrs)] <- most_attrs
+
+  attr(results, "grid_cols") <- grid_names
+  results
 }
 
