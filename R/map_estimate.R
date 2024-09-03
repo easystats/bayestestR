@@ -166,7 +166,7 @@ map_estimate.rvar <- map_estimate.draws
 #' @export
 map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
   xdf <- insight::get_parameters(x)
-  out <- .map_estimate_models(x, precision = precision, method = method)
+  out <- .map_estimate_models(xdf, precision = precision, method = method)
   .append_datagrid(out, x)
 }
 
