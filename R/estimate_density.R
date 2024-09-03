@@ -375,7 +375,11 @@ estimate_density.emmGrid <- function(x,
     bw = bw, ...
   )
 
-  out <- .append_datagrid(out, x)
+  # This doesn't use .append_datagrid because we get a non-grid output
+  grid <- insight::get_datagrid(x)
+  grid$Parameter <- unique(out$Parameter)
+  out <- datawizard::data_join(grid, out, by = "Parameter")
+  out$Parameter <- NULL
   class(out) <- .set_density_class(out)
   out
 }
