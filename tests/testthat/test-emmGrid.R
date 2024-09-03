@@ -25,6 +25,7 @@ set.seed(300)
 
 test_that("emmGrid hdi", {
   xhdi <- hdi(all_, ci = 0.95)
+  expect_identical(colnames(xhdi)[1:2], c("group", "contrast"))
   expect_equal(xhdi$CI_low, all_summ$lower.HPD, tolerance = 0.1)
   expect_equal(xhdi$CI_high, all_summ$upper.HPD, tolerance = 0.1)
 
@@ -34,6 +35,7 @@ test_that("emmGrid hdi", {
 
 test_that("emmGrid point_estimate", {
   xpest <- point_estimate(all_, centrality = "all", dispersion = TRUE)
+  expect_identical(colnames(xpest)[1:2], c("group", "contrast"))
   expect_equal(xpest$Median, all_summ$emmean, tolerance = 0.1)
 
   xpest2 <- point_estimate(emc_, centrality = "all", dispersion = TRUE)
@@ -46,55 +48,65 @@ test_that("emmGrid point_estimate", {
 
 test_that("emmGrid ci", {
   xci <- ci(all_, ci = 0.9)
+  expect_identical(colnames(xci)[1:2], c("group", "contrast"))
   expect_equal(length(xci$CI_low), 3)
   expect_equal(length(xci$CI_high), 3)
 })
 
 test_that("emmGrid eti", {
   xeti <- eti(all_, ci = 0.9)
+  expect_identical(colnames(xeti)[1:2], c("group", "contrast"))
   expect_equal(length(xeti$CI_low), 3)
   expect_equal(length(xeti$CI_high), 3)
 })
 
 test_that("emmGrid equivalence_test", {
   xeqtest <- equivalence_test(all_, ci = 0.9, range = c(-0.1, 0.1))
+  expect_identical(colnames(xeqtest)[1:2], c("group", "contrast"))
   expect_equal(length(xeqtest$ROPE_Percentage), 3)
   expect_equal(length(xeqtest$ROPE_Equivalence), 3)
 })
 
 test_that("emmGrid estimate_density", {
   xestden <- estimate_density(c_, method = "logspline", precision = 5)
+  expect_identical(colnames(xestden)[1], "contrast")
   expect_equal(length(xestden$x), 5)
 })
 
 test_that("emmGrid map_estimate", {
   xmapest <- map_estimate(all_, method = "kernel")
+  expect_identical(colnames(xmapest)[1:2], c("group", "contrast"))
   expect_equal(length(xmapest$MAP_Estimate), 3)
 })
 
 
 test_that("emmGrid p_direction", {
   xpd <- p_direction(all_, method = "direct")
+  expect_identical(colnames(xpd)[1:2], c("group", "contrast"))
   expect_equal(length(xpd$pd), 3)
 })
 
 test_that("emmGrid p_map", {
   xpmap <- p_map(all_, precision = 2^9)
+  expect_identical(colnames(xpmap)[1:2], c("group", "contrast"))
   expect_equal(length(xpmap$p_MAP), 3)
 })
 
 test_that("emmGrid p_rope", {
   xprope <- p_rope(all_, range = c(-0.1, 0.1))
+  expect_identical(colnames(xprope)[1:2], c("group", "contrast"))
   expect_equal(length(xprope$p_ROPE), 3)
 })
 
 test_that("emmGrid p_significance", {
   xsig <- p_significance(all_, threshold = c(-0.1, 0.1))
+  expect_identical(colnames(xsig)[1:2], c("group", "contrast"))
   expect_equal(length(xsig$ps), 3)
 })
 
 test_that("emmGrid rope", {
   xrope <- rope(all_, range = "default", ci = 0.9)
+  expect_identical(colnames(xrope)[1:2], c("group", "contrast"))
   expect_equal(length(xrope$ROPE_Percentage), 3)
 })
 
@@ -106,6 +118,8 @@ test_that("emmGrid describe_posterior", {
     describe_posterior(all_)$median,
     describe_posterior(emc_)$median
   )
+
+  expect_identical(colnames(describe_posterior(all_))[1:2], c("group", "contrast"))
 
   skip_on_cran()
   expect_equal(
@@ -129,6 +143,7 @@ test_that("emmGrid bayesfactor_parameters", {
   xbfp <- bayesfactor_parameters(all_, prior = model_p, verbose = FALSE)
   xbfp2 <- bayesfactor_parameters(emc_, prior = model_p, verbose = FALSE)
   xbfp3 <- bayesfactor_parameters(emc_, prior = emc_p, verbose = FALSE)
+  expect_identical(colnames(xbfp)[1:2], c("group", "contrast"))
   expect_equal(xbfp$log_BF, xbfp2$log_BF, tolerance = 0.1)
   expect_equal(xbfp$log_BF, xbfp3$log_BF, tolerance = 0.1)
 
@@ -166,6 +181,7 @@ test_that("emmGrid si", {
   set.seed(4)
 
   xrsi <- si(all_, prior = model_p, verbose = FALSE)
+  expect_identical(colnames(xrsi)[1:2], c("group", "contrast"))
   expect_equal(length(xrsi$CI_low), 3)
   expect_equal(length(xrsi$CI_high), 3)
 
