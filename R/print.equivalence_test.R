@@ -34,7 +34,8 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$HDI_low, maxlen_high, x$HDI_high)
 
   ci <- unique(x$CI)
-  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "HDI", "Effects", "Component")
+  keep.columns <- c(attr(x, "grid_cols"), "Parameter", "Effects", "Component",
+                    "ROPE_Equivalence", "ROPE_Percentage", "CI", "HDI")
 
   x <- x[, intersect(keep.columns, colnames(x))]
 

@@ -176,11 +176,10 @@ bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
     verbose = verbose
   )
 
-  out <- bayesfactor_restricted.data.frame(
+  bayesfactor_restricted.data.frame(
     posterior = samps$posterior, prior = samps$prior,
     hypothesis = hypothesis
   )
-  .append_datagrid(out, posterior)
 }
 
 #' @export

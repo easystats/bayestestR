@@ -225,7 +225,8 @@ format.bayesfactor_restricted <- function(x,
     BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
   }
   BFE$log_BF <- NULL
-  colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
+  colnames(BFE)[colnames(BFE)=="p_prior"] <- "P(Prior)"
+  colnames(BFE)[colnames(BFE)=="p_posterior"] <- "P(Posterior)"
 
   # footer
   if (is.null(format) || format == "text") {
