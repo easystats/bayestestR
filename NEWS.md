@@ -18,6 +18,8 @@
   - Besides the existing `as.numeric()` method, `p_direction()` now also has an
     `as.vector()` method.
 
+* `p_significance()` now accepts non-symmetric ranges for the `threshold` argument.
+
 * `p_to_pd()` now also works with data frames returned by `p_direction()`. If
   a data frame contains a `pd`, `p_direction` or `PD` column name, this is assumed
   to be the pd-values, which are then converted to p-values.
