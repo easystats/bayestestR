@@ -146,10 +146,12 @@ threshold.</p>
 <dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
 <dd><p>The threshold value that separates significant from
 negligible effect, which can have following possible values:</p><ul><li><p><code>"default"</code>, in which case the range is set to <code>0.1</code> if input is a vector,
-and based on <code><a href="rope_range.html">rope_range()</a></code> if a Bayesian model is provided.</p></li>
+and based on <code><a href="rope_range.html">rope_range()</a></code> if a (Bayesian) model is provided.</p></li>
 <li><p>a single numeric value (e.g., 0.1), which is used as range around zero
-(i.e. the threshold range is set to -0.1 and 0.1)</p></li>
-<li><p>a numeric vector of length two (e.g., <code>c(-0.2, 0.1)</code>).</p></li>
+(i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
+interval)</p></li>
+<li><p>a numeric vector of length two (e.g., <code>c(-0.2, 0.1)</code>), useful for
+asymmetric intervals.</p></li>
 </ul></dd>
 
 
