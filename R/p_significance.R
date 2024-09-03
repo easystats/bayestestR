@@ -10,10 +10,12 @@
 #' @param threshold The threshold value that separates significant from
 #' negligible effect, which can have following possible values:
 #' - `"default"`, in which case the range is set to `0.1` if input is a vector,
-#'   and based on [`rope_range()`] if a Bayesian model is provided.
+#'   and based on [`rope_range()`] if a (Bayesian) model is provided.
 #' - a single numeric value (e.g., 0.1), which is used as range around zero
-#'   (i.e. the threshold range is set to -0.1 and 0.1)
-#' - a numeric vector of length two (e.g., `c(-0.2, 0.1)`).
+#'   (i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
+#'   interval)
+#' - a numeric vector of length two (e.g., `c(-0.2, 0.1)`), useful for
+#'   asymmetric intervals.
 #' @inheritParams rope
 #' @inheritParams hdi
 #'

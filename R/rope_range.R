@@ -32,7 +32,8 @@
 #' - For all other models, `-0.1, 0.1` is used to determine the ROPE limits,
 #'   but it is strongly advised to specify it manually.
 #'
-#' @param x A `stanreg`, `brmsfit` or `BFBayesFactor` object.
+#' @param x A `stanreg`, `brmsfit` or `BFBayesFactor` object, or a frequentist
+#' regression model.
 #' @param verbose Toggle warnings.
 #' @inheritParams rope
 #'

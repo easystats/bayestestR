@@ -10,7 +10,8 @@ rope_range(x, ...)
 \method{rope_range}{default}(x, verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object.}
+\item{x}{A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object, or a frequentist
+regression model.}
 
 \item{...}{Currently not used.}
 

@@ -51,10 +51,12 @@ p_significance(x, ...)
 negligible effect, which can have following possible values:
 \itemize{
 \item \code{"default"}, in which case the range is set to \code{0.1} if input is a vector,
-and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.
+and based on \code{\link[=rope_range]{rope_range()}} if a (Bayesian) model is provided.
 \item a single numeric value (e.g., 0.1), which is used as range around zero
-(i.e. the threshold range is set to -0.1 and 0.1)
-\item a numeric vector of length two (e.g., \code{c(-0.2, 0.1)}).
+(i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
+interval)
+\item a numeric vector of length two (e.g., \code{c(-0.2, 0.1)}), useful for
+asymmetric intervals.
 }}
 
 \item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
