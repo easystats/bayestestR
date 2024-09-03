@@ -244,8 +244,8 @@ rope.rvar <- rope.draws
 #' @export
 rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
-
   dat <- rope(xdf, range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }

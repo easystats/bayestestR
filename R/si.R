@@ -168,6 +168,7 @@ si.emmGrid <- function(posterior, prior = NULL,
     BF = BF, verbose = verbose, ...
   )
 
+  out <- .append_datagrid(out, posterior)
   attr(out, "ci_method") <- "SI"
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   out

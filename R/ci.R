@@ -179,8 +179,10 @@ ci.emmGrid <- function(x, ci = NULL, ...) {
   }
 
   if (is.null(ci)) ci <- 0.95
-  x <- insight::get_parameters(x)
-  ci(x, ci = ci, ...)
+  xdf <- insight::get_parameters(x)
+  out <- ci(xdf, ci = ci, ...)
+  out <- .append_datagrid(out, x)
+  out
 }
 
 

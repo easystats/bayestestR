@@ -794,7 +794,6 @@ describe_posterior.emmGrid <- function(posterior,
     posterior_samples <- insight::get_parameters(posterior)
   }
 
-
   out <- .describe_posterior(
     posterior_samples,
     centrality = centrality,
@@ -812,11 +811,10 @@ describe_posterior.emmGrid <- function(posterior,
   )
 
   row.names(out) <- NULL # Reset row names
-
+  out <- .append_datagrid(out, posterior)
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
-
   out
 }
 

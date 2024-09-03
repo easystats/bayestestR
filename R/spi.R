@@ -130,6 +130,7 @@ spi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 spi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
   out <- spi(xdf, ci = ci, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

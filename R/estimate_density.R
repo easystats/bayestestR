@@ -367,13 +367,15 @@ estimate_density.emmGrid <- function(x,
                                      extend_scale = 0.1,
                                      bw = "SJ",
                                      ...) {
-  x <- insight::get_parameters(x)
+  xdf <- insight::get_parameters(x)
 
-  out <- estimate_density(x,
+  out <- estimate_density(xdf,
     method = method, precision = precision,
     extend = extend, extend_scale = extend_scale,
     bw = bw, ...
   )
+
+  out <- .append_datagrid(out, x)
   class(out) <- .set_density_class(out)
   out
 }

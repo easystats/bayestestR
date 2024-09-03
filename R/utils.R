@@ -154,3 +154,17 @@
   attr(params, "clean_parameters") <- cp
   params
 }
+
+#' @keywords internal
+.append_datagrid <- function(results, object) {
+  # results is assumed to be a data frame with "Parameter" column
+  # object is an emmeans that results is based on
+
+  grid <- insight::get_datagrid(object)
+  grid_names <- colnames(grid)
+
+  results[colnames(grid)] <- grid
+  results$Parameter <- NULL
+  results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
+}
+

@@ -389,8 +389,8 @@ p_direction.bamlss <- function(x,
 #' @export
 p_direction.emmGrid <- function(x, method = "direct", null = 0, as_p = FALSE, remove_na = TRUE, ...) {
   xdf <- insight::get_parameters(x)
-
   out <- p_direction(xdf, method = method, null = null, as_p = as_p, remove_na = remove_na, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

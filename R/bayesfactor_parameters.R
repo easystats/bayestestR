@@ -378,7 +378,7 @@ bayesfactor_parameters.emmGrid <- function(posterior,
   )
 
   # Get BFs
-  bayesfactor_parameters.data.frame(
+  out <- bayesfactor_parameters.data.frame(
     posterior = samps$posterior,
     prior = samps$prior,
     direction = direction,
@@ -386,6 +386,7 @@ bayesfactor_parameters.emmGrid <- function(posterior,
     verbose = verbose,
     ...
   )
+  .append_datagrid(out, posterior)
 }
 
 #' @export

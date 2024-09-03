@@ -213,8 +213,8 @@ p_significance.BGGM <- p_significance.bcplm
 #' @export
 p_significance.emmGrid <- function(x, threshold = "default", ...) {
   xdf <- insight::get_parameters(x)
-
   out <- p_significance(xdf, threshold = threshold, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

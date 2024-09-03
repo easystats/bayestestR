@@ -182,8 +182,8 @@ equivalence_test.rvar <- equivalence_test.draws
 #' @export
 equivalence_test.emmGrid <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
-
   out <- equivalence_test(xdf, range = range, ci = ci, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

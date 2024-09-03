@@ -158,8 +158,8 @@ p_map.rvar <- p_map.draws
 #' @export
 p_map.emmGrid <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
   xdf <- insight::get_parameters(x)
-
   out <- p_map(xdf, null = null, precision = precision, method = method, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

@@ -220,8 +220,8 @@ point_estimate.MCMCglmm <- function(x, centrality = "all", dispersion = FALSE, .
 #' @export
 point_estimate.emmGrid <- function(x, centrality = "all", dispersion = FALSE, ...) {
   xdf <- insight::get_parameters(x)
-
   out <- point_estimate(xdf, centrality = centrality, dispersion = dispersion, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

@@ -167,8 +167,8 @@ bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 #' @export
 bci.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
-
   dat <- bci(xdf, ci = ci, verbose = verbose, ...)
+  dat <- .append_datagrid(dat, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }

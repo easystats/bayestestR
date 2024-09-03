@@ -264,6 +264,7 @@ hdi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 hdi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
