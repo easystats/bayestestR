@@ -1,8 +1,19 @@
 #' Practical Significance (ps)
 #'
-#' Compute the probability of **Practical Significance** (***ps***), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
+#' Compute the probability of **Practical Significance** (***ps***), which can
+#' be conceptualized as a unidirectional equivalence test. It returns the
+#' probability that effect is above a given threshold corresponding to a
+#' negligible effect in the median's direction. Mathematically, it is defined as
+#' the proportion of the posterior distribution of the median sign above the
+#' threshold.
 #'
-#' @param threshold The threshold value that separates significant from negligible effect. If `"default"`, the range is set to `0.1` if input is a vector, and based on [`rope_range()`][rope_range] if a Bayesian model is provided.
+#' @param threshold The threshold value that separates significant from
+#' negligible effect, which can have following possible values:
+#' - `"default"`, in which case the range is set to `0.1` if input is a vector,
+#'   and based on [`rope_range()`] if a Bayesian model is provided.
+#' - a single numeric value (e.g., 0.1), which is used as range around zero
+#'   (i.e. the threshold range is set to -0.1 and 0.1)
+#' - a numeric vector of length two (e.g., `c(-0.2, 0.1)`).
 #' @inheritParams rope
 #' @inheritParams hdi
 #'
@@ -67,7 +78,11 @@ p_significance.numeric <- function(x, threshold = "default", ...) {
 
 #' @rdname p_significance
 #' @export
-p_significance.get_predicted <- function(x, threshold = "default", use_iterations = FALSE, verbose = TRUE, ...) {
+p_significance.get_predicted <- function(x,
+                                         threshold = "default",
+                                         use_iterations = FALSE,
+                                         verbose = TRUE,
+                                         ...) {
   if (isTRUE(use_iterations)) {
     if ("iterations" %in% names(attributes(x))) {
       out <- p_significance(
@@ -275,12 +290,21 @@ p_significance.brmsfit <- function(x,
 }
 
 .p_significance <- function(x, threshold, ...) {
-  psig <- max(
-    c(
-      length(x[x > abs(threshold)]) / length(x), # ps positive
-      length(x[x < -abs(threshold)]) / length(x) # ps negative
+  if (length(threshold) == 1) {
+    psig <- max(
+      c(
+        length(x[x > abs(threshold)]) / length(x), # ps positive
+        length(x[x < -abs(threshold)]) / length(x) # ps negative
+      )
     )
-  )
+  } else {
+    psig <- max(
+      c(
+        length(x[x > threshold[2]]) / length(x), # ps positive
+        length(x[x < threshold[1]]) / length(x) # ps negative
+      )
+    )
+  }
 
   psig
 }
@@ -291,9 +315,9 @@ p_significance.brmsfit <- function(x,
 #' @export
 as.numeric.p_significance <- function(x, ...) {
   if (inherits(x, "data.frame")) {
-    return(as.numeric(as.vector(x$ps)))
+    as.numeric(as.vector(x$ps))
   } else {
-    return(as.vector(x))
+    as.vector(x)
   }
 }
 
@@ -308,15 +332,6 @@ as.double.p_significance <- as.numeric.p_significance
 
 #' @keywords internal
 .select_threshold_ps <- function(model = NULL, threshold = "default", verbose = TRUE) {
-  # If a range is passed
-  if (length(threshold) > 1) {
-    if (length(unique(abs(threshold))) == 1) {
-      # If symmetric range
-      threshold <- abs(threshold[2])
-    } else {
-      insight::format_error("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
-    }
-  }
   # If default
   if (all(threshold == "default")) {
     if (is.null(model)) {
@@ -324,8 +339,14 @@ as.double.p_significance <- as.numeric.p_significance
     } else {
       threshold <- rope_range(model, verbose = verbose)[2]
     }
-  } else if (!all(is.numeric(threshold))) {
-    insight::format_error("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
+  } else if (all(is.numeric(threshold)) && length(threshold) == 2) {
+  } else if (!all(is.numeric(threshold)) || length(threshold) > 2) {
+    insight::format_error(
+      "`threshold` should be one of the following values:",
+      "- \"default\", in which case the threshold is based on `rope_range()`",
+      "- a single numeric value (e.g., 0.1), which is used as range around zero (i.e. the threshold range is set to -0.1 and 0.1)",
+      "- a numeric vector of length two (e.g., `c(-0.2, 0.1)`)"
+    )
   }
   threshold
 }

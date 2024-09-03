@@ -47,7 +47,15 @@ p_significance(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{threshold}{The threshold value that separates significant from negligible effect. If \code{"default"}, the range is set to \code{0.1} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
+\item{threshold}{The threshold value that separates significant from
+negligible effect, which can have following possible values:
+\itemize{
+\item \code{"default"}, in which case the range is set to \code{0.1} if input is a vector,
+and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.
+\item a single numeric value (e.g., 0.1), which is used as range around zero
+(i.e. the threshold range is set to -0.1 and 0.1)
+\item a numeric vector of length two (e.g., \code{c(-0.2, 0.1)}).
+}}
 
 \item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
 (returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
@@ -73,7 +81,12 @@ for the output.}
 Values between 0 and 1 corresponding to the probability of practical significance (ps).
 }
 \description{
-Compute the probability of \strong{Practical Significance} (\emph{\strong{ps}}), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
+Compute the probability of \strong{Practical Significance} (\emph{\strong{ps}}), which can
+be conceptualized as a unidirectional equivalence test. It returns the
+probability that effect is above a given threshold corresponding to a
+negligible effect in the median's direction. Mathematically, it is defined as
+the proportion of the posterior distribution of the median sign above the
+threshold.
 }
 \details{
 \code{p_significance()} returns the proportion of a probability

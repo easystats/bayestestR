@@ -18,9 +18,20 @@ test_that("p_significance", {
     )
   )
 
+  # non-symmetric intervals
+  ps <- p_significance(x, threshold = c(0.05, 0.2))
+  expect_equal(as.numeric(ps), 0.7881, tolerance = 0.1)
+  # should be identical, both ranges have same distance to the mean 1
+  ps <- p_significance(x, threshold = c(1.8, 1.95))
+  expect_equal(as.numeric(ps), 0.7881, tolerance = 0.1)
+
+  set.seed(333)
   x <- data.frame(replicate(4, rnorm(100)))
   pd <- p_significance(x)
   expect_identical(dim(pd), c(4L, 2L))
+
+  # error:
+  expect_error(p_significance(x, threshold = 1:3))
 })
 
 test_that("stanreg", {
