@@ -300,8 +300,8 @@ bci.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   upper <- stats::quantile(x, upper.inv, names = FALSE, na.rm = TRUE)
 
   data.frame(
-    "CI" = ci,
-    "CI_low" = lower,
-    "CI_high" = upper
+    CI = ci,
+    CI_low = lower,
+    CI_high = upper
   )
 }

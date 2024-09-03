@@ -176,4 +176,3 @@
   attr(results, "grid_cols") <- grid_names
   results
 }
-
