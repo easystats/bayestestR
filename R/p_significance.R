@@ -222,6 +222,20 @@ p_significance.emmGrid <- function(x, threshold = "default", ...) {
 #' @export
 p_significance.emm_list <- p_significance.emmGrid
 
+#' @export
+p_significance.slopes <- function(x, threshold = "default", ...) {
+  xrvar <- .get_marginaleffects_rvar(x)
+  out <- p_significance(xrvar, threshold = threshold, ...)
+  out <- .append_datagrid(out, x)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
+
+#' @export
+p_significance.comparisons <- p_significance.slopes
+
+#' @export
+p_significance.predictions <- p_significance.slopes
 
 
 #' @rdname p_significance

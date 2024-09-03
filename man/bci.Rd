@@ -9,6 +9,7 @@
 \alias{bci.sim.merMod}
 \alias{bci.sim}
 \alias{bci.emmGrid}
+\alias{bci.slopes}
 \alias{bci.stanreg}
 \alias{bci.brmsfit}
 \alias{bci.BFBayesFactor}
@@ -37,6 +38,8 @@ bcai(x, ...)
 \method{bci}{sim}(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...)
 
 \method{bci}{emmGrid}(x, ci = 0.95, verbose = TRUE, ...)
+
+\method{bci}{slopes}(x, ci = 0.95, verbose = TRUE, ...)
 
 \method{bci}{stanreg}(
   x,

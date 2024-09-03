@@ -229,6 +229,20 @@ point_estimate.emmGrid <- function(x, centrality = "all", dispersion = FALSE, ..
 #' @export
 point_estimate.emm_list <- point_estimate.emmGrid
 
+#' @export
+point_estimate.slopes <- function(x, centrality = "all", dispersion = FALSE, ...) {
+  xrvar <- .get_marginaleffects_rvar(x)
+  out <- point_estimate(xrvar, centrality = centrality, dispersion = dispersion, ...)
+  out <- .append_datagrid(out, x)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
+
+#' @export
+point_estimate.comparisons <- point_estimate.slopes
+
+#' @export
+point_estimate.predictions <- point_estimate.slopes
 
 #' @rdname point_estimate
 #' @export

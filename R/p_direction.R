@@ -399,6 +399,22 @@ p_direction.emmGrid <- function(x, method = "direct", null = 0, as_p = FALSE, re
 #' @export
 p_direction.emm_list <- p_direction.emmGrid
 
+#' @rdname p_direction
+#' @export
+p_direction.slopes <- function(x, method = "direct", null = 0, as_p = FALSE, remove_na = TRUE, ...) {
+  xrvar <- .get_marginaleffects_rvar(x)
+  out <- p_direction(xrvar, method = method, null = null, as_p = as_p, remove_na = remove_na, ...)
+  out <- .append_datagrid(out, x)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
+
+#' @export
+p_direction.comparisons <- p_direction.slopes
+
+#' @export
+p_direction.predictions <- p_direction.slopes
+
 
 #' @keywords internal
 .p_direction_models <- function(x,

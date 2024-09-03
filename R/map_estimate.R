@@ -173,6 +173,19 @@ map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
 #' @export
 map_estimate.emm_list <- map_estimate.emmGrid
 
+#' @export
+map_estimate.slopes <- function(x, precision = 2^10, method = "kernel", ...) {
+  xrvar <- .get_marginaleffects_rvar(x)
+  out <- map_estimate(xrvar, precision = precision, method = method, ...)
+  .append_datagrid(out, x)
+}
+
+#' @export
+map_estimate.comparisons <- map_estimate.slopes
+
+#' @export
+map_estimate.predictions <- map_estimate.slopes
+
 
 #' @rdname map_estimate
 #' @export

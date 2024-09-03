@@ -178,6 +178,22 @@ bci.emm_list <- bci.emmGrid
 
 #' @rdname bci
 #' @export
+bci.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  xrvar <- .get_marginaleffects_rvar(x)
+  dat <- bci(xrvar, ci = ci, verbose = verbose, ...)
+  dat <- .append_datagrid(dat, x)
+  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  dat
+}
+
+#' @export
+bci.comparisons <- bci.slopes
+
+#' @export
+bci.predictions <- bci.slopes
+
+#' @rdname bci
+#' @export
 bci.stanreg <- function(x,
                         ci = 0.95,
                         effects = c("fixed", "random", "all"),

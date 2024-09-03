@@ -132,7 +132,12 @@
 }
 
 #' @keywords internal
-.is_baysian_emmeans <- function(x) {
+.is_baysian_grid <- function(x) {
+  UseMethod(".is_baysian_grid")
+}
+
+#' @keywords internal
+.is_baysian_grid.emmGrid <- function(x) {
   if (inherits(x, "emm_list")) {
     x <- x[[1]]
   }
@@ -140,6 +145,19 @@
   !(all(dim(post.beta) == 1) && is.na(post.beta))
 }
 
+#' @keywords internal
+.is_baysian_grid.emm_list <- .is_baysian_grid.emmGrid
+
+#' @keywords internal
+.is_baysian_grid.slopes <- function(x) {
+  !is.null(attr(x, "posterior_draws"))
+}
+
+#' @keywords internal
+.is_baysian_grid.predictions <- .is_baysian_grid.slopes
+
+#' @keywords internal
+.is_baysian_grid.comparisons <- .is_baysian_grid.slopes
 
 # safe add cleaned parameter names to a model object
 .add_clean_parameters_attribute <- function(params, model) {
@@ -157,6 +175,11 @@
 
 #' @keywords internal
 .append_datagrid <- function(results, object) {
+  UseMethod(".append_datagrid", object)
+}
+
+#' @keywords internal
+.append_datagrid.emmGrid <- function(results, object) {
   # results is assumed to be a data frame with "Parameter" column
   # object is an emmeans that results is based on
 
@@ -175,4 +198,22 @@
 
   attr(results, "grid_cols") <- grid_names
   results
+}
+
+#' @keywords internal
+.append_datagrid.emm_list <- .append_datagrid.emmGrid
+
+#' @keywords internal
+.append_datagrid.predictions <- .append_datagrid.emmGrid
+
+#' @keywords internal
+.append_datagrid.slopes <- .append_datagrid.predictions
+
+#' @keywords internal
+.append_datagrid.comparisons <- .append_datagrid.predictions
+
+#' @keywords internal
+.get_marginaleffects_rvar <- function(object) {
+  # errors and checks are handled by marginaleffects
+  marginaleffects::posterior_draws(object, shape = "rvar")[["rvar"]]
 }

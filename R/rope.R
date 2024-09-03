@@ -253,6 +253,21 @@ rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
 #' @export
 rope.emm_list <- rope.emmGrid
 
+#' @export
+rope.slopes <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
+  xrvar <- .get_marginaleffects_rvar(x)
+  dat <- rope(xrvar, range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  dat <- .append_datagrid(dat, x)
+  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  dat
+}
+
+#' @export
+rope.comparisons <- rope.slopes
+
+#' @export
+rope.predictions <- rope.slopes
+
 
 #' @export
 rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {

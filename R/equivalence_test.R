@@ -193,6 +193,22 @@ equivalence_test.emm_list <- equivalence_test.emmGrid
 
 
 #' @export
+equivalence_test.slopes <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
+  xrvar <- .get_marginaleffects_rvar(x)
+  out <- equivalence_test(xrvar, range = range, ci = ci, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
+
+#' @export
+equivalence_test.comparisons <- equivalence_test.slopes
+
+#' @export
+equivalence_test.predictions <- equivalence_test.slopes
+
+
+#' @export
 equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
   out <- equivalence_test(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
