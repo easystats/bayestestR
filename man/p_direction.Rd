@@ -190,7 +190,7 @@ with Bayesian statistics (Makowski et al., 2019).
 
 In most cases, it seems that the \emph{pd} has a direct correspondence with the
 frequentist one-sided \emph{p}-value through the formula (for two-sided \emph{p}):
-\deqn{p = 2 \times (1 - p_d)}{p = 2 * (1 - pd)}
+\ifelse{html}{\out{p = 2 * (1 - p<sub>d</sub>)}}{\eqn{p = 2 \times (1 - p_d)}}
 Thus, a two-sided p-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001} would
 correspond approximately to a \emph{pd} of \verb{95\%}, \verb{97.5\%}, \verb{99.5\%} and \verb{99.95\%}.
 See \code{\link[=pd_to_p]{pd_to_p()}} for details.
