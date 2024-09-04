@@ -264,12 +264,28 @@ hdi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 hdi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
 #' @export
 hdi.emm_list <- hdi.emmGrid
+
+#' @export
+hdi.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  xrvar <- .get_marginaleffects_draws(x)
+  out <- hdi(xrvar, ci = ci, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
+
+#' @export
+hdi.comparisons <- hdi.slopes
+
+#' @export
+hdi.predictions <- hdi.slopes
 
 
 #' @rdname hdi

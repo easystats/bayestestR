@@ -167,14 +167,30 @@ bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 #' @export
 bci.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
-
   dat <- bci(xdf, ci = ci, verbose = verbose, ...)
+  dat <- .append_datagrid(dat, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
 #' @export
 bci.emm_list <- bci.emmGrid
+
+#' @rdname bci
+#' @export
+bci.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  xrvar <- .get_marginaleffects_draws(x)
+  dat <- bci(xrvar, ci = ci, verbose = verbose, ...)
+  dat <- .append_datagrid(dat, x)
+  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  dat
+}
+
+#' @export
+bci.comparisons <- bci.slopes
+
+#' @export
+bci.predictions <- bci.slopes
 
 #' @rdname bci
 #' @export
@@ -300,8 +316,8 @@ bci.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   upper <- stats::quantile(x, upper.inv, names = FALSE, na.rm = TRUE)
 
   data.frame(
-    "CI" = ci,
-    "CI_low" = lower,
-    "CI_high" = upper
+    CI = ci,
+    CI_low = lower,
+    CI_high = upper
   )
 }

@@ -103,7 +103,8 @@ format.bayesfactor_models <- function(x,
   BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
-  if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
+  sgn <- sign(BFE$log_BF)
+  if (any((sgn < 0)[!is.na(BFE$log_BF)])) {
     BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
   }
 
@@ -170,7 +171,8 @@ format.bayesfactor_inclusion <- function(x,
   BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
-  if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
+  sgn <- sign(BFE$log_BF)
+  if (any((sgn < 0)[!is.na(BFE$log_BF)])) {
     BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
   }
 
@@ -221,11 +223,13 @@ format.bayesfactor_restricted <- function(x,
   BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
-  if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
+  sgn <- sign(BFE$log_BF)
+  if (any((sgn < 0)[!is.na(BFE$log_BF)])) {
     BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
   }
   BFE$log_BF <- NULL
-  colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
+  colnames(BFE)[colnames(BFE) == "p_prior"] <- "P(Prior)"
+  colnames(BFE)[colnames(BFE) == "p_posterior"] <- "P(Posterior)"
 
   # footer
   if (is.null(format) || format == "text") {
@@ -266,7 +270,8 @@ format.bayesfactor_parameters <- function(x,
 
   x$BF_override <- insight::format_bf(abs(x$log_BF), name = NULL, exact = exact, ...)
 
-  if (any((sgn <- sign(x$log_BF) < 0)[!is.na(x$log_BF)])) {
+  sgn <- sign(x$log_BF)
+  if (any((sgn < 0)[!is.na(x$log_BF)])) {
     x$BF_override[sgn] <- paste0("-", x$BF_override[sgn])
   }
   x$log_BF <- NULL

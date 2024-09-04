@@ -165,12 +165,26 @@ map_estimate.rvar <- map_estimate.draws
 
 #' @export
 map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
-  x <- insight::get_parameters(x)
-  .map_estimate_models(x, precision = precision, method = method)
+  xdf <- insight::get_parameters(x)
+  out <- .map_estimate_models(xdf, precision = precision, method = method)
+  .append_datagrid(out, x)
 }
 
 #' @export
 map_estimate.emm_list <- map_estimate.emmGrid
+
+#' @export
+map_estimate.slopes <- function(x, precision = 2^10, method = "kernel", ...) {
+  xrvar <- .get_marginaleffects_draws(x)
+  out <- map_estimate(xrvar, precision = precision, method = method, ...)
+  .append_datagrid(out, x)
+}
+
+#' @export
+map_estimate.comparisons <- map_estimate.slopes
+
+#' @export
+map_estimate.predictions <- map_estimate.slopes
 
 
 #' @rdname map_estimate

@@ -53,14 +53,29 @@ p_rope.rvar <- p_rope.draws
 #' @export
 p_rope.emmGrid <- function(x, range = "default", verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
-
   out <- p_rope(xdf, range = range, verbose = verbose)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
 #' @export
 p_rope.emm_list <- p_rope.emmGrid
+
+#' @export
+p_rope.slopes <- function(x, range = "default", verbose = TRUE, ...) {
+  xrvar <- .get_marginaleffects_draws(x)
+  out <- p_rope(xrvar, range = range, verbose = verbose)
+  out <- .append_datagrid(out, x)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
+
+#' @export
+p_rope.comparisons <- p_rope.slopes
+
+#' @export
+p_rope.predictions <- p_rope.slopes
 
 #' @export
 p_rope.BFBayesFactor <- p_rope.numeric

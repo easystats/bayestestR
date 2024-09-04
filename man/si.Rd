@@ -161,6 +161,9 @@ It is important to provide the correct \code{prior} for meaningful results.
 the priors \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
 \item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
 }
+\item When \code{posterior} is an output from a \code{{marginaleffects}} function, \code{prior} should also be an an output
+from a \code{{marginaleffects}} function equivalent to \code{posterior} but created
+with a model of priors samples \emph{only}.
 \item When \code{posterior} is an \code{emmGrid} / \code{emm_list} object:
 \itemize{
 \item \code{prior} should also be an \code{emmGrid} / \code{emm_list} object equivalent to \code{posterior} but

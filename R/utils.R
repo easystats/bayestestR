@@ -132,7 +132,12 @@
 }
 
 #' @keywords internal
-.is_baysian_emmeans <- function(x) {
+.is_baysian_grid <- function(x) {
+  UseMethod(".is_baysian_grid")
+}
+
+#' @keywords internal
+.is_baysian_grid.emmGrid <- function(x) {
   if (inherits(x, "emm_list")) {
     x <- x[[1]]
   }
@@ -140,6 +145,19 @@
   !(all(dim(post.beta) == 1) && is.na(post.beta))
 }
 
+#' @keywords internal
+.is_baysian_grid.emm_list <- .is_baysian_grid.emmGrid
+
+#' @keywords internal
+.is_baysian_grid.slopes <- function(x) {
+  !is.null(attr(x, "posterior_draws"))
+}
+
+#' @keywords internal
+.is_baysian_grid.predictions <- .is_baysian_grid.slopes
+
+#' @keywords internal
+.is_baysian_grid.comparisons <- .is_baysian_grid.slopes
 
 # safe add cleaned parameter names to a model object
 .add_clean_parameters_attribute <- function(params, model) {
@@ -153,4 +171,33 @@
   )
   attr(params, "clean_parameters") <- cp
   params
+}
+
+#' @keywords internal
+.append_datagrid <- function(results, object) {
+  # results is assumed to be a data frame with "Parameter" column
+  # object is an emmeans / marginalefeects that results is based on
+
+  all_attrs <- attributes(results) # save attributes for later
+
+  grid <- insight::get_datagrid(object)
+  grid_names <- colnames(grid)
+
+  results[colnames(grid)] <- grid
+  results$Parameter <- NULL
+  results <- results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
+
+  # add back attributes
+  most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(grid)))]
+  attributes(results)[names(most_attrs)] <- most_attrs
+
+  attr(results, "grid_cols") <- grid_names
+  results
+}
+
+#' @keywords internal
+.get_marginaleffects_draws <- function(object) {
+  # errors and checks are handled by marginaleffects
+  insight::check_if_installed("marginaleffects")
+  data.frame(marginaleffects::posterior_draws(object, shape = "DxP"))
 }

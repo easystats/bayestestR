@@ -172,20 +172,43 @@ ci.rvar <- ci.draws
 
 #' @export
 ci.emmGrid <- function(x, ci = NULL, ...) {
-  if (!.is_baysian_emmeans(x)) {
+  if (!.is_baysian_grid(x)) {
     insight::check_if_installed("parameters")
     if (is.null(ci)) ci <- 0.95
     return(parameters::ci(model = x, ci = ci, ...))
   }
 
   if (is.null(ci)) ci <- 0.95
-  x <- insight::get_parameters(x)
-  ci(x, ci = ci, ...)
+  xdf <- insight::get_parameters(x)
+  out <- ci(xdf, ci = ci, ...)
+  out <- .append_datagrid(out, x)
+  out
 }
 
 
 #' @export
 ci.emm_list <- ci.emmGrid
+
+#' @export
+ci.slopes <- function(x, ci = NULL, ...) {
+  if (!.is_baysian_grid(x)) {
+    insight::check_if_installed("parameters")
+    if (is.null(ci)) ci <- 0.95
+    return(parameters::ci(model = x, ci = ci, ...))
+  }
+
+  if (is.null(ci)) ci <- 0.95
+  xrvar <- .get_marginaleffects_draws(x)
+  out <- ci(xrvar, ci = ci, ...)
+  out <- .append_datagrid(out, x)
+  out
+}
+
+#' @export
+ci.comparisons <- ci.slopes
+
+#' @export
+ci.predictions <- ci.slopes
 
 
 #' @rdname ci

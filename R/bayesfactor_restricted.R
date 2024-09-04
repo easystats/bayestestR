@@ -186,6 +186,15 @@ bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
 bayesfactor_restricted.emm_list <- bayesfactor_restricted.emmGrid
 
 #' @export
+bayesfactor_restricted.slopes <- bayesfactor_restricted.emmGrid
+
+#' @export
+bayesfactor_restricted.predictions <- bayesfactor_restricted.emmGrid
+
+#' @export
+bayesfactor_restricted.comparisons <- bayesfactor_restricted.emmGrid
+
+#' @export
 bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NULL, ...) {
   p_hypothesis <- parse(text = hypothesis)
 

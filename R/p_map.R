@@ -158,8 +158,8 @@ p_map.rvar <- p_map.draws
 #' @export
 p_map.emmGrid <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
   xdf <- insight::get_parameters(x)
-
   out <- p_map(xdf, null = null, precision = precision, method = method, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -167,7 +167,20 @@ p_map.emmGrid <- function(x, null = 0, precision = 2^10, method = "kernel", ...)
 #' @export
 p_map.emm_list <- p_map.emmGrid
 
+#' @export
+p_map.slopes <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
+  xrvar <- .get_marginaleffects_draws(x)
+  out <- p_map(xrvar, null = null, precision = precision, method = method, ...)
+  out <- .append_datagrid(out, x)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
 
+#' @export
+p_map.comparisons <- p_map.slopes
+
+#' @export
+p_map.predictions <- p_map.slopes
 
 
 #' @keywords internal

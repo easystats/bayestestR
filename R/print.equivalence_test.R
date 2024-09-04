@@ -6,7 +6,7 @@ print.equivalence_test <- function(x, digits = 2, ...) {
 
   # fix "sd" pattern
   model <- .retrieve_model(x)
-  if (!is.null(model)) {
+  if (!is.null(model) && !is.data.frame(model)) {
     cp <- insight::clean_parameters(model)
     if (!is.null(cp$Group) && any(startsWith(cp$Group, "SD/Cor"))) {
       cp <- cp[startsWith(cp$Group, "SD/Cor"), ]
@@ -34,7 +34,10 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$HDI_low, maxlen_high, x$HDI_high)
 
   ci <- unique(x$CI)
-  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "HDI", "Effects", "Component")
+  keep.columns <- c(
+    attr(x, "grid_cols"), "Parameter", "Effects", "Component",
+    "ROPE_Equivalence", "ROPE_Percentage", "CI", "HDI"
+  )
 
   x <- x[, intersect(keep.columns, colnames(x))]
 

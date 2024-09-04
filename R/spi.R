@@ -72,6 +72,16 @@ spi.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat
 }
 
+#' @export
+spi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  dat <- .compute_interval_dataframe(x = .posterior_draws_to_df(x), ci = ci, verbose = verbose, fun = "spi")
+  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  dat
+}
+
+#' @export
+spi.rvar <- spi.draws
+
 
 #' @export
 spi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
@@ -130,6 +140,7 @@ spi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 spi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
   out <- spi(xdf, ci = ci, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -137,6 +148,20 @@ spi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 spi.emm_list <- spi.emmGrid
 
+#' @export
+spi.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  xrvar <- .get_marginaleffects_draws(x)
+  out <- spi(xrvar, ci = ci, verbose = verbose, ...)
+  out <- .append_datagrid(out, x)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
+
+#' @export
+spi.comparisons <- spi.slopes
+
+#' @export
+spi.predictions <- spi.slopes
 
 #' @rdname spi
 #' @export

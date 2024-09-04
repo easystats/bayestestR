@@ -7,6 +7,7 @@
 \alias{p_direction.data.frame}
 \alias{p_direction.MCMCglmm}
 \alias{p_direction.emmGrid}
+\alias{p_direction.slopes}
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
 \alias{p_direction.BFBayesFactor}
@@ -46,6 +47,15 @@ pd(x, ...)
 )
 
 \method{p_direction}{emmGrid}(
+  x,
+  method = "direct",
+  null = 0,
+  as_p = FALSE,
+  remove_na = TRUE,
+  ...
+)
+
+\method{p_direction}{slopes}(
   x,
   method = "direct",
   null = 0,

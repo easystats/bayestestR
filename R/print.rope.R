@@ -28,7 +28,7 @@ print.rope <- function(x, digits = 2, ...) {
 
   # These are the base columns we want to print
   cols <- c(
-    "Parameter", "ROPE_Percentage", "Effects", "Component",
+    attr(x, "grid_cols"), "Parameter", "ROPE_Percentage", "Effects", "Component",
     if (is_multivariate) c("ROPE_low", "ROPE_high")
   )
 

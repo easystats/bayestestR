@@ -168,6 +168,7 @@ si.emmGrid <- function(posterior, prior = NULL,
     BF = BF, verbose = verbose, ...
   )
 
+  out <- .append_datagrid(out, posterior)
   attr(out, "ci_method") <- "SI"
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   out
@@ -175,6 +176,15 @@ si.emmGrid <- function(posterior, prior = NULL,
 
 #' @export
 si.emm_list <- si.emmGrid
+
+#' @export
+si.slopes <- si.emmGrid
+
+#' @export
+si.comparisons <- si.emmGrid
+
+#' @export
+si.predictions <- si.emmGrid
 
 
 #' @export
