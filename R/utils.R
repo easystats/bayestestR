@@ -175,13 +175,8 @@
 
 #' @keywords internal
 .append_datagrid <- function(results, object) {
-  UseMethod(".append_datagrid", object)
-}
-
-#' @keywords internal
-.append_datagrid.emmGrid <- function(results, object) {
   # results is assumed to be a data frame with "Parameter" column
-  # object is an emmeans that results is based on
+  # object is an emmeans / marginalefeects that results is based on
 
   all_attrs <- attributes(results) # save attributes for later
 
@@ -199,18 +194,6 @@
   attr(results, "grid_cols") <- grid_names
   results
 }
-
-#' @keywords internal
-.append_datagrid.emm_list <- .append_datagrid.emmGrid
-
-#' @keywords internal
-.append_datagrid.predictions <- .append_datagrid.emmGrid
-
-#' @keywords internal
-.append_datagrid.slopes <- .append_datagrid.predictions
-
-#' @keywords internal
-.append_datagrid.comparisons <- .append_datagrid.predictions
 
 #' @keywords internal
 .get_marginaleffects_rvar <- function(object) {
