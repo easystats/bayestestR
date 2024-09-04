@@ -837,7 +837,7 @@ describe_posterior.slopes <- function(posterior,
                                       verbose = TRUE,
                                       ...) {
   if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-      "si" %in% tolower(ci_method)) {
+    "si" %in% tolower(ci_method)) {
     samps <- .clean_priors_and_posteriors(posterior, bf_prior, verbose = verbose)
     bf_prior <- samps$prior
     posterior_samples <- samps$posterior
