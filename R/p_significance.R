@@ -355,7 +355,6 @@ as.double.p_significance <- as.numeric.p_significance
     } else {
       threshold <- rope_range(model, verbose = verbose)[2]
     }
-  } else if (all(is.numeric(threshold)) && length(threshold) == 2) {
   } else if (!all(is.numeric(threshold)) || length(threshold) > 2) {
     insight::format_error(
       "`threshold` should be one of the following values:",
