@@ -94,6 +94,9 @@
 #'       - `prior` can also be a model equivalent to `posterior` but with samples from
 #'         the priors *only*. See [unupdate()].
 #'       - **Note:** When `posterior` is a `brmsfit_multiple` model, `prior` **must** be provided.
+#'   - When `posterior` is an output from a `{marginaleffects}` function, `prior` should also be an an output
+#'   from a `{marginaleffects}` function equivalent to `posterior` but created
+#'   with a model of priors samples *only*.
 #'   - When `posterior` is an `emmGrid` / `emm_list` object:
 #'       - `prior` should also be an `emmGrid` / `emm_list` object equivalent to `posterior` but
 #'        created with a model of priors samples *only*. See [unupdate()].
@@ -391,6 +394,15 @@ bayesfactor_parameters.emmGrid <- function(posterior,
 
 #' @export
 bayesfactor_parameters.emm_list <- bayesfactor_parameters.emmGrid
+
+#' @export
+bayesfactor_parameters.slopes <- bayesfactor_parameters.emmGrid
+
+#' @export
+bayesfactor_parameters.predictions <- bayesfactor_parameters.emmGrid
+
+#' @export
+bayesfactor_parameters.comparisons <- bayesfactor_parameters.emmGrid
 
 
 #' @rdname bayesfactor_parameters

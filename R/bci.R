@@ -179,7 +179,7 @@ bci.emm_list <- bci.emmGrid
 #' @rdname bci
 #' @export
 bci.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xrvar <- .get_marginaleffects_rvar(x)
+  xrvar <- .get_marginaleffects_draws(x)
   dat <- bci(xrvar, ci = ci, verbose = verbose, ...)
   dat <- .append_datagrid(dat, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))

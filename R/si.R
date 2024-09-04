@@ -177,6 +177,15 @@ si.emmGrid <- function(posterior, prior = NULL,
 #' @export
 si.emm_list <- si.emmGrid
 
+#' @export
+si.slopes <- si.emmGrid
+
+#' @export
+si.comparisons <- si.emmGrid
+
+#' @export
+si.predictions <- si.emmGrid
+
 
 #' @export
 si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...) {

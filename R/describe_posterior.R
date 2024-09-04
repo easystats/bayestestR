@@ -655,7 +655,7 @@ describe_posterior.draws <- function(posterior,
     rope_range = rope_range,
     rope_ci = rope_ci,
     keep_iterations = keep_iterations,
-    bf_prior = bf_prior,
+    bf_prior = if (!is.null(bf_prior)) .posterior_draws_to_df(bf_prior),
     BF = BF,
     verbose = verbose,
     ...
@@ -822,7 +822,58 @@ describe_posterior.emmGrid <- function(posterior,
 #' @export
 describe_posterior.emm_list <- describe_posterior.emmGrid
 
+#' @export
+describe_posterior.slopes <- function(posterior,
+                                      centrality = "median",
+                                      dispersion = FALSE,
+                                      ci = 0.95,
+                                      ci_method = "eti",
+                                      test = c("p_direction", "rope"),
+                                      rope_range = "default",
+                                      rope_ci = 0.95,
+                                      keep_iterations = FALSE,
+                                      bf_prior = NULL,
+                                      BF = 1,
+                                      verbose = TRUE,
+                                      ...) {
+  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
+      "si" %in% tolower(ci_method)) {
+    samps <- .clean_priors_and_posteriors(posterior, bf_prior, verbose = verbose)
+    bf_prior <- samps$prior
+    posterior_samples <- samps$posterior
+  } else {
+    posterior_samples <- .get_marginaleffects_draws(posterior)
+  }
 
+  out <- describe_posterior(
+    posterior_samples,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    keep_iterations = keep_iterations,
+    bf_prior = bf_prior,
+    BF = BF,
+    verbose = verbose,
+    ...
+  )
+
+  row.names(out) <- NULL # Reset row names
+  out <- .append_datagrid(out, posterior)
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
+  attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
+  out
+}
+
+#' @export
+describe_posterior.comparisons <- describe_posterior.slopes
+
+#' @export
+describe_posterior.predictions <- describe_posterior.slopes
 
 
 # Stan ------------------------------

@@ -179,6 +179,28 @@
   )
 }
 
+.clean_priors_and_posteriors.slopes <- function(posterior, prior,
+                                                verbose = TRUE, ...) {
+  if (is.null(prior)) {
+    prior <- posterior
+    if (verbose) {
+      insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")
+    }
+  }
+
+  posterior <- .get_marginaleffects_draws(posterior)
+  prior <- .get_marginaleffects_draws(prior)
+
+  list(
+    posterior = posterior,
+    prior = prior
+  )
+}
+
+.clean_priors_and_posteriors.predictions <- .clean_priors_and_posteriors.slopes
+
+.clean_priors_and_posteriors.comparisons <- .clean_priors_and_posteriors.slopes
+
 
 # BMA ---------------------------------------------------------------------
 

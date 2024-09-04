@@ -64,7 +64,7 @@ p_rope.emm_list <- p_rope.emmGrid
 
 #' @export
 p_rope.slopes <- function(x, range = "default", verbose = TRUE, ...) {
-  xrvar <- .get_marginaleffects_rvar(x)
+  xrvar <- .get_marginaleffects_draws(x)
   out <- p_rope(xrvar, range = range, verbose = verbose)
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))

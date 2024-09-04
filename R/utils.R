@@ -196,7 +196,12 @@
 }
 
 #' @keywords internal
-.get_marginaleffects_rvar <- function(object) {
+.get_marginaleffects_draws <- function(object) {
   # errors and checks are handled by marginaleffects
-  marginaleffects::posterior_draws(object, shape = "rvar")[["rvar"]]
+  posterior_draws <- attr(object, "posterior_draws")
+  if (is.null(posterior_draws)) {
+    insight::format_warning("Could not find posterior draws. The object produced by the `marginaleffects` package was not based on a bayesian model.")
+  }
+  as.data.frame(t(posterior_draws))
 }
+

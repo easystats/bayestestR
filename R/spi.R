@@ -150,7 +150,7 @@ spi.emm_list <- spi.emmGrid
 
 #' @export
 spi.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xrvar <- .get_marginaleffects_rvar(x)
+  xrvar <- .get_marginaleffects_draws(x)
   out <- spi(xrvar, ci = ci, verbose = verbose, ...)
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))

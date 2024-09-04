@@ -274,7 +274,7 @@ hdi.emm_list <- hdi.emmGrid
 
 #' @export
 hdi.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xrvar <- .get_marginaleffects_rvar(x)
+  xrvar <- .get_marginaleffects_draws(x)
   out <- hdi(xrvar, ci = ci, verbose = verbose, ...)
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))

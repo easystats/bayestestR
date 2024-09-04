@@ -185,7 +185,7 @@ eti.emm_list <- eti.emmGrid
 
 #' @export
 eti.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xrvar <- .get_marginaleffects_rvar(x)
+  xrvar <- .get_marginaleffects_draws(x)
   dat <- eti(xrvar, ci = ci, verbose = verbose, ...)
   dat <- .append_datagrid(dat, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
