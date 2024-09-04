@@ -22,6 +22,18 @@ test_that("emmGrid descrive_posterior", {
   expect_equal(results[setdiff(colnames(results), c("term", "contrast"))],
                results_draws[setdiff(colnames(results_draws), "Parameter")],
                ignore_attr = TRUE)
+
+  # estimate_density
+  mfx <- marginaleffects::comparisons(mod, variables = "cyl",
+                                      newdata = data.frame(hp = 100, am = 0))
+  samps <- insight::get_parameters(mod)[c("cyl6", "cyl8")]
+
+  res <- estimate_density(mfx)
+  resref <- estimate_density(samps)
+  expect_equal(res[intersect(colnames(res), colnames(resref))],
+               resref[intersect(colnames(res), colnames(resref))],
+               ignore_attr = TRUE)
+
 })
 
 test_that("emmGrid bayesfactors", {

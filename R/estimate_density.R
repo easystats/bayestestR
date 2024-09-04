@@ -387,6 +387,37 @@ estimate_density.emmGrid <- function(x,
 #' @export
 estimate_density.emm_list <- estimate_density.emmGrid
 
+#' @export
+estimate_density.slopes <- function(x,
+                                    method = "kernel",
+                                    precision = 2^10,
+                                    extend = FALSE,
+                                    extend_scale = 0.1,
+                                    bw = "SJ",
+                                    ...) {
+  xdf <- .get_marginaleffects_draws(x)
+
+  out <- estimate_density(xdf,
+                          method = method, precision = precision,
+                          extend = extend, extend_scale = extend_scale,
+                          bw = bw, ...
+  )
+
+  # This doesn't use .append_datagrid because we get a non-grid output
+  grid <- insight::get_datagrid(x)
+  grid$Parameter <- unique(out$Parameter)
+  out <- datawizard::data_join(grid, out, by = "Parameter")
+  out$Parameter <- NULL
+  class(out) <- .set_density_class(out)
+  out
+}
+
+#' @export
+estimate_density.predictions <- estimate_density.slopes
+
+#' @export
+estimate_density.comparisons <- estimate_density.slopes
+
 
 #' @export
 estimate_density.stanreg <- function(x,
