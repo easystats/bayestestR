@@ -75,8 +75,8 @@ to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
 \item{BF}{The amount of support required to be included in the support interval.}
 
-\item{rvar_col}{Possibly a single character - the name of an \code{rvar} column in
-the data frame, to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

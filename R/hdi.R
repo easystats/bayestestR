@@ -150,7 +150,7 @@ hdi.data.frame <- function(x, ci = 0.95, verbose = TRUE, rvar_col = NULL, ...) {
 
   if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
     cl <- match.call()
-    cl[[1]] <- hdi
+    cl[[1]] <- bayestestR::hdi
     cl$x <- x_rvar
     cl$rvar_col <- NULL
     out <- eval.parent(cl)

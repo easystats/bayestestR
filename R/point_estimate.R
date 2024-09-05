@@ -135,7 +135,7 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, th
 point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE, threshold = 0.1, rvar_col = NULL, ...) {
   if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
     cl <- match.call()
-    cl[[1]] <- point_estimate
+    cl[[1]] <- bayestestR::point_estimate
     cl$x <- x_rvar
     cl$rvar_col <- NULL
     out <- eval.parent(cl)

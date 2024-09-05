@@ -196,8 +196,8 @@ p_direction.numeric <- function(x,
 
 
 #' @rdname p_direction
-#' @param rvar_col Possibly a single character - the name of an `rvar` column in
-#'   the data frame, to be processed. See example in [p_direction()].
+#' @param rvar_col A single character - the name of an `rvar` column in the data
+#'   frame to be processed. See example in [p_direction()].
 #' @export
 p_direction.data.frame <- function(x,
                                    method = "direct",
@@ -209,7 +209,7 @@ p_direction.data.frame <- function(x,
   obj_name <- insight::safe_deparse_symbol(substitute(x))
   if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
     cl <- match.call()
-    cl[[1]] <- p_direction
+    cl[[1]] <- bayestestR::p_direction
     cl$x <- x_rvar
     cl$rvar_col <- NULL
     out <- eval.parent(cl)

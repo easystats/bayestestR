@@ -5,6 +5,7 @@
 \alias{p_pointnull}
 \alias{p_map.numeric}
 \alias{p_map.get_predicted}
+\alias{p_map.data.frame}
 \alias{p_map.stanreg}
 \alias{p_map.brmsfit}
 \title{Bayesian p-value based on the density at the Maximum A Posteriori (MAP)}
@@ -24,6 +25,8 @@ p_pointnull(x, ...)
   verbose = TRUE,
   ...
 )
+
+\method{p_map}{data.frame}(x, null = 0, precision = 2^10, method = "kernel", rvar_col = NULL, ...)
 
 \method{p_map}{stanreg}(
   x,
@@ -71,6 +74,9 @@ iterations instead of the predictions. This only applies to models that return
 iterations for predicted values (e.g., \code{brmsfit} models).}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

@@ -127,8 +127,8 @@ frequentist p-value using \code{\link[=pd_to_p]{pd_to_p()}}.}
 \item{remove_na}{Should missing values be removed before computation? Note
 that \code{Inf} (infinity) are \emph{not} removed.}
 
-\item{rvar_col}{Possibly a single character - the name of an \code{rvar} column in
-the data frame, to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
