@@ -127,4 +127,4 @@ Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
-Remotes: easystats/insight
+Remotes: easystats/insight, easystats/datawizard
