@@ -273,8 +273,9 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verb
 #' @export
 si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   si(.posterior_draws_to_df(posterior),
-     prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
-     BF = BF, verbose = verbose, ...)
+    prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
+    BF = BF, verbose = verbose, ...
+  )
 }
 
 #' @export

@@ -227,7 +227,7 @@
 
   is_rvar <- vapply(object, function(col) inherits(col, "rvar"), FUN.VALUE = logical(1))
   grid_names <- colnames(object)[!is_rvar]
-  grid <- data.frame(object[,grid_names,drop = FALSE])
+  grid <- data.frame(object[, grid_names, drop = FALSE])
 
   if (long) {
     grid$Parameter <- unique(results$Parameter)
@@ -263,9 +263,9 @@
   }
 
   if (is.character(rvar_col) &&
-      length(rvar_col) == 1L &&
-      rvar_col %in% colnames(df) &&
-      inherits(df[[rvar_col]], "rvar")) {
+    length(rvar_col) == 1L &&
+    rvar_col %in% colnames(df) &&
+    inherits(df[[rvar_col]], "rvar")) {
     return(df[[rvar_col]])
   }
 

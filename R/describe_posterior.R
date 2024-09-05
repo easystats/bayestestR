@@ -383,11 +383,17 @@ describe_posterior.default <- function(posterior, ...) {
       dot_args <- list(...)
       dot_args$verbose <- !"rope" %in% test
       test_equi <- .prepare_output(
-        do.call(equivalence_test,
-                c(dot_args,
-                  list(x = x_df,
-                       range = rope_range,
-                       ci = rope_ci))),
+        do.call(
+          equivalence_test,
+          c(
+            dot_args,
+            list(
+              x = x_df,
+              range = rope_range,
+              ci = rope_ci
+            )
+          )
+        ),
         cleaned_parameters,
         is_stanmvreg
       )
