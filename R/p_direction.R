@@ -207,7 +207,8 @@ p_direction.data.frame <- function(x,
                                    rvar_col = NULL,
                                    ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::p_direction
     cl$x <- x_rvar

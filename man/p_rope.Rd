@@ -21,7 +21,7 @@ p_rope(x, ...)
   component = c("location", "all", "conditional", "smooth_terms", "sigma",
     "distributional", "auxiliary"),
   parameters = NULL,
-  verbose = verbose,
+  verbose = TRUE,
   ...
 )
 
