@@ -189,8 +189,8 @@ bayesfactor_parameters <- function(posterior,
                                    prior = NULL,
                                    direction = "two-sided",
                                    null = 0,
-                                   verbose = TRUE,
-                                   ...) {
+                                   ...,
+                                   verbose = TRUE) {
   UseMethod("bayesfactor_parameters")
 }
 
@@ -200,8 +200,8 @@ bayesfactor_pointnull <- function(posterior,
                                   prior = NULL,
                                   direction = "two-sided",
                                   null = 0,
-                                  verbose = TRUE,
-                                  ...) {
+                                  ...,
+                                  verbose = TRUE) {
   if (length(null) > 1L && verbose) {
     insight::format_alert("`null` is a range - computing a ROPE based Bayes factor.")
   }
@@ -222,8 +222,8 @@ bayesfactor_rope <- function(posterior,
                              prior = NULL,
                              direction = "two-sided",
                              null = rope_range(posterior, verbose = FALSE),
-                             verbose = TRUE,
-                             ...) {
+                             ...,
+                             verbose = TRUE) {
   if (length(null) < 2 && verbose) {
     insight::format_alert("'null' is a point - computing a Savage-Dickey (point null) Bayes factor.")
   }
@@ -256,8 +256,8 @@ bayesfactor_parameters.numeric <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           verbose = TRUE,
-                                           ...) {
+                                           ...,
+                                           verbose = TRUE) {
   # nm <- insight::safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
@@ -289,11 +289,11 @@ bayesfactor_parameters.stanreg <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
                                            component = c("conditional", "location", "smooth_terms", "sigma", "zi", "zero_inflated", "all"),
                                            parameters = NULL,
-                                           ...) {
+                                           ...,
+                                           verbose = TRUE) {
   cleaned_parameters <- insight::clean_parameters(posterior)
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -335,8 +335,8 @@ bayesfactor_parameters.blavaan <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           verbose = TRUE,
-                                           ...) {
+                                           ...,
+                                           verbose = TRUE) {
   cleaned_parameters <- insight::clean_parameters(posterior)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
@@ -368,8 +368,8 @@ bayesfactor_parameters.emmGrid <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           verbose = TRUE,
-                                           ...) {
+                                           ...,
+                                           verbose = TRUE) {
   samps <- .clean_priors_and_posteriors(
     posterior,
     prior,
@@ -409,8 +409,8 @@ bayesfactor_parameters.data.frame <- function(posterior,
                                               direction = "two-sided",
                                               null = 0,
                                               rvar_col = NULL,
-                                              verbose = TRUE,
-                                              ...) {
+                                              ...,
+                                              verbose = TRUE) {
   if (length(x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::bayesfactor_parameters
@@ -483,8 +483,8 @@ bayesfactor_parameters.draws <- function(posterior,
                                          prior = NULL,
                                          direction = "two-sided",
                                          null = 0,
-                                         verbose = TRUE,
-                                         ...) {
+                                         ...,
+                                         verbose = TRUE) {
   bayesfactor_parameters(
     .posterior_draws_to_df(posterior),
     prior = if (!is.null(prior)) .posterior_draws_to_df(prior),

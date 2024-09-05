@@ -19,8 +19,8 @@ bayesfactor_parameters(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 bayesfactor_pointnull(
@@ -28,8 +28,8 @@ bayesfactor_pointnull(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 bayesfactor_rope(
@@ -37,8 +37,8 @@ bayesfactor_rope(
   prior = NULL,
   direction = "two-sided",
   null = rope_range(posterior, verbose = FALSE),
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 bf_parameters(
@@ -46,8 +46,8 @@ bf_parameters(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 bf_pointnull(
@@ -55,8 +55,8 @@ bf_pointnull(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 bf_rope(
@@ -64,8 +64,8 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = rope_range(posterior, verbose = FALSE),
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 \method{bayesfactor_parameters}{numeric}(
@@ -73,8 +73,8 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 \method{bayesfactor_parameters}{stanreg}(
@@ -82,12 +82,12 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "location", "smooth_terms", "sigma", "zi",
     "zero_inflated", "all"),
   parameters = NULL,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 \method{bayesfactor_parameters}{brmsfit}(
@@ -95,12 +95,12 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "location", "smooth_terms", "sigma", "zi",
     "zero_inflated", "all"),
   parameters = NULL,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 \method{bayesfactor_parameters}{blavaan}(
@@ -108,8 +108,8 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 
 \method{bayesfactor_parameters}{data.frame}(
@@ -118,8 +118,8 @@ bf_rope(
   direction = "two-sided",
   null = 0,
   rvar_col = NULL,
-  verbose = TRUE,
-  ...
+  ...,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -136,10 +136,10 @@ tailed) or \code{1}, \code{"right"} (right tailed).}
 \item{null}{Value of the null, either a scalar (for point-null) or a range
 (for a interval-null).}
 
-\item{verbose}{Toggle off warnings.}
-
 \item{...}{Arguments passed to and from other methods. (Can be used to pass
 arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
+
+\item{verbose}{Toggle off warnings.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
