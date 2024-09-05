@@ -196,48 +196,17 @@ p_direction.data.frame <- function(x,
                                    rvar_col = NULL,
                                    ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
-
-  if (is.null(rvar_col)) {
-    return(.p_direction_df(
-      x,
-      method = method,
-      null = null,
-      as_p = as_p,
-      remove_na = remove_na,
-      obj_name = obj_name,
-      ...
-    ))
+  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- p_direction
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+    return(.append_datagrid(out, x))
   }
 
-  if (length(rvar_col) != 1L && !rvar_col %in% colnames(x)) {
-    insight::format_error("The `rvar_col` argument must be a single, valid column name.")
-  }
 
-  out <- p_direction(
-    x[[rvar_col]],
-    method = method,
-    null = null,
-    as_p = as_p,
-    remove_na = remove_na,
-    ...
-  )
-
-  x[["pd"]] <- out[["pd"]]
-  attr(x, "object_name") <- obj_name
-  attr(x, "as_p") <- as_p
-
-  x
-}
-
-
-#' @keywords internal
-.p_direction_df <- function(x,
-                            method = "direct",
-                            null = 0,
-                            as_p = FALSE,
-                            remove_na = TRUE,
-                            obj_name = NULL,
-                            ...) {
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
@@ -280,6 +249,9 @@ p_direction.data.frame <- function(x,
 
   out
 }
+
+
+
 
 
 #' @export

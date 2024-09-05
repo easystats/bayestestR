@@ -175,6 +175,11 @@
 
 #' @keywords internal
 .append_datagrid <- function(results, object) {
+  UseMethod(".append_datagrid", object = object)
+}
+
+#' @keywords internal
+.append_datagrid.emmGrid <- function(results, object) {
   # results is assumed to be a data frame with "Parameter" column
   # object is an emmeans / marginalefeects that results is based on
 
@@ -195,9 +200,55 @@
   results
 }
 
+.append_datagrid.emm_list <- .append_datagrid.emmGrid
+
+.append_datagrid.slopes <- .append_datagrid.emmGrid
+
+.append_datagrid.predictions <- .append_datagrid.emmGrid
+
+.append_datagrid.comparisons <- .append_datagrid.emmGrid
+
+.append_datagrid.data.frame <- function(results, object) {
+  # results is assumed to be a data frame with "Parameter" column
+  # object is a data frame with an rvar column that results is based on
+
+  all_attrs <- attributes(results) # save attributes for later
+
+  is_rvar <- vapply(object, function(col) inherits(col, "rvar"), FUN.VALUE = logical(1))
+  grid_names <- colnames(object)[!is_rvar]
+
+  results[grid_names] <- object[grid_names]
+  results$Parameter <- NULL
+  results <- results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
+
+  # add back attributes
+  most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(object)))]
+  attributes(results)[names(most_attrs)] <- most_attrs
+
+  attr(results, "grid_cols") <- grid_names
+  results
+}
+
+
 #' @keywords internal
 .get_marginaleffects_draws <- function(object) {
   # errors and checks are handled by marginaleffects
   insight::check_if_installed("marginaleffects")
   data.frame(marginaleffects::posterior_draws(object, shape = "DxP"))
+}
+
+#' @keywords internal
+.possibly_extract_rvar_col <- function(df, rvar_col) {
+  if (missing(rvar_col) || is.null(rvar_col)) {
+    return(NULL)
+  }
+
+  if (is.character(rvar_col) &&
+      length(rvar_col) == 1L &&
+      rvar_col %in% colnames(df) &&
+      inherits(df[[rvar_col]], "rvar")) {
+    return(df[[rvar_col]])
+  }
+
+  insight::format_error("The `rvar_col` argument must be a single, valid column name.")
 }
