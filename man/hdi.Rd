@@ -13,7 +13,7 @@ hdi(x, ...)
 
 \method{hdi}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
 
-\method{hdi}{data.frame}(x, ci = 0.95, verbose = TRUE, rvar_col = NULL, ...)
+\method{hdi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
 
 \method{hdi}{stanreg}(
   x,

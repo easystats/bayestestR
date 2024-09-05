@@ -159,7 +159,7 @@ ci.numeric <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...
 #' @rdname ci
 #' @inheritParams p_direction
 #' @export
-ci.data.frame <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, rvar_col = NULL, ...) {
+ci.data.frame <- function(x, ci = 0.95, method = "ETI", BF = 1, rvar_col = NULL, verbose = TRUE, ...) {
   if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::ci

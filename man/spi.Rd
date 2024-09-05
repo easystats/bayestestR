@@ -13,7 +13,7 @@ spi(x, ...)
 
 \method{spi}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
 
-\method{spi}{data.frame}(x, ci = 0.95, verbose = TRUE, rvar_col = NULL, ...)
+\method{spi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
 
 \method{spi}{stanreg}(
   x,

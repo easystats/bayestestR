@@ -22,7 +22,7 @@ bcai(x, ...)
 
 \method{bci}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
 
-\method{bci}{data.frame}(x, ci = 0.95, verbose = TRUE, rvar_col = NULL, ...)
+\method{bci}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
 
 \method{bci}{MCMCglmm}(x, ci = 0.95, verbose = TRUE, ...)
 

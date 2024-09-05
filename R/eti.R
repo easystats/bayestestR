@@ -68,7 +68,7 @@ eti.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 #' @rdname eti
 #' @inheritParams p_direction
-eti.data.frame <- function(x, ci = 0.95, verbose = TRUE, rvar_col = NULL, ...) {
+eti.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
   if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {

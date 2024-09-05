@@ -13,7 +13,7 @@ eti(x, ...)
 
 \method{eti}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
 
-\method{eti}{data.frame}(x, ci = 0.95, verbose = TRUE, rvar_col = NULL, ...)
+\method{eti}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
 
 \method{eti}{stanreg}(
   x,

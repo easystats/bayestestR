@@ -12,7 +12,7 @@ p_rope(x, ...)
 
 \method{p_rope}{numeric}(x, range = "default", verbose = TRUE, ...)
 
-\method{p_rope}{data.frame}(x, range = "default", verbose = TRUE, rvar_col = NULL, ...)
+\method{p_rope}{data.frame}(x, range = "default", rvar_col = NULL, verbose = TRUE, ...)
 
 \method{p_rope}{stanreg}(
   x,

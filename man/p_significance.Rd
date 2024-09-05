@@ -4,6 +4,7 @@
 \alias{p_significance}
 \alias{p_significance.numeric}
 \alias{p_significance.get_predicted}
+\alias{p_significance.data.frame}
 \alias{p_significance.stanreg}
 \alias{p_significance.brmsfit}
 \title{Practical Significance (ps)}
@@ -19,6 +20,8 @@ p_significance(x, ...)
   verbose = TRUE,
   ...
 )
+
+\method{p_significance}{data.frame}(x, threshold = "default", rvar_col = NULL, ...)
 
 \method{p_significance}{stanreg}(
   x,
@@ -65,6 +68,9 @@ iterations instead of the predictions. This only applies to models that return
 iterations for predicted values (e.g., \code{brmsfit} models).}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

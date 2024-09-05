@@ -40,7 +40,7 @@ p_rope.numeric <- function(x, range = "default", verbose = TRUE, ...) {
 #' @export
 #' @rdname p_rope
 #' @inheritParams p_direction
-p_rope.data.frame <- function(x, range = "default", verbose = TRUE, rvar_col = NULL, ...) {
+p_rope.data.frame <- function(x, range = "default", rvar_col = NULL, verbose = TRUE, ...) {
   if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::p_rope

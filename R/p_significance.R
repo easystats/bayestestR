@@ -109,8 +109,24 @@ p_significance.get_predicted <- function(x,
 
 
 #' @export
-p_significance.data.frame <- function(x, threshold = "default", ...) {
+#' @rdname p_significance
+#' @inheritParams p_direction
+p_significance.data.frame <- function(x, threshold = "default", rvar_col = NULL, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
+
+  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::p_significance
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x))
+  }
+
+
   threshold <- .select_threshold_ps(threshold = threshold)
   x <- .select_nums(x)
 

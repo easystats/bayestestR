@@ -16,7 +16,7 @@ ci(x, ...)
 
 \method{ci}{numeric}(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...)
 
-\method{ci}{data.frame}(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, rvar_col = NULL, ...)
+\method{ci}{data.frame}(x, ci = 0.95, method = "ETI", BF = 1, rvar_col = NULL, verbose = TRUE, ...)
 
 \method{ci}{sim.merMod}(
   x,
