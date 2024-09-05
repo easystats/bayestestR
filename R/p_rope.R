@@ -38,7 +38,26 @@ p_rope.numeric <- function(x, range = "default", verbose = TRUE, ...) {
 
 
 #' @export
-p_rope.data.frame <- p_rope.numeric
+#' @rdname p_rope
+#' @inheritParams p_direction
+p_rope.data.frame <- function(x, range = "default", verbose = TRUE, rvar_col = NULL, ...) {
+  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::p_rope
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(x))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x))
+  }
+
+  out <- .p_rope(rope(x, range = range, ci = 1, verbose = verbose, ...))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  out
+}
 
 
 #' @export
