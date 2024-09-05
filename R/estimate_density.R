@@ -221,6 +221,7 @@ estimate_density.numeric <- function(x,
 
 
 #' @rdname estimate_density
+#' @inheritParams p_direction
 #' @export
 estimate_density.data.frame <- function(x,
                                         method = "kernel",
@@ -232,7 +233,29 @@ estimate_density.data.frame <- function(x,
                                         select = NULL,
                                         by = NULL,
                                         at = NULL,
+                                        rvar_col = NULL,
                                         ...) {
+
+  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::estimate_density
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(x))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    # This doesn't use .append_datagrid because we get a non-grid output
+    dgrid <- x[,vapply(x, function(col) !inherits(col, "rvar"), FUN.VALUE = logical(1)), drop = FALSE]
+    dgrid$Parameter <- unique(out$Parameter)
+    out <- datawizard::data_join(dgrid, out, by = "Parameter")
+    out$Parameter <- NULL
+    class(out) <- .set_density_class(out)
+    return(out)
+  }
+
+
   # Sanity
   if (!is.null(at)) {
     insight::format_warning(paste0(
