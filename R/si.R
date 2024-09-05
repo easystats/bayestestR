@@ -221,8 +221,31 @@ si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = F
 
 
 #' @rdname si
+#' @inheritParams p_direction
 #' @export
-si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
+si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verbose = TRUE, ...) {
+  if (length(x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::si
+    cl$posterior <- x_rvar
+    cl$rvar_col <- NULL
+    if (length(prior_rvar <- .possibly_extract_rvar_col(posterior, prior)) > 0L) {
+      cl$prior <- prior_rvar
+    }
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(posterior))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    # This doesn't use .append_datagrid because we get a non-grid output
+    dgrid <- posterior[,vapply(posterior, function(col) !inherits(col, "rvar"), FUN.VALUE = logical(1)), drop = FALSE]
+    dgrid$Parameter <- unique(out$Parameter)
+    out_grid <- datawizard::data_join(dgrid, out, by = "Parameter")
+    class(out_grid) <- class(out)
+    return(out)
+  }
+
+
   if (is.null(prior)) {
     prior <- posterior
     insight::format_warning(
@@ -255,7 +278,9 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
 
 #' @export
 si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
-  si(.posterior_draws_to_df(posterior), prior = prior, BF = BF, verbose = verbose, ...)
+  si(.posterior_draws_to_df(posterior),
+     prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
+     BF = BF, verbose = verbose, ...)
 }
 
 #' @export
@@ -276,7 +301,7 @@ si.rvar <- si.draws
     )
   }
 
-  out <- data.frame(
+  data.frame(
     Parameter = colnames(posterior),
     CI = BF,
     CI_low = sis[, 1],
@@ -310,12 +335,12 @@ si.rvar <- si.draws
 
   f_prior <- .logspline(prior, ...)
   f_posterior <- .logspline(posterior, ...)
-  d_prior <- logspline::dlogspline(x_axis, f_prior)
-  d_posterior <- logspline::dlogspline(x_axis, f_posterior)
+  d_prior <- logspline::dlogspline(x_axis, f_prior, log = TRUE)
+  d_posterior <- logspline::dlogspline(x_axis, f_posterior, log = TRUE)
 
-  relative_d <- d_posterior / d_prior
+  relative_d <- d_posterior - d_prior
 
-  crit <- relative_d >= BF
+  crit <- relative_d >= log(BF)
 
   cp <- rle(stats::na.omit(crit))
   if (length(cp$lengths) > 3 && verbose) {

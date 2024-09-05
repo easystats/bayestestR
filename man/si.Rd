@@ -62,7 +62,7 @@ si(posterior, ...)
   ...
 )
 
-\method{si}{data.frame}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
+\method{si}{data.frame}(posterior, prior = NULL, BF = 1, rvar_col = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object,
@@ -95,6 +95,9 @@ for the output.}
 (returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
 iterations instead of the predictions. This only applies to models that return
 iterations for predicted values (e.g., \code{brmsfit} models).}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 }
 \value{
 A data frame containing the lower and upper bounds of the SI.
@@ -150,29 +153,27 @@ prior.
 (Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
 See example below.)
 \cr\cr
-It is important to provide the correct \code{prior} for meaningful results.
+It is important to provide the correct \code{prior} for meaningful results,
+to match the \code{posterior}-type input:
 \itemize{
-\item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-\item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
-\item When \code{posterior} is a \code{stanreg}, \code{brmsfit} or other supported Bayesian model:
+\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-estimate.
+\item \strong{A data frame} - \code{prior} should also be a \emph{data frame}, representing the prior-estimates, in matching column order.
 \itemize{
-\item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-\item \code{prior} can also be a model equivalent to \code{posterior} but with samples from
-the priors \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
-\item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
+\item If \code{rvar_col} is specified, \code{prior} should be \emph{the name of an \code{rvar} column} that represents the prior-estimates.
 }
-\item When \code{posterior} is an output from a \code{{marginaleffects}} function, \code{prior} should also be an an output
-from a \code{{marginaleffects}} function equivalent to \code{posterior} but created
-with a model of priors samples \emph{only}.
-\item When \code{posterior} is an \code{emmGrid} / \code{emm_list} object:
+\item \strong{Supported Bayesian model (\code{stanreg}, \code{brmsfit}, etc.)}
 \itemize{
-\item \code{prior} should also be an \code{emmGrid} / \code{emm_list} object equivalent to \code{posterior} but
-created with a model of priors samples \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
-\item \code{prior} can also be the original (posterior) \emph{model}. If so, the function will try to
-update the \code{emmGrid} / \code{emm_list} to use the \code{\link[=unupdate]{unupdate()}}d prior-model.
-(\emph{This cannot be done for \code{brmsfit} models.})
-\item \strong{Note}: When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.),
-or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
+\item \code{prior} should be \emph{a model an equivalent model with MCMC samples from the priors \emph{only}}. See \code{\link[=unupdate]{unupdate()}}.
+\item If \code{prior} is set to \code{NULL}, \code{\link[=unupdate]{unupdate()}} is called internally (not supported for \code{brmsfit_multiple} model).
+}
+\item \strong{Output from a \code{{marginaleffects}} function} - \code{prior} should also be \emph{an equivalent output} from a \code{{marginaleffects}} function based on a prior-model
+(See \code{\link[=unupdate]{unupdate()}}).
+\item \strong{Output from an \code{{emmeans}} function}
+\itemize{
+\item \code{prior} should also be \emph{an equivalent output} from an \code{{emmeans}} function based on a prior-model (See \code{\link[=unupdate]{unupdate()}}).
+\item \code{prior} can also be \emph{the original (posterior) model}, in which case the function
+will try to "unupdate" the estimates (not supported if the estimates have undergone
+any transformations -- \code{"log"}, \code{"response"}, etc. -- or any \code{regrid}ing).
 }
 }
 }

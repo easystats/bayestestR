@@ -3,6 +3,7 @@
 \name{describe_posterior}
 \alias{describe_posterior}
 \alias{describe_posterior.numeric}
+\alias{describe_posterior.data.frame}
 \alias{describe_posterior.stanreg}
 \alias{describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
@@ -21,6 +22,23 @@ describe_posterior(posterior, ...)
   keep_iterations = FALSE,
   bf_prior = NULL,
   BF = 1,
+  verbose = TRUE,
+  ...
+)
+
+\method{describe_posterior}{data.frame}(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  BF = 1,
+  rvar_col = NULL,
   verbose = TRUE,
   ...
 )
@@ -122,6 +140,9 @@ case of models) ignored.}
 \item{BF}{The amount of support required to be included in the support interval.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}

@@ -568,7 +568,58 @@ describe_posterior.double <- describe_posterior.numeric
 
 
 #' @export
-describe_posterior.data.frame <- describe_posterior.numeric
+#' @rdname describe_posterior
+#' @inheritParams p_direction
+describe_posterior.data.frame <- function(posterior,
+                                          centrality = "median",
+                                          dispersion = FALSE,
+                                          ci = 0.95,
+                                          ci_method = "eti",
+                                          test = c("p_direction", "rope"),
+                                          rope_range = "default",
+                                          rope_ci = 0.95,
+                                          keep_iterations = FALSE,
+                                          bf_prior = NULL,
+                                          BF = 1,
+                                          rvar_col = NULL,
+                                          verbose = TRUE,
+                                          ...) {
+  if (length(x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::describe_posterior
+    cl$posterior <- x_rvar
+    cl$rvar_col <- NULL
+    if (length(prior_rvar <- .possibly_extract_rvar_col(posterior, bf_prior)) > 0L) {
+      cl$bf_prior <- prior_rvar
+    }
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(posterior))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, posterior))
+  }
+
+
+  out <- .describe_posterior(
+    posterior,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    keep_iterations = keep_iterations,
+    bf_prior = bf_prior,
+    BF = BF,
+    verbose = verbose,
+    ...
+  )
+
+  class(out) <- unique(c("describe_posterior", "see_describe_posterior", class(out)))
+  out
+}
 
 
 #' @export
