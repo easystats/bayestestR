@@ -118,7 +118,7 @@ p_rope.stanreg <- function(x,
                              "auxiliary"
                            ),
                            parameters = NULL,
-                           verbose = verbose,
+                           verbose = TRUE,
                            ...) {
   out <- .p_rope(rope(
     x,
