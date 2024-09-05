@@ -148,8 +148,22 @@ map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects
 
 
 #' @rdname map_estimate
+#' @inheritParams p_direction
 #' @export
-map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", ...) {
+map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", rvar_col = NULL, ...) {
+  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- map_estimate
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(x))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x))
+  }
+
   .map_estimate_models(x, precision = precision, method = method)
 }
 

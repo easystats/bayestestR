@@ -122,6 +122,7 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' p_direction(df)
 #' p_direction(df, method = "kernel")
+#'
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -148,6 +149,14 @@
 #' p_direction(bf)
 #' p_direction(bf, method = "kernel")
 #' }
+#'
+#' @examplesIf requireNamespace("posterior", quietly = TRUE)
+#' # Using "rvar_col"
+#' x <- data.frame(mu = c(0, 0.5, 1), sigma = c(1, 0.5, 0.25))
+#' x$my_rvar <- posterior::rvar_rng(rnorm, 3, mean = x$mu, sd = x$sigma)
+#' x
+#' p_direction(x, rvar_col = "my_rvar")
+#'
 #' @export
 p_direction <- function(x, ...) {
   UseMethod("p_direction")
@@ -187,6 +196,8 @@ p_direction.numeric <- function(x,
 
 
 #' @rdname p_direction
+#' @param rvar_col Possibly a single character - the name of an `rvar` column in
+#'   the data frame, to be processed. See example in [p_direction()].
 #' @export
 p_direction.data.frame <- function(x,
                                    method = "direct",

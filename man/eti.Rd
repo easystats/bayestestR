@@ -3,6 +3,7 @@
 \name{eti}
 \alias{eti}
 \alias{eti.numeric}
+\alias{eti.data.frame}
 \alias{eti.stanreg}
 \alias{eti.brmsfit}
 \alias{eti.get_predicted}
@@ -11,6 +12,8 @@
 eti(x, ...)
 
 \method{eti}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
+
+\method{eti}{data.frame}(x, ci = 0.95, verbose = TRUE, rvar_col = NULL, ...)
 
 \method{eti}{stanreg}(
   x,
@@ -48,6 +51,9 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 (between 0 and 1) to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{rvar_col}{Possibly a single character - the name of an \code{rvar} column in
+the data frame, to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
