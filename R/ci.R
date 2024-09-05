@@ -157,8 +157,24 @@ ci.numeric <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...
 
 
 #' @rdname ci
+#' @inheritParams p_direction
 #' @export
-ci.data.frame <- ci.numeric
+ci.data.frame <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, rvar_col = NULL, ...) {
+  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::ci
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(x))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x))
+  }
+
+  .ci_bayesian(x, ci = ci, method = method, verbose = verbose, BF = BF, ...)
+}
 
 
 #' @export

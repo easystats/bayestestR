@@ -16,7 +16,7 @@ ci(x, ...)
 
 \method{ci}{numeric}(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...)
 
-\method{ci}{data.frame}(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...)
+\method{ci}{data.frame}(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, rvar_col = NULL, ...)
 
 \method{ci}{sim.merMod}(
   x,
@@ -74,6 +74,9 @@ to be estimated. Default to \code{0.95} (\verb{95\%}).}
 \item{verbose}{Toggle off warnings.}
 
 \item{BF}{The amount of support required to be included in the support interval.}
+
+\item{rvar_col}{Possibly a single character - the name of an \code{rvar} column in
+the data frame, to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
