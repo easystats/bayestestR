@@ -14,6 +14,7 @@
 \alias{bayesfactor_parameters.data.frame}
 \title{Bayes Factors (BF) for a Single Parameter}
 \usage{
+
 bayesfactor_parameters(
   posterior,
   prior = NULL,
@@ -126,6 +127,9 @@ bf_rope(
 \item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object,
 \code{emmGrid} or a data frame - representing a posterior distribution(s)
 from (see 'Details').}
+
+\item{...}{Arguments passed to and from other methods. (Can be used to pass
+arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 

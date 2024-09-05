@@ -11,15 +11,9 @@
 \alias{as.logical.bayesfactor_restricted}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
-bayesfactor_restricted(
-  posterior,
-  hypothesis,
-  prior = NULL,
-  verbose = TRUE,
-  ...
-)
+bayesfactor_restricted(posterior, ...)
 
-bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
+bf_restricted(posterior, ...)
 
 \method{bayesfactor_restricted}{stanreg}(
   posterior,
@@ -71,13 +65,13 @@ bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
 \item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing
 a posterior distribution(s) from (see Details).}
 
+\item{...}{Currently not used.}
+
 \item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
 
 \item{prior}{An object representing a prior distribution (see Details).}
 
 \item{verbose}{Toggle off warnings.}
-
-\item{...}{Currently not used.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

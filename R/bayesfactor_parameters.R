@@ -411,12 +411,14 @@ bayesfactor_parameters.data.frame <- function(posterior,
                                               rvar_col = NULL,
                                               ...,
                                               verbose = TRUE) {
-  if (length(x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::bayesfactor_parameters
     cl$posterior <- x_rvar
     cl$rvar_col <- NULL
-    if (length(prior_rvar <- .possibly_extract_rvar_col(posterior, prior)) > 0L) {
+    prior_rvar <- .possibly_extract_rvar_col(posterior, prior)
+    if (length(prior_rvar) > 0L) {
       cl$prior <- prior_rvar
     }
     out <- eval.parent(cl)
