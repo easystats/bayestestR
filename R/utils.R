@@ -174,29 +174,39 @@
 }
 
 #' @keywords internal
-.append_datagrid <- function(results, object) {
+.append_datagrid <- function(results, object, long = FALSE) {
   UseMethod(".append_datagrid", object = object)
 }
 
 #' @keywords internal
-.append_datagrid.emmGrid <- function(results, object) {
+.append_datagrid.emmGrid <- function(results, object, long = FALSE) {
   # results is assumed to be a data frame with "Parameter" column
   # object is an emmeans / marginalefeects that results is based on
 
   all_attrs <- attributes(results) # save attributes for later
+  all_class <- class(results)
 
   grid <- insight::get_datagrid(object)
   grid_names <- colnames(grid)
 
-  results[colnames(grid)] <- grid
-  results$Parameter <- NULL
-  results <- results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
+  if (long) {
+    grid$Parameter <- unique(results$Parameter)
+    results <- datawizard::data_merge(grid, results, by = "Parameter")
+    results$Parameter <- NULL
+    class(results) <- all_class
+  } else {
+    results[colnames(grid)] <- grid
+    results$Parameter <- NULL
+    results <- results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
 
-  # add back attributes
-  most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(grid)))]
-  attributes(results)[names(most_attrs)] <- most_attrs
+    # add back attributes
+    most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(grid)))]
+    attributes(results)[names(most_attrs)] <- most_attrs
+  }
 
-  attr(results, "grid_cols") <- grid_names
+
+
+  attr(results, "idvars") <- grid_names
   results
 }
 
@@ -208,24 +218,33 @@
 
 .append_datagrid.comparisons <- .append_datagrid.emmGrid
 
-.append_datagrid.data.frame <- function(results, object) {
+.append_datagrid.data.frame <- function(results, object, long = FALSE) {
   # results is assumed to be a data frame with "Parameter" column
   # object is a data frame with an rvar column that results is based on
 
   all_attrs <- attributes(results) # save attributes for later
+  all_class <- class(results)
 
   is_rvar <- vapply(object, function(col) inherits(col, "rvar"), FUN.VALUE = logical(1))
   grid_names <- colnames(object)[!is_rvar]
+  grid <- data.frame(object[,grid_names,drop = FALSE])
 
-  results[grid_names] <- object[grid_names]
-  results$Parameter <- NULL
-  results <- results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
+  if (long) {
+    grid$Parameter <- unique(results$Parameter)
+    results <- datawizard::data_merge(grid, results, by = "Parameter")
+    results$Parameter <- NULL
+    class(results) <- all_class
+  } else {
+    results[grid_names] <- object[grid_names]
+    results$Parameter <- NULL
+    results <- results[, c(grid_names, setdiff(colnames(results), grid_names)), drop = FALSE]
 
-  # add back attributes
-  most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(object)))]
-  attributes(results)[names(most_attrs)] <- most_attrs
+    # add back attributes
+    most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(object)))]
+    attributes(results)[names(most_attrs)] <- most_attrs
+  }
 
-  attr(results, "grid_cols") <- grid_names
+  attr(results, "idvars") <- grid_names
   results
 }
 

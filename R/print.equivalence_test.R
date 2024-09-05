@@ -35,7 +35,7 @@ print.equivalence_test <- function(x, digits = 2, ...) {
 
   ci <- unique(x$CI)
   keep.columns <- c(
-    attr(x, "grid_cols"), "Parameter", "Effects", "Component",
+    attr(x, "idvars"), "Parameter", "Effects", "Component",
     "ROPE_Equivalence", "ROPE_Percentage", "CI", "HDI"
   )
 

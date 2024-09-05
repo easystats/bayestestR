@@ -170,7 +170,7 @@ ci.data.frame <- function(x, ci = 0.95, method = "ETI", BF = 1, rvar_col = NULL,
     obj_name <- insight::safe_deparse_symbol(substitute(x))
     attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
 
-    return(.append_datagrid(out, x))
+    return(.append_datagrid(out, x, long = length(ci) > 1L))
   }
 
   .ci_bayesian(x, ci = ci, method = method, verbose = verbose, BF = BF, ...)
@@ -197,7 +197,7 @@ ci.emmGrid <- function(x, ci = NULL, ...) {
   if (is.null(ci)) ci <- 0.95
   xdf <- insight::get_parameters(x)
   out <- ci(xdf, ci = ci, ...)
-  out <- .append_datagrid(out, x)
+  out <- .append_datagrid(out, x, long = length(ci) > 1L)
   out
 }
 
@@ -216,7 +216,7 @@ ci.slopes <- function(x, ci = NULL, ...) {
   if (is.null(ci)) ci <- 0.95
   xrvar <- .get_marginaleffects_draws(x)
   out <- ci(xrvar, ci = ci, ...)
-  out <- .append_datagrid(out, x)
+  out <- .append_datagrid(out, x, long = length(ci) > 1L)
   out
 }
 

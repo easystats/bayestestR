@@ -246,11 +246,7 @@ estimate_density.data.frame <- function(x,
     obj_name <- insight::safe_deparse_symbol(substitute(x))
     attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
 
-    # This doesn't use .append_datagrid because we get a non-grid output
-    dgrid <- x[,vapply(x, function(col) !inherits(col, "rvar"), FUN.VALUE = logical(1)), drop = FALSE]
-    dgrid$Parameter <- unique(out$Parameter)
-    out <- datawizard::data_join(dgrid, out, by = "Parameter")
-    out$Parameter <- NULL
+    out <- .append_datagrid(out, x, long = TRUE)
     class(out) <- .set_density_class(out)
     return(out)
   }
@@ -398,11 +394,7 @@ estimate_density.emmGrid <- function(x,
     bw = bw, ...
   )
 
-  # This doesn't use .append_datagrid because we get a non-grid output
-  dgrid <- insight::get_datagrid(x)
-  dgrid$Parameter <- unique(out$Parameter)
-  out <- datawizard::data_join(dgrid, out, by = "Parameter")
-  out$Parameter <- NULL
+  out <- .append_datagrid(out, x, long = TRUE)
   class(out) <- .set_density_class(out)
   out
 }
@@ -426,11 +418,7 @@ estimate_density.slopes <- function(x,
     bw = bw, ...
   )
 
-  # This doesn't use .append_datagrid because we get a non-grid output
-  dgrid <- insight::get_datagrid(x)
-  dgrid$Parameter <- unique(out$Parameter)
-  out <- datawizard::data_join(dgrid, out, by = "Parameter")
-  out$Parameter <- NULL
+  out <- .append_datagrid(out, x, long = TRUE)
   class(out) <- .set_density_class(out)
   out
 }

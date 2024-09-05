@@ -168,7 +168,7 @@ si.emmGrid <- function(posterior, prior = NULL,
     BF = BF, verbose = verbose, ...
   )
 
-  out <- .append_datagrid(out, posterior)
+  out <- .append_datagrid(out, posterior, long = length(BF) > 1L)
   attr(out, "ci_method") <- "SI"
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   out
@@ -237,14 +237,8 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verb
     obj_name <- insight::safe_deparse_symbol(substitute(posterior))
     attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
 
-    # This doesn't use .append_datagrid because we get a non-grid output
-    dgrid <- posterior[,vapply(posterior, function(col) !inherits(col, "rvar"), FUN.VALUE = logical(1)), drop = FALSE]
-    dgrid$Parameter <- unique(out$Parameter)
-    out_grid <- datawizard::data_join(dgrid, out, by = "Parameter")
-    class(out_grid) <- class(out)
-    return(out)
+    return(.append_datagrid(out, posterior, long = length(BF) > 1L))
   }
-
 
   if (is.null(prior)) {
     prior <- posterior

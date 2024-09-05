@@ -80,7 +80,7 @@ spi.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
 
     attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
 
-    return(.append_datagrid(out, x))
+    return(.append_datagrid(out, x, long = length(ci) > 1L))
   }
 
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "spi")
@@ -156,7 +156,7 @@ spi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 spi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
   out <- spi(xdf, ci = ci, verbose = verbose, ...)
-  out <- .append_datagrid(out, x)
+  out <- .append_datagrid(out, x, long = length(ci) > 1L)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -168,7 +168,7 @@ spi.emm_list <- spi.emmGrid
 spi.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xrvar <- .get_marginaleffects_draws(x)
   out <- spi(xrvar, ci = ci, verbose = verbose, ...)
-  out <- .append_datagrid(out, x)
+  out <- .append_datagrid(out, x, long = length(ci) > 1L)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

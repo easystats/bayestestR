@@ -80,7 +80,7 @@ eti.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
 
     attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
 
-    return(.append_datagrid(out, x))
+    return(.append_datagrid(out, x, long = length(ci) > 1L))
   }
 
 
@@ -192,7 +192,7 @@ eti.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 eti.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
   dat <- eti(xdf, ci = ci, verbose = verbose, ...)
-  dat <- .append_datagrid(dat, x)
+  dat <- .append_datagrid(dat, x, long = length(ci) > 1L)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
@@ -204,7 +204,7 @@ eti.emm_list <- eti.emmGrid
 eti.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xrvar <- .get_marginaleffects_draws(x)
   dat <- eti(xrvar, ci = ci, verbose = verbose, ...)
-  dat <- .append_datagrid(dat, x)
+  dat <- .append_datagrid(dat, x, long = length(ci) > 1L)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
