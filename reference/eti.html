@@ -15,7 +15,7 @@ Credible Interval (CI)."><meta property="og:image" content="https://easystats.gi
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,6 +94,9 @@ uncertainty characterisation of posterior distributions as
 <span><span class="co"># S3 method for class 'numeric'</span></span>
 <span><span class="fu">eti</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'data.frame'</span></span>
+<span><span class="fu">eti</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, rvar_col <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'stanreg'</span></span>
 <span><span class="fu">eti</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
@@ -144,6 +147,11 @@ resemble the arguments of the <code>.numeric</code> or <code>.data.frame</code>m
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Toggle off warnings.</p></dd>
+
+
+<dt id="arg-rvar-col">rvar_col<a class="anchor" aria-label="anchor" href="#arg-rvar-col"></a></dt>
+<dd><p>A single character - the name of an <code>rvar</code> column in the data
+frame to be processed. See example in <code><a href="p_direction.html">p_direction()</a></code>.</p></dd>
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
@@ -343,9 +351,9 @@ the resulting HDI.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.023 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.022 seconds (Warm-up)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.018 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.041 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.04 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).</span>
@@ -369,8 +377,8 @@ the resulting HDI.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.024 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.02 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.044 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.019 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.043 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).</span>
@@ -394,8 +402,8 @@ the resulting HDI.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.024 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.02 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.044 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.019 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.043 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">eti</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>

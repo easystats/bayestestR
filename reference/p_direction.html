@@ -17,7 +17,7 @@ the frequentist p-value (see details)."><meta property="og:image" content="https
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -231,8 +231,8 @@ that <code>Inf</code> (infinity) are <em>not</em> removed.</p></dd>
 
 
 <dt id="arg-rvar-col">rvar_col<a class="anchor" aria-label="anchor" href="#arg-rvar-col"></a></dt>
-<dd><p>Name of an <code>rvar</code>-type column. If <code>NULL</code>, each column in the
-data frame is assumed to represent draws from a posterior distribution.</p></dd>
+<dd><p>A single character - the name of an <code>rvar</code> column in the data
+frame to be processed. See example in <code>p_direction()</code>.</p></dd>
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
@@ -406,6 +406,7 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-out co"><span class="r-pr">#&gt;</span> X2        | 51.93%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X3        | 50.15%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X4        | 59.86%</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># rstanarm models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -466,8 +467,8 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.026 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.024 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.05 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.023 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.049 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span>
@@ -577,6 +578,22 @@ and Practices in Psychological Science, 4(1). <a href="https://doi.org/10.1177/2
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Difference | 100%</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># Using "rvar_col"</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="va">my_rvar</span> <span class="op">&lt;-</span> <span class="fu">posterior</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/posterior/reference/rvar_rng.html" class="external-link">rvar_rng</a></span><span class="op">(</span><span class="va">rnorm</span>, <span class="fl">3</span>, mean <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">mu</span>, sd <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">sigma</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    mu sigma      my_rvar</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.0  1.00 -0.01 ± 0.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.5  0.50  0.49 ± 0.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 1.0  0.25  1.00 ± 0.25</span>
+<span class="r-in"><span><span class="fu">p_direction</span><span class="op">(</span><span class="va">x</span>, rvar_col <span class="op">=</span> <span class="st">"my_rvar"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Probability of Direction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mu   | sigma |     pd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.00 |  1.00 | 50.10%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.50 |  0.50 | 83.90%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1.00 |  0.25 |   100%</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -13,7 +13,7 @@ characterisation of posterior distributions as Credible Interval (CI)."><meta pr
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +92,7 @@ characterisation of posterior distributions as <strong>Credible Interval (CI)</s
 <span><span class="fu">hdi</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'data.frame'</span></span>
-<span><span class="fu">hdi</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">hdi</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, rvar_col <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'stanreg'</span></span>
 <span><span class="fu">hdi</span><span class="op">(</span></span>
@@ -144,6 +144,11 @@ resemble the arguments of the <code>.numeric</code> or <code>.data.frame</code>m
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Toggle off warnings.</p></dd>
+
+
+<dt id="arg-rvar-col">rvar_col<a class="anchor" aria-label="anchor" href="#arg-rvar-col"></a></dt>
+<dd><p>A single character - the name of an <code>rvar</code> column in the data
+frame to be processed. See example in <code><a href="p_direction.html">p_direction()</a></code>.</p></dd>
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>

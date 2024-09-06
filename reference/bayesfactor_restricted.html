@@ -19,7 +19,7 @@ see the Bayes factors vignette."><meta property="og:image" content="https://easy
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,15 +94,9 @@ see <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bayesfactor_restricted</span><span class="op">(</span></span>
-<span>  <span class="va">posterior</span>,</span>
-<span>  <span class="va">hypothesis</span>,</span>
-<span>  prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bayesfactor_restricted</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">bf_restricted</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">hypothesis</span>, prior <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">bf_restricted</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'stanreg'</span></span>
 <span><span class="fu">bayesfactor_restricted</span><span class="op">(</span></span>
@@ -144,6 +138,15 @@ see <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'data.frame'</span></span>
+<span><span class="fu">bayesfactor_restricted</span><span class="op">(</span></span>
+<span>  <span class="va">posterior</span>,</span>
+<span>  <span class="va">hypothesis</span>,</span>
+<span>  prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rvar_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'bayesfactor_restricted'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">as.logical</a></span><span class="op">(</span><span class="va">x</span>, which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"posterior"</span>, <span class="st">"prior"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -155,6 +158,10 @@ see <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"
 <dl><dt id="arg-posterior">posterior<a class="anchor" aria-label="anchor" href="#arg-posterior"></a></dt>
 <dd><p>A <code>stanreg</code> / <code>brmsfit</code> object, <code>emmGrid</code> or a data frame - representing
 a posterior distribution(s) from (see Details).</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Currently not used.</p></dd>
 
 
 <dt id="arg-hypothesis">hypothesis<a class="anchor" aria-label="anchor" href="#arg-hypothesis"></a></dt>
@@ -169,10 +176,6 @@ a posterior distribution(s) from (see Details).</p></dd>
 <dd><p>Toggle off warnings.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Currently not used.</p></dd>
-
-
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
 <dd><p>Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.</p></dd>
@@ -182,6 +185,11 @@ returned? Only applies to mixed models. May be abbreviated.</p></dd>
 <dd><p>Should results for all parameters, parameters for the
 conditional model or the zero-inflated part of the model be returned? May
 be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+
+
+<dt id="arg-rvar-col">rvar_col<a class="anchor" aria-label="anchor" href="#arg-rvar-col"></a></dt>
+<dd><p>A single character - the name of an <code>rvar</code> column in the data
+frame to be processed. See example in <code><a href="p_direction.html">p_direction()</a></code>.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -225,23 +233,19 @@ prior.
 (Note that by default, <code><a href="https://paul-buerkner.github.io/brms/reference/brm.html" class="external-link">brms::brm()</a></code> uses flat priors for fixed-effects;
 See example below.)
 <br><br>
-It is important to provide the correct <code>prior</code> for meaningful results.</p><ul><li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
-<li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
-<li><p>When <code>posterior</code> is a <code>stanreg</code>, <code>brmsfit</code> or other supported Bayesian model:</p><ul><li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
-<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from
-the priors <em>only</em>. See <code><a href="unupdate.html">unupdate()</a></code>.</p></li>
-<li><p><strong>Note:</strong> When <code>posterior</code> is a <code>brmsfit_multiple</code> model, <code>prior</code> <strong>must</strong> be provided.</p></li>
+It is important to provide the correct <code>prior</code> for meaningful results,
+to match the <code>posterior</code>-type input:</p><ul><li><p><strong>A numeric vector</strong> - <code>prior</code> should also be a <em>numeric vector</em>, representing the prior-estimate.</p></li>
+<li><p><strong>A data frame</strong> - <code>prior</code> should also be a <em>data frame</em>, representing the prior-estimates, in matching column order.</p><ul><li><p>If <code>rvar_col</code> is specified, <code>prior</code> should be <em>the name of an <code>rvar</code> column</em> that represents the prior-estimates.</p></li>
 </ul></li>
-<li><p>When <code>posterior</code> is an output from a <code>{marginaleffects}</code> function, <code>prior</code> should also be an an output
-from a <code>{marginaleffects}</code> function equivalent to <code>posterior</code> but created
-with a model of priors samples <em>only</em>.</p></li>
-<li><p>When <code>posterior</code> is an <code>emmGrid</code> / <code>emm_list</code> object:</p><ul><li><p><code>prior</code> should also be an <code>emmGrid</code> / <code>emm_list</code> object equivalent to <code>posterior</code> but
-created with a model of priors samples <em>only</em>. See <code><a href="unupdate.html">unupdate()</a></code>.</p></li>
-<li><p><code>prior</code> can also be the original (posterior) <em>model</em>. If so, the function will try to
-update the <code>emmGrid</code> / <code>emm_list</code> to use the <code><a href="unupdate.html">unupdate()</a></code>d prior-model.
-(<em>This cannot be done for <code>brmsfit</code> models.</em>)</p></li>
-<li><p><strong>Note</strong>: When the <code>emmGrid</code> has undergone any transformations (<code>"log"</code>, <code>"response"</code>, etc.),
-or <code>regrid</code>ing, then <code>prior</code> must be an <code>emmGrid</code> object, as stated above.</p></li>
+<li><p><strong>Supported Bayesian model (<code>stanreg</code>, <code>brmsfit</code>, etc.)</strong></p><ul><li><p><code>prior</code> should be <em>a model an equivalent model with MCMC samples from the priors <strong>only</strong></em>. See <code><a href="unupdate.html">unupdate()</a></code>.</p></li>
+<li><p>If <code>prior</code> is set to <code>NULL</code>, <code><a href="unupdate.html">unupdate()</a></code> is called internally (not supported for <code>brmsfit_multiple</code> model).</p></li>
+</ul></li>
+<li><p><strong>Output from a <code>{marginaleffects}</code> function</strong> - <code>prior</code> should also be <em>an equivalent output</em> from a <code>{marginaleffects}</code> function based on a prior-model
+(See <code><a href="unupdate.html">unupdate()</a></code>).</p></li>
+<li><p><strong>Output from an <code>{emmeans}</code> function</strong></p><ul><li><p><code>prior</code> should also be <em>an equivalent output</em> from an <code>{emmeans}</code> function based on a prior-model (See <code><a href="unupdate.html">unupdate()</a></code>).</p></li>
+<li><p><code>prior</code> can also be <em>the original (posterior) model</em>, in which case the function
+will try to "unupdate" the estimates (not supported if the estimates have undergone
+any transformations – <code>"log"</code>, <code>"response"</code>, etc. – or any <code>regrid</code>ing).</p></li>
 </ul></li>
 </ul></div>
     <div class="section level2">
@@ -353,8 +357,8 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2.2e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -371,15 +375,15 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.034 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.041 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.075 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.033 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.04 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.073 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1.1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
@@ -396,15 +400,15 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.034 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.033 seconds (Warm-up)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.042 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.076 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.075 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Gradient evaluation took 1.1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Gradient evaluation took 1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
@@ -428,8 +432,8 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 1.1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
@@ -446,9 +450,9 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.032 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.042 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.074 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.031 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.041 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.072 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">em_condition</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_model</span>, <span class="op">~</span><span class="va">condition</span>, data <span class="op">=</span> <span class="va">disgust</span><span class="op">)</span></span></span>

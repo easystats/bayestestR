@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,6 +92,24 @@
 <span>  keep_iterations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  bf_prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'data.frame'</span></span>
+<span><span class="fu">describe_posterior</span><span class="op">(</span></span>
+<span>  <span class="va">posterior</span>,</span>
+<span>  centrality <span class="op">=</span> <span class="st">"median"</span>,</span>
+<span>  dispersion <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  ci_method <span class="op">=</span> <span class="st">"eti"</span>,</span>
+<span>  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span><span class="op">)</span>,</span>
+<span>  rope_range <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  keep_iterations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  bf_prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  rvar_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -224,6 +242,11 @@ case of models) ignored.</p></dd>
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Toggle off warnings.</p></dd>
+
+
+<dt id="arg-rvar-col">rvar_col<a class="anchor" aria-label="anchor" href="#arg-rvar-col"></a></dt>
+<dd><p>A single character - the name of an <code>rvar</code> column in the data
+frame to be processed. See example in <code><a href="p_direction.html">p_direction()</a></code>.</p></dd>
 
 
 <dt id="arg-diagnostic">diagnostic<a class="anchor" aria-label="anchor" href="#arg-diagnostic"></a></dt>
