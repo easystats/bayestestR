@@ -274,6 +274,7 @@
 
 #' @keywords internal
 .clean_distributional <- function (d) {
+  insight::check_if_installed("distributional")
   nm <- format(d)
   attributes(d) <- NULL
   names(d) <- nm
