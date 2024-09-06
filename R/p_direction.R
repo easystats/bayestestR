@@ -298,10 +298,9 @@ p_direction.distribution <- function(x,
 
   for (i in seq_along(pd)) {
     low <- distributional::cdf(x[[i]], q = null)
+    high <- 1 - low
     if (.is_discrete_dist(x[[i]])) {
-      high <- 1 - (low + stats::density(x[[i]], at = null))
-    } else {
-      high <- 1 - low
+      low <- low - stats::density(x[[i]], at = null)
     }
     pd[i] <- max(low, high)
   }
