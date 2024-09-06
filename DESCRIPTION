@@ -82,6 +82,7 @@ Suggests:
     bridgesampling,
     brms,
     curl,
+    distributional,
     effectsize,
     emmeans,
     gamm4,
