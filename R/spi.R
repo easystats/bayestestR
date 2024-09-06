@@ -352,7 +352,7 @@ spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   }
 
   # output
-  data.frame(CI = ci, CI_low = x.l,CI_high = x.u)
+  data.frame(CI = ci, CI_low = x.l, CI_high = x.u)
 }
 
 .spi_lower <- function(bw, n.sims, k, l, dens, x) {

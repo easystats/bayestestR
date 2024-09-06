@@ -597,7 +597,7 @@ describe_posterior.data.frame <- function(posterior,
     cl$posterior <- x_rvar
     cl$rvar_col <- NULL
     prior_rvar <- .possibly_extract_rvar_col(posterior, bf_prior)
-    if (length(prior_var) > 0L) {
+    if (length(prior_rvar) > 0L) {
       cl$bf_prior <- prior_rvar
     }
     out <- eval.parent(cl)
