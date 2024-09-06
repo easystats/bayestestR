@@ -92,7 +92,7 @@
 #' - **A data frame** - `prior` should also be a _data frame_, representing the prior-estimates, in matching column order.
 #'   - If `rvar_col` is specified, `prior` should be _the name of an `rvar` column_ that represents the prior-estimates.
 #' - **Supported Bayesian model (`stanreg`, `brmsfit`, etc.)**
-#'   - `prior` should be _a model an equivalent model with MCMC samples from the priors *only*_. See [unupdate()].
+#'   - `prior` should be _a model an equivalent model with MCMC samples from the priors **only**_. See [unupdate()].
 #'   - If `prior` is set to `NULL`, [unupdate()] is called internally (not supported for `brmsfit_multiple` model).
 #' - **Output from a `{marginaleffects}` function** - `prior` should also be _an equivalent output_ from a `{marginaleffects}` function based on a prior-model
 #'  (See [unupdate()]).

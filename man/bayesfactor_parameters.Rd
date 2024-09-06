@@ -242,7 +242,7 @@ to match the \code{posterior}-type input:
 }
 \item \strong{Supported Bayesian model (\code{stanreg}, \code{brmsfit}, etc.)}
 \itemize{
-\item \code{prior} should be \emph{a model an equivalent model with MCMC samples from the priors \emph{only}}. See \code{\link[=unupdate]{unupdate()}}.
+\item \code{prior} should be \emph{a model an equivalent model with MCMC samples from the priors \strong{only}}. See \code{\link[=unupdate]{unupdate()}}.
 \item If \code{prior} is set to \code{NULL}, \code{\link[=unupdate]{unupdate()}} is called internally (not supported for \code{brmsfit_multiple} model).
 }
 \item \strong{Output from a \code{{marginaleffects}} function} - \code{prior} should also be \emph{an equivalent output} from a \code{{marginaleffects}} function based on a prior-model
