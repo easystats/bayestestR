@@ -83,7 +83,7 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, th
     estimate_list <- centrality
   }
 
-  out <- data.frame(".temp" = 0)
+  out <- data.frame(.temp = 0)
 
   # Median
   if ("median" %in% estimate_list) {
@@ -132,8 +132,14 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, th
 #' @export
 #' @rdname point_estimate
 #' @inheritParams p_direction
-point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE, threshold = 0.1, rvar_col = NULL, ...) {
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+point_estimate.data.frame <- function(x,
+                                      centrality = "all",
+                                      dispersion = FALSE,
+                                      threshold = 0.1,
+                                      rvar_col = NULL,
+                                      ...) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::point_estimate
     cl$x <- x_rvar
@@ -156,7 +162,7 @@ point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE,
     estimates <- do.call(rbind, estimates)
   }
 
-  out <- cbind(data.frame("Parameter" = names(x), stringsAsFactors = FALSE), estimates)
+  out <- cbind(data.frame(Parameter = names(x), stringsAsFactors = FALSE), estimates)
   rownames(out) <- NULL
   attr(out, "data") <- x
   attr(out, "centrality") <- centrality
@@ -209,7 +215,11 @@ point_estimate.BGGM <- point_estimate.bcplm
 
 
 #' @export
-point_estimate.bamlss <- function(x, centrality = "all", dispersion = FALSE, component = c("conditional", "location", "all"), ...) {
+point_estimate.bamlss <- function(x,
+                                  centrality = "all",
+                                  dispersion = FALSE,
+                                  component = c("conditional", "location", "all"),
+                                  ...) {
   component <- match.arg(component)
   out <- point_estimate(
     insight::get_parameters(x, component = component),

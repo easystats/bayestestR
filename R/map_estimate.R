@@ -151,7 +151,8 @@ map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects
 #' @inheritParams p_direction
 #' @export
 map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", rvar_col = NULL, ...) {
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::map_estimate
     cl$x <- x_rvar

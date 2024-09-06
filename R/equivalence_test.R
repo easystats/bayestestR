@@ -150,7 +150,8 @@ equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = 
 equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::equivalence_test
     cl$x <- x_rvar

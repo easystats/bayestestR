@@ -224,12 +224,14 @@ si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = F
 #' @inheritParams p_direction
 #' @export
 si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verbose = TRUE, ...) {
-  if (length(x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::si
     cl$posterior <- x_rvar
     cl$rvar_col <- NULL
-    if (length(prior_rvar <- .possibly_extract_rvar_col(posterior, prior)) > 0L) {
+    prior_rvar <- .possibly_extract_rvar_col(posterior, prior)
+    if (length(prior_rvar) > 0L) {
       cl$prior <- prior_rvar
     }
     out <- eval.parent(cl)

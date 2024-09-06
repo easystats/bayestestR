@@ -71,7 +71,8 @@ spi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
 spi.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::spi
     cl$x <- x_rvar
@@ -351,11 +352,7 @@ spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   }
 
   # output
-  data.frame(
-    "CI" = ci,
-    "CI_low" = x.l,
-    "CI_high" = x.u
-  )
+  data.frame(CI = ci, CI_low = x.l,CI_high = x.u)
 }
 
 .spi_lower <- function(bw, n.sims, k, l, dens, x) {
@@ -432,7 +429,7 @@ spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   w.l <- quadprog::solve.QP(D.l, d.l, A.l, c(1, rep(0, range_ll_lu + 2)), range_ll_lu)
   x.l <- w.l$solution %*% x[l.l:l.u]
 
-  return(x.l)
+  x.l
 }
 
 .spi_upper <- function(bw, n.sims, ui, u, dens, x) {

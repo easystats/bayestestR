@@ -219,7 +219,8 @@ rope.get_predicted <- function(x,
 rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", rvar_col = NULL, verbose = TRUE, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::rope
     cl$x <- x_rvar

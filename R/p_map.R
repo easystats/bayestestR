@@ -127,7 +127,8 @@ p_map.get_predicted <- function(x,
 #' @rdname p_map
 #' @inheritParams p_direction
 p_map.data.frame <- function(x, null = 0, precision = 2^10, method = "kernel", rvar_col = NULL, ...) {
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::p_map
     cl$x <- x_rvar

@@ -114,7 +114,8 @@ p_significance.get_predicted <- function(x,
 p_significance.data.frame <- function(x, threshold = "default", rvar_col = NULL, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::p_significance
     cl$x <- x_rvar
@@ -269,18 +270,18 @@ p_significance.stanreg <- function(x,
   component <- match.arg(component)
   threshold <- .select_threshold_ps(model = x, threshold = threshold, verbose = verbose)
 
-  data <- p_significance(
+  result <- p_significance(
     insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
     threshold = threshold
   )
 
   cleaned_parameters <- insight::clean_parameters(x)
-  out <- .prepare_output(data, cleaned_parameters, inherits(x, "stanmvreg"))
+  out <- .prepare_output(result, cleaned_parameters, inherits(x, "stanmvreg"))
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "threshold") <- threshold
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
-  class(out) <- class(data)
+  class(out) <- class(result)
 
   out
 }
@@ -305,18 +306,18 @@ p_significance.brmsfit <- function(x,
   component <- match.arg(component)
   threshold <- .select_threshold_ps(model = x, threshold = threshold, verbose = verbose)
 
-  data <- p_significance(
+  result <- p_significance(
     insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
     threshold = threshold
   )
 
   cleaned_parameters <- insight::clean_parameters(x)
-  out <- .prepare_output(data, cleaned_parameters)
+  out <- .prepare_output(result, cleaned_parameters)
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "threshold") <- threshold
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
-  class(out) <- class(data)
+  class(out) <- class(result)
 
   out
 }

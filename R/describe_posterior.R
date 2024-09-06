@@ -465,7 +465,7 @@ describe_posterior.default <- function(posterior, ...) {
     test_psig$.rowid <- seq_len(nrow(test_psig))
   } else if (!all(is.na(test_rope$Parameter))) {
     test_rope$.rowid <- seq_len(nrow(test_rope))
-  } else if (!all(is.na(test_bf$Parameter))) {
+  } else if (!all(is.na(test_bf$Parameter))) { # nolint
     test_bf$.rowid <- seq_len(nrow(test_bf))
   } else {
     estimates$.rowid <- seq_len(nrow(estimates))
@@ -590,12 +590,14 @@ describe_posterior.data.frame <- function(posterior,
                                           rvar_col = NULL,
                                           verbose = TRUE,
                                           ...) {
-  if (length(x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::describe_posterior
     cl$posterior <- x_rvar
     cl$rvar_col <- NULL
-    if (length(prior_rvar <- .possibly_extract_rvar_col(posterior, bf_prior)) > 0L) {
+    prior_rvar <- .possibly_extract_rvar_col(posterior, bf_prior)
+    if (length(prior_var) > 0L) {
       cl$bf_prior <- prior_rvar
     }
     out <- eval.parent(cl)

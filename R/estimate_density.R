@@ -235,7 +235,8 @@ estimate_density.data.frame <- function(x,
                                         at = NULL,
                                         rvar_col = NULL,
                                         ...) {
-  if (length(x_rvar <- .possibly_extract_rvar_col(x, rvar_col)) > 0L) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
     cl <- match.call()
     cl[[1]] <- bayestestR::estimate_density
     cl$x <- x_rvar
