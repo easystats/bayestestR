@@ -3,6 +3,7 @@
 \name{point_estimate}
 \alias{point_estimate}
 \alias{point_estimate.numeric}
+\alias{point_estimate.data.frame}
 \alias{point_estimate.stanreg}
 \alias{point_estimate.brmsfit}
 \alias{point_estimate.BFBayesFactor}
@@ -12,6 +13,15 @@
 point_estimate(x, ...)
 
 \method{point_estimate}{numeric}(x, centrality = "all", dispersion = FALSE, threshold = 0.1, ...)
+
+\method{point_estimate}{data.frame}(
+  x,
+  centrality = "all",
+  dispersion = FALSE,
+  threshold = 0.1,
+  rvar_col = NULL,
+  ...
+)
 
 \method{point_estimate}{stanreg}(
   x,
@@ -66,6 +76,9 @@ Dispersion is not available for \code{"MAP"} or \code{"mode"} centrality indices
 \item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates
 the fraction (0 to 0.5) of observations to be trimmed from each end of the
 vector before the mean is computed.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

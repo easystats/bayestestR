@@ -3,6 +3,7 @@
 \name{rope}
 \alias{rope}
 \alias{rope.numeric}
+\alias{rope.data.frame}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
 \title{Region of Practical Equivalence (ROPE)}
@@ -10,6 +11,16 @@
 rope(x, ...)
 
 \method{rope}{numeric}(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...)
+
+\method{rope}{data.frame}(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  rvar_col = NULL,
+  verbose = TRUE,
+  ...
+)
 
 \method{rope}{stanreg}(
   x,
@@ -58,6 +69,9 @@ proportion of HDI, to use for the percentage in ROPE.}
 ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link[=ci]{ci()}}.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

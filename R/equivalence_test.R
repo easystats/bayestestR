@@ -145,8 +145,24 @@ equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = 
 
 
 #' @rdname equivalence_test
+#' @inheritParams p_direction
 #' @export
-equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
+equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
+  obj_name <- insight::safe_deparse_symbol(substitute(x))
+
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::equivalence_test
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x))
+  }
+
   l <- insight::compact_list(lapply(
     x,
     equivalence_test,
@@ -163,7 +179,7 @@ equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, verbose
   )
   row.names(out) <- NULL
 
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "object_name") <- obj_name
   class(out) <- unique(c("equivalence_test", "see_equivalence_test_df", class(out)))
 
   out

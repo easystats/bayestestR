@@ -214,7 +214,24 @@ rope.get_predicted <- function(x,
 
 
 #' @export
-rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
+#' @rdname rope
+#' @inheritParams p_direction
+rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", rvar_col = NULL, verbose = TRUE, ...) {
+  obj_name <- insight::safe_deparse_symbol(substitute(x))
+
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::rope
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x))
+  }
+
   out <- .prepare_rope_df(x, range, ci, ci_method, verbose)
   HDI_area_attributes <- insight::compact_list(out$HDI_area)
   dat <- data.frame(
@@ -225,7 +242,7 @@ rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", 
   row.names(dat) <- NULL
 
   attr(dat, "HDI_area") <- HDI_area_attributes
-  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(dat, "object_name") <- obj_name
 
   class(dat) <- c("rope", "see_rope", "data.frame")
   dat

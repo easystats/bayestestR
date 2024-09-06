@@ -1,4 +1,4 @@
-test_that("emmGrid descrive_posterior", {
+test_that("marginaleffects descrive_posterior", {
   skip_on_ci()
   skip_on_cran()
 
@@ -30,7 +30,7 @@ test_that("emmGrid descrive_posterior", {
   # estimate_density
   mfx <- marginaleffects::comparisons(mod,
     variables = "cyl",
-    newdata = data.frame(hp = 100, am = 0)
+    newdata = marginaleffects::datagrid(hp = 100, am = 0)
   )
   samps <- insight::get_parameters(mod)[c("cyl6", "cyl8")]
 
@@ -42,7 +42,7 @@ test_that("emmGrid descrive_posterior", {
   )
 })
 
-test_that("emmGrid bayesfactors", {
+test_that("marginaleffects bayesfactors", {
   skip_on_ci()
   skip_on_cran()
 
@@ -52,7 +52,7 @@ test_that("emmGrid bayesfactors", {
   data("mtcars")
   mtcars$cyl <- factor(mtcars$cyl)
   mod <- rstanarm::stan_glm(mpg ~ cyl + hp * am, data = mtcars, refresh = 0)
-  modp <- unupdate(mod)
+  modp <- unupdate(mod, verbose = FALSE)
 
   mfx <- marginaleffects::avg_slopes(mod, by = "am")
   mfxp <- marginaleffects::avg_slopes(modp, by = "am")

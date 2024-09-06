@@ -66,9 +66,27 @@ eti.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
 
 
 #' @export
-eti.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
+#' @rdname eti
+#' @inheritParams p_direction
+eti.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
+  obj_name <- insight::safe_deparse_symbol(substitute(x))
+
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::eti
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x, long = length(ci) > 1L))
+  }
+
+
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(dat, "object_name") <- obj_name
   dat
 }
 
@@ -175,7 +193,7 @@ eti.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 eti.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
   dat <- eti(xdf, ci = ci, verbose = verbose, ...)
-  dat <- .append_datagrid(dat, x)
+  dat <- .append_datagrid(dat, x, long = length(ci) > 1L)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
@@ -187,7 +205,7 @@ eti.emm_list <- eti.emmGrid
 eti.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xrvar <- .get_marginaleffects_draws(x)
   dat <- eti(xrvar, ci = ci, verbose = verbose, ...)
-  dat <- .append_datagrid(dat, x)
+  dat <- .append_datagrid(dat, x, long = length(ci) > 1L)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }

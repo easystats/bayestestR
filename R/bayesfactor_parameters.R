@@ -85,26 +85,22 @@
 #' (Note that by default, `brms::brm()` uses flat priors for fixed-effects;
 #' See example below.)
 #' \cr\cr
-#' It is important to provide the correct `prior` for meaningful results.
+#' It is important to provide the correct `prior` for meaningful results,
+#' to match the `posterior`-type input:
 #'
-#'   - When `posterior` is a numerical vector, `prior` should also be a numerical vector.
-#'   - When `posterior` is a `data.frame`, `prior` should also be a `data.frame`, with matching column order.
-#'   - When `posterior` is a `stanreg`, `brmsfit` or other supported Bayesian model:
-#'       - `prior` can be set to `NULL`, in which case prior samples are drawn internally.
-#'       - `prior` can also be a model equivalent to `posterior` but with samples from
-#'         the priors *only*. See [unupdate()].
-#'       - **Note:** When `posterior` is a `brmsfit_multiple` model, `prior` **must** be provided.
-#'   - When `posterior` is an output from a `{marginaleffects}` function, `prior` should also be an an output
-#'   from a `{marginaleffects}` function equivalent to `posterior` but created
-#'   with a model of priors samples *only*.
-#'   - When `posterior` is an `emmGrid` / `emm_list` object:
-#'       - `prior` should also be an `emmGrid` / `emm_list` object equivalent to `posterior` but
-#'        created with a model of priors samples *only*. See [unupdate()].
-#'       - `prior` can also be the original (posterior) *model*. If so, the function will try to
-#'        update the `emmGrid` / `emm_list` to use the [unupdate()]d prior-model.
-#'        (*This cannot be done for `brmsfit` models.*)
-#'       - **Note**: When the `emmGrid` has undergone any transformations (`"log"`, `"response"`, etc.),
-#'         or `regrid`ing, then `prior` must be an `emmGrid` object, as stated above.
+#' - **A numeric vector** - `prior` should also be a _numeric vector_, representing the prior-estimate.
+#' - **A data frame** - `prior` should also be a _data frame_, representing the prior-estimates, in matching column order.
+#'   - If `rvar_col` is specified, `prior` should be _the name of an `rvar` column_ that represents the prior-estimates.
+#' - **Supported Bayesian model (`stanreg`, `brmsfit`, etc.)**
+#'   - `prior` should be _a model an equivalent model with MCMC samples from the priors **only**_. See [unupdate()].
+#'   - If `prior` is set to `NULL`, [unupdate()] is called internally (not supported for `brmsfit_multiple` model).
+#' - **Output from a `{marginaleffects}` function** - `prior` should also be _an equivalent output_ from a `{marginaleffects}` function based on a prior-model
+#'  (See [unupdate()]).
+#' - **Output from an `{emmeans}` function**
+#'   - `prior` should also be _an equivalent output_ from an `{emmeans}` function based on a prior-model (See [unupdate()]).
+#'   - `prior` can also be _the original (posterior) model_, in which case the function
+#'      will try to "unupdate" the estimates (not supported if the estimates have undergone
+#'      any transformations -- `"log"`, `"response"`, etc. -- or any `regrid`ing).
 #'
 #' @section Interpreting Bayes Factors:
 #' A Bayes factor greater than 1 can be interpreted as evidence against the
@@ -193,8 +189,8 @@ bayesfactor_parameters <- function(posterior,
                                    prior = NULL,
                                    direction = "two-sided",
                                    null = 0,
-                                   verbose = TRUE,
-                                   ...) {
+                                   ...,
+                                   verbose = TRUE) {
   UseMethod("bayesfactor_parameters")
 }
 
@@ -204,8 +200,8 @@ bayesfactor_pointnull <- function(posterior,
                                   prior = NULL,
                                   direction = "two-sided",
                                   null = 0,
-                                  verbose = TRUE,
-                                  ...) {
+                                  ...,
+                                  verbose = TRUE) {
   if (length(null) > 1L && verbose) {
     insight::format_alert("`null` is a range - computing a ROPE based Bayes factor.")
   }
@@ -226,8 +222,8 @@ bayesfactor_rope <- function(posterior,
                              prior = NULL,
                              direction = "two-sided",
                              null = rope_range(posterior, verbose = FALSE),
-                             verbose = TRUE,
-                             ...) {
+                             ...,
+                             verbose = TRUE) {
   if (length(null) < 2 && verbose) {
     insight::format_alert("'null' is a point - computing a Savage-Dickey (point null) Bayes factor.")
   }
@@ -260,8 +256,8 @@ bayesfactor_parameters.numeric <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           verbose = TRUE,
-                                           ...) {
+                                           ...,
+                                           verbose = TRUE) {
   # nm <- insight::safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
@@ -293,11 +289,11 @@ bayesfactor_parameters.stanreg <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
                                            component = c("conditional", "location", "smooth_terms", "sigma", "zi", "zero_inflated", "all"),
                                            parameters = NULL,
-                                           ...) {
+                                           ...,
+                                           verbose = TRUE) {
   cleaned_parameters <- insight::clean_parameters(posterior)
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -339,8 +335,8 @@ bayesfactor_parameters.blavaan <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           verbose = TRUE,
-                                           ...) {
+                                           ...,
+                                           verbose = TRUE) {
   cleaned_parameters <- insight::clean_parameters(posterior)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
@@ -372,8 +368,8 @@ bayesfactor_parameters.emmGrid <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           verbose = TRUE,
-                                           ...) {
+                                           ...,
+                                           verbose = TRUE) {
   samps <- .clean_priors_and_posteriors(
     posterior,
     prior,
@@ -406,13 +402,33 @@ bayesfactor_parameters.comparisons <- bayesfactor_parameters.emmGrid
 
 
 #' @rdname bayesfactor_parameters
+#' @inheritParams p_direction
 #' @export
 bayesfactor_parameters.data.frame <- function(posterior,
                                               prior = NULL,
                                               direction = "two-sided",
                                               null = 0,
-                                              verbose = TRUE,
-                                              ...) {
+                                              rvar_col = NULL,
+                                              ...,
+                                              verbose = TRUE) {
+  x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
+  if (length(x_rvar) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::bayesfactor_parameters
+    cl$posterior <- x_rvar
+    cl$rvar_col <- NULL
+    prior_rvar <- .possibly_extract_rvar_col(posterior, prior)
+    if (length(prior_rvar) > 0L) {
+      cl$prior <- prior_rvar
+    }
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(posterior))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, posterior))
+  }
+
   # find direction
   direction <- .get_direction(direction)
 
@@ -469,11 +485,11 @@ bayesfactor_parameters.draws <- function(posterior,
                                          prior = NULL,
                                          direction = "two-sided",
                                          null = 0,
-                                         verbose = TRUE,
-                                         ...) {
+                                         ...,
+                                         verbose = TRUE) {
   bayesfactor_parameters(
     .posterior_draws_to_df(posterior),
-    prior = prior,
+    prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
     direction = direction,
     null = null,
     verbose = verbose,

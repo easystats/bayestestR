@@ -34,7 +34,7 @@ map_estimate(x, ...)
   ...
 )
 
-\method{map_estimate}{data.frame}(x, precision = 2^10, method = "kernel", ...)
+\method{map_estimate}{data.frame}(x, precision = 2^10, method = "kernel", rvar_col = NULL, ...)
 
 \method{map_estimate}{get_predicted}(
   x,
@@ -71,6 +71,9 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
 (returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the

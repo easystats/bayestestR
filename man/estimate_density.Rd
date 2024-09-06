@@ -18,6 +18,7 @@ estimate_density(x, ...)
   select = NULL,
   by = NULL,
   at = NULL,
+  rvar_col = NULL,
   ...
 )
 }
@@ -55,6 +56,9 @@ density estimation is performed for each group (subsets) indicated by \code{by}.
 See examples.}
 
 \item{at}{Deprecated in favour of \code{by}.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 }
 \description{
 This function is a wrapper over different methods of density estimation. By

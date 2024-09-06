@@ -3,6 +3,7 @@
 \name{p_rope}
 \alias{p_rope}
 \alias{p_rope.numeric}
+\alias{p_rope.data.frame}
 \alias{p_rope.stanreg}
 \alias{p_rope.brmsfit}
 \title{Probability of being in the ROPE}
@@ -11,6 +12,8 @@ p_rope(x, ...)
 
 \method{p_rope}{numeric}(x, range = "default", verbose = TRUE, ...)
 
+\method{p_rope}{data.frame}(x, range = "default", rvar_col = NULL, verbose = TRUE, ...)
+
 \method{p_rope}{stanreg}(
   x,
   range = "default",
@@ -18,7 +21,7 @@ p_rope(x, ...)
   component = c("location", "all", "conditional", "smooth_terms", "sigma",
     "distributional", "auxiliary"),
   parameters = NULL,
-  verbose = verbose,
+  verbose = TRUE,
   ...
 )
 
@@ -48,6 +51,9 @@ the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Baye
 model, \code{\link[=rope_range]{rope_range()}} is used.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

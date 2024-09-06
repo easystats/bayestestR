@@ -383,10 +383,16 @@ describe_posterior.default <- function(posterior, ...) {
       dot_args <- list(...)
       dot_args$verbose <- !"rope" %in% test
       test_equi <- .prepare_output(
-        equivalence_test(x_df,
-          range = rope_range,
-          ci = rope_ci,
-          dot_args
+        do.call(
+          equivalence_test,
+          c(
+            dot_args,
+            list(
+              x = x_df,
+              range = rope_range,
+              ci = rope_ci
+            )
+          )
         ),
         cleaned_parameters,
         is_stanmvreg
@@ -459,7 +465,7 @@ describe_posterior.default <- function(posterior, ...) {
     test_psig$.rowid <- seq_len(nrow(test_psig))
   } else if (!all(is.na(test_rope$Parameter))) {
     test_rope$.rowid <- seq_len(nrow(test_rope))
-  } else if (!all(is.na(test_bf$Parameter))) {
+  } else if (!all(is.na(test_bf$Parameter))) { # nolint
     test_bf$.rowid <- seq_len(nrow(test_bf))
   } else {
     estimates$.rowid <- seq_len(nrow(estimates))
@@ -568,7 +574,60 @@ describe_posterior.double <- describe_posterior.numeric
 
 
 #' @export
-describe_posterior.data.frame <- describe_posterior.numeric
+#' @rdname describe_posterior
+#' @inheritParams p_direction
+describe_posterior.data.frame <- function(posterior,
+                                          centrality = "median",
+                                          dispersion = FALSE,
+                                          ci = 0.95,
+                                          ci_method = "eti",
+                                          test = c("p_direction", "rope"),
+                                          rope_range = "default",
+                                          rope_ci = 0.95,
+                                          keep_iterations = FALSE,
+                                          bf_prior = NULL,
+                                          BF = 1,
+                                          rvar_col = NULL,
+                                          verbose = TRUE,
+                                          ...) {
+  x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
+  if (length(x_rvar) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::describe_posterior
+    cl$posterior <- x_rvar
+    cl$rvar_col <- NULL
+    prior_rvar <- .possibly_extract_rvar_col(posterior, bf_prior)
+    if (length(prior_rvar) > 0L) {
+      cl$bf_prior <- prior_rvar
+    }
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(posterior))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, posterior))
+  }
+
+
+  out <- .describe_posterior(
+    posterior,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    keep_iterations = keep_iterations,
+    bf_prior = bf_prior,
+    BF = BF,
+    verbose = verbose,
+    ...
+  )
+
+  class(out) <- unique(c("describe_posterior", "see_describe_posterior", class(out)))
+  out
+}
 
 
 #' @export

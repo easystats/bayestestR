@@ -83,7 +83,7 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, th
     estimate_list <- centrality
   }
 
-  out <- data.frame(".temp" = 0)
+  out <- data.frame(.temp = 0)
 
   # Median
   if ("median" %in% estimate_list) {
@@ -130,7 +130,29 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, th
 
 
 #' @export
-point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE, threshold = 0.1, ...) {
+#' @rdname point_estimate
+#' @inheritParams p_direction
+point_estimate.data.frame <- function(x,
+                                      centrality = "all",
+                                      dispersion = FALSE,
+                                      threshold = 0.1,
+                                      rvar_col = NULL,
+                                      ...) {
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::point_estimate
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    obj_name <- insight::safe_deparse_symbol(substitute(x))
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x))
+  }
+
+
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
@@ -140,7 +162,7 @@ point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE,
     estimates <- do.call(rbind, estimates)
   }
 
-  out <- cbind(data.frame("Parameter" = names(x), stringsAsFactors = FALSE), estimates)
+  out <- cbind(data.frame(Parameter = names(x), stringsAsFactors = FALSE), estimates)
   rownames(out) <- NULL
   attr(out, "data") <- x
   attr(out, "centrality") <- centrality
@@ -193,7 +215,11 @@ point_estimate.BGGM <- point_estimate.bcplm
 
 
 #' @export
-point_estimate.bamlss <- function(x, centrality = "all", dispersion = FALSE, component = c("conditional", "location", "all"), ...) {
+point_estimate.bamlss <- function(x,
+                                  centrality = "all",
+                                  dispersion = FALSE,
+                                  component = c("conditional", "location", "all"),
+                                  ...) {
   component <- match.arg(component)
   out <- point_estimate(
     insight::get_parameters(x, component = component),

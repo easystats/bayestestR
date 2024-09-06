@@ -12,7 +12,14 @@ equivalence_test(x, ...)
 
 \method{equivalence_test}{default}(x, ...)
 
-\method{equivalence_test}{data.frame}(x, range = "default", ci = 0.95, verbose = TRUE, ...)
+\method{equivalence_test}{data.frame}(
+  x,
+  range = "default",
+  ci = 0.95,
+  rvar_col = NULL,
+  verbose = TRUE,
+  ...
+)
 
 \method{equivalence_test}{stanreg}(
   x,
@@ -54,6 +61,9 @@ model, \code{\link[=rope_range]{rope_range()}} is used.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
+
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{verbose}{Toggle off warnings.}
 

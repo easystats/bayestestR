@@ -109,8 +109,25 @@ p_significance.get_predicted <- function(x,
 
 
 #' @export
-p_significance.data.frame <- function(x, threshold = "default", ...) {
+#' @rdname p_significance
+#' @inheritParams p_direction
+p_significance.data.frame <- function(x, threshold = "default", rvar_col = NULL, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
+
+  x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
+  if (length(x_rvar) > 0L) {
+    cl <- match.call()
+    cl[[1]] <- bayestestR::p_significance
+    cl$x <- x_rvar
+    cl$rvar_col <- NULL
+    out <- eval.parent(cl)
+
+    attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
+
+    return(.append_datagrid(out, x))
+  }
+
+
   threshold <- .select_threshold_ps(threshold = threshold)
   x <- .select_nums(x)
 
@@ -253,18 +270,18 @@ p_significance.stanreg <- function(x,
   component <- match.arg(component)
   threshold <- .select_threshold_ps(model = x, threshold = threshold, verbose = verbose)
 
-  data <- p_significance(
+  result <- p_significance(
     insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
     threshold = threshold
   )
 
   cleaned_parameters <- insight::clean_parameters(x)
-  out <- .prepare_output(data, cleaned_parameters, inherits(x, "stanmvreg"))
+  out <- .prepare_output(result, cleaned_parameters, inherits(x, "stanmvreg"))
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "threshold") <- threshold
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
-  class(out) <- class(data)
+  class(out) <- class(result)
 
   out
 }
@@ -289,18 +306,18 @@ p_significance.brmsfit <- function(x,
   component <- match.arg(component)
   threshold <- .select_threshold_ps(model = x, threshold = threshold, verbose = verbose)
 
-  data <- p_significance(
+  result <- p_significance(
     insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
     threshold = threshold
   )
 
   cleaned_parameters <- insight::clean_parameters(x)
-  out <- .prepare_output(data, cleaned_parameters)
+  out <- .prepare_output(result, cleaned_parameters)
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "threshold") <- threshold
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
-  class(out) <- class(data)
+  class(out) <- class(result)
 
   out
 }

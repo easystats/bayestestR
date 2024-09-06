@@ -127,8 +127,8 @@ frequentist p-value using \code{\link[=pd_to_p]{pd_to_p()}}.}
 \item{remove_na}{Should missing values be removed before computation? Note
 that \code{Inf} (infinity) are \emph{not} removed.}
 
-\item{rvar_col}{Name of an \code{rvar}-type column. If \code{NULL}, each column in the
-data frame is assumed to represent draws from a posterior distribution.}
+\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
+frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
@@ -263,6 +263,7 @@ p_direction(posterior, method = "kernel")
 df <- data.frame(replicate(4, rnorm(100)))
 p_direction(df)
 p_direction(df, method = "kernel")
+
 \donttest{
 # rstanarm models
 # -----------------------------------------------
@@ -289,6 +290,13 @@ bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 p_direction(bf)
 p_direction(bf, method = "kernel")
 }
+\dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("posterior", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Using "rvar_col"
+x <- data.frame(mu = c(0, 0.5, 1), sigma = c(1, 0.5, 0.25))
+x$my_rvar <- posterior::rvar_rng(rnorm, 3, mean = x$mu, sd = x$sigma)
+x
+p_direction(x, rvar_col = "my_rvar")
 \dontshow{\}) # examplesIf}
 }
 \references{
