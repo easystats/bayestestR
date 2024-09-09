@@ -495,9 +495,9 @@ describe_posterior.default <- function(posterior, ...) {
   # column consist only of missing values, we remove those columns as well
 
   remove_columns <- ".rowid"
-  if (insight::n_unique(out$Effects, na.rm = TRUE) < 2) remove_columns <- c(remove_columns, "Effects")
-  if (insight::n_unique(out$Component, na.rm = TRUE) < 2) remove_columns <- c(remove_columns, "Component")
-  if (insight::n_unique(out$Response, na.rm = TRUE) < 2) remove_columns <- c(remove_columns, "Response")
+  if (insight::n_unique(out$Effects, remove_na = TRUE) < 2) remove_columns <- c(remove_columns, "Effects")
+  if (insight::n_unique(out$Component, remove_na = TRUE) < 2) remove_columns <- c(remove_columns, "Component")
+  if (insight::n_unique(out$Response, remove_na = TRUE) < 2) remove_columns <- c(remove_columns, "Response")
 
   # Restore columns order
   out <- datawizard::data_remove(out[order(out$.rowid), ], remove_columns, verbose = FALSE)
