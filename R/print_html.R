@@ -50,11 +50,22 @@ print_html.p_rope <- function(x, digits = 2, ...) {
 
 #' @export
 print_html.p_significance <- function(x, digits = 2, ...) {
-  caption <- sprintf(
-    "Practical Significance (threshold: %s)",
-    insight::format_value(attributes(x)$threshold, digits = digits)
-  )
-  .print_html_default(x = x, digits = digits, caption = caption, ...)
+  threshold <- attributes(x)$threshold
+  if (is.list(threshold)) {
+    caption <- "Practical Significance"
+    out <- as.data.frame(do.call(rbind, threshold))
+    colnames(out) <- c("ROPE_low", "ROPE_high")
+    x$ROPE_low <- out$ROPE_low
+    x$ROPE_high <- out$ROPE_high
+    ci_string <- "ROPE"
+  } else {
+    caption <- sprintf(
+      "Practical Significance (threshold: %s)",
+      insight::format_value(attributes(x)$threshold, digits = digits)
+    )
+    ci_string <- NULL
+  }
+  .print_html_default(x = x, digits = digits, caption = caption, ci_string = ci_string, ...)
 }
 
 
