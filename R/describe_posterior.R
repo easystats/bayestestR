@@ -18,9 +18,10 @@
 #'   For each "test", the corresponding \pkg{bayestestR} function is called
 #'   (e.g. [bayestestR::rope()] or [bayestestR::p_direction()]) and its results
 #'   included in the summary output.
-#' @param rope_range ROPE's lower and higher bounds. Should be a list of two
-#'   values (e.g., `c(-0.1, 0.1)`) or `"default"`. If `"default"`,
-#'   the bounds are set to `x +- 0.1*SD(response)`.
+#' @param rope_range ROPE's lower and higher bounds. Should be a vector of two
+#'   values (e.g., `c(-0.1, 0.1)`), `"default"` or a list of numeric vectors of
+#'   the same length as numbers of parameters. If `"default"`, the bounds are
+#'   set to `x +- 0.1*SD(response)`.
 #' @param rope_ci The Credible Interval (CI) probability, corresponding to the
 #'   proportion of HDI, to use for the percentage in ROPE.
 #' @param keep_iterations If `TRUE`, will keep all iterations (draws) of
@@ -90,6 +91,7 @@
 #'   describe_posterior(model)
 #'   describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 #'   describe_posterior(model, ci = c(0.80, 0.90))
+#'   describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #'
 #'   # emmeans estimates
 #'   # -----------------------------------------------

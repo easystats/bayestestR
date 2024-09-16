@@ -51,13 +51,13 @@ equivalence_test(x, ...)
 \item{...}{Currently not used.}
 
 \item{range}{ROPE's lower and higher bounds. Should be \code{"default"} or
-depending on the number of outcome variables a vector or a list. In
-models with one response, \code{range} should be a vector of length two (e.g.,
-\code{c(-0.1, 0.1)}). In multivariate models, \code{range} should be a list with a
-numeric vectors for each response variable. Vector names should correspond
-to the name of the response variables. If \code{"default"} and input is a vector,
-the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian
-model, \code{\link[=rope_range]{rope_range()}} is used.}
+depending on the number of outcome variables a vector or a list. In models
+with one response, \code{range} can be a vector of length two (e.g., \code{c(-0.1, 0.1)}), or a list of numeric vector of the same length as numbers of
+parameters (see 'Examples'). In multivariate models, \code{range} should be a list
+with a numeric vectors for each response variable. Vector names should
+correspond to the name of the response variables. If \code{"default"} and input is
+a vector, the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a
+Bayesian model, \code{\link[=rope_range]{rope_range()}} is used.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}

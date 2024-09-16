@@ -6,13 +6,14 @@
 #' @param x Vector representing a posterior distribution. Can also be a
 #' `stanreg` or `brmsfit` model.
 #' @param range ROPE's lower and higher bounds. Should be `"default"` or
-#' depending on the number of outcome variables a vector or a list. In
-#' models with one response, `range` should be a vector of length two (e.g.,
-#' `c(-0.1, 0.1)`). In multivariate models, `range` should be a list with a
-#' numeric vectors for each response variable. Vector names should correspond
-#' to the name of the response variables. If `"default"` and input is a vector,
-#' the range is set to `c(-0.1, 0.1)`. If `"default"` and input is a Bayesian
-#' model, [`rope_range()`][rope_range] is used.
+#' depending on the number of outcome variables a vector or a list. In models
+#' with one response, `range` can be a vector of length two (e.g., `c(-0.1,
+#' 0.1)`), or a list of numeric vector of the same length as numbers of
+#' parameters (see 'Examples'). In multivariate models, `range` should be a list
+#' with a numeric vectors for each response variable. Vector names should
+#' correspond to the name of the response variables. If `"default"` and input is
+#' a vector, the range is set to `c(-0.1, 0.1)`. If `"default"` and input is a
+#' Bayesian model, [`rope_range()`][rope_range] is used.
 #' @param ci The Credible Interval (CI) probability, corresponding to the
 #' proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in
@@ -109,6 +110,9 @@
 #' )
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
+#'
+#' # multiple ROPE ranges
+#' rope(model, range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #'
 #' library(emmeans)
 #' rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
@@ -381,7 +385,7 @@ rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", eff
 
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -442,7 +446,7 @@ rope.brmsfit <- function(x,
         "With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2."
       )
     }
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
     insight::format_error(
       "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
     )
@@ -514,7 +518,7 @@ rope.sim.merMod <- function(x,
 
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -574,7 +578,7 @@ rope.sim.merMod <- function(x,
 rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", parameters = NULL, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -607,15 +611,42 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
 
 #' @keywords internal
 .prepare_rope_df <- function(parms, range, ci, ci_method, verbose) {
-  tmp <- sapply(
-    parms,
-    rope,
-    range = range,
-    ci = ci,
-    ci_method = ci_method,
-    verbose = verbose,
-    simplify = FALSE
-  )
+  if (is.list(range)) {
+    if (length(range) != ncol(parms)) {
+      insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
+    }
+    # check if list of values contains only valid values
+    checks <- vapply(range, function(r) {
+      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
+    }, logical(1))
+    if (!all(checks)) {
+      insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    }
+    tmp <- mapply(
+      function(p, r) {
+        rope(
+          p,
+          range = r,
+          ci = ci,
+          ci_method = ci_method,
+          verbose = verbose
+        )
+      },
+      parms,
+      range,
+      SIMPLIFY = FALSE
+    )
+  } else {
+    tmp <- sapply(
+      parms,
+      rope,
+      range = range,
+      ci = ci,
+      ci_method = ci_method,
+      verbose = verbose,
+      simplify = FALSE
+    )
+  }
 
   HDI_area <- lapply(tmp, attr, which = "HDI_area")
 

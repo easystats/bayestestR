@@ -146,6 +146,11 @@ test_that("describe_posterior", {
   )
   expect_identical(dim(rez), c(4L, 21L))
 
+  # allow multiple ropes
+  rez <- describe_posterior(x, rope_range = list(c(-1, 1), "default"))
+  expect_identical(rez$ROPE_low, c(-1, -0.1), tolerance = 1e-3)
+  expect_identical(rez$ROPE_high, c(1, 0.1), tolerance = 1e-3)
+
   rez <- describe_posterior(
     x,
     centrality = NULL,
