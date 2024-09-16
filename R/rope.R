@@ -518,7 +518,7 @@ rope.sim.merMod <- function(x,
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  list <- lapply(c("fixed", "random"), function(.x) {
+  rope_list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
 
     getropedata <- .prepare_rope_df(parms, range, ci, ci_method, verbose)
@@ -543,7 +543,7 @@ rope.sim.merMod <- function(x,
     tmp
   })
 
-  dat <- do.call(rbind, args = c(insight::compact_list(list), make.row.names = FALSE))
+  dat <- do.call(rbind, args = c(insight::compact_list(rope_list), make.row.names = FALSE))
 
   dat <- switch(effects,
     fixed = .select_rows(dat, "Group", "fixed"),
@@ -555,7 +555,7 @@ rope.sim.merMod <- function(x,
     dat <- datawizard::data_remove(dat, "Group", verbose = FALSE)
   }
 
-  HDI_area_attributes <- lapply(insight::compact_list(list), attr, "HDI_area")
+  HDI_area_attributes <- lapply(insight::compact_list(rope_list), attr, "HDI_area")
 
   if (effects != "all") {
     HDI_area_attributes <- HDI_area_attributes[[1]]
