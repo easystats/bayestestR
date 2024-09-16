@@ -59,8 +59,9 @@ test_that("brms", {
     tolerance = 0.01
   )
 
+  out <- p_significance(m2, threshold = list(1, "default", 2), effects = "all")
   expect_equal(
-    p_significance(m2, threshold = list(1, "default", 2), effects = "all")$ps,
+    out$ps,
     c(1.00000, 0.99850, 0.12275),
     tolerance = 0.01
   )
