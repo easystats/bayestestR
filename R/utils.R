@@ -15,6 +15,47 @@
   x[unlist(lapply(x, is.numeric))]
 }
 
+#' @keywords internal
+.retrieve_model <- function(x) {
+  # retrieve model
+  obj_name <- attr(x, "object_name", exact = TRUE)
+  model <- NULL
+
+  if (!is.null(obj_name)) {
+    # first try, parent frame
+    model <- .safe(get(obj_name, envir = parent.frame()))
+
+    if (is.null(model)) {
+      # second try, global env
+      model <- .safe(get(obj_name, envir = globalenv()))
+    }
+
+    if (is.null(model)) {
+      # last try
+      model <- .dynGet(obj_name, ifnotfound = NULL)
+    }
+  }
+  model
+}
+
+#' @keywords internal
+.dynGet <- function(x,
+                    ifnotfound = stop(gettextf("%s not found", sQuote(x)), domain = NA, call. = FALSE),
+                    minframe = 1L,
+                    inherits = FALSE) {
+  x <- insight::safe_deparse(x)
+  n <- sys.nframe()
+  myObj <- structure(list(.b = as.raw(7)), foo = 47L)
+  while (n > minframe) {
+    n <- n - 1L
+    env <- sys.frame(n)
+    r <- get0(x, envir = env, inherits = inherits, ifnotfound = myObj)
+    if (!identical(r, myObj)) {
+      return(r)
+    }
+  }
+  ifnotfound
+}
 
 #' @keywords internal
 .get_direction <- function(direction) {
