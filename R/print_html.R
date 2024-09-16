@@ -31,11 +31,19 @@ print_html.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) 
 
 #' @export
 print_html.p_rope <- function(x, digits = 2, ...) {
-  caption <- sprintf(
-    "Proportion of samples inside the ROPE [%.*f, %.*f]",
-    digits, x$ROPE_low[1], digits, x$ROPE_high[1]
-  )
-  x$ROPE_low <- x$ROPE_high <- NULL
+  # check if we have multiple ROPE values
+  if (insight::n_unique(x$ROPE_low) > 1) {
+    caption <- "Proportion of samples inside the ROPE"
+  } else {
+    caption <- sprintf(
+      "Proportion of samples inside the ROPE [%.*f, %.*f]",
+      digits,
+      x$ROPE_low[1],
+      digits,
+      x$ROPE_high[1]
+    )
+    x$ROPE_low <- x$ROPE_high <- NULL
+  }
   .print_html_default(x = x, digits = digits, caption = caption, ci_string = "ROPE", ...)
 }
 

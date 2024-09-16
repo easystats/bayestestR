@@ -133,6 +133,28 @@ p_significance.data.frame <- function(x, threshold = "default", rvar_col = NULL,
 
   if (ncol(x) == 1) {
     ps <- .p_significance(x[, 1], threshold = threshold, ...)
+  } else if (is.list(threshold)) {
+    if (length(threshold) != ncol(x)) {
+      insight::format_error("Length of `threshold` should match the number of parameters.")
+    }
+    # check if list of values contains only valid values
+    checks <- vapply(threshold, function(r) {
+      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
+    }, logical(1))
+    if (!all(checks)) {
+      insight::format_error("`threshold` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    }
+    ps <- mapply(
+      function(p, thres) {
+        .p_significance(
+          p,
+          threshold = thres
+        )
+      },
+      x,
+      threshold,
+      SIMPLIFY = FALSE
+    )
   } else {
     ps <- sapply(x, .p_significance, threshold = threshold, simplify = TRUE, ...)
   }
@@ -365,6 +387,15 @@ as.double.p_significance <- as.numeric.p_significance
 
 #' @keywords internal
 .select_threshold_ps <- function(model = NULL, threshold = "default", verbose = TRUE) {
+  if (is.list(threshold)) {
+    lapply(threshold, .select_threshold_list, model = model, verbose = verbose)
+  } else {
+    .select_threshold_list(model = model, threshold = threshold, verbose = verbose)
+  }
+}
+
+#' @keywords internal
+.select_threshold_list <- function(model = NULL, threshold = "default", verbose = TRUE) {
   # If default
   if (all(threshold == "default")) {
     if (is.null(model)) {
@@ -372,11 +403,11 @@ as.double.p_significance <- as.numeric.p_significance
     } else {
       threshold <- rope_range(model, verbose = verbose)[2]
     }
-  } else if (!all(is.numeric(threshold)) || length(threshold) > 2) {
+  } else if (!is.list(threshold) && (!all(is.numeric(threshold)) || length(threshold) > 2)) {
     insight::format_error(
       "`threshold` should be one of the following values:",
       "- \"default\", in which case the threshold is based on `rope_range()`",
-      "- a single numeric value (e.g., 0.1), which is used as range around zero (i.e. the threshold range is set to -0.1 and 0.1)",
+      "- a single numeric value (e.g., 0.1), which is used as range around zero (i.e. the threshold range is set to -0.1 and 0.1)", # nolint
       "- a numeric vector of length two (e.g., `c(-0.2, 0.1)`)"
     )
   }
