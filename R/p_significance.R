@@ -54,8 +54,8 @@
 #'   chains = 2, refresh = 0
 #' )
 #' p_significance(model)
-#' # multiple thresholds
-#' p_significance(model, threshold = list(c(-10, 5), c(-0.2, 0.2), "default"))
+#' # multiple thresholds - asymmetric, symmetric, default
+#' p_significance(model, threshold = list(c(-10, 5), 0.2, "default"))
 #' }
 #' @export
 p_significance <- function(x, ...) {
@@ -142,7 +142,7 @@ p_significance.data.frame <- function(x, threshold = "default", rvar_col = NULL,
     }
     # check if list of values contains only valid values
     checks <- vapply(threshold, function(r) {
-      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
+      !all(r == "default") || !all(is.numeric(r)) || length(r) > 2
     }, logical(1))
     if (!all(checks)) {
       insight::format_error("`threshold` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
@@ -391,7 +391,13 @@ as.double.p_significance <- as.numeric.p_significance
 #' @keywords internal
 .select_threshold_ps <- function(model = NULL, threshold = "default", verbose = TRUE) {
   if (is.list(threshold)) {
-    lapply(threshold, .select_threshold_list, model = model, verbose = verbose)
+    lapply(threshold, function(i) {
+      out <- .select_threshold_list(model = model, threshold = i, verbose = verbose)
+      if (length(out) == 1) {
+        out <- c(-1 * abs(out), abs(out))
+      }
+      out
+    })
   } else {
     .select_threshold_list(model = model, threshold = threshold, verbose = verbose)
   }

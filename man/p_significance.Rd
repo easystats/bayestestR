@@ -132,8 +132,8 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl,
   chains = 2, refresh = 0
 )
 p_significance(model)
-# multiple thresholds
-p_significance(model, threshold = list(c(-10, 5), c(-0.2, 0.2), "default"))
+# multiple thresholds - asymmetric, symmetric, default
+p_significance(model, threshold = list(c(-10, 5), 0.2, "default"))
 }
 \dontshow{\}) # examplesIf}
 }
