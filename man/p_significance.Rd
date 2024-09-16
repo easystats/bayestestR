@@ -59,7 +59,8 @@ and based on \code{\link[=rope_range]{rope_range()}} if a (Bayesian) model is pr
 (i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
 interval)
 \item a numeric vector of length two (e.g., \code{c(-0.2, 0.1)}), useful for
-asymmetric intervals.
+asymmetric intervals
+\item a list of numeric vectors, where each vector corresponds to a parameter.
 }}
 
 \item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
@@ -131,6 +132,8 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl,
   chains = 2, refresh = 0
 )
 p_significance(model)
+# multiple thresholds
+p_significance(model, threshold = list(c(-10, 5), c(-0.2, 0.2), "default"))
 }
 \dontshow{\}) # examplesIf}
 }

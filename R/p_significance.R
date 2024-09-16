@@ -15,7 +15,8 @@
 #'   (i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
 #'   interval)
 #' - a numeric vector of length two (e.g., `c(-0.2, 0.1)`), useful for
-#'   asymmetric intervals.
+#'   asymmetric intervals
+#' - a list of numeric vectors, where each vector corresponds to a parameter.
 #' @inheritParams rope
 #' @inheritParams hdi
 #'
@@ -53,6 +54,8 @@
 #'   chains = 2, refresh = 0
 #' )
 #' p_significance(model)
+#' # multiple thresholds
+#' p_significance(model, threshold = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #' }
 #' @export
 p_significance <- function(x, ...) {
