@@ -100,7 +100,8 @@ print.p_significance <- function(x, digits = 2, ...) {
     caption <- "Practical Significance"
     out <- as.data.frame(do.call(rbind, threshold))
     colnames(out) <- c("ROPE_low", "ROPE_high")
-    x <- cbind(x, out)
+    x$ROPE_low <- out$ROPE_low
+    x$ROPE_high <- out$ROPE_high
     ci_string <- "ROPE"
   } else {
     caption <- sprintf(
