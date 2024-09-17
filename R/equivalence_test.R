@@ -165,13 +165,40 @@ equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, rvar_co
     return(.append_datagrid(out, x))
   }
 
-  l <- insight::compact_list(lapply(
-    x,
-    equivalence_test,
-    range = range,
-    ci = ci,
-    verbose = verbose
-  ))
+  # multiple ranges for the parameters - iterate over parameters and range
+  if (is.list(range)) {
+    if (length(range) != ncol(x)) {
+      insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
+    }
+    # check if list of values contains only valid values
+    checks <- vapply(range, function(r) {
+      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
+    }, logical(1))
+    if (!all(checks)) {
+      insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    }
+    l <- insight::compact_list(mapply(
+      function(p, r) {
+        equivalence_test(
+          p,
+          range = r,
+          ci = ci,
+          verbose = verbose
+        )
+      },
+      x,
+      range,
+      SIMPLIFY = FALSE
+    ))
+  } else {
+    l <- insight::compact_list(lapply(
+      x,
+      equivalence_test,
+      range = range,
+      ci = ci,
+      verbose = verbose
+    ))
+  }
 
   dat <- do.call(rbind, l)
   out <- data.frame(
@@ -259,50 +286,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
     verbose = verbose
   )
 
-  if (is.list(range)) {
-    if (length(range) != ncol(params)) {
-      insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
-    }
-    # check if list of values contains only valid values
-    checks <- vapply(range, function(r) {
-      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
-    }, logical(1))
-    if (!all(checks)) {
-      insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
-    }
-    l <- mapply(
-      function(p, r) {
-        equivalence_test(
-          p,
-          range = r,
-          ci = ci,
-          verbose = verbose
-        )
-      },
-      params,
-      range,
-      SIMPLIFY = FALSE
-    )
-  } else {
-    l <- sapply(
-      params,
-      equivalence_test,
-      range = range,
-      ci = ci,
-      verbose = verbose,
-      simplify = FALSE
-    )
-  }
-
-  dat <- do.call(rbind, l)
-  out <- data.frame(
-    Parameter = rep(names(l), each = nrow(dat) / length(l)),
-    dat,
-    stringsAsFactors = FALSE
-  )
-
-  class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
-  out
+  equivalence_test(params, range = range, ci = ci, verbose = verbose)
 }
 
 
