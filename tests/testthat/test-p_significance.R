@@ -103,5 +103,4 @@ test_that("stan", {
     p_significance(m, threshold = list(1, 2, 3, 4), effects = "all"),
     regex = "Length of"
   )
-
 })
