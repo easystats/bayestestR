@@ -612,16 +612,9 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
 #' @keywords internal
 .prepare_rope_df <- function(parms, range, ci, ci_method, verbose) {
   if (is.list(range)) {
-    if (length(range) != ncol(parms)) {
-      insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
-    }
     # check if list of values contains only valid values
-    checks <- vapply(range, function(r) {
-      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
-    }, logical(1))
-    if (!all(checks)) {
-      insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
-    }
+    .check_list_range(range, params)
+    # apply thresholds to each column
     tmp <- mapply(
       function(p, r) {
         rope(

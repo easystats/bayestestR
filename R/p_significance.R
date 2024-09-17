@@ -137,16 +137,9 @@ p_significance.data.frame <- function(x, threshold = "default", rvar_col = NULL,
   if (ncol(x) == 1) {
     ps <- .p_significance(x[, 1], threshold = threshold, ...)
   } else if (is.list(threshold)) {
-    if (length(threshold) != ncol(x)) {
-      insight::format_error("Length of `threshold` should match the number of parameters.")
-    }
     # check if list of values contains only valid values
-    checks <- vapply(threshold, function(r) {
-      !all(r == "default") || !all(is.numeric(r)) || length(r) > 2
-    }, logical(1))
-    if (!all(checks)) {
-      insight::format_error("`threshold` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
-    }
+    .check_list_range(threshold, x, larger_two = TRUE)
+    # apply thresholds to each column
     ps <- mapply(
       function(p, thres) {
         .p_significance(
@@ -421,4 +414,21 @@ as.double.p_significance <- as.numeric.p_significance
     )
   }
   threshold
+}
+
+.check_list_range <- function(range, params, larger_two = FALSE) {
+  if (length(range) != ncol(params)) {
+    insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
+  }
+  # check if list of values contains only valid values
+  checks <- vapply(range, function(r) {
+    if (larger_two) {
+      !all(r == "default") || !all(is.numeric(r)) || length(r) > 2
+    } else {
+      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
+    }
+  }, logical(1))
+  if (!all(checks)) {
+    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
 }

@@ -167,16 +167,9 @@ equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, rvar_co
 
   # multiple ranges for the parameters - iterate over parameters and range
   if (is.list(range)) {
-    if (length(range) != ncol(x)) {
-      insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
-    }
     # check if list of values contains only valid values
-    checks <- vapply(range, function(r) {
-      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
-    }, logical(1))
-    if (!all(checks)) {
-      insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
-    }
+    .check_list_range(range, x)
+    # apply thresholds to each column
     l <- insight::compact_list(mapply(
       function(p, r) {
         equivalence_test(
