@@ -31,7 +31,7 @@ p_rope(x, ...)
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,
-  verbose = verbose,
+  verbose = TRUE,
   ...
 )
 }
