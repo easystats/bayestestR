@@ -70,4 +70,13 @@ test_that("brms", {
     list(c(-1, 1), c(-0.60269480520891, 0.60269480520891), c(-2, 2)),
     tolerance = 1e-4
   )
+
+  expect_error(
+    p_significance(m2, threshold = list(1, "a", 2), effects = "all"),
+    regex = "should be one of"
+  )
+  expect_error(
+    p_significance(m2, threshold = list(1, 2, 3, 4), effects = "all"),
+    regex = "Length of"
+  )
 })

@@ -49,6 +49,15 @@ test_that("rope", {
     rope(p, verbose = FALSE)$ROPE_Percentage,
     tolerance = 1e-3
   )
+
+  expect_error(
+    rope(m, range = list(c(-0.1, 0.1), c(2, 2))),
+    regex = "Length of"
+  )
+  expect_error(
+    rope(m, range = list(c(-0.1, 0.1), c(2, 2), "default", "a", c(1, 3))),
+    regex = "should be 'default'"
+  )
 })
 
 
