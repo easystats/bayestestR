@@ -319,7 +319,7 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     sep = " ",
     header = NULL,
     format = "text",
-    align = align,
+    align = align
   ))
 
   invisible(x)

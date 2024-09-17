@@ -105,7 +105,7 @@ print_html.bayesfactor_models <- function(x,
     log = log,
     show_names = show_names,
     caption = caption,
-    align = c("llr"),
+    align = "llr",
     ...
   )
 }
@@ -122,7 +122,7 @@ print_html.bayesfactor_inclusion <- function(x,
     digits = digits,
     log = log,
     caption = caption,
-    align = c("lrrr"),
+    align = "lrrr",
     ...
   )
 }
