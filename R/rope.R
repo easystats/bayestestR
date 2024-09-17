@@ -121,6 +121,9 @@
 #' # multiple ROPE ranges
 #' rope(model, range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #'
+#' # named ROPE ranges
+#' rope(model, range = list(gear = c(-3, 2), wt = c(-0.2, 0.2)))
+#'
 #' library(emmeans)
 #' rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 #'

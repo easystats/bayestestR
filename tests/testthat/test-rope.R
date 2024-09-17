@@ -53,7 +53,7 @@ test_that("rope", {
   # list range
   expect_equal(
     rope(m, range = list(c(-1, 0.1), "default", "default", c(-1, 1), c(-1.5, -1)))$ROPE_Percentage,
-    c(0.15823, 1, 0, 0.3903, 0.38186)
+    c(0.15823, 1, 0, 0.3903, 0.38186),
     tolerance = 1e-3
   )
 

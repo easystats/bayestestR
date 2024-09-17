@@ -87,6 +87,8 @@
 #' equivalence_test(model)
 #' # multiple ROPE ranges - asymmetric, symmetric, default
 #' equivalence_test(model, range = list(c(10, 40), c(-5, -4), "default"))
+#' # named ROPE ranges
+#' equivalence_test(model, range = list(wt = c(-5, -4), `(Intercept)` = c(10, 40)))
 #'
 #' # plot result
 #' test <- equivalence_test(model)

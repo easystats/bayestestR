@@ -59,7 +59,7 @@
 #' p_significance(model)
 #' # multiple thresholds - asymmetric, symmetric, default
 #' p_significance(model, threshold = list(c(-10, 5), 0.2, "default"))
-#' # names thresholds
+#' # named thresholds
 #' p_significance(model, threshold = list(wt = 0.2, `(Intercept)` = c(-10, 5)))
 #' }
 #' @export
