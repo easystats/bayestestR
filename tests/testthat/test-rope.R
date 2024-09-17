@@ -72,6 +72,10 @@ test_that("rope", {
     rope(m, range = list(c(-0.1, 0.1), c(2, 2), "default", "a", c(1, 3))),
     regex = "should be 'default'"
   )
+  expect_error(
+    rope(m, range = list("(Intercept)" = c(-1, 0.1), pointout = c(-1.5, -1), period3 = c(-1, 1))),
+    regex = "Not all elements"
+  )
 })
 
 

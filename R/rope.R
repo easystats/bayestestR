@@ -6,14 +6,21 @@
 #' @param x Vector representing a posterior distribution. Can also be a
 #' `stanreg` or `brmsfit` model.
 #' @param range ROPE's lower and higher bounds. Should be `"default"` or
-#' depending on the number of outcome variables a vector or a list. In models
-#' with one response, `range` can be a vector of length two (e.g., `c(-0.1,
-#' 0.1)`), or a list of numeric vector of the same length as numbers of
-#' parameters (see 'Examples'). In multivariate models, `range` should be a list
-#' with a numeric vectors for each response variable. Vector names should
-#' correspond to the name of the response variables. If `"default"` and input is
-#' a vector, the range is set to `c(-0.1, 0.1)`. If `"default"` and input is a
-#' Bayesian model, [`rope_range()`][rope_range] is used.
+#' depending on the number of outcome variables a vector or a list. For models
+#' with one response, `range` can be:
+#'
+#' - a vector of length two (e.g., `c(-0.1, 0.1)`),
+#' - a list of numeric vector of the same length as numbers of parameters (see
+#'   'Examples').
+#' - a list of *named* numeric vectors, where names correspond to parameter
+#'   names. In this case, all parameters that have no matching name in `range`
+#'   will be set to `"default"`.
+#'
+#' In multivariate models, `range` should be a list with a numeric vectors for
+#' each response variable. Vector names should correspond to the name of the
+#' response variables. If `"default"` and input is a vector, the range is set to
+#' `c(-0.1, 0.1)`. If `"default"` and input is a Bayesian model,
+#' [`rope_range()`] is used.
 #' @param ci The Credible Interval (CI) probability, corresponding to the
 #' proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in
@@ -34,7 +41,7 @@
 #' size according to Cohen, 1988). This could be generalized: For instance,
 #' for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`.
 #' This ROPE range can be automatically computed for models using the
-#' [rope_range] function.
+#' [`rope_range()`] function.
 #'
 #' Kruschke (2010, 2011, 2014) suggests using the proportion of  the `95%`
 #' (or `89%`, considered more stable) [HDI][hdi] that falls within the

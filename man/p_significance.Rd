@@ -60,7 +60,10 @@ and based on \code{\link[=rope_range]{rope_range()}} if a (Bayesian) model is pr
 interval)
 \item a numeric vector of length two (e.g., \code{c(-0.2, 0.1)}), useful for
 asymmetric intervals
-\item a list of numeric vectors, where each vector corresponds to a parameter.
+\item a list of numeric vectors, where each vector corresponds to a parameter
+\item a list of \emph{named} numeric vectors, where names correspond to parameter
+names. In this case, all parameters that have no matching name in \code{threshold}
+will be set to \code{"default"}.
 }}
 
 \item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
@@ -134,6 +137,8 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl,
 p_significance(model)
 # multiple thresholds - asymmetric, symmetric, default
 p_significance(model, threshold = list(c(-10, 5), 0.2, "default"))
+# names thresholds
+p_significance(model, threshold = list(wt = 0.2, `(Intercept)` = c(-10, 5)))
 }
 \dontshow{\}) # examplesIf}
 }
