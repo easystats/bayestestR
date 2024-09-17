@@ -37,7 +37,6 @@ test_that("p_significance", {
 test_that("stanreg", {
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
-
   m <- insight::download_model("stanreg_merMod_5")
 
   expect_equal(
@@ -49,7 +48,7 @@ test_that("stanreg", {
 
 test_that("brms", {
   skip_if_offline()
-  skip_if_not_or_load_if_installed("rstanarm")
+  skip_if_not_or_load_if_installed("brms")
 
   m2 <- insight::download_model("brms_1")
 
@@ -57,5 +56,51 @@ test_that("brms", {
     p_significance(m2, effects = "all")$ps,
     c(1.0000, 0.9985, 0.9785),
     tolerance = 0.01
+  )
+
+  out <- p_significance(m2, threshold = list(1, "default", 2), effects = "all")
+  expect_equal(
+    out$ps,
+    c(1.00000, 0.99850, 0.12275),
+    tolerance = 0.01
+  )
+  expect_equal(
+    attributes(out)$threshold,
+    list(c(-1, 1), c(-0.60269480520891, 0.60269480520891), c(-2, 2)),
+    tolerance = 1e-4
+  )
+
+  expect_error(
+    p_significance(m2, threshold = list(1, "a", 2), effects = "all"),
+    regex = "should be one of"
+  )
+  expect_error(
+    p_significance(m2, threshold = list(1, 2, 3, 4), effects = "all"),
+    regex = "Length of"
+  )
+})
+
+test_that("stan", {
+  skip_if_offline()
+  skip_if_not_or_load_if_installed("rstanarm")
+  m <- insight::download_model("stanreg_merMod_5")
+
+  expect_equal(
+    p_significance(m, threshold = list("(Intercept)" = 1, period4 = 1.5, period3 = 0.5))$ps,
+    p_significance(m, threshold = list(1, "default", "default", 0.5, 1.5))$ps,
+    tolerance = 1e-4
+  )
+
+  expect_error(
+    p_significance(m, threshold = list("(Intercept)" = 1, point = 1.5, period3 = 0.5)),
+    regex = "Not all elements"
+  )
+  expect_error(
+    p_significance(m, threshold = list(1, "a", 2), effects = "all"),
+    regex = "should be one of"
+  )
+  expect_error(
+    p_significance(m, threshold = list(1, 2, 3, 4), effects = "all"),
+    regex = "Length of"
   )
 })

@@ -51,13 +51,22 @@ equivalence_test(x, ...)
 \item{...}{Currently not used.}
 
 \item{range}{ROPE's lower and higher bounds. Should be \code{"default"} or
-depending on the number of outcome variables a vector or a list. In
-models with one response, \code{range} should be a vector of length two (e.g.,
-\code{c(-0.1, 0.1)}). In multivariate models, \code{range} should be a list with a
-numeric vectors for each response variable. Vector names should correspond
-to the name of the response variables. If \code{"default"} and input is a vector,
-the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian
-model, \code{\link[=rope_range]{rope_range()}} is used.}
+depending on the number of outcome variables a vector or a list. For models
+with one response, \code{range} can be:
+\itemize{
+\item a vector of length two (e.g., \code{c(-0.1, 0.1)}),
+\item a list of numeric vector of the same length as numbers of parameters (see
+'Examples').
+\item a list of \emph{named} numeric vectors, where names correspond to parameter
+names. In this case, all parameters that have no matching name in \code{range}
+will be set to \code{"default"}.
+}
+
+In multivariate models, \code{range} should be a list with a numeric vectors for
+each response variable. Vector names should correspond to the name of the
+response variables. If \code{"default"} and input is a vector, the range is set to
+\code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
+\code{\link[=rope_range]{rope_range()}} is used.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
@@ -164,6 +173,10 @@ print(test, digits = 4)
 \donttest{
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
+# multiple ROPE ranges - asymmetric, symmetric, default
+equivalence_test(model, range = list(c(10, 40), c(-5, -4), "default"))
+# named ROPE ranges
+equivalence_test(model, range = list(wt = c(-5, -4), `(Intercept)` = c(10, 40)))
 
 # plot result
 test <- equivalence_test(model)

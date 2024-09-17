@@ -92,6 +92,13 @@ rope_range.default <- function(x, verbose = TRUE, ...) {
 
 
 #' @export
+rope_range.parameters_model <- function(x, verbose = TRUE, ...) {
+  model <- .retrieve_model(x)
+  rope_range.default(x = model, verbose = verbose, ...)
+}
+
+
+#' @export
 rope_range.data.frame <- function(x, verbose = TRUE, ...) {
   # to avoid errors with "get_response()" in the default method
   c(-0.1, 0.1)

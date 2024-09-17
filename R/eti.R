@@ -316,8 +316,8 @@ eti.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   ))
 
   data.frame(
-    "CI" = ci,
-    "CI_low" = results[1],
-    "CI_high" = results[2]
+    CI = ci,
+    CI_low = results[1],
+    CI_high = results[2]
   )
 }

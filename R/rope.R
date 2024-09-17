@@ -6,13 +6,21 @@
 #' @param x Vector representing a posterior distribution. Can also be a
 #' `stanreg` or `brmsfit` model.
 #' @param range ROPE's lower and higher bounds. Should be `"default"` or
-#' depending on the number of outcome variables a vector or a list. In
-#' models with one response, `range` should be a vector of length two (e.g.,
-#' `c(-0.1, 0.1)`). In multivariate models, `range` should be a list with a
-#' numeric vectors for each response variable. Vector names should correspond
-#' to the name of the response variables. If `"default"` and input is a vector,
-#' the range is set to `c(-0.1, 0.1)`. If `"default"` and input is a Bayesian
-#' model, [`rope_range()`][rope_range] is used.
+#' depending on the number of outcome variables a vector or a list. For models
+#' with one response, `range` can be:
+#'
+#' - a vector of length two (e.g., `c(-0.1, 0.1)`),
+#' - a list of numeric vector of the same length as numbers of parameters (see
+#'   'Examples').
+#' - a list of *named* numeric vectors, where names correspond to parameter
+#'   names. In this case, all parameters that have no matching name in `range`
+#'   will be set to `"default"`.
+#'
+#' In multivariate models, `range` should be a list with a numeric vectors for
+#' each response variable. Vector names should correspond to the name of the
+#' response variables. If `"default"` and input is a vector, the range is set to
+#' `c(-0.1, 0.1)`. If `"default"` and input is a Bayesian model,
+#' [`rope_range()`] is used.
 #' @param ci The Credible Interval (CI) probability, corresponding to the
 #' proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in
@@ -33,7 +41,7 @@
 #' size according to Cohen, 1988). This could be generalized: For instance,
 #' for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`.
 #' This ROPE range can be automatically computed for models using the
-#' [rope_range] function.
+#' [`rope_range()`] function.
 #'
 #' Kruschke (2010, 2011, 2014) suggests using the proportion of  the `95%`
 #' (or `89%`, considered more stable) [HDI][hdi] that falls within the
@@ -109,6 +117,12 @@
 #' )
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
+#'
+#' # multiple ROPE ranges
+#' rope(model, range = list(c(-10, 5), c(-0.2, 0.2), "default"))
+#'
+#' # named ROPE ranges
+#' rope(model, range = list(gear = c(-3, 2), wt = c(-0.2, 0.2)))
 #'
 #' library(emmeans)
 #' rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
@@ -381,7 +395,7 @@ rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", eff
 
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -442,7 +456,7 @@ rope.brmsfit <- function(x,
         "With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2."
       )
     }
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
     insight::format_error(
       "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
     )
@@ -514,11 +528,11 @@ rope.sim.merMod <- function(x,
 
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  list <- lapply(c("fixed", "random"), function(.x) {
+  rope_list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
 
     getropedata <- .prepare_rope_df(parms, range, ci, ci_method, verbose)
@@ -543,7 +557,7 @@ rope.sim.merMod <- function(x,
     tmp
   })
 
-  dat <- do.call(rbind, args = c(insight::compact_list(list), make.row.names = FALSE))
+  dat <- do.call(rbind, args = c(insight::compact_list(rope_list), make.row.names = FALSE))
 
   dat <- switch(effects,
     fixed = .select_rows(dat, "Group", "fixed"),
@@ -555,7 +569,7 @@ rope.sim.merMod <- function(x,
     dat <- datawizard::data_remove(dat, "Group", verbose = FALSE)
   }
 
-  HDI_area_attributes <- lapply(insight::compact_list(list), attr, "HDI_area")
+  HDI_area_attributes <- lapply(insight::compact_list(rope_list), attr, "HDI_area")
 
   if (effects != "all") {
     HDI_area_attributes <- HDI_area_attributes[[1]]
@@ -574,7 +588,7 @@ rope.sim.merMod <- function(x,
 rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", parameters = NULL, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -607,15 +621,35 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
 
 #' @keywords internal
 .prepare_rope_df <- function(parms, range, ci, ci_method, verbose) {
-  tmp <- sapply(
-    parms,
-    rope,
-    range = range,
-    ci = ci,
-    ci_method = ci_method,
-    verbose = verbose,
-    simplify = FALSE
-  )
+  if (is.list(range)) {
+    # check if list of values contains only valid values
+    range <- .check_list_range(range, parms)
+    # apply thresholds to each column
+    tmp <- mapply(
+      function(p, r) {
+        rope(
+          p,
+          range = r,
+          ci = ci,
+          ci_method = ci_method,
+          verbose = verbose
+        )
+      },
+      parms,
+      range,
+      SIMPLIFY = FALSE
+    )
+  } else {
+    tmp <- sapply(
+      parms,
+      rope,
+      range = range,
+      ci = ci,
+      ci_method = ci_method,
+      verbose = verbose,
+      simplify = FALSE
+    )
+  }
 
   HDI_area <- lapply(tmp, attr, which = "HDI_area")
 

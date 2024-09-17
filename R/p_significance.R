@@ -15,7 +15,11 @@
 #'   (i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
 #'   interval)
 #' - a numeric vector of length two (e.g., `c(-0.2, 0.1)`), useful for
-#'   asymmetric intervals.
+#'   asymmetric intervals
+#' - a list of numeric vectors, where each vector corresponds to a parameter
+#' - a list of *named* numeric vectors, where names correspond to parameter
+#'   names. In this case, all parameters that have no matching name in `threshold`
+#'   will be set to `"default"`.
 #' @inheritParams rope
 #' @inheritParams hdi
 #'
@@ -53,6 +57,10 @@
 #'   chains = 2, refresh = 0
 #' )
 #' p_significance(model)
+#' # multiple thresholds - asymmetric, symmetric, default
+#' p_significance(model, threshold = list(c(-10, 5), 0.2, "default"))
+#' # named thresholds
+#' p_significance(model, threshold = list(wt = 0.2, `(Intercept)` = c(-10, 5)))
 #' }
 #' @export
 p_significance <- function(x, ...) {
@@ -128,11 +136,26 @@ p_significance.data.frame <- function(x, threshold = "default", rvar_col = NULL,
   }
 
 
-  threshold <- .select_threshold_ps(threshold = threshold)
+  threshold <- .select_threshold_ps(threshold = threshold, params = x)
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
     ps <- .p_significance(x[, 1], threshold = threshold, ...)
+  } else if (is.list(threshold)) {
+    # check if list of values contains only valid values
+    threshold <- .check_list_range(threshold, x, larger_two = TRUE)
+    # apply thresholds to each column
+    ps <- mapply(
+      function(p, thres) {
+        .p_significance(
+          p,
+          threshold = thres
+        )
+      },
+      x,
+      threshold,
+      SIMPLIFY = FALSE
+    )
   } else {
     ps <- sapply(x, .p_significance, threshold = threshold, simplify = TRUE, ...)
   }
@@ -268,12 +291,15 @@ p_significance.stanreg <- function(x,
                                    ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  threshold <- .select_threshold_ps(model = x, threshold = threshold, verbose = verbose)
+  params <- insight::get_parameters(x, effects = effects, component = component, parameters = parameters)
 
-  result <- p_significance(
-    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
-    threshold = threshold
+  threshold <- .select_threshold_ps(
+    model = x,
+    threshold = threshold,
+    params = params,
+    verbose = verbose
   )
+  result <- p_significance(params, threshold = threshold)
 
   cleaned_parameters <- insight::clean_parameters(x)
   out <- .prepare_output(result, cleaned_parameters, inherits(x, "stanmvreg"))
@@ -304,12 +330,15 @@ p_significance.brmsfit <- function(x,
                                    ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  threshold <- .select_threshold_ps(model = x, threshold = threshold, verbose = verbose)
+  params <- insight::get_parameters(x, effects = effects, component = component, parameters = parameters)
 
-  result <- p_significance(
-    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
-    threshold = threshold
+  threshold <- .select_threshold_ps(
+    model = x,
+    threshold = threshold,
+    params = params,
+    verbose = verbose
   )
+  result <- p_significance(params, threshold = threshold)
 
   cleaned_parameters <- insight::clean_parameters(x)
   out <- .prepare_output(result, cleaned_parameters)
@@ -364,7 +393,42 @@ as.double.p_significance <- as.numeric.p_significance
 # helpers --------------------------
 
 #' @keywords internal
-.select_threshold_ps <- function(model = NULL, threshold = "default", verbose = TRUE) {
+.select_threshold_ps <- function(model = NULL, threshold = "default", params = NULL, verbose = TRUE) {
+  if (is.list(threshold)) {
+    # if we have named elements, complete list
+    if (!is.null(params)) {
+      named_threshold <- names(threshold)
+      if (!is.null(named_threshold)) {
+        # find out which name belongs to which parameter
+        pos <- match(named_threshold, colnames(params))
+        # if not all element names were found, error
+        if (anyNA(pos)) {
+          insight::format_error(paste(
+            "Not all elements of `threshold` were found in the parameters. Please check following names:",
+            toString(named_threshold[is.na(pos)])
+          ))
+        }
+        # now "fill" non-specified elements with "default"
+        out <- as.list(rep("default", ncol(params)))
+        out[pos] <- threshold
+        # overwrite former threshold
+        threshold <- out
+      }
+    }
+    lapply(threshold, function(i) {
+      out <- .select_threshold_list(model = model, threshold = i, verbose = verbose)
+      if (length(out) == 1) {
+        out <- c(-1 * abs(out), abs(out))
+      }
+      out
+    })
+  } else {
+    .select_threshold_list(model = model, threshold = threshold, verbose = verbose)
+  }
+}
+
+#' @keywords internal
+.select_threshold_list <- function(model = NULL, threshold = "default", verbose = TRUE) {
   # If default
   if (all(threshold == "default")) {
     if (is.null(model)) {
@@ -372,13 +436,49 @@ as.double.p_significance <- as.numeric.p_significance
     } else {
       threshold <- rope_range(model, verbose = verbose)[2]
     }
-  } else if (!all(is.numeric(threshold)) || length(threshold) > 2) {
+  } else if (!is.list(threshold) && (!all(is.numeric(threshold)) || length(threshold) > 2)) {
     insight::format_error(
       "`threshold` should be one of the following values:",
       "- \"default\", in which case the threshold is based on `rope_range()`",
-      "- a single numeric value (e.g., 0.1), which is used as range around zero (i.e. the threshold range is set to -0.1 and 0.1)",
+      "- a single numeric value (e.g., 0.1), which is used as range around zero (i.e. the threshold range is set to -0.1 and 0.1)", # nolint
       "- a numeric vector of length two (e.g., `c(-0.2, 0.1)`)"
     )
   }
   threshold
+}
+
+.check_list_range <- function(range, params, larger_two = FALSE) {
+  # if we have named elements, complete list
+  named_range <- names(range)
+  if (!is.null(named_range)) {
+    # find out which name belongs to which parameter
+    pos <- match(named_range, colnames(params))
+    # if not all element names were found, error
+    if (anyNA(pos)) {
+      insight::format_error(paste(
+        "Not all elements of `range` were found in the parameters. Please check following names:",
+        toString(named_range[is.na(pos)])
+      ))
+    }
+    # now "fill" non-specified elements with "default"
+    out <- as.list(rep("default", ncol(params)))
+    out[pos] <- range
+    # overwrite former range
+    range <- out
+  }
+  if (length(range) != ncol(params)) {
+    insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
+  }
+  # check if list of values contains only valid values
+  checks <- vapply(range, function(r) {
+    if (larger_two) {
+      !all(r == "default") || !all(is.numeric(r)) || length(r) > 2
+    } else {
+      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
+    }
+  }, logical(1))
+  if (!all(checks)) {
+    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
+  range
 }

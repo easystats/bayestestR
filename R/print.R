@@ -70,14 +70,19 @@ print.map_estimate <- function(x,
 
 #' @export
 print.p_rope <- function(x, digits = 2, ...) {
-  caption <- sprintf(
-    "Proportion of samples inside the ROPE [%.*f, %.*f]",
-    digits,
-    x$ROPE_low[1],
-    digits,
-    x$ROPE_high[1]
-  )
-  x$ROPE_low <- x$ROPE_high <- NULL
+  # check if we have multiple ROPE values
+  if (insight::n_unique(x$ROPE_low) > 1) {
+    caption <- "Proportion of samples inside the ROPE"
+  } else {
+    caption <- sprintf(
+      "Proportion of samples inside the ROPE [%.*f, %.*f]",
+      digits,
+      x$ROPE_low[1],
+      digits,
+      x$ROPE_high[1]
+    )
+    x$ROPE_low <- x$ROPE_high <- NULL
+  }
   .print_default(
     x = x,
     digits = digits,
@@ -90,14 +95,26 @@ print.p_rope <- function(x, digits = 2, ...) {
 
 #' @export
 print.p_significance <- function(x, digits = 2, ...) {
-  caption <- sprintf(
-    "Practical Significance (threshold: %s)",
-    insight::format_value(attributes(x)$threshold, digits = digits)
-  )
+  threshold <- attributes(x)$threshold
+  if (is.list(threshold)) {
+    caption <- "Practical Significance"
+    out <- as.data.frame(do.call(rbind, threshold))
+    colnames(out) <- c("ROPE_low", "ROPE_high")
+    x$ROPE_low <- out$ROPE_low
+    x$ROPE_high <- out$ROPE_high
+    ci_string <- "ROPE"
+  } else {
+    caption <- sprintf(
+      "Practical Significance (threshold: %s)",
+      insight::format_value(attributes(x)$threshold, digits = digits)
+    )
+    ci_string <- NULL
+  }
   .print_default(
     x = x,
     digits = digits,
     caption = caption,
+    ci_string = ci_string,
     ...
   )
 }
@@ -302,7 +319,7 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     sep = " ",
     header = NULL,
     format = "text",
-    align = align,
+    align = align
   ))
 
   invisible(x)
