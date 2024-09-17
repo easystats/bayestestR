@@ -17,7 +17,7 @@ threshold."><meta property="og:image" content="https://easystats.github.io/bayes
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,7 +154,11 @@ and based on <code><a href="rope_range.html">rope_range()</a></code> if a (Bayes
 (i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
 interval)</p></li>
 <li><p>a numeric vector of length two (e.g., <code>c(-0.2, 0.1)</code>), useful for
-asymmetric intervals.</p></li>
+asymmetric intervals</p></li>
+<li><p>a list of numeric vectors, where each vector corresponds to a parameter</p></li>
+<li><p>a list of <em>named</em> numeric vectors, where names correspond to parameter
+names. In this case, all parameters that have no matching name in <code>threshold</code>
+will be set to <code>"default"</code>.</p></li>
 </ul></dd>
 
 
@@ -255,6 +259,24 @@ will be less than 0.5, which indicates no clear practical significance.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | 0.98</span>
+<span class="r-in"><span><span class="co"># multiple thresholds - asymmetric, symmetric, default</span></span></span>
+<span class="r-in"><span><span class="fu">p_significance</span><span class="op">(</span><span class="va">model</span>, threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fl">0.2</span>, <span class="st">"default"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Practical Significance</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |   ps |           ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.00 | [-10.00, 5.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.00 | [ -0.20, 0.20]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | 0.98 | [ -0.60, 0.60]</span>
+<span class="r-in"><span><span class="co"># named thresholds</span></span></span>
+<span class="r-in"><span><span class="fu">p_significance</span><span class="op">(</span><span class="va">model</span>, threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>wt <span class="op">=</span> <span class="fl">0.2</span>, `(Intercept)` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Practical Significance</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |   ps |           ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.00 | [-10.00, 5.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.00 | [ -0.20, 0.20]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | 0.98 | [ -0.60, 0.60]</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
