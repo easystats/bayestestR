@@ -164,6 +164,8 @@ print(test, digits = 4)
 \donttest{
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
+# multiple ROPE ranges - asymmetric, symmetric, default
+equivalence_test(model, range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 
 # plot result
 test <- equivalence_test(model)

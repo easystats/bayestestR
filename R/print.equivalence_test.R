@@ -2,7 +2,10 @@
 print.equivalence_test <- function(x, digits = 2, ...) {
   orig_x <- x
   insight::print_color("# Test for Practical Equivalence\n\n", "blue")
-  cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, x$ROPE_low[1], digits, x$ROPE_high[1]))
+  # print ROPE limits, if we just have one set of ROPE values
+  if (insight::n_unique(x$ROPE_low) == 1) {
+    cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, x$ROPE_low[1], digits, x$ROPE_high[1]))
+  }
 
   # fix "sd" pattern
   model <- .retrieve_model(x)
@@ -23,21 +26,20 @@ print.equivalence_test <- function(x, digits = 2, ...) {
     }
   }
 
-  # find the longest HDI-value, so we can align the brackets in the ouput
-  x$HDI_low <- sprintf("%.*f", digits, x$HDI_low)
-  x$HDI_high <- sprintf("%.*f", digits, x$HDI_high)
-
-  maxlen_low <- max(nchar(x$HDI_low))
-  maxlen_high <- max(nchar(x$HDI_high))
-
   x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage * 100)
-  x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$HDI_low, maxlen_high, x$HDI_high)
+  x$HDI <- insight::format_ci(x$HDI_low, x$HDI_high, ci = NULL, digits = digits)
 
   ci <- unique(x$CI)
   keep.columns <- c(
     attr(x, "idvars"), "Parameter", "Effects", "Component",
     "ROPE_Equivalence", "ROPE_Percentage", "CI", "HDI"
   )
+
+  # keep ROPE columns for multiple ROPE values
+  if (insight::n_unique(x$ROPE_low) > 1) {
+    keep.columns <- c(keep.columns, "ROPE")
+    x$ROPE <- insight::format_ci(x$ROPE_low, x$ROPE_high, ci = NULL, digits = digits)
+  }
 
   x <- x[, intersect(keep.columns, colnames(x))]
 

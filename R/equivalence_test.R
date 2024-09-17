@@ -85,6 +85,8 @@
 #' \donttest{
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
+#' # multiple ROPE ranges - asymmetric, symmetric, default
+#' equivalence_test(model, range = list(c(10, 40), c(-5, -4), "default"))
 #'
 #' # plot result
 #' test <- equivalence_test(model)
@@ -244,7 +246,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
                                      verbose = TRUE) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
-  } else if (!all(is.numeric(range)) || length(range) != 2L) {
+  } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2L)) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -257,14 +259,40 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
     verbose = verbose
   )
 
-  l <- sapply(
-    params,
-    equivalence_test,
-    range = range,
-    ci = ci,
-    verbose = verbose,
-    simplify = FALSE
-  )
+  if (is.list(range)) {
+    if (length(range) != ncol(params)) {
+      insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
+    }
+    # check if list of values contains only valid values
+    checks <- vapply(range, function(r) {
+      !all(r == "default") || !all(is.numeric(r)) || length(r) != 2
+    }, logical(1))
+    if (!all(checks)) {
+      insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    }
+    l <- mapply(
+      function(p, r) {
+        equivalence_test(
+          p,
+          range = r,
+          ci = ci,
+          verbose = verbose
+        )
+      },
+      params,
+      range,
+      SIMPLIFY = FALSE
+    )
+  } else {
+    l <- sapply(
+      params,
+      equivalence_test,
+      range = range,
+      ci = ci,
+      verbose = verbose,
+      simplify = FALSE
+    )
+  }
 
   dat <- do.call(rbind, l)
   out <- data.frame(
