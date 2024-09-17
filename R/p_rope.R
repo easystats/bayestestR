@@ -150,7 +150,7 @@ p_rope.brmsfit <- function(x,
                            effects = c("fixed", "random", "all"),
                            component = c("conditional", "zi", "zero_inflated", "all"),
                            parameters = NULL,
-                           verbose = verbose,
+                           verbose = TRUE,
                            ...) {
   out <- .p_rope(rope(
     x,
