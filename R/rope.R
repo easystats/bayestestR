@@ -613,7 +613,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
 .prepare_rope_df <- function(parms, range, ci, ci_method, verbose) {
   if (is.list(range)) {
     # check if list of values contains only valid values
-    .check_list_range(range, parms)
+    range <- .check_list_range(range, parms)
     # apply thresholds to each column
     tmp <- mapply(
       function(p, r) {

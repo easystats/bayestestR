@@ -138,7 +138,7 @@ p_significance.data.frame <- function(x, threshold = "default", rvar_col = NULL,
     ps <- .p_significance(x[, 1], threshold = threshold, ...)
   } else if (is.list(threshold)) {
     # check if list of values contains only valid values
-    .check_list_range(threshold, x, larger_two = TRUE)
+    threshold <- .check_list_range(threshold, x, larger_two = TRUE)
     # apply thresholds to each column
     ps <- mapply(
       function(p, thres) {
@@ -417,6 +417,24 @@ as.double.p_significance <- as.numeric.p_significance
 }
 
 .check_list_range <- function(range, params, larger_two = FALSE) {
+  # if we have named elements, complete list
+  named_range <- names(range)
+  if (!is.null(named_range)) {
+    # find out which name belongs to which parameter
+    pos <- match(named_range, colnames(params))
+    # if not all element names were found, error
+    if (anyNA(pos)) {
+      insight::format_error(paste(
+        "Not all elements of `range` were found in the parameters. Please check following names:",
+        toString(names_range[is.na])
+      ))
+    }
+    # now "fill" non-specified elements with "default"
+    out <- rep("default", ncol(params))
+    out[pos] <- range
+    # overwrite former range
+    range <- out
+  }
   if (length(range) != ncol(params)) {
     insight::format_error("Length of `range` (i.e. number of ROPE limits) should match the number of parameters.")
   }
@@ -431,4 +449,5 @@ as.double.p_significance <- as.numeric.p_significance
   if (!all(checks)) {
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
+  range
 }

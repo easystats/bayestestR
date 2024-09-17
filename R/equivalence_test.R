@@ -168,7 +168,7 @@ equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, rvar_co
   # multiple ranges for the parameters - iterate over parameters and range
   if (is.list(range)) {
     # check if list of values contains only valid values
-    .check_list_range(range, x)
+    range <- .check_list_range(range, x)
     # apply thresholds to each column
     l <- insight::compact_list(mapply(
       function(p, r) {
