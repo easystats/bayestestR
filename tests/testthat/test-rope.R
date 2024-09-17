@@ -49,6 +49,33 @@ test_that("rope", {
     rope(p, verbose = FALSE)$ROPE_Percentage,
     tolerance = 1e-3
   )
+
+  # list range
+  expect_equal(
+    rope(m, range = list(c(-1, 0.1), "default", "default", c(-1, 1), c(-1.5, -1)))$ROPE_Percentage,
+    c(0.15823, 1, 0, 0.3903, 0.38186),
+    tolerance = 1e-3
+  )
+
+  # named elements, chooses "default" for unnamed
+  expect_equal(
+    rope(m, range = list(c(-1, 0.1), "default", "default", c(-1, 1), c(-1.5, -1)))$ROPE_Percentage,
+    rope(m, range = list("(Intercept)" = c(-1, 0.1), period4 = c(-1.5, -1), period3 = c(-1, 1)))$ROPE_Percentage,
+    tolerance = 1e-3
+  )
+
+  expect_error(
+    rope(m, range = list(c(-0.1, 0.1), c(2, 2))),
+    regex = "Length of"
+  )
+  expect_error(
+    rope(m, range = list(c(-0.1, 0.1), c(2, 2), "default", "a", c(1, 3))),
+    regex = "should be 'default'"
+  )
+  expect_error(
+    rope(m, range = list("(Intercept)" = c(-1, 0.1), pointout = c(-1.5, -1), period3 = c(-1, 1))),
+    regex = "Not all elements"
+  )
 })
 
 

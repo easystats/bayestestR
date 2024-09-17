@@ -31,22 +31,41 @@ print_html.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) 
 
 #' @export
 print_html.p_rope <- function(x, digits = 2, ...) {
-  caption <- sprintf(
-    "Proportion of samples inside the ROPE [%.*f, %.*f]",
-    digits, x$ROPE_low[1], digits, x$ROPE_high[1]
-  )
-  x$ROPE_low <- x$ROPE_high <- NULL
+  # check if we have multiple ROPE values
+  if (insight::n_unique(x$ROPE_low) > 1) {
+    caption <- "Proportion of samples inside the ROPE"
+  } else {
+    caption <- sprintf(
+      "Proportion of samples inside the ROPE [%.*f, %.*f]",
+      digits,
+      x$ROPE_low[1],
+      digits,
+      x$ROPE_high[1]
+    )
+    x$ROPE_low <- x$ROPE_high <- NULL
+  }
   .print_html_default(x = x, digits = digits, caption = caption, ci_string = "ROPE", ...)
 }
 
 
 #' @export
 print_html.p_significance <- function(x, digits = 2, ...) {
-  caption <- sprintf(
-    "Practical Significance (threshold: %s)",
-    insight::format_value(attributes(x)$threshold, digits = digits)
-  )
-  .print_html_default(x = x, digits = digits, caption = caption, ...)
+  threshold <- attributes(x)$threshold
+  if (is.list(threshold)) {
+    caption <- "Practical Significance"
+    out <- as.data.frame(do.call(rbind, threshold))
+    colnames(out) <- c("ROPE_low", "ROPE_high")
+    x$ROPE_low <- out$ROPE_low
+    x$ROPE_high <- out$ROPE_high
+    ci_string <- "ROPE"
+  } else {
+    caption <- sprintf(
+      "Practical Significance (threshold: %s)",
+      insight::format_value(attributes(x)$threshold, digits = digits)
+    )
+    ci_string <- NULL
+  }
+  .print_html_default(x = x, digits = digits, caption = caption, ci_string = ci_string, ...)
 }
 
 
@@ -86,7 +105,7 @@ print_html.bayesfactor_models <- function(x,
     log = log,
     show_names = show_names,
     caption = caption,
-    align = c("llr"),
+    align = "llr",
     ...
   )
 }
@@ -103,7 +122,7 @@ print_html.bayesfactor_inclusion <- function(x,
     digits = digits,
     log = log,
     caption = caption,
-    align = c("lrrr"),
+    align = "lrrr",
     ...
   )
 }

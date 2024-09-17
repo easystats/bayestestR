@@ -34,7 +34,7 @@ test_that("brms beta to freq", {
   skip_if_not_or_load_if_installed("betareg")
 
   set.seed(333)
-  m <- insight::download_model("brms_beta_1")
+  m <- suppressWarnings(insight::download_model("brms_beta_1"))
   data(FoodExpenditure, package = "betareg")
   m1 <- glmmTMB::glmmTMB(
     I(food / income) ~ income + (1 | persons),
@@ -56,7 +56,7 @@ test_that("ordbetareg to freq", {
 
   set.seed(333)
   data(sleepstudy, package = "lme4")
-  m <- insight::download_model("ordbetareg_1")
+  m <- suppressWarnings(insight::download_model("ordbetareg_1"))
   sleepstudy$y <- datawizard::normalize(sleepstudy$Reaction)
   m1 <- glmmTMB::glmmTMB(
     y ~ Days + (Days | Subject),

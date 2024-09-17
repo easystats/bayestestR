@@ -121,9 +121,10 @@ For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link[=rope]{rope()}} or \code{\link[=p_direction]{p_direction()}}) and its results
 included in the summary output.}
 
-\item{rope_range}{ROPE's lower and higher bounds. Should be a list of two
-values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"},
-the bounds are set to \code{x +- 0.1*SD(response)}.}
+\item{rope_range}{ROPE's lower and higher bounds. Should be a vector of two
+values (e.g., \code{c(-0.1, 0.1)}), \code{"default"} or a list of numeric vectors of
+the same length as numbers of parameters. If \code{"default"}, the bounds are
+set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
@@ -210,6 +211,7 @@ if (require("rstanarm") && require("emmeans")) {
   describe_posterior(model)
   describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
   describe_posterior(model, ci = c(0.80, 0.90))
+  describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 
   # emmeans estimates
   # -----------------------------------------------
