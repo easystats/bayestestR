@@ -76,6 +76,11 @@ rope_range <- function(x, ...) {
 #' @rdname rope_range
 #' @export
 rope_range.default <- function(x, verbose = TRUE, ...) {
+  # sanity check - if no model found, return default
+  if (is.null(x)) {
+    return(c(-0.1, 0.1))
+  }
+
   response <- insight::get_response(x, source = "mf")
   response_transform <- insight::find_transformation(x)
   information <- insight::model_info(x, verbose = FALSE)
