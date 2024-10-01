@@ -71,6 +71,7 @@ test_that("check_prior - brms (linux)", {
   skip_if_not_or_load_if_installed("RcppEigen")
   skip_if_not_or_load_if_installed("brms")
 
+  data(inhaler, package = "brms")
   # all `brms` examples in circus have uniform prior distribution, so
   # need to use a custom example here
   set.seed(333)
