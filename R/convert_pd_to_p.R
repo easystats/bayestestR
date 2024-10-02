@@ -19,11 +19,11 @@
 #'
 #' When `direction = "two-sided"`
 #'
-#' \deqn{p = 2 \times (1 - p_d)}{p = 2 * (1 - pd)}
+#' \ifelse{html}{\out{p = 2 * (1 - p<sub>d</sub>)}}{\eqn{p = 2 \times (1 - p_d)}}
 #'
 #' When `direction = "one-sided"`
 #'
-#' \deqn{p = 1 - p_d}{p = 1 - pd}
+#' \ifelse{html}{\out{p = 1 - p<sub>d</sub>}}{\eqn{p = 1 - p_d}}
 #'
 #' Note that this conversion is only valid when the lowest possible values of pd
 #' is 0.5 - i.e., when the posterior represents continuous parameter space (see
