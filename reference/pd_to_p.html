@@ -125,9 +125,9 @@ the new data frame is returned.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Conversion is done using the following equation (see <em>Makowski et al., 2019</em>):</p>
 <p>When <code>direction = "two-sided"</code></p>
-<p>$$p = 2 \times (1 - p_d)$$</p>
+<p>p = 2 * (1 - p<sub>d</sub>)</p>
 <p>When <code>direction = "one-sided"</code></p>
-<p>$$p = 1 - p_d$$</p>
+<p>p = 1 - p<sub>d</sub></p>
 <p>Note that this conversion is only valid when the lowest possible values of pd
 is 0.5 - i.e., when the posterior represents continuous parameter space (see
 <code><a href="p_direction.html">p_direction()</a></code>). If any pd &lt; 0.5 are detected, they are converted to a p
