@@ -1,5 +1,5 @@
 test_that("data.frame w/ rvar_col descrive_posterior etc", {
-  skip_on_ci()
+  # skip_on_ci()
   skip_on_cran()
   skip_if_not_installed("posterior")
 
@@ -63,7 +63,7 @@ test_that("data.frame w/ rvar_col descrive_posterior etc", {
 })
 
 test_that("data.frame w/ rvar_col bayesfactors", {
-  skip_on_ci()
+  # skip_on_ci()
   skip_on_cran()
   skip_if_not_installed("posterior")
   skip_if_not_installed("logspline")
