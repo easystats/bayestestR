@@ -27,7 +27,7 @@ test_that("weighted_posteriors for BayesFactor", {
 
 test_that("weighted_posteriors for BayesFactor (intercept)", {
   # fails for win old-release
-  skip_on_ci()
+  # skip_on_ci()
   skip_on_cran()
   skip_if_not_or_load_if_installed("BayesFactor")
 
