@@ -127,7 +127,6 @@ Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest probabili
 Other ci: 
 \code{\link{bci}()},
 \code{\link{ci}()},
-\code{\link{cwi}()},
 \code{\link{eti}()},
 \code{\link{hdi}()},
 \code{\link{si}()}

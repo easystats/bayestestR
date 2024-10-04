@@ -1,6 +1,8 @@
 #' Overlap Coefficient
 #'
-#' A method to calculate the overlap coefficient between two empirical distributions (that can be used as a measure of similarity between two samples).
+#' A method to calculate the overlap coefficient between two empirical
+#' distributions (that can be used as a measure of similarity between two
+#' samples).
 #'
 #' @param x Vector of x values.
 #' @param y Vector of x values.
@@ -17,32 +19,56 @@
 #' overlap(x, y)
 #' plot(overlap(x, y))
 #' @export
-overlap <- function(x, y, method_density = "kernel", method_auc = "trapezoid", precision = 2^10, extend = TRUE, extend_scale = 0.1, ...) {
+overlap <- function(x,
+                    y,
+                    method_density = "kernel",
+                    method_auc = "trapezoid",
+                    precision = 2^10,
+                    extend = TRUE,
+                    extend_scale = 0.1,
+                    ...) {
   # Generate densities
-  dx <- estimate_density(x, method = method_density, precision = precision, extend = extend, extend_scale = extend_scale, ...)
-  dy <- estimate_density(y, method = method_density, precision = precision, extend = extend, extend_scale = extend_scale, ...)
+  dx <- estimate_density(
+    x,
+    method = method_density,
+    precision = precision,
+    extend = extend,
+    extend_scale = extend_scale,
+    ...
+  )
+  dy <- estimate_density(
+    y,
+    method = method_density,
+    precision = precision,
+    extend = extend,
+    extend_scale = extend_scale,
+    ...
+  )
 
   # Create density estimation functions
   fx <- stats::approxfun(dx$x, dx$y, method = "linear", rule = 2)
   fy <- stats::approxfun(dy$x, dy$y, method = "linear", rule = 2)
 
   x_axis <- seq(min(c(dx$x, dy$x)), max(c(dx$x, dy$x)), length.out = precision)
-  data <- data.frame(x = x_axis, y1 = fx(x_axis), y2 = fy(x_axis))
-
+  approx_data <- data.frame(x = x_axis, y1 = fx(x_axis), y2 = fy(x_axis))
 
 
   # calculate intersection densities
-  data$intersection <- pmin(data$y1, data$y2)
-  data$exclusion <- pmax(data$y1, data$y2)
+  approx_data$intersection <- pmin(approx_data$y1, approx_data$y2)
+  approx_data$exclusion <- pmax(approx_data$y1, approx_data$y2)
 
   # integrate areas under curves
-  area_intersection <- area_under_curve(data$x, data$intersection, method = method_auc)
+  area_intersection <- area_under_curve(
+    approx_data$x,
+    approx_data$intersection,
+    method = method_auc
+  )
   # area_exclusion <- area_under_curve(data$x, data$exclusion, method = method_auc)
 
 
   # compute overlap coefficient
   overlap <- area_intersection
-  attr(overlap, "data") <- data
+  attr(overlap, "data") <- approx_data
 
   class(overlap) <- c("overlap", class(overlap))
   overlap
@@ -59,7 +85,7 @@ print.overlap <- function(x, ...) {
 #' @export
 plot.overlap <- function(x, ...) {
   # Can be improved through see
-  data <- attributes(x)$data
-  graphics::plot(data$x, data$exclusion, type = "l")
-  graphics::polygon(data$x, data$intersection, col = "red")
+  plot_data <- attributes(x)$data
+  graphics::plot(plot_data$x, plot_data$exclusion, type = "l")
+  graphics::polygon(plot_data$x, plot_data$intersection, col = "red")
 }

@@ -33,21 +33,21 @@ distribution <- function(type = "normal", ...) {
   )
 
   switch(match.arg(arg = type, choices = basr_r_distributions),
-    "beta" = distribution_beta(...),
-    "binom" = ,
-    "binomial" = distribution_binomial(...),
-    "cauchy" = distribution_cauchy(...),
-    "chisq" = ,
-    "chisquared" = distribution_chisquared(...),
-    "gamma" = distribution_gamma(...),
-    "gaussian" = ,
-    "normal" = distribution_normal(...),
-    "nbinom" = distribution_nbinom(...),
-    "poisson" = distribution_poisson(...),
-    "t" = ,
-    "student" = ,
-    "student_t" = distribution_student(...),
-    "uniform" = distribution_uniform(...),
+    beta = distribution_beta(...),
+    binom = ,
+    binomial = distribution_binomial(...),
+    cauchy = distribution_cauchy(...),
+    chisq = ,
+    chisquared = distribution_chisquared(...),
+    gamma = distribution_gamma(...),
+    gaussian = ,
+    normal = distribution_normal(...),
+    nbinom = distribution_nbinom(...),
+    poisson = distribution_poisson(...),
+    t = ,
+    student = ,
+    student_t = distribution_student(...),
+    uniform = distribution_uniform(...),
     distribution_custom(type = type, ...)
   )
 }
@@ -148,7 +148,7 @@ distribution_mixture_normal <- function(n, mean = c(-3, 3), sd = 1, random = FAL
   n <- round(n / length(mean))
   sd <- sd
   if (length(sd) != length(mean)) {
-    sd <- rep(sd, length.out = length(mean))
+    sd <- rep_len(sd, length(mean))
   }
 
 

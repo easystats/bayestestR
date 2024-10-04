@@ -155,7 +155,6 @@ intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381
 \seealso{
 Other ci: 
 \code{\link{bci}()},
-\code{\link{cwi}()},
 \code{\link{eti}()},
 \code{\link{hdi}()},
 \code{\link{si}()},

@@ -27,17 +27,26 @@ diagnostic_draws <- function(posterior, ...) {
 diagnostic_draws.brmsfit <- function(posterior, ...) {
   insight::check_if_installed("brms")
 
-  data <- brms::nuts_params(posterior)
-  data$idvar <- paste0(data$Chain, "_", data$Iteration)
+  nuts_parameters <- brms::nuts_params(posterior)
+  nuts_parameters$idvar <- paste0(
+    nuts_parameters$Chain,
+    "_",
+    nuts_parameters$Iteration
+  )
   out <- stats::reshape(
-    data,
+    nuts_parameters,
     v.names = "Value",
     idvar = "idvar",
     timevar = "Parameter",
     direction = "wide"
   )
   out$idvar <- NULL
-  out <- merge(out, brms::log_posterior(posterior), by = c("Chain", "Iteration"), sort = FALSE)
+  out <- merge(
+    out,
+    brms::log_posterior(posterior),
+    by = c("Chain", "Iteration"),
+    sort = FALSE
+  )
 
   # Rename
   names(out)[names(out) == "Value.accept_stat__"] <- "Acceptance_Rate"
