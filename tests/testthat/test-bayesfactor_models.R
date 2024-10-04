@@ -108,11 +108,9 @@ test_that("bayesfactor_models STAN", {
 
   set.seed(333)
   suppressMessages({
-    expect_warning(
-      {
-        stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1)
-      }
-    )
+    expect_warning({
+      stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1)
+    })
   })
   expect_s3_class(stan_models, "bayesfactor_models")
   expect_length(stan_models$log_BF, 2)
