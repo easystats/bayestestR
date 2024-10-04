@@ -38,7 +38,7 @@ test_that("brms", {
   skip_on_cran()
   skip_if_offline()
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("brms_1")
@@ -57,7 +57,7 @@ test_that("brms", {
   skip_on_cran()
   skip_if_offline()
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("brms_mv_2")
@@ -81,7 +81,7 @@ test_that("brms", {
   skip_on_cran()
   skip_if_offline()
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("brms_2")
