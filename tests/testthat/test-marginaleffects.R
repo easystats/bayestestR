@@ -1,5 +1,5 @@
 test_that("marginaleffects descrive_posterior", {
-  skip_on_ci()
+  # skip_on_ci()
   skip_on_cran()
 
   skip_if_not_installed("rstanarm")
@@ -43,7 +43,7 @@ test_that("marginaleffects descrive_posterior", {
 })
 
 test_that("marginaleffects bayesfactors", {
-  skip_on_ci()
+  # skip_on_ci()
   skip_on_cran()
 
   skip_if_not_installed("rstanarm")
