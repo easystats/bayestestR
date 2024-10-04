@@ -10,14 +10,14 @@ test_that("brms", {
   expect_s3_class(hdi(model), "data.frame")
   expect_s3_class(ci(model), "data.frame")
   expect_s3_class(rope(model, verbose = FALSE), "data.frame")
-  expect_true(inherits(equivalence_test(model), "equivalence_test"))
+  expect_s3_class(equivalence_test(model), "equivalence_test")
   expect_s3_class(map_estimate(model), "data.frame")
   expect_s3_class(p_map(model), "data.frame")
   expect_s3_class(p_direction(model), "data.frame")
 
-  expect_identical(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
-  expect_identical(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
-  expect_equal(nrow(equivalence_test(model)), 2L)
+  expect_named(hdi(model), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
+  expect_named(hdi(model, effects = "all"), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
+  expect_identical(nrow(equivalence_test(model)), 2L)
 
   out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
   suppressWarnings({
