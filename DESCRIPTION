@@ -67,7 +67,7 @@ Depends:
     R (>= 3.6)
 Imports:
     insight (>= 0.20.5),
-    datawizard (>= 0.12.3),
+    datawizard (>= 0.13.0),
     graphics,
     methods,
     stats,
@@ -128,4 +128,3 @@ Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
-Remotes: easystats/datawizard
