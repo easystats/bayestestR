@@ -24,7 +24,7 @@
 #' @param ci The Credible Interval (CI) probability, corresponding to the
 #' proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in
-#' ROPE. Can be 'HDI' (default) or 'ETI'. See [ci()].
+#' ROPE. Can be 'HDI' (default) or 'ETI'. See [`ci()`].
 #'
 #' @inheritParams hdi
 #'
@@ -46,7 +46,7 @@
 #' Kruschke (2010, 2011, 2014) suggests using the proportion of  the `95%`
 #' (or `89%`, considered more stable) [HDI][hdi] that falls within the
 #' ROPE as an index for "null-hypothesis" testing (as understood under the
-#' Bayesian framework, see [`equivalence_test()`][equivalence_test]).
+#' Bayesian framework, see [`equivalence_test()`]).
 #'
 #' @section Sensitivity to parameter's scale:
 #' It is important to consider the unit (i.e., the scale) of the predictors

@@ -31,8 +31,8 @@
 #'   to zero the better).
 #'   \cr \cr
 #'   Some attention is required for finding suitable values for the ROPE limits
-#'   (argument `range`). See 'Details' in [`rope_range()`][rope_range]
-#'   for further information.
+#'   (argument `range`). See 'Details' in [`rope_range()`] for further
+#'   information.
 #'   \cr \cr
 #'   **Multicollinearity: Non-independent covariates**
 #'   \cr \cr

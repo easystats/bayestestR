@@ -70,7 +70,9 @@ effective_sample(model)
 }
 \references{
 \itemize{
-\item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
-\item Bürkner, P. C. (2017). brms: An R package for Bayesian multilevel models using Stan. Journal of Statistical Software, 80(1), 1-28
+\item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS,
+and Stan. Academic Press.
+\item Bürkner, P. C. (2017). brms: An R package for Bayesian multilevel models
+using Stan. Journal of Statistical Software, 80(1), 1-28
 }
 }

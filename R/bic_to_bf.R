@@ -27,8 +27,8 @@ bic_to_bf <- function(bic, denominator, log = FALSE) {
   delta <- (denominator - bic) / 2
 
   if (log) {
-    return(delta)
+    delta
   } else {
-    return(exp(delta))
+    exp(delta)
   }
 }

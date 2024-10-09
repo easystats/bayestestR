@@ -132,8 +132,8 @@ of the posterior within the ROPE is smaller than to \verb{2.5\%} or greater than
 to zero the better).
 \cr \cr
 Some attention is required for finding suitable values for the ROPE limits
-(argument \code{range}). See 'Details' in \code{\link[=rope_range]{rope_range()}}
-for further information.
+(argument \code{range}). See 'Details' in \code{\link[=rope_range]{rope_range()}} for further
+information.
 \cr \cr
 \strong{Multicollinearity: Non-independent covariates}
 \cr \cr

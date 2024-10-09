@@ -1,6 +1,6 @@
 ---
 title: "Mediation Analysis using Bayesian Regression Models"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{Mediation Analysis using Bayesian Regression Models}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 csl: apa.csl
@@ -31,7 +31,7 @@ options(width = 80)
 
 if (!requireNamespace("mediation", quietly = TRUE) ||
   !requireNamespace("curl", quietly = TRUE) ||
-  !requireNamespace("httr", quietly = TRUE) ||
+  !requireNamespace("httr2", quietly = TRUE) ||
   !requireNamespace("lavaan", quietly = TRUE) ||
   !requireNamespace("brms", quietly = TRUE) ||
   !requireNamespace("rstanarm", quietly = TRUE) ||

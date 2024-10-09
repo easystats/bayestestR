@@ -107,19 +107,17 @@ Dispersion is not available for \code{"MAP"} or \code{"mode"} centrality indices
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
-\item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"ETI"} (default, see \code{\link[=eti]{eti()}}), \code{"HDI"}
-(see \code{\link[=hdi]{hdi()}}), \code{"BCI"} (see
-\code{\link[=bci]{bci()}}), \code{"SPI"} (see \code{\link[=spi]{spi()}}), or
-\code{"SI"} (see \code{\link[=si]{si()}}).}
+\item{ci_method}{The type of index used for Credible Interval. Can be \code{"ETI"}
+(default, see \code{\link[=eti]{eti()}}), \code{"HDI"} (see \code{\link[=hdi]{hdi()}}), \code{"BCI"} (see \code{\link[=bci]{bci()}}),
+\code{"SPI"} (see \code{\link[=spi]{spi()}}), or \code{"SI"} (see \code{\link[=si]{si()}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
-For each "test", the corresponding \pkg{bayestestR} function is called
-(e.g. \code{\link[=rope]{rope()}} or \code{\link[=p_direction]{p_direction()}}) and its results
-included in the summary output.}
+\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests. For each
+"test", the corresponding \pkg{bayestestR} function is called (e.g.
+\code{\link[=rope]{rope()}} or \code{\link[=p_direction]{p_direction()}}) and its results included in the summary
+output.}
 
 \item{rope_range}{ROPE's lower and higher bounds. Should be a vector of two
 values (e.g., \code{c(-0.1, 0.1)}), \code{"default"} or a list of numeric vectors of

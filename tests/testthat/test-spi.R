@@ -3,7 +3,7 @@ test_that("spi", {
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   expect_equal(spi(distribution_normal(1000), ci = 0.90)$CI_low[1], -1.65, tolerance = 0.02)
@@ -25,7 +25,7 @@ test_that("ci", {
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   m <- insight::download_model("stanreg_merMod_5")
@@ -42,7 +42,7 @@ test_that("spi brms", {
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   m <- insight::download_model("brms_zi_3")
@@ -60,7 +60,7 @@ test_that("ci - BayesFactor", {
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   mod_bf <- proportionBF(y = 15, N = 25, p = 0.5)

@@ -63,7 +63,7 @@ describe_prior.brmsfit <- function(model,
 
   # If the prior scale has been adjusted, it is the actual scale that was used.
   if ("Prior_Adjusted_Scale" %in% names(priors)) {
-    priors$Prior_Scale[!is.na(priors$Prior_Adjusted_Scale)] <- priors$Prior_Adjusted_Scale[!is.na(priors$Prior_Adjusted_Scale)]
+    priors$Prior_Scale[!is.na(priors$Prior_Adjusted_Scale)] <- priors$Prior_Adjusted_Scale[!is.na(priors$Prior_Adjusted_Scale)] # nolint
     priors$Prior_Adjusted_Scale <- NULL
   }
 
@@ -85,7 +85,7 @@ describe_prior.brmsfit <- function(model,
     colnames(priors)[1] <- "Cleaned_Parameter"
     out <- merge(cp, priors, by = "Cleaned_Parameter", all = TRUE)
     out <- out[!duplicated(out$Parameter), ]
-    priors <- out[intersect(colnames(out), c("Parameter", "Prior_Distribution", "Prior_df", "Prior_Location", "Prior_Scale", "Response"))]
+    priors <- out[intersect(colnames(out), c("Parameter", "Prior_Distribution", "Prior_df", "Prior_Location", "Prior_Scale", "Response"))] # nolint
   }
 
   priors

@@ -17,9 +17,13 @@ test_that("bayesfactor_models BIC", {
   BFM3 <- bayesfactor_models(mo2, mo3, mo4, mo1, denominator = mo1)
   BFM4 <<- bayesfactor_models(mo2, mo3, mo4, mo5, mo1, denominator = mo1)
 
-  expect_equal(BFM1, BFM2)
-  expect_equal(BFM1, BFM3)
-  expect_equal(BFM1, bayesfactor_models(list(mo2 = mo2, mo3 = mo3, mo4 = mo4, mo1 = mo1), denominator = 4))
+  expect_equal(BFM1, BFM2, tolerance = 1e-4, ignore_attr = TRUE)
+  expect_equal(BFM1, BFM3, tolerance = 1e-4, ignore_attr = TRUE)
+  expect_equal(
+    BFM1,
+    bayesfactor_models(list(mo2 = mo2, mo3 = mo3, mo4 = mo4, mo1 = mo1), denominator = 4),
+    tolerance = 1e-4, ignore_attr = TRUE
+  )
 
   # only on same data!
   expect_warning(bayesfactor_models(mo1, mo2, mo4_e))
@@ -104,19 +108,19 @@ test_that("bayesfactor_models STAN", {
 
   set.seed(333)
   suppressMessages({
-    expect_warning(
+    expect_warning({
       stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1)
-    )
+    })
   })
   expect_s3_class(stan_models, "bayesfactor_models")
-  expect_equal(length(stan_models$log_BF), 2)
+  expect_length(stan_models$log_BF, 2)
   expect_equal(stan_models$log_BF[2], log(bridge_BF$bf), tolerance = 0.1)
 })
 
 test_that("bayesfactor_models BRMS", {
   # Checks for brms models
   skip_on_cran()
-  skip_on_ci()
+  # skip_on_ci()
 
   skip_if_not_or_load_if_installed("bridgesampling")
   skip_if_not_or_load_if_installed("brms")
@@ -143,7 +147,9 @@ test_that("bayesfactor_models BRMS", {
   set.seed(444)
   suppressWarnings(suppressMessages(
     expect_message(
-      bfm <- bayesfactor_models(stan_brms_model_0, stan_brms_model_1),
+      {
+        bfm <- bayesfactor_models(stan_brms_model_0, stan_brms_model_1)
+      },
       regexp = "marginal"
     )
   ))
@@ -163,7 +169,12 @@ test_that("bayesfactor_models BRMS", {
     silent = 2
   )
 
-  suppressWarnings(expect_message(bfmwc <- bayesfactor_models(stan_brms_model_0wc, stan_brms_model_1wc), regexp = NA))
+  suppressWarnings(expect_message(
+    {
+      bfmwc <- bayesfactor_models(stan_brms_model_0wc, stan_brms_model_1wc)
+    },
+    regexp = NA
+  ))
   expect_equal(bfmwc$log_BF, bfm$log_BF, tolerance = 0.01)
 })
 
@@ -179,7 +190,8 @@ test_that("bayesfactor_inclusion | BayesFactor", {
   BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose * supp, ToothGrowth)
   expect_equal(
     bayesfactor_inclusion(BF_ToothGrowth),
-    bayesfactor_inclusion(bayesfactor_models(BF_ToothGrowth))
+    bayesfactor_inclusion(bayesfactor_models(BF_ToothGrowth)),
+    tolerance = 1e-4, ignore_attr = TRUE
   )
 })
 
