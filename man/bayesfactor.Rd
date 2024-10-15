@@ -47,14 +47,15 @@ the denominator, or a model to be used as a denominator. Ignored for
 \verb{BayesFactor::priorOdds<-}.}
 }
 \value{
-Some type of Bayes factor, depending on the input. See \code{\link[=bayesfactor_parameters]{bayesfactor_parameters()}}, \code{\link[=bayesfactor_models]{bayesfactor_models()}} or \code{\link[=bayesfactor_inclusion]{bayesfactor_inclusion()}}
+Some type of Bayes factor, depending on the input. See
+\code{\link[=bayesfactor_parameters]{bayesfactor_parameters()}}, \code{\link[=bayesfactor_models]{bayesfactor_models()}} or \code{\link[=bayesfactor_inclusion]{bayesfactor_inclusion()}}.
 }
 \description{
 This function compte the Bayes factors (BFs) that are appropriate to the
-input. For vectors or single models, it will compute \code{\link[=bayesfactor_parameters]{BFs for single parameters()}}, or is \code{hypothesis} is specified,
-\code{\link[=bayesfactor_restricted]{BFs for restricted models()}}. For multiple models,
-it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models()}} and if a model comparison is passed, it will
-compute the \code{\link[=bayesfactor_inclusion]{inclusion BF()}}.
+input. For vectors or single models, it will compute \code{\link[=bayesfactor_parameters]{BFs for single parameters}}, or is \code{hypothesis} is specified,
+\code{\link[=bayesfactor_restricted]{BFs for restricted models}}. For multiple models,
+it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models}} and if a model comparison is passed, it will
+compute the \code{\link[=bayesfactor_inclusion]{inclusion BF}}.
 \cr\cr
 For a complete overview of these functions, read the \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factor vignette}.
 }
