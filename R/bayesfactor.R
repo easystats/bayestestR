@@ -2,11 +2,11 @@
 #'
 #' This function compte the Bayes factors (BFs) that are appropriate to the
 #' input. For vectors or single models, it will compute [`BFs for single
-#' parameters()`][bayesfactor_parameters], or is `hypothesis` is specified,
-#' [`BFs for restricted models()`][bayesfactor_restricted]. For multiple models,
+#' parameters`][bayesfactor_parameters], or is `hypothesis` is specified,
+#' [`BFs for restricted models`][bayesfactor_restricted]. For multiple models,
 #' it will return the BF corresponding to [`comparison between
-#' models()`][bayesfactor_models] and if a model comparison is passed, it will
-#' compute the [`inclusion BF()`][bayesfactor_inclusion].
+#' models`][bayesfactor_models] and if a model comparison is passed, it will
+#' compute the [`inclusion BF`][bayesfactor_inclusion].
 #' \cr\cr
 #' For a complete overview of these functions, read the [Bayes factor vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
@@ -17,19 +17,20 @@
 #' @inheritParams bayesfactor_models
 #' @inheritParams bayesfactor_inclusion
 #'
-#' @return Some type of Bayes factor, depending on the input. See [bayesfactor_parameters()], [bayesfactor_models()] or [bayesfactor_inclusion()]
+#' @return Some type of Bayes factor, depending on the input. See
+#' [`bayesfactor_parameters()`], [`bayesfactor_models()`] or [`bayesfactor_inclusion()`].
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examplesIf require("rstanarm") && require("logspline")
+#' \dontrun{
 #' library(bayestestR)
 #'
 #' prior <- distribution_normal(1000, mean = 0, sd = 1)
-#' posterior <- distribution_normal(1000, mean = .5, sd = .3)
+#' posterior <- distribution_normal(1000, mean = 0.5, sd = 0.3)
 #'
 #' bayesfactor(posterior, prior = prior, verbose = FALSE)
 #'
-#' \donttest{
 #' # rstanarm models
 #' # ---------------
 #' model <- suppressWarnings(rstanarm::stan_lmer(extra ~ group + (1 | ID), data = sleep))

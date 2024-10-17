@@ -16,8 +16,10 @@
 #'   information there is in autocorrelated chains} (*Kruschke 2015, p182-3*).
 #'
 #' @references
-#'   - Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
-#'   - Bürkner, P. C. (2017). brms: An R package for Bayesian multilevel models using Stan. Journal of Statistical Software, 80(1), 1-28
+#' - Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS,
+#'   and Stan. Academic Press.
+#' - Bürkner, P. C. (2017). brms: An R package for Bayesian multilevel models
+#'   using Stan. Journal of Statistical Software, 80(1), 1-28
 #'
 #' @examplesIf require("rstanarm")
 #' \donttest{
@@ -82,7 +84,7 @@ effective_sample.brmsfit <- function(model,
 #' @export
 effective_sample.stanreg <- function(model,
                                      effects = c("fixed", "random", "all"),
-                                     component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                     component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), # nolint
                                      parameters = NULL,
                                      ...) {
   # check arguments
@@ -112,7 +114,7 @@ effective_sample.stanreg <- function(model,
 #' @export
 effective_sample.stanmvreg <- function(model,
                                        effects = c("fixed", "random", "all"),
-                                       component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                       component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), # nolint
                                        parameters = NULL,
                                        ...) {
   # check arguments

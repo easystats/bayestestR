@@ -82,7 +82,8 @@
 #' @inherit ci return
 #'
 #' @family ci
-#' @seealso Other interval functions, such as [hdi()], [eti()], [bci()], [spi()], [si()], [cwi()].
+#' @seealso Other interval functions, such as [`hdi()`], [`eti()`], [`bci()`],
+#' [`spi()`], [`si()`].
 #'
 #' @examplesIf require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")
 #' library(bayestestR)

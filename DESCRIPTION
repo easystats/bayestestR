@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.14.0.11
+Version: 0.15.0
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -66,8 +66,8 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.6)
 Imports:
-    insight (>= 0.20.4),
-    datawizard (>= 0.12.3),
+    insight (>= 0.20.5),
+    datawizard (>= 0.13.0),
     graphics,
     methods,
     stats,
@@ -81,6 +81,7 @@ Suggests:
     blavaan,
     bridgesampling,
     brms,
+    collapse,
     curl,
     effectsize,
     emmeans,
@@ -88,7 +89,6 @@ Suggests:
     ggdist,
     ggplot2,
     glmmTMB,
-    httr,
     httr2,
     KernSmooth,
     knitr,
@@ -112,7 +112,8 @@ Suggests:
     rstanarm,
     see (>= 0.8.5),
     testthat,
-    tweedie
+    tweedie,
+    withr
 License: GPL-3
 URL: https://easystats.github.io/bayestestR/
 BugReports: https://github.com/easystats/bayestestR/issues
@@ -127,4 +128,3 @@ Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
-Remotes: easystats/insight, easystats/datawizard

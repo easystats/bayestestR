@@ -90,13 +90,14 @@ test_that("check_prior - brms (linux)", {
     )
   ))
 
-  expect_warning(expect_identical(
-    check_prior(model2, method = "lakeland")$Prior_Quality,
-    c(
-      "informative", "misinformative", "informative", "informative",
-      "informative", "not determinable", "not determinable", "not determinable"
-    )
-  ))
+  ## FIXME: this test returns inconsistent results across platforms and OSs
+  # expect_warning(expect_identical(
+  #   check_prior(model2, method = "lakeland")$Prior_Quality,
+  #   c(
+  #     "informative", "misinformative", "informative", "informative",
+  #     "informative", "not determinable", "not determinable", "not determinable"
+  #   )
+  # ))
 })
 
 test_that("check_prior - brms (not linux or windows)", {

@@ -2,7 +2,7 @@ test_that("rstanarm", {
   skip_on_cran()
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("stanreg_lm_1")
@@ -50,7 +50,7 @@ test_that("rstanarm", {
   skip_on_cran()
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("stanreg_glm_3")
@@ -69,7 +69,7 @@ test_that("rstanarm", {
   skip_on_cran()
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("stanreg_merMod_3")
@@ -89,7 +89,7 @@ test_that("rstanarm", {
   skip_on_cran()
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("stanmvreg_1")
@@ -109,7 +109,7 @@ test_that("rstanarm", {
   skip_on_cran()
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("stanmvreg_1")

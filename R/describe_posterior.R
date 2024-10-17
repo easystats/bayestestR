@@ -6,18 +6,16 @@
 #'   **bayestestR** supports a wide range of models (see `methods("describe_posterior")`)
 #'   and not all of those are documented in the 'Usage' section, because methods
 #'   for other classes mostly resemble the arguments of the `.numeric` method.
-#' @param ci_method The type of index used for Credible Interval. Can be
-#'   `"ETI"` (default, see [bayestestR::eti()]), `"HDI"`
-#'   (see [bayestestR::hdi()]), `"BCI"` (see
-#'   [bayestestR::bci()]), `"SPI"` (see [bayestestR::spi()]), or
-#'   `"SI"` (see [bayestestR::si()]).
+#' @param ci_method The type of index used for Credible Interval. Can be `"ETI"`
+#'   (default, see [`eti()`]), `"HDI"` (see [`hdi()`]), `"BCI"` (see [`bci()`]),
+#'   `"SPI"` (see [`spi()`]), or `"SI"` (see [`si()`]).
 #' @param test The indices of effect existence to compute. Character (vector) or
 #'   list with one or more of these options: `"p_direction"` (or `"pd"`),
 #'   `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`),
-#'   `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests.
-#'   For each "test", the corresponding \pkg{bayestestR} function is called
-#'   (e.g. [bayestestR::rope()] or [bayestestR::p_direction()]) and its results
-#'   included in the summary output.
+#'   `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests. For each
+#'   "test", the corresponding \pkg{bayestestR} function is called (e.g.
+#'   [`rope()`] or [`p_direction()`]) and its results included in the summary
+#'   output.
 #' @param rope_range ROPE's lower and higher bounds. Should be a vector of two
 #'   values (e.g., `c(-0.1, 0.1)`), `"default"` or a list of numeric vectors of
 #'   the same length as numbers of parameters. If `"default"`, the bounds are
@@ -27,7 +25,7 @@
 #' @param keep_iterations If `TRUE`, will keep all iterations (draws) of
 #'   bootstrapped or Bayesian models. They will be added as additional columns
 #'   named `iter_1, iter_2, ...`. You can reshape them to a long format by
-#'   running [bayestestR::reshape_iterations()].
+#'   running [`reshape_iterations()`].
 #' @param bf_prior Distribution representing a prior for the computation of
 #'   Bayes factors / SI. Used if the input is a posterior, otherwise (in the
 #'   case of models) ignored.
