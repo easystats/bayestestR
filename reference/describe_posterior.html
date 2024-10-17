@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -195,21 +195,19 @@ to be estimated. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
 
 
 <dt id="arg-ci-method">ci_method<a class="anchor" aria-label="anchor" href="#arg-ci-method"></a></dt>
-<dd><p>The type of index used for Credible Interval. Can be
-<code>"ETI"</code> (default, see <code><a href="eti.html">eti()</a></code>), <code>"HDI"</code>
-(see <code><a href="hdi.html">hdi()</a></code>), <code>"BCI"</code> (see
-<code><a href="bci.html">bci()</a></code>), <code>"SPI"</code> (see <code><a href="spi.html">spi()</a></code>), or
-<code>"SI"</code> (see <code><a href="si.html">si()</a></code>).</p></dd>
+<dd><p>The type of index used for Credible Interval. Can be <code>"ETI"</code>
+(default, see <code><a href="eti.html">eti()</a></code>), <code>"HDI"</code> (see <code><a href="hdi.html">hdi()</a></code>), <code>"BCI"</code> (see <code><a href="bci.html">bci()</a></code>),
+<code>"SPI"</code> (see <code><a href="spi.html">spi()</a></code>), or <code>"SI"</code> (see <code><a href="si.html">si()</a></code>).</p></dd>
 
 
 <dt id="arg-test">test<a class="anchor" aria-label="anchor" href="#arg-test"></a></dt>
 <dd><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
-<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
-For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href="rope.html">rope()</a></code> or <code><a href="p_direction.html">p_direction()</a></code>) and its results
-included in the summary output.</p></dd>
+<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests. For each
+"test", the corresponding <span class="pkg">bayestestR</span> function is called (e.g.
+<code><a href="rope.html">rope()</a></code> or <code><a href="p_direction.html">p_direction()</a></code>) and its results included in the summary
+output.</p></dd>
 
 
 <dt id="arg-rope-range">rope_range<a class="anchor" aria-label="anchor" href="#arg-rope-range"></a></dt>
