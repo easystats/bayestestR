@@ -103,7 +103,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>1. Initiation to Bayesian models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/v0.15.0/vignettes/example1.Rmd" class="external-link"><code>vignettes/example1.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/main/vignettes/example1.Rmd" class="external-link"><code>vignettes/example1.Rmd</code></a></small>
       <div class="d-none name"><code>example1.Rmd</code></div>
     </div>
 
@@ -629,10 +629,15 @@ be run directly on the model:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span>, <span class="st">"bayesfactor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE |       BF |  Rhat |      ESS
-&gt; ------------------------------------------------------------------------------------------------------------
-&gt; (Intercept)   | 277.13 | [240.57, 312.75] |   100% | [-6.17, 6.17] |        0% | 1.77e+13 | 1.000 | 32904.00
-&gt; feedsunflower |  51.69 | [  2.81, 102.04] | 98.09% | [-6.17, 6.17] |     1.01% |    0.770 | 1.000 | 32751.00</code></pre>
+&gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE
+&gt; ------------------------------------------------------------------------------
+&gt; (Intercept)   | 277.13 | [240.57, 312.75] |   100% | [-6.17, 6.17] |        0%
+&gt; feedsunflower |  51.69 | [  2.81, 102.04] | 98.09% | [-6.17, 6.17] |     1.01%
+&gt; 
+&gt; Parameter     |       BF |  Rhat |      ESS
+&gt; -------------------------------------------
+&gt; (Intercept)   | 1.77e+13 | 1.000 | 32904.00
+&gt; feedsunflower |    0.770 | 1.000 | 32751.00</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>,
 the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE
 percentage</strong>!</p>

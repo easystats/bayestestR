@@ -67,7 +67,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Describe Posterior Distributions</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/v0.15.0/R/describe_posterior.R" class="external-link"><code>R/describe_posterior.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/main/R/describe_posterior.R" class="external-link"><code>R/describe_posterior.R</code></a></small>
       <div class="d-none name"><code>describe_posterior.Rd</code></div>
     </div>
 
@@ -325,14 +325,23 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI |     pd |          ROPE | % in ROPE | iter_index | iter_group | iter_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.21 | [-1.70, 1.42] | 60.00% | [-0.10, 0.10] |     5.56% |       1.00 |       1.00 |       0.51</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.21 | [-2.38, 2.41] | 55.00% | [-0.10, 0.10] |    11.11% |       2.00 |       1.00 |      -0.36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |   0.22 | [-1.96, 2.61] | 55.00% | [-0.10, 0.10] |     5.56% |       3.00 |       1.00 |       1.32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.20 | [-1.58, 0.61] | 65.00% | [-0.10, 0.10] |    16.67% |       4.00 |       1.00 |       0.34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.21 | [-1.70, 1.42] | 60.00% | [-0.10, 0.10] |     5.56% |       1.00 |       2.00 |      -0.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.21 | [-2.38, 2.41] | 55.00% | [-0.10, 0.10] |    11.11% |       2.00 |       2.00 |      -0.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI |     pd |          ROPE | % in ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.21 | [-1.70, 1.42] | 60.00% | [-0.10, 0.10] |     5.56%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.21 | [-2.38, 2.41] | 55.00% | [-0.10, 0.10] |    11.11%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |   0.22 | [-1.96, 2.61] | 55.00% | [-0.10, 0.10] |     5.56%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.20 | [-1.58, 0.61] | 65.00% | [-0.10, 0.10] |    16.67%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.21 | [-1.70, 1.42] | 60.00% | [-0.10, 0.10] |     5.56%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.21 | [-2.38, 2.41] | 55.00% | [-0.10, 0.10] |    11.11%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | iter_index | iter_group | iter_value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |       1.00 |       1.00 |       0.51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |       2.00 |       1.00 |      -0.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |       3.00 |       1.00 |       1.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |       4.00 |       1.00 |       0.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |       1.00 |       2.00 |      -0.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |       2.00 |       2.00 |      -0.50</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># rstanarm models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -368,9 +377,13 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |       80% CI |       90% CI |   pd |          ROPE | % in ROPE |       BF |              Prior</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   0.97 | [0.84, 1.09] | [0.81, 1.12] | 100% | [-0.09, 0.09] |        0% | 1.27e+15 | Cauchy (0 +- 0.71)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |       80% CI |       90% CI |   pd |          ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   0.97 | [0.84, 1.09] | [0.81, 1.12] | 100% | [-0.09, 0.09]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | % in ROPE |       BF |              Prior</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |        0% | 1.27e+15 | Cauchy (0 +- 0.71)</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

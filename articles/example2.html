@@ -103,7 +103,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>2. Confirmation of Bayesian skills</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/v0.15.0/vignettes/example2.Rmd" class="external-link"><code>vignettes/example2.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/main/vignettes/example2.Rmd" class="external-link"><code>vignettes/example2.Rmd</code></a></small>
       <div class="d-none name"><code>example2.Rmd</code></div>
     </div>
 
@@ -342,9 +342,13 @@ statistically by using the <code><a href="https://rdrr.io/pkg/BayesFactor/man/tt
 <span><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter  | Median |         95% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
-&gt; ------------------------------------------------------------------------------------------------------
-&gt; Difference |  -0.19 | [-0.32, -0.06] | 99.75% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
+&gt; Parameter  | Median |         95% CI |     pd |          ROPE | % in ROPE
+&gt; -------------------------------------------------------------------------
+&gt; Difference |  -0.19 | [-0.32, -0.06] | 99.75% | [-0.03, 0.03] |        0%
+&gt; 
+&gt; Parameter  |    BF |              Prior
+&gt; ---------------------------------------
+&gt; Difference | 17.72 | Cauchy (0 +- 0.71)</code></pre>
 <p>From the indices, we can say that the difference of
 <code>Sepal.Width</code> between <em>virginica</em> and
 <em>versicolor</em> has a probability of <strong>100% of being
@@ -408,19 +412,28 @@ distribution using our old pal <code><a href="../reference/describe_posterior.ht
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter   | Median |          95% CI |     pd |          ROPE | % in ROPE |    BF |  Rhat |      ESS
-&gt; ------------------------------------------------------------------------------------------------------
-&gt; (Intercept) |  -6.12 | [-10.45, -2.25] | 99.92% | [-0.18, 0.18] |        0% | 12.91 | 1.000 | 26540.00
-&gt; Sepal.Width |   2.13 | [  0.79,  3.63] | 99.94% | [-0.18, 0.18] |        0% | 14.63 | 1.000 | 26693.00</code></pre>
+&gt; Parameter   | Median |          95% CI |     pd |          ROPE | % in ROPE
+&gt; ---------------------------------------------------------------------------
+&gt; (Intercept) |  -6.12 | [-10.45, -2.25] | 99.92% | [-0.18, 0.18] |        0%
+&gt; Sepal.Width |   2.13 | [  0.79,  3.63] | 99.94% | [-0.18, 0.18] |        0%
+&gt; 
+&gt; Parameter   |    BF |  Rhat |      ESS
+&gt; --------------------------------------
+&gt; (Intercept) | 12.91 | 1.000 | 26540.00
+&gt; Sepal.Width | 14.63 | 1.000 | 26693.00</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/" class="external-link">performance</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://easystats.github.io/performance/reference/model_performance.html" class="external-link">model_performance</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; # Indices of model performance
 &gt; 
-&gt; ELPD    | ELPD_SE |   LOOIC | LOOIC_SE |    WAIC |    R2 |  RMSE | Sigma | Log_loss | Score_log | Score_spherical
-&gt; -----------------------------------------------------------------------------------------------------------------
-&gt; -66.284 |   3.052 | 132.568 |    6.104 | 132.562 | 0.099 | 0.477 | 1.000 |    0.643 |   -35.436 |           0.014</code></pre>
+&gt; ELPD    | ELPD_SE |   LOOIC | LOOIC_SE |    WAIC |    R2 |  RMSE | Sigma
+&gt; ------------------------------------------------------------------------
+&gt; -66.284 |   3.052 | 132.568 |    6.104 | 132.562 | 0.099 | 0.477 | 1.000
+&gt; 
+&gt; ELPD    | Log_loss | Score_log | Score_spherical
+&gt; ------------------------------------------------
+&gt; -66.284 |    0.643 |   -35.436 |           0.014</code></pre>
 </div>
 <div class="section level3">
 <h3 id="visualise-the-indices">Visualise the indices<a class="anchor" aria-label="anchor" href="#visualise-the-indices"></a>
