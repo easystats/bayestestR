@@ -293,8 +293,8 @@
 #' @keywords internal
 .get_marginaleffects_draws <- function(object) {
   # errors and checks are handled by marginaleffects
-  insight::check_if_installed("marginaleffects")
-  data.frame(marginaleffects::posterior_draws(object, shape = "DxP"))
+  insight::check_if_installed("marginaleffects", minimum_version = "0.24.0")
+  data.frame(marginaleffects::get_draws(object, shape = "DxP"))
 }
 
 #' @keywords internal
