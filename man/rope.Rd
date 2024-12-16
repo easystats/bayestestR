@@ -65,11 +65,11 @@ names. In this case, all parameters that have no matching name in \code{range}
 will be set to \code{"default"}.
 }
 
-In multivariate models, \code{range} should be a list with a numeric vectors for
-each response variable. Vector names should correspond to the name of the
-response variables. If \code{"default"} and input is a vector, the range is set to
-\code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
-\code{\link[=rope_range]{rope_range()}} is used.}
+In multivariate models, \code{range} should be a list with another list (one for
+each response variable) of numeric vectors . Vector names should correspond to
+the name of the response variables. If \code{"default"} and input is a vector, the
+range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
+\code{\link[=rope_range]{rope_range()}} is used. See 'Examples'.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
@@ -190,17 +190,29 @@ library(emmeans)
 rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 
 library(brms)
-model <- brm(mpg ~ wt + cyl, data = mtcars)
+model <- brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 rope(model)
 rope(model, ci = c(0.90, 0.95))
 
 library(brms)
 model <- brm(
   bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
-  data = mtcars
+  data = mtcars,
+  refresh = 0
 )
 rope(model)
 rope(model, ci = c(0.90, 0.95))
+
+# different ROPE ranges for model parameters. For each response, a named
+# list (with the name of the response variable) is required as list-element
+# for the `range` argument.
+rope(
+  model,
+  range = list(
+    mpg = list(b_mpg_wt = c(-1, 1), b_mpg_cyl = c(-2, 2)),
+    disp = list(b_disp_wt = c(-5, 5), b_disp_cyl = c(-4, 4))
+  )
+)
 
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
