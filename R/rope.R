@@ -128,14 +128,15 @@
 #' rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 #'
 #' library(brms)
-#' model <- brm(mpg ~ wt + cyl, data = mtcars)
+#' model <- brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
 #'
 #' library(brms)
 #' model <- brm(
 #'   bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
-#'   data = mtcars
+#'   data = mtcars,
+#'   refresh = 0
 #' )
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
