@@ -31,6 +31,19 @@ withr::with_environment(
       ignore_attr = TRUE
     )
 
+    # multi ci levels
+    res <- hdi(mfx, ci = c(0.8, 0.9))
+    expect_equal(as.data.frame(res[1:3]),
+                 data.frame(term = c("am", "am", "am", "am", "cyl", "cyl",
+                                     "cyl", "cyl", "cyl", "cyl", "cyl", "cyl",
+                                     "hp", "hp", "hp", "hp"),
+                            contrast = c("1 - 0", "1 - 0", "1 - 0", "1 - 0",
+                                         "6 - 4", "6 - 4", "8 - 4", "8 - 4",
+                                         "6 - 4", "6 - 4", "8 - 4", "8 - 4",
+                                         "dY/dX", "dY/dX", "dY/dX", "dY/dX"),
+                            am = c(0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+                                   1, 1)))
+
     # estimate_density
     mfx <- marginaleffects::comparisons(mod,
       variables = "cyl",

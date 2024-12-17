@@ -31,6 +31,11 @@ test_that("emmGrid hdi", {
 
   xhdi2 <- hdi(emc_, ci = 0.95)
   expect_equal(xhdi$CI_low, xhdi2$CI_low)
+
+  xhdi3 <- hdi(all_, ci = c(0.9, 0.95))
+  expect_equal(as.data.frame(xhdi3[1:2]),
+               data.frame(group = c("1", "1", "2", "2", ".", "."),
+                          contrast = c(".", ".", ".", ".", "group1 - group2", "group1 - group2")))
 })
 
 test_that("emmGrid point_estimate", {
