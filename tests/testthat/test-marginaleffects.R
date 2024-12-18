@@ -26,7 +26,7 @@ withr::with_environment(
     )
 
     expect_true(all(c("term", "contrast") %in% colnames(results)))
-    expect_equal(results[setdiff(colnames(results), c("term", "contrast"))],
+    expect_equal(results[setdiff(colnames(results), c("term", "contrast", "am"))],
       results_draws[setdiff(colnames(results_draws), "Parameter")],
       ignore_attr = TRUE
     )
