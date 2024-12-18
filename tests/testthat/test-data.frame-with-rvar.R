@@ -45,9 +45,13 @@ test_that("data.frame w/ rvar_col descrive_posterior etc", {
   res <- eti(dfx, rvar_col = "my_rvar", ci = c(0.8, 0.95))
   res.ref <- eti(dfx$my_rvar, ci = c(0.8, 0.95))
   expect_true(all(c("mu", "sigma") %in% colnames(res)))
-  expect_identical(as.data.frame(res[c("mu", "sigma")]),
-                   data.frame(mu = c(0, 0, 0.5, 0.5, 1, 1),
-                              sigma = c(1, 1, 0.5, 0.5, 0.25, 0.25)))
+  expect_identical(
+    as.data.frame(res[c("mu", "sigma")]),
+    data.frame(
+      mu = c(0, 0, 0.5, 0.5, 1, 1),
+      sigma = c(1, 1, 0.5, 0.5, 0.25, 0.25)
+    )
+  )
   expect_identical(nrow(format(res)), 3L)
   expect_identical(ncol(format(res)), 4L)
   expect_equal(res[setdiff(colnames(res), c("mu", "sigma"))],

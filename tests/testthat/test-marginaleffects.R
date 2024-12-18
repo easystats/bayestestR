@@ -33,16 +33,26 @@ withr::with_environment(
 
     # multi ci levels
     res <- hdi(mfx, ci = c(0.8, 0.9))
-    expect_identical(as.data.frame(res[1:3]),
-                 data.frame(term = c("am", "am", "am", "am", "cyl", "cyl",
-                                     "cyl", "cyl", "cyl", "cyl", "cyl", "cyl",
-                                     "hp", "hp", "hp", "hp"),
-                            contrast = c("1 - 0", "1 - 0", "1 - 0", "1 - 0",
-                                         "6 - 4", "6 - 4", "8 - 4", "8 - 4",
-                                         "6 - 4", "6 - 4", "8 - 4", "8 - 4",
-                                         "dY/dX", "dY/dX", "dY/dX", "dY/dX"),
-                            am = c(0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
-                                   1, 1), stringsAsFactors = FALSE))
+    expect_identical(
+      as.data.frame(res[1:3]),
+      data.frame(
+        term = c(
+          "am", "am", "am", "am", "cyl", "cyl",
+          "cyl", "cyl", "cyl", "cyl", "cyl", "cyl",
+          "hp", "hp", "hp", "hp"
+        ),
+        contrast = c(
+          "1 - 0", "1 - 0", "1 - 0", "1 - 0",
+          "6 - 4", "6 - 4", "8 - 4", "8 - 4",
+          "6 - 4", "6 - 4", "8 - 4", "8 - 4",
+          "dY/dX", "dY/dX", "dY/dX", "dY/dX"
+        ),
+        am = c(
+          0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+          1, 1
+        ), stringsAsFactors = FALSE
+      )
+    )
 
     # estimate_density
     mfx <- marginaleffects::comparisons(mod,
