@@ -1,3 +1,10 @@
+# bayestestR 0.15.0.4
+
+## Bug fixes
+
+* Fix to `emmeans` / `marginaleffects` / `data.frame(<rvar>)` methods when using multiple credible levels (#688).
+
+
 # bayestestR 0.15.0
 
 ## Changes

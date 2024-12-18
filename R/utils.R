@@ -230,7 +230,7 @@
   datagrid <- insight::get_datagrid(object)
   grid_names <- colnames(datagrid)
 
-  if (long) {
+  if (long || nrow(datagrid) < nrow(results)) {
     datagrid$Parameter <- unique(results$Parameter)
     results <- datawizard::data_merge(datagrid, results, by = "Parameter")
     results$Parameter <- NULL
@@ -270,7 +270,7 @@
   grid_names <- colnames(object)[!is_rvar]
   datagrid <- data.frame(object[, grid_names, drop = FALSE])
 
-  if (long) {
+  if (long || nrow(datagrid) < nrow(results)) {
     datagrid$Parameter <- unique(results$Parameter)
     results <- datawizard::data_merge(datagrid, results, by = "Parameter")
     results$Parameter <- NULL
