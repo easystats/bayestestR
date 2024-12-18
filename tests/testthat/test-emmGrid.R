@@ -30,12 +30,12 @@ test_that("emmGrid hdi", {
   expect_equal(xhdi$CI_high, all_summ$upper.HPD, tolerance = 0.1)
 
   xhdi2 <- hdi(emc_, ci = 0.95)
-  expect_equal(xhdi$CI_low, xhdi2$CI_low)
+  expect_identical(xhdi$CI_low, xhdi2$CI_low)
 
   xhdi3 <- hdi(all_, ci = c(0.9, 0.95))
-  expect_equal(as.data.frame(xhdi3[1:2]),
-               data.frame(group = c("1", "1", "2", "2", ".", "."),
-                          contrast = c(".", ".", ".", ".", "group1 - group2", "group1 - group2")))
+  expect_identical(as.data.frame(xhdi3[1:2]),
+                   data.frame(group = c("1", "1", "2", "2", ".", "."),
+                              contrast = c(".", ".", ".", ".", "group1 - group2", "group1 - group2"), stringsAsFactors = FALSE))
 })
 
 test_that("emmGrid point_estimate", {
@@ -44,7 +44,7 @@ test_that("emmGrid point_estimate", {
   expect_equal(xpest$Median, all_summ$emmean, tolerance = 0.1)
 
   xpest2 <- point_estimate(emc_, centrality = "all", dispersion = TRUE)
-  expect_equal(xpest$Median, xpest2$Median)
+  expect_identical(xpest$Median, xpest2$Median)
 })
 
 
@@ -119,7 +119,7 @@ test_that("emmGrid rope", {
 # describe_posterior ------------------------------------------------------
 
 test_that("emmGrid describe_posterior", {
-  expect_equal(
+  expect_identical(
     describe_posterior(all_)$median,
     describe_posterior(emc_)$median
   )
@@ -127,7 +127,7 @@ test_that("emmGrid describe_posterior", {
   expect_identical(colnames(describe_posterior(all_))[1:2], c("group", "contrast"))
 
   skip_on_cran()
-  expect_equal(
+  expect_identical(
     describe_posterior(all_, bf_prior = model_p, test = "bf")$log_BF,
     describe_posterior(emc_, bf_prior = model_p, test = "bf")$log_BF
   )
@@ -172,9 +172,9 @@ test_that("emmGrid bayesfactor_restricted", {
   hyps <- c("`1` < `2`", "`1` < 0")
 
   xrbf <- bayesfactor_restricted(em_, prior = model_p, hypothesis = hyps)
-  expect_equal(length(xrbf$log_BF), 2)
-  expect_equal(length(xrbf$p_prior), 2)
-  expect_equal(length(xrbf$p_posterior), 2)
+  expect_length(xrbf$log_BF, 2)
+  expect_length(xrbf$p_prior, 2)
+  expect_length(xrbf$p_posterior, 2)
   expect_warning(bayesfactor_restricted(em_, hypothesis = hyps))
 
   xrbf2 <- bayesfactor_restricted(emc_, prior = model_p, hypothesis = hyps)
@@ -187,12 +187,12 @@ test_that("emmGrid si", {
 
   xrsi <- si(all_, prior = model_p, verbose = FALSE)
   expect_identical(colnames(xrsi)[1:2], c("group", "contrast"))
-  expect_equal(length(xrsi$CI_low), 3)
-  expect_equal(length(xrsi$CI_high), 3)
+  expect_length(xrsi$CI_low, 3)
+  expect_length(xrsi$CI_high, 3)
 
   xrsi2 <- si(emc_, prior = model_p, verbose = FALSE)
-  expect_equal(xrsi$CI_low, xrsi2$CI_low)
-  expect_equal(xrsi$CI_high, xrsi2$CI_high)
+  expect_identical(xrsi$CI_low, xrsi2$CI_low)
+  expect_identical(xrsi$CI_high, xrsi2$CI_high)
 })
 
 
