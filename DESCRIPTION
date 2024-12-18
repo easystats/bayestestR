@@ -95,7 +95,7 @@ Suggests:
     lavaan,
     lme4,
     logspline (>= 2.1.21),
-    marginaleffects (>= 0.24.0),
+    marginaleffects (>= 0.24.0.6),
     MASS,
     mclust,
     mediation,
