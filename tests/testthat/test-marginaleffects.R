@@ -90,8 +90,8 @@ withr::with_environment(
     outsi <- si(mfx, prior = mfxp, verbose = FALSE)
     outsiref <- si(mfx_samps, prior = mfxp_samps, verbose = FALSE)
 
-    expect_true(all(c("term", "contrast") %in% colnames(outsi)))
-    expect_equal(outsi[setdiff(colnames(outsi), c("term", "contrast"))],
+    expect_true(all(c("term", "contrast", "am") %in% colnames(outsi)))
+    expect_equal(outsi[setdiff(colnames(outsi), c("term", "contrast", "am"))],
       outsiref[setdiff(colnames(outsiref), "Parameter")],
       ignore_attr = TRUE
     )
@@ -99,7 +99,7 @@ withr::with_environment(
     # bayesfactor_parameters
     bfp <- bayesfactor_parameters(mfx, prior = mfxp, verbose = FALSE)
     bfpref <- bayesfactor_parameters(mfx_samps, prior = mfxp_samps, verbose = FALSE)
-    expect_equal(bfp[setdiff(colnames(bfp), c("term", "contrast"))],
+    expect_equal(bfp[setdiff(colnames(bfp), c("term", "contrast", "am"))],
       bfpref[setdiff(colnames(bfpref), "Parameter")],
       ignore_attr = TRUE
     )
