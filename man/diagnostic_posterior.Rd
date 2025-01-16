@@ -38,16 +38,30 @@ diagnostic_posterior(posterior, ...)
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
 
-\item{effects}{Should parameters for fixed effects, random effects
-or both be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.}
 
-\item{component}{Should all predictor variables, predictor variables for the
-conditional model, the zero-inflated part of the model, the dispersion
-term or the instrumental variables be returned? Applies to models
-with zero-inflated and/or dispersion formula, or to models with instrumental
-variable (so called fixed-effects regressions). May be abbreviated. Note that the
-\emph{conditional} component is also called \emph{count} or \emph{mean}
-component, depending on the model.}
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, the instrumental variables or marginal effects be returned? Applies to
+models with zero-inflated and/or dispersion formula, or to models with
+instrumental variables (so called fixed-effects regressions), or models with
+marginal effects (from \strong{mfx}). See details in section \emph{Model Components}
+.May be abbreviated. Note that the \emph{conditional} component also refers to the
+\emph{count} or \emph{mean} component - names may differ, depending on the modeling
+package. There are three convenient shortcuts (not applicable to \emph{all} model
+classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
 
 \item{parameters}{Regular expression pattern that describes the parameters that
 should be returned.}
