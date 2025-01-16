@@ -246,7 +246,6 @@
   }
 
 
-
   attr(results, "idvars") <- grid_names
   results
 }

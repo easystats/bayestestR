@@ -52,7 +52,6 @@ test_that("emmGrid point_estimate", {
 })
 
 
-
 # Basics ------------------------------------------------------------------
 
 test_that("emmGrid ci", {

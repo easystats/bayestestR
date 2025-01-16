@@ -67,10 +67,6 @@ distribution_custom <- function(n, type = "norm", ..., random = FALSE) {
 }
 
 
-
-
-
-
 #' @rdname distribution
 #' @inheritParams stats::rbeta
 #' @export
@@ -99,7 +95,6 @@ distribution_binomial <- function(n, size = 1, prob = 0.5, random = FALSE, ...) 
 distribution_binom <- distribution_binomial
 
 
-
 #' @rdname distribution
 #' @inheritParams stats::rcauchy
 #' @export
@@ -125,7 +120,6 @@ distribution_chisquared <- function(n, df, ncp = 0, random = FALSE, ...) {
 #' @rdname distribution
 #' @export
 distribution_chisq <- distribution_chisquared
-
 
 
 #' @rdname distribution
@@ -265,7 +259,6 @@ distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
     stats::qunif(stats::ppoints(n), min, max, ...)
   }
 }
-
 
 
 #' @rdname distribution

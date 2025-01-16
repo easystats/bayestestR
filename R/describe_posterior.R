@@ -528,8 +528,6 @@ describe_posterior.default <- function(posterior, ...) {
 }
 
 
-
-
 # Models based on simple data frame of posterior ---------------------
 
 
@@ -728,7 +726,6 @@ describe_posterior.draws <- function(posterior,
 describe_posterior.rvar <- describe_posterior.draws
 
 
-
 # easystats methods ------------------------
 
 
@@ -823,8 +820,6 @@ describe_posterior.get_predicted <- function(posterior,
     insight::format_error("No iterations present in the output.")
   }
 }
-
-
 
 
 # emmeans ---------------------------
@@ -1221,8 +1216,6 @@ describe_posterior.brmsfit <- function(posterior,
 describe_posterior.blavaan <- describe_posterior.stanfit
 
 
-
-
 # other models --------------------------------
 
 
@@ -1345,8 +1338,6 @@ describe_posterior.bamlss <- function(posterior,
 }
 
 
-
-
 # BayesFactor --------------------
 
 
@@ -1429,9 +1420,6 @@ describe_posterior.BFBayesFactor <- function(posterior,
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
-
-
-
 
 
 # Helpers -----------------------------------------------------------------

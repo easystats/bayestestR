@@ -263,9 +263,6 @@ p_direction.data.frame <- function(x,
 }
 
 
-
-
-
 #' @export
 p_direction.draws <- function(x,
                               method = "direct",
@@ -477,7 +474,6 @@ p_direction.sim <- function(x,
 }
 
 
-
 #' @rdname p_direction
 #' @export
 p_direction.stanreg <- function(x,
@@ -641,7 +637,6 @@ p_direction.parameters_model <- function(x, ...) {
 
   out
 }
-
 
 
 # Definition --------------------------------------------------------------

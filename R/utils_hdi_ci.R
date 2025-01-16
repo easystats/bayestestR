@@ -45,7 +45,6 @@
 }
 
 
-
 #' @keywords internal
 .compute_interval_dataframe <- function(x, ci, verbose, fun) {
   numeric_variables <- vapply(x, is.numeric, TRUE)
@@ -75,7 +74,6 @@
 }
 
 
-
 #' @keywords internal
 .compute_interval_simMerMod <- function(x, ci, effects, parameters, verbose, fun) {
   fixed <- fixed.data <- NULL
@@ -101,7 +99,6 @@
 
   list(result = d, data = do.call(cbind, insight::compact_list(list(fixed.data, random.data))))
 }
-
 
 
 #' @keywords internal

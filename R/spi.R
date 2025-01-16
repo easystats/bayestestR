@@ -282,8 +282,6 @@ spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 }
 
 
-
-
 # Helper ------------------------------------------------------------------
 
 # Code taken (and slightly simplified) from:

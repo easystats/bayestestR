@@ -222,7 +222,6 @@ p_rope.blrm <- p_rope.mcmc
 p_rope.mcmc.list <- p_rope.mcmc
 
 
-
 # Internal ----------------------------------------------------------------
 
 

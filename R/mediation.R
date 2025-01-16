@@ -156,9 +156,6 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 }
 
 
-
-
-
 # workhorse ---------------------------------
 
 
@@ -316,7 +313,6 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 }
 
 
-
 # S3 ---------------------------------
 
 #' @export
@@ -356,7 +352,6 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
     insight::format_alert("\nDirect and indirect effects have opposite directions. The proportion mediated is not meaningful.")
   }
 }
-
 
 
 #' @export

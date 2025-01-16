@@ -184,7 +184,6 @@ contr.equalprior_deviations <- function(n, contrasts = TRUE, sparse = FALSE) {
 }
 
 
-
 # OLD ------------------------------
 
 #' @export

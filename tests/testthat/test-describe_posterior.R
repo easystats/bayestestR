@@ -107,7 +107,6 @@ test_that("describe_posterior", {
 })
 
 
-
 test_that("describe_posterior", {
   skip_on_os(c("mac", "linux"))
   skip_if_offline()

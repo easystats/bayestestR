@@ -87,17 +87,12 @@ sensitivity_to_prior.default <- function(model, ...) {
 }
 
 
-
-
 #' Set a new location for a prior
 #' @keywords internal
 .prior_new_location <- function(prior, sign, magnitude = 10) {
   prior$location <- -1 * sign * magnitude * prior$scale
   prior
 }
-
-
-
 
 
 #' Extract and Returns the priors formatted for rstanarm

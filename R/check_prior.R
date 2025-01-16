@@ -50,9 +50,6 @@ check_prior <- function(model, method = "gelman", simulate_priors = TRUE, ...) {
 }
 
 
-
-
-
 #' @export
 check_prior.brmsfit <- function(model,
                                 method = "gelman",

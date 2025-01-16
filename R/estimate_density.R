@@ -161,7 +161,6 @@ estimate_density.default <- function(x, ...) {
 }
 
 
-
 # Methods -----------------------------------------------------------------
 
 #' @export
@@ -589,7 +588,6 @@ estimate_density.bamlss <- function(x,
 }
 
 
-
 #' Coerce to a Data Frame
 #'
 #' @inheritParams base::as.data.frame
@@ -642,8 +640,6 @@ as.data.frame.density <- function(x, ...) {
   row.names(out) <- NULL
   out[, c("Parameter", "x", "y")]
 }
-
-
 
 
 #' Density Probability at a Given Value
