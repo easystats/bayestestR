@@ -79,7 +79,6 @@ test_that("rope", {
 })
 
 
-
 test_that("rope", {
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")

@@ -95,7 +95,6 @@ p_to_pd <- function(p, direction = "two-sided", ...) {
 }
 
 
-
 #' @rdname pd_to_p
 #' @export
 convert_p_to_pd <- p_to_pd

@@ -284,7 +284,6 @@ si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 si.rvar <- si.draws
 
 
-
 # Helper ------------------------------------------------------------------
 
 .si.data.frame <- function(posterior, prior, BF, verbose = TRUE, ...) {
@@ -306,7 +305,6 @@ si.rvar <- si.draws
     stringsAsFactors = FALSE
   )
 }
-
 
 
 #' @keywords internal

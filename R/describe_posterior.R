@@ -11,11 +11,11 @@
 #'   `"SPI"` (see [`spi()`]), or `"SI"` (see [`si()`]).
 #' @param test The indices of effect existence to compute. Character (vector) or
 #'   list with one or more of these options: `"p_direction"` (or `"pd"`),
-#'   `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`),
-#'   `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests. For each
-#'   "test", the corresponding \pkg{bayestestR} function is called (e.g.
-#'   [`rope()`] or [`p_direction()`]) and its results included in the summary
-#'   output.
+#'   `"rope"`, `"p_map"`, `"p_significance"` (or `"ps"`), `"p_rope"`,
+#'   `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`) or
+#'   `"all"` to compute all tests. For each "test", the corresponding
+#'   \pkg{bayestestR} function is called (e.g. [`rope()`] or [`p_direction()`])
+#'   and its results included in the summary output.
 #' @param rope_range ROPE's lower and higher bounds. Should be a vector of two
 #'   values (e.g., `c(-0.1, 0.1)`), `"default"` or a list of numeric vectors of
 #'   the same length as numbers of parameters. If `"default"`, the bounds are
@@ -528,8 +528,6 @@ describe_posterior.default <- function(posterior, ...) {
 }
 
 
-
-
 # Models based on simple data frame of posterior ---------------------
 
 
@@ -728,7 +726,6 @@ describe_posterior.draws <- function(posterior,
 describe_posterior.rvar <- describe_posterior.draws
 
 
-
 # easystats methods ------------------------
 
 
@@ -823,8 +820,6 @@ describe_posterior.get_predicted <- function(posterior,
     insight::format_error("No iterations present in the output.")
   }
 }
-
-
 
 
 # emmeans ---------------------------
@@ -1221,8 +1216,6 @@ describe_posterior.brmsfit <- function(posterior,
 describe_posterior.blavaan <- describe_posterior.stanfit
 
 
-
-
 # other models --------------------------------
 
 
@@ -1345,8 +1338,6 @@ describe_posterior.bamlss <- function(posterior,
 }
 
 
-
-
 # BayesFactor --------------------
 
 
@@ -1429,9 +1420,6 @@ describe_posterior.BFBayesFactor <- function(posterior,
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
-
-
-
 
 
 # Helpers -----------------------------------------------------------------

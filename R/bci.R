@@ -27,7 +27,6 @@ bci <- function(x, ...) {
 bcai <- bci
 
 
-
 #' @rdname bci
 #' @export
 bci.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
@@ -38,7 +37,6 @@ bci.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
   attr(out, "data") <- x
   out
 }
-
 
 
 #' @rdname bci
@@ -66,7 +64,6 @@ bci.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
 }
 
 
-
 #' @export
 bci.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = .posterior_draws_to_df(x), ci = ci, verbose = verbose, fun = "bci")
@@ -89,7 +86,6 @@ bci.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
-
 #' @export
 bci.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- as.data.frame(x)
@@ -97,7 +93,6 @@ bci.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
-
 
 
 #' @export
@@ -112,7 +107,6 @@ bci.bamlss <- function(x,
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
-
 
 
 #' @export
@@ -135,7 +129,6 @@ bci.mcmc.list <- bci.bcplm
 
 #' @export
 bci.BGGM <- bci.bcplm
-
 
 
 #' @rdname bci
@@ -161,7 +154,6 @@ bci.sim.merMod <- function(x,
 }
 
 
-
 #' @rdname bci
 #' @export
 bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
@@ -176,7 +168,6 @@ bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
   attr(out, "data") <- dat$data
   out
 }
-
 
 
 #' @rdname bci
@@ -249,7 +240,6 @@ bci.stanfit <- bci.stanreg
 bci.blavaan <- bci.stanreg
 
 
-
 #' @rdname bci
 #' @export
 bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
@@ -277,7 +267,6 @@ bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
-
 
 
 #' @rdname bci

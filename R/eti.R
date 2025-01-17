@@ -64,7 +64,6 @@ eti.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
-
 #' @export
 #' @rdname eti
 #' @inheritParams p_direction
@@ -91,7 +90,6 @@ eti.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
 }
 
 
-
 #' @export
 eti.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = .posterior_draws_to_df(x), ci = ci, verbose = verbose, fun = "eti")
@@ -101,7 +99,6 @@ eti.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
 
 #' @export
 eti.rvar <- eti.draws
-
 
 
 #' @export
@@ -114,7 +111,6 @@ eti.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
-
 #' @export
 eti.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- as.data.frame(x)
@@ -122,7 +118,6 @@ eti.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
-
 
 
 #' @export
@@ -133,7 +128,6 @@ eti.bamlss <- function(x, ci = 0.95, component = c("all", "conditional", "locati
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
-
 
 
 #' @export
@@ -246,7 +240,6 @@ eti.stanfit <- eti.stanreg
 
 #' @export
 eti.blavaan <- eti.stanreg
-
 
 
 #' @rdname eti

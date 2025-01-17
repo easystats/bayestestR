@@ -22,7 +22,6 @@ unupdate <- function(model, verbose = TRUE, ...) {
 }
 
 
-
 #' @export
 #' @rdname unupdate
 unupdate.stanreg <- function(model, verbose = TRUE, ...) {
@@ -50,7 +49,6 @@ unupdate.stanreg <- function(model, verbose = TRUE, ...) {
 
   model_prior
 }
-
 
 
 #' @export

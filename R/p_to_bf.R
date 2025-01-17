@@ -121,7 +121,6 @@ p_to_bf.default <- function(x, log = FALSE, ...) {
 }
 
 
-
 # methods ---------------
 
 #' @export

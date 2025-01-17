@@ -389,7 +389,6 @@ as.numeric.p_significance <- function(x, ...) {
 as.double.p_significance <- as.numeric.p_significance
 
 
-
 # helpers --------------------------
 
 #' @keywords internal

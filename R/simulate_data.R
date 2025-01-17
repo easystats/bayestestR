@@ -114,7 +114,6 @@ simulate_correlation <- function(n = 100,
 }
 
 
-
 #' @rdname simulate_correlation
 #' @export
 simulate_ttest <- function(n = 100, d = 0.5, names = NULL, ...) {

@@ -53,7 +53,6 @@ describe_prior.brmsfit <- function(model,
 # Internal ----------------------------------------------------------------
 
 
-
 #' @keywords internal
 .describe_prior <- function(model, parameters = NULL, ...) {
   priors <- insight::get_priors(model, ...)

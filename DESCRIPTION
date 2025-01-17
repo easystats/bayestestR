@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.15.0.4
+Version: 0.15.1
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -67,7 +67,7 @@ Depends:
     R (>= 3.6)
 Imports:
     insight (>= 1.0.0),
-    datawizard (>= 0.13.0),
+    datawizard (>= 1.0.0),
     graphics,
     methods,
     stats,
@@ -95,7 +95,7 @@ Suggests:
     lavaan,
     lme4,
     logspline (>= 2.1.21),
-    marginaleffects (>= 0.24.0.6),
+    marginaleffects (>= 0.24.0),
     MASS,
     mclust,
     mediation,
@@ -128,4 +128,3 @@ Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
-Remotes: easystats/datawizard, vincentarelbundock/marginaleffects

@@ -81,7 +81,6 @@ test_that("data.frame w/ rvar_col bayesfactors", {
   dfx
 
 
-
   ## SIs
   res <- si(dfx, rvar_col = "my_rvar", prior = "other_rvar", verbose = FALSE)
   res.ref <- si(dfx$my_rvar, prior = dfx$other_rvar, verbose = FALSE)

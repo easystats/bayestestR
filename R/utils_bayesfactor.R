@@ -420,7 +420,6 @@ as.double.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
 as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
 
 
-
 # logspline ---------------------------------------------------------------
 
 #' @keywords internal

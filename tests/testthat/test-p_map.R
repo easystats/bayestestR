@@ -50,7 +50,6 @@ test_that("p_map", {
 })
 
 
-
 test_that("p_map | null", {
   x <- distribution_normal(4000, mean = 1)
   expect_equal(as.numeric(p_map(x)), 0.6194317, ignore_attr = TRUE, tolerance = 0.01)

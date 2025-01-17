@@ -121,7 +121,6 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 }
 
 
-
 # helper ------------------
 
 
