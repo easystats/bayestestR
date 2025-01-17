@@ -16,11 +16,11 @@
 #'   names. In this case, all parameters that have no matching name in `range`
 #'   will be set to `"default"`.
 #'
-#' In multivariate models, `range` should be a list with a numeric vectors for
-#' each response variable. Vector names should correspond to the name of the
-#' response variables. If `"default"` and input is a vector, the range is set to
-#' `c(-0.1, 0.1)`. If `"default"` and input is a Bayesian model,
-#' [`rope_range()`] is used.
+#' In multivariate models, `range` should be a list with another list (one for
+#' each response variable) of numeric vectors . Vector names should correspond to
+#' the name of the response variables. If `"default"` and input is a vector, the
+#' range is set to `c(-0.1, 0.1)`. If `"default"` and input is a Bayesian model,
+#' [`rope_range()`] is used. See 'Examples'.
 #' @param ci The Credible Interval (CI) probability, corresponding to the
 #' proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in
@@ -128,17 +128,29 @@
 #' rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 #'
 #' library(brms)
-#' model <- brm(mpg ~ wt + cyl, data = mtcars)
+#' model <- brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
 #'
 #' library(brms)
 #' model <- brm(
 #'   bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
-#'   data = mtcars
+#'   data = mtcars,
+#'   refresh = 0
 #' )
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
+#'
+#' # different ROPE ranges for model parameters. For each response, a named
+#' # list (with the name of the response variable) is required as list-element
+#' # for the `range` argument.
+#' rope(
+#'   model,
+#'   range = list(
+#'     mpg = list(b_mpg_wt = c(-1, 1), b_mpg_cyl = c(-2, 2)),
+#'     disp = list(b_disp_wt = c(-5, 5), b_disp_cyl = c(-4, 4))
+#'   )
+#' )
 #'
 #' library(BayesFactor)
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
@@ -453,7 +465,7 @@ rope.brmsfit <- function(x,
         !all(names(range) %in% insight::find_response(x))
     ) {
       insight::format_error(
-        "With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2."
+        "With a multivariate model, `range` should be 'default' or a list with multiple lists (one for each response) of named numeric vectors with length 2."
       )
     }
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {

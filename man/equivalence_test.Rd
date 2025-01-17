@@ -62,11 +62,11 @@ names. In this case, all parameters that have no matching name in \code{range}
 will be set to \code{"default"}.
 }
 
-In multivariate models, \code{range} should be a list with a numeric vectors for
-each response variable. Vector names should correspond to the name of the
-response variables. If \code{"default"} and input is a vector, the range is set to
-\code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
-\code{\link[=rope_range]{rope_range()}} is used.}
+In multivariate models, \code{range} should be a list with another list (one for
+each response variable) of numeric vectors . Vector names should correspond to
+the name of the response variables. If \code{"default"} and input is a vector, the
+range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
+\code{\link[=rope_range]{rope_range()}} is used. See 'Examples'.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
