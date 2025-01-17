@@ -121,7 +121,7 @@ Here we provide functions for computing Bayes factors in two different contexts:
 - **testing single parameters (coefficients) within a model** 
 - **comparing statistical models themselves**
 
-# Testing Models' Parameters with Bayes Factors {#bayesfactor_parameters}
+# 1. Testing Models' Parameters with Bayes Factors {#bayesfactor_parameters}
 
 A **Bayes factor for a single parameter** can be used to answer the question:
 
@@ -428,13 +428,8 @@ than the prior densities.
 
 In `bayestestR`, this can be achieved with the `si()` function:
 
-```{r}
-my_first_si <- si(
-  posterior = data.frame(group2 = posterior),
-  prior = data.frame(group2 = prior),
-  BF = 1,
-  verbose = FALSE
-)
+```{r, eval=FALSE}
+my_first_si <- si(model, BF = 1)
 
 print(my_first_si)
 ```
@@ -471,7 +466,7 @@ observing the data.
 decreased by observing the data. Testing against values outside this interval
 will produce a Bayes factor larger than $1/BF$ in support of the alternative.
 
-# Comparing Models using Bayes Factors {#bayesfactor_models}
+# 2. Comparing Models using Bayes Factors {#bayesfactor_models}
 
 Bayes factors can also be used to compare statistical **models**. In this
 statistical context, they answer the following question:
@@ -738,7 +733,7 @@ $$
 
 **NOTE**: See the *Specifying Correct Priors for Factors with More Than 2 Levels* appendix below.
 
-# Bayesian Model Averaging
+# 3. Bayesian Model Averaging
 
 In the previous section, we discussed the direct comparison of two models to
 determine if an effect is supported by the data. However, in many cases there
@@ -792,7 +787,9 @@ bayesfactor_inclusion(comparison, match_models = TRUE)
 `bayesfactor_inclusion()` is meant to provide Bayes Factors per predictor,
 similar to JASP's *Effects* option. 
 
-Let's compare the two:
+Let's compare the two. 
+Note that for this comparison we will use the `{BayesFactor}` package, which is what _JASP_ uses under the hood.
+(Note that this package used different model-parameterization and different default prior-specifications compared to _Stan_-based packages.)
 
 1. **Across all models**:
 
