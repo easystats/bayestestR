@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,11 +131,11 @@ with one response, <code>range</code> can be:</p><ul><li><p>a vector of length t
 <li><p>a list of <em>named</em> numeric vectors, where names correspond to parameter
 names. In this case, all parameters that have no matching name in <code>range</code>
 will be set to <code>"default"</code>.</p></li>
-</ul><p>In multivariate models, <code>range</code> should be a list with a numeric vectors for
-each response variable. Vector names should correspond to the name of the
-response variables. If <code>"default"</code> and input is a vector, the range is set to
-<code>c(-0.1, 0.1)</code>. If <code>"default"</code> and input is a Bayesian model,
-<code><a href="rope_range.html">rope_range()</a></code> is used.</p></dd>
+</ul><p>In multivariate models, <code>range</code> should be a list with another list (one for
+each response variable) of numeric vectors . Vector names should correspond to
+the name of the response variables. If <code>"default"</code> and input is a vector, the
+range is set to <code>c(-0.1, 0.1)</code>. If <code>"default"</code> and input is a Bayesian model,
+<code><a href="rope_range.html">rope_range()</a></code> is used. See 'Examples'.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>

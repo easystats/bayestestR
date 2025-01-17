@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -196,7 +196,7 @@ model</strong></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="bayesfactor_parameters">Testing Models’ Parameters with Bayes Factors<a class="anchor" aria-label="anchor" href="#bayesfactor_parameters"></a>
+<h2 id="bayesfactor_parameters">1. Testing Models’ Parameters with Bayes Factors<a class="anchor" aria-label="anchor" href="#bayesfactor_parameters"></a>
 </h2>
 <p>A <strong>Bayes factor for a single parameter</strong> can be used to
 answer the question:</p>
@@ -456,19 +456,15 @@ higher than the prior densities.</p>
 <p>In <code>bayestestR</code>, this can be achieved with the
 <code><a href="../reference/si.html">si()</a></code> function:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">my_first_si</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/si.html">si</a></span><span class="op">(</span></span>
-<span>  posterior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>group2 <span class="op">=</span> <span class="va">posterior</span><span class="op">)</span>,</span>
-<span>  prior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>group2 <span class="op">=</span> <span class="va">prior</span><span class="op">)</span>,</span>
-<span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">my_first_si</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/si.html">si</a></span><span class="op">(</span><span class="va">model</span>, BF <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">my_first_si</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Support Interval
 &gt; 
-&gt; Parameter |    BF = 1 SI
-&gt; ------------------------
-&gt; group2    | [0.15, 3.04]</code></pre>
+&gt; Parameter   |     BF = 1 SI | Effects |   Component
+&gt; ---------------------------------------------------
+&gt; (Intercept) | [-0.44, 1.99] |   fixed | conditional
+&gt; group2      | [ 0.16, 3.04] |   fixed | conditional</code></pre>
 <p>The argument <code>BF = 1</code> indicates that we want the interval
 to contain values that have gained support by a factor of at least 1
 (that is, any support at all).</p>
@@ -496,8 +492,7 @@ indicate) depends on what we want our interval to represent:</p>
 <li>A <span class="math inline">BF = 1</span> contains values whose
 credibility has merely not decreased by observing the data.</li>
 <li>A <span class="math inline">BF &gt; 1</span> contains values who
-received more impressive support from the data.<br>
-</li>
+received more impressive support from the data.</li>
 <li>A <span class="math inline">BF &lt; 1</span> contains values whose
 credibility has <em>not</em> been impressively decreased by observing
 the data. Testing against values outside this interval will produce a
@@ -507,7 +502,7 @@ support of the alternative.</li>
 </div>
 </div>
 <div class="section level2">
-<h2 id="bayesfactor_models">Comparing Models using Bayes Factors<a class="anchor" aria-label="anchor" href="#bayesfactor_models"></a>
+<h2 id="bayesfactor_models">2. Comparing Models using Bayes Factors<a class="anchor" aria-label="anchor" href="#bayesfactor_models"></a>
 </h2>
 <p>Bayes factors can also be used to compare statistical
 <strong>models</strong>. In this statistical context, they answer the
@@ -786,8 +781,8 @@ these restrictions as logical conditions:</p>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
 &gt; Hypothesis                                       P(Prior) P(Posterior)       BF
-&gt; Petal.Length &gt; 0                                     0.50            1     2.02
-&gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.24            0 0.00e+00
+&gt; Petal.Length &gt; 0                                     0.50            1     1.99
+&gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.25            0 0.00e+00
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>We can see that the novice botanist’s hypothesis gets a Bayes factor
@@ -816,7 +811,7 @@ Factors with More Than 2 Levels</em> appendix below.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="bayesian-model-averaging">Bayesian Model Averaging<a class="anchor" aria-label="anchor" href="#bayesian-model-averaging"></a>
+<h2 id="bayesian-model-averaging">3. Bayesian Model Averaging<a class="anchor" aria-label="anchor" href="#bayesian-model-averaging"></a>
 </h2>
 <p>In the previous section, we discussed the direct comparison of two
 models to determine if an effect is supported by the data. However, in
@@ -889,7 +884,11 @@ want to do this <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeat
 </h4>
 <p><code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> is meant to provide Bayes
 Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
-<p>Let’s compare the two:</p>
+<p>Let’s compare the two. Note that for this comparison we will use the
+<a href="https://richarddmorey.github.io/BayesFactor/" class="external-link">BayesFactor</a> package, which is what <em>JASP</em> uses
+under the hood. (Note that this package used different
+model-parameterization and different default prior-specifications
+compared to <em>Stan</em>-based packages.)</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Across all models</strong>:</li>
@@ -905,9 +904,9 @@ Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
-&gt; supp          0.60         1.00       140.99
+&gt; supp          0.60         1.00       141.02
 &gt; dose          0.60         1.00     3.21e+14
-&gt; dose:supp     0.20         0.72        10.12
+&gt; dose:supp     0.20         0.71        10.00
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -921,9 +920,9 @@ Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
-&gt; supp          0.40         0.28        59.19
-&gt; dose          0.40         0.28     1.36e+14
-&gt; dose:supp     0.20         0.72         2.57
+&gt; supp          0.40         0.28        59.71
+&gt; dose          0.40         0.29     1.38e+14
+&gt; dose:supp     0.20         0.71         2.54
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -942,8 +941,8 @@ same in <code>R</code>:</p>
 <span><span class="va">BF_ToothGrowth_against_dose</span></span></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
 &gt; --------------
-&gt; [1] supp + dose             : 59  ±4.5%
-&gt; [2] supp + dose + supp:dose : 152 ±1.5%
+&gt; [1] supp + dose             : 60  ±4.6%
+&gt; [2] supp + dose + supp:dose : 152 ±1.1%
 &gt; 
 &gt; Against denominator:
 &gt;   len ~ dose 
@@ -955,8 +954,8 @@ same in <code>R</code>:</p>
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
 &gt; dose          1.00         1.00             
-&gt; supp          0.67         1.00       105.74
-&gt; dose:supp     0.33         0.72         5.06
+&gt; supp          0.67         1.00       105.77
+&gt; dose:supp     0.33         0.71         5.00
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -998,7 +997,7 @@ null value (also see <code><a href="../reference/si.html">si()</a></code> descri
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model             BF
-&gt; [1] wt + am + carb 0.811
+&gt; [1] wt + am + carb 0.820
 &gt; 
 &gt; * Against Denominator: [2] wt + am
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -1014,10 +1013,10 @@ null in the posterior. However, this is not the case:</p>
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
-&gt; (Intercept) | [28.28, 40.43]
-&gt; wt          | [-5.54, -1.75]
-&gt; am          | [-1.05,  5.66]
-&gt; carb        | [-2.03, -0.35]</code></pre>
+&gt; (Intercept) | [27.95, 40.05]
+&gt; wt          | [-5.49, -1.72]
+&gt; am          | [-0.75,  6.00]
+&gt; carb        | [-2.04, -0.31]</code></pre>
 <p>How can this be? By estimating the HDI of the effect for
 <code>carb</code> in the full model, we are acting under the assumption
 that this model is correct. However, as we’ve just seen, both models are
@@ -1045,10 +1044,10 @@ distribution, and estimate the HDI.</p>
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
-&gt; (Intercept) | [29.06, 42.36]
-&gt; wt          | [-6.72, -2.17]
-&gt; am          | [-2.79,  5.02]
-&gt; carb        | [-1.68,  0.00]</code></pre>
+&gt; (Intercept) | [28.77, 42.61]
+&gt; wt          | [-6.77, -2.18]
+&gt; am          | [-2.59,  5.47]
+&gt; carb        | [-1.69,  0.00]</code></pre>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-24-1.png" width="100%"></p>
 <p>We can see that across both models under consideration, the posterior
 of the <code>carb</code> effect is almost equally weighted between the
@@ -1266,8 +1265,8 @@ restriction):</p>
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 2e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
+&gt; Chain 1: Gradient evaluation took 2.1e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -1284,15 +1283,15 @@ restriction):</p>
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.032 seconds (Warm-up)
-&gt; Chain 1:                0.049 seconds (Sampling)
-&gt; Chain 1:                0.081 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.028 seconds (Warm-up)
+&gt; Chain 1:                0.045 seconds (Sampling)
+&gt; Chain 1:                0.073 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+&gt; Chain 2: Gradient evaluation took 1.4e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -1309,9 +1308,9 @@ restriction):</p>
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.033 seconds (Warm-up)
-&gt; Chain 2:                0.045 seconds (Sampling)
-&gt; Chain 2:                0.078 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.029 seconds (Warm-up)
+&gt; Chain 2:                0.041 seconds (Sampling)
+&gt; Chain 2:                0.07 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -1334,15 +1333,15 @@ restriction):</p>
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.033 seconds (Warm-up)
-&gt; Chain 3:                0.042 seconds (Sampling)
-&gt; Chain 3:                0.075 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.028 seconds (Warm-up)
+&gt; Chain 3:                0.039 seconds (Sampling)
+&gt; Chain 3:                0.067 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+&gt; Chain 4: Gradient evaluation took 9e-06 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -1359,9 +1358,9 @@ restriction):</p>
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.031 seconds (Warm-up)
-&gt; Chain 4:                0.044 seconds (Sampling)
-&gt; Chain 4:                0.075 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.027 seconds (Warm-up)
+&gt; Chain 4:                0.041 seconds (Sampling)
+&gt; Chain 4:                0.068 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
@@ -1377,8 +1376,7 @@ restriction):</p>
 <p><strong><em>What happened???</em></strong></p>
 <ol style="list-style-type: decimal">
 <li>The comparison of 2 levels all have a prior of ~0.5, as
-expected.<br>
-</li>
+expected.</li>
 <li>The comparison of 3 levels has different priors, depending on the
 order restriction - i.e. <strong>some orders are <em>a priori</em> more
 likely than others!!!</strong>
@@ -1413,12 +1411,11 @@ likely than others!!!</strong>
 <h4 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h4>
 <p>When comparing the results from the two factor coding schemes, we
-find:<br>
-1. In both cases, the estimated (posterior) means are quite similar (if
-not identical).<br>
-2. The priors and Bayes factors differ between the two schemes.<br>
-3. Only with <code>contr.equalprior*</code>, the prior distribution of
-the difference or the order of 3 (or more) means is balanced.</p>
+find: 1. In both cases, the estimated (posterior) means are quite
+similar (if not identical). 2. The priors and Bayes factors differ
+between the two schemes. 3. Only with <code>contr.equalprior*</code>,
+the prior distribution of the difference or the order of 3 (or more)
+means is balanced.</p>
 <p>Read more about the equal prior contrasts in the
 <code>contr.equalprior</code> docs!</p>
 </div>
