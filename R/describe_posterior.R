@@ -1436,7 +1436,7 @@ describe_posterior.BFBayesFactor <- function(posterior,
 
 #' @keywords internal
 .check_if_need_to_compute_rope_range <- function(rope_range, test) {
-  if (rope_range != "default") {
+  if (is.numeric(rope_range) || is.list(rope_range)) {
     return(FALSE)
   }
 
