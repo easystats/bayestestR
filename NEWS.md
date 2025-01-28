@@ -1,3 +1,10 @@
+# bayestestR 0.15.2
+
+## Changes
+
+* `describe_posterior()` no longer re-samples a model when computing
+  indices.
+
 # bayestestR 0.15.1
 
 ## Changes
