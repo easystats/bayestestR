@@ -141,7 +141,7 @@ describe_posterior.default <- function(posterior, ...) {
   }
 
   # we need this information from the original object
-  if (all(rope_range == "default")) {
+  if (.check_if_need_to_compute_rope_range(rope_range, test)) {
     rope_range <- rope_range(x, verbose = verbose, ...)
   }
 
@@ -1432,4 +1432,21 @@ describe_posterior.BFBayesFactor <- function(posterior,
     "p_rope", "rope", "equivalence", "equivalence_test", "equitest",
     "bf", "bayesfactor", "bayes_factor", "p_map", "all"
   ), several.ok = TRUE)
+}
+
+#' @keywords internal
+.check_if_need_to_compute_rope_range <- function(rope_range, test) {
+  if (is.numeric(rope_range) || is.list(rope_range)) {
+    return(FALSE)
+  }
+
+  need_rope <- c(
+    "all",
+    "p_rope",
+    "ps", "p_sig", "p_significance",
+    "rope",
+    "equivalence", "equivalence_test", "equitest"
+  )
+
+  return(is.character(test) && length(test) > 0L && any(need_rope %in% tolower(test)))
 }
