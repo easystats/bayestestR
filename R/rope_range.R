@@ -152,7 +152,7 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
       0.1 * 1
     } else if (information$is_exponential) {
       # Gamma models
-      sig <- insight::get_sigma(x)
+      sig <- insight::get_sigma(x, no_recursion = TRUE)
       if (is.null(sig) || length(sig) == 0 || is.na(sig)) stop(call. = FALSE)
       switch(information$link_function,
         inverse = ,
@@ -165,7 +165,7 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
       0.05
     } else if (information$is_count) {
       # Not sure about this
-      sig <- insight::get_sigma(x)
+      sig <- insight::get_sigma(x, no_recursion = TRUE)
       if (is.null(sig) || length(sig) == 0 || is.na(sig)) stop(call. = FALSE)
       0.1 * sig
     } else {
