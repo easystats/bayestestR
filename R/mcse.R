@@ -85,7 +85,6 @@ mcse.stanreg <- function(model,
 }
 
 
-
 #' @export
 mcse.stanfit <- mcse.stanreg
 

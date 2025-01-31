@@ -33,21 +33,21 @@ distribution <- function(type = "normal", ...) {
   )
 
   switch(match.arg(arg = type, choices = basr_r_distributions),
-    "beta" = distribution_beta(...),
-    "binom" = ,
-    "binomial" = distribution_binomial(...),
-    "cauchy" = distribution_cauchy(...),
-    "chisq" = ,
-    "chisquared" = distribution_chisquared(...),
-    "gamma" = distribution_gamma(...),
-    "gaussian" = ,
-    "normal" = distribution_normal(...),
-    "nbinom" = distribution_nbinom(...),
-    "poisson" = distribution_poisson(...),
-    "t" = ,
-    "student" = ,
-    "student_t" = distribution_student(...),
-    "uniform" = distribution_uniform(...),
+    beta = distribution_beta(...),
+    binom = ,
+    binomial = distribution_binomial(...),
+    cauchy = distribution_cauchy(...),
+    chisq = ,
+    chisquared = distribution_chisquared(...),
+    gamma = distribution_gamma(...),
+    gaussian = ,
+    normal = distribution_normal(...),
+    nbinom = distribution_nbinom(...),
+    poisson = distribution_poisson(...),
+    t = ,
+    student = ,
+    student_t = distribution_student(...),
+    uniform = distribution_uniform(...),
     distribution_custom(type = type, ...)
   )
 }
@@ -65,10 +65,6 @@ distribution_custom <- function(n, type = "norm", ..., random = FALSE) {
     f(stats::ppoints(n), ...)
   }
 }
-
-
-
-
 
 
 #' @rdname distribution
@@ -99,7 +95,6 @@ distribution_binomial <- function(n, size = 1, prob = 0.5, random = FALSE, ...) 
 distribution_binom <- distribution_binomial
 
 
-
 #' @rdname distribution
 #' @inheritParams stats::rcauchy
 #' @export
@@ -127,7 +122,6 @@ distribution_chisquared <- function(n, df, ncp = 0, random = FALSE, ...) {
 distribution_chisq <- distribution_chisquared
 
 
-
 #' @rdname distribution
 #' @inheritParams stats::rgamma
 #' @param shape Shape parameter.
@@ -148,7 +142,7 @@ distribution_mixture_normal <- function(n, mean = c(-3, 3), sd = 1, random = FAL
   n <- round(n / length(mean))
   sd <- sd
   if (length(sd) != length(mean)) {
-    sd <- rep(sd, length.out = length(mean))
+    sd <- rep_len(sd, length(mean))
   }
 
 
@@ -265,7 +259,6 @@ distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
     stats::qunif(stats::ppoints(n), min, max, ...)
   }
 }
-
 
 
 #' @rdname distribution

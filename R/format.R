@@ -80,7 +80,6 @@ format.equivalence_test <- format.describe_posterior
 format.rope <- format.describe_posterior
 
 
-
 # special handling for bayes factors ------------------
 
 
@@ -154,7 +153,6 @@ format.bayesfactor_models <- function(x,
 }
 
 
-
 #' @export
 format.bayesfactor_inclusion <- function(x,
                                          digits = 3,
@@ -208,7 +206,6 @@ format.bayesfactor_inclusion <- function(x,
 }
 
 
-
 #' @export
 format.bayesfactor_restricted <- function(x,
                                           digits = 3,
@@ -252,7 +249,6 @@ format.bayesfactor_restricted <- function(x,
   attr(BFE, "table_caption") <- caption
   BFE
 }
-
 
 
 #' @export

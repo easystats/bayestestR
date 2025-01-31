@@ -57,7 +57,7 @@ test_that("bayesfactor_parameters RSTANARM", {
   skip_if_offline()
   skip_if_not_or_load_if_installed("logspline", "2.1.21")
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
 
   fit <- suppressMessages(stan_glm(mpg ~ ., data = mtcars, refresh = 0))
 
@@ -93,7 +93,7 @@ test_that("bayesfactor_parameters RSTANARM", {
 test_that("bayesfactor_parameters BRMS", {
   skip_if_offline()
   skip_if_not_or_load_if_installed("logspline", "2.1.21")
-  skip_if_not_or_load_if_installed("httr")
+  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
   skip_if_not_or_load_if_installed("cmdstanr")
   skip_if_not(dir.exists(cmdstanr::cmdstan_default_install_path()))

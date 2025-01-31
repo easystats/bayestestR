@@ -79,7 +79,6 @@ p_map <- function(x, ...) {
 p_pointnull <- p_map
 
 
-
 #' @rdname p_map
 #' @export
 p_map.numeric <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
@@ -160,7 +159,6 @@ p_map.data.frame <- function(x, null = 0, precision = 2^10, method = "kernel", r
 }
 
 
-
 #' @export
 p_map.draws <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
   p_map(.posterior_draws_to_df(x), null = null, precision = precision, method = method, ...)
@@ -168,7 +166,6 @@ p_map.draws <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
 
 #' @export
 p_map.rvar <- p_map.draws
-
 
 
 #' @export
@@ -216,8 +213,6 @@ p_map.predictions <- p_map.slopes
 }
 
 
-
-
 #' @export
 p_map.mcmc <- function(x, null = 0, precision = 2^10, method = "kernel", parameters = NULL, ...) {
   out <- .p_map_models(
@@ -249,7 +244,6 @@ p_map.mcmc.list <- p_map.mcmc
 p_map.BGGM <- p_map.mcmc
 
 
-
 #' @export
 p_map.bamlss <- function(x, null = 0, precision = 2^10, method = "kernel",
                          component = c("all", "conditional", "location"), parameters = NULL, ...) {
@@ -269,7 +263,6 @@ p_map.bamlss <- function(x, null = 0, precision = 2^10, method = "kernel",
   attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
   out
 }
-
 
 
 #' @export
@@ -293,8 +286,6 @@ p_map.sim.merMod <- function(x, null = 0, precision = 2^10, method = "kernel",
 }
 
 
-
-
 #' @export
 p_map.sim <- function(x, null = 0, precision = 2^10, method = "kernel",
                       parameters = NULL, ...) {
@@ -312,8 +303,6 @@ p_map.sim <- function(x, null = 0, precision = 2^10, method = "kernel",
   attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
   out
 }
-
-
 
 
 #' @rdname p_map
@@ -356,7 +345,6 @@ p_map.stanfit <- p_map.stanreg
 p_map.blavaan <- p_map.stanreg
 
 
-
 #' @rdname p_map
 #' @export
 p_map.brmsfit <- function(x, null = 0, precision = 2^10, method = "kernel",
@@ -390,16 +378,12 @@ p_map.brmsfit <- function(x, null = 0, precision = 2^10, method = "kernel",
 }
 
 
-
-
-
 #' @export
 p_map.BFBayesFactor <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
   out <- p_map(insight::get_parameters(x), null = null, precision = precision, method = method, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
-
 
 
 #' @export
@@ -409,7 +393,6 @@ p_map.MCMCglmm <- function(x, null = 0, precision = 2^10, method = "kernel", ...
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
-
 
 
 #' @export

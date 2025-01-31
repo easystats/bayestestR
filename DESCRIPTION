@@ -1,28 +1,28 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.14.0.11
+Version: 0.15.1.2
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
              role = c("aut", "cre"),
              email = "dom.makowski@gmail.com",
-             comment = c(ORCID = "0000-0001-5375-9967", Twitter = "@Dom_Makowski")),
+             comment = c(ORCID = "0000-0001-5375-9967")),
       person(given = "Daniel",
              family = "Lüdecke",
              role = "aut",
              email = "d.luedecke@uke.de",
-             comment = c(ORCID = "0000-0002-8895-3206", Twitter = "@strengejacke")),
+             comment = c(ORCID = "0000-0002-8895-3206")),
       person(given = "Mattan S.",
              family = "Ben-Shachar",
              role = "aut",
              email = "matanshm@post.bgu.ac.il",
-             comment = c(ORCID = "0000-0002-4287-4801", Twitter = "@mattansb")),
+             comment = c(ORCID = "0000-0002-4287-4801")),
       person(given = "Indrajeet",
              family = "Patil",
              role = "aut",
              email = "patilindrajeet.science@gmail.com",
-             comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")),
+             comment = c(ORCID = "0000-0003-1995-6531")),
       person(given = "Micah K.",
              family = "Wilson",
              role = "aut",
@@ -32,7 +32,7 @@ Authors@R:
              family = "Wiernik",
              role = "aut",
              email = "brenton@wiernik.org",
-             comment = c(ORCID = "0000-0001-9560-6336", Twitter = "@bmwiernik")),
+             comment = c(ORCID = "0000-0001-9560-6336")),
       person(given = "Paul-Christian",
              family = "Bürkner",
              role = "rev",
@@ -66,8 +66,8 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.6)
 Imports:
-    insight (>= 0.20.4),
-    datawizard (>= 0.12.3),
+    insight (>= 1.0.0),
+    datawizard (>= 1.0.0),
     graphics,
     methods,
     stats,
@@ -81,6 +81,7 @@ Suggests:
     blavaan,
     bridgesampling,
     brms,
+    collapse,
     curl,
     distributional,
     effectsize,
@@ -89,14 +90,13 @@ Suggests:
     ggdist,
     ggplot2,
     glmmTMB,
-    httr,
     httr2,
     KernSmooth,
     knitr,
     lavaan,
     lme4,
     logspline (>= 2.1.21),
-    marginaleffects (>= 0.21.0),
+    marginaleffects (>= 0.24.0),
     MASS,
     mclust,
     mediation,
@@ -113,7 +113,8 @@ Suggests:
     rstanarm,
     see (>= 0.8.5),
     testthat,
-    tweedie
+    tweedie,
+    withr
 License: GPL-3
 URL: https://easystats.github.io/bayestestR/
 BugReports: https://github.com/easystats/bayestestR/issues
@@ -128,4 +129,3 @@ Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
-Remotes: easystats/insight, easystats/datawizard

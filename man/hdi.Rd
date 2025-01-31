@@ -177,12 +177,12 @@ examples in R and Stan. Chapman and Hall/CRC.
 }
 }
 \seealso{
-Other interval functions, such as \code{\link[=hdi]{hdi()}}, \code{\link[=eti]{eti()}}, \code{\link[=bci]{bci()}}, \code{\link[=spi]{spi()}}, \code{\link[=si]{si()}}, \code{\link[=cwi]{cwi()}}.
+Other interval functions, such as \code{\link[=hdi]{hdi()}}, \code{\link[=eti]{eti()}}, \code{\link[=bci]{bci()}},
+\code{\link[=spi]{spi()}}, \code{\link[=si]{si()}}.
 
 Other ci: 
 \code{\link{bci}()},
 \code{\link{ci}()},
-\code{\link{cwi}()},
 \code{\link{eti}()},
 \code{\link{si}()},
 \code{\link{spi}()}

@@ -1,5 +1,5 @@
 test_that("data.frame w/ rvar_col descrive_posterior etc", {
-  skip_on_ci()
+  # skip_on_ci()
   skip_on_cran()
   skip_if_not_installed("posterior")
 
@@ -45,6 +45,13 @@ test_that("data.frame w/ rvar_col descrive_posterior etc", {
   res <- eti(dfx, rvar_col = "my_rvar", ci = c(0.8, 0.95))
   res.ref <- eti(dfx$my_rvar, ci = c(0.8, 0.95))
   expect_true(all(c("mu", "sigma") %in% colnames(res)))
+  expect_identical(
+    as.data.frame(res[c("mu", "sigma")]),
+    data.frame(
+      mu = c(0, 0, 0.5, 0.5, 1, 1),
+      sigma = c(1, 1, 0.5, 0.5, 0.25, 0.25)
+    )
+  )
   expect_identical(nrow(format(res)), 3L)
   expect_identical(ncol(format(res)), 4L)
   expect_equal(res[setdiff(colnames(res), c("mu", "sigma"))],
@@ -63,7 +70,7 @@ test_that("data.frame w/ rvar_col descrive_posterior etc", {
 })
 
 test_that("data.frame w/ rvar_col bayesfactors", {
-  skip_on_ci()
+  # skip_on_ci()
   skip_on_cran()
   skip_if_not_installed("posterior")
   skip_if_not_installed("logspline")
@@ -72,7 +79,6 @@ test_that("data.frame w/ rvar_col bayesfactors", {
   dfx$my_rvar <- posterior::rvar_rng(rnorm, 3, mean = dfx$mu, sd = dfx$sigma)
   dfx$other_rvar <- posterior::rvar_rng(rnorm, 3, mean = dfx$mu + 0.5, sd = dfx$sigma - 0.1)
   dfx
-
 
 
   ## SIs

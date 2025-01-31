@@ -33,6 +33,7 @@ and statistics, in which a trend appears in several different groups of data
 but disappears or reverses when these groups are combined.
 }
 \examples{
+\dontshow{if (requireNamespace("MASS", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data <- simulate_simpson(n = 10, groups = 5, r = 0.5)
 
 if (require("ggplot2")) {
@@ -41,4 +42,5 @@ if (require("ggplot2")) {
     geom_smooth(aes(color = Group), method = "lm") +
     geom_smooth(method = "lm")
 }
+\dontshow{\}) # examplesIf}
 }

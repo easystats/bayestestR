@@ -41,7 +41,6 @@ map_estimate <- function(x, ...) {
 }
 
 
-
 # numeric -----------------------
 
 #' @rdname map_estimate
@@ -89,7 +88,6 @@ map_estimate.blrm <- map_estimate.bayesQR
 
 #' @export
 map_estimate.mcmc.list <- map_estimate.bayesQR
-
 
 
 # stan / posterior models -----------------------
@@ -233,7 +231,6 @@ map_estimate.get_predicted <- function(x,
   }
   out
 }
-
 
 
 # Methods -----------------------------------------------------------------

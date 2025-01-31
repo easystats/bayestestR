@@ -174,7 +174,6 @@ Statistical Science. 11(3): 189–212. 10.1214/ss/1032280214
 \seealso{
 Other ci: 
 \code{\link{ci}()},
-\code{\link{cwi}()},
 \code{\link{eti}()},
 \code{\link{hdi}()},
 \code{\link{si}()},

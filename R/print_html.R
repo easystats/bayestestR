@@ -28,7 +28,6 @@ print_html.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) 
 }
 
 
-
 #' @export
 print_html.p_rope <- function(x, digits = 2, ...) {
   # check if we have multiple ROPE values
@@ -85,8 +84,6 @@ print_html.bayestestR_eti <- function(x, digits = 2, caption = "Equal-Tailed Int
 print_html.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...) {
   .print_html_default(x = x, digits = digits, caption = caption, ci_string = "SI", ...)
 }
-
-
 
 
 # special handling for bayes factors ------------------
@@ -157,9 +154,6 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 }
 
 
-
-
-
 # util ---------------
 
 
@@ -187,7 +181,6 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     format = "html"
   )
 }
-
 
 
 .print_bf_html_default <- function(x,

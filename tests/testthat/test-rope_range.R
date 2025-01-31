@@ -28,7 +28,6 @@ test_that("rope_range logistic", {
 })
 
 
-
 test_that("rope_range", {
   skip_if_not_or_load_if_installed("brms")
   model <- suppressWarnings(brms::brm(mpg ~ wt + gear, data = mtcars, iter = 300))

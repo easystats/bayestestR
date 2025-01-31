@@ -246,7 +246,6 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 }
 
 
-
 # util ---------------------
 
 .print_default <- function(x,
@@ -295,7 +294,6 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 
   invisible(x)
 }
-
 
 
 .print_bf_default <- function(x,

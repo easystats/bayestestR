@@ -285,7 +285,7 @@ p_significance.predictions <- p_significance.slopes
 p_significance.stanreg <- function(x,
                                    threshold = "default",
                                    effects = c("fixed", "random", "all"),
-                                   component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                   component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), # nolint
                                    parameters = NULL,
                                    verbose = TRUE,
                                    ...) {
@@ -387,7 +387,6 @@ as.numeric.p_significance <- function(x, ...) {
 #' @method as.double p_significance
 #' @export
 as.double.p_significance <- as.numeric.p_significance
-
 
 
 # helpers --------------------------

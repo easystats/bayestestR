@@ -226,7 +226,6 @@ The Support Interval. \doi{10.31234/osf.io/zwnxb}
 Other ci: 
 \code{\link{bci}()},
 \code{\link{ci}()},
-\code{\link{cwi}()},
 \code{\link{eti}()},
 \code{\link{hdi}()},
 \code{\link{spi}()}

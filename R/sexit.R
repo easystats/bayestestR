@@ -252,13 +252,11 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
 }
 
 
-
 #' @keywords internal
 .sexit_preprocess <- function(x, significant = "default", large = "default", ...) {
   thresholds <- sexit_thresholds(x)
   if (significant == "default") significant <- thresholds[1]
   if (large == "default") large <- thresholds[2]
-
 
 
   suppressWarnings({
@@ -294,7 +292,6 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
 
   list(significant = significant, large = large, text = thresholds)
 }
-
 
 
 #' @export

@@ -34,7 +34,9 @@ means that the x axis will be extended by \code{1/10} of the range of the data.}
 \item{...}{Currently not used.}
 }
 \description{
-A method to calculate the overlap coefficient between two empirical distributions (that can be used as a measure of similarity between two samples).
+A method to calculate the overlap coefficient between two empirical
+distributions (that can be used as a measure of similarity between two
+samples).
 }
 \examples{
 library(bayestestR)

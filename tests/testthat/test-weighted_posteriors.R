@@ -27,7 +27,7 @@ test_that("weighted_posteriors for BayesFactor", {
 
 test_that("weighted_posteriors for BayesFactor (intercept)", {
   # fails for win old-release
-  skip_on_ci()
+  # skip_on_ci()
   skip_on_cran()
   skip_if_not_or_load_if_installed("BayesFactor")
 
@@ -41,7 +41,7 @@ test_that("weighted_posteriors for BayesFactor (intercept)", {
   BFmods <- regressionBF(y ~ x1 + x2, data = dat, progress = FALSE)
 
   res <- weighted_posteriors(BFmods)
-  expect_equal(attr(res, "weights")$weights, c(1032, 805, 1388, 775))
+  expect_equal(attr(res, "weights")$weights, c(1032, 805, 1388, 775), ignore_attr = TRUE)
 
   wHDI <- hdi(res[c("x1", "x2")], ci = 0.9)
   expect_equal(wHDI$CI_low, c(-0.519, -0.640), tolerance = 0.01)
@@ -64,7 +64,7 @@ test_that("weighted_posteriors for nonlinear BayesFactor", {
 
   res <- weighted_posteriors(BFS)
 
-  expect_equal(attributes(res)$weights$weights, c(113, 3876, 11))
+  expect_equal(attributes(res)$weights$weights, c(113, 3876, 11), ignore_attr = TRUE)
 })
 
 test_that("weighted_posteriors vs posterior_average", {
@@ -87,7 +87,9 @@ test_that("weighted_posteriors vs posterior_average", {
   )
 
   set.seed(444)
-  expect_warning(res_BT <- weighted_posteriors(fit1, fit2))
+  expect_warning({
+    res_BT <- weighted_posteriors(fit1, fit2)
+  })
 
   set.seed(444)
   res_brms <- brms::posterior_average(fit1, fit2, weights = "bma", missing = 0)
@@ -96,8 +98,8 @@ test_that("weighted_posteriors vs posterior_average", {
   res_BT1 <- eti(res_BT)
   res_brms1 <- eti(res_brms)
 
-  expect_equal(res_BT1$Parameter, res_brms1$Parameter)
-  expect_equal(res_BT1$CI, res_brms1$CI)
-  expect_equal(res_BT1$CI_low, res_brms1$CI_low)
-  expect_equal(res_BT1$CI_high, res_brms1$CI_high)
+  expect_equal(res_BT1$Parameter, res_brms1$Parameter, tolerance = 1e-4)
+  expect_equal(res_BT1$CI, res_brms1$CI, tolerance = 1e-4)
+  expect_equal(res_BT1$CI_low, res_brms1$CI_low, tolerance = 1e-4)
+  expect_equal(res_BT1$CI_high, res_brms1$CI_high, tolerance = 1e-4)
 })

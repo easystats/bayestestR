@@ -86,8 +86,6 @@ print_md.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", 
 }
 
 
-
-
 # special handling for bayes factors ------------------
 
 
@@ -154,9 +152,6 @@ print_md.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 
   insight::export_table(formatted_table, format = "markdown")
 }
-
-
-
 
 
 # util ---------------

@@ -82,7 +82,8 @@
 #' @inherit ci return
 #'
 #' @family ci
-#' @seealso Other interval functions, such as [hdi()], [eti()], [bci()], [spi()], [si()], [cwi()].
+#' @seealso Other interval functions, such as [`hdi()`], [`eti()`], [`bci()`],
+#' [`spi()`], [`si()`].
 #'
 #' @examplesIf require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")
 #' library(bayestestR)
@@ -406,9 +407,7 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 }
 
 
-
 # Helper ------------------------------------------------------------------
-
 
 
 #' @keywords internal

@@ -12,7 +12,7 @@
 #'
 #' @return A dataset.
 #'
-#' @examples
+#' @examplesIf requireNamespace("MASS", quietly = TRUE)
 #' data <- simulate_simpson(n = 10, groups = 5, r = 0.5)
 #'
 #' if (require("ggplot2")) {

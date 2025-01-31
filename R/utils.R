@@ -230,7 +230,7 @@
   datagrid <- insight::get_datagrid(object)
   grid_names <- colnames(datagrid)
 
-  if (long) {
+  if (long || nrow(datagrid) < nrow(results)) {
     datagrid$Parameter <- unique(results$Parameter)
     results <- datawizard::data_merge(datagrid, results, by = "Parameter")
     results$Parameter <- NULL
@@ -244,7 +244,6 @@
     most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(datagrid)))]
     attributes(results)[names(most_attrs)] <- most_attrs
   }
-
 
 
   attr(results, "idvars") <- grid_names
@@ -270,7 +269,7 @@
   grid_names <- colnames(object)[!is_rvar]
   datagrid <- data.frame(object[, grid_names, drop = FALSE])
 
-  if (long) {
+  if (long || nrow(datagrid) < nrow(results)) {
     datagrid$Parameter <- unique(results$Parameter)
     results <- datawizard::data_merge(datagrid, results, by = "Parameter")
     results$Parameter <- NULL
@@ -293,8 +292,8 @@
 #' @keywords internal
 .get_marginaleffects_draws <- function(object) {
   # errors and checks are handled by marginaleffects
-  insight::check_if_installed("marginaleffects")
-  data.frame(marginaleffects::posterior_draws(object, shape = "DxP"))
+  insight::check_if_installed("marginaleffects", minimum_version = "0.24.0")
+  data.frame(marginaleffects::get_draws(object, shape = "DxP"))
 }
 
 #' @keywords internal

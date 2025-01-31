@@ -31,8 +31,8 @@
 #'   to zero the better).
 #'   \cr \cr
 #'   Some attention is required for finding suitable values for the ROPE limits
-#'   (argument `range`). See 'Details' in [`rope_range()`][rope_range]
-#'   for further information.
+#'   (argument `range`). See 'Details' in [`rope_range()`] for further
+#'   information.
 #'   \cr \cr
 #'   **Multicollinearity: Non-independent covariates**
 #'   \cr \cr
@@ -147,7 +147,6 @@ equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = 
 }
 
 
-
 #' @rdname equivalence_test
 #' @inheritParams p_direction
 #' @export
@@ -256,8 +255,6 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
 }
 
 
-
-
 #' @keywords internal
 .equivalence_test_models <- function(x,
                                      range = "default",
@@ -354,7 +351,6 @@ equivalence_test.brmsfit <- function(x,
 }
 
 
-
 #' @export
 equivalence_test.sim.merMod <- function(x,
                                         range = "default",
@@ -431,7 +427,6 @@ equivalence_test.mcmc.list <- equivalence_test.bcplm
 
 #' @export
 equivalence_test.bayesQR <- equivalence_test.bcplm
-
 
 
 #' @export

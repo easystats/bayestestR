@@ -24,7 +24,6 @@ simulate_prior <- function(model, n = 1000, ...) {
 }
 
 
-
 #' @export
 simulate_prior.stanreg <- function(model,
                                    n = 1000,
@@ -75,15 +74,10 @@ simulate_prior.brmsfit <- function(model,
 }
 
 
-
 #' @export
 simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
   .simulate_prior(insight::get_priors(model, verbose = verbose), n = n, verbose = verbose)
 }
-
-
-
-
 
 
 #' @keywords internal
