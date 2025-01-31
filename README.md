@@ -2,8 +2,6 @@
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01541/status.svg)](https://doi.org/10.21105/joss.01541)
-[![status](https://tinyverse.netlify.com/badge/bayestestR)](https://CRAN.R-project.org/package=bayestestR)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 
 ***Become a Bayesian master you will***
 
@@ -46,9 +44,9 @@ badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-
 The *bayestestR* package is available on CRAN, while its latest
 development version is available on R-universe (from *rOpenSci*).
 
-| Type        | Source     | Command                                                                      |
-|-------------|------------|------------------------------------------------------------------------------|
-| Release     | CRAN       | `install.packages("bayestestR")`                                             |
+| Type | Source | Command |
+|----|----|----|
+| Release | CRAN | `install.packages("bayestestR")` |
 | Development | R-universe | `install.packages("bayestestR", repos = "https://easystats.r-universe.dev")` |
 
 Once you have downloaded the package, you can then load it using:
@@ -159,9 +157,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter | Median |        95% CI |     pd |   ps
-## --------------------------------------------------
-## Posterior |  -0.01 | [-1.98, 1.93] | 50.52% | 0.46
+## Parameter |   Median |        95% CI |     pd |   ps
+## ----------------------------------------------------
+## Posterior | 3.05e-03 | [-1.92, 1.95] | 50.09% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -464,7 +462,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.41
+## [1] 0.36
 ```
 
 ## Code of Conduct
@@ -477,7 +475,7 @@ By contributing to this project, you agree to abide by its terms.
 # References
 
 <div id="refs" class="references csl-bib-body hanging-indent"
-line-spacing="2">
+entry-spacing="0" line-spacing="2">
 
 <div id="ref-kruschke2018rejecting" class="csl-entry">
 
