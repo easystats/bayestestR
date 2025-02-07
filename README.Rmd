@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-[![DOI](https://joss.theoj.org/papers/10.21105/joss.01541/status.svg)](https://doi.org/10.21105/joss.01541)   [![status](https://tinyverse.netlify.com/badge/bayestestR)](https://CRAN.R-project.org/package=bayestestR) [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01541/status.svg)](https://doi.org/10.21105/joss.01541)
 
 ***Become a Bayesian master you will***
 
@@ -95,14 +95,14 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
 - [**Centrality**](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
   - `mean()`, `median()` or [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html) for an estimation of the mode.
   - [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.html) can be used to get them at once and can be run directly on models.
-  
+
 - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
   - [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html) for *Highest Density Intervals (HDI)*, [`spi()`](https://easystats.github.io/bayestestR/reference/spi.html) for *Shortest Probability Intervals (SPI)* or [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html) for *Equal-Tailed Intervals (ETI)*.
   - [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html) can be used as a general method for Confidence and Credible Intervals (CI).
-  
+
 - [**Effect Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html): whether an effect is different from 0.
   - [`p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html) for a Bayesian equivalent of the frequentist *p*-value (see [Makowski et al., 2019](https://doi.org/10.3389/fpsyg.2019.02767))
-  - [`p_pointnull()`](https://easystats.github.io/bayestestR/reference/p_map.html) represents the odds of null hypothesis (*h0 = 0*) compared to the most likely hypothesis (the MAP). 
+  - [`p_pointnull()`](https://easystats.github.io/bayestestR/reference/p_map.html) represents the odds of null hypothesis (*h0 = 0*) compared to the most likely hypothesis (the MAP).
   - [`bf_pointnull()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) for a classic *Bayes Factor (BF)* assessing the likelihood of effect presence against its absence (*h0 = 0*).
 
 - [**Effect Significance**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html): whether the effect size can be considered as non-negligible.
@@ -199,7 +199,7 @@ While the **median** and the **mean** are available through base R functions, [`
 
 [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html) computes the **Highest Density Interval (HDI)** of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterization as **Credible Interval (CI)**.
 
-Unlike equal-tailed intervals (see [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)) that typically exclude 2.5\% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions. 
+Unlike equal-tailed intervals (see [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)) that typically exclude 2.5\% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions.
 
 ```{r message=FALSE, warning=FALSE}
 posterior <- distribution_chisquared(10000, 4)
@@ -322,9 +322,9 @@ ggplot(dat4, aes(x = x, y = y, fill = fill)) +
 
 ### Bayes Factor
 
-[`bayesfactor_parameters()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) computes Bayes factors against the null (either a point or an interval), bases on prior and posterior samples of a single parameter. This Bayes factor indicates the degree by which the mass of the posterior distribution has shifted further away from or closer to the null value(s) (relative to the prior distribution), thus indicating if the null value has become less or more likely given the observed data. 
+[`bayesfactor_parameters()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) computes Bayes factors against the null (either a point or an interval), bases on prior and posterior samples of a single parameter. This Bayes factor indicates the degree by which the mass of the posterior distribution has shifted further away from or closer to the null value(s) (relative to the prior distribution), thus indicating if the null value has become less or more likely given the observed data.
 
-When the null is an interval, the Bayes factor is computed by comparing the prior and posterior odds of the parameter falling within or outside the null; When the null is a point, a Savage-Dickey density ratio is computed, which is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null [@wagenmakers2010bayesian]. 
+When the null is an interval, the Bayes factor is computed by comparing the prior and posterior odds of the parameter falling within or outside the null; When the null is a point, a Savage-Dickey density ratio is computed, which is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null [@wagenmakers2010bayesian].
 
 
 ```{r message=FALSE, warning=FALSE}

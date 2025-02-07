@@ -429,7 +429,7 @@ than the prior densities.
 In `bayestestR`, this can be achieved with the `si()` function:
 
 ```{r}
-my_first_si <- si(model, BF = 1)
+my_first_si <- si(model, BF = 1, verbose = FALSE)
 
 print(my_first_si)
 ```

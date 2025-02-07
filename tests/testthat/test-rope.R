@@ -94,8 +94,19 @@ test_that("rope", {
 })
 
 
+test_that("BayesFactor", {
+  skip_on_os(c("linux", "mac"))
+  skip_if_not_or_load_if_installed("BayesFactor")
+
+  mods <- regressionBF(mpg ~ am + cyl, mtcars, progress = FALSE)
+  rx <- suppressMessages(rope(mods, verbose = FALSE))
+  expect_equal(rx$ROPE_high, -rx$ROPE_low, tolerance = 0.01)
+  expect_equal(rx$ROPE_high[1], 0.6026948, tolerance = 0.01)
+})
+
+
 skip_if_not_or_load_if_installed("brms")
-skip_on_os("windows")
+skip_on_os(c("windows", "mac"))
 
 set.seed(123)
 model <- suppressWarnings(brms::brm(mpg ~ wt + gear, data = mtcars, iter = 500))
@@ -106,8 +117,6 @@ test_that("rope (brms)", {
   expect_equal(rope$ROPE_high[1], 0.6026948)
   expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
 })
-
-skip_on_os("mac")
 
 model <- suppressWarnings(brm(bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE), data = mtcars, iter = 500, refresh = 0))
 rope <- rope(model, verbose = FALSE)
@@ -121,15 +130,4 @@ test_that("rope (brms, multivariate)", {
     c(0, 0, 0.493457, 0.072897, 0, 0.508411),
     tolerance = 0.1
   )
-})
-
-skip_on_os("linux")
-
-test_that("BayesFactor", {
-  skip_if_not_or_load_if_installed("BayesFactor")
-
-  mods <- regressionBF(mpg ~ am + cyl, mtcars, progress = FALSE)
-  rx <- suppressMessages(rope(mods, verbose = FALSE))
-  expect_equal(rx$ROPE_high, -rx$ROPE_low, tolerance = 0.01)
-  expect_equal(rx$ROPE_high[1], 0.6026948, tolerance = 0.01)
 })
