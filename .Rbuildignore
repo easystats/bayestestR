@@ -24,6 +24,7 @@ tests\^spelling
 \.lintr$
 ^CRAN-SUBMISSION$
 ^data-raw$
+^tests/testthat/_snaps/.
 
 ^man/figures/JASP.
 ^man/figures/b.
