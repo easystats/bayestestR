@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,11 +71,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.15.2" id="bayestestr-0152">bayestestR 0.15.2<a class="anchor" aria-label="anchor" href="#bayestestr-0152"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.15.2" id="bayestestr-0152">bayestestR 0.15.2<a class="anchor" aria-label="anchor" href="#bayestestr-0152"></a></h2><p class="text-muted">CRAN release: 2025-02-07</p>
 <div class="section level3">
 <h3 id="changes-0-15-2">Changes<a class="anchor" aria-label="anchor" href="#changes-0-15-2"></a></h3>
-<ul><li>
-<code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> no longer re-samples a model when computing indices.</li>
+<ul><li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> no longer re-samples a model when computing indices.</p></li>
+<li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> calls tests only when needed. Before, there was a minimal overhead by calling tests that were not requested.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-15-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-15-2"></a></h3>
+<ul><li>Fixed failing test for Mac OS.</li>
 </ul></div>
 </div>
     <div class="section level2">

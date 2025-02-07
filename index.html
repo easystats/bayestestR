@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,7 +106,7 @@
 <img src="logo.png" class="logo" alt=""><h1 id="bayestestr-">bayestestR <a class="anchor" aria-label="anchor" href="#bayestestr-"></a>
 </h1>
 </div>
-<p><a href="https://doi.org/10.21105/joss.01541" class="external-link"><img src="https://joss.theoj.org/papers/10.21105/joss.01541/status.svg" alt="DOI"></a> <a href="https://CRAN.R-project.org/package=bayestestR" class="external-link"><img src="https://tinyverse.netlify.com/badge/bayestestR" alt="status"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></p>
+<p><a href="https://doi.org/10.21105/joss.01541" class="external-link"><img src="https://joss.theoj.org/papers/10.21105/joss.01541/status.svg" alt="DOI"></a></p>
 <p><strong><em>Become a Bayesian master you will</em></strong></p>
 <hr>
 <p><span class="emoji" data-emoji="warning">⚠️</span> We changed the default the CI width! Please make an <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">informed decision</a> and set it explicitly (<code>ci = 0.89</code>, <code>ci = 0.95</code> or anything else that you decide) <span class="emoji" data-emoji="warning">⚠️</span></p>
@@ -126,9 +126,9 @@
 <p>The <em>bayestestR</em> package is available on CRAN, while its latest development version is available on R-universe (from <em>rOpenSci</em>).</p>
 <table class="table">
 <colgroup>
-<col width="12%">
-<col width="11%">
-<col width="75%">
+<col width="33%">
+<col width="33%">
+<col width="33%">
 </colgroup>
 <thead><tr>
 <th>Type</th>
@@ -242,9 +242,9 @@
 <span><span class="op">)</span></span>
 <span><span class="co">## Summary of Posterior Distribution</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Parameter | Median |        95% CI |     pd |   ps</span></span>
-<span><span class="co">## --------------------------------------------------</span></span>
-<span><span class="co">## Posterior |  -0.01 | [-1.98, 1.93] | 50.52% | 0.46</span></span></code></pre></div>
+<span><span class="co">## Parameter |   Median |        95% CI |     pd |   ps</span></span>
+<span><span class="co">## ----------------------------------------------------</span></span>
+<span><span class="co">## Posterior | 3.05e-03 | [-1.92, 1.95] | 50.09% | 0.46</span></span></code></pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">zinb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"http://stats.idre.ucla.edu/stat/data/fish.csv"</span><span class="op">)</span></span>
@@ -432,7 +432,7 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><code>density_at()</code></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/density_at.html">density_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">## [1] 0.41</span></span></code></pre></div>
+<span><span class="co">## [1] 0.36</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -444,7 +444,7 @@
 <div class="section level1">
 <h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h1>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-kruschke2018rejecting" class="csl-entry">
 Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(2), 270–280.
 </div>
