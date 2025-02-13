@@ -21,6 +21,11 @@ format.describe_posterior <- function(x,
 
   # format columns and values of data frame
   out <- insight::format_table(x, digits = digits, format = format, ...)
+  if (inherits(x, "p_rope") && all(c("p_Superiority", "p_Inferiority") %in% colnames(out))) {
+    colnames(out)[colnames(out) == "p_Superiority"] <- "p (Superiority)"
+    colnames(out)[colnames(out) == "p_Inferiority"] <- "p (Inferiority)"
+  }
+
 
   # different CI-types as column names?
   if (ci_string != "CI" && any(endsWith(colnames(out), "CI"))) {

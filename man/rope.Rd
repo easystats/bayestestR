@@ -10,13 +10,22 @@
 \usage{
 rope(x, ...)
 
-\method{rope}{numeric}(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...)
+\method{rope}{numeric}(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 \method{rope}{data.frame}(
   x,
   range = "default",
   ci = 0.95,
   ci_method = "ETI",
+  complement = FALSE,
   rvar_col = NULL,
   verbose = TRUE,
   ...
@@ -27,6 +36,7 @@ rope(x, ...)
   range = "default",
   ci = 0.95,
   ci_method = "ETI",
+  complement = FALSE,
   effects = c("fixed", "random", "all"),
   component = c("location", "all", "conditional", "smooth_terms", "sigma",
     "distributional", "auxiliary"),
@@ -40,6 +50,7 @@ rope(x, ...)
   range = "default",
   ci = 0.95,
   ci_method = "ETI",
+  complement = FALSE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,
@@ -76,6 +87,10 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{ci_method}{The type of interval to use to quantify the percentage in
 ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link[=ci]{ci()}}.}
+
+\item{complement}{Should the probabilities above/below the ROPE (the
+\emph{complementary} probabilities) be returned as well? See
+\code{\link[=equivalence_test]{equivalence_test()}} as well.}
 
 \item{verbose}{Toggle off warnings.}
 
