@@ -3,6 +3,7 @@
 #' Compute the proportion of the whole posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running `rope(..., ci = 1)`.
 #'
 #' @inheritParams rope
+#' @param ... Other arguments passed to [rope()].
 #'
 #' @examples
 #' library(bayestestR)
@@ -227,9 +228,16 @@ p_rope.mcmc.list <- p_rope.mcmc
 
 #' @keywords internal
 .p_rope <- function(rope_rez) {
-  cols <- c("Parameter", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Effects", "Component")
-  out <- as.data.frame(rope_rez)[cols[cols %in% names(rope_rez)]]
+  cols <- c("Parameter", "ROPE_low", "ROPE_high",
+            "ROPE_Percentage", "Superiority_Percentage", "Inferiority_Percentage",
+            "Effects", "Component")
+  out <- as.data.frame(rope_rez)[intersect(names(rope_rez), cols)]
+
   names(out)[names(out) == "ROPE_Percentage"] <- "p_ROPE"
+  if (all(c("Superiority_Percentage", "Inferiority_Percentage") %in% names(out))) {
+    names(out)[names(out) == "Superiority_Percentage"] <- "p_Superiority"
+    names(out)[names(out) == "Inferiority_Percentage"] <- "p_Inferiority"
+  }
 
   class(out) <- c("p_rope", "see_p_rope", "data.frame")
   out
