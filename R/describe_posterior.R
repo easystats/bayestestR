@@ -915,6 +915,15 @@ describe_posterior.slopes <- function(posterior,
     ...
   )
 
+  # extract model info. if we have categorical, add "group" variable
+  model <- attributes(posterior)$model
+  if (!is.null(model)) {
+    m_info <- insight::model_info(model)
+    if (isTRUE(m_info$is_categorical) && "group" %in% colnames(posterior)) {
+      out <- .safe(cbind(data.frame(group = posterior$group), out), out)
+    }
+  }
+
   row.names(out) <- NULL # Reset row names
   out <- .append_datagrid(out, posterior)
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))

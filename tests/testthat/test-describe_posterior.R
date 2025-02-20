@@ -1,5 +1,6 @@
 test_that("describe_posterior", {
   skip_if(getRversion() < "4.2")
+  skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
@@ -683,5 +684,31 @@ test_that("describe_posterior: BayesFactor", {
     ),
     tolerance = 0.1,
     ignore_attr = TRUE
+  )
+})
+
+
+test_that("describe_posterior: BayesFactor", {
+  skip_if_not(getRversion() >= "4.0", "Don't run with R < 4.0")
+  skip_if_not_installed("marginaleffects")
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+
+  m <- insight::download_model("brms_categorical_1_num")
+  skip_if(is.null(m))
+  out2 <- marginaleffects::avg_predictions(m, variables = "mpg")
+  post <- describe_posterior(out2)
+  expect_named(
+    post,
+    c(
+      "mpg", "group", "Median", "CI", "CI_low", "CI_high", "pd",
+      "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
+    )
+  )
+  expect_identical(
+    post$group,
+    c("3", "3", "3", "3", "3", "4", "4", "4", "4", "4", "5", "5", "5", "5", "5")
   )
 })
