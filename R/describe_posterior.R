@@ -919,7 +919,7 @@ describe_posterior.slopes <- function(posterior,
   model <- attributes(posterior)$model
   if (!is.null(model)) {
     m_info <- insight::model_info(model)
-    if (m_info$is_categorical && "group" %in% colnames(posterior)) {
+    if (isTRUE(m_info$is_categorical) && "group" %in% colnames(posterior)) {
       out <- .safe(cbind(data.frame(group = posterior$group), out), out)
     }
   }
