@@ -1,3 +1,10 @@
+# bayestestR (devel)
+
+## Bug fixes
+
+* `describe_posterior()` now returns a columns with response levels for
+  *marginaleffects* objects applied to categorical or multinomial Stan models.
+
 # bayestestR 0.15.2
 
 ## Changes
