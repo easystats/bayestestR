@@ -688,7 +688,7 @@ test_that("describe_posterior: BayesFactor", {
 })
 
 
-test_that("describe_posterior: BayesFactor", {
+test_that("describe_posterior: response column for marginaleffects", {
   skip_if_not(getRversion() >= "4.0", "Don't run with R < 4.0")
   skip_if_not_installed("marginaleffects")
   skip_if_not_installed("curl")

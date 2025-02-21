@@ -227,6 +227,15 @@
   all_attrs <- attributes(results) # save attributes for later
   all_class <- class(results)
 
+  # extract model info. if we have categorical, add "group" variable
+  model <- attributes(object)$model
+  if (!long && !is.null(model)) {
+    m_info <- insight::model_info(model)
+    if (isTRUE(m_info$is_categorical) && "group" %in% colnames(object)) {
+      results <- .safe(cbind(data.frame(group = object$group), results), results)
+    }
+  }
+
   datagrid <- insight::get_datagrid(object)
   grid_names <- colnames(datagrid)
 
@@ -244,7 +253,6 @@
     most_attrs <- all_attrs[setdiff(names(all_attrs), names(attributes(datagrid)))]
     attributes(results)[names(most_attrs)] <- most_attrs
   }
-
 
   attr(results, "idvars") <- grid_names
   results
