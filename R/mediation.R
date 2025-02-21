@@ -172,7 +172,7 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
   if (length(ci) > 1) ci <- ci[1]
 
   # check for binary response. In this case, user should rescale variables
-  modelinfo <- insight::model_info(model)
+  modelinfo <- insight::model_info(model, verbose = FALSE)
   if (any(sapply(modelinfo, function(i) i$is_binomial, simplify = TRUE))) {
     insight::format_alert("One of moderator or outcome is binary, so direct and indirect effects may be on different scales. Consider rescaling model predictors, e.g. with `effectsize::standardize()`.")
   }
