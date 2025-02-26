@@ -30,7 +30,7 @@ You can reference the package and its documentation as follows:
 ## Installation
 
 [![CRAN](https://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
-[![insight status
+[![bayestestR status
 badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-universe.dev)
 [![codecov](https://codecov.io/gh/easystats/bayestestR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/easystats/bayestestR)
 
@@ -156,7 +156,7 @@ describe_posterior(
 ## 
 ## Parameter |   Median |        95% CI |     pd |   ps
 ## ----------------------------------------------------
-## Posterior | 6.50e-03 | [-1.96, 1.97] | 50.20% | 0.46
+## Posterior | 8.95e-03 | [-1.97, 1.94] | 50.37% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -459,7 +459,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.39
+## [1] 0.4
 ```
 
 ## Code of Conduct
