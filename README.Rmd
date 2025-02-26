@@ -39,7 +39,7 @@ You can reference the package and its documentation as follows:
 
 ## Installation
 
-[![CRAN](https://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR) [![insight status badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-universe.dev) [![codecov](https://codecov.io/gh/easystats/bayestestR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/easystats/bayestestR)
+[![CRAN](https://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR) [![bayestestR status badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-universe.dev) [![codecov](https://codecov.io/gh/easystats/bayestestR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/easystats/bayestestR)
 
 
 The *bayestestR* package is available on CRAN, while its latest development version is available on R-universe (from _rOpenSci_).
