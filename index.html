@@ -119,7 +119,7 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><a href="https://cran.r-project.org/package=bayestestR" class="external-link"><img src="https://www.r-pkg.org/badges/version/bayestestR" alt="CRAN"></a> <a href="https://easystats.r-universe.dev" class="external-link"><img src="https://easystats.r-universe.dev/badges/bayestestR" alt="insight status badge"></a> <a href="https://app.codecov.io/gh/easystats/bayestestR" class="external-link"><img src="https://codecov.io/gh/easystats/bayestestR/branch/main/graph/badge.svg" alt="codecov"></a></p>
+<p><a href="https://cran.r-project.org/package=bayestestR" class="external-link"><img src="https://www.r-pkg.org/badges/version/bayestestR" alt="CRAN"></a> <a href="https://easystats.r-universe.dev" class="external-link"><img src="https://easystats.r-universe.dev/badges/bayestestR" alt="bayestestR status badge"></a> <a href="https://app.codecov.io/gh/easystats/bayestestR" class="external-link"><img src="https://codecov.io/gh/easystats/bayestestR/branch/main/graph/badge.svg" alt="codecov"></a></p>
 <p>The <em>bayestestR</em> package is available on CRAN, while its latest development version is available on R-universe (from <em>rOpenSci</em>).</p>
 <table class="table">
 <colgroup>
@@ -242,7 +242,7 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## Parameter |   Median |        95% CI |     pd |   ps</span></span>
 <span><span class="co">## ----------------------------------------------------</span></span>
-<span><span class="co">## Posterior | 6.50e-03 | [-1.96, 1.97] | 50.20% | 0.46</span></span></code></pre></div>
+<span><span class="co">## Posterior | 8.95e-03 | [-1.97, 1.94] | 50.37% | 0.47</span></span></code></pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">zinb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"http://stats.idre.ucla.edu/stat/data/fish.csv"</span><span class="op">)</span></span>
@@ -430,7 +430,7 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><code>density_at()</code></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/density_at.html">density_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">## [1] 0.39</span></span></code></pre></div>
+<span><span class="co">## [1] 0.4</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
