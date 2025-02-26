@@ -2,17 +2,10 @@
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01541/status.svg)](https://doi.org/10.21105/joss.01541)
+[![downloads](https://cranlogs.r-pkg.org/badges/bayestestR)](https://cran.r-project.org/package=bayestestR)
+[![total](https://cranlogs.r-pkg.org/badges/grand-total/bayestestR)](https://cranlogs.r-pkg.org/)
 
 ***Become a Bayesian master you will***
-
-------------------------------------------------------------------------
-
-:warning: We changed the default the CI width! Please make an [informed
-decision](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-and set it explicitly (`ci = 0.89`, `ci = 0.95` or anything else that
-you decide) :warning:
-
-------------------------------------------------------------------------
 
 Existing R packages allow users to easily fit a large variety of models
 and extract and visualize the posterior draws. However, most of these
@@ -36,10 +29,10 @@ You can reference the package and its documentation as follows:
 
 ## Installation
 
-[![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
+[![CRAN](https://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
 [![insight status
 badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-universe.dev)
-[![R-CMD-check](https://github.com/easystats/bayestestR/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/bayestestR/actions)
+[![codecov](https://codecov.io/gh/easystats/bayestestR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/easystats/bayestestR)
 
 The *bayestestR* package is available on CRAN, while its latest
 development version is available on R-universe (from *rOpenSci*).
@@ -57,12 +50,16 @@ library("bayestestR")
 
 > **Tip**
 >
-> **Instead of `library(bayestestR)`, use `library(easystats)`.** **This
-> will make all features of the easystats-ecosystem available.**
+> Instead of `library(bayestestR)`, use `library(easystats)`. This will
+> make all features of the easystats-ecosystem available.
 >
-> **To stay updated, use `easystats::install_latest()`.**
+> To stay updated, use `easystats::install_latest()`.
 
 ## Documentation
+
+[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/)
+[![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
+[![Features](https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3)](https://easystats.github.io/bayestestR/reference/index.html)
 
 Access the package
 [documentation](https://easystats.github.io/bayestestR/) and check-out
@@ -159,7 +156,7 @@ describe_posterior(
 ## 
 ## Parameter |   Median |        95% CI |     pd |   ps
 ## ----------------------------------------------------
-## Posterior | 3.05e-03 | [-1.92, 1.95] | 50.09% | 0.46
+## Posterior | 6.50e-03 | [-1.96, 1.97] | 50.20% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -462,7 +459,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.36
+## [1] 0.39
 ```
 
 ## Code of Conduct
