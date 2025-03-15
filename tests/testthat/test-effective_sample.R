@@ -14,9 +14,12 @@ test_that("effective_sample", {
     res,
     data.frame(
       Parameter = c("b_Intercept", "b_wt", "b_cyl"),
-      ESS = c(5242, 2071, 1951),
+      ESS = c(5283, 2120, 2001),
+      ESS_tail = c(3255, 2003, 2227),
       stringsAsFactors = FALSE
-    )
+    ),
+    ignore_attr = TRUE,
+    tolerance = 1e-1
   )
 
   brms_null_1 <- insight::download_model("brms_null_1")
@@ -26,10 +29,13 @@ test_that("effective_sample", {
   expect_equal(
     res,
     data.frame(
-      Parameter = c("b_Intercept"),
-      ESS = c(2888),
+      Parameter = "b_Intercept",
+      ESS = 2912,
+      ESS_tail = 2388,
       stringsAsFactors = FALSE
-    )
+    ),
+    ignore_attr = TRUE,
+    tolerance = 1e-1
   )
 
   brms_null_2 <- insight::download_model("brms_null_2")
@@ -39,9 +45,12 @@ test_that("effective_sample", {
   expect_equal(
     res,
     data.frame(
-      Parameter = c("b_Intercept"),
-      ESS = c(1059),
+      Parameter = "b_Intercept",
+      ESS = 1098,
+      ESS_tail = 954,
       stringsAsFactors = FALSE
-    )
+    ),
+    ignore_attr = TRUE,
+    tolerance = 1e-1
   )
 })

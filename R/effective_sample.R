@@ -103,8 +103,8 @@ effective_sample.brmsfit <- function(model,
 
   data.frame(
     Parameter = idx$variable[rows_to_keep],
-    ESS = idx[rows_to_keep, "ess_bulk"],
-    ESS_tail = idx[rows_to_keep, "ess_tail"],
+    ESS = round(idx[rows_to_keep, "ess_bulk"]),
+    ESS_tail = round(idx[rows_to_keep, "ess_tail"]),
     stringsAsFactors = FALSE,
     row.names = NULL
   )
