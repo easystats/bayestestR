@@ -154,8 +154,10 @@ the resulting HDI.
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \section{Model components}{
- Possible values for the \code{component} argument
-depend on the model class. Following are valid options:
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
 \itemize{
 \item \code{"all"}: returns all model components, applies to all models, but will only
 have an effect for models with more than just the conditional model

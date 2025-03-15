@@ -12,6 +12,8 @@
 #' @param ... Currently not used.
 #' @inheritParams hdi
 #'
+#' @inheritSection hdi Model components
+#'
 #' @return A data frame with two columns: Parameter name and effective sample size (ESS).
 #'
 #' @details
@@ -53,13 +55,13 @@
 #' ))
 #' effective_sample(model)
 #'
-#' model <- brms::brm(
+#' model <- suppressWarnings(brms::brm(
 #'   mpg ~ wt,
 #'   data = mtcars,
 #'   chains = 2,
 #'   iter = 200,
 #'   refresh = 0
-#' )
+#' ))
 #' effective_sample(model)
 #' }
 #' @export

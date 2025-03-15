@@ -43,8 +43,10 @@
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @section Model components: Possible values for the `component` argument
-#' depend on the model class. Following are valid options:
+#' @section Model components:
+#'
+#' Possible values for the `component` argument depend on the model class.
+#' Following are valid options:
 #' - `"all"`: returns all model components, applies to all models, but will only
 #'   have an effect for models with more than just the conditional model
 #'   component.
