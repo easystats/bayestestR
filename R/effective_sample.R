@@ -44,7 +44,6 @@
 #'
 #' @examplesIf all(insight::check_if_installed(c("rstanarm", "brms"), quietly = TRUE))
 #' \donttest{
-#' library()
 #' model <- suppressWarnings(rstanarm::stan_glm(
 #'   mpg ~ wt + gear,
 #'   data = mtcars,

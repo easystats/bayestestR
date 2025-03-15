@@ -77,7 +77,6 @@ credible intervals, tail probabilities, etc.).
 \examples{
 \dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-library()
 model <- suppressWarnings(rstanarm::stan_glm(
   mpg ~ wt + gear,
   data = mtcars,
