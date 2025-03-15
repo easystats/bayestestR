@@ -47,12 +47,13 @@ for the output.}
 A data frame with two columns: Parameter name and effective sample size (ESS).
 }
 \description{
-Effective Sample Size (ESS) is a measure of how much independent information there is in
-autocorrelated chains. It is used to assess the quality of MCMC samples. A higher ESS indicates
-more reliable estimates. For most applications, an effective sample size greater than 1,000 is
-sufficient for stable estimates (Bürkner, 2017). This function returns the effective sample size
-(ESS) for various Bayesian model objects. For \code{brmsfit} objects, the returned ESS corresponds to
-the bulk-ESS (and the tail-ESS is also returned).
+Effective Sample Size (ESS) is a measure of how much independent information
+there is in autocorrelated chains. It is used to assess the quality of MCMC
+samples. A higher ESS indicates more reliable estimates. For most
+applications, an effective sample size greater than 1,000 is sufficient for
+stable estimates (Bürkner, 2017). This function returns the effective sample
+size (ESS) for various Bayesian model objects. For \code{brmsfit} objects, the
+returned ESS corresponds to the bulk-ESS (and the tail-ESS is also returned).
 }
 \details{
 \itemize{
@@ -74,16 +75,25 @@ credible intervals, tail probabilities, etc.).
 }
 }
 \examples{
-\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-library(rstanarm)
-model <- suppressWarnings(
-  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-)
+library()
+model <- suppressWarnings(rstanarm::stan_glm(
+  mpg ~ wt + gear,
+  data = mtcars,
+  chains = 2,
+  iter = 200,
+  refresh = 0
+))
 effective_sample(model)
 
-library(brms)
-model <- brm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0, backend = "cmdstanr")
+model <- brms::brm(
+  mpg ~ wt,
+  data = mtcars,
+  chains = 2,
+  iter = 200,
+  refresh = 0
+)
 effective_sample(model)
 }
 \dontshow{\}) # examplesIf}
@@ -91,11 +101,11 @@ effective_sample(model)
 \references{
 \itemize{
 \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS,
-and Stan. Academic Press.s
+and Stan. Academic Press.
 \item Bürkner, P. C. (2017). brms: An R package for Bayesian multilevel models
 using Stan. Journal of Statistical Software, 80(1), 1-28
-\item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Bürkner, P.-C. (2021). Rank-normalization,
-folding, and localization: An improved R-hat for assessing convergence of MCMC. Bayesian Analysis,
-16(2), 667-718.
+\item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Bürkner, P.-C.
+(2021). Rank-normalization, folding, and localization: An improved R-hat
+for assessing convergence of MCMC. Bayesian Analysis, 16(2), 667-718.
 }
 }
