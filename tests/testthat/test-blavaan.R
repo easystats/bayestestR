@@ -77,7 +77,7 @@ test_that("blavaan, all", {
   ## Bayes factors ----
 
   # For these models, no BF available, see #627
-  expect_error(bayesfactor_models(bfit, bfit2), regex = "Could not calculate Bayes")
+  expect_warning(bayesfactor_models(bfit, bfit2), regex = "Bayes factors might not be precise")
 
   bfit_prior <- unupdate(bfit)
   capture.output(x <- expect_warning(bayesfactor_parameters(bfit, prior = bfit_prior)))
