@@ -87,16 +87,6 @@ effective_sample.brmsfit <- function(model,
                                      component = "conditional",
                                      parameters = NULL,
                                      ...) {
-  # check arguments
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random", "all")
-  )
-  component <- insight::validate_argument(
-    component,
-    c("conditional", "zi", "zero_inflated", "all")
-  )
-
   pars <- insight::find_parameters(
     model,
     effects = effects,
@@ -128,16 +118,6 @@ effective_sample.stanreg <- function(model,
                                      component = "location",
                                      parameters = NULL,
                                      ...) {
-  # check arguments
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random", "all")
-  )
-  component <- insight::validate_argument(
-    component,
-    c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary") #
-  )
-
   effective_sample.brmsfit(
     model,
     effects = effects,
@@ -154,16 +134,6 @@ effective_sample.stanmvreg <- function(model,
                                        component = "location",
                                        parameters = NULL,
                                        ...) {
-  # check arguments
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random", "all")
-  )
-  component <- insight::validate_argument(
-    component,
-    c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary") #
-  )
-
   pars <- insight::get_parameters(
     model,
     effects = effects,
@@ -188,18 +158,11 @@ effective_sample.stanfit <- function(model,
                                      effects = "fixed",
                                      parameters = NULL,
                                      ...) {
-  # check arguments
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random", "all")
+  pars <- insight::get_parameters(
+    model,
+    effects = effects,
+    parameters = parameters
   )
-
-  pars <-
-    insight::get_parameters(
-      model,
-      effects = effects,
-      parameters = parameters
-    )
 
   insight::check_if_installed("rstan")
 
@@ -235,19 +198,12 @@ effective_sample.MCMCglmm <- function(model,
                                       effects = "fixed",
                                       parameters = NULL,
                                       ...) {
-  # check arguments
-  effects <- insight::validate_argument(
-    effects,
-    c("fixed", "random", "all")
+  pars <- insight::get_parameters(
+    model,
+    effects = effects,
+    parameters = parameters,
+    summary = TRUE
   )
-
-  pars <-
-    insight::get_parameters(
-      model,
-      effects = effects,
-      parameters = parameters,
-      summary = TRUE
-    )
 
   s.fixed <- as.data.frame(summary(model)$solutions)
   s.random <- as.data.frame(summary(model)$Gcovariances)
