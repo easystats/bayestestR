@@ -12,11 +12,23 @@
 #'   resemble the arguments of the `.numeric` or `.data.frame`methods.
 #' @param ci Value or vector of probability of the (credible) interval - CI
 #'   (between 0 and 1) to be estimated. Default to `.95` (`95%`).
-#' @param effects Should results for fixed effects, random effects or both be
-#'   returned? Only applies to mixed models. May be abbreviated.
-#' @param component Should results for all parameters, parameters for the
-#'   conditional model or the zero-inflated part of the model be returned? May
-#'   be abbreviated. Only applies to \pkg{brms}-models.
+#' @param effects Should results for fixed effects (`"fixed"`, the default),
+#'   random effects (`"random"`) or both ("`all"`) be returned? Only applies to
+#'   mixed models. May be abbreviated.
+#' @param component Which type of parameters to return, such as parameters for
+#' the conditional model, the zero-inflated part of the model, the dispersion
+#' term, etc. See details in section _Model Components_. May be abbreviated.
+#' Note that the *conditional* component also refers to the *count* or *mean*
+#' component - names may differ, depending on the modeling package. There are
+#' three convenient shortcuts (not applicable to *all* model classes):
+#' - `component = "all"` returns all possible parameters.
+#' - If `component = "location"`, location parameters such as `conditional`,
+#'   `zero_inflated`, `smooth_terms`, or `instruments` are returned (everything
+#'   that are fixed or random effects - depending on the `effects` argument -
+#'   but no auxiliary parameters).
+#' - For `component = "distributional"` (or `"auxiliary"`), components like
+#'   `sigma`, `dispersion`, `beta` or `precision` (and other auxiliary
+#'   parameters) are returned.
 #' @param parameters Regular expression pattern that describes the parameters
 #'   that should be returned. Meta-parameters (like `lp__` or `prior_`) are
 #'   filtered by default, so only parameters that typically appear in the
@@ -30,6 +42,29 @@
 #' @param ... Currently not used.
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'
+#' @section Model components: Possible values for the `component` argument
+#' depend on the model class. Following are valid options:
+#' - `"all"`: returns all model components, applies to all models, but will only
+#'   have an effect for models with more than just the conditional model
+#'   component.
+#' - `"conditional"`: only returns the conditional component, i.e. "fixed
+#'   effects" terms from the model. Will only have an effect for models with
+#'   more than just the conditional model component.
+#' - `"smooth_terms"`: returns smooth terms, only applies to GAMs (or similar
+#'   models that may contain smooth terms).
+#' - `"zero_inflated"` (or `"zi"`): returns the zero-inflation component.
+#' - `"location"`: returns location parameters such as `conditional`,
+#'   `zero_inflated`, or `smooth_terms` (everything that are fixed or random
+#'   effects - depending on the `effects` argument - but no auxiliary
+#'   parameters).
+#' - `"distributional"` (or `"auxiliary"`): components like `sigma`,
+#'   `dispersion`, `beta` or `precision` (and other auxiliary parameters) are
+#'   returned.
+#'
+#' For models of class `brmsfit` (package **brms**), even more options are
+#' possible for the `component` argument, which are not all documented in detail
+#' here. See also [`?insight::find_parameters`](https://easystats.github.io/insight/reference/find_parameters.BGGM.html).
 #'
 #' @details Unlike equal-tailed intervals (see `eti()`) that typically exclude `2.5%`
 #' from each tail of the distribution and always include the median, the HDI is

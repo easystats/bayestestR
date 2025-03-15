@@ -83,13 +83,19 @@ effective_sample.default <- function(model, ...) {
 #' @rdname effective_sample
 #' @export
 effective_sample.brmsfit <- function(model,
-                                     effects = c("fixed", "random", "all"),
-                                     component = c("conditional", "zi", "zero_inflated", "all"),
+                                     effects = "fixed",
+                                     component = "conditional",
                                      parameters = NULL,
                                      ...) {
   # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  effects <- insight::validate_argument(
+    effects,
+    c("fixed", "random", "all")
+  )
+  component <- insight::validate_argument(
+    component,
+    c("conditional", "zi", "zero_inflated", "all")
+  )
 
   pars <- insight::find_parameters(
     model,
@@ -118,43 +124,45 @@ effective_sample.brmsfit <- function(model,
 #' @rdname effective_sample
 #' @export
 effective_sample.stanreg <- function(model,
-                                     effects = c("fixed", "random", "all"),
-                                     component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), # nolint
+                                     effects = "fixed",
+                                     component = "location",
                                      parameters = NULL,
                                      ...) {
   # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  effects <- insight::validate_argument(
+    effects,
+    c("fixed", "random", "all")
+  )
+  component <- insight::validate_argument(
+    component,
+    c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary") #
+  )
 
-  pars <- insight::find_parameters(
+  effective_sample.brmsfit(
     model,
     effects = effects,
     component = component,
     parameters = parameters,
-    flatten = TRUE
-  )
-
-  s <- as.data.frame(summary(model))
-  s <- s[rownames(s) %in% pars, ]
-
-  data.frame(
-    Parameter = rownames(s),
-    ESS = s[["n_eff"]],
-    stringsAsFactors = FALSE,
-    row.names = NULL
+    ...
   )
 }
 
 
 #' @export
 effective_sample.stanmvreg <- function(model,
-                                       effects = c("fixed", "random", "all"),
-                                       component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), # nolint
+                                       effects = "fixed",
+                                       component = "location",
                                        parameters = NULL,
                                        ...) {
   # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  effects <- insight::validate_argument(
+    effects,
+    c("fixed", "random", "all")
+  )
+  component <- insight::validate_argument(
+    component,
+    c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary") #
+  )
 
   pars <- insight::get_parameters(
     model,
@@ -177,11 +185,14 @@ effective_sample.stanmvreg <- function(model,
 
 #' @export
 effective_sample.stanfit <- function(model,
-                                     effects = c("fixed", "random", "all"),
+                                     effects = "fixed",
                                      parameters = NULL,
                                      ...) {
   # check arguments
-  effects <- match.arg(effects)
+  effects <- insight::validate_argument(
+    effects,
+    c("fixed", "random", "all")
+  )
 
   pars <-
     insight::get_parameters(
@@ -221,11 +232,14 @@ effective_sample.blavaan <- function(model, parameters = NULL, ...) {
 
 #' @export
 effective_sample.MCMCglmm <- function(model,
-                                      effects = c("fixed", "random", "all"),
+                                      effects = "fixed",
                                       parameters = NULL,
                                       ...) {
   # check arguments
-  effects <- match.arg(effects)
+  effects <- insight::validate_argument(
+    effects,
+    c("fixed", "random", "all")
+  )
 
   pars <-
     insight::get_parameters(
