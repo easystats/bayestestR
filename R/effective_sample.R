@@ -141,12 +141,16 @@ effective_sample.stanmvreg <- function(model,
     parameters = parameters
   )
 
-  s <- as.data.frame(summary(model))
-  s <- s[rownames(s) %in% colnames(pars), ]
+  insight::check_if_installed("posterior")
+  idx <- as.data.frame(posterior::summarise_draws(model))
+  rows_to_keep <- idx$variable %in% colnames(pars)
+  # ess_*() functions are defined in:
+  # https://github.com/stan-dev/posterior/blob/master/R/convergence.R
 
   data.frame(
-    Parameter = rownames(s),
-    ESS = s[["n_eff"]],
+    Parameter = idx$variable[rows_to_keep],
+    ESS = round(idx[rows_to_keep, "ess_bulk"]),
+    ESS_tail = round(idx[rows_to_keep, "ess_tail"]),
     stringsAsFactors = FALSE,
     row.names = NULL
   )
