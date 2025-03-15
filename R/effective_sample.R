@@ -1,6 +1,11 @@
 #' Effective Sample Size (ESS)
 #'
-#' This function returns the effective sample size (ESS).
+#' Effective Sample Size (ESS) is a measure of how much independent information there is in
+#' autocorrelated chains. It is used to assess the quality of MCMC samples. A higher ESS indicates
+#' more reliable estimates. For most applications, an effective sample size greater than 1,000 is 
+#' sufficient for stable estimates (Bürkner, 2017). This function returns the effective sample size 
+#' (ESS) for various Bayesian model objects. For `brmsfit` objects, the returned ESS corresponds to 
+#' the bulk-ESS (and the tail-ESS is also returned).
 #'
 #' @param model A `stanreg`, `stanfit`, `brmsfit`, `blavaan`, or `MCMCglmm` object.
 #' @param ... Currently not used.
@@ -8,25 +13,44 @@
 #'
 #' @return A data frame with two columns: Parameter name and effective sample size (ESS).
 #'
-#' @details **Effective Sample (ESS)** should be as large as possible, altough
+#' @details 
+#'   - **Effective Sample (ESS)** should be as large as possible, altough
 #'   for most applications, an effective sample size greater than 1,000 is
 #'   sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the
 #'   number of independent samples with the same estimation power as the N
 #'   autocorrelated samples. It is is a measure of \dQuote{how much independent
 #'   information there is in autocorrelated chains} (*Kruschke 2015, p182-3*).
 #'
+#'   - **Bulk-ESS** is useful as a diagnostic for the sampling efficiency in
+#'   the bulk of the posterior. It is defined as the effective sample size for
+#'   rank normalized values using split chains. It can be interpreted as the 
+#'   reliability of indices of central tendency (mean, median, etc.).
+#'
+#'   - **Tail-ESS** is useful as a diagnostic for the sampling efficiency in
+#'   the tails of the posterior. It is defined as the minimum of the effective
+#'   sample sizes for 5% and 95% quantiles. It can be interpreted as the 
+#'   reliability of indices that depend on the tails of the distribution (e.g.,
+#'   credible intervals, tail probabilities, etc.).
+#'
 #' @references
 #' - Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS,
-#'   and Stan. Academic Press.
+#'   and Stan. Academic Press.s
 #' - Bürkner, P. C. (2017). brms: An R package for Bayesian multilevel models
 #'   using Stan. Journal of Statistical Software, 80(1), 1-28
-#'
+#' - Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., & Bürkner, P.-C. (2021). Rank-normalization,
+#'   folding, and localization: An improved R-hat for assessing convergence of MCMC. Bayesian Analysis,
+#'   16(2), 667-718.
+#' 
 #' @examplesIf require("rstanarm")
 #' \donttest{
 #' library(rstanarm)
 #' model <- suppressWarnings(
 #'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' )
+#' effective_sample(model)
+#'
+#' library(brms)
+#' model <- brm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0, backend = "cmdstanr")
 #' effective_sample(model)
 #' }
 #' @export
@@ -66,14 +90,16 @@ effective_sample.brmsfit <- function(model,
     flatten = TRUE
   )
 
-  insight::check_if_installed("rstan")
-
-  s <- rstan::summary(model$fit)$summary
-  s <- subset(s, subset = rownames(s) %in% pars)
+  insight::check_if_installed("posterior")
+  idx <- as.data.frame(posterior::summarise_draws(model))
+  row.names(idx) <- idx$variable
+  # ess_*() functions are defined in:
+  # https://github.com/stan-dev/posterior/blob/master/R/convergence.R
 
   data.frame(
     Parameter = rownames(s),
-    ESS = round(s[, "n_eff"]),
+    ESS = idx[pars, "ess_bulk"],
+    ESS_tail = idx[pars, "ess_tail"],
     stringsAsFactors = FALSE,
     row.names = NULL
   )
