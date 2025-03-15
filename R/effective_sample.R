@@ -101,14 +101,14 @@ effective_sample.brmsfit <- function(model,
 
   insight::check_if_installed("posterior")
   idx <- as.data.frame(posterior::summarise_draws(model))
-  row.names(idx) <- idx$variable
+  rows_to_keep <- idx$variable %in% pars
   # ess_*() functions are defined in:
   # https://github.com/stan-dev/posterior/blob/master/R/convergence.R
 
   data.frame(
-    Parameter = rownames(s),
-    ESS = idx[pars, "ess_bulk"],
-    ESS_tail = idx[pars, "ess_tail"],
+    Parameter = idx$variable[rows_to_keep],
+    ESS = idx[rows_to_keep, "ess_bulk"],
+    ESS_tail = idx[rows_to_keep, "ess_tail"],
     stringsAsFactors = FALSE,
     row.names = NULL
   )
