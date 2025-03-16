@@ -83,6 +83,7 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
 }
 
 
+#' @rdname unupdate
 #' @export
 unupdate.brmsfit_multiple <- function(model,
                                       verbose = TRUE,

@@ -4,6 +4,7 @@
 #'
 #' @inheritParams effective_sample
 #' @param n Size of the simulated prior distributions.
+#' @inheritParams hdi
 #'
 #' @seealso [`unupdate()`] for directly sampling from the prior
 #'   distribution (useful for complex priors and designs).

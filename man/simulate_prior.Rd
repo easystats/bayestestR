@@ -50,6 +50,8 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{verbose}{Toggle off warnings.}
 }
 \description{
 Transforms priors information to actual distributions.

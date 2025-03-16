@@ -3,11 +3,14 @@
 \name{unupdate}
 \alias{unupdate}
 \alias{unupdate.brmsfit}
+\alias{unupdate.brmsfit_multiple}
 \title{Un-update Bayesian models to their prior-to-data state}
 \usage{
 unupdate(model, verbose = TRUE, ...)
 
 \method{unupdate}{brmsfit}(model, verbose = TRUE, ...)
+
+\method{unupdate}{brmsfit_multiple}(model, verbose = TRUE, newdata = NULL, ...)
 }
 \arguments{
 \item{model}{A fitted Bayesian model.}

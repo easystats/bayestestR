@@ -205,6 +205,7 @@ weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 #' @export
 weighted_posteriors.blavaan <- weighted_posteriors.stanreg
 
+#' @rdname weighted_posteriors
 #' @export
 weighted_posteriors.BFBayesFactor <- function(...,
                                               prior_odds = NULL,
