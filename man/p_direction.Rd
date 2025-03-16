@@ -5,12 +5,7 @@
 \alias{pd}
 \alias{p_direction.numeric}
 \alias{p_direction.data.frame}
-\alias{p_direction.MCMCglmm}
-\alias{p_direction.emmGrid}
-\alias{p_direction.slopes}
-\alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
-\alias{p_direction.BFBayesFactor}
 \alias{p_direction.get_predicted}
 \title{Probability of Direction (pd)}
 \usage{
@@ -37,60 +32,11 @@ pd(x, ...)
   ...
 )
 
-\method{p_direction}{MCMCglmm}(
-  x,
-  method = "direct",
-  null = 0,
-  as_p = FALSE,
-  remove_na = TRUE,
-  ...
-)
-
-\method{p_direction}{emmGrid}(
-  x,
-  method = "direct",
-  null = 0,
-  as_p = FALSE,
-  remove_na = TRUE,
-  ...
-)
-
-\method{p_direction}{slopes}(
-  x,
-  method = "direct",
-  null = 0,
-  as_p = FALSE,
-  remove_na = TRUE,
-  ...
-)
-
-\method{p_direction}{stanreg}(
-  x,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  method = "direct",
-  null = 0,
-  as_p = FALSE,
-  remove_na = TRUE,
-  ...
-)
-
 \method{p_direction}{brmsfit}(
   x,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
-  method = "direct",
-  null = 0,
-  as_p = FALSE,
-  remove_na = TRUE,
-  ...
-)
-
-\method{p_direction}{BFBayesFactor}(
-  x,
   method = "direct",
   null = 0,
   as_p = FALSE,
@@ -260,6 +206,35 @@ available), and then computing the \link[=area_under_curve]{area under the curve
 between them. Note the this approach assumes a continuous density function,
 and so \strong{when the posterior represents a (partially) discrete parameter
 space, only the direct method \emph{must} be used} (see above).
+}
+
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
 }
 
 \examples{
