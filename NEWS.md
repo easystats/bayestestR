@@ -1,5 +1,11 @@
 # bayestestR (devel)
 
+## Changes
+
+* `effective_sample()`, and functions that call `effective_sample()` (like
+  `describe_posterior()` with the respective `test` option) now also return
+  the tail ESS.
+
 ## Bug fixes
 
 * `describe_posterior()` now returns a columns with response levels for
