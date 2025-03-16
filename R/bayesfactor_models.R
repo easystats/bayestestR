@@ -1,8 +1,7 @@
 #' Bayes Factors (BF) for model comparison
 #'
-#' @description This function computes or extracts Bayes factors from fitted models.
-#' \cr \cr
-#' The `bf_*` function is an alias of the main function.
+#' @description This function computes or extracts Bayes factors from fitted
+#' models. The `bf_*` function is an alias of the main function.
 #'
 #' @author Mattan S. Ben-Shachar
 #'

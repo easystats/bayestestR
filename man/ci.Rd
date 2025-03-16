@@ -4,12 +4,7 @@
 \alias{ci}
 \alias{ci.numeric}
 \alias{ci.data.frame}
-\alias{ci.sim.merMod}
-\alias{ci.sim}
-\alias{ci.stanreg}
 \alias{ci.brmsfit}
-\alias{ci.BFBayesFactor}
-\alias{ci.MCMCglmm}
 \title{Confidence/Credible/Compatibility Interval (CI)}
 \usage{
 ci(x, ...)
@@ -18,46 +13,17 @@ ci(x, ...)
 
 \method{ci}{data.frame}(x, ci = 0.95, method = "ETI", BF = 1, rvar_col = NULL, verbose = TRUE, ...)
 
-\method{ci}{sim.merMod}(
-  x,
-  ci = 0.95,
-  method = "ETI",
-  effects = c("fixed", "random", "all"),
-  parameters = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{ci}{sim}(x, ci = 0.95, method = "ETI", parameters = NULL, verbose = TRUE, ...)
-
-\method{ci}{stanreg}(
-  x,
-  ci = 0.95,
-  method = "ETI",
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  verbose = TRUE,
-  BF = 1,
-  ...
-)
-
 \method{ci}{brmsfit}(
   x,
   ci = 0.95,
   method = "ETI",
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
   verbose = TRUE,
   BF = 1,
   ...
 )
-
-\method{ci}{BFBayesFactor}(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...)
-
-\method{ci}{MCMCglmm}(x, ci = 0.95, method = "ETI", verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior
@@ -82,12 +48,6 @@ frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.
 random effects (\code{"random"}) or both ("\verb{all"}) be returned? Only applies to
 mixed models. May be abbreviated.}
 
-\item{parameters}{Regular expression pattern that describes the parameters
-that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
-filtered by default, so only parameters that typically appear in the
-\code{summary()} are returned. Use \code{parameters} to select specific parameters
-for the output.}
-
 \item{component}{Which type of parameters to return, such as parameters for
 the conditional model, the zero-inflated part of the model, the dispersion
 term, etc. See details in section \emph{Model Components}. May be abbreviated.
@@ -104,6 +64,12 @@ but no auxiliary parameters).
 \code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
 parameters) are returned.
 }}
+
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
 }
 \value{
 A data frame with following columns:
