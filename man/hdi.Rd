@@ -103,9 +103,9 @@ outside the interval. The HDI can be used in the context of uncertainty
 characterisation of posterior distributions as \strong{Credible Interval (CI)}.
 }
 \details{
-Unlike equal-tailed intervals (see \code{eti()}) that typically exclude \verb{2.5\%}
-from each tail of the distribution and always include the median, the HDI is
-\emph{not} equal-tailed and therefore always includes the mode(s) of posterior
+Unlike equal-tailed intervals (see \code{\link[=eti]{eti()}}) that typically exclude
+\verb{2.5\%} from each tail of the distribution and always include the median, the
+HDI is \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
 distributions. While this can be useful to better represent the credibility
 mass of a distribution, the HDI also has some limitations. See \code{\link[=spi]{spi()}} for
 details.
@@ -125,16 +125,16 @@ your model). Moreover, 89 indicates the arbitrariness of interval limits -
 its only remarkable property is being the highest prime number that does not
 exceed the already unstable \verb{95\%} threshold (\emph{McElreath, 2015}).
 
-However, \verb{95\%} has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}. For instance, it
-shares (in the case of a normal posterior distribution) an intuitive
-relationship with the standard deviation and it conveys a more accurate image
-of the (artificial) bounds of the distribution. Also, because it is wider, it
-makes analyses more conservative (i.e., the probability of covering 0 is
-larger for the \verb{95\%} CI than for lower ranges such as \verb{89\%}), which is a good
-thing in the context of the reproducibility crisis.
+However, \verb{95\%} has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}.
+For instance, it shares (in the case of a normal posterior distribution) an
+intuitive relationship with the standard deviation and it conveys a more
+accurate image of the (artificial) bounds of the distribution. Also, because
+it is wider, it makes analyses more conservative (i.e., the probability of
+covering zero is larger for the \verb{95\%} CI than for lower ranges such as \verb{89\%}),
+which is a good thing in the context of the reproducibility crisis.
 
 A \verb{95\%} equal-tailed interval (ETI) has \verb{2.5\%} of the distribution on either
-side of its limits. It indicates the 2.5th percentile and the 97.5h
+side of its limits. It indicates the 2.5th percentile and the 97.5th
 percentile. In symmetric distributions, the two methods of computing credible
 intervals, the ETI and the \link[=hdi]{HDI}, return similar results.
 
@@ -183,31 +183,31 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 posterior <- rnorm(1000)
 hdi(posterior, ci = 0.89)
 hdi(posterior, ci = c(0.80, 0.90, 0.95))
 
-bayestestR::hdi(iris[1:4])
-bayestestR::hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
+hdi(iris[1:4])
+hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
 \donttest{
 model <- suppressWarnings(
   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
-bayestestR::hdi(model)
-bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
+hdi(model)
+hdi(model, ci = c(0.80, 0.90, 0.95))
 
-bayestestR::hdi(emmeans::emtrends(model, ~1, "wt", data = mtcars))
+hdi(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-bayestestR::hdi(model)
-bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
+hdi(model)
+hdi(model, ci = c(0.80, 0.90, 0.95))
 
 bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
-bayestestR::hdi(bf)
-bayestestR::hdi(bf, ci = c(0.80, 0.90, 0.95))
+hdi(bf)
+hdi(bf, ci = c(0.80, 0.90, 0.95))
 }
 \dontshow{\}) # examplesIf}
 }

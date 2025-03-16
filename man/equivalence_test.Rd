@@ -138,19 +138,19 @@ HDI that falls within the ROPE as a decision rule. If the HDI
 is completely outside the ROPE, the "null hypothesis" for this parameter is
 "rejected". If the ROPE completely covers the HDI, i.e., all most credible
 values of a parameter are inside the region of practical equivalence, the
-null hypothesis is accepted. Else, it’s undecided whether to accept or
+null hypothesis is accepted. Else, it is undecided whether to accept or
 reject the null hypothesis. If the full ROPE is used (i.e., \verb{100\%} of the
 HDI), then the null hypothesis is rejected or accepted if the percentage
 of the posterior within the ROPE is smaller than to \verb{2.5\%} or greater than
 \verb{97.5\%}. Desirable results are low proportions inside the ROPE  (the closer
 to zero the better).
-\cr \cr
+
 Some attention is required for finding suitable values for the ROPE limits
 (argument \code{range}). See 'Details' in \code{\link[=rope_range]{rope_range()}} for further
 information.
-\cr \cr
+
 \strong{Multicollinearity: Non-independent covariates}
-\cr \cr
+
 When parameters show strong correlations, i.e. when covariates are not
 independent, the joint parameter distributions may shift towards or
 away from the ROPE. In such cases, the test for practical equivalence may
@@ -159,7 +159,7 @@ testing based on univariate marginals, as the probabilities are conditional
 on independence. Most problematic are the results of the "undecided"
 parameters, which may either move further towards "rejection" or away
 from it (\cite{Kruschke 2014, 340f}).
-\cr \cr
+
 \code{equivalence_test()} performs a simple check for pairwise correlations
 between parameters, but as there can be collinearity between more than two variables,
 a first step to check the assumptions of this hypothesis testing is to look
@@ -173,7 +173,7 @@ the amount of digits in the output, and there is a
 to visualize the results from the equivalence-test (for models only).
 }
 \examples{
-\dontshow{if (require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))

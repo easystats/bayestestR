@@ -179,7 +179,7 @@ effects.
 }
 
 \examples{
-\dontshow{if (require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "emmeans", "brms", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
@@ -187,9 +187,8 @@ rope(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 1, 1), ci = c(0.90, 0.95))
 \donttest{
-library(rstanarm)
 model <- suppressWarnings(
-  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
 rope(model)
 rope(model, ci = c(0.90, 0.95))
@@ -200,17 +199,14 @@ rope(model, range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 # named ROPE ranges
 rope(model, range = list(gear = c(-3, 2), wt = c(-0.2, 0.2)))
 
-library(emmeans)
-rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
+rope(emmeans::emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 
-library(brms)
-model <- brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 rope(model)
 rope(model, ci = c(0.90, 0.95))
 
-library(brms)
-model <- brm(
-  bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
+model <- brms::brm(
+  brmsbrms::bf(brms::mvbind(mpg, disp) ~ wt + cyl) + brms::set_rescor(rescor = TRUE),
   data = mtcars,
   refresh = 0
 )
@@ -228,8 +224,7 @@ rope(
   )
 )
 
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 rope(bf)
 rope(bf, ci = c(0.90, 0.95))
 }

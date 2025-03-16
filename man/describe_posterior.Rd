@@ -116,7 +116,7 @@ list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"p_significance"} (or \code{"ps"}), \code{"p_rope"},
 \code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or
 \code{"all"} to compute all tests. For each "test", the corresponding
-\pkg{bayestestR} function is called (e.g. \code{\link[=rope]{rope()}} or \code{\link[=p_direction]{p_direction()}})
+\strong{bayestestR} function is called (e.g. \code{\link[=rope]{rope()}} or \code{\link[=p_direction]{p_direction()}})
 and its results included in the summary output.}
 
 \item{rope_range}{ROPE's lower and higher bounds. Should be a vector of two
@@ -184,61 +184,58 @@ intervals and tests can be omitted from the summary output by setting the
 related argument to \code{NULL}. For example, \code{test = NULL} and \code{centrality = NULL} would only return the HDI (or CI).
 }
 \examples{
+\dontshow{if (all(insight::check_if_installed(c("logspline", "rstanarm", "emmeans", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
-if (require("logspline")) {
-  x <- rnorm(1000)
-  describe_posterior(x, verbose = FALSE)
-  describe_posterior(x,
-    centrality = "all",
-    dispersion = TRUE,
-    test = "all",
-    verbose = FALSE
-  )
-  describe_posterior(x, ci = c(0.80, 0.90), verbose = FALSE)
+x <- rnorm(1000)
+describe_posterior(x, verbose = FALSE)
+describe_posterior(x,
+  centrality = "all",
+  dispersion = TRUE,
+  test = "all",
+  verbose = FALSE
+)
+describe_posterior(x, ci = c(0.80, 0.90), verbose = FALSE)
 
-  df <- data.frame(replicate(4, rnorm(100)))
-  describe_posterior(df, verbose = FALSE)
-  describe_posterior(
-    df,
-    centrality = "all",
-    dispersion = TRUE,
-    test = "all",
-    verbose = FALSE
-  )
-  describe_posterior(df, ci = c(0.80, 0.90), verbose = FALSE)
+df <- data.frame(replicate(4, rnorm(100)))
+describe_posterior(df, verbose = FALSE)
+describe_posterior(
+  df,
+  centrality = "all",
+  dispersion = TRUE,
+  test = "all",
+  verbose = FALSE
+)
+describe_posterior(df, ci = c(0.80, 0.90), verbose = FALSE)
 
-  df <- data.frame(replicate(4, rnorm(20)))
-  head(reshape_iterations(
-    describe_posterior(df, keep_iterations = TRUE, verbose = FALSE)
-  ))
-}
+df <- data.frame(replicate(4, rnorm(20)))
+head(reshape_iterations(
+  describe_posterior(df, keep_iterations = TRUE, verbose = FALSE)
+))
+
 \donttest{
 # rstanarm models
 # -----------------------------------------------
-if (require("rstanarm") && require("emmeans")) {
-  model <- suppressWarnings(
-    stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-  )
-  describe_posterior(model)
-  describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
-  describe_posterior(model, ci = c(0.80, 0.90))
-  describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
+model <- suppressWarnings(
+  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+)
+describe_posterior(model)
+describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
+describe_posterior(model, ci = c(0.80, 0.90))
+describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 
-  # emmeans estimates
-  # -----------------------------------------------
-  describe_posterior(emtrends(model, ~1, "wt"))
-}
+# emmeans estimates
+# -----------------------------------------------
+describe_posterior(emtrends(model, ~1, "wt"))
 
 # BayesFactor objects
 # -----------------------------------------------
-if (require("BayesFactor")) {
-  bf <- ttestBF(x = rnorm(100, 1, 1))
-  describe_posterior(bf)
-  describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
-  describe_posterior(bf, ci = c(0.80, 0.90))
+bf <- ttestBF(x = rnorm(100, 1, 1))
+describe_posterior(bf)
+describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
+describe_posterior(bf, ci = c(0.80, 0.90))
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

@@ -44,7 +44,7 @@
 #'   (2021). Rank-normalization, folding, and localization: An improved R-hat
 #'   for assessing convergence of MCMC. Bayesian Analysis, 16(2), 667-718.
 #'
-#' @examplesIf all(insight::check_if_installed(c("rstanarm", "brms"), quietly = TRUE))
+#' @examplesIf all(insight::check_if_installed(c("rstanarm", "brms", "posterior"), quietly = TRUE))
 #' \donttest{
 #' model <- suppressWarnings(rstanarm::stan_glm(
 #'   mpg ~ wt + gear,
