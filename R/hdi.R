@@ -237,11 +237,10 @@ hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 hdi.bamlss <- function(x,
                        ci = 0.95,
-                       component = c("all", "conditional", "location"),
+                       component = "all",
                        verbose = TRUE,
                        ...) {
   ci_fun <- .check_ci_fun(list(...))
-  component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
   dat <- .add_clean_parameters_attribute(dat, x)

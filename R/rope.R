@@ -464,9 +464,6 @@ rope.stanreg <- function(x,
                          parameters = NULL,
                          verbose = TRUE,
                          ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {

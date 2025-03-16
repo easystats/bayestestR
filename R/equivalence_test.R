@@ -17,6 +17,8 @@
 #'
 #' @inheritParams rope
 #'
+#' @inheritSection hdi Model components
+#'
 #' @details Using the [ROPE][rope] and the [HDI][hdi], \cite{Kruschke (2018)}
 #'   suggests using the percentage of the `95%` (or `89%`, considered more stable)
 #'   HDI that falls within the ROPE as a decision rule. If the HDI
@@ -282,28 +284,24 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
 }
 
 
-#' @rdname equivalence_test
 #' @export
 equivalence_test.stanreg <- function(x,
                                      range = "default",
                                      ci = 0.95,
-                                     effects = c("fixed", "random", "all"),
-                                     component = c(
-                                       "location",
-                                       "all",
-                                       "conditional",
-                                       "smooth_terms",
-                                       "sigma",
-                                       "distributional",
-                                       "auxiliary"
-                                     ),
+                                     effects = "fixed",
+                                     component = "location",
                                      parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
-  out <- .equivalence_test_models(x, range, ci, effects, component, parameters, verbose)
+  out <- .equivalence_test_models(
+    x,
+    range,
+    ci,
+    effects,
+    component,
+    parameters,
+    verbose
+  )
 
   out <- .prepare_output(
     out,
@@ -329,15 +327,20 @@ equivalence_test.blavaan <- equivalence_test.stanreg
 equivalence_test.brmsfit <- function(x,
                                      range = "default",
                                      ci = 0.95,
-                                     effects = c("fixed", "random", "all"),
-                                     component = c("conditional", "zi", "zero_inflated", "all"),
+                                     effects = "fixed",
+                                     component = "conditional",
                                      parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
-  out <- .equivalence_test_models(x, range, ci, effects, component, parameters, verbose)
+  out <- .equivalence_test_models(
+    x,
+    range,
+    ci,
+    effects,
+    component,
+    parameters,
+    verbose
+  )
 
   out <- .prepare_output(
     out,
@@ -433,11 +436,10 @@ equivalence_test.bayesQR <- equivalence_test.bcplm
 equivalence_test.bamlss <- function(x,
                                     range = "default",
                                     ci = 0.95,
-                                    component = c("all", "conditional", "location"),
+                                    component = "all",
                                     parameters = NULL,
                                     verbose = TRUE,
                                     ...) {
-  component <- match.arg(component)
   out <- .equivalence_test_models(
     insight::get_parameters(x, component = component),
     range,
