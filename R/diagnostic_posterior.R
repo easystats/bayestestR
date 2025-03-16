@@ -7,6 +7,8 @@
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
 #'   with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
 #'
+#' @inheritSection hdi Model components
+#'
 #' @details
 #'   **Effective Sample (ESS)** should be as large as possible, although for
 #'   most applications, an effective sample size greater than 1000 is sufficient
@@ -64,7 +66,12 @@ diagnostic_posterior.default <- function(posterior, diagnostic = c("ESS", "Rhat"
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects = "fixed", component = "location", parameters = NULL, ...) {
+diagnostic_posterior.stanreg <- function(posterior,
+                                         diagnostic = "all",
+                                         effects = "fixed",
+                                         component = "location",
+                                         parameters = NULL,
+                                         ...) {
   # Find parameters
   params <- insight::find_parameters(
     posterior,
