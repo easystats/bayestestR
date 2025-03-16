@@ -221,7 +221,7 @@ rope(model)
 rope(model, ci = c(0.90, 0.95))
 
 model <- brms::brm(
-  brmsbrms::bf(brms::mvbind(mpg, disp) ~ wt + cyl) + brms::set_rescor(rescor = TRUE),
+  brms::bf(brms::mvbind(mpg, disp) ~ wt + cyl) + brms::set_rescor(rescor = TRUE),
   data = mtcars,
   refresh = 0
 )
