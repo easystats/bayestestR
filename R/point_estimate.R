@@ -15,6 +15,8 @@
 #' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams hdi
 #'
+#' @inheritSection hdi Model components
+#'
 #' @references Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D.
 #' (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*.
 #' Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
@@ -218,9 +220,8 @@ point_estimate.BGGM <- point_estimate.bcplm
 point_estimate.bamlss <- function(x,
                                   centrality = "all",
                                   dispersion = FALSE,
-                                  component = c("conditional", "location", "all"),
+                                  component = "conditional",
                                   ...) {
-  component <- match.arg(component)
   out <- point_estimate(
     insight::get_parameters(x, component = component),
     centrality = centrality,
@@ -270,15 +271,28 @@ point_estimate.comparisons <- point_estimate.slopes
 #' @export
 point_estimate.predictions <- point_estimate.slopes
 
-#' @rdname point_estimate
 #' @export
-point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+point_estimate.stanreg <- function(x,
+                                   centrality = "all",
+                                   dispersion = FALSE,
+                                   effects = "fixed",
+                                   component = "location",
+                                   parameters = NULL,
+                                   ...) {
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
-    point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion, ...),
+    point_estimate(
+      insight::get_parameters(
+        x,
+        effects = effects,
+        component = component,
+        parameters = parameters
+      ),
+      centrality = centrality,
+      dispersion = dispersion,
+      ...
+    ),
     cleaned_parameters,
     inherits(x, "stanmvreg")
   )
@@ -300,13 +314,27 @@ point_estimate.blavaan <- point_estimate.stanreg
 
 #' @rdname point_estimate
 #' @export
-point_estimate.brmsfit <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+point_estimate.brmsfit <- function(x,
+                                   centrality = "all",
+                                   dispersion = FALSE,
+                                   effects = "fixed",
+                                   component = "conditional",
+                                   parameters = NULL,
+                                   ...) {
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
-    point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion, ...),
+    point_estimate(
+      insight::get_parameters(
+        x,
+        effects = effects,
+        component = component,
+        parameters = parameters
+      ),
+      centrality = centrality,
+      dispersion = dispersion,
+      ...
+    ),
     cleaned_parameters
   )
 
@@ -320,9 +348,12 @@ point_estimate.brmsfit <- function(x, centrality = "all", dispersion = FALSE, ef
 
 
 #' @export
-point_estimate.sim.merMod <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-
+point_estimate.sim.merMod <- function(x,
+                                      centrality = "all",
+                                      dispersion = FALSE,
+                                      effects = "fixed",
+                                      parameters = NULL,
+                                      ...) {
   out <- .point_estimate_models(
     x = x,
     effects = effects,
@@ -332,7 +363,11 @@ point_estimate.sim.merMod <- function(x, centrality = "all", dispersion = FALSE,
     dispersion = dispersion,
     ...
   )
-  attr(out, "data") <- insight::get_parameters(x, effects = effects, parameters = parameters)
+  attr(out, "data") <- insight::get_parameters(
+    x,
+    effects = effects,
+    parameters = parameters
+  )
   attr(out, "centrality") <- centrality
   out <- .add_clean_parameters_attribute(out, x)
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
@@ -360,7 +395,6 @@ point_estimate.sim <- function(x, centrality = "all", dispersion = FALSE, parame
 }
 
 
-#' @rdname point_estimate
 #' @export
 point_estimate.BFBayesFactor <- function(x, centrality = "all", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x), centrality = centrality, dispersion = dispersion, ...)
