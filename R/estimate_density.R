@@ -24,7 +24,8 @@
 #' @param by Optional character vector. If not `NULL` and input is a data frame,
 #' density estimation is performed for each group (subsets) indicated by `by`.
 #' See examples.
-#' @param at Deprecated in favour of `by`.
+#'
+#' @inheritSection hdi Model components
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -172,17 +173,7 @@ estimate_density.numeric <- function(x,
                                      bw = "SJ",
                                      ci = NULL,
                                      by = NULL,
-                                     at = NULL,
                                      ...) {
-  # TODO remove deprecation warning
-  # Sanity
-  if (!is.null(at)) {
-    insight::format_warning(
-      "The `at` argument is deprecated and might be removed in a future update. Please replace by `by`."
-    )
-    by <- at
-  }
-
   if (!is.null(by)) {
     if (length(by) == 1) {
       insight::format_error(paste0(
@@ -231,7 +222,6 @@ estimate_density.data.frame <- function(x,
                                         ci = NULL,
                                         select = NULL,
                                         by = NULL,
-                                        at = NULL,
                                         rvar_col = NULL,
                                         ...) {
   x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
@@ -250,15 +240,6 @@ estimate_density.data.frame <- function(x,
     return(out)
   }
 
-
-  # Sanity
-  if (!is.null(at)) {
-    insight::format_warning(paste0(
-      "The `at` argument is deprecated and might be removed in a future update.",
-      " Please replace by `by`."
-    ))
-    by <- at
-  }
 
   if (is.null(by)) {
     # No grouping -------------------
@@ -311,16 +292,7 @@ estimate_density.draws <- function(x,
                                    ci = NULL,
                                    select = NULL,
                                    by = NULL,
-                                   at = NULL,
                                    ...) {
-  if (!is.null(at)) {
-    insight::format_warning(paste0(
-      "The `at` argument is deprecated and might be removed in a future update.",
-      " Please replace by `by`."
-    ))
-    by <- at
-  }
-
   estimate_density(
     .posterior_draws_to_df(x),
     method = method,
@@ -436,15 +408,17 @@ estimate_density.stanreg <- function(x,
                                      extend = FALSE,
                                      extend_scale = 0.1,
                                      bw = "SJ",
-                                     effects = c("fixed", "random", "all"),
-                                     component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                     effects = "fixed",
+                                     component = "location",
                                      parameters = NULL,
                                      ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   out <- estimate_density(
-    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+    insight::get_parameters(
+      x,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    ),
     method = method,
     precision = precision,
     extend = extend,
@@ -465,6 +439,7 @@ estimate_density.stanfit <- estimate_density.stanreg
 estimate_density.blavaan <- estimate_density.stanreg
 
 
+#' @rdname estimate_density
 #' @export
 estimate_density.brmsfit <- function(x,
                                      method = "kernel",
@@ -472,15 +447,17 @@ estimate_density.brmsfit <- function(x,
                                      extend = FALSE,
                                      extend_scale = 0.1,
                                      bw = "SJ",
-                                     effects = c("fixed", "random", "all"),
-                                     component = c("conditional", "zi", "zero_inflated", "all"),
+                                     effects = "fixed",
+                                     component = "conditional",
                                      parameters = NULL,
                                      ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   out <- estimate_density(
-    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+    insight::get_parameters(
+      x,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    ),
     method = method,
     precision = precision,
     extend = extend,
@@ -568,10 +545,9 @@ estimate_density.bamlss <- function(x,
                                     extend = FALSE,
                                     extend_scale = 0.1,
                                     bw = "SJ",
-                                    component = c("all", "conditional", "location"),
+                                    component = "all",
                                     parameters = NULL,
                                     ...) {
-  component <- match.arg(component)
   out <- estimate_density(
     insight::get_parameters(x, component = component, parameters = parameters),
     method = method,
