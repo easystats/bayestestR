@@ -14,9 +14,8 @@ diagnostic_posterior(posterior, ...)
 \method{diagnostic_posterior}{stanreg}(
   posterior,
   diagnostic = "all",
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
   ...
 )
@@ -24,8 +23,8 @@ diagnostic_posterior(posterior, ...)
 \method{diagnostic_posterior}{brmsfit}(
   posterior,
   diagnostic = "all",
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
   ...
 )
