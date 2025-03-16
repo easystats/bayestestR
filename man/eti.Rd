@@ -55,12 +55,26 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects (\code{"fixed"}, the default),
+random effects (\code{"random"}) or both ("\verb{all"}) be returned? Only applies to
+mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section \emph{Model Components}. May be abbreviated.
+Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to \emph{all} model classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
 
 \item{parameters}{Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
@@ -90,9 +104,9 @@ uncertainty characterisation of posterior distributions as
 \strong{Credible Interval (CI)}.
 }
 \details{
-Unlike equal-tailed intervals (see \code{eti()}) that typically exclude \verb{2.5\%}
-from each tail of the distribution and always include the median, the HDI is
-\emph{not} equal-tailed and therefore always includes the mode(s) of posterior
+Unlike equal-tailed intervals (see \code{\link[=eti]{eti()}}) that typically exclude
+\verb{2.5\%} from each tail of the distribution and always include the median, the
+HDI is \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
 distributions. While this can be useful to better represent the credibility
 mass of a distribution, the HDI also has some limitations. See \code{\link[=spi]{spi()}} for
 details.
@@ -112,16 +126,16 @@ your model). Moreover, 89 indicates the arbitrariness of interval limits -
 its only remarkable property is being the highest prime number that does not
 exceed the already unstable \verb{95\%} threshold (\emph{McElreath, 2015}).
 
-However, \verb{95\%} has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}. For instance, it
-shares (in the case of a normal posterior distribution) an intuitive
-relationship with the standard deviation and it conveys a more accurate image
-of the (artificial) bounds of the distribution. Also, because it is wider, it
-makes analyses more conservative (i.e., the probability of covering 0 is
-larger for the \verb{95\%} CI than for lower ranges such as \verb{89\%}), which is a good
-thing in the context of the reproducibility crisis.
+However, \verb{95\%} has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}.
+For instance, it shares (in the case of a normal posterior distribution) an
+intuitive relationship with the standard deviation and it conveys a more
+accurate image of the (artificial) bounds of the distribution. Also, because
+it is wider, it makes analyses more conservative (i.e., the probability of
+covering zero is larger for the \verb{95\%} CI than for lower ranges such as \verb{89\%}),
+which is a good thing in the context of the reproducibility crisis.
 
 A \verb{95\%} equal-tailed interval (ETI) has \verb{2.5\%} of the distribution on either
-side of its limits. It indicates the 2.5th percentile and the 97.5h
+side of its limits. It indicates the 2.5th percentile and the 97.5th
 percentile. In symmetric distributions, the two methods of computing credible
 intervals, the ETI and the \link[=hdi]{HDI}, return similar results.
 

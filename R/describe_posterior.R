@@ -14,7 +14,7 @@
 #'   `"rope"`, `"p_map"`, `"p_significance"` (or `"ps"`), `"p_rope"`,
 #'   `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`) or
 #'   `"all"` to compute all tests. For each "test", the corresponding
-#'   \pkg{bayestestR} function is called (e.g. [`rope()`] or [`p_direction()`])
+#'   **bayestestR** function is called (e.g. [`rope()`] or [`p_direction()`])
 #'   and its results included in the summary output.
 #' @param rope_range ROPE's lower and higher bounds. Should be a vector of two
 #'   values (e.g., `c(-0.1, 0.1)`), `"default"` or a list of numeric vectors of
@@ -49,61 +49,56 @@
 #' - [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
 #' - [Bayes factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 #'
-#' @examples
+#' @examplesIf all(insight::check_if_installed(c("logspline", "rstanarm", "emmeans", "BayesFactor"), quietly = TRUE))
 #' library(bayestestR)
 #'
-#' if (require("logspline")) {
-#'   x <- rnorm(1000)
-#'   describe_posterior(x, verbose = FALSE)
-#'   describe_posterior(x,
-#'     centrality = "all",
-#'     dispersion = TRUE,
-#'     test = "all",
-#'     verbose = FALSE
-#'   )
-#'   describe_posterior(x, ci = c(0.80, 0.90), verbose = FALSE)
+#' x <- rnorm(1000)
+#' describe_posterior(x, verbose = FALSE)
+#' describe_posterior(x,
+#'   centrality = "all",
+#'   dispersion = TRUE,
+#'   test = "all",
+#'   verbose = FALSE
+#' )
+#' describe_posterior(x, ci = c(0.80, 0.90), verbose = FALSE)
 #'
-#'   df <- data.frame(replicate(4, rnorm(100)))
-#'   describe_posterior(df, verbose = FALSE)
-#'   describe_posterior(
-#'     df,
-#'     centrality = "all",
-#'     dispersion = TRUE,
-#'     test = "all",
-#'     verbose = FALSE
-#'   )
-#'   describe_posterior(df, ci = c(0.80, 0.90), verbose = FALSE)
+#' df <- data.frame(replicate(4, rnorm(100)))
+#' describe_posterior(df, verbose = FALSE)
+#' describe_posterior(
+#'   df,
+#'   centrality = "all",
+#'   dispersion = TRUE,
+#'   test = "all",
+#'   verbose = FALSE
+#' )
+#' describe_posterior(df, ci = c(0.80, 0.90), verbose = FALSE)
 #'
-#'   df <- data.frame(replicate(4, rnorm(20)))
-#'   head(reshape_iterations(
-#'     describe_posterior(df, keep_iterations = TRUE, verbose = FALSE)
-#'   ))
-#' }
+#' df <- data.frame(replicate(4, rnorm(20)))
+#' head(reshape_iterations(
+#'   describe_posterior(df, keep_iterations = TRUE, verbose = FALSE)
+#' ))
+#'
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
-#' if (require("rstanarm") && require("emmeans")) {
-#'   model <- suppressWarnings(
-#'     stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-#'   )
-#'   describe_posterior(model)
-#'   describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
-#'   describe_posterior(model, ci = c(0.80, 0.90))
-#'   describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
+#' model <- suppressWarnings(
+#'   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' )
+#' describe_posterior(model)
+#' describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
+#' describe_posterior(model, ci = c(0.80, 0.90))
+#' describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #'
-#'   # emmeans estimates
-#'   # -----------------------------------------------
-#'   describe_posterior(emtrends(model, ~1, "wt"))
-#' }
+#' # emmeans estimates
+#' # -----------------------------------------------
+#' describe_posterior(emtrends(model, ~1, "wt"))
 #'
 #' # BayesFactor objects
 #' # -----------------------------------------------
-#' if (require("BayesFactor")) {
-#'   bf <- ttestBF(x = rnorm(100, 1, 1))
-#'   describe_posterior(bf)
-#'   describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
-#'   describe_posterior(bf, ci = c(0.80, 0.90))
-#' }
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' describe_posterior(bf)
+#' describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
+#' describe_posterior(bf, ci = c(0.80, 0.90))
 #' }
 #' @export
 describe_posterior <- function(posterior, ...) {

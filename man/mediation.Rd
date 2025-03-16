@@ -106,7 +106,7 @@ the indirect effect is also called \emph{average causal mediation effects}
 \note{
 There is an \code{as.data.frame()} method that returns the posterior
 samples of the effects, which can be used for further processing in the
-different \pkg{bayestestR} package.
+\strong{bayestestR} package.
 }
 \examples{
 \dontshow{if (require("mediation") && require("brms") && require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

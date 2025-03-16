@@ -76,12 +76,26 @@ frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects (\code{"fixed"}, the default),
+random effects (\code{"random"}) or both ("\verb{all"}) be returned? Only applies to
+mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section \emph{Model Components}. May be abbreviated.
+Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to \emph{all} model classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
 
 \item{parameters}{Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
@@ -124,19 +138,19 @@ HDI that falls within the ROPE as a decision rule. If the HDI
 is completely outside the ROPE, the "null hypothesis" for this parameter is
 "rejected". If the ROPE completely covers the HDI, i.e., all most credible
 values of a parameter are inside the region of practical equivalence, the
-null hypothesis is accepted. Else, it’s undecided whether to accept or
+null hypothesis is accepted. Else, it is undecided whether to accept or
 reject the null hypothesis. If the full ROPE is used (i.e., \verb{100\%} of the
 HDI), then the null hypothesis is rejected or accepted if the percentage
 of the posterior within the ROPE is smaller than to \verb{2.5\%} or greater than
 \verb{97.5\%}. Desirable results are low proportions inside the ROPE  (the closer
 to zero the better).
-\cr \cr
+
 Some attention is required for finding suitable values for the ROPE limits
 (argument \code{range}). See 'Details' in \code{\link[=rope_range]{rope_range()}} for further
 information.
-\cr \cr
+
 \strong{Multicollinearity: Non-independent covariates}
-\cr \cr
+
 When parameters show strong correlations, i.e. when covariates are not
 independent, the joint parameter distributions may shift towards or
 away from the ROPE. In such cases, the test for practical equivalence may
@@ -145,7 +159,7 @@ testing based on univariate marginals, as the probabilities are conditional
 on independence. Most problematic are the results of the "undecided"
 parameters, which may either move further towards "rejection" or away
 from it (\cite{Kruschke 2014, 340f}).
-\cr \cr
+
 \code{equivalence_test()} performs a simple check for pairwise correlations
 between parameters, but as there can be collinearity between more than two variables,
 a first step to check the assumptions of this hypothesis testing is to look
@@ -159,7 +173,7 @@ the amount of digits in the output, and there is a
 to visualize the results from the equivalence-test (for models only).
 }
 \examples{
-\dontshow{if (require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))

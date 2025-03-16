@@ -59,7 +59,7 @@
 #'
 #' @note There is an `as.data.frame()` method that returns the posterior
 #'   samples of the effects, which can be used for further processing in the
-#'   different \pkg{bayestestR} package.
+#'   **bayestestR** package.
 #'
 #' @references
 #'
