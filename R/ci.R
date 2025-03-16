@@ -18,6 +18,8 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
+#' @inheritSection hdi Model components
+#'
 #' @return A data frame with following columns:
 #'
 #' - `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a
