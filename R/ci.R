@@ -49,19 +49,19 @@
 #' ci(df, method = "ETI", ci = c(0.80, 0.89, 0.95))
 #' ci(df, method = "HDI", ci = c(0.80, 0.89, 0.95))
 #'
-#' model <- suppressWarnings(
-#'   stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
-#' )
+#' model <- suppressWarnings(rstanarm::stan_glm(
+#'   mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0
+#' ))
 #' ci(model, method = "ETI", ci = c(0.80, 0.89))
 #' ci(model, method = "HDI", ci = c(0.80, 0.89))
 #'
 #' @examplesIf require("BayesFactor", quietly = TRUE)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' ci(bf, method = "ETI")
 #' ci(bf, method = "HDI")
 #'
 #' @examplesIf require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)
-#' model <- emtrends(model, ~1, "wt", data = mtcars)
+#' model <- emmeans::emtrends(model, ~1, "wt", data = mtcars)
 #' ci(model, method = "ETI")
 #' ci(model, method = "HDI")
 #' @export

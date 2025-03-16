@@ -189,7 +189,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor", "see"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))

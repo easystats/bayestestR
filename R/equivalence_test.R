@@ -73,7 +73,7 @@
 #'   [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
 #'   to visualize the results from the equivalence-test (for models only).
 #'
-#' @examplesIf all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))
+#' @examplesIf all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor", "see"), quietly = TRUE))
 #' library(bayestestR)
 #'
 #' equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))

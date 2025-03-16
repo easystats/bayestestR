@@ -234,11 +234,11 @@ describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 
 # emmeans estimates
 # -----------------------------------------------
-describe_posterior(emtrends(model, ~1, "wt"))
+describe_posterior(emmeans::emtrends(model, ~1, "wt"))
 
 # BayesFactor objects
 # -----------------------------------------------
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 describe_posterior(bf)
 describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(bf, ci = c(0.80, 0.90))
