@@ -9,7 +9,7 @@ done by comparing posterior model probabilities, via bayesfactor_models()."><met
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,30 +91,8 @@ done by comparing posterior model probabilities, via <code><a href="bayesfactor_
 <span>  prior_odds <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  missing <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  parameters <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'brmsfit'</span></span>
-<span><span class="fu">weighted_posteriors</span><span class="op">(</span></span>
-<span>  <span class="va">...</span>,</span>
-<span>  prior_odds <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  missing <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  parameters <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'blavaan'</span></span>
-<span><span class="fu">weighted_posteriors</span><span class="op">(</span></span>
-<span>  <span class="va">...</span>,</span>
-<span>  prior_odds <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  missing <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
+<span>  effects <span class="op">=</span> <span class="st">"fixed"</span>,</span>
+<span>  component <span class="op">=</span> <span class="st">"conditional"</span>,</span>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -268,7 +246,7 @@ E. J. (2019). A cautionary note on estimating effect size.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.08 | [-1.38, 0.07]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.09 | [-1.38, 0.07]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## weighted prediction distributions via data.frames</span></span></span>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,34 +128,10 @@
 <span>  bf_prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  diagnostic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ESS"</span>, <span class="st">"Rhat"</span><span class="op">)</span>,</span>
 <span>  priors <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"location"</span>, <span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"smooth_terms"</span>, <span class="st">"sigma"</span>,</span>
-<span>    <span class="st">"distributional"</span>, <span class="st">"auxiliary"</span><span class="op">)</span>,</span>
+<span>  effects <span class="op">=</span> <span class="st">"fixed"</span>,</span>
+<span>  component <span class="op">=</span> <span class="st">"location"</span>,</span>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'brmsfit'</span></span>
-<span><span class="fu">describe_posterior</span><span class="op">(</span></span>
-<span>  <span class="va">posterior</span>,</span>
-<span>  centrality <span class="op">=</span> <span class="st">"median"</span>,</span>
-<span>  dispersion <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_method <span class="op">=</span> <span class="st">"eti"</span>,</span>
-<span>  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span><span class="op">)</span>,</span>
-<span>  rope_range <span class="op">=</span> <span class="st">"default"</span>,</span>
-<span>  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  keep_iterations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  bf_prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  diagnostic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ESS"</span>, <span class="st">"Rhat"</span><span class="op">)</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span>, <span class="st">"all"</span>, <span class="st">"location"</span>,</span>
-<span>    <span class="st">"distributional"</span>, <span class="st">"auxiliary"</span><span class="op">)</span>,</span>
-<span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  priors <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -295,6 +271,32 @@ intervals and tests can be omitted from the summary output by setting the
 related argument to <code>NULL</code>. For example, <code>test = NULL</code> and <code>centrality = NULL</code> would only return the HDI (or CI).</p>
     </div>
     <div class="section level2">
+    <h2 id="model-components">Model components<a class="anchor" aria-label="anchor" href="#model-components"></a></h2>
+
+
+
+<p>Possible values for the <code>component</code> argument depend on the model class.
+Following are valid options:</p><ul><li><p><code>"all"</code>: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.</p></li>
+<li><p><code>"conditional"</code>: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.</p></li>
+<li><p><code>"smooth_terms"</code>: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).</p></li>
+<li><p><code>"zero_inflated"</code> (or <code>"zi"</code>): returns the zero-inflation component.</p></li>
+<li><p><code>"location"</code>: returns location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, or <code>smooth_terms</code> (everything that are fixed or random
+effects - depending on the <code>effects</code> argument - but no auxiliary
+parameters).</p></li>
+<li><p><code>"distributional"</code> (or <code>"auxiliary"</code>): components like <code>sigma</code>,
+<code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary parameters) are
+returned.</p></li>
+</ul><p>For models of class <code>brmsfit</code> (package <strong>brms</strong>), even more options are
+possible for the <code>component</code> argument, which are not all documented in detail
+here. See also <a href="https://easystats.github.io/insight/reference/find_parameters.BGGM.html" class="external-link"><code><a href="https://easystats.github.io/insight/reference/find_parameters.html" class="external-link">?insight::find_parameters</a></code></a>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
 
 <ul><li><p>Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
@@ -418,7 +420,10 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span><span class="co"># rstanarm models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">gear</span>, data <span class="op">=</span> <span class="va">mtcars</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">200</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">gear</span>, data <span class="op">=</span> <span class="va">mtcars</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">200</span>,</span></span>
+<span class="r-in"><span>    refresh <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Summary of Posterior Distribution</span> </span>
@@ -488,7 +493,7 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># emmeans estimates</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="fu">emtrends</span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X1      | Median |         95% CI |   pd |          ROPE | % in ROPE</span>
@@ -497,7 +502,7 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># BayesFactor objects</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu">ttestBF</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">bf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

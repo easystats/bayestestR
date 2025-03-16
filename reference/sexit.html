@@ -55,7 +55,7 @@ be also suggestive of low statistical power (see details section).
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -260,16 +260,16 @@ Existence and Significance in the Bayesian Framework. Frontiers in Psychology
 <span class="r-in"><span><span class="va">s</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large. The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.05| and |0.30|.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The effect (Median = -1.06, 95% CI [-2.91, 1.07]) has a 86.30% probability of being negative (&lt; 0), 85.10% of being significant (&lt; -0.05), and 78.50% of being large (&lt; -0.30)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The effect (Median = -0.96, 95% CI [-2.80, 1.08]) has a 84.70% probability of being negative (&lt; 0), 83.50% of being significant (&lt; -0.05), and 76.70% of being large (&lt; -0.30)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Median |        95% CI | Direction | Significance (&gt; |0.05|) | Large (&gt; |0.30|)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  -1.06 | [-2.91, 1.07] |      0.86 |                    0.85 |             0.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -0.96 | [-2.80, 1.08] |      0.85 |                    0.83 |             0.77</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">s</span>, summary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.05| and |0.30|.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> The effect (Median = -1.06, 95% CI [-2.91, 1.07]) has 86.30%, 85.10% and 78.50% probability of being negative (&lt; 0), significant (&lt; -0.05) and large (&lt; -0.30)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The effect (Median = -0.96, 95% CI [-2.80, 1.08]) has 84.70%, 83.50% and 76.70% probability of being negative (&lt; 0), significant (&lt; -0.05) and large (&lt; -0.30)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">sexit</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">s</span></span></span>
@@ -306,10 +306,10 @@ Existence and Significance in the Bayesian Framework. Frontiers in Psychology
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.30| and |1.81| (corresponding respectively to 0.05 and 0.30 of the outcome's SD).</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - (Intercept) (Median = 52.22, 95% CI [39.39, 64.20]) has 100.00%, 100.00% and 100.00% probability of being positive (&gt; 0), significant (&gt; 0.30) and large (&gt; 1.81)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - wt (Median = -7.78, 95% CI [-12.18, -3.24]) has 100.00%, 99.88% and 99.12% probability of being negative (&lt; 0), significant (&lt; -0.30) and large (&lt; -1.81)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - cyl (Median = -3.47, 95% CI [-5.44, -1.45]) has 99.88%, 99.88% and 94.62% probability of being negative (&lt; 0), significant (&lt; -0.30) and large (&lt; -1.81)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - wt:cyl (Median = 0.69, 95% CI [0.02, 1.32]) has 97.88%, 87.75% and 0.00% probability of being positive (&gt; 0), significant (&gt; 0.30) and large (&gt; 1.81)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - (Intercept) (Median = 52.52, 95% CI [40.70, 64.08]) has 100.00%, 100.00% and 100.00% probability of being positive (&gt; 0), significant (&gt; 0.30) and large (&gt; 1.81)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - wt (Median = -8.04, 95% CI [-12.59, -3.18]) has 100.00%, 99.88% and 99.50% probability of being negative (&lt; 0), significant (&lt; -0.30) and large (&lt; -1.81)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - cyl (Median = -3.49, 95% CI [-5.59, -1.60]) has 100.00%, 99.88% and 96.00% probability of being negative (&lt; 0), significant (&lt; -0.30) and large (&lt; -1.81)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - wt:cyl (Median = 0.71, 95% CI [0.08, 1.32]) has 98.88%, 89.12% and 0.00% probability of being positive (&gt; 0), significant (&gt; 0.30) and large (&gt; 1.81)</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

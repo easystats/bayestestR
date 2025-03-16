@@ -11,7 +11,7 @@ for:"><meta property="og:image" content="https://easystats.github.io/bayestestR/
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,52 +91,18 @@ for:</p>
 <span><span class="co"># S3 method for class 'data.frame'</span></span>
 <span><span class="fu">ci</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, method <span class="op">=</span> <span class="st">"ETI"</span>, BF <span class="op">=</span> <span class="fl">1</span>, rvar_col <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for class 'sim.merMod'</span></span>
-<span><span class="fu">ci</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'sim'</span></span>
-<span><span class="fu">ci</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, method <span class="op">=</span> <span class="st">"ETI"</span>, parameters <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'stanreg'</span></span>
-<span><span class="fu">ci</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"location"</span>, <span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"smooth_terms"</span>, <span class="st">"sigma"</span>,</span>
-<span>    <span class="st">"distributional"</span>, <span class="st">"auxiliary"</span><span class="op">)</span>,</span>
-<span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
 <span><span class="co"># S3 method for class 'brmsfit'</span></span>
 <span><span class="fu">ci</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
+<span>  effects <span class="op">=</span> <span class="st">"fixed"</span>,</span>
+<span>  component <span class="op">=</span> <span class="st">"conditional"</span>,</span>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  BF <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'BFBayesFactor'</span></span>
-<span><span class="fu">ci</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, method <span class="op">=</span> <span class="st">"ETI"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, BF <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'MCMCglmm'</span></span>
-<span><span class="fu">ci</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, method <span class="op">=</span> <span class="st">"ETI"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -181,14 +147,6 @@ random effects (<code>"random"</code>) or both ("<code>all"</code>) be returned?
 mixed models. May be abbreviated.</p></dd>
 
 
-<dt id="arg-parameters">parameters<a class="anchor" aria-label="anchor" href="#arg-parameters"></a></dt>
-<dd><p>Regular expression pattern that describes the parameters
-that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
-filtered by default, so only parameters that typically appear in the
-<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
-for the output.</p></dd>
-
-
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
 <dd><p>Which type of parameters to return, such as parameters for
 the conditional model, the zero-inflated part of the model, the dispersion
@@ -204,6 +162,14 @@ but no auxiliary parameters).</p></li>
 <code>sigma</code>, <code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary
 parameters) are returned.</p></li>
 </ul></dd>
+
+
+<dt id="arg-parameters">parameters<a class="anchor" aria-label="anchor" href="#arg-parameters"></a></dt>
+<dd><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -226,6 +192,32 @@ an "uncertainty" or "compatibility" interval, the latter being defined as
 "Given any value in the interval and the background assumptions,
 the data should not seem very surprising" (<em>Gelman &amp; Greenland 2019</em>).</p>
 <p>There is also a <a href="https://easystats.github.io/see/articles/bayestestR.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="model-components">Model components<a class="anchor" aria-label="anchor" href="#model-components"></a></h2>
+
+
+
+<p>Possible values for the <code>component</code> argument depend on the model class.
+Following are valid options:</p><ul><li><p><code>"all"</code>: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.</p></li>
+<li><p><code>"conditional"</code>: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.</p></li>
+<li><p><code>"smooth_terms"</code>: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).</p></li>
+<li><p><code>"zero_inflated"</code> (or <code>"zi"</code>): returns the zero-inflation component.</p></li>
+<li><p><code>"location"</code>: returns location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, or <code>smooth_terms</code> (everything that are fixed or random
+effects - depending on the <code>effects</code> argument - but no auxiliary
+parameters).</p></li>
+<li><p><code>"distributional"</code> (or <code>"auxiliary"</code>): components like <code>sigma</code>,
+<code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary parameters) are
+returned.</p></li>
+</ul><p>For models of class <code>brmsfit</code> (package <strong>brms</strong>), even more options are
+possible for the <code>component</code> argument, which are not all documented in detail
+here. See also <a href="https://easystats.github.io/insight/reference/find_parameters.BGGM.html" class="external-link"><code><a href="https://easystats.github.io/insight/reference/find_parameters.html" class="external-link">?insight::find_parameters</a></code></a>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -272,9 +264,9 @@ intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.21, 1.17] | [-1.46, 1.56] | [-2.07, 1.72]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.03, 1.52] | [-1.45, 1.74] | [-2.34, 1.71]</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu">stan_glm</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">200</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">200</span>, refresh <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"ETI"</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -289,7 +281,7 @@ intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [34.36, 39.67] | [34.20, 40.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.09, -4.51] | [-6.37, -4.47]</span>
-<span class="r-in"><span><span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu">ttestBF</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">bf</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -302,7 +294,7 @@ intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |      95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.81, 1.24]</span>
-<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">emtrends</span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

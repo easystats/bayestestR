@@ -9,7 +9,7 @@ distribution that lies within a region of practical equivalence."><meta property
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,28 +96,14 @@ distribution that lies within a region of practical equivalence.</p>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for class 'stanreg'</span></span>
-<span><span class="fu">rope</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  range <span class="op">=</span> <span class="st">"default"</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"location"</span>, <span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"smooth_terms"</span>, <span class="st">"sigma"</span>,</span>
-<span>    <span class="st">"distributional"</span>, <span class="st">"auxiliary"</span><span class="op">)</span>,</span>
-<span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
 <span><span class="co"># S3 method for class 'brmsfit'</span></span>
 <span><span class="fu">rope</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  range <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  ci_method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
-<span>  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span>  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
+<span>  effects <span class="op">=</span> <span class="st">"fixed"</span>,</span>
+<span>  component <span class="op">=</span> <span class="st">"conditional"</span>,</span>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -268,6 +254,32 @@ the effects.</p>
 <p><strong>Limitations:</strong> A ROPE range needs to be arbitrarily defined. Sensitive to
 the scale (the unit) of the predictors. Not sensitive to highly significant
 effects.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="model-components">Model components<a class="anchor" aria-label="anchor" href="#model-components"></a></h2>
+
+
+
+<p>Possible values for the <code>component</code> argument depend on the model class.
+Following are valid options:</p><ul><li><p><code>"all"</code>: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.</p></li>
+<li><p><code>"conditional"</code>: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.</p></li>
+<li><p><code>"smooth_terms"</code>: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).</p></li>
+<li><p><code>"zero_inflated"</code> (or <code>"zi"</code>): returns the zero-inflation component.</p></li>
+<li><p><code>"location"</code>: returns location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, or <code>smooth_terms</code> (everything that are fixed or random
+effects - depending on the <code>effects</code> argument - but no auxiliary
+parameters).</p></li>
+<li><p><code>"distributional"</code> (or <code>"auxiliary"</code>): components like <code>sigma</code>,
+<code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary parameters) are
+returned.</p></li>
+</ul><p>For models of class <code>brmsfit</code> (package <strong>brms</strong>), even more options are
+possible for the <code>component</code> argument, which are not all documented in detail
+here. See also <a href="https://easystats.github.io/insight/reference/find_parameters.BGGM.html" class="external-link"><code><a href="https://easystats.github.io/insight/reference/find_parameters.html" class="external-link">?insight::find_parameters</a></code></a>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -451,43 +463,57 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu">brmsbrms</span><span class="fu">::</span><span class="fu">bf</span><span class="op">(</span><span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/mvbind.html" class="external-link">mvbind</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">disp</span><span class="op">)</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span><span class="op">)</span> <span class="op">+</span> <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula-helpers.html" class="external-link">set_rescor</a></span><span class="op">(</span>rescor <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/mvbind.html" class="external-link">mvbind</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">disp</span><span class="op">)</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span><span class="op">)</span> <span class="op">+</span> <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula-helpers.html" class="external-link">set_rescor</a></span><span class="op">(</span>rescor <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">mtcars</span>,</span></span>
 <span class="r-in"><span>  refresh <span class="op">=</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in loadNamespace(x):</span> there is no package called ‘brmsbrms’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compiling Stan program...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start sampling</span>
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_cyl and b_wt (r = 0.78). This might</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?rope'.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-0.60, 0.60]:</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   b_disp_cyl and b_disp_wt (r = 0.79). This might lead to inappropriate</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   results. See 'Details' in '?rope'.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ROPE with depends on outcome variable.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | inside ROPE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept |      0.00 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt        |      0.00 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl       |      0.00 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | inside ROPE |      ROPE width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_Intercept  |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_wt         |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_cyl        |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_Intercept |      0.00 % | [-12.39, 12.39]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_wt        |      0.00 % | [-12.39, 12.39]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_cyl       |      0.00 % | [-12.39, 12.39]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.90</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_cyl and b_wt (r = 0.78). This might</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?rope'.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportions of samples inside the ROPE [-0.60, 0.60]:</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   b_disp_cyl and b_disp_wt (r = 0.79). This might lead to inappropriate</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   results. See 'Details' in '?rope'.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportions of samples inside the ROPE.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ROPE with depends on outcome variable.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 90% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | inside ROPE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept |      0.00 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt        |      0.00 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl       |      0.00 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | inside ROPE |      ROPE width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_Intercept  |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_wt         |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_cyl        |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_Intercept |      0.00 % | [-12.39, 12.39]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_wt        |      0.00 % | [-12.39, 12.39]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_cyl       |      0.00 % | [-12.39, 12.39]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 95% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | inside ROPE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept |      0.00 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt        |      0.00 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl       |      0.00 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | inside ROPE |      ROPE width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_Intercept  |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_wt         |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_cyl        |      0.00 % |   [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_Intercept |      0.00 % | [-12.39, 12.39]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_wt        |      0.00 % | [-12.39, 12.39]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_cyl       |      0.00 % | [-12.39, 12.39]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -501,10 +527,21 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-in"><span>    disp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b_disp_wt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, b_disp_cyl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_cyl and b_wt (r = 0.78). This might</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?rope'.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Not all elements of `range` were found in the parameters. Please check</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   following names: mpg, disp</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   b_disp_cyl and b_disp_wt (r = 0.79). This might lead to inappropriate</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   results. See 'Details' in '?rope'.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ROPE with depends on outcome variable.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | inside ROPE |    ROPE width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_Intercept  |      0.00 % | [-0.10, 0.10]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_wt         |      0.00 % | [-1.00, 1.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg_cyl        |     89.82 % | [-2.00, 2.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_Intercept |      0.00 % | [-0.10, 0.10]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_wt        |      0.00 % | [-5.00, 5.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp_cyl       |      0.00 % | [-4.00, 4.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span><span class="va">bf</span><span class="op">)</span></span></span>
