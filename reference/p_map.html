@@ -183,14 +183,26 @@ frame to be processed. See example in <code><a href="p_direction.html">p_directi
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
-<dd><p>Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.</p></dd>
+<dd><p>Should results for fixed effects (<code>"fixed"</code>, the default),
+random effects (<code>"random"</code>) or both ("<code>all"</code>) be returned? Only applies to
+mixed models. May be abbreviated.</p></dd>
 
 
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
-<dd><p>Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+<dd><p>Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section <em>Model Components</em>. May be abbreviated.
+Note that the <em>conditional</em> component also refers to the <em>count</em> or <em>mean</em>
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to <em>all</em> model classes):</p><ul><li><p><code>component = "all"</code> returns all possible parameters.</p></li>
+<li><p>If <code>component = "location"</code>, location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, <code>smooth_terms</code>, or <code>instruments</code> are returned (everything
+that are fixed or random effects - depending on the <code>effects</code> argument -
+but no auxiliary parameters).</p></li>
+<li><p>For <code>component = "distributional"</code> (or <code>"auxiliary"</code>), components like
+<code>sigma</code>, <code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary
+parameters) are returned.</p></li>
+</ul></dd>
 
 
 <dt id="arg-parameters">parameters<a class="anchor" aria-label="anchor" href="#arg-parameters"></a></dt>
@@ -271,8 +283,8 @@ definition and interpretation. Only suitable for weak / very diffused priors.</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 9e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 6e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -289,9 +301,9 @@ definition and interpretation. Only suitable for weak / very diffused priors.</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.021 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.02 seconds (Warm-up)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.017 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.038 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.037 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span>
@@ -365,8 +377,8 @@ definition and interpretation. Only suitable for weak / very diffused priors.</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.02 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.039 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.019 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.038 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">p_map</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">MAP-based p-value</span> </span>

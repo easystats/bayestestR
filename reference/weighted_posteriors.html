@@ -153,14 +153,26 @@ parameter that appears in other models. Defaults to 0.</p></dd>
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
-<dd><p>Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.</p></dd>
+<dd><p>Should results for fixed effects (<code>"fixed"</code>, the default),
+random effects (<code>"random"</code>) or both ("<code>all"</code>) be returned? Only applies to
+mixed models. May be abbreviated.</p></dd>
 
 
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
-<dd><p>Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+<dd><p>Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section <em>Model Components</em>. May be abbreviated.
+Note that the <em>conditional</em> component also refers to the <em>count</em> or <em>mean</em>
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to <em>all</em> model classes):</p><ul><li><p><code>component = "all"</code> returns all possible parameters.</p></li>
+<li><p>If <code>component = "location"</code>, location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, <code>smooth_terms</code>, or <code>instruments</code> are returned (everything
+that are fixed or random effects - depending on the <code>effects</code> argument -
+but no auxiliary parameters).</p></li>
+<li><p>For <code>component = "distributional"</code> (or <code>"auxiliary"</code>), components like
+<code>sigma</code>, <code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary
+parameters) are returned.</p></li>
+</ul></dd>
 
 
 <dt id="arg-parameters">parameters<a class="anchor" aria-label="anchor" href="#arg-parameters"></a></dt>
@@ -256,7 +268,7 @@ E. J. (2019). A cautionary note on estimating effect size.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.09 | [-1.38, 0.07]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.08 | [-1.38, 0.07]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## weighted prediction distributions via data.frames</span></span></span>

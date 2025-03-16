@@ -103,14 +103,26 @@
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
-<dd><p>Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.</p></dd>
+<dd><p>Should results for fixed effects (<code>"fixed"</code>, the default),
+random effects (<code>"random"</code>) or both ("<code>all"</code>) be returned? Only applies to
+mixed models. May be abbreviated.</p></dd>
 
 
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
-<dd><p>Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+<dd><p>Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section <em>Model Components</em>. May be abbreviated.
+Note that the <em>conditional</em> component also refers to the <em>count</em> or <em>mean</em>
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to <em>all</em> model classes):</p><ul><li><p><code>component = "all"</code> returns all possible parameters.</p></li>
+<li><p>If <code>component = "location"</code>, location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, <code>smooth_terms</code>, or <code>instruments</code> are returned (everything
+that are fixed or random effects - depending on the <code>effects</code> argument -
+but no auxiliary parameters).</p></li>
+<li><p>For <code>component = "distributional"</code> (or <code>"auxiliary"</code>), components like
+<code>sigma</code>, <code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary
+parameters) are returned.</p></li>
+</ul></dd>
 
 
 <dt id="arg-parameters">parameters<a class="anchor" aria-label="anchor" href="#arg-parameters"></a></dt>
@@ -144,9 +156,9 @@ suggestion of how big the estimation noise is”.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">mcse</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter       MCSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 0.15783056</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          wt 0.04047611</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          am 0.07802692</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 0.16538278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          wt 0.04132833</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          am 0.07838402</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

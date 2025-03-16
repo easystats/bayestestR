@@ -162,14 +162,26 @@ frame to be processed. See example in <code><a href="p_direction.html">p_directi
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
-<dd><p>Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.</p></dd>
+<dd><p>Should results for fixed effects (<code>"fixed"</code>, the default),
+random effects (<code>"random"</code>) or both ("<code>all"</code>) be returned? Only applies to
+mixed models. May be abbreviated.</p></dd>
 
 
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
-<dd><p>Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+<dd><p>Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section <em>Model Components</em>. May be abbreviated.
+Note that the <em>conditional</em> component also refers to the <em>count</em> or <em>mean</em>
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to <em>all</em> model classes):</p><ul><li><p><code>component = "all"</code> returns all possible parameters.</p></li>
+<li><p>If <code>component = "location"</code>, location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, <code>smooth_terms</code>, or <code>instruments</code> are returned (everything
+that are fixed or random effects - depending on the <code>effects</code> argument -
+but no auxiliary parameters).</p></li>
+<li><p>For <code>component = "distributional"</code> (or <code>"auxiliary"</code>), components like
+<code>sigma</code>, <code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary
+parameters) are returned.</p></li>
+</ul></dd>
 
 
 <dt id="arg-parameters">parameters<a class="anchor" aria-label="anchor" href="#arg-parameters"></a></dt>
@@ -206,27 +218,25 @@ HDI that falls within the ROPE as a decision rule. If the HDI
 is completely outside the ROPE, the "null hypothesis" for this parameter is
 "rejected". If the ROPE completely covers the HDI, i.e., all most credible
 values of a parameter are inside the region of practical equivalence, the
-null hypothesis is accepted. Else, it’s undecided whether to accept or
+null hypothesis is accepted. Else, it is undecided whether to accept or
 reject the null hypothesis. If the full ROPE is used (i.e., <code>100%</code> of the
 HDI), then the null hypothesis is rejected or accepted if the percentage
 of the posterior within the ROPE is smaller than to <code>2.5%</code> or greater than
 <code>97.5%</code>. Desirable results are low proportions inside the ROPE  (the closer
-to zero the better).
-<br><br>
-Some attention is required for finding suitable values for the ROPE limits
+to zero the better).</p>
+<p>Some attention is required for finding suitable values for the ROPE limits
 (argument <code>range</code>). See 'Details' in <code><a href="rope_range.html">rope_range()</a></code> for further
-information.
-<br><br><strong>Multicollinearity: Non-independent covariates</strong>
-<br><br>
-When parameters show strong correlations, i.e. when covariates are not
+information.</p>
+<p><strong>Multicollinearity: Non-independent covariates</strong></p>
+<p>When parameters show strong correlations, i.e. when covariates are not
 independent, the joint parameter distributions may shift towards or
 away from the ROPE. In such cases, the test for practical equivalence may
 have inappropriate results. Collinearity invalidates ROPE and hypothesis
 testing based on univariate marginals, as the probabilities are conditional
 on independence. Most problematic are the results of the "undecided"
 parameters, which may either move further towards "rejection" or away
-from it (<cite>Kruschke 2014, 340f</cite>).
-<br><br><code>equivalence_test()</code> performs a simple check for pairwise correlations
+from it (<cite>Kruschke 2014, 340f</cite>).</p>
+<p><code>equivalence_test()</code> performs a simple check for pairwise correlations
 between parameters, but as there can be collinearity between more than two variables,
 a first step to check the assumptions of this hypothesis testing is to look
 at different pair plots. An even more sophisticated check is the projection
@@ -268,7 +278,7 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |       95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Undecided |      8.11 % | [-2.00, 1.97]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Undecided |      8.21 % | [-2.02, 1.95]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">equivalence_test</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">0.01</span><span class="op">)</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -288,12 +298,12 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |      50% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rejected |      0.00 % | [0.31, 1.64]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rejected |      0.00 % | [0.28, 1.65]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |       99% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Undecided |      5.05 % | [-1.58, 3.65]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Undecided |      5.45 % | [-1.58, 3.53]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -306,7 +316,7 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |          50% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rejected |    0.0000 % | [0.3115, 1.7148]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rejected |    0.0000 % | [0.3113, 1.6862]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |           99% HDI</span>
@@ -319,8 +329,8 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2.2e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -337,15 +347,15 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.047 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.046 seconds (Warm-up)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.047 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.094 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.093 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1.1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
@@ -362,9 +372,9 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.049 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.044 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.093 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.053 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.041 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.094 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).</span>
@@ -387,9 +397,9 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.046 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.046 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.092 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.049 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.045 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.094 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).</span>
@@ -412,9 +422,9 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.049 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.043 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.092 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.041 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.045 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.086 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">equivalence_test</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between cyl and wt (r = 0.78). This might</span>
@@ -425,9 +435,9 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |       H0 | inside ROPE |        95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Rejected |      0.00 % | [36.21, 43.06]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Rejected |      0.00 % | [-4.74, -1.62]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | Rejected |      0.00 % | [-2.36, -0.70]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Rejected |      0.00 % | [36.06, 43.20]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Rejected |      0.00 % | [-4.77, -1.57]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | Rejected |      0.00 % | [-2.36, -0.66]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># multiple ROPE ranges - asymmetric, symmetric, default</span></span></span>
@@ -438,9 +448,9 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        H0 | inside ROPE |        95% HDI |           ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Undecided |     58.39 % | [36.21, 43.06] | [10.00, 40.00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Undecided |     12.05 % | [-4.74, -1.62] | [-5.00, -4.00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  Rejected |      0.00 % | [-2.36, -0.70] |  [-0.10, 0.10]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Undecided |     57.37 % | [36.06, 43.20] | [10.00, 40.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Undecided |     12.97 % | [-4.77, -1.57] | [-5.00, -4.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  Rejected |      0.00 % | [-2.36, -0.66] |  [-0.10, 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># named ROPE ranges</span></span></span>
@@ -451,9 +461,9 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        H0 | inside ROPE |        95% HDI |           ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Undecided |     58.39 % | [36.21, 43.06] | [10.00, 40.00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Undecided |     12.05 % | [-4.74, -1.62] | [-5.00, -4.00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  Rejected |      0.00 % | [-2.36, -0.70] |  [-0.10, 0.10]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Undecided |     57.37 % | [36.06, 43.20] | [10.00, 40.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Undecided |     12.97 % | [-4.77, -1.57] | [-5.00, -4.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  Rejected |      0.00 % | [-2.36, -0.66] |  [-0.10, 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -462,7 +472,7 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between cyl and wt (r = 0.78). This might</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?equivalence_test'.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Picking joint bandwidth of 0.0895</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Picking joint bandwidth of 0.0924</span>
 <span class="r-plt img"><img src="equivalence_test-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">equivalence_test</span><span class="op">(</span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -472,7 +482,7 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X1      |       H0 | inside ROPE |        95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> overall | Rejected |      0.00 % | [-4.74, -1.62]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall | Rejected |      0.00 % | [-4.77, -1.57]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -482,8 +492,8 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 6e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -501,14 +511,14 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.019 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.02 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.039 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.018 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.037 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 3e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 9e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
@@ -525,9 +535,9 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.021 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.021 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.042 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.019 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.038 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).</span>
@@ -551,8 +561,8 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.019 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.014 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.033 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.017 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.036 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).</span>
@@ -575,12 +585,12 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.02 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.016 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.036 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.021 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.017 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.038 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">equivalence_test</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_cyl and b_wt (r = 0.78). This might</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_cyl and b_wt (r = 0.79). This might</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?equivalence_test'.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Test for Practical Equivalence</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -588,9 +598,9 @@ to visualize the results from the equivalence-test (for models only).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       H0 | inside ROPE |        95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept | Rejected |      0.00 % | [36.19, 43.16]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt        | Rejected |      0.00 % | [-4.71, -1.64]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl       | Rejected |      0.00 % | [-2.36, -0.68]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intercept | Rejected |      0.00 % | [36.14, 43.39]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt        | Rejected |      0.00 % | [-4.77, -1.57]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl       | Rejected |      0.00 % | [-2.38, -0.63]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>

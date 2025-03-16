@@ -173,8 +173,9 @@ frame to be processed. See example in <code><a href="p_direction.html">p_directi
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
-<dd><p>Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.</p></dd>
+<dd><p>Should results for fixed effects (<code>"fixed"</code>, the default),
+random effects (<code>"random"</code>) or both ("<code>all"</code>) be returned? Only applies to
+mixed models. May be abbreviated.</p></dd>
 
 
 <dt id="arg-parameters">parameters<a class="anchor" aria-label="anchor" href="#arg-parameters"></a></dt>
@@ -186,9 +187,20 @@ for the output.</p></dd>
 
 
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
-<dd><p>Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+<dd><p>Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section <em>Model Components</em>. May be abbreviated.
+Note that the <em>conditional</em> component also refers to the <em>count</em> or <em>mean</em>
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to <em>all</em> model classes):</p><ul><li><p><code>component = "all"</code> returns all possible parameters.</p></li>
+<li><p>If <code>component = "location"</code>, location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, <code>smooth_terms</code>, or <code>instruments</code> are returned (everything
+that are fixed or random effects - depending on the <code>effects</code> argument -
+but no auxiliary parameters).</p></li>
+<li><p>For <code>component = "distributional"</code> (or <code>"auxiliary"</code>), components like
+<code>sigma</code>, <code>dispersion</code>, <code>beta</code> or <code>precision</code> (and other auxiliary
+parameters) are returned.</p></li>
+</ul></dd>
 
 
 <dt id="arg-use-iterations">use_iterations<a class="anchor" aria-label="anchor" href="#arg-use-iterations"></a></dt>
@@ -207,9 +219,9 @@ vector, this column is missing.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Unlike equal-tailed intervals (see <code><a href="eti.html">eti()</a></code>) that typically exclude <code>2.5%</code>
-from each tail of the distribution and always include the median, the HDI is
-<em>not</em> equal-tailed and therefore always includes the mode(s) of posterior
+    <p>Unlike equal-tailed intervals (see <code><a href="eti.html">eti()</a></code>) that typically exclude
+<code>2.5%</code> from each tail of the distribution and always include the median, the
+HDI is <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior
 distributions. While this can be useful to better represent the credibility
 mass of a distribution, the HDI also has some limitations. See <code><a href="spi.html">spi()</a></code> for
 details.</p>
@@ -226,15 +238,15 @@ or <code>brms</code>) is only 4.000 (thus, you might want to increase it when fi
 your model). Moreover, 89 indicates the arbitrariness of interval limits -
 its only remarkable property is being the highest prime number that does not
 exceed the already unstable <code>95%</code> threshold (<em>McElreath, 2015</em>).</p>
-<p>However, <code>95%</code> has some <a href="https://easystats.github.io/blog/posts/bayestestr_95/" class="external-link">advantages too</a>. For instance, it
-shares (in the case of a normal posterior distribution) an intuitive
-relationship with the standard deviation and it conveys a more accurate image
-of the (artificial) bounds of the distribution. Also, because it is wider, it
-makes analyses more conservative (i.e., the probability of covering 0 is
-larger for the <code>95%</code> CI than for lower ranges such as <code>89%</code>), which is a good
-thing in the context of the reproducibility crisis.</p>
+<p>However, <code>95%</code> has some <a href="https://easystats.github.io/blog/posts/bayestestr_95/" class="external-link">advantages too</a>.
+For instance, it shares (in the case of a normal posterior distribution) an
+intuitive relationship with the standard deviation and it conveys a more
+accurate image of the (artificial) bounds of the distribution. Also, because
+it is wider, it makes analyses more conservative (i.e., the probability of
+covering zero is larger for the <code>95%</code> CI than for lower ranges such as <code>89%</code>),
+which is a good thing in the context of the reproducibility crisis.</p>
 <p>A <code>95%</code> equal-tailed interval (ETI) has <code>2.5%</code> of the distribution on either
-side of its limits. It indicates the 2.5th percentile and the 97.5h
+side of its limits. It indicates the 2.5th percentile and the 97.5th
 percentile. In symmetric distributions, the two methods of computing credible
 intervals, the ETI and the <a href="hdi.html">HDI</a>, return similar results.</p>
 <p>This is not the case for skewed distributions. Indeed, it is possible that
