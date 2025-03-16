@@ -9,8 +9,6 @@
 \alias{bf_rope}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
-\alias{bayesfactor_parameters.brmsfit}
-\alias{bayesfactor_parameters.blavaan}
 \alias{bayesfactor_parameters.data.frame}
 \title{Bayes Factors (BF) for a Single Parameter}
 \usage{
@@ -82,32 +80,9 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "location", "smooth_terms", "sigma", "zi",
-    "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
-  ...,
-  verbose = TRUE
-)
-
-\method{bayesfactor_parameters}{brmsfit}(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "location", "smooth_terms", "sigma", "zi",
-    "zero_inflated", "all"),
-  parameters = NULL,
-  ...,
-  verbose = TRUE
-)
-
-\method{bayesfactor_parameters}{blavaan}(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
   ...,
   verbose = TRUE
 )
@@ -278,6 +253,35 @@ null, at which one convention is that a Bayes factor greater than 3 can be
 considered as "substantial" evidence against the null (and vice versa, a
 Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
 null-model) (\cite{Wetzels et al. 2011}).
+}
+
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
 }
 
 \examples{

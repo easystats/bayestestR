@@ -285,12 +285,12 @@ hdi.BGGM <- hdi.bcplm
 #' @export
 hdi.sim.merMod <- function(x,
                            ci = 0.95,
-                           effects = c("fixed", "random", "all"),
+                           effects = "fixed",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
   ci_fun <- .check_ci_fun(list(...))
-  effects <- match.arg(effects)
+
   dat <- .compute_interval_simMerMod(
     x = x,
     ci = ci,
@@ -349,17 +349,14 @@ hdi.comparisons <- hdi.slopes
 hdi.predictions <- hdi.slopes
 
 
-#' @rdname hdi
 #' @export
 hdi.stanreg <- function(x,
                         ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                        effects = "fixed",
+                        component = "location",
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
@@ -395,13 +392,11 @@ hdi.blavaan <- hdi.stanreg
 #' @export
 hdi.brmsfit <- function(x,
                         ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("conditional", "zi", "zero_inflated", "all"),
+                        effects = "fixed",
+                        component = "conditional",
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(

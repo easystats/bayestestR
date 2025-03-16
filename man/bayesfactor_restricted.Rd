@@ -20,8 +20,8 @@ bf_restricted(posterior, ...)
   hypothesis,
   prior = NULL,
   verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   ...
 )
 
@@ -30,8 +30,8 @@ bf_restricted(posterior, ...)
   hypothesis,
   prior = NULL,
   verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   ...
 )
 

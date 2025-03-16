@@ -10,7 +10,7 @@ bayesfactor(
   direction = "two-sided",
   null = 0,
   hypothesis = NULL,
-  effects = c("fixed", "random", "all"),
+  effects = "fixed",
   verbose = TRUE,
   denominator = 1,
   match_models = FALSE,
