@@ -3,7 +3,6 @@
 \name{map_estimate}
 \alias{map_estimate}
 \alias{map_estimate.numeric}
-\alias{map_estimate.stanreg}
 \alias{map_estimate.brmsfit}
 \alias{map_estimate.data.frame}
 \alias{map_estimate.get_predicted}
@@ -13,23 +12,12 @@ map_estimate(x, ...)
 
 \method{map_estimate}{numeric}(x, precision = 2^10, method = "kernel", ...)
 
-\method{map_estimate}{stanreg}(
-  x,
-  precision = 2^10,
-  method = "kernel",
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  ...
-)
-
 \method{map_estimate}{brmsfit}(
   x,
   precision = 2^10,
   method = "kernel",
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
   ...
 )
@@ -114,6 +102,35 @@ of the \emph{mode} for continuous parameters. Note that this function relies on
 (\code{"SJ"}) compared to the legacy default implemented the base R \code{\link[=density]{density()}}
 function (\code{"nrd0"}).
 }
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
+}
+
 \examples{
 \dontshow{if (require("rstanarm") && require("brms")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{

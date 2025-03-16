@@ -4,9 +4,6 @@
 \alias{si}
 \alias{si.numeric}
 \alias{si.stanreg}
-\alias{si.brmsfit}
-\alias{si.blavaan}
-\alias{si.emmGrid}
 \alias{si.get_predicted}
 \alias{si.data.frame}
 \title{Compute Support Intervals}
@@ -20,38 +17,11 @@ si(posterior, ...)
   prior = NULL,
   BF = 1,
   verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
   ...
 )
-
-\method{si}{brmsfit}(
-  posterior,
-  prior = NULL,
-  BF = 1,
-  verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
-  parameters = NULL,
-  ...
-)
-
-\method{si}{blavaan}(
-  posterior,
-  prior = NULL,
-  BF = 1,
-  verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
-  parameters = NULL,
-  ...
-)
-
-\method{si}{emmGrid}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
 \method{si}{get_predicted}(
   posterior,

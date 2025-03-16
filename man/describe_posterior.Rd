@@ -5,7 +5,6 @@
 \alias{describe_posterior.numeric}
 \alias{describe_posterior.data.frame}
 \alias{describe_posterior.stanreg}
-\alias{describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posterior, ...)
@@ -56,33 +55,10 @@ describe_posterior(posterior, ...)
   bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"),
   priors = FALSE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
   BF = 1,
-  verbose = TRUE,
-  ...
-)
-
-\method{describe_posterior}{brmsfit}(
-  posterior,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.95,
-  ci_method = "eti",
-  test = c("p_direction", "rope"),
-  rope_range = "default",
-  rope_ci = 0.95,
-  keep_iterations = FALSE,
-  bf_prior = NULL,
-  diagnostic = c("ESS", "Rhat"),
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all", "location",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  BF = 1,
-  priors = FALSE,
   verbose = TRUE,
   ...
 )
@@ -183,6 +159,35 @@ One or more components of point estimates (like posterior mean or median),
 intervals and tests can be omitted from the summary output by setting the
 related argument to \code{NULL}. For example, \code{test = NULL} and \code{centrality = NULL} would only return the HDI (or CI).
 }
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
+}
+
 \examples{
 \dontshow{if (all(insight::check_if_installed(c("logspline", "rstanarm", "emmeans", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
@@ -217,7 +222,10 @@ head(reshape_iterations(
 # rstanarm models
 # -----------------------------------------------
 model <- suppressWarnings(
-  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  rstanarm::stan_glm(
+    mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200,
+    refresh = 0
+  )
 )
 describe_posterior(model)
 describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
@@ -226,11 +234,11 @@ describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 
 # emmeans estimates
 # -----------------------------------------------
-describe_posterior(emtrends(model, ~1, "wt"))
+describe_posterior(emmeans::emtrends(model, ~1, "wt"))
 
 # BayesFactor objects
 # -----------------------------------------------
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 describe_posterior(bf)
 describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(bf, ci = c(0.80, 0.90))

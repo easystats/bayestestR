@@ -11,6 +11,8 @@
 #' @inheritParams hdi
 #' @inheritParams estimate_density
 #'
+#' @inheritSection hdi Model components
+#'
 #' @return A numeric value if `x` is a vector. If `x` is a model-object,
 #' returns a data frame with following columns:
 #'
@@ -112,14 +114,21 @@ map_estimate.mcmc.list <- map_estimate.bayesQR
 }
 
 
-#' @rdname map_estimate
 #' @export
-map_estimate.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+map_estimate.stanreg <- function(x,
+                                 precision = 2^10,
+                                 method = "kernel",
+                                 effects = "fixed",
+                                 component = "location",
+                                 parameters = NULL,
+                                 ...) {
   .map_estimate_models(
-    x = insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+    x = insight::get_parameters(
+      x,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    ),
     precision = precision,
     method = method
   )
@@ -134,13 +143,22 @@ map_estimate.blavaan <- map_estimate.stanreg
 
 #' @rdname map_estimate
 #' @export
-map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+map_estimate.brmsfit <- function(x,
+                                 precision = 2^10,
+                                 method = "kernel",
+                                 effects = "fixed",
+                                 component = "conditional",
+                                 parameters = NULL,
+                                 ...) {
   .map_estimate_models(
-    x = insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
-    precision = precision, method = method
+    x = insight::get_parameters(
+      x,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    ),
+    precision = precision,
+    method = method
   )
 }
 

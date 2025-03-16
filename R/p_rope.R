@@ -4,6 +4,8 @@
 #'
 #' @inheritParams rope
 #'
+#' @inheritSection hdi Model components
+#'
 #' @examples
 #' library(bayestestR)
 #'
@@ -104,20 +106,11 @@ p_rope.BFBayesFactor <- p_rope.numeric
 p_rope.MCMCglmm <- p_rope.numeric
 
 
-#' @rdname p_rope
 #' @export
 p_rope.stanreg <- function(x,
                            range = "default",
-                           effects = c("fixed", "random", "all"),
-                           component = c(
-                             "location",
-                             "all",
-                             "conditional",
-                             "smooth_terms",
-                             "sigma",
-                             "distributional",
-                             "auxiliary"
-                           ),
+                           effects = "fixed",
+                           component = "location",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
@@ -147,8 +140,8 @@ p_rope.blavaan <- p_rope.stanreg
 #' @export
 p_rope.brmsfit <- function(x,
                            range = "default",
-                           effects = c("fixed", "random", "all"),
-                           component = c("conditional", "zi", "zero_inflated", "all"),
+                           effects = "fixed",
+                           component = "conditional",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
@@ -182,11 +175,10 @@ p_rope.sim <- function(x, range = "default", parameters = NULL, verbose = TRUE, 
 #' @export
 p_rope.bamlss <- function(x,
                           range = "default",
-                          component = c("all", "conditional", "location"),
+                          component = "all",
                           parameters = NULL,
                           verbose = TRUE,
                           ...) {
-  component <- match.arg(component)
   out <- .p_rope(rope(
     x,
     range = range,
@@ -204,7 +196,14 @@ p_rope.bamlss <- function(x,
 
 #' @export
 p_rope.mcmc <- function(x, range = "default", parameters = NULL, verbose = TRUE, ...) {
-  out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, verbose = verbose, ...))
+  out <- .p_rope(rope(
+    x,
+    range = range,
+    ci = 1,
+    parameters = parameters,
+    verbose = verbose,
+    ...
+  ))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

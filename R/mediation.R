@@ -139,7 +139,6 @@ mediation.brmsfit <- function(model,
 }
 
 
-#' @rdname mediation
 #' @export
 mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = 0.95, method = "ETI", ...) {
   .mediation(

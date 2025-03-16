@@ -23,7 +23,6 @@ unupdate <- function(model, verbose = TRUE, ...) {
 
 
 #' @export
-#' @rdname unupdate
 unupdate.stanreg <- function(model, verbose = TRUE, ...) {
   insight::check_if_installed("rstanarm")
 
@@ -51,8 +50,8 @@ unupdate.stanreg <- function(model, verbose = TRUE, ...) {
 }
 
 
-#' @export
 #' @rdname unupdate
+#' @export
 unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
   insight::check_if_installed("brms")
 
@@ -84,8 +83,8 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
 }
 
 
-#' @export
 #' @rdname unupdate
+#' @export
 unupdate.brmsfit_multiple <- function(model,
                                       verbose = TRUE,
                                       newdata = NULL,
@@ -127,7 +126,6 @@ unupdate.brmsfit_multiple <- function(model,
 
 
 #' @export
-#' @rdname unupdate
 unupdate.blavaan <- function(model, verbose = TRUE, ...) {
   insight::check_if_installed("blavaan")
 

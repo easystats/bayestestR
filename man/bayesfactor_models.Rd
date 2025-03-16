@@ -48,9 +48,8 @@ random effects) and their \code{log(BF)}s  (Use \code{as.numeric()} to extract t
 non-log Bayes factors; see examples), that prints nicely.
 }
 \description{
-This function computes or extracts Bayes factors from fitted models.
-\cr \cr
-The \verb{bf_*} function is an alias of the main function.
+This function computes or extracts Bayes factors from fitted
+models. The \verb{bf_*} function is an alias of the main function.
 }
 \details{
 If the passed models are supported by \strong{insight} the DV of all models will

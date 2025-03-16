@@ -4,7 +4,6 @@
 \alias{hdi}
 \alias{hdi.numeric}
 \alias{hdi.data.frame}
-\alias{hdi.stanreg}
 \alias{hdi.brmsfit}
 \alias{hdi.get_predicted}
 \title{Highest Density Interval (HDI)}
@@ -15,22 +14,11 @@ hdi(x, ...)
 
 \method{hdi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
 
-\method{hdi}{stanreg}(
-  x,
-  ci = 0.95,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  verbose = TRUE,
-  ...
-)
-
 \method{hdi}{brmsfit}(
   x,
   ci = 0.95,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
   verbose = TRUE,
   ...

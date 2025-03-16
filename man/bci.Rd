@@ -5,14 +5,7 @@
 \alias{bcai}
 \alias{bci.numeric}
 \alias{bci.data.frame}
-\alias{bci.MCMCglmm}
-\alias{bci.sim.merMod}
-\alias{bci.sim}
-\alias{bci.emmGrid}
-\alias{bci.slopes}
-\alias{bci.stanreg}
 \alias{bci.brmsfit}
-\alias{bci.BFBayesFactor}
 \alias{bci.get_predicted}
 \title{Bias Corrected and Accelerated Interval (BCa)}
 \usage{
@@ -24,45 +17,15 @@ bcai(x, ...)
 
 \method{bci}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
 
-\method{bci}{MCMCglmm}(x, ci = 0.95, verbose = TRUE, ...)
-
-\method{bci}{sim.merMod}(
-  x,
-  ci = 0.95,
-  effects = c("fixed", "random", "all"),
-  parameters = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{bci}{sim}(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...)
-
-\method{bci}{emmGrid}(x, ci = 0.95, verbose = TRUE, ...)
-
-\method{bci}{slopes}(x, ci = 0.95, verbose = TRUE, ...)
-
-\method{bci}{stanreg}(
-  x,
-  ci = 0.95,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  verbose = TRUE,
-  ...
-)
-
 \method{bci}{brmsfit}(
   x,
   ci = 0.95,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
   verbose = TRUE,
   ...
 )
-
-\method{bci}{BFBayesFactor}(x, ci = 0.95, verbose = TRUE, ...)
 
 \method{bci}{get_predicted}(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 }
@@ -87,12 +50,6 @@ frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.
 random effects (\code{"random"}) or both ("\verb{all"}) be returned? Only applies to
 mixed models. May be abbreviated.}
 
-\item{parameters}{Regular expression pattern that describes the parameters
-that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
-filtered by default, so only parameters that typically appear in the
-\code{summary()} are returned. Use \code{parameters} to select specific parameters
-for the output.}
-
 \item{component}{Which type of parameters to return, such as parameters for
 the conditional model, the zero-inflated part of the model, the dispersion
 term, etc. See details in section \emph{Model Components}. May be abbreviated.
@@ -109,6 +66,12 @@ but no auxiliary parameters).
 \code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
 parameters) are returned.
 }}
+
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
 
 \item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
 (returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
@@ -176,6 +139,35 @@ to the transformed lower and higher bounds of the original distribution.
 On the contrary, applying transformations to the distribution will change
 the resulting HDI.
 }
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
+}
+
 \examples{
 posterior <- rnorm(1000)
 bci(posterior)

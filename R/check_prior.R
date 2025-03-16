@@ -50,19 +50,16 @@ check_prior <- function(model, method = "gelman", simulate_priors = TRUE, ...) {
 }
 
 
+#' @rdname check_prior
 #' @export
 check_prior.brmsfit <- function(model,
                                 method = "gelman",
                                 simulate_priors = TRUE,
-                                effects = c("fixed", "random", "all"),
-                                component = c("conditional", "zi", "zero_inflated", "all"),
+                                effects = "fixed",
+                                component = "conditional",
                                 parameters = NULL,
                                 verbose = TRUE,
                                 ...) {
-  # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   posteriors <- insight::get_parameters(
     model,
     effects = effects,

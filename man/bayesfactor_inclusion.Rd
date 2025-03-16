@@ -25,9 +25,8 @@ log(BF) for each effect (Use \code{as.numeric()} to extract the non-log Bayes
 factors; see examples).
 }
 \description{
-The \verb{bf_*} function is an alias of the main function.
-\cr \cr
-For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+The \verb{bf_*} function is an alias of the main function. For more info, see
+\href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
 Inclusion Bayes factors answer the question: Are the observed data

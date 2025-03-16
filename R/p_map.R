@@ -22,6 +22,8 @@
 #' @inheritParams density_at
 #' @inheritParams pd
 #'
+#' @inheritSection hdi Model components
+#'
 #' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
 #' library(bayestestR)
 #'
@@ -214,7 +216,12 @@ p_map.predictions <- p_map.slopes
 
 
 #' @export
-p_map.mcmc <- function(x, null = 0, precision = 2^10, method = "kernel", parameters = NULL, ...) {
+p_map.mcmc <- function(x,
+                       null = 0,
+                       precision = 2^10,
+                       method = "kernel",
+                       parameters = NULL,
+                       ...) {
   out <- .p_map_models(
     x = x,
     null = null,
@@ -245,9 +252,13 @@ p_map.BGGM <- p_map.mcmc
 
 
 #' @export
-p_map.bamlss <- function(x, null = 0, precision = 2^10, method = "kernel",
-                         component = c("all", "conditional", "location"), parameters = NULL, ...) {
-  component <- match.arg(component)
+p_map.bamlss <- function(x,
+                         null = 0,
+                         precision = 2^10,
+                         method = "kernel",
+                         component = "all",
+                         parameters = NULL,
+                         ...) {
   out <- .p_map_models(
     x = x,
     null = null,
@@ -266,10 +277,13 @@ p_map.bamlss <- function(x, null = 0, precision = 2^10, method = "kernel",
 
 
 #' @export
-p_map.sim.merMod <- function(x, null = 0, precision = 2^10, method = "kernel",
-                             effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-
+p_map.sim.merMod <- function(x,
+                             null = 0,
+                             precision = 2^10,
+                             method = "kernel",
+                             effects = "fixed",
+                             parameters = NULL,
+                             ...) {
   out <- .p_map_models(
     x = x,
     null = null,
@@ -281,7 +295,11 @@ p_map.sim.merMod <- function(x, null = 0, precision = 2^10, method = "kernel",
     ...
   )
 
-  attr(out, "data") <- insight::get_parameters(x, effects = effects, parameters = parameters)
+  attr(out, "data") <- insight::get_parameters(
+    x,
+    effects = effects,
+    parameters = parameters
+  )
   out
 }
 
@@ -305,14 +323,15 @@ p_map.sim <- function(x, null = 0, precision = 2^10, method = "kernel",
 }
 
 
-#' @rdname p_map
 #' @export
-p_map.stanreg <- function(x, null = 0, precision = 2^10, method = "kernel",
-                          effects = c("fixed", "random", "all"),
-                          component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
-                          parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+p_map.stanreg <- function(x,
+                          null = 0,
+                          precision = 2^10,
+                          method = "kernel",
+                          effects = "fixed",
+                          component = "location",
+                          parameters = NULL,
+                          ...) {
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
@@ -347,12 +366,14 @@ p_map.blavaan <- p_map.stanreg
 
 #' @rdname p_map
 #' @export
-p_map.brmsfit <- function(x, null = 0, precision = 2^10, method = "kernel",
-                          effects = c("fixed", "random", "all"),
-                          component = c("conditional", "zi", "zero_inflated", "all"),
-                          parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+p_map.brmsfit <- function(x,
+                          null = 0,
+                          precision = 2^10,
+                          method = "kernel",
+                          effects = "fixed",
+                          component = "conditional",
+                          parameters = NULL,
+                          ...) {
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(

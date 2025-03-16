@@ -3,23 +3,11 @@
 \name{mediation}
 \alias{mediation}
 \alias{mediation.brmsfit}
-\alias{mediation.stanmvreg}
 \title{Summary of Bayesian multivariate-response mediation-models}
 \usage{
 mediation(model, ...)
 
 \method{mediation}{brmsfit}(
-  model,
-  treatment,
-  mediator,
-  response = NULL,
-  centrality = "median",
-  ci = 0.95,
-  method = "ETI",
-  ...
-)
-
-\method{mediation}{stanmvreg}(
   model,
   treatment,
   mediator,
