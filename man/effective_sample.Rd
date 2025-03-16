@@ -3,7 +3,6 @@
 \name{effective_sample}
 \alias{effective_sample}
 \alias{effective_sample.brmsfit}
-\alias{effective_sample.stanreg}
 \title{Effective Sample Size (ESS)}
 \usage{
 effective_sample(model, ...)
@@ -12,14 +11,6 @@ effective_sample(model, ...)
   model,
   effects = "fixed",
   component = "conditional",
-  parameters = NULL,
-  ...
-)
-
-\method{effective_sample}{stanreg}(
-  model,
-  effects = "fixed",
-  component = "location",
   parameters = NULL,
   ...
 )

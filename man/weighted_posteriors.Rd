@@ -4,9 +4,6 @@
 \alias{weighted_posteriors}
 \alias{weighted_posteriors.data.frame}
 \alias{weighted_posteriors.stanreg}
-\alias{weighted_posteriors.brmsfit}
-\alias{weighted_posteriors.blavaan}
-\alias{weighted_posteriors.BFBayesFactor}
 \title{Generate posterior distributions weighted across models}
 \usage{
 weighted_posteriors(..., prior_odds = NULL, missing = 0, verbose = TRUE)
@@ -18,37 +15,9 @@ weighted_posteriors(..., prior_odds = NULL, missing = 0, verbose = TRUE)
   prior_odds = NULL,
   missing = 0,
   verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL
-)
-
-\method{weighted_posteriors}{brmsfit}(
-  ...,
-  prior_odds = NULL,
-  missing = 0,
-  verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL
-)
-
-\method{weighted_posteriors}{blavaan}(
-  ...,
-  prior_odds = NULL,
-  missing = 0,
-  verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL
-)
-
-\method{weighted_posteriors}{BFBayesFactor}(
-  ...,
-  prior_odds = NULL,
-  missing = 0,
-  verbose = TRUE,
-  iterations = 4000
 )
 }
 \arguments{

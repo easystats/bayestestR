@@ -27,15 +27,11 @@ simulate_prior <- function(model, n = 1000, ...) {
 #' @export
 simulate_prior.stanreg <- function(model,
                                    n = 1000,
-                                   effects = c("fixed", "random", "all"),
-                                   component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                   effects = "fixed",
+                                   component = "location",
                                    parameters = NULL,
                                    verbose = TRUE,
                                    ...) {
-  # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   priors <- insight::get_priors(
     model,
     effects = effects,
@@ -50,18 +46,16 @@ simulate_prior.stanreg <- function(model,
 #' @export
 simulate_prior.blavaan <- simulate_prior.stanreg
 
+
+#' @rdname simulate_prior
 #' @export
 simulate_prior.brmsfit <- function(model,
                                    n = 1000,
-                                   effects = c("fixed", "random", "all"),
-                                   component = c("conditional", "zi", "zero_inflated", "all"),
+                                   effects = "fixed",
+                                   component = "conditional",
                                    parameters = NULL,
                                    verbose = TRUE,
                                    ...) {
-  # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   priors <- insight::get_priors(
     model,
     effects = effects,

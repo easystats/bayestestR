@@ -4,7 +4,6 @@
 \alias{spi}
 \alias{spi.numeric}
 \alias{spi.data.frame}
-\alias{spi.stanreg}
 \alias{spi.brmsfit}
 \alias{spi.get_predicted}
 \title{Shortest Probability Interval (SPI)}
@@ -15,22 +14,11 @@ spi(x, ...)
 
 \method{spi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
 
-\method{spi}{stanreg}(
-  x,
-  ci = 0.95,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  verbose = TRUE,
-  ...
-)
-
 \method{spi}{brmsfit}(
   x,
   ci = 0.95,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
   verbose = TRUE,
   ...

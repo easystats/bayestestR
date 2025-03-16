@@ -4,7 +4,6 @@
 \alias{diagnostic_posterior}
 \alias{diagnostic_posterior.default}
 \alias{diagnostic_posterior.stanreg}
-\alias{diagnostic_posterior.brmsfit}
 \title{Posteriors Sampling Diagnostic}
 \usage{
 diagnostic_posterior(posterior, ...)
@@ -16,15 +15,6 @@ diagnostic_posterior(posterior, ...)
   diagnostic = "all",
   effects = "fixed",
   component = "location",
-  parameters = NULL,
-  ...
-)
-
-\method{diagnostic_posterior}{brmsfit}(
-  posterior,
-  diagnostic = "all",
-  effects = "fixed",
-  component = "conditional",
   parameters = NULL,
   ...
 )

@@ -109,10 +109,9 @@ spi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 spi.bamlss <- function(x,
                        ci = 0.95,
-                       component = c("all", "conditional", "location"),
+                       component = "all",
                        verbose = TRUE,
                        ...) {
-  component <- match.arg(component)
   hdi(x, ci = ci, component = component, verbose = verbose, ci_method = "spi")
 }
 
@@ -140,12 +139,19 @@ spi.BGGM <- spi.mcmc
 #' @export
 spi.sim.merMod <- function(x,
                            ci = 0.95,
-                           effects = c("fixed", "random", "all"),
+                           effects = "fixed",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
-  effects <- match.arg(effects)
-  hdi(x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, ci_method = "spi", ...)
+  hdi(
+    x,
+    ci = ci,
+    effects = effects,
+    parameters = parameters,
+    verbose = verbose,
+    ci_method = "spi",
+    ...
+  )
 }
 
 #' @export
@@ -180,17 +186,15 @@ spi.comparisons <- spi.slopes
 #' @export
 spi.predictions <- spi.slopes
 
-#' @rdname spi
+
 #' @export
 spi.stanreg <- function(x,
                         ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                        effects = "fixed",
+                        component = "location",
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
@@ -226,13 +230,11 @@ spi.blavaan <- spi.stanreg
 #' @export
 spi.brmsfit <- function(x,
                         ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("conditional", "zi", "zero_inflated", "all"),
+                        effects = "fixed",
+                        component = "conditional",
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(

@@ -1133,8 +1133,6 @@ describe_posterior.stanfit <- function(posterior,
 }
 
 
-#' @inheritParams describe_posterior.stanreg
-#' @rdname describe_posterior
 #' @export
 describe_posterior.brmsfit <- function(posterior,
                                        centrality = "median",

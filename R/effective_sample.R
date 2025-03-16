@@ -113,7 +113,6 @@ effective_sample.brmsfit <- function(model,
 }
 
 
-#' @rdname effective_sample
 #' @export
 effective_sample.stanreg <- function(model,
                                      effects = "fixed",

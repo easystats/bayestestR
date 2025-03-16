@@ -5,7 +5,6 @@
 \alias{describe_posterior.numeric}
 \alias{describe_posterior.data.frame}
 \alias{describe_posterior.stanreg}
-\alias{describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posterior, ...)
@@ -60,27 +59,6 @@ describe_posterior(posterior, ...)
   component = "location",
   parameters = NULL,
   BF = 1,
-  verbose = TRUE,
-  ...
-)
-
-\method{describe_posterior}{brmsfit}(
-  posterior,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.95,
-  ci_method = "eti",
-  test = c("p_direction", "rope"),
-  rope_range = "default",
-  rope_ci = 0.95,
-  keep_iterations = FALSE,
-  bf_prior = NULL,
-  diagnostic = c("ESS", "Rhat"),
-  effects = "fixed",
-  component = "conditional",
-  parameters = NULL,
-  BF = 1,
-  priors = FALSE,
   verbose = TRUE,
   ...
 )

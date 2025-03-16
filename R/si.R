@@ -113,17 +113,16 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   out
 }
 
+
 #' @rdname si
 #' @export
 si.stanreg <- function(posterior, prior = NULL,
                        BF = 1, verbose = TRUE,
-                       effects = c("fixed", "random", "all"),
-                       component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary", "distributional"),
+                       effects = "fixed",
+                       component = "location",
                        parameters = NULL,
                        ...) {
   cleaned_parameters <- insight::clean_parameters(posterior)
-  effects <- match.arg(effects)
-  component <- match.arg(component)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
     effects = effects, component = component,
@@ -146,17 +145,13 @@ si.stanreg <- function(posterior, prior = NULL,
   out
 }
 
-
-#' @rdname si
 #' @export
 si.brmsfit <- si.stanreg
 
-#' @rdname si
 #' @export
 si.blavaan <- si.stanreg
 
 
-#' @rdname si
 #' @export
 si.emmGrid <- function(posterior, prior = NULL,
                        BF = 1, verbose = TRUE, ...) {
@@ -188,7 +183,7 @@ si.predictions <- si.emmGrid
 
 
 #' @export
-si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...) {
+si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = "fixed", ...) {
   out <- si(insight::get_parameters(posterior, effects = effects),
     prior = prior, BF = BF, verbose = verbose
   )

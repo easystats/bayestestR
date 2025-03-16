@@ -196,7 +196,6 @@ diagnostic_posterior.stanmvreg <- function(posterior,
 
 
 #' @inheritParams insight::get_parameters
-#' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.brmsfit <- function(posterior,
                                          diagnostic = "all",
