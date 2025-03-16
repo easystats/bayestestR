@@ -23,6 +23,8 @@
 #' @inheritParams rope
 #' @inheritParams hdi
 #'
+#' @inheritSection hdi Model components
+#'
 #' @return Values between 0 and 1 corresponding to the probability of practical significance (ps).
 #'
 #' @details `p_significance()` returns the proportion of a probability
@@ -280,18 +282,20 @@ p_significance.comparisons <- p_significance.slopes
 p_significance.predictions <- p_significance.slopes
 
 
-#' @rdname p_significance
 #' @export
 p_significance.stanreg <- function(x,
                                    threshold = "default",
-                                   effects = c("fixed", "random", "all"),
-                                   component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), # nolint
+                                   effects = "fixed",
+                                   component = "location",
                                    parameters = NULL,
                                    verbose = TRUE,
                                    ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  params <- insight::get_parameters(x, effects = effects, component = component, parameters = parameters)
+  params <- insight::get_parameters(
+    x,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
 
   threshold <- .select_threshold_ps(
     model = x,
@@ -323,14 +327,17 @@ p_significance.blavaan <- p_significance.stanreg
 #' @export
 p_significance.brmsfit <- function(x,
                                    threshold = "default",
-                                   effects = c("fixed", "random", "all"),
-                                   component = c("conditional", "zi", "zero_inflated", "all"),
+                                   effects = "fixed",
+                                   component = "conditional",
                                    parameters = NULL,
                                    verbose = TRUE,
                                    ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  params <- insight::get_parameters(x, effects = effects, component = component, parameters = parameters)
+  params <- insight::get_parameters(
+    x,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
 
   threshold <- .select_threshold_ps(
     model = x,
@@ -351,6 +358,7 @@ p_significance.brmsfit <- function(x,
   out
 }
 
+
 .p_significance <- function(x, threshold, ...) {
   if (length(threshold) == 1) {
     psig <- max(
@@ -370,6 +378,7 @@ p_significance.brmsfit <- function(x,
 
   psig
 }
+
 
 # methods ---------------------------
 
@@ -426,6 +435,7 @@ as.double.p_significance <- as.numeric.p_significance
   }
 }
 
+
 #' @keywords internal
 .select_threshold_list <- function(model = NULL, threshold = "default", verbose = TRUE) {
   # If default
@@ -446,6 +456,8 @@ as.double.p_significance <- as.numeric.p_significance
   threshold
 }
 
+
+#' @keywords internal
 .check_list_range <- function(range, params, larger_two = FALSE) {
   # if we have named elements, complete list
   named_range <- names(range)
