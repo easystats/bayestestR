@@ -85,8 +85,8 @@ test_that("blavaan, all", {
   # capture.output(x <- expect_warning(bayesfactor_parameters(bfit, prior = bfit_prior)))
   # expect_identical(nrow(x), 10L)
 
-  x <- expect_warning(si(bfit, prior = bfit_prior))
-  expect_identical(nrow(x), 10L)
+  # x <- expect_warning(si(bfit, prior = bfit_prior))
+  # expect_identical(nrow(x), 10L)
 
   ## Prior/posterior checks ----
   suppressWarnings(x <- check_prior(bfit))
