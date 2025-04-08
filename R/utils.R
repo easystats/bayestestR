@@ -215,6 +215,16 @@
 }
 
 #' @keywords internal
+.add_response_column <- function(result, model) {
+  model_object <- attributes(model)$model
+  if (!is.null(model_object) && insight::is_multivariate(model_object) && "group" %in% colnames(model)) { # nolint
+    result <- cbind(model["group"], result)
+    colnames(result)[1] <- "Response"
+  }
+  result
+}
+
+#' @keywords internal
 .append_datagrid <- function(results, object, long = FALSE) {
   UseMethod(".append_datagrid", object = object)
 }

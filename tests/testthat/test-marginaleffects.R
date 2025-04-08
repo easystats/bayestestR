@@ -105,3 +105,25 @@ withr::with_environment(
     )
   })
 )
+
+
+test_that("marginaleffects bayesfactors", {
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_installed("httr2")
+  skip_if_installed("brms")
+  skip_if_installed("modelbased")
+
+  m <- insight::download_model("brms_mv_1")
+  skip_if(is.null(m))
+  p <- modelbased::get_marginalmeans(m, "wt")
+  out <- describe_posterior(p)
+  expect_named(
+    out,
+    c(
+      "Response", "wt", "Median", "CI", "CI_low", "CI_high", "pd",
+      "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
+    )
+  )
+  expect_identical(dim(out), c(30L, 11L))
+})
