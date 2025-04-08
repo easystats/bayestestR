@@ -110,9 +110,9 @@ withr::with_environment(
 test_that("marginaleffects bayesfactors", {
   skip_if_not_installed("curl")
   skip_if_offline()
-  skip_if_installed("httr2")
-  skip_if_installed("brms")
-  skip_if_installed("modelbased")
+  skip_if_not_installed("httr2")
+  skip_if_not_installed("brms")
+  skip_if_not_installed("modelbased")
 
   m <- insight::download_model("brms_mv_1")
   skip_if(is.null(m))
