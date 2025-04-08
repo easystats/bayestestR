@@ -231,10 +231,7 @@
   model <- attributes(object)$model
   if (!long && !is.null(model)) {
     m_info <- insight::model_info(model, response = 1, verbose = FALSE)
-    if (isTRUE(m_info$is_categorical) && "group" %in% colnames(object)) {
-      results <- .safe(cbind(data.frame(group = object$group), results), results)
-    }
-    if (isTRUE(insight::is_multivariate(model)) && "group" %in% colnames(object)) {
+    if ((isTRUE(m_info$is_categorical) || isTRUE(insight::is_multivariate(model))) && "group" %in% colnames(object)) { # nolint
       results <- .safe(cbind(data.frame(group = object$group), results), results)
     }
   }
