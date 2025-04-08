@@ -929,10 +929,7 @@ describe_posterior.slopes <- function(posterior,
   )
 
   row.names(out) <- NULL # Reset row names
-  # add data grid
   out <- .append_datagrid(out, posterior)
-  # add response for multivariate models
-  out <- .add_response_column(out, posterior)
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
