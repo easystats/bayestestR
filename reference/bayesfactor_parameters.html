@@ -59,7 +59,7 @@ the Bayes factors vignette."><meta property="og:image" content="https://easystat
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -494,7 +494,14 @@ Science, 6(3), 291–298. <a href="https://doi.org/10.1177/1745691611406923" cla
 <span class="r-in"><span><span class="co"># ---------------</span></span></span>
 <span class="r-in"><span><span class="va">group_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span><span class="fu">emmeans</span><span class="op">(</span><span class="va">stan_model</span>, <span class="op">~</span><span class="va">group</span>, data <span class="op">=</span> <span class="va">sleep</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bayesfactor_parameters</span><span class="op">(</span><span class="va">group_diff</span>, prior <span class="op">=</span> <span class="va">stan_model</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in m_info$is_categorical || m_info$is_ordinal:</span> invalid 'x' type in 'x || y'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factor (Savage-Dickey density ratio)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> contrast        |   BF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1 - group2 | 3.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or</span></span></span>
 <span class="r-in"><span><span class="co"># group_diff_prior &lt;- pairs(emmeans(unupdate(stan_model), ~group))</span></span></span>
