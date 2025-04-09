@@ -231,7 +231,7 @@
   model <- attributes(object)$model
   if (!long && !is.null(model)) {
     m_info <- insight::model_info(model, response = 1, verbose = FALSE)
-    if ((m_info$is_categorical || m_info$is_ordinal || m_info$is_cumulative || isTRUE(insight::is_multivariate(model))) && "group" %in% colnames(object)) { # nolint
+    if (!is.null(m_info) && (m_info$is_categorical || m_info$is_ordinal || m_info$is_cumulative || isTRUE(insight::is_multivariate(model))) && "group" %in% colnames(object)) { # nolint
       results <- .safe(cbind(data.frame(group = object$group), results), results)
     }
   }
