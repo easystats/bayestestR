@@ -121,7 +121,7 @@ test_that("marginaleffects bayesfactors", {
   expect_named(
     out,
     c(
-      "Response", "wt", "Median", "CI", "CI_low", "CI_high", "pd",
+      "wt", "group", "Median", "CI", "CI_low", "CI_high", "pd",
       "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
     )
   )
