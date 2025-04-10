@@ -33,7 +33,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Dominique Makowski \email{dom.makowski@gmail.com} (\href{https://orcid.org/0000-0001-5375-9967}{ORCID})
+\strong{Maintainer}: Dominique Makowski \email{officialeasystats@gmail.com} (\href{https://orcid.org/0000-0001-5375-9967}{ORCID})
 
 Authors:
 \itemize{
