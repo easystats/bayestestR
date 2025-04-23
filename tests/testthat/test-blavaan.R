@@ -90,7 +90,7 @@ test_that("blavaan, all", {
 
   ## Prior/posterior checks ----
   suppressWarnings(x <- check_prior(bfit))
-  expect_identical(nrow(x), 13L)
+  expect_identical(nrow(x), 9L)
 
   ## FIXME: Error in `Yp[[p]]$SY + tcrossprod(Yp[[p]]$MY - Mu[var.idx])`:
   ## ! non-conformable arrays

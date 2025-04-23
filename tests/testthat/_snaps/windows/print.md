@@ -50,7 +50,7 @@
       child       | 0.996 | 303.00
       camper      | 0.996 | 292.00
       
-      # Random effects (conditional) Intercept: persons
+      # Random effects (conditional) (Intercept: persons)
       
       Parameter |    Median |         95% CI |     pd |          ROPE | % in ROPE
       ---------------------------------------------------------------------------
@@ -66,7 +66,7 @@
       persons.3 | 1.010 | 114.00
       persons.4 | 1.009 | 114.00
       
-      # Random effects (zero-inflated) Intercept: persons
+      # Random effects (zero-inflated) (Intercept: persons)
       
       Parameter | Median |         95% CI |     pd |          ROPE | % in ROPE
       ------------------------------------------------------------------------
@@ -82,7 +82,7 @@
       persons.3 | 0.997 | 154.00
       persons.4 | 1.000 | 189.00
       
-      # Random effects (conditional) SD/Cor: persons
+      # Random effects (conditional) (SD/Cor: persons)
       
       Parameter   | Median |         95% CI |   pd |          ROPE | % in ROPE
       ------------------------------------------------------------------------
@@ -92,7 +92,7 @@
       ----------------------------
       (Intercept) | 1.010 | 126.00
       
-      # Random effects (zero-inflated) SD/Cor: persons
+      # Random effects (zero-inflated) (SD/Cor: persons)
       
       Parameter   | Median |         95% CI |   pd |          ROPE | % in ROPE
       ------------------------------------------------------------------------
