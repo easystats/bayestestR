@@ -54,12 +54,13 @@ test_that("map_estimate", {
 
 # edge cases
 test_that("map_estimate, constant vectors or sparse samples", {
-  out <- map_estimate(c(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.2, 2.2, 2.2, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5))
+  x <- c(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.2, 2.2, 2.2, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+  out <- map_estimate(x)
   expect_true(is.na(out$MAP_Estimate))
   out <- map_estimate(c(3, 3, 3))
   expect_identical(out$MAP_Estimate, 3)
   expect_message(
-    map_estimate(c(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.2, 2.2, 2.2, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)),
+    map_estimate(x, verbose = TRUE),
     regex = "Could not calculate MAP estimate"
   )
 })
