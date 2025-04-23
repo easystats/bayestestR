@@ -57,6 +57,7 @@ map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
 }
 
 .map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
+  dots <- list(...)
   # sanity check - if we have only one unique value (a vector of constant values)
   # density estimation doesn't work
   if (insight::n_unique(x) == 1) {
@@ -65,6 +66,13 @@ map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
   } else {
     d <- try(estimate_density(x, precision = precision, method = method, ...), silent = TRUE)
     if (inherits(d, "try-error")) {
+      if (isTRUE(dots$verbose)) {
+        msg <- "Could not calculate MAP estimate."
+        if (grepl("too sparse", d, fixed = TRUE)) {
+          msg <- paste(msg, "The provided data is probably too sparse to calculate the density.")
+        }
+        insight::format_alert(msg)
+      }
       return(NA)
     }
     out <- d$x[which.max(d$y)]
@@ -139,7 +147,8 @@ map_estimate.stanreg <- function(x,
       parameters = parameters
     ),
     precision = precision,
-    method = method
+    method = method,
+    ...
   )
 }
 
@@ -167,7 +176,8 @@ map_estimate.brmsfit <- function(x,
       parameters = parameters
     ),
     precision = precision,
-    method = method
+    method = method,
+    ...
   )
 }
 
@@ -190,13 +200,13 @@ map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", rvar
     return(.append_datagrid(out, x))
   }
 
-  .map_estimate_models(x, precision = precision, method = method)
+  .map_estimate_models(x, precision = precision, method = method, ...)
 }
 
 
 #' @export
 map_estimate.draws <- function(x, precision = 2^10, method = "kernel", ...) {
-  .map_estimate_models(.posterior_draws_to_df(x), precision = precision, method = method)
+  .map_estimate_models(.posterior_draws_to_df(x), precision = precision, method = method, ...)
 }
 
 #' @export
@@ -206,7 +216,7 @@ map_estimate.rvar <- map_estimate.draws
 #' @export
 map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
   xdf <- insight::get_parameters(x)
-  out <- .map_estimate_models(xdf, precision = precision, method = method)
+  out <- .map_estimate_models(xdf, precision = precision, method = method, ...)
   .append_datagrid(out, x)
 }
 

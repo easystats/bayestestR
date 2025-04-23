@@ -58,4 +58,8 @@ test_that("map_estimate, constant vectors or sparse samples", {
   expect_true(is.na(out$MAP_Estimate))
   out <- map_estimate(c(3, 3, 3))
   expect_identical(out$MAP_Estimate, 3)
+  expect_message(
+    map_estimate(c(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.2, 2.2, 2.2, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)),
+    regex = "Could not calculate MAP estimate"
+  )
 })
