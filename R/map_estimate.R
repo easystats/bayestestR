@@ -57,10 +57,19 @@ map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
 }
 
 .map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
-  d <- estimate_density(x, precision = precision, method = method, ...)
-
-  out <- d$x[which.max(d$y)]
-  attr(out, "MAP_density") <- max(d$y)
+  # sanity check - if we have only one unique value (a vector of constant values)
+  # density estimation doesn't work
+  if (insight::n_unique(x) == 1) {
+    out <- stats::na.omit(x)[1]
+    attr(out, "MAP_density") <- 1
+  } else {
+    d <- try(estimate_density(x, precision = precision, method = method, ...), silent = TRUE)
+    if (inherits(d, "try-error")) {
+      return(NA)
+    }
+    out <- d$x[which.max(d$y)]
+    attr(out, "MAP_density") <- max(d$y)
+  }
   out
 }
 

@@ -51,3 +51,11 @@ test_that("map_estimate", {
   m <- correlationBF(y = iris$Sepal.Length, x = iris$Sepal.Width)
   expect_error(map_estimate(m))
 })
+
+# edge cases
+test_that("map_estimate, constant vectors or sparse samples", {
+  out <- map_estimate(c(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.2, 2.2, 2.2, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5))
+  expect_true(is.na(out$MAP_Estimate))
+  out <- map_estimate(c(3, 3, 3))
+  expect_identical(out$MAP_Estimate, 3)
+})
