@@ -576,7 +576,8 @@ p_direction.brmsfit <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        ...
       ),
       method = method,
       null = null,
