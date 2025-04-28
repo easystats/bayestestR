@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.2.13</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,20 @@
       <small>Source: <a href="https://github.com/easystats/bayestestR/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.15.3" id="bayestestr-0153">bayestestR 0.15.3<a class="anchor" aria-label="anchor" href="#bayestestr-0153"></a></h2><p class="text-muted">CRAN release: 2025-04-28</p>
+<div class="section level3">
+<h3 id="changes-0-15-3">Changes<a class="anchor" aria-label="anchor" href="#changes-0-15-3"></a></h3>
+<ul><li>
+<code><a href="../reference/effective_sample.html">effective_sample()</a></code>, and functions that call <code><a href="../reference/effective_sample.html">effective_sample()</a></code> (like <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> with the respective <code>test</code> option) now also return the tail ESS.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-15-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-15-3"></a></h3>
+<ul><li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> now returns a columns with response levels for <em>marginaleffects</em> objects applied to categorical or multinomial Stan models.</p></li>
+<li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> now returns a columns with response variables for <em>marginaleffects</em> objects applied to multivariate response Stan models.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/map_estimate.html">map_estimate()</a></code> and <code>point_estimate(centrality = "MAP")</code> for vectors with only one unique value.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.15.2" id="bayestestr-0152">bayestestR 0.15.2<a class="anchor" aria-label="anchor" href="#bayestestr-0152"></a></h2><p class="text-muted">CRAN release: 2025-02-07</p>
 <div class="section level3">
@@ -568,7 +582,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.9000.</p>
 </div>
 
     </footer></div>
