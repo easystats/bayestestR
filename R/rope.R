@@ -547,7 +547,8 @@ rope.brmsfit <- function(x,
             x,
             effects = effects,
             component = component,
-            parameters = parameters
+            parameters = parameters,
+            ...
           ),
           range = range[[dv_item]],
           ci = ci,

@@ -382,7 +382,8 @@ p_map.brmsfit <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        ...
       ),
       null = null,
       precision = precision,

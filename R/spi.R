@@ -243,7 +243,8 @@ spi.brmsfit <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        ...
       ),
       ci = ci,
       verbose = verbose,

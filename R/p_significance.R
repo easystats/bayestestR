@@ -340,7 +340,8 @@ p_significance.brmsfit <- function(x,
     x,
     effects = effects,
     component = component,
-    parameters = parameters
+    parameters = parameters,
+    ...
   )
 
   threshold <- .select_threshold_ps(

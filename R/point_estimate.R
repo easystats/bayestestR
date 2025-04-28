@@ -329,7 +329,8 @@ point_estimate.brmsfit <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        ...
       ),
       centrality = centrality,
       dispersion = dispersion,
