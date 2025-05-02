@@ -116,9 +116,23 @@ arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects (\code{"fixed"}, the default),
-random effects (\code{"random"}) or both ("\verb{all"}) be returned? Only applies to
-mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
+
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
 
 \item{component}{Which type of parameters to return, such as parameters for
 the conditional model, the zero-inflated part of the model, the dispersion

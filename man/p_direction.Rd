@@ -76,10 +76,6 @@ that \code{Inf} (infinity) are \emph{not} removed.}
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
-\item{effects}{Should results for fixed effects (\code{"fixed"}, the default),
-random effects (\code{"random"}) or both ("\verb{all"}) be returned? Only applies to
-mixed models. May be abbreviated.}
-
 \item{component}{Which type of parameters to return, such as parameters for
 the conditional model, the zero-inflated part of the model, the dispersion
 term, etc. See details in section \emph{Model Components}. May be abbreviated.
