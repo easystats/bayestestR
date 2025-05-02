@@ -240,7 +240,7 @@ diagnostic_posterior.brmsfit <- function(posterior,
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   diagnostic_df$ESS <- diagnostic_df$n_eff
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "all", component = "all")
+  MCSE <- mcse(posterior, effects = "full", component = "all")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
