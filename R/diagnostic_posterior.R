@@ -106,7 +106,7 @@ diagnostic_posterior.stanreg <- function(posterior,
     diagnostic_df$ESS <- diagnostic_df$n_eff
   }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "all")
+  MCSE <- mcse(posterior, effects = "full")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
@@ -181,6 +181,11 @@ diagnostic_posterior.stanmvreg <- function(posterior,
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   diagnostic_df$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", diagnostic_df$Parameter)
+
+  # Select rows
+  diagnostic_df <- diagnostic_df[diagnostic_df$Parameter %in% params, ]
+
+  # clean parameters
   for (i in unique(diagnostic_df$Response)) {
     diagnostic_df$Parameter <- gsub(
       sprintf("%s|", i),
@@ -190,8 +195,7 @@ diagnostic_posterior.stanmvreg <- function(posterior,
     )
   }
 
-  # Select rows
-  diagnostic_df[diagnostic_df$Parameter %in% params, ]
+  diagnostic_df
 }
 
 
@@ -236,7 +240,7 @@ diagnostic_posterior.brmsfit <- function(posterior,
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   diagnostic_df$ESS <- diagnostic_df$n_eff
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "all", component = "all")
+  MCSE <- mcse(posterior, effects = "full", component = "all")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns

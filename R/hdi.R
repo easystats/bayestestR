@@ -12,9 +12,6 @@
 #'   resemble the arguments of the `.numeric` or `.data.frame`methods.
 #' @param ci Value or vector of probability of the (credible) interval - CI
 #'   (between 0 and 1) to be estimated. Default to `.95` (`95%`).
-#' @param effects Should results for fixed effects (`"fixed"`, the default),
-#'   random effects (`"random"`) or both ("`all"`) be returned? Only applies to
-#'   mixed models. May be abbreviated.
 #' @param component Which type of parameters to return, such as parameters for
 #' the conditional model, the zero-inflated part of the model, the dispersion
 #' term, etc. See details in section _Model Components_. May be abbreviated.
@@ -40,6 +37,8 @@
 #' iterations for predicted values (e.g., `brmsfit` models).
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
+#' @inheritParams insight::get_parameters.BFBayesFactor
+#' @inheritParams insight::get_parameters
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'

@@ -1,5 +1,7 @@
 test_that("p_rope", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   m <- insight::download_model("stanreg_merMod_5")
   expect_equal(

@@ -85,7 +85,8 @@
 #' # -----------------------------------------------
 #' model <- suppressWarnings(
 #'   rstanarm::stan_glm(
-#'     mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200,
+#'     mpg ~ wt + gear,
+#'     data = mtcars, chains = 2, iter = 200,
 #'     refresh = 0
 #'   )
 #' )

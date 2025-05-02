@@ -1,10 +1,10 @@
 test_that("effective_sample", {
-  skip_if_not_or_load_if_installed("curl")
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
   skip_if_not_or_load_if_installed("rstan")
-  skip_if_not_or_load_if_installed("httr2")
 
   brms_1 <- insight::download_model("brms_1")
   skip_if(is.null(brms_1))
