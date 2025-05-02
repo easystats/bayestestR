@@ -106,7 +106,7 @@ diagnostic_posterior.stanreg <- function(posterior,
     diagnostic_df$ESS <- diagnostic_df$n_eff
   }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "all")
+  MCSE <- mcse(posterior, effects = "full")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
