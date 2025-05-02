@@ -2,11 +2,12 @@ test_that("brms", {
   skip_on_cran()
   skip_if_not_installed("curl")
   skip_if_offline()
-  skip_if_not_or_load_if_installed("brms")
   skip_if_not_installed("httr2")
+  skip_if_not_or_load_if_installed("brms")
 
   set.seed(333)
   model <- insight::download_model("brms_mixed_1")
+  skip_if(is.null(model))
 
   expect_s3_class(hdi(model), "data.frame")
   expect_s3_class(ci(model), "data.frame")
@@ -37,12 +38,14 @@ test_that("brms", {
 
 test_that("brms", {
   skip_on_cran()
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("brms_1")
+  skip_if(is.null(model))
 
   out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
   s <- summary(model)
@@ -56,12 +59,14 @@ test_that("brms", {
 
 test_that("brms", {
   skip_on_cran()
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("brms_mv_2")
+  skip_if(is.null(model))
 
   out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean", test = NULL)
   s <- suppressWarnings(summary(model))
@@ -80,12 +85,14 @@ test_that("brms", {
 
 test_that("brms", {
   skip_on_cran()
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
 
   set.seed(333)
   model <- insight::download_model("brms_2")
+  skip_if(is.null(model))
 
   out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean", test = NULL)
   s <- summary(model)
