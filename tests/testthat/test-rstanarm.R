@@ -79,11 +79,19 @@ test_that("rstanarm", {
 
   out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
   s <- summary(model)
-  expect_identical(colnames(out), c(
-    "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
-    "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
-    "Rhat", "ESS"
-  ))
+  expect_named(
+    out,
+    c(
+      "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
+      "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
+      "Rhat", "ESS"
+    )
+  )
+  expect_equal(as.vector(s[c(1:4, 8), 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
+  expect_equal(as.vector(s[c(1:4, 8), 8, drop = TRUE]), out$Rhat, tolerance = 1e-1)
+
+  out <- describe_posterior(model, effects = "full", component = "all", centrality = "mean")
+  s <- summary(model)
   expect_equal(as.vector(s[1:8, 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
   expect_equal(as.vector(s[1:8, 8, drop = TRUE]), out$Rhat, tolerance = 1e-1)
 })
@@ -100,10 +108,13 @@ test_that("rstanarm", {
 
   out <- describe_posterior(model, effects = "fixed", component = "all", centrality = "mean", test = NULL)
   s <- summary(model)
-  expect_identical(colnames(out), c(
-    "Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
-    "Rhat", "ESS"
-  ))
+  expect_named(
+    out,
+    c(
+      "Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
+      "Rhat", "ESS"
+    )
+  )
   expect_equal(as.vector(s[c(1:2, 5:7), 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
   expect_equal(as.vector(s[c(1:2, 5:7), 10, drop = TRUE]), out$Rhat, tolerance = 1e-1)
 })

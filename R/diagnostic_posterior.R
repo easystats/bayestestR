@@ -181,6 +181,11 @@ diagnostic_posterior.stanmvreg <- function(posterior,
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   diagnostic_df$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", diagnostic_df$Parameter)
+
+  # Select rows
+  diagnostic_df <- diagnostic_df[diagnostic_df$Parameter %in% params, ]
+
+  # clean parameters
   for (i in unique(diagnostic_df$Response)) {
     diagnostic_df$Parameter <- gsub(
       sprintf("%s|", i),
@@ -190,8 +195,7 @@ diagnostic_posterior.stanmvreg <- function(posterior,
     )
   }
 
-  # Select rows
-  diagnostic_df[diagnostic_df$Parameter %in% params, ]
+  diagnostic_df
 }
 
 
