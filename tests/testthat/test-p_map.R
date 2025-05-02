@@ -41,7 +41,7 @@ test_that("p_map", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
-  skip_if_not_or_load_if_installed("rstanarm")
+  skip_if_not_or_load_if_installed("brms")
 
   m <- insight::download_model("brms_zi_3")
   p <- insight::get_parameters(m, effects = "all", component = "all")
