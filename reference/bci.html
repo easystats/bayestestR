@@ -9,7 +9,7 @@ distributions."><meta property="og:image" content="https://easystats.github.io/b
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.3.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,9 +136,20 @@ frame to be processed. See example in <code><a href="p_direction.html">p_directi
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
-<dd><p>Should results for fixed effects (<code>"fixed"</code>, the default),
-random effects (<code>"random"</code>) or both ("<code>all"</code>) be returned? Only applies to
-mixed models. May be abbreviated.</p></dd>
+<dd><p>Should variables for fixed effects (<code>"fixed"</code>), random effects
+(<code>"random"</code>) or both (<code>"all"</code>) be returned? Only applies to mixed models. May
+be abbreviated.</p>
+<p>For models of from packages <strong>brms</strong> or <strong>rstanarm</strong> there are additional
+options:</p><ul><li><p><code>"fixed"</code> returns fixed effects.</p></li>
+<li><p><code>"random_variance"</code> return random effects parameters (variance and
+correlation components, e.g. those parameters that start with <code>sd_</code> or
+<code>cor_</code>).</p></li>
+<li><p><code>"grouplevel"</code> returns random effects group level estimates, i.e. those
+parameters that start with <code>r_</code>.</p></li>
+<li><p><code>"random"</code> returns both <code>"random_variance"</code> and <code>"grouplevel"</code>.</p></li>
+<li><p><code>"all"</code> returns fixed effects and random effects variances.</p></li>
+<li><p><code>"full"</code> returns all parameters.</p></li>
+</ul></dd>
 
 
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>

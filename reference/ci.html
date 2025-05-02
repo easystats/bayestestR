@@ -11,7 +11,7 @@ for:"><meta property="og:image" content="https://easystats.github.io/bayestestR/
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.3.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,9 +142,20 @@ frame to be processed. See example in <code><a href="p_direction.html">p_directi
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
-<dd><p>Should results for fixed effects (<code>"fixed"</code>, the default),
-random effects (<code>"random"</code>) or both ("<code>all"</code>) be returned? Only applies to
-mixed models. May be abbreviated.</p></dd>
+<dd><p>Should variables for fixed effects (<code>"fixed"</code>), random effects
+(<code>"random"</code>) or both (<code>"all"</code>) be returned? Only applies to mixed models. May
+be abbreviated.</p>
+<p>For models of from packages <strong>brms</strong> or <strong>rstanarm</strong> there are additional
+options:</p><ul><li><p><code>"fixed"</code> returns fixed effects.</p></li>
+<li><p><code>"random_variance"</code> return random effects parameters (variance and
+correlation components, e.g. those parameters that start with <code>sd_</code> or
+<code>cor_</code>).</p></li>
+<li><p><code>"grouplevel"</code> returns random effects group level estimates, i.e. those
+parameters that start with <code>r_</code>.</p></li>
+<li><p><code>"random"</code> returns both <code>"random_variance"</code> and <code>"grouplevel"</code>.</p></li>
+<li><p><code>"all"</code> returns fixed effects and random effects variances.</p></li>
+<li><p><code>"full"</code> returns all parameters.</p></li>
+</ul></dd>
 
 
 <dt id="arg-component">component<a class="anchor" aria-label="anchor" href="#arg-component"></a></dt>
@@ -265,7 +276,8 @@ intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.03, 1.52] | [-1.45, 1.74] | [-2.34, 1.71]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">200</span>, refresh <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>  <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">mtcars</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">200</span>, refresh <span class="op">=</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"ETI"</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
