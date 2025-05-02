@@ -2,9 +2,9 @@ test_that("describe_posterior", {
   skip_if(getRversion() < "4.2")
   skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
   skip_on_os("linux")
 
@@ -110,10 +110,11 @@ test_that("describe_posterior", {
 
 test_that("describe_posterior", {
   skip_on_os(c("mac", "linux"))
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   set.seed(333)
@@ -247,10 +248,11 @@ test_that("describe_posterior", {
 
 
 test_that("describe_posterior", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   m <- insight::download_model("stanreg_merMod_5")
@@ -264,10 +266,11 @@ test_that("describe_posterior", {
 })
 
 test_that("describe_posterior", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   m <- insight::download_model("brms_zi_3")
@@ -283,10 +286,11 @@ test_that("describe_posterior", {
 
 test_that("describe_posterior w/ BF+SI", {
   skip_on_cran()
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   x <- insight::download_model("stanreg_lm_1")
@@ -319,10 +323,11 @@ test_that("describe_posterior w/ BF+SI", {
 
 test_that("describe_posterior: BayesFactor", {
   skip_if_not(getRversion() >= "4.0", "Don't run with R < 4.0")
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
 
   set.seed(123)

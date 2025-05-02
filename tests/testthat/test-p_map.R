@@ -21,7 +21,9 @@ test_that("p_map", {
 
 
 test_that("p_map", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
 
   m <- insight::download_model("stanreg_merMod_5")
@@ -36,7 +38,9 @@ test_that("p_map", {
 
 
 test_that("p_map", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
 
   m <- insight::download_model("brms_zi_3")

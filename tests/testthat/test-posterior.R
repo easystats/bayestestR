@@ -1,5 +1,7 @@
 test_that("mp-posterior-draws", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("posterior")
   skip_if_not_or_load_if_installed("brms")
 
@@ -19,7 +21,9 @@ test_that("mp-posterior-draws", {
 })
 
 test_that("mp-posterior-draws_list", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("posterior")
   skip_if_not_or_load_if_installed("brms")
 
@@ -39,7 +43,9 @@ test_that("mp-posterior-draws_list", {
 })
 
 test_that("mp-posterior-draws_df", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("posterior")
   skip_if_not_or_load_if_installed("brms")
 
@@ -59,7 +65,9 @@ test_that("mp-posterior-draws_df", {
 })
 
 test_that("mp-posterior-draws_matrix", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("posterior")
   skip_if_not_or_load_if_installed("brms")
 
@@ -79,7 +87,9 @@ test_that("mp-posterior-draws_matrix", {
 })
 
 test_that("mp-posterior-draws_array", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("posterior")
   skip_if_not_or_load_if_installed("brms")
 
@@ -100,7 +110,9 @@ test_that("mp-posterior-draws_array", {
 
 
 test_that("mp-posterior-draws_rvar", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("posterior")
   skip_if_not_or_load_if_installed("brms")
 
