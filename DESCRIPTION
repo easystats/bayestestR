@@ -95,7 +95,7 @@ Suggests:
     lavaan,
     lme4,
     logspline (>= 2.1.21),
-    marginaleffects (>= 0.25.0),
+    marginaleffects (>= 0.26.0),
     MASS,
     mclust,
     mediation,
@@ -128,4 +128,4 @@ Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
-Remotes: easystats/insight, easystats/parameters, vincentarelbundock/marginaleffects
+Remotes: easystats/insight, easystats/parameters
