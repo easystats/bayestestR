@@ -21,3 +21,13 @@
   # tmp$Parameter <- gsub("r_(.*)\\.(.*)\\.", "\\1", tmp$Parameter)
   tmp
 }
+
+
+#' @keywords internal
+.get_cleaned_parameters <- function(x, ...) {
+  dots <- list(...)
+  if ("cleaned_parameters" %in% names(dots)) {
+    return(dots$cleaned_parameters)
+  }
+  insight::clean_parameters(x)
+}

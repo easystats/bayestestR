@@ -238,7 +238,7 @@ eti.stanreg <- function(x,
       verbose = verbose,
       ...
     ),
-    insight::clean_parameters(x),
+    .get_cleaned_parameters(x, ...),
     inherits(x, "stanmvreg")
   )
 
@@ -275,7 +275,7 @@ eti.brmsfit <- function(x,
       verbose = verbose,
       ...
     ),
-    insight::clean_parameters(x)
+    .get_cleaned_parameters(x, ...)
   )
 
   class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))

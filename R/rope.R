@@ -482,7 +482,11 @@ rope.stanreg <- function(x,
     ...
   )
 
-  out <- .prepare_output(rope_data, insight::clean_parameters(x), inherits(x, "stanmvreg"))
+  out <- .prepare_output(
+    rope_data,
+    .get_cleaned_parameters(x, ...),
+    inherits(x, "stanmvreg")
+  )
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -567,7 +571,11 @@ rope.brmsfit <- function(x,
     )
     rope_data <- do.call(rbind, rope_data)
 
-    out <- .prepare_output(rope_data, insight::clean_parameters(x), is_brms_mv = TRUE)
+    out <- .prepare_output(
+      rope_data,
+      .get_cleaned_parameters(x, ...),
+      is_brms_mv = TRUE
+    )
   } else {
     rope_data <- rope(
       insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
@@ -578,7 +586,7 @@ rope.brmsfit <- function(x,
       ...
     )
 
-    out <- .prepare_output(rope_data, insight::clean_parameters(x))
+    out <- .prepare_output(rope_data, .get_cleaned_parameters(x, ...))
   }
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")

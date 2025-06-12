@@ -1,3 +1,9 @@
+# bayestestR (devel)
+
+## Changes
+
+* Improved efficiency for `describe_posterior()`.
+
 # bayestestR 0.16.0
 
 ## Changes

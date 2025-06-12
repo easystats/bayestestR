@@ -87,7 +87,7 @@ check_prior.brmsfit <- function(model,
 
   .check_prior(priors, posteriors, method,
     verbose = verbose,
-    cleaned_parameters = insight::clean_parameters(model)
+    cleaned_parameters = .get_cleaned_parameters(model, ...)
   )
 }
 

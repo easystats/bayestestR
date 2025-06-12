@@ -305,7 +305,7 @@ equivalence_test.stanreg <- function(x,
 
   out <- .prepare_output(
     out,
-    insight::clean_parameters(x),
+    .get_cleaned_parameters(x, ...),
     inherits(x, "stanmvreg")
   )
 
@@ -344,7 +344,7 @@ equivalence_test.brmsfit <- function(x,
 
   out <- .prepare_output(
     out,
-    insight::clean_parameters(x),
+    .get_cleaned_parameters(x, ...),
     inherits(x, "stanmvreg")
   )
 

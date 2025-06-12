@@ -174,7 +174,13 @@ describe_posterior.default <- function(posterior, ...) {
     estimates <- data.frame(Parameter = NA)
   } else {
     estimates <- .prepare_output(
-      point_estimate(x_df, centrality = centrality, dispersion = dispersion, ...),
+      point_estimate(
+        x_df,
+        centrality = centrality,
+        dispersion = dispersion,
+        cleaned_parameters = cleaned_parameters,
+        ...
+      ),
       cleaned_parameters,
       is_stanmvreg
     )
@@ -198,9 +204,24 @@ describe_posterior.default <- function(posterior, ...) {
     )
     # not sure why "si" requires the model object
     if (ci_method == "si") {
-      uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, verbose = verbose, ...)
+      uncertainty <- ci(
+        x,
+        BF = BF,
+        method = ci_method,
+        prior = bf_prior,
+        verbose = verbose,
+        cleaned_parameters = cleaned_parameters,
+        ...
+      )
     } else {
-      uncertainty <- ci(x_df, ci = ci, method = ci_method, verbose = verbose, ...)
+      uncertainty <- ci(
+        x_df,
+        ci = ci,
+        method = ci_method,
+        verbose = verbose,
+        cleaned_parameters = cleaned_parameters,
+        ...
+      )
     }
     uncertainty <- .prepare_output(
       uncertainty,
@@ -288,7 +309,7 @@ describe_posterior.default <- function(posterior, ...) {
 
     if (any(c("p_map", "p_pointnull") %in% test)) {
       test_pmap <- .prepare_output(
-        p_map(x_df, ...),
+        p_map(x_df, cleaned_parameters = cleaned_parameters, ...),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -308,7 +329,7 @@ describe_posterior.default <- function(posterior, ...) {
 
     if (any(c("pd", "p_direction", "pdir", "mpe") %in% test)) {
       test_pd <- .prepare_output(
-        p_direction(x_df, ...),
+        p_direction(x_df, cleaned_parameters = cleaned_parameters, ...),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -327,7 +348,13 @@ describe_posterior.default <- function(posterior, ...) {
 
     if ("p_rope" %in% test) {
       test_prope <- .prepare_output(
-        p_rope(x_df, range = rope_range, verbose = verbose, ...),
+        p_rope(
+          x_df,
+          range = rope_range,
+          verbose = verbose,
+          cleaned_parameters = cleaned_parameters,
+          ...
+        ),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -345,7 +372,12 @@ describe_posterior.default <- function(posterior, ...) {
 
     if (any(c("ps", "p_sig", "p_significance") %in% test)) {
       test_psig <- .prepare_output(
-        p_significance(x_df, threshold = rope_range, ...),
+        p_significance(
+          x_df,
+          threshold = rope_range,
+          cleaned_parameters = cleaned_parameters,
+          ...
+        ),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -365,7 +397,13 @@ describe_posterior.default <- function(posterior, ...) {
 
     if ("rope" %in% test) {
       test_rope <- .prepare_output(
-        rope(x_df, range = rope_range, ci = rope_ci, ...),
+        rope(
+          x_df,
+          range = rope_range,
+          ci = rope_ci,
+          cleaned_parameters = cleaned_parameters,
+          ...
+        ),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -528,6 +566,7 @@ describe_posterior.default <- function(posterior, ...) {
   }
 
   # Prepare output
+  attr(out, "cleaned_parameters") <- cleaned_parameters
   attr(out, "ci_method") <- ci_method
   out
 }
@@ -993,6 +1032,9 @@ describe_posterior.stanreg <- function(posterior,
     ...
   )
 
+  # intermediate step: save cleaned parameters
+  cp <- attributes(out)$cleaned_parameters
+
   diagnostic <- diagnostic_posterior(
     posterior,
     diagnostic,
@@ -1008,7 +1050,7 @@ describe_posterior.stanreg <- function(posterior,
     out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
 
-  out <- .add_clean_parameters_attribute(out, posterior)
+  out <- .add_clean_parameters_attribute(out, posterior, cleaned_parameters = cp)
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
@@ -1053,6 +1095,9 @@ describe_posterior.stanmvreg <- function(posterior,
     ...
   )
 
+  # intermediate step: save cleaned parameters
+  cp <- attributes(out)$cleaned_parameters
+
   if (is.null(out$Response)) {
     out$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", out$Parameter)
   }
@@ -1072,7 +1117,7 @@ describe_posterior.stanmvreg <- function(posterior,
     out <- .merge_and_sort(out, priors_data, by = c("Parameter", "Response"), all = TRUE)
   }
 
-  out <- .add_clean_parameters_attribute(out, posterior)
+  out <- .add_clean_parameters_attribute(out, posterior, cleaned_parameters = cp)
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
@@ -1177,6 +1222,9 @@ describe_posterior.brmsfit <- function(posterior,
     ...
   )
 
+  # intermediate step: save cleaned parameters
+  cp <- attributes(out)$cleaned_parameters
+
   if (!is.null(diagnostic)) {
     diagnostic <- diagnostic_posterior(
       posterior,
@@ -1194,7 +1242,7 @@ describe_posterior.brmsfit <- function(posterior,
     out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
 
-  out <- .add_clean_parameters_attribute(out, posterior)
+  out <- .add_clean_parameters_attribute(out, posterior, cleaned_parameters = cp)
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))

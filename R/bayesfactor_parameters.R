@@ -296,7 +296,7 @@ bayesfactor_parameters.stanreg <- function(posterior,
                                            parameters = NULL,
                                            ...,
                                            verbose = TRUE) {
-  cleaned_parameters <- insight::clean_parameters(posterior)
+  cleaned_parameters <- .get_cleaned_parameters(posterior, ...)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
     effects = effects, component = component,

@@ -355,7 +355,7 @@ hdi.stanreg <- function(x,
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     hdi(
@@ -395,7 +395,7 @@ hdi.brmsfit <- function(x,
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     hdi(
