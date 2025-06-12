@@ -309,7 +309,7 @@ p_significance.stanreg <- function(x,
   )
   result <- p_significance(params, threshold = threshold)
 
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
   out <- .prepare_output(result, cleaned_parameters, inherits(x, "stanmvreg"))
 
   attr(out, "clean_parameters") <- cleaned_parameters
@@ -352,7 +352,7 @@ p_significance.brmsfit <- function(x,
   )
   result <- p_significance(params, threshold = threshold)
 
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
   out <- .prepare_output(result, cleaned_parameters)
 
   attr(out, "clean_parameters") <- cleaned_parameters

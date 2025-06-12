@@ -124,7 +124,7 @@ p_rope.stanreg <- function(x,
     verbose = verbose,
     ...
   ))
-  out <- .add_clean_parameters_attribute(out, x)
+  out <- .add_clean_parameters_attribute(out, x, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -155,7 +155,7 @@ p_rope.brmsfit <- function(x,
     verbose = verbose,
     ...
   ))
-  out <- .add_clean_parameters_attribute(out, x)
+  out <- .add_clean_parameters_attribute(out, x, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

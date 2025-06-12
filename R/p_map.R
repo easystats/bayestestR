@@ -332,7 +332,7 @@ p_map.stanreg <- function(x,
                           component = "location",
                           parameters = NULL,
                           ...) {
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     p_map(
@@ -374,7 +374,7 @@ p_map.brmsfit <- function(x,
                           component = "conditional",
                           parameters = NULL,
                           ...) {
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     p_map(

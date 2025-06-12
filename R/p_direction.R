@@ -524,7 +524,7 @@ p_direction.stanreg <- function(x,
                                 as_p = FALSE,
                                 remove_na = TRUE,
                                 ...) {
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     p_direction(
@@ -569,7 +569,7 @@ p_direction.brmsfit <- function(x,
                                 as_p = FALSE,
                                 remove_na = TRUE,
                                 ...) {
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     p_direction(
