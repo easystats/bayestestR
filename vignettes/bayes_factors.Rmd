@@ -181,7 +181,7 @@ model <- stan_glm(
 
 ### Testing against a null-*region*
 
-One way of operationlizing the null-hypothesis is by setting a null region, such
+One way of operationalizing the null-hypothesis is by setting a null region, such
 that an effect that falls within this interval would be *practically* equivalent
 to the null [@kruschke2010believe]. In our case, that means defining a range of
 effects we would consider equal to the drug having no effect at all. We can then
