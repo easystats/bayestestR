@@ -244,17 +244,21 @@
   # extract model info. if we have categorical, add "group" variable
   model <- attributes(object)$model
   if (!long && !is.null(model)) {
-    m_info <- insight::model_info(model, response = 1, verbose = FALSE)
-    if (
-      !is.null(m_info) &&
-        (m_info$is_categorical ||
-          m_info$is_mixture ||
-          m_info$is_ordinal ||
-          m_info$is_multinomial ||
-          m_info$is_cumulative ||
-          isTRUE(insight::is_multivariate(model))) &&
-        "group" %in% colnames(object)
-    ) {
+    m_info <- insight::model_info(model, response = 1, verbose = FALSE)´
+    # check if we have ordinal and alike
+    if (!is.null(m_info)) {
+      has_response_levels <- isTRUE(
+        m_info$is_categorical |
+          m_info$is_mixture |
+          m_info$is_ordinal |
+          m_info$is_multinomial |
+          m_info$is_cumulative
+      )
+    } else {
+      has_response_levels <- FALSE
+    }
+
+    if ((has_response_levels || isTRUE(insight::is_multivariate(model))) && "group" %in% colnames(object)) {
       results <- .safe(
         cbind(data.frame(group = object$group), results),
         results
