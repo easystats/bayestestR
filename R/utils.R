@@ -244,7 +244,7 @@
   # extract model info. if we have categorical, add "group" variable
   model <- attributes(object)$model
   if (!long && !is.null(model)) {
-    m_info <- insight::model_info(model, response = 1, verbose = FALSE)´
+    m_info <- insight::model_info(model, response = 1, verbose = FALSE)
     # check if we have ordinal and alike
     if (!is.null(m_info)) {
       has_response_levels <- isTRUE(
