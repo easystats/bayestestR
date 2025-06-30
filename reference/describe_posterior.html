@@ -327,7 +327,7 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI |     pd |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.02 | [-1.89, 1.98] | 50.70% | [-0.10, 0.10] |     8.21%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.05 | [-1.97, 2.03] | 52.20% | [-0.10, 0.10] |     8.63%</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">x</span>,</span></span>
 <span class="r-in"><span>  centrality <span class="op">=</span> <span class="st">"all"</span>,</span></span>
 <span class="r-in"><span>  dispersion <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
@@ -336,13 +336,13 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |  MAD | Mean |   SD |   MAP |        95% CI | p (MAP)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.02 | 0.99 | 0.01 | 0.97 | -0.11 | [-1.89, 1.98] |   0.991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |  MAD |  Mean |   SD |   MAP |        95% CI | p (MAP)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.05 | 0.98 | -0.02 | 1.03 | -0.13 | [-1.97, 2.03] |   0.982</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |     pd | p (ROPE) |   ps |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior | 50.70% |    0.078 | 0.46 | [-0.10, 0.10] |     8.21%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior | 52.20% |    0.082 | 0.48 | [-0.10, 0.10] |     8.63%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Equivalence (ROPE) |   BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------</span>
@@ -352,18 +352,18 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        80% CI |        90% CI |     pd |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.02 | [-1.20, 1.19] | [-1.53, 1.61] | 50.70% | [-0.10, 0.10] |     8.21%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Posterior |  -0.05 | [-1.31, 1.31] | [-1.62, 1.69] | 52.20% | [-0.10, 0.10] |     8.63%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">df</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |    Median |        95% CI |     pd |          ROPE | % in ROPE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | -7.48e-03 | [-1.50, 2.19] | 50.00% | [-0.10, 0.10] |    11.70%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |      0.03 | [-2.09, 1.38] | 50.00% | [-0.10, 0.10] |     6.38%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |     -0.06 | [-1.58, 2.10] | 52.00% | [-0.10, 0.10] |     9.57%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |     -0.23 | [-1.82, 1.85] | 60.00% | [-0.10, 0.10] |     6.38%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI |     pd |          ROPE | % in ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.12 | [-2.21, 1.86] | 56.00% | [-0.10, 0.10] |    10.64%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.28 | [-2.06, 1.69] | 56.00% | [-0.10, 0.10] |     6.38%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |  -0.12 | [-1.80, 1.66] | 56.00% | [-0.10, 0.10] |     4.26%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.23 | [-2.19, 1.65] | 59.00% | [-0.10, 0.10] |     2.13%</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">df</span>,</span></span>
 <span class="r-in"><span>  centrality <span class="op">=</span> <span class="st">"all"</span>,</span></span>
@@ -373,19 +373,19 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |    Median |  MAD |  Mean |   SD |   MAP |        95% CI | p (MAP)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | -7.48e-03 | 0.89 |  0.04 | 0.97 | -0.34 | [-1.50, 2.19] |   0.939</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |      0.03 | 1.04 | -0.06 | 0.97 |  0.50 | [-2.09, 1.38] |   0.904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |     -0.06 | 1.06 |  0.03 | 1.06 | -0.68 | [-1.58, 2.10] |   0.853</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |     -0.23 | 0.91 | -0.16 | 0.95 | -0.28 | [-1.82, 1.85] |   0.954</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |  MAD |  Mean |   SD |   MAP |        95% CI | p (MAP)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.12 | 1.20 | -0.18 | 1.10 | -0.11 | [-2.21, 1.86] |   0.997</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.28 | 1.19 | -0.10 | 1.07 | -0.64 | [-2.06, 1.69] |   0.796</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |  -0.12 | 0.89 | -0.03 | 0.99 | -0.32 | [-1.80, 1.66] |   0.919</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.23 | 1.09 | -0.21 | 1.06 | -0.40 | [-2.19, 1.65] |   0.958</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |     pd | p (ROPE) |   ps |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | 50.00% |    0.110 | 0.48 | [-0.10, 0.10] |    11.70%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | 50.00% |    0.060 | 0.49 | [-0.10, 0.10] |     6.38%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | 52.00% |    0.090 | 0.47 | [-0.10, 0.10] |     9.57%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | 60.00% |    0.060 | 0.58 | [-0.10, 0.10] |     6.38%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | 56.00% |    0.100 | 0.50 | [-0.10, 0.10] |    10.64%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | 56.00% |    0.060 | 0.53 | [-0.10, 0.10] |     6.38%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | 56.00% |    0.040 | 0.53 | [-0.10, 0.10] |     4.26%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | 59.00% |    0.020 | 0.57 | [-0.10, 0.10] |     2.13%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Equivalence (ROPE) |   BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------</span>
@@ -396,12 +396,12 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">df</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.90</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |    Median |        80% CI |        90% CI |     pd |          ROPE | % in ROPE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | -7.48e-03 | [-1.04, 1.30] | [-1.15, 1.70] | 50.00% | [-0.10, 0.10] |    11.70%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |      0.03 | [-1.32, 1.07] | [-1.75, 1.23] | 50.00% | [-0.10, 0.10] |     6.38%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |     -0.06 | [-1.11, 1.44] | [-1.34, 1.73] | 52.00% | [-0.10, 0.10] |     9.57%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |     -0.23 | [-1.30, 1.06] | [-1.40, 1.64] | 60.00% | [-0.10, 0.10] |     6.38%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        80% CI |        90% CI |     pd |          ROPE | % in ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.12 | [-1.58, 1.27] | [-1.89, 1.47] | 56.00% | [-0.10, 0.10] |    10.64%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.28 | [-1.32, 1.51] | [-1.84, 1.64] | 56.00% | [-0.10, 0.10] |     6.38%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |  -0.12 | [-1.27, 1.18] | [-1.54, 1.57] | 56.00% | [-0.10, 0.10] |     4.26%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.23 | [-1.57, 1.13] | [-1.80, 1.41] | 59.00% | [-0.10, 0.10] |     2.13%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reshape_iterations.html">reshape_iterations</a></span><span class="op">(</span></span></span>
@@ -411,21 +411,21 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI |     pd |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.21 | [-1.70, 1.42] | 60.00% | [-0.10, 0.10] |     5.56%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.21 | [-2.38, 2.41] | 55.00% | [-0.10, 0.10] |    11.11%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |   0.22 | [-1.96, 2.61] | 55.00% | [-0.10, 0.10] |     5.56%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.20 | [-1.58, 0.61] | 65.00% | [-0.10, 0.10] |    16.67%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.21 | [-1.70, 1.42] | 60.00% | [-0.10, 0.10] |     5.56%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.21 | [-2.38, 2.41] | 55.00% | [-0.10, 0.10] |    11.11%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |   0.31 | [-1.55, 1.59] | 70.00% | [-0.10, 0.10] |     5.56%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |   0.12 | [-1.45, 1.55] | 50.00% | [-0.10, 0.10] |     5.56%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |  -0.06 | [-2.77, 1.70] | 60.00% | [-0.10, 0.10] |    16.67%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |   0.13 | [-1.67, 1.94] | 60.00% | [-0.10, 0.10] |    11.11%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |   0.31 | [-1.55, 1.59] | 70.00% | [-0.10, 0.10] |     5.56%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |   0.12 | [-1.45, 1.55] | 50.00% | [-0.10, 0.10] |     5.56%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | iter_index | iter_group | iter_value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |       1.00 |       1.00 |       0.51</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |       2.00 |       1.00 |      -0.36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |       3.00 |       1.00 |       1.32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |       4.00 |       1.00 |       0.34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |       1.00 |       2.00 |      -0.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |       2.00 |       2.00 |      -0.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |       1.00 |       1.00 |       0.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |       2.00 |       1.00 |      -0.77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |       3.00 |       1.00 |      -1.51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |       4.00 |       1.00 |       1.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |       1.00 |       2.00 |       0.16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |       2.00 |       2.00 |       0.74</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># rstanarm models</span></span></span>
@@ -442,15 +442,15 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |         95% CI |     pd |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  38.94 | [30.09, 47.23] |   100% | [-0.60, 0.60] |        0%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.37 | [-6.57, -4.25] |   100% | [-0.60, 0.60] |        0%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.38 | [-2.03,  1.30] | 63.50% | [-0.60, 0.60] |    44.74%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.04 | [29.35, 48.29] |   100% | [-0.60, 0.60] |        0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.43 | [-6.71, -4.23] |   100% | [-0.60, 0.60] |        0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.30 | [-1.86,  1.56] | 63.00% | [-0.60, 0.60] |    54.74%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |  Rhat |    ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.011 | 190.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.017 | 156.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 1.007 | 173.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.002 | 169.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.002 | 217.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 0.997 | 211.00</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">model</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span>, test <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bayes factors might not be precise.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   For precise Bayes factors, sampling at least 40,000 posterior samples is</span>
@@ -459,49 +459,49 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |  MAD |  Mean |   SD |   MAP |         95% CI | p (MAP)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  38.94 | 5.21 | 38.92 | 4.87 | 39.81 | [30.09, 47.23] |  &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.37 | 0.63 | -5.43 | 0.64 | -5.19 | [-6.57, -4.25] |  &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.38 | 0.92 | -0.34 | 0.90 | -0.80 | [-2.03,  1.30] |  0.843 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.04 | 3.98 | 38.71 | 4.71 | 40.40 | [29.35, 48.29] |  &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.43 | 0.69 | -5.48 | 0.68 | -5.17 | [-6.71, -4.23] |  &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.30 | 0.84 | -0.28 | 0.89 | -0.20 | [-1.86,  1.56] |  0.977 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |     pd | p (ROPE) |   ps |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |   100% |   &lt; .001 | 1.00 | [-0.60, 0.60] |        0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |   100% |   &lt; .001 | 1.00 | [-0.60, 0.60] |        0%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 63.50% |   0.425  | 0.42 | [-0.60, 0.60] |    44.74%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 63.00% |   0.520  | 0.35 | [-0.60, 0.60] |    54.74%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Equivalence (ROPE) |       BF |  Rhat |    ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |           Rejected | 1.14e+05 | 1.011 | 190.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |           Rejected | 1.70e+04 | 1.017 | 156.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |          Undecided |    0.049 | 1.007 | 173.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |           Rejected | 6.33e+03 | 1.002 | 169.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |           Rejected | 4.88e+04 | 1.002 | 217.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |          Undecided |    0.044 | 0.997 | 211.00</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.90</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Summary of Posterior Distribution</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |         80% CI |         90% CI |     pd |          ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  38.94 | [33.06, 44.88] | [31.18, 46.44] |   100% | [-0.60, 0.60]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.37 | [-6.18, -4.57] | [-6.44, -4.40] |   100% | [-0.60, 0.60]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.38 | [-1.37,  0.86] | [-1.67,  1.20] | 63.50% | [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.04 | [33.38, 44.21] | [30.79, 46.08] |   100% | [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.43 | [-6.36, -4.64] | [-6.66, -4.40] |   100% | [-0.60, 0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.30 | [-1.24,  0.74] | [-1.57,  1.30] | 63.00% | [-0.60, 0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | % in ROPE |  Rhat |    ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        0% | 1.011 | 190.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |        0% | 1.017 | 156.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |    44.74% | 1.007 | 173.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        0% | 1.002 | 169.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |        0% | 1.002 | 217.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |    54.74% | 0.997 | 211.00</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">model</span>, rope_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="st">"default"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Summary of Posterior Distribution</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |         95% CI |     pd |           ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  38.94 | [30.09, 47.23] |   100% | [-10.00, 5.00] |        0%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.37 | [-6.57, -4.25] |   100% | [ -0.20, 0.20] |        0%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.38 | [-2.03,  1.30] | 63.50% | [ -0.10, 0.10] |     6.84%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.04 | [29.35, 48.29] |   100% | [-10.00, 5.00] |        0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.43 | [-6.71, -4.23] |   100% | [ -0.20, 0.20] |        0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.30 | [-1.86,  1.56] | 63.00% | [ -0.10, 0.10] |     8.42%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |  Rhat |    ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.011 | 190.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.017 | 156.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 1.007 | 173.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.002 | 169.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.002 | 217.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 0.997 | 211.00</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># emmeans estimates</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -510,7 +510,7 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X1      | Median |         95% CI |   pd |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> overall |  -5.37 | [-6.57, -4.25] | 100% | [-0.10, 0.10] |        0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall |  -5.43 | [-6.71, -4.23] | 100% | [-0.10, 0.10] |        0%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># BayesFactor objects</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -520,35 +520,35 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |       95% CI |   pd |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   0.97 | [0.79, 1.15] | 100% | [-0.09, 0.09] |        0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.06 | [0.86, 1.27] | 100% | [-0.10, 0.10] |        0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |       BF |              Prior</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | 1.27e+15 | Cauchy (0 +- 0.71)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | 1.73e+15 | Cauchy (0 +- 0.71)</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">bf</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span>, test <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |  MAD | Mean |   SD |  MAP |       95% CI | p (MAP) |   pd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   0.96 | 0.09 | 0.97 | 0.09 | 0.96 | [0.79, 1.16] |  &lt; .001 | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.06 | 0.10 | 1.06 | 0.10 | 1.05 | [0.87, 1.27] |  &lt; .001 | 100%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | p (ROPE) |   ps |          ROPE | % in ROPE | Equivalence (ROPE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   &lt; .001 | 1.00 | [-0.09, 0.09] |        0% |           Rejected</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   &lt; .001 | 1.00 | [-0.10, 0.10] |        0% |           Rejected</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |       BF |              Prior</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | 1.27e+15 | Cauchy (0 +- 0.71)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | 1.73e+15 | Cauchy (0 +- 0.71)</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">bf</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.90</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |       80% CI |       90% CI |   pd |          ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   0.97 | [0.84, 1.09] | [0.81, 1.12] | 100% | [-0.09, 0.09]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.06 | [0.93, 1.19] | [0.89, 1.23] | 100% | [-0.10, 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | % in ROPE |       BF |              Prior</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |        0% | 1.27e+15 | Cauchy (0 +- 0.71)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |        0% | 1.73e+15 | Cauchy (0 +- 0.71)</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

@@ -251,9 +251,9 @@ intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">posterior</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95% ETI: [-2.00, 1.96]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% ETI: [-1.93, 1.97]</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">posterior</span>, method <span class="op">=</span> <span class="st">"HDI"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95% HDI: [-1.91, 2.03]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% HDI: [-1.85, 2.04]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">df</span>, method <span class="op">=</span> <span class="st">"ETI"</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -261,19 +261,19 @@ intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       80% ETI |       89% ETI |       95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.46, 1.35] | [-1.70, 1.63] | [-1.94, 1.94]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.21, 1.34] | [-1.51, 1.71] | [-1.81, 2.08]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.20, 1.19] | [-1.54, 1.48] | [-2.02, 1.71]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.22, 1.51] | [-1.88, 1.61] | [-2.20, 1.82]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.46, 1.27] | [-1.60, 1.62] | [-1.96, 1.96]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.19, 1.34] | [-1.42, 1.48] | [-2.02, 1.84]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.26, 1.18] | [-1.72, 1.51] | [-2.20, 1.66]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.01, 1.61] | [-1.33, 1.73] | [-1.85, 2.22]</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">df</span>, method <span class="op">=</span> <span class="st">"HDI"</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Highest Density Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       80% HDI |       89% HDI |       95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.38, 1.37] | [-1.95, 1.37] | [-1.77, 2.17]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.20, 1.35] | [-1.64, 1.52] | [-2.15, 1.80]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.21, 1.17] | [-1.46, 1.56] | [-2.07, 1.72]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.03, 1.52] | [-1.45, 1.74] | [-2.34, 1.71]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.64, 1.02] | [-1.55, 1.73] | [-1.97, 1.80]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.44, 0.99] | [-1.44, 1.49] | [-2.29, 1.72]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-0.98, 1.35] | [-1.46, 1.56] | [-2.34, 1.52]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.00, 1.62] | [-1.22, 1.89] | [-1.47, 2.39]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>,</span></span>
@@ -284,41 +284,41 @@ intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        80% ETI |        89% ETI | Effects |   Component</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [34.59, 39.93] | [34.12, 40.56] |   fixed | conditional</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.10, -4.52] | [-6.27, -4.33] |   fixed | conditional</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [34.88, 39.92] | [34.57, 40.72] |   fixed | conditional</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.12, -4.71] | [-6.44, -4.53] |   fixed | conditional</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"HDI"</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Highest Density Interval</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        80% HDI |        89% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [34.36, 39.67] | [34.20, 40.60]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.09, -4.51] | [-6.37, -4.47]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [34.55, 39.51] | [34.47, 40.19]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.15, -4.75] | [-6.14, -4.41]</span>
 <span class="r-in"><span><span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">bf</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |      95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.80, 1.23]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.73, 1.08]</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">bf</span>, method <span class="op">=</span> <span class="st">"HDI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Highest Density Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |      95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.81, 1.24]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.74, 1.09]</span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X1      |        95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> overall | [-6.37, -4.20]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall | [-6.69, -4.42]</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"HDI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Highest Density Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X1      |        95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> overall | [-6.37, -4.18]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall | [-6.53, -4.38]</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
