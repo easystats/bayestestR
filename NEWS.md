@@ -1,3 +1,9 @@
+# bayestestR (devel)
+
+## Changes
+
+* Added `display()` methods for *bayestestR* objects.
+
 # bayestestR 0.16.1
 
 ## Changes
