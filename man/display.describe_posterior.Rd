@@ -48,7 +48,7 @@ for examples.
 \dontshow{if (all(insight::check_if_installed(c("tinytable", "gt"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 d <- data.frame(replicate(4, rnorm(20)))
-result <- describe_posterior(df)
+result <- describe_posterior(d)
 
 # markdown format
 display(result)
