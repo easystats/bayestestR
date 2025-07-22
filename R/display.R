@@ -9,6 +9,10 @@
 #' `"html"`, or `"tt"`. `format = "tt"` creates a `tinytable` object, which is
 #' either printed as markdown or HTML table, depending on the environment. See
 #' [`insight::export_table()`] for details.
+#' @param digits Integer, number of digits to round the table output. Defaults
+#' to 2.
+#' @param caption Character, caption for the table. If `NULL`, no caption is
+#' added. By default, a caption is created based on the object type.
 #' @param ... Arguments passed down to `print_html()` or `print_md()` (e.g.,
 #' `digits`), or to `insight::export_table()`.
 #'

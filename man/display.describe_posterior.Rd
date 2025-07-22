@@ -27,6 +27,12 @@ either printed as markdown or HTML table, depending on the environment. See
 
 \item{...}{Arguments passed down to \code{print_html()} or \code{print_md()} (e.g.,
 \code{digits}), or to \code{insight::export_table()}.}
+
+\item{digits}{Integer, number of digits to round the table output. Defaults
+to 2.}
+
+\item{caption}{Character, caption for the table. If \code{NULL}, no caption is
+added. By default, a caption is created based on the object type.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character
