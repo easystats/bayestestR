@@ -9,7 +9,7 @@ near-perfect distribution."><meta property="og:image" content="https://easystats
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,9 +116,7 @@ near-perfect distribution.</p>
 <span></span>
 <span><span class="fu">distribution_tweedie</span><span class="op">(</span><span class="va">n</span>, xi <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">mu</span>, <span class="va">phi</span>, power <span class="op">=</span> <span class="cn">NULL</span>, random <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">distribution_uniform</span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span>, random <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">rnorm_perfect</span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">distribution_uniform</span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span>, random <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -127,8 +125,7 @@ near-perfect distribution.</p>
 
 <dl><dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>Can be any of the names from base R's
-<a href="https://rdrr.io/r/stats/Distributions.html" class="external-link">Distributions</a>, like <code>"cauchy"</code>, <code>"pois"</code> or
-<code>"beta"</code>.</p></dd>
+<a href="https://rdrr.io/r/stats/Distributions.html" class="external-link">Distributions</a>, like <code>"cauchy"</code>, <code>"pois"</code> or <code>"beta"</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -141,7 +138,8 @@ near-perfect distribution.</p>
 
 <dt id="arg-random">random<a class="anchor" aria-label="anchor" href="#arg-random"></a></dt>
 <dd><p>Generate near-perfect or random (simple wrappers for the base R
-<code>r*</code> functions) distributions.</p></dd>
+<code>r*</code> functions) distributions. When <code>random = FALSE</code>, these function return
+<code>q*(ppoints(n), ...)</code>.</p></dd>
 
 
 <dt id="arg-shape-shape-">shape1, shape2<a class="anchor" aria-label="anchor" href="#arg-shape-shape-"></a></dt>
@@ -206,10 +204,6 @@ is <code>var(Y) = phi * mu^xi</code>.</p></dd>
 <dd><p>lower and upper limits of the distribution.  Must be finite.</p></dd>
 
 </dl></div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When <code>random = FALSE</code>, these function return <code>q*(ppoints(n), ...)</code>.</p>
-    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
