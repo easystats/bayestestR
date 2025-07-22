@@ -9,7 +9,8 @@
 #' `"html"`, or `"tt"`. `format = "tt"` creates a `tinytable` object, which is
 #' either printed as markdown or HTML table, depending on the environment. See
 #' [`insight::export_table()`] for details.
-#' @param ... Currently not used.
+#' @param ... Arguments passed down to `print_html()` or `print_md()` (e.g.,
+#' `digits`), or to `insight::export_table()`.
 #'
 #' @return If `format = "markdown"`, the return value will be a character
 #' vector in markdown-table format. If `format = "html"`, an object of
@@ -28,13 +29,13 @@
 #' result <- describe_posterior(df)
 #'
 #' # markdown format
-#' display(mp)
+#' display(result)
 #'
 #' # gt HTML
-#' display(mp, format = "html")
+#' display(result, format = "html")
 #'
 #' # tinytable
-#' display(mp, format = "tt")
+#' display(result, format = "tt")
 #' }
 #' @export
 display.describe_posterior <- function(object, format = "markdown", ...) {

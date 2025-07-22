@@ -179,7 +179,8 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
   insight::export_table(
     formatted_table,
     caption = caption,
-    format = .check_format_backend(...)
+    format = .check_format_backend(...),
+    ...
   )
 }
 
@@ -205,6 +206,7 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     formatted_table,
     align = align,
     caption = caption,
-    format = .check_format_backend(...)
+    format = .check_format_backend(...),
+    ...
   )
 }

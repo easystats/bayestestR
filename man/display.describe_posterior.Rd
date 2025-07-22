@@ -25,7 +25,8 @@ example \code{\link[=describe_posterior]{describe_posterior()}}, \code{\link[=po
 either printed as markdown or HTML table, depending on the environment. See
 \code{\link[insight:export_table]{insight::export_table()}} for details.}
 
-\item{...}{Currently not used.}
+\item{...}{Arguments passed down to \code{print_html()} or \code{print_md()} (e.g.,
+\code{digits}), or to \code{insight::export_table()}.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character
@@ -50,13 +51,13 @@ d <- data.frame(replicate(4, rnorm(20)))
 result <- describe_posterior(df)
 
 # markdown format
-display(mp)
+display(result)
 
 # gt HTML
-display(mp, format = "html")
+display(result, format = "html")
 
 # tinytable
-display(mp, format = "tt")
+display(result, format = "tt")
 }
 \dontshow{\}) # examplesIf}
 }
