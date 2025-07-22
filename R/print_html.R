@@ -1,3 +1,4 @@
+#' @rdname display.describe_posterior
 #' @export
 print_html.describe_posterior <- function(x, digits = 2, caption = "Summary of Posterior Distribution", ...) {
   .print_html_default(x = x, digits = digits, caption = caption, ...)
@@ -150,7 +151,7 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     ...
   )
 
-  insight::export_table(formatted_table, format = "html")
+  insight::export_table(formatted_table, format = .check_format_backend(...), ...)
 }
 
 
@@ -178,7 +179,7 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
   insight::export_table(
     formatted_table,
     caption = caption,
-    format = "html"
+    format = .check_format_backend(...)
   )
 }
 
@@ -204,6 +205,6 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     formatted_table,
     align = align,
     caption = caption,
-    format = "html"
+    format = .check_format_backend(...)
   )
 }

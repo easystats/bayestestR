@@ -59,6 +59,7 @@ reference:
 
   - title: "Utilities"
     contents:
+      - display
       - mediation
       - convert_bayesian_as_frequentist
       - contr.equalprior_pairs

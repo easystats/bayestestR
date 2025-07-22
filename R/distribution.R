@@ -4,18 +4,15 @@
 #' near-perfect distribution.
 #'
 #' @param type Can be any of the names from base R's
-#'   [Distributions][stats::Distributions], like `"cauchy"`, `"pois"` or
-#'   `"beta"`.
+#' [Distributions][stats::Distributions], like `"cauchy"`, `"pois"` or `"beta"`.
 #' @param random Generate near-perfect or random (simple wrappers for the base R
-#'   `r*` functions) distributions.
+#' `r*` functions) distributions. When `random = FALSE`, these function return
+#' `q*(ppoints(n), ...)`.
 #' @param xi For tweedie distributions, the value of `xi` such that the variance
 #' is `var(Y) = phi * mu^xi`.
 #' @param power Alias for `xi`.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams tweedie::rtweedie
-#'
-#' @details
-#' When `random = FALSE`, these function return `q*(ppoints(n), ...)`.
 #'
 #' @examples
 #' library(bayestestR)
@@ -258,13 +255,4 @@ distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
   } else {
     stats::qunif(stats::ppoints(n), min, max, ...)
   }
-}
-
-
-#' @rdname distribution
-#' @inheritParams stats::rnorm
-#' @export
-rnorm_perfect <- function(n, mean = 0, sd = 1) {
-  .Deprecated("distribution_normal")
-  stats::qnorm(stats::ppoints(n), mean, sd)
 }
