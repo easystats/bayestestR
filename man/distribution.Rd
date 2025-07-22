@@ -20,7 +20,6 @@
 \alias{distribution_student_t}
 \alias{distribution_tweedie}
 \alias{distribution_uniform}
-\alias{rnorm_perfect}
 \title{Empirical Distributions}
 \usage{
 distribution(type = "normal", ...)
@@ -60,20 +59,18 @@ distribution_student_t(n, df, ncp, random = FALSE, ...)
 distribution_tweedie(n, xi = NULL, mu, phi, power = NULL, random = FALSE, ...)
 
 distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
-
-rnorm_perfect(n, mean = 0, sd = 1)
 }
 \arguments{
 \item{type}{Can be any of the names from base R's
-\link[stats:Distributions]{Distributions}, like \code{"cauchy"}, \code{"pois"} or
-\code{"beta"}.}
+\link[stats:Distributions]{Distributions}, like \code{"cauchy"}, \code{"pois"} or \code{"beta"}.}
 
 \item{...}{Arguments passed to or from other methods.}
 
 \item{n}{the number of observations}
 
 \item{random}{Generate near-perfect or random (simple wrappers for the base R
-\verb{r*} functions) distributions.}
+\verb{r*} functions) distributions. When \code{random = FALSE}, these function return
+\verb{q*(ppoints(n), ...)}.}
 
 \item{shape1, shape2}{non-negative parameters of the Beta distribution.}
 
@@ -110,9 +107,6 @@ is \code{var(Y) = phi * mu^xi}.}
 \description{
 Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a
 near-perfect distribution.
-}
-\details{
-When \code{random = FALSE}, these function return \verb{q*(ppoints(n), ...)}.
 }
 \examples{
 library(bayestestR)

@@ -2,7 +2,12 @@
 
 ## Changes
 
-* Added `display()` methods for *bayestestR* objects.
+* Added `display()` methods for *bayestestR* objects. The `display()` methods
+  also get a new `format` option, `format = "tt"`, to produce tables with the
+  `tinytable` package.
+
+* The long deprecated `rnorm_perfect()` function has been removed. Use
+  `distribution_normal()` instead.
 
 # bayestestR 0.16.1
 
