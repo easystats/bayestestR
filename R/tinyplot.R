@@ -23,8 +23,6 @@ tinyplot.estimate_density <- function(x, centrality = "median", ci = 0.95, show_
     colnames(plot_data)
   )
 
-  tinyplot::tinytheme("ridge2")
-
   datasplit <- split(plot_data, plot_data[split_columns])
 
   # summary of posteriors for the error bars
@@ -59,15 +57,18 @@ tinyplot.estimate_density <- function(x, centrality = "median", ci = 0.95, show_
     levels = levels(my_summary$Parameter)
   )
 
-  summary_layer <<- tinyplot::tinyplot(
-    Parameter ~ x,
-    data = my_summary,
-    ymin = str2lang("CI_low"),
-    ymax = CI_high,
-    type = "errorbar",
-    flip = TRUE,
+  summary_layer <- tinyplot::tinyplot(
+    x = my_summary$x,
+    y = plot_data$Parameter,
+    # ymin = my_summary$CI_low,
+    # xmax = my_summary$CI_high,
+    type = "p",
+    # flip = TRUE,
     add = TRUE
   )
+
+  tinyplot::tinytheme("ridge2")
+
 
   tinyplot::tinyplot(
     Parameter ~ x,
