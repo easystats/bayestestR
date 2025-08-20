@@ -661,7 +661,7 @@ rope.sim.merMod <- function(x,
                             ci = 0.95,
                             ci_method = "ETI",
                             complement = FALSE,
-                            effects = c("fixed", "random", "all"),
+                            effects = "fixed",
                             parameters = NULL,
                             verbose = TRUE,
                             ...) {
@@ -727,8 +727,14 @@ rope.sim.merMod <- function(x,
 
 
 #' @export
-rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE,
-                     parameters = NULL, verbose = TRUE, ...) {
+rope.sim <- function(x,
+                     range = "default",
+                     ci = 0.95,
+                     ci_method = "ETI",
+                     complement = FALSE,
+                     parameters = NULL,
+                     verbose = TRUE,
+                     ...) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
