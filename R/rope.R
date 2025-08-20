@@ -272,7 +272,14 @@ rope.get_predicted <- function(x,
 #' @export
 #' @rdname rope
 #' @inheritParams p_direction
-rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, rvar_col = NULL, verbose = TRUE, ...) {
+rope.data.frame <- function(x,
+                            range = "default",
+                            ci = 0.95,
+                            ci_method = "ETI",
+                            complement = FALSE,
+                            rvar_col = NULL,
+                            verbose = TRUE,
+                            ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
   x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
@@ -306,7 +313,13 @@ rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", 
 
 
 #' @export
-rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
+rope.draws <- function(x,
+                       range = "default",
+                       ci = 0.95,
+                       ci_method = "ETI",
+                       complement = FALSE,
+                       verbose = TRUE,
+                       ...) {
   rope(
     .posterior_draws_to_df(x),
     range = range,
@@ -323,7 +336,13 @@ rope.rvar <- rope.draws
 
 
 #' @export
-rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
+rope.emmGrid <- function(x,
+                         range = "default",
+                         ci = 0.95,
+                         ci_method = "ETI",
+                         complement = FALSE,
+                         verbose = TRUE,
+                         ...) {
   xdf <- insight::get_parameters(x)
   dat <- rope(
     xdf,
@@ -344,7 +363,13 @@ rope.emm_list <- rope.emmGrid
 
 
 #' @export
-rope.slopes <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
+rope.slopes <- function(x,
+                        range = "default",
+                        ci = 0.95,
+                        ci_method = "ETI",
+                        complement = FALSE,
+                        verbose = TRUE,
+                        ...) {
   xrvar <- .get_marginaleffects_draws(x)
   dat <- rope(
     xrvar,
@@ -368,7 +393,13 @@ rope.predictions <- rope.slopes
 
 
 #' @export
-rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
+rope.BFBayesFactor <- function(x,
+                               range = "default",
+                               ci = 0.95,
+                               ci_method = "ETI",
+                               complement = FALSE,
+                               verbose = TRUE,
+                               ...) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   }
@@ -390,7 +421,13 @@ rope.bamlss <- rope.BFBayesFactor
 
 
 #' @export
-rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
+rope.MCMCglmm <- function(x,
+                          range = "default",
+                          ci = 0.95,
+                          ci_method = "ETI",
+                          complement = FALSE,
+                          verbose = TRUE,
+                          ...) {
   nF <- x$Fixed$nfl
   out <- rope(
     as.data.frame(x$Sol[, 1:nF, drop = FALSE]),
@@ -407,7 +444,13 @@ rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", co
 
 
 #' @export
-rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
+rope.mcmc <- function(x,
+                      range = "default",
+                      ci = 0.95,
+                      ci_method = "ETI",
+                      complement = FALSE,
+                      verbose = TRUE,
+                      ...) {
   out <- rope(
     as.data.frame(x),
     range = range,
@@ -424,7 +467,13 @@ rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "ETI", comple
 
 
 #' @export
-rope.bcplm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
+rope.bcplm <- function(x,
+                       range = "default",
+                       ci = 0.95,
+                       ci_method = "ETI",
+                       complement = FALSE,
+                       verbose = TRUE,
+                       ...) {
   out <- rope(
     insight::get_parameters(x),
     range = range,
@@ -454,11 +503,16 @@ rope.mcmc.list <- rope.bcplm
 
 #' @rdname rope
 #' @export
-rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE,
+rope.stanreg <- function(x,
+                         range = "default",
+                         ci = 0.95,
+                         ci_method = "ETI",
+                         complement = FALSE,
                          effects = "fixed",
                          component = "location",
                          parameters = NULL,
-                         verbose = TRUE, ...) {
+                         verbose = TRUE,
+                         ...) {
   effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
   component <- insight::validate_argument(
     component,
