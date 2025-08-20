@@ -37,9 +37,8 @@ rope(x, ...)
   ci = 0.95,
   ci_method = "ETI",
   complement = FALSE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -51,8 +50,8 @@ rope(x, ...)
   ci = 0.95,
   ci_method = "ETI",
   complement = FALSE,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
   verbose = TRUE,
   ...

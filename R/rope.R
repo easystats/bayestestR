@@ -192,7 +192,14 @@ rope.numeric <- function(x,
   }
 
   rope_values <- lapply(ci, function(i) {
-    .rope(x, range = range, ci = i, ci_method = ci_method, complement = complement, verbose = verbose)
+    .rope(
+      x,
+      range = range,
+      ci = i,
+      ci_method = ci_method,
+      complement = complement,
+      verbose = verbose
+    )
   })
 
   # "do.call(rbind)" does not bind attribute values together
@@ -200,7 +207,10 @@ rope.numeric <- function(x,
 
   out <- do.call(rbind, rope_values)
   if (nrow(out) > 1) {
-    iv <- intersect(colnames(out), c("ROPE_Percentage", "Superiority_Percentage", "Inferiority_Percentage"))
+    iv <- intersect(
+      colnames(out),
+      c("ROPE_Percentage", "Superiority_Percentage", "Inferiority_Percentage")
+    )
     out[iv] <- lapply(out[iv], as.numeric)
   }
 
@@ -245,7 +255,15 @@ rope.get_predicted <- function(x,
     }
     attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    out <- rope(as.numeric(x), range = range, ci = ci, ci_method = ci_method, complement = complement, verbose = verbose, ...)
+    out <- rope(
+      as.numeric(x),
+      range = range,
+      ci = ci,
+      ci_method = ci_method,
+      complement = complement,
+      verbose = verbose,
+      ...
+    )
   }
   out
 }
@@ -289,7 +307,15 @@ rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", 
 
 #' @export
 rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
-  rope(.posterior_draws_to_df(x), range = range, ci = ci, ci_method = ci_method, complement = complement, verbose = verbose, ...)
+  rope(
+    .posterior_draws_to_df(x),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
 }
 
 #' @export
@@ -299,7 +325,15 @@ rope.rvar <- rope.draws
 #' @export
 rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
-  dat <- rope(xdf, range = range, ci = ci, ci_method = ci_method, complement = complement, verbose = verbose, ...)
+  dat <- rope(
+    xdf,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   dat <- .append_datagrid(dat, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -312,7 +346,15 @@ rope.emm_list <- rope.emmGrid
 #' @export
 rope.slopes <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
   xrvar <- .get_marginaleffects_draws(x)
-  dat <- rope(xrvar, range = range, ci = ci, ci_method = ci_method, complement = complement, verbose = verbose, ...)
+  dat <- rope(
+    xrvar,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   dat <- .append_datagrid(dat, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -330,7 +372,15 @@ rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "ETI
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   }
-  out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, complement = complement, verbose = verbose, ...)
+  out <- rope(
+    insight::get_parameters(x),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -358,7 +408,15 @@ rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", co
 
 #' @export
 rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
-  out <- rope(as.data.frame(x), range = range, ci = ci, ci_method = ci_method, complement = complement, verbose = verbose, ...)
+  out <- rope(
+    as.data.frame(x),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   attr(out, "object_name") <- NULL
   attr(out, "data") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -367,7 +425,15 @@ rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "ETI", comple
 
 #' @export
 rope.bcplm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
-  out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, complement = complement, verbose = verbose, ...)
+  out <- rope(
+    insight::get_parameters(x),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   attr(out, "object_name") <- NULL
   attr(out, "data") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -389,12 +455,15 @@ rope.mcmc.list <- rope.bcplm
 #' @rdname rope
 #' @export
 rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE,
-                         effects = c("fixed", "random", "all"),
-                         component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                         effects = "fixed",
+                         component = "location",
                          parameters = NULL,
                          verbose = TRUE, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
+  component <- insight::validate_argument(
+    component,
+    c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary")
+  )
 
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
@@ -406,7 +475,12 @@ rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", com
   if (verbose && !inherits(x, "blavaan")) .check_multicollinearity(x, "rope")
 
   rope_data <- rope(
-    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+    insight::get_parameters(
+      x,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    ),
     range = range,
     ci = ci,
     ci_method = ci_method,
@@ -442,8 +516,8 @@ rope.brmsfit <- function(x,
                          ci = 0.95,
                          ci_method = "ETI",
                          complement = FALSE,
-                         effects = c("fixed", "random", "all"),
-                         component = c("conditional", "zi", "zero_inflated", "all"),
+                         effects = "fixed",
+                         component = "conditional",
                          parameters = NULL,
                          verbose = TRUE,
                          ...) {
@@ -644,7 +718,12 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complem
 
 
 #' @keywords internal
-.rope <- function(x, range = c(-0.1, 0.1), ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE) {
+.rope <- function(x,
+                  range = c(-0.1, 0.1),
+                  ci = 0.95,
+                  ci_method = "ETI",
+                  complement = FALSE,
+                  verbose = TRUE) {
   ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)
 
   if (anyNA(ci_bounds)) {
