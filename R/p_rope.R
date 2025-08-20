@@ -227,10 +227,11 @@ p_rope.mcmc.list <- p_rope.mcmc
 
 #' @keywords internal
 .p_rope <- function(rope_rez) {
-  cols <- c("Parameter", "ROPE_low", "ROPE_high",
-            "ROPE_Percentage", "Superiority_Percentage", "Inferiority_Percentage",
-            "Effects", "Component")
-  out <- as.data.frame(rope_rez)[intersect(names(rope_rez), cols)]
+  cols <- c(
+    "Parameter", "ROPE_low", "ROPE_high", "ROPE_Percentage",
+    "Superiority_Percentage", "Inferiority_Percentage", "Effects", "Component"
+  )
+  out <- as.data.frame(rope_rez)[cols[cols %in% names(rope_rez)]]
 
   names(out)[names(out) == "ROPE_Percentage"] <- "p_ROPE"
   if (all(c("Superiority_Percentage", "Inferiority_Percentage") %in% names(out))) {
