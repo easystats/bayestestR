@@ -9,6 +9,8 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
+#' @inheritSection hdi Model components
+#'
 #' @references
 #' DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals.
 #' Statistical Science. 11(3): 189–212. 10.1214/ss/1032280214
@@ -75,7 +77,6 @@ bci.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
 bci.rvar <- bci.draws
 
 
-#' @rdname bci
 #' @export
 bci.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
@@ -98,10 +99,9 @@ bci.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 bci.bamlss <- function(x,
                        ci = 0.95,
-                       component = c("all", "conditional", "location"),
+                       component = "all",
                        verbose = TRUE,
                        ...) {
-  component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "bci")
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
@@ -131,15 +131,13 @@ bci.mcmc.list <- bci.bcplm
 bci.BGGM <- bci.bcplm
 
 
-#' @rdname bci
 #' @export
 bci.sim.merMod <- function(x,
                            ci = 0.95,
-                           effects = c("fixed", "random", "all"),
+                           effects = "fixed",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
-  effects <- match.arg(effects)
   dat <- .compute_interval_simMerMod(
     x = x,
     ci = ci,
@@ -154,7 +152,6 @@ bci.sim.merMod <- function(x,
 }
 
 
-#' @rdname bci
 #' @export
 bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
   dat <- .compute_interval_sim(
@@ -170,7 +167,6 @@ bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 }
 
 
-#' @rdname bci
 #' @export
 bci.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
@@ -183,7 +179,6 @@ bci.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 bci.emm_list <- bci.emmGrid
 
-#' @rdname bci
 #' @export
 bci.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xrvar <- .get_marginaleffects_draws(x)
@@ -199,18 +194,14 @@ bci.comparisons <- bci.slopes
 #' @export
 bci.predictions <- bci.slopes
 
-#' @rdname bci
 #' @export
 bci.stanreg <- function(x,
                         ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                        effects = "fixed",
+                        component = "location",
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   out <- .prepare_output(
     bci(
       insight::get_parameters(
@@ -223,7 +214,7 @@ bci.stanreg <- function(x,
       verbose = verbose,
       ...
     ),
-    insight::clean_parameters(x),
+    .get_cleaned_parameters(x, ...),
     inherits(x, "stanmvreg")
   )
 
@@ -242,12 +233,13 @@ bci.blavaan <- bci.stanreg
 
 #' @rdname bci
 #' @export
-bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
-                        component = c("conditional", "zi", "zero_inflated", "all"),
-                        parameters = NULL, verbose = TRUE, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+bci.brmsfit <- function(x,
+                        ci = 0.95,
+                        effects = "fixed",
+                        component = "conditional",
+                        parameters = NULL,
+                        verbose = TRUE,
+                        ...) {
   out <- .prepare_output(
     bci(
       insight::get_parameters(
@@ -260,7 +252,7 @@ bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
       verbose = verbose,
       ...
     ),
-    insight::clean_parameters(x)
+    .get_cleaned_parameters(x, ...)
   )
 
   class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
@@ -269,7 +261,6 @@ bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
 }
 
 
-#' @rdname bci
 #' @export
 bci.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- bci(insight::get_parameters(x), ci = ci, verbose = verbose, ...)

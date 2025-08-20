@@ -171,12 +171,10 @@ weighted_posteriors.stanreg <- function(...,
                                         prior_odds = NULL,
                                         missing = 0,
                                         verbose = TRUE,
-                                        effects = c("fixed", "random", "all"),
-                                        component = c("conditional", "zi", "zero_inflated", "all"),
+                                        effects = "fixed",
+                                        component = "conditional",
                                         parameters = NULL) {
   Mods <- list(...)
-  effects <- match.arg(effects)
-  component <- match.arg(component)
 
   # Get Bayes factors
   BFMods <- bayesfactor_models(..., denominator = 1, verbose = verbose)
@@ -202,15 +200,13 @@ weighted_posteriors.stanreg <- function(...,
 }
 
 #' @export
-#' @rdname weighted_posteriors
 weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 
 #' @export
-#' @rdname weighted_posteriors
 weighted_posteriors.blavaan <- weighted_posteriors.stanreg
 
-#' @export
 #' @rdname weighted_posteriors
+#' @export
 weighted_posteriors.BFBayesFactor <- function(...,
                                               prior_odds = NULL,
                                               missing = 0,

@@ -1,8 +1,7 @@
 #' Inclusion Bayes Factors for testing predictors across Bayesian models
 #'
-#' The `bf_*` function is an alias of the main function.
-#' \cr \cr
-#' For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
+#' The `bf_*` function is an alias of the main function. For more info, see
+#' [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
 #' @author Mattan S. Ben-Shachar
 #' @param models An object of class [bayesfactor_models()] or `BFBayesFactor`.

@@ -42,6 +42,8 @@
 #'   arguments to internal [logspline::logspline()].)
 #' @inheritParams hdi
 #'
+#' @inheritSection hdi Model components
+#'
 #' @return A data frame containing the (log) Bayes factor representing evidence
 #'   *against* the null  (Use `as.numeric()` to extract the non-log Bayes
 #'   factors; see examples).
@@ -289,14 +291,12 @@ bayesfactor_parameters.stanreg <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           effects = c("fixed", "random", "all"),
-                                           component = c("conditional", "location", "smooth_terms", "sigma", "zi", "zero_inflated", "all"),
+                                           effects = "fixed",
+                                           component = "conditional",
                                            parameters = NULL,
                                            ...,
                                            verbose = TRUE) {
-  cleaned_parameters <- insight::clean_parameters(posterior)
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  cleaned_parameters <- .get_cleaned_parameters(posterior, ...)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
     effects = effects, component = component,
@@ -323,12 +323,10 @@ bayesfactor_parameters.stanreg <- function(posterior,
 }
 
 
-#' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.brmsfit <- bayesfactor_parameters.stanreg
 
 
-#' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.blavaan <- function(posterior,
                                            prior = NULL,

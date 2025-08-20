@@ -17,25 +17,27 @@
 #'
 #' @inheritParams rope
 #'
+#' @inheritSection hdi Model components
+#'
 #' @details Using the [ROPE][rope] and the [HDI][hdi], \cite{Kruschke (2018)}
 #'   suggests using the percentage of the `95%` (or `89%`, considered more stable)
 #'   HDI that falls within the ROPE as a decision rule. If the HDI
 #'   is completely outside the ROPE, the "null hypothesis" for this parameter is
 #'   "rejected". If the ROPE completely covers the HDI, i.e., all most credible
 #'   values of a parameter are inside the region of practical equivalence, the
-#'   null hypothesis is accepted. Else, it’s undecided whether to accept or
+#'   null hypothesis is accepted. Else, it is undecided whether to accept or
 #'   reject the null hypothesis. If the full ROPE is used (i.e., `100%` of the
 #'   HDI), then the null hypothesis is rejected or accepted if the percentage
 #'   of the posterior within the ROPE is smaller than to `2.5%` or greater than
 #'   `97.5%`. Desirable results are low proportions inside the ROPE  (the closer
 #'   to zero the better).
-#'   \cr \cr
+#'
 #'   Some attention is required for finding suitable values for the ROPE limits
 #'   (argument `range`). See 'Details' in [`rope_range()`] for further
 #'   information.
-#'   \cr \cr
+#'
 #'   **Multicollinearity: Non-independent covariates**
-#'   \cr \cr
+#'
 #'   When parameters show strong correlations, i.e. when covariates are not
 #'   independent, the joint parameter distributions may shift towards or
 #'   away from the ROPE. In such cases, the test for practical equivalence may
@@ -44,7 +46,7 @@
 #'   on independence. Most problematic are the results of the "undecided"
 #'   parameters, which may either move further towards "rejection" or away
 #'   from it (\cite{Kruschke 2014, 340f}).
-#'   \cr \cr
+#'
 #'   `equivalence_test()` performs a simple check for pairwise correlations
 #'   between parameters, but as there can be collinearity between more than two variables,
 #'   a first step to check the assumptions of this hypothesis testing is to look
@@ -71,7 +73,7 @@
 #'   [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
 #'   to visualize the results from the equivalence-test (for models only).
 #'
-#' @examplesIf require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")
+#' @examplesIf all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor", "see"), quietly = TRUE))
 #' library(bayestestR)
 #'
 #' equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
@@ -282,32 +284,28 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
 }
 
 
-#' @rdname equivalence_test
 #' @export
 equivalence_test.stanreg <- function(x,
                                      range = "default",
                                      ci = 0.95,
-                                     effects = c("fixed", "random", "all"),
-                                     component = c(
-                                       "location",
-                                       "all",
-                                       "conditional",
-                                       "smooth_terms",
-                                       "sigma",
-                                       "distributional",
-                                       "auxiliary"
-                                     ),
+                                     effects = "fixed",
+                                     component = "location",
                                      parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
-  out <- .equivalence_test_models(x, range, ci, effects, component, parameters, verbose)
+  out <- .equivalence_test_models(
+    x,
+    range,
+    ci,
+    effects,
+    component,
+    parameters,
+    verbose
+  )
 
   out <- .prepare_output(
     out,
-    insight::clean_parameters(x),
+    .get_cleaned_parameters(x, ...),
     inherits(x, "stanmvreg")
   )
 
@@ -329,19 +327,24 @@ equivalence_test.blavaan <- equivalence_test.stanreg
 equivalence_test.brmsfit <- function(x,
                                      range = "default",
                                      ci = 0.95,
-                                     effects = c("fixed", "random", "all"),
-                                     component = c("conditional", "zi", "zero_inflated", "all"),
+                                     effects = "fixed",
+                                     component = "conditional",
                                      parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
-  out <- .equivalence_test_models(x, range, ci, effects, component, parameters, verbose)
+  out <- .equivalence_test_models(
+    x,
+    range,
+    ci,
+    effects,
+    component,
+    parameters,
+    verbose
+  )
 
   out <- .prepare_output(
     out,
-    insight::clean_parameters(x),
+    .get_cleaned_parameters(x, ...),
     inherits(x, "stanmvreg")
   )
 
@@ -433,11 +436,10 @@ equivalence_test.bayesQR <- equivalence_test.bcplm
 equivalence_test.bamlss <- function(x,
                                     range = "default",
                                     ci = 0.95,
-                                    component = c("all", "conditional", "location"),
+                                    component = "all",
                                     parameters = NULL,
                                     verbose = TRUE,
                                     ...) {
-  component <- match.arg(component)
   out <- .equivalence_test_models(
     insight::get_parameters(x, component = component),
     range,

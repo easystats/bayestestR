@@ -11,6 +11,8 @@
 #' @inheritParams hdi
 #' @inheritParams estimate_density
 #'
+#' @inheritSection hdi Model components
+#'
 #' @return A numeric value if `x` is a vector. If `x` is a model-object,
 #' returns a data frame with following columns:
 #'
@@ -45,20 +47,42 @@ map_estimate <- function(x, ...) {
 
 #' @rdname map_estimate
 #' @export
-map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
-  out <- map_estimate(data.frame(x = x),
+map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", verbose = TRUE, ...) {
+  out <- map_estimate(
+    data.frame(x = x),
     precision,
-    method = method, ...
+    method = method,
+    verbose = verbose,
+    ...
   )
   attr(out, "data") <- x
   out
 }
 
-.map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
-  d <- estimate_density(x, precision = precision, method = method, ...)
-
-  out <- d$x[which.max(d$y)]
-  attr(out, "MAP_density") <- max(d$y)
+.map_estimate <- function(x, precision = 2^10, method = "kernel", verbose = TRUE, ...) {
+  # sanity check - if we have only one unique value (a vector of constant values)
+  # density estimation doesn't work
+  if (insight::n_unique(x) == 1) {
+    if (verbose) {
+      insight::format_alert("Data is singular, MAP estimate equals the unique value of the data.")
+    }
+    out <- stats::na.omit(x)[1]
+    attr(out, "MAP_density") <- 1
+  } else {
+    d <- try(estimate_density(x, precision = precision, method = method, ...), silent = TRUE)
+    if (inherits(d, "try-error")) {
+      if (verbose) {
+        msg <- "Could not calculate MAP estimate."
+        if (grepl("too sparse", d, fixed = TRUE)) {
+          msg <- paste(msg, "The provided data is probably too sparse to calculate the density.")
+        }
+        insight::format_alert(msg)
+      }
+      return(NA)
+    }
+    out <- d$x[which.max(d$y)]
+    attr(out, "MAP_density") <- max(d$y)
+  }
   out
 }
 
@@ -68,7 +92,7 @@ map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
 #' @export
 map_estimate.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
   x <- insight::get_parameters(x)
-  map_estimate(x, precision = precision, method = method)
+  map_estimate(x, precision = precision, method = method, ...)
 }
 
 #' @export
@@ -93,8 +117,16 @@ map_estimate.mcmc.list <- map_estimate.bayesQR
 # stan / posterior models -----------------------
 
 #' @keywords internal
-.map_estimate_models <- function(x, precision, method, ...) {
-  l <- sapply(x, .map_estimate, precision = precision, method = method, simplify = FALSE, ...)
+.map_estimate_models <- function(x, precision, method, verbose = TRUE, ...) {
+  l <- sapply(
+    x,
+    .map_estimate,
+    precision = precision,
+    method = method,
+    verbose = verbose,
+    simplify = FALSE,
+    ...
+  )
 
   out <- data.frame(
     Parameter = colnames(x),
@@ -103,7 +135,7 @@ map_estimate.mcmc.list <- map_estimate.bayesQR
     row.names = NULL
   )
 
-  out <- .add_clean_parameters_attribute(out, x)
+  out <- .add_clean_parameters_attribute(out, x, ...)
   attr(out, "MAP_density") <- sapply(l, attr, "MAP_density")
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   attr(out, "centrality") <- "map"
@@ -112,16 +144,26 @@ map_estimate.mcmc.list <- map_estimate.bayesQR
 }
 
 
-#' @rdname map_estimate
 #' @export
-map_estimate.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+map_estimate.stanreg <- function(x,
+                                 precision = 2^10,
+                                 method = "kernel",
+                                 effects = "fixed",
+                                 component = "location",
+                                 parameters = NULL,
+                                 verbose = TRUE,
+                                 ...) {
   .map_estimate_models(
-    x = insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+    x = insight::get_parameters(
+      x,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    ),
     precision = precision,
-    method = method
+    method = method,
+    verbose = verbose,
+    ...
   )
 }
 
@@ -134,13 +176,25 @@ map_estimate.blavaan <- map_estimate.stanreg
 
 #' @rdname map_estimate
 #' @export
-map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+map_estimate.brmsfit <- function(x,
+                                 precision = 2^10,
+                                 method = "kernel",
+                                 effects = "fixed",
+                                 component = "conditional",
+                                 parameters = NULL,
+                                 verbose = TRUE,
+                                 ...) {
   .map_estimate_models(
-    x = insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
-    precision = precision, method = method
+    x = insight::get_parameters(
+      x,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    ),
+    precision = precision,
+    method = method,
+    verbose = verbose,
+    ...
   )
 }
 
@@ -148,7 +202,12 @@ map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects
 #' @rdname map_estimate
 #' @inheritParams p_direction
 #' @export
-map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", rvar_col = NULL, ...) {
+map_estimate.data.frame <- function(x,
+                                    precision = 2^10,
+                                    method = "kernel",
+                                    rvar_col = NULL,
+                                    verbose = TRUE,
+                                    ...) {
   x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
   if (length(x_rvar) > 0L) {
     cl <- match.call()
@@ -163,13 +222,13 @@ map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", rvar
     return(.append_datagrid(out, x))
   }
 
-  .map_estimate_models(x, precision = precision, method = method)
+  .map_estimate_models(x, precision = precision, method = method, verbose = verbose, ...)
 }
 
 
 #' @export
 map_estimate.draws <- function(x, precision = 2^10, method = "kernel", ...) {
-  .map_estimate_models(.posterior_draws_to_df(x), precision = precision, method = method)
+  .map_estimate_models(.posterior_draws_to_df(x), precision = precision, method = method, ...)
 }
 
 #' @export
@@ -179,7 +238,7 @@ map_estimate.rvar <- map_estimate.draws
 #' @export
 map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
   xdf <- insight::get_parameters(x)
-  out <- .map_estimate_models(xdf, precision = precision, method = method)
+  out <- .map_estimate_models(xdf, precision = precision, method = method, ...)
   .append_datagrid(out, x)
 }
 
@@ -222,7 +281,8 @@ map_estimate.get_predicted <- function(x,
     }
     attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    out <- map_estimate(as.numeric(x),
+    out <- map_estimate(
+      as.numeric(x),
       precision = precision,
       method = method,
       verbose = verbose,

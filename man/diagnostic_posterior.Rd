@@ -4,7 +4,6 @@
 \alias{diagnostic_posterior}
 \alias{diagnostic_posterior.default}
 \alias{diagnostic_posterior.stanreg}
-\alias{diagnostic_posterior.brmsfit}
 \title{Posteriors Sampling Diagnostic}
 \usage{
 diagnostic_posterior(posterior, ...)
@@ -14,18 +13,8 @@ diagnostic_posterior(posterior, ...)
 \method{diagnostic_posterior}{stanreg}(
   posterior,
   diagnostic = "all",
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  ...
-)
-
-\method{diagnostic_posterior}{brmsfit}(
-  posterior,
-  diagnostic = "all",
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
   ...
 )
@@ -33,14 +22,30 @@ diagnostic_posterior(posterior, ...)
 \arguments{
 \item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
 
-\item{...}{Currently not used.}
+\item{...}{Currently only used for models of class \code{brmsfit}, where a \code{variable}
+argument can be used, which is directly passed to the \code{as.data.frame()}
+method (i.e., \code{as.data.frame(x, variable = variable)}).}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
 
 \item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
 (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
-be abbreviated.}
+be abbreviated.
+
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
 
 \item{component}{Which type of parameters to return, such as parameters for
 the conditional model, the zero-inflated part of the model, the dispersion
@@ -88,6 +93,35 @@ effective sample size (the formula for \code{mcse()} is from Kruschke 2015, p.
 187). The MCSE "provides a quantitative suggestion of how big the estimation
 noise is".
 }
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
+}
+
 \examples{
 \dontshow{if (require("rstanarm") && require("brms")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{

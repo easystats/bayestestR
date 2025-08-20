@@ -1,3 +1,4 @@
+#' @rdname display.describe_posterior
 #' @export
 print.describe_posterior <- function(x,
                                      digits = 2,

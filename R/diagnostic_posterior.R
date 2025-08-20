@@ -7,6 +7,8 @@
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
 #'   with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
 #'
+#' @inheritSection hdi Model components
+#'
 #' @details
 #'   **Effective Sample (ESS)** should be as large as possible, although for
 #'   most applications, an effective sample size greater than 1000 is sufficient
@@ -64,10 +66,13 @@ diagnostic_posterior.default <- function(posterior, diagnostic = c("ESS", "Rhat"
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
+diagnostic_posterior.stanreg <- function(posterior,
+                                         diagnostic = "all",
+                                         effects = "fixed",
+                                         component = "location",
+                                         parameters = NULL,
+                                         ...) {
   # Find parameters
-  effects <- match.arg(effects)
-  component <- match.arg(component)
   params <- insight::find_parameters(
     posterior,
     effects = effects,
@@ -81,7 +86,12 @@ diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects 
     return(data.frame(Parameter = params))
   }
 
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
+
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
   } else {
@@ -96,7 +106,7 @@ diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects 
     diagnostic_df$ESS <- diagnostic_df$n_eff
   }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "all")
+  MCSE <- mcse(posterior, effects = "full")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
@@ -117,11 +127,10 @@ diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects 
 #' @export
 diagnostic_posterior.stanmvreg <- function(posterior,
                                            diagnostic = "all",
-                                           effects = c("fixed", "random", "all"),
+                                           effects = "fixed",
                                            parameters = NULL,
                                            ...) {
   # Find parameters
-  effects <- match.arg(effects)
   all_params <- insight::find_parameters(
     posterior,
     effects = effects,
@@ -139,7 +148,12 @@ diagnostic_posterior.stanmvreg <- function(posterior,
     return(data.frame(Parameter = params))
   }
 
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
+
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
   } else {
@@ -167,27 +181,33 @@ diagnostic_posterior.stanmvreg <- function(posterior,
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   diagnostic_df$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", diagnostic_df$Parameter)
-  for (i in unique(diagnostic_df$Response)) {
-    diagnostic_df$Parameter <- gsub(sprintf("%s|", i), "", diagnostic_df$Parameter, fixed = TRUE)
-  }
 
   # Select rows
-  diagnostic_df[diagnostic_df$Parameter %in% params, ]
+  diagnostic_df <- diagnostic_df[diagnostic_df$Parameter %in% params, ]
+
+  # clean parameters
+  for (i in unique(diagnostic_df$Response)) {
+    diagnostic_df$Parameter <- gsub(
+      sprintf("%s|", i),
+      "",
+      diagnostic_df$Parameter,
+      fixed = TRUE
+    )
+  }
+
+  diagnostic_df
 }
 
 
 #' @inheritParams insight::get_parameters
-#' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.brmsfit <- function(posterior,
                                          diagnostic = "all",
-                                         effects = c("fixed", "random", "all"),
-                                         component = c("conditional", "zi", "zero_inflated", "all"),
+                                         effects = "fixed",
+                                         component = "conditional",
                                          parameters = NULL,
                                          ...) {
   # Find parameters
-  effects <- match.arg(effects)
-  component <- match.arg(component)
   params <- insight::find_parameters(posterior,
     effects = effects,
     component = component,
@@ -201,7 +221,12 @@ diagnostic_posterior.brmsfit <- function(posterior,
   }
 
   # Get diagnostic
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
+
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat") # Add MCSE
   } else if ("Rhat" %in% diagnostic) {
@@ -215,7 +240,7 @@ diagnostic_posterior.brmsfit <- function(posterior,
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   diagnostic_df$ESS <- diagnostic_df$n_eff
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "all", component = "all")
+  MCSE <- mcse(posterior, effects = "full", component = "all")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
@@ -234,10 +259,14 @@ diagnostic_posterior.brmsfit <- function(posterior,
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects = "fixed", parameters = NULL, ...) {
   # Find parameters
-  effects <- match.arg(effects)
-  params <- insight::find_parameters(posterior, effects = effects, parameters = parameters, flatten = TRUE)
+  params <- insight::find_parameters(
+    posterior,
+    effects = effects,
+    parameters = parameters,
+    flatten = TRUE
+  )
 
   # If no diagnostic
   if (is.null(diagnostic)) {
@@ -245,7 +274,11 @@ diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects 
   }
 
   # Get diagnostic
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
   }
@@ -295,7 +328,11 @@ diagnostic_posterior.blavaan <- function(posterior, diagnostic = "all", ...) {
     return(out)
   }
 
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
   } else {

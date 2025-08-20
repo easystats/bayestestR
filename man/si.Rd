@@ -4,9 +4,6 @@
 \alias{si}
 \alias{si.numeric}
 \alias{si.stanreg}
-\alias{si.brmsfit}
-\alias{si.blavaan}
-\alias{si.emmGrid}
 \alias{si.get_predicted}
 \alias{si.data.frame}
 \title{Compute Support Intervals}
@@ -20,38 +17,11 @@ si(posterior, ...)
   prior = NULL,
   BF = 1,
   verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
   ...
 )
-
-\method{si}{brmsfit}(
-  posterior,
-  prior = NULL,
-  BF = 1,
-  verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
-  parameters = NULL,
-  ...
-)
-
-\method{si}{blavaan}(
-  posterior,
-  prior = NULL,
-  BF = 1,
-  verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
-  parameters = NULL,
-  ...
-)
-
-\method{si}{emmGrid}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
 \method{si}{get_predicted}(
   posterior,
@@ -78,12 +48,40 @@ arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
 
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
+
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section \emph{Model Components}. May be abbreviated.
+Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to \emph{all} model classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
 
 \item{parameters}{Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are

@@ -4,6 +4,7 @@
 #'
 #' @inheritParams effective_sample
 #'
+#' @inheritSection hdi Model components
 #'
 #' @details **Monte Carlo Standard Error (MCSE)** is another measure of
 #' accuracy of the chains. It is defined as standard deviation of the chains
@@ -30,14 +31,11 @@ mcse <- function(model, ...) {
 
 #' @export
 mcse.brmsfit <- function(model,
-                         effects = c("fixed", "random", "all"),
-                         component = c("conditional", "zi", "zero_inflated", "all"),
+                         effects = "fixed",
+                         component = "conditional",
                          parameters = NULL,
                          ...) {
   # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   params <- insight::get_parameters(
     model,
     effects = effects,
@@ -59,14 +57,10 @@ mcse.brmsfit <- function(model,
 #' @rdname mcse
 #' @export
 mcse.stanreg <- function(model,
-                         effects = c("fixed", "random", "all"),
-                         component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                         effects = "fixed",
+                         component = "location",
                          parameters = NULL,
                          ...) {
-  # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   params <- insight::get_parameters(
     model,
     effects = effects,

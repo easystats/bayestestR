@@ -129,12 +129,9 @@ bf_restricted <- bayesfactor_restricted
 #' @export
 bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE,
-                                           effects = c("fixed", "random", "all"),
-                                           component = c("conditional", "zi", "zero_inflated", "all"),
+                                           effects = "fixed",
+                                           component = "conditional",
                                            ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   samps <- .clean_priors_and_posteriors(posterior, prior,
     effects = effects, component = component,
     verbose = verbose

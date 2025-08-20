@@ -12,6 +12,8 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
+#' @inheritSection hdi Model components
+#'
 #' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
 #' library(bayestestR)
 #'
@@ -121,8 +123,7 @@ eti.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
 
 
 #' @export
-eti.bamlss <- function(x, ci = 0.95, component = c("all", "conditional", "location"), verbose = TRUE, ...) {
-  component <- match.arg(component)
+eti.bamlss <- function(x, ci = 0.95, component = "all", verbose = TRUE, ...) {
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
@@ -155,11 +156,10 @@ eti.BGGM <- eti.bcplm
 #' @export
 eti.sim.merMod <- function(x,
                            ci = 0.95,
-                           effects = c("fixed", "random", "all"),
+                           effects = "fixed",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
-  effects <- match.arg(effects)
   dat <- .compute_interval_simMerMod(
     x = x,
     ci = ci,
@@ -176,7 +176,13 @@ eti.sim.merMod <- function(x,
 
 #' @export
 eti.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
-  dat <- .compute_interval_sim(x = x, ci = ci, parameters = parameters, verbose = verbose, fun = "eti")
+  dat <- .compute_interval_sim(
+    x = x,
+    ci = ci,
+    parameters = parameters,
+    verbose = verbose,
+    fun = "eti"
+  )
   out <- dat$result
   attr(out, "data") <- dat$data
   out
@@ -195,6 +201,7 @@ eti.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 eti.emm_list <- eti.emmGrid
 
+
 #' @export
 eti.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xrvar <- .get_marginaleffects_draws(x)
@@ -210,22 +217,28 @@ eti.comparisons <- eti.slopes
 #' @export
 eti.predictions <- eti.slopes
 
-#' @rdname eti
-#' @export
-eti.stanreg <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
-                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
-                        parameters = NULL, verbose = TRUE, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
 
+#' @export
+eti.stanreg <- function(x,
+                        ci = 0.95,
+                        effects = "fixed",
+                        component = "location",
+                        parameters = NULL,
+                        verbose = TRUE,
+                        ...) {
   out <- .prepare_output(
     eti(
-      insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+      insight::get_parameters(
+        x,
+        effects = effects,
+        component = component,
+        parameters = parameters
+      ),
       ci = ci,
       verbose = verbose,
       ...
     ),
-    insight::clean_parameters(x),
+    .get_cleaned_parameters(x, ...),
     inherits(x, "stanmvreg")
   )
 
@@ -233,7 +246,6 @@ eti.stanreg <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
-
 
 #' @export
 eti.stanfit <- eti.stanreg
@@ -244,20 +256,26 @@ eti.blavaan <- eti.stanreg
 
 #' @rdname eti
 #' @export
-eti.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
-                        component = c("conditional", "zi", "zero_inflated", "all"),
-                        parameters = NULL, verbose = TRUE, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+eti.brmsfit <- function(x,
+                        ci = 0.95,
+                        effects = "fixed",
+                        component = "conditional",
+                        parameters = NULL,
+                        verbose = TRUE,
+                        ...) {
   out <- .prepare_output(
     eti(
-      insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+      insight::get_parameters(
+        x,
+        effects = effects,
+        component = component,
+        parameters = parameters
+      ),
       ci = ci,
       verbose = verbose,
       ...
     ),
-    insight::clean_parameters(x)
+    .get_cleaned_parameters(x, ...)
   )
 
   class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))

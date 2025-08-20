@@ -123,6 +123,7 @@ centred
 characterisation
 characterises
 ci
+codecov
 compte
 containe
 cplm
@@ -159,6 +160,7 @@ lavaan
 lentiful
 lifecycle
 lm
+marginaleffects
 maths
 mattansb
 mcmc
@@ -168,7 +170,7 @@ nbinom
 neq
 notin
 objets
-operationlizing
+operationalizing
 orthonormal
 osterior
 patilindrajeets
@@ -184,6 +186,7 @@ reproducibility
 richarddmorey
 riors
 rmsb
+rmarkdown
 rstanarm
 sIgnificance
 salis

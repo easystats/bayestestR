@@ -53,13 +53,12 @@ bayesfactor <- function(...,
                         direction = "two-sided",
                         null = 0,
                         hypothesis = NULL,
-                        effects = c("fixed", "random", "all"),
+                        effects = "fixed",
                         verbose = TRUE,
                         denominator = 1,
                         match_models = FALSE,
                         prior_odds = NULL) {
   mods <- list(...)
-  effects <- match.arg(effects)
 
   if (length(mods) > 1) {
     bayesfactor_models(..., denominator = denominator)

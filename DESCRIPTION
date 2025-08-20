@@ -1,12 +1,12 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.15.2
+Version: 0.16.1.2
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
              role = c("aut", "cre"),
-             email = "dom.makowski@gmail.com",
+             email = "officialeasystats@gmail.com",
              comment = c(ORCID = "0000-0001-5375-9967")),
       person(given = "Daniel",
              family = "Lüdecke",
@@ -56,7 +56,7 @@ Authors@R:
              role = "ctb",
              email = "sam@crawley.nz",
              comment = c(ORCID = "0000-0002-7847-0411")))
-Maintainer: Dominique Makowski <dom.makowski@gmail.com>
+Maintainer: Dominique Makowski <officialeasystats@gmail.com>
 Description: Provides utilities to describe posterior
     distributions and Bayesian models. It includes point-estimates such as
     Maximum A Posteriori (MAP), measures of dispersion (Highest Density
@@ -66,8 +66,8 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.6)
 Imports:
-    insight (>= 1.0.1),
-    datawizard (>= 1.0.0),
+    insight (>= 1.3.1),
+    datawizard (>= 1.2.0),
     graphics,
     methods,
     stats,
@@ -95,7 +95,7 @@ Suggests:
     lavaan,
     lme4,
     logspline (>= 2.1.21),
-    marginaleffects (>= 0.24.0),
+    marginaleffects (>= 0.26.0),
     MASS,
     mclust,
     mediation,
@@ -104,14 +104,15 @@ Suggests:
     parameters,
     patchwork,
     performance,
-    quadprog,
     posterior,
+    quadprog,
     RcppEigen,
     rmarkdown,
     rstan,
     rstanarm,
     see (>= 0.8.5),
     testthat,
+    tinytable,
     tweedie,
     withr
 License: GPL-3

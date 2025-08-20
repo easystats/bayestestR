@@ -1,6 +1,6 @@
 ---
 title: "In-Depth 1: Comparison of Point-Estimates"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{In-Depth 1: Comparison of Point-Estimates}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 csl: apa.csl
@@ -48,7 +48,7 @@ This vignette can be referred to by citing the package:
 # Effect Point-Estimates in the Bayesian Framework
 
 
-## Introduction 
+## Introduction
 
 One of the main difference between the Bayesian and the frequentist frameworks
 is that the former returns a probability *distribution* for each effect (*i.e.*,
@@ -57,8 +57,8 @@ value*. However, there is still a need and demand - for reporting or use in
 further analysis - for a single value (**point-estimate**) that best
 characterises the underlying posterior distribution.
 
-There are three main indices used in the literature for effect estimation: 
-- the **mean** 
+There are three main indices used in the literature for effect estimation:
+- the **mean**
 - the **median**
 - the **MAP** (Maximum A Posteriori) estimate (roughly
 corresponding to the mode - the "peak" - of the distribution)
@@ -190,7 +190,7 @@ dat <- df
 dat <- data_select(dat, select = c("sample_size", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
   dat,
-  select = -c("sample_size", "error", "true_effect", "outcome_type"),
+  select = -c("sample_size", "true_effect", "outcome_type"),
   names_to = "estimate",
   values_to = "value"
 )

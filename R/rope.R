@@ -31,6 +31,8 @@
 #'
 #' @inheritParams hdi
 #'
+#' @inheritSection hdi Model components
+#'
 #' @section ROPE:
 #' Statistically, the probability of a posterior distribution of being
 #' different from 0 does not make much sense (the probability of a single value
@@ -106,7 +108,7 @@
 #'   methods for model selection. Statistics and Computing, 27(3), 711–735.
 #'   \doi{10.1007/s11222-016-9649-y}
 #'
-#' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
+#' @examplesIf all(insight::check_if_installed(c("rstanarm", "emmeans", "brms", "BayesFactor"), quietly = TRUE))
 #' library(bayestestR)
 #'
 #' rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
@@ -114,9 +116,8 @@
 #' rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #' rope(x = rnorm(1000, 1, 1), ci = c(0.90, 0.95))
 #' \donttest{
-#' library(rstanarm)
 #' model <- suppressWarnings(
-#'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#'   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' )
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
@@ -127,17 +128,14 @@
 #' # named ROPE ranges
 #' rope(model, range = list(gear = c(-3, 2), wt = c(-0.2, 0.2)))
 #'
-#' library(emmeans)
-#' rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
+#' rope(emmeans::emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 #'
-#' library(brms)
-#' model <- brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
 #'
-#' library(brms)
-#' model <- brm(
-#'   bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
+#' model <- brms::brm(
+#'   brms::bf(brms::mvbind(mpg, disp) ~ wt + cyl) + brms::set_rescor(rescor = TRUE),
 #'   data = mtcars,
 #'   refresh = 0
 #' )
@@ -155,8 +153,7 @@
 #'   )
 #' )
 #'
-#' library(BayesFactor)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' rope(bf)
 #' rope(bf, ci = c(0.90, 0.95))
 #' }
@@ -202,7 +199,10 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", com
   }
 
   # Attributes
-  hdi_area <- cbind(CI = ci, data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area"))))
+  hdi_area <- cbind(
+    CI = ci,
+    data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area")))
+  )
   names(hdi_area) <- c("CI", "CI_low", "CI_high")
 
   attr(out, "HDI_area") <- hdi_area
@@ -301,6 +301,7 @@ rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", com
 
 #' @export
 rope.emm_list <- rope.emmGrid
+
 
 #' @export
 rope.slopes <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
@@ -441,7 +442,11 @@ rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", com
     ...
   )
 
-  out <- .prepare_output(rope_data, insight::clean_parameters(x), inherits(x, "stanmvreg"))
+  out <- .prepare_output(
+    rope_data,
+    .get_cleaned_parameters(x, ...),
+    inherits(x, "stanmvreg")
+  )
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -469,9 +474,6 @@ rope.brmsfit <- function(x,
                          parameters = NULL,
                          verbose = TRUE,
                          ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   # check range argument
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
@@ -506,7 +508,13 @@ rope.brmsfit <- function(x,
       dv,
       function(dv_item) {
         ret <- rope(
-          insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+          insight::get_parameters(
+            x,
+            effects = effects,
+            component = component,
+            parameters = parameters,
+            ...
+          ),
           range = range[[dv_item]],
           ci = ci,
           ci_method = ci_method,
@@ -525,7 +533,11 @@ rope.brmsfit <- function(x,
     )
     rope_data <- do.call(rbind, rope_data)
 
-    out <- .prepare_output(rope_data, insight::clean_parameters(x), is_brms_mv = TRUE)
+    out <- .prepare_output(
+      rope_data,
+      .get_cleaned_parameters(x, ...),
+      is_brms_mv = TRUE
+    )
   } else {
     rope_data <- rope(
       insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
@@ -537,7 +549,7 @@ rope.brmsfit <- function(x,
       ...
     )
 
-    out <- .prepare_output(rope_data, insight::clean_parameters(x))
+    out <- .prepare_output(rope_data, .get_cleaned_parameters(x, ...))
   }
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
@@ -558,8 +570,6 @@ rope.sim.merMod <- function(x,
                             parameters = NULL,
                             verbose = TRUE,
                             ...) {
-  effects <- match.arg(effects)
-
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
@@ -591,7 +601,10 @@ rope.sim.merMod <- function(x,
     tmp
   })
 
-  dat <- do.call(rbind, args = c(insight::compact_list(rope_list), make.row.names = FALSE))
+  dat <- do.call(
+    rbind,
+    args = c(insight::compact_list(rope_list), make.row.names = FALSE)
+  )
 
   dat <- switch(effects,
     fixed = .select_rows(dat, "Group", "fixed"),
@@ -651,6 +664,36 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complem
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
 
   dat
+}
+
+
+# helper -------------------------------------------------------------------
+
+
+#' @keywords internal
+.rope <- function(x, range = c(-0.1, 0.1), ci = 0.95, ci_method = "ETI", verbose = TRUE) {
+  ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)
+
+  if (anyNA(ci_bounds)) {
+    rope_percentage <- NA
+  } else {
+    HDI_area <- x[x >= ci_bounds$CI_low & x <= ci_bounds$CI_high]
+    area_within <- HDI_area[HDI_area >= min(range) & HDI_area <= max(range)]
+    rope_percentage <- length(area_within) / length(HDI_area)
+  }
+
+
+  rope <- data.frame(
+    CI = ci,
+    ROPE_low = range[1],
+    ROPE_high = range[2],
+    ROPE_Percentage = rope_percentage
+  )
+
+  attr(rope, "HDI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
+  attr(rope, "CI_bounds") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
+  class(rope) <- unique(c("rope", "see_rope", class(rope)))
+  rope
 }
 
 

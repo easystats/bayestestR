@@ -3,23 +3,11 @@
 \name{mediation}
 \alias{mediation}
 \alias{mediation.brmsfit}
-\alias{mediation.stanmvreg}
 \title{Summary of Bayesian multivariate-response mediation-models}
 \usage{
 mediation(model, ...)
 
 \method{mediation}{brmsfit}(
-  model,
-  treatment,
-  mediator,
-  response = NULL,
-  centrality = "median",
-  ci = 0.95,
-  method = "ETI",
-  ...
-)
-
-\method{mediation}{stanmvreg}(
   model,
   treatment,
   mediator,
@@ -106,7 +94,7 @@ the indirect effect is also called \emph{average causal mediation effects}
 \note{
 There is an \code{as.data.frame()} method that returns the posterior
 samples of the effects, which can be used for further processing in the
-different \pkg{bayestestR} package.
+\strong{bayestestR} package.
 }
 \examples{
 \dontshow{if (require("mediation") && require("brms") && require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

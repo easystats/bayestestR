@@ -30,9 +30,10 @@ test_that("ci", {
 
 
 test_that("ci", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
 
   m <- insight::download_model("stanreg_merMod_5")
@@ -47,9 +48,10 @@ test_that("ci", {
 
 
 test_that("rope", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
 
   m <- insight::download_model("brms_zi_3")

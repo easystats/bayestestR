@@ -35,7 +35,9 @@ test_that("p_significance", {
 })
 
 test_that("stanreg", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   m <- insight::download_model("stanreg_merMod_5")
 
@@ -47,7 +49,9 @@ test_that("stanreg", {
 })
 
 test_that("brms", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
 
   m2 <- insight::download_model("brms_1")
@@ -81,7 +85,9 @@ test_that("brms", {
 })
 
 test_that("stan", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   m <- insight::download_model("stanreg_merMod_5")
 

@@ -1,4 +1,4 @@
-# bayestestR 0.15.3
+# bayestestR (devel)
 
 ## New functionality
 
@@ -6,6 +6,59 @@
   that `rope(x, complement = TRUE)` returns the ROPE posterior probability
   together with the posterior probabilities above/below the ROPE (the 
   _complementary_ probabilities).
+
+# bayestestR (devel)
+
+## Changes
+
+* Added `display()` methods for *bayestestR* objects. The `display()` methods
+  also get a new `format` option, `format = "tt"`, to produce tables with the
+  `tinytable` package.
+
+* The long deprecated `rnorm_perfect()` function has been removed. Use
+  `distribution_normal()` instead.
+
+# bayestestR 0.16.1
+
+## Changes
+
+* Improved efficiency for `describe_posterior()`.
+
+* Minor improvements for models with multinomial response variables.
+
+* Minor improvements for mixture models from package *brms*.
+
+# bayestestR 0.16.0
+
+## Changes
+
+* Revised code-base to address changes in latest *insight* update. Dealing with
+  larger models (many parameters, many posterior samples) from packages *brms*
+  and *rstanarm* is more efficient now. Furthermore, the options for the
+  `effects` argument have a new behavior. `"all"` only returns fixed effects
+  and random effects variance components, but no longer the group level
+  estimates. Use `effects = "full"` to return all parameters. This change is
+  mainly to be more flexible and gain more efficiency for models with many
+  parameters and / or many posterior draws.
+
+# bayestestR 0.15.3
+
+## Changes
+
+* `effective_sample()`, and functions that call `effective_sample()` (like
+  `describe_posterior()` with the respective `test` option) now also return
+  the tail ESS.
+
+## Bug fixes
+
+* `describe_posterior()` now returns a columns with response levels for
+  *marginaleffects* objects applied to categorical or multinomial Stan models.
+
+* `describe_posterior()` now returns a columns with response variables for
+  *marginaleffects* objects applied to multivariate response Stan models.
+
+* Fixed issue in `map_estimate()` and `point_estimate(centrality = "MAP")` for
+  vectors with only one unique value.
 
 # bayestestR 0.15.2
 

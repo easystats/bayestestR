@@ -12,11 +12,20 @@
 #'   resemble the arguments of the `.numeric` or `.data.frame`methods.
 #' @param ci Value or vector of probability of the (credible) interval - CI
 #'   (between 0 and 1) to be estimated. Default to `.95` (`95%`).
-#' @param effects Should results for fixed effects, random effects or both be
-#'   returned? Only applies to mixed models. May be abbreviated.
-#' @param component Should results for all parameters, parameters for the
-#'   conditional model or the zero-inflated part of the model be returned? May
-#'   be abbreviated. Only applies to \pkg{brms}-models.
+#' @param component Which type of parameters to return, such as parameters for
+#' the conditional model, the zero-inflated part of the model, the dispersion
+#' term, etc. See details in section _Model Components_. May be abbreviated.
+#' Note that the *conditional* component also refers to the *count* or *mean*
+#' component - names may differ, depending on the modeling package. There are
+#' three convenient shortcuts (not applicable to *all* model classes):
+#' - `component = "all"` returns all possible parameters.
+#' - If `component = "location"`, location parameters such as `conditional`,
+#'   `zero_inflated`, `smooth_terms`, or `instruments` are returned (everything
+#'   that are fixed or random effects - depending on the `effects` argument -
+#'   but no auxiliary parameters).
+#' - For `component = "distributional"` (or `"auxiliary"`), components like
+#'   `sigma`, `dispersion`, `beta` or `precision` (and other auxiliary
+#'   parameters) are returned.
 #' @param parameters Regular expression pattern that describes the parameters
 #'   that should be returned. Meta-parameters (like `lp__` or `prior_`) are
 #'   filtered by default, so only parameters that typically appear in the
@@ -28,12 +37,39 @@
 #' iterations for predicted values (e.g., `brmsfit` models).
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
+#' @inheritParams insight::get_parameters.BFBayesFactor
+#' @inheritParams insight::get_parameters
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @details Unlike equal-tailed intervals (see `eti()`) that typically exclude `2.5%`
-#' from each tail of the distribution and always include the median, the HDI is
-#' *not* equal-tailed and therefore always includes the mode(s) of posterior
+#' @section Model components:
+#'
+#' Possible values for the `component` argument depend on the model class.
+#' Following are valid options:
+#' - `"all"`: returns all model components, applies to all models, but will only
+#'   have an effect for models with more than just the conditional model
+#'   component.
+#' - `"conditional"`: only returns the conditional component, i.e. "fixed
+#'   effects" terms from the model. Will only have an effect for models with
+#'   more than just the conditional model component.
+#' - `"smooth_terms"`: returns smooth terms, only applies to GAMs (or similar
+#'   models that may contain smooth terms).
+#' - `"zero_inflated"` (or `"zi"`): returns the zero-inflation component.
+#' - `"location"`: returns location parameters such as `conditional`,
+#'   `zero_inflated`, or `smooth_terms` (everything that are fixed or random
+#'   effects - depending on the `effects` argument - but no auxiliary
+#'   parameters).
+#' - `"distributional"` (or `"auxiliary"`): components like `sigma`,
+#'   `dispersion`, `beta` or `precision` (and other auxiliary parameters) are
+#'   returned.
+#'
+#' For models of class `brmsfit` (package **brms**), even more options are
+#' possible for the `component` argument, which are not all documented in detail
+#' here. See also [`?insight::find_parameters`](https://easystats.github.io/insight/reference/find_parameters.BGGM.html).
+#'
+#' @details Unlike equal-tailed intervals (see [`eti()`]) that typically exclude
+#' `2.5%` from each tail of the distribution and always include the median, the
+#' HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior
 #' distributions. While this can be useful to better represent the credibility
 #' mass of a distribution, the HDI also has some limitations. See [`spi()`] for
 #' details.
@@ -53,17 +89,16 @@
 #' its only remarkable property is being the highest prime number that does not
 #' exceed the already unstable `95%` threshold (_McElreath, 2015_).
 #'
-#' However, `95%` has some [advantages
-#' too](https://easystats.github.io/blog/posts/bayestestr_95/). For instance, it
-#' shares (in the case of a normal posterior distribution) an intuitive
-#' relationship with the standard deviation and it conveys a more accurate image
-#' of the (artificial) bounds of the distribution. Also, because it is wider, it
-#' makes analyses more conservative (i.e., the probability of covering 0 is
-#' larger for the `95%` CI than for lower ranges such as `89%`), which is a good
-#' thing in the context of the reproducibility crisis.
+#' However, `95%` has some [advantages too](https://easystats.github.io/blog/posts/bayestestr_95/).
+#' For instance, it shares (in the case of a normal posterior distribution) an
+#' intuitive relationship with the standard deviation and it conveys a more
+#' accurate image of the (artificial) bounds of the distribution. Also, because
+#' it is wider, it makes analyses more conservative (i.e., the probability of
+#' covering zero is larger for the `95%` CI than for lower ranges such as `89%`),
+#' which is a good thing in the context of the reproducibility crisis.
 #'
 #' A `95%` equal-tailed interval (ETI) has `2.5%` of the distribution on either
-#' side of its limits. It indicates the 2.5th percentile and the 97.5h
+#' side of its limits. It indicates the 2.5th percentile and the 97.5th
 #' percentile. In symmetric distributions, the two methods of computing credible
 #' intervals, the ETI and the [HDI][hdi], return similar results.
 #'
@@ -85,31 +120,31 @@
 #' @seealso Other interval functions, such as [`hdi()`], [`eti()`], [`bci()`],
 #' [`spi()`], [`si()`].
 #'
-#' @examplesIf require("rstanarm") && require("brms") && require("emmeans") && require("BayesFactor")
+#' @examplesIf all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(1000)
 #' hdi(posterior, ci = 0.89)
 #' hdi(posterior, ci = c(0.80, 0.90, 0.95))
 #'
-#' bayestestR::hdi(iris[1:4])
-#' bayestestR::hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
+#' hdi(iris[1:4])
+#' hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
 #' \donttest{
 #' model <- suppressWarnings(
 #'   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' )
-#' bayestestR::hdi(model)
-#' bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
+#' hdi(model)
+#' hdi(model, ci = c(0.80, 0.90, 0.95))
 #'
-#' bayestestR::hdi(emmeans::emtrends(model, ~1, "wt", data = mtcars))
+#' hdi(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 #'
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' bayestestR::hdi(model)
-#' bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
+#' hdi(model)
+#' hdi(model, ci = c(0.80, 0.90, 0.95))
 #'
 #' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
-#' bayestestR::hdi(bf)
-#' bayestestR::hdi(bf, ci = c(0.80, 0.90, 0.95))
+#' hdi(bf)
+#' hdi(bf, ci = c(0.80, 0.90, 0.95))
 #' }
 #' @author Credits go to **ggdistribute** and [**HDInterval**](https://github.com/mikemeredith/HDInterval).
 #'
@@ -127,7 +162,10 @@ hdi <- function(x, ...) {
 
 #' @export
 hdi.default <- function(x, ...) {
-  insight::format_error(paste0("'hdi()' is not yet implemented for objects of class '", class(x)[1], "'."))
+  insight::format_error(paste0(
+    "'hdi()' is not yet implemented for objects of class '",
+    class(x)[1], "'."
+  ))
 }
 
 
@@ -170,7 +208,12 @@ hdi.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
 
 #' @export
 hdi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  dat <- .compute_interval_dataframe(x = .posterior_draws_to_df(x), ci = ci, verbose = verbose, fun = "hdi")
+  dat <- .compute_interval_dataframe(
+    x = .posterior_draws_to_df(x),
+    ci = ci,
+    verbose = verbose,
+    fun = "hdi"
+  )
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
@@ -193,11 +236,10 @@ hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 hdi.bamlss <- function(x,
                        ci = 0.95,
-                       component = c("all", "conditional", "location"),
+                       component = "all",
                        verbose = TRUE,
                        ...) {
   ci_fun <- .check_ci_fun(list(...))
-  component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
   dat <- .add_clean_parameters_attribute(dat, x)
@@ -241,12 +283,12 @@ hdi.BGGM <- hdi.bcplm
 #' @export
 hdi.sim.merMod <- function(x,
                            ci = 0.95,
-                           effects = c("fixed", "random", "all"),
+                           effects = "fixed",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
   ci_fun <- .check_ci_fun(list(...))
-  effects <- match.arg(effects)
+
   dat <- .compute_interval_simMerMod(
     x = x,
     ci = ci,
@@ -305,18 +347,15 @@ hdi.comparisons <- hdi.slopes
 hdi.predictions <- hdi.slopes
 
 
-#' @rdname hdi
 #' @export
 hdi.stanreg <- function(x,
                         ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                        effects = "fixed",
+                        component = "location",
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     hdi(
@@ -351,14 +390,12 @@ hdi.blavaan <- hdi.stanreg
 #' @export
 hdi.brmsfit <- function(x,
                         ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("conditional", "zi", "zero_inflated", "all"),
+                        effects = "fixed",
+                        component = "conditional",
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     hdi(
@@ -418,8 +455,10 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
     return(check_ci)
   }
 
-  x_sorted <- unname(sort.int(x, method = "quick")) # removes NA/NaN, but not Inf
-  window_size <- ceiling(ci * length(x_sorted)) # See https://github.com/easystats/bayestestR/issues/39
+  # removes NA/NaN, but not Inf
+  x_sorted <- unname(sort.int(x, method = "quick"))
+  # See https://github.com/easystats/bayestestR/issues/39
+  window_size <- ceiling(ci * length(x_sorted))
 
   if (window_size < 2) {
     if (verbose) {
