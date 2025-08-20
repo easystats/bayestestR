@@ -178,7 +178,13 @@ rope.default <- function(x, ...) {
 
 #' @rdname rope
 #' @export
-rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE, ...) {
+rope.numeric <- function(x,
+                         range = "default",
+                         ci = 0.95,
+                         ci_method = "ETI",
+                         complement = FALSE,
+                         verbose = TRUE,
+                         ...) {
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
@@ -378,39 +384,6 @@ rope.BGGM <- rope.bcplm
 
 #' @export
 rope.mcmc.list <- rope.bcplm
-
-
-#' @keywords internal
-.rope <- function(x, range = c(-0.1, 0.1), ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE) {
-  ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)
-
-  if (anyNA(ci_bounds)) {
-    inferiority_percentage <- superiority_percentage <- rope_percentage <- NA
-  } else {
-    HDI_area <- x[x >= ci_bounds$CI_low & x <= ci_bounds$CI_high]
-    rope_percentage <- mean(HDI_area >= min(range) & HDI_area <= max(range))
-    superiority_percentage <- mean(HDI_area > max(range))
-    inferiority_percentage <- mean(HDI_area < min(range))
-  }
-
-
-  rope <- data.frame(
-    CI = ci,
-    ROPE_low = range[1],
-    ROPE_high = range[2],
-    ROPE_Percentage = rope_percentage
-  )
-
-  if (isTRUE(complement)) {
-    rope[["Superiority_Percentage"]] <- superiority_percentage
-    rope[["Inferiority_Percentage"]] <- inferiority_percentage
-  }
-
-  attr(rope, "HDI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
-  attr(rope, "CI_bounds") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
-  class(rope) <- unique(c("rope", "see_rope", class(rope)))
-  rope
-}
 
 
 #' @rdname rope
@@ -671,17 +644,17 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complem
 
 
 #' @keywords internal
-.rope <- function(x, range = c(-0.1, 0.1), ci = 0.95, ci_method = "ETI", verbose = TRUE) {
+.rope <- function(x, range = c(-0.1, 0.1), ci = 0.95, ci_method = "ETI", complement = FALSE, verbose = TRUE) {
   ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)
 
   if (anyNA(ci_bounds)) {
-    rope_percentage <- NA
+    inferiority_percentage <- superiority_percentage <- rope_percentage <- NA
   } else {
     HDI_area <- x[x >= ci_bounds$CI_low & x <= ci_bounds$CI_high]
-    area_within <- HDI_area[HDI_area >= min(range) & HDI_area <= max(range)]
-    rope_percentage <- length(area_within) / length(HDI_area)
+    rope_percentage <- mean(HDI_area >= min(range) & HDI_area <= max(range))
+    superiority_percentage <- mean(HDI_area > max(range))
+    inferiority_percentage <- mean(HDI_area < min(range))
   }
-
 
   rope <- data.frame(
     CI = ci,
@@ -689,6 +662,11 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", complem
     ROPE_high = range[2],
     ROPE_Percentage = rope_percentage
   )
+
+  if (isTRUE(complement)) {
+    rope[["Superiority_Percentage"]] <- superiority_percentage
+    rope[["Inferiority_Percentage"]] <- inferiority_percentage
+  }
 
   attr(rope, "HDI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
   attr(rope, "CI_bounds") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
