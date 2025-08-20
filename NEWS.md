@@ -2,7 +2,7 @@
 
 ## New functionality
 
-* `rope()` (and by extention `p_rope()`) gain a new `complement` argument such
+* `rope()` (and by extension `p_rope()`) gain a new `complement` argument such
   that `rope(x, complement = TRUE)` returns the ROPE posterior probability
   together with the posterior probabilities above/below the ROPE (the 
   _complementary_ probabilities).
