@@ -513,12 +513,6 @@ rope.stanreg <- function(x,
                          parameters = NULL,
                          verbose = TRUE,
                          ...) {
-  effects <- insight::validate_argument(effects, c("fixed", "random", "all"))
-  component <- insight::validate_argument(
-    component,
-    c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary")
-  )
-
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
