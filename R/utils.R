@@ -200,7 +200,8 @@
 
 #' @keywords internal
 .is_baysian_grid.slopes <- function(x) {
-  !is.null(attr(x, "posterior_draws"))
+  insight::check_if_installed("marginaleffects")
+  !is.null(suppressWarnings(marginaleffects::get_draws(model, "PxD")))
 }
 
 
