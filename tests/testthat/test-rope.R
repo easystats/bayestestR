@@ -38,6 +38,14 @@ test_that("rope, vector", {
     c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Superiority_Percentage",  "Inferiority_Percentage")
   )
   expect_snapshot(print(out))
+
+  out <- p_rope(x, complement = TRUE)
+  expect_named(
+    out,
+    c("ROPE_low", "ROPE_high", "p_ROPE", "p_Superiority", "p_Inferiority")
+  )
+  expect_equal(out$p_Superiority, 0.497, tolerance = 1e-3)
+  expect_equal(out$p_Inferiority, 0.4885, tolerance = 1e-3)
 })
 
 
