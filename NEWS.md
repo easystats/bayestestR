@@ -1,5 +1,14 @@
 # bayestestR (devel)
 
+## New functionality
+
+* `rope()` (and by extension `p_rope()`) gain a new `complement` argument such
+  that `rope(x, complement = TRUE)` returns the ROPE posterior probability
+  together with the posterior probabilities above/below the ROPE (the 
+  _complementary_ probabilities).
+
+# bayestestR (devel)
+
 ## Changes
 
 * Added `display()` methods for *bayestestR* objects. The `display()` methods

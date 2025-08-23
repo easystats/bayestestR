@@ -1,10 +1,4 @@
-test_that("rope", {
-  skip_if_not_installed("curl")
-  skip_if_offline()
-  skip_if_not_installed("httr2")
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("brms")
-
+test_that("rope, vector", {
   expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1), verbose = FALSE)), 0.084, tolerance = 0.01)
   expect_identical(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")
   expect_length(capture.output(print(equivalence_test(distribution_normal(1000)))), 9)
@@ -35,10 +29,27 @@ test_that("rope", {
     )), 0.084,
     tolerance = 0.01
   )
+
+  set.seed(1234)
+  x <- rnorm(4000, sd = 5)
+  out <- rope(x, complement = TRUE)
+  expect_named(
+    out,
+    c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Superiority_Percentage",  "Inferiority_Percentage")
+  )
+  expect_snapshot(print(out))
+
+  out <- p_rope(x, complement = TRUE)
+  expect_named(
+    out,
+    c("ROPE_low", "ROPE_high", "p_ROPE", "p_Superiority", "p_Inferiority")
+  )
+  expect_equal(out$p_Superiority, 0.497, tolerance = 1e-3)
+  expect_equal(out$p_Inferiority, 0.4885, tolerance = 1e-3)
 })
 
 
-test_that("rope", {
+test_that("rope, bayes", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
@@ -83,7 +94,7 @@ test_that("rope", {
 })
 
 
-test_that("rope", {
+test_that("rope, get_parameters", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
@@ -100,7 +111,8 @@ test_that("rope", {
 })
 
 
-test_that("BayesFactor", {
+test_that("rope BayesFactor", {
+  skip_on_cran()
   skip_on_os(c("linux", "mac"))
   skip_if_not_or_load_if_installed("BayesFactor")
 
@@ -111,23 +123,40 @@ test_that("BayesFactor", {
 })
 
 
-skip_if_not_or_load_if_installed("brms")
-skip_on_os(c("windows", "mac"))
-
-set.seed(123)
-model <- suppressWarnings(brms::brm(mpg ~ wt + gear, data = mtcars, iter = 500))
-rope <- rope(model, verbose = FALSE)
-
 test_that("rope (brms)", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("brms")
+  skip_on_os(c("windows", "mac"))
+
+  set.seed(123)
+  model <- suppressWarnings(brms::brm(mpg ~ wt + gear, data = mtcars, iter = 500))
+  rope <- rope(model, verbose = FALSE)
+
   expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
   expect_equal(rope$ROPE_high[1], 0.6026948)
   expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
+
+  out <- describe_posterior(model, complement = TRUE)
+  expect_equal(out$p_Superiority, c(1, 0, 0.137895), tolerance = 0.01)
+  expect_named(
+    out,
+    c(
+      "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+      "ROPE_low", "ROPE_high", "ROPE_Percentage", "Superiority_Percentage",
+      "Inferiority_Percentage", "Rhat", "ESS"
+    )
+  )
 })
 
-model <- suppressWarnings(brm(bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE), data = mtcars, iter = 500, refresh = 0))
-rope <- rope(model, verbose = FALSE)
 
 test_that("rope (brms, multivariate)", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("brms")
+  skip_on_os(c("windows", "mac"))
+
+  model <- suppressWarnings(brm(bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE), data = mtcars, iter = 500, refresh = 0))
+  rope <- rope(model, verbose = FALSE)
+
   expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
   expect_equal(rope$ROPE_high[1], 0.6026948, tolerance = 0.01)
   expect_equal(rope$ROPE_high[4], 12.3938694, tolerance = 0.01)
