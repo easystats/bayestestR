@@ -14,7 +14,7 @@ withr::with_environment(
     mod <- rstanarm::stan_glm(mpg ~ cyl + hp * am, data = mtcars, refresh = 0)
 
     mfx <- marginaleffects::avg_slopes(mod, by = "am")
-    mfx_samps <- as.data.frame(t(attr(mfx, "posterior_draws")))
+    mfx_samps <- suppressWarnings(marginaleffects::get_draws(mfx, shape = "DxP"))
 
     results <- describe_posterior(mfx,
       centrality = "MAP", ci_method = "hdi",
@@ -83,8 +83,8 @@ withr::with_environment(
     mfx <- marginaleffects::avg_slopes(mod, by = "am")
     mfxp <- marginaleffects::avg_slopes(modp, by = "am")
 
-    mfx_samps <- as.data.frame(t(attr(mfx, "posterior_draws")))
-    mfxp_samps <- as.data.frame(t(attr(mfxp, "posterior_draws")))
+    mfx_samps <- suppressWarnings(marginaleffects::get_draws(mfx, shape = "DxP"))
+    mfxp_samps <- suppressWarnings(marginaleffects::get_draws(mfxp, shape = "DxP"))
 
     # SI
     outsi <- si(mfx, prior = mfxp, verbose = FALSE)
