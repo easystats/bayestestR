@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -496,7 +496,7 @@ are not null</strong>, <em>i.e.</em>, which are outside this range.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>, ci <span class="op">=</span> <span class="fl">0.89</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-20.00, 20.00]:
 &gt; 
-&gt; inside ROPE
+&gt; Inside ROPE
 &gt; -----------
 &gt; 4.95 %</code></pre>
 <p><strong>5% of the 89% CI can be considered as null</strong>. Is that
@@ -536,7 +536,7 @@ obtained by the <code>rope_range</code> function :)</strong></p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span>, range <span class="op">=</span> <span class="va">rope_range</span>, ci <span class="op">=</span> <span class="fl">0.89</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-6.17, 6.17]:
 &gt; 
-&gt; inside ROPE
+&gt; Inside ROPE
 &gt; -----------
 &gt; 0.00 %</code></pre>
 <p>With this reasonable definition of ROPE, we observe that the 89% of

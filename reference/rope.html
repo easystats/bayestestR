@@ -9,7 +9,7 @@ distribution that lies within a region of practical equivalence."><meta property
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,15 @@ distribution that lies within a region of practical equivalence.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rope</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'numeric'</span></span>
-<span><span class="fu">rope</span><span class="op">(</span><span class="va">x</span>, range <span class="op">=</span> <span class="st">"default"</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, ci_method <span class="op">=</span> <span class="st">"ETI"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">rope</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  range <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  ci_method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
+<span>  complement <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'data.frame'</span></span>
 <span><span class="fu">rope</span><span class="op">(</span></span>
@@ -91,7 +99,22 @@ distribution that lies within a region of practical equivalence.</p>
 <span>  range <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  ci_method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
+<span>  complement <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  rvar_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'stanreg'</span></span>
+<span><span class="fu">rope</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  range <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  ci_method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
+<span>  complement <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  effects <span class="op">=</span> <span class="st">"fixed"</span>,</span>
+<span>  component <span class="op">=</span> <span class="st">"location"</span>,</span>
+<span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -102,6 +125,7 @@ distribution that lies within a region of practical equivalence.</p>
 <span>  range <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  ci_method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
+<span>  complement <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  effects <span class="op">=</span> <span class="st">"fixed"</span>,</span>
 <span>  component <span class="op">=</span> <span class="st">"conditional"</span>,</span>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -147,6 +171,12 @@ proportion of HDI, to use for the percentage in ROPE.</p></dd>
 <dt id="arg-ci-method">ci_method<a class="anchor" aria-label="anchor" href="#arg-ci-method"></a></dt>
 <dd><p>The type of interval to use to quantify the percentage in
 ROPE. Can be 'HDI' (default) or 'ETI'. See <code><a href="ci.html">ci()</a></code>.</p></dd>
+
+
+<dt id="arg-complement">complement<a class="anchor" aria-label="anchor" href="#arg-complement"></a></dt>
+<dd><p>Should the probabilities above/below the ROPE (the
+<em>complementary</em> probabilities) be returned as well? See
+<code><a href="equivalence_test.html">equivalence_test()</a></code> as well.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -208,48 +238,49 @@ for the output.</p></dd>
     <h2 id="rope">ROPE<a class="anchor" aria-label="anchor" href="#rope"></a></h2>
 
 
-<p>Statistically, the probability of a posterior distribution of being
-different from 0 does not make much sense (the probability of a single value
-null hypothesis in a continuous distribution is 0). Therefore, the idea
+
+<p>Statistically, the probability of a posterior distribution of being different
+from 0 does not make much sense (the probability of a single value null
+hypothesis in a continuous distribution is 0). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are <em>equivalent to the null</em> value for practical
 purposes (<em>Kruschke 2010, 2011, 2014</em>).</p>
-<p>Kruschke (2018) suggests that such null value could be set, by default,
-to the -0.1 to 0.1 range of a standardized parameter (negligible effect
-size according to Cohen, 1988). This could be generalized: For instance,
-for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>.
-This ROPE range can be automatically computed for models using the
-<code><a href="rope_range.html">rope_range()</a></code> function.</p>
-<p>Kruschke (2010, 2011, 2014) suggests using the proportion of  the <code>95%</code>
-(or <code>89%</code>, considered more stable) <a href="hdi.html">HDI</a> that falls within the
-ROPE as an index for "null-hypothesis" testing (as understood under the
-Bayesian framework, see <code><a href="equivalence_test.html">equivalence_test()</a></code>).</p>
+<p>Kruschke (2018) suggests that such null value could be set, by default, to
+the -0.1 to 0.1 range of a standardized parameter (negligible effect size
+according to Cohen, 1988). This could be generalized: For instance, for
+linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>. This ROPE range
+can be automatically computed for models using the <code><a href="rope_range.html">rope_range()</a></code> function.</p>
+<p>Kruschke (2010, 2011, 2014) suggests using the proportion of  the <code>95%</code> (or
+<code>89%</code>, considered more stable) <a href="hdi.html">HDI</a> that falls within the ROPE as an
+index for "null-hypothesis" testing (as understood under the Bayesian
+framework, see <code><a href="equivalence_test.html">equivalence_test()</a></code>).</p>
     </div>
     <div class="section level2">
     <h2 id="sensitivity-to-parameter-s-scale">Sensitivity to parameter's scale<a class="anchor" aria-label="anchor" href="#sensitivity-to-parameter-s-scale"></a></h2>
 
 
-<p>It is important to consider the unit (i.e., the scale) of the predictors
-when using an index based on the ROPE, as the correct interpretation of the
-ROPE as representing a region of practical equivalence to zero is dependent
-on the scale of the predictors. Indeed, the percentage in ROPE depend on
-the unit of its parameter. In other words, as the ROPE represents a fixed
-portion of the response's scale, its proximity with a coefficient depends
-on the scale of the coefficient itself.</p>
+
+<p>It is important to consider the unit (i.e., the scale) of the predictors when
+using an index based on the ROPE, as the correct interpretation of the ROPE
+as representing a region of practical equivalence to zero is dependent on the
+scale of the predictors. Indeed, the percentage in ROPE depend on the unit of
+its parameter. In other words, as the ROPE represents a fixed portion of the
+response's scale, its proximity with a coefficient depends on the scale of
+the coefficient itself.</p>
     </div>
     <div class="section level2">
     <h2 id="multicollinearity-non-independent-covariates">Multicollinearity - Non-independent covariates<a class="anchor" aria-label="anchor" href="#multicollinearity-non-independent-covariates"></a></h2>
 
 
+
 <p>When parameters show strong correlations, i.e. when covariates are not
-independent, the joint parameter distributions may shift towards or
-away from the ROPE. Collinearity invalidates ROPE and hypothesis
-testing based on univariate marginals, as the probabilities are conditional
-on independence. Most problematic are parameters that only have partial
-overlap with the ROPE region. In case of collinearity, the (joint) distributions
-of these parameters may either get an increased or decreased ROPE, which
-means that inferences based on <code>rope()</code> are inappropriate
-(<em>Kruschke 2014, 340f</em>).</p>
+independent, the joint parameter distributions may shift towards or away from
+the ROPE. Collinearity invalidates ROPE and hypothesis testing based on
+univariate marginals, as the probabilities are conditional on independence.
+Most problematic are parameters that only have partial overlap with the ROPE
+region. In case of collinearity, the (joint) distributions of these
+parameters may either get an increased or decreased ROPE, which means that
+inferences based on <code>rope()</code> are inappropriate (<em>Kruschke 2014, 340f</em>).</p>
 <p><code>rope()</code> performs a simple check for pairwise correlations between
 parameters, but as there can be collinearity between more than two variables,
 a first step to check the assumptions of this hypothesis testing is to look
@@ -325,21 +356,21 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">0.01</span><span class="op">)</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-0.10, 0.10]:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 100.00 %   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-0.10, 0.10]:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8.32 %     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">0.01</span><span class="op">)</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-0.10, 0.10]:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.00 %     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -348,14 +379,14 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 90% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4.89 %     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 95% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4.63 %     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -367,7 +398,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-0.60, 0.60]:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |      0.00 %</span>
@@ -378,7 +409,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 90% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |      0.00 %</span>
@@ -387,7 +418,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 95% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |      0.00 %</span>
@@ -399,7 +430,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span><span class="va">model</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="st">"default"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-10.00, 5.00]:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |      0.00 %</span>
@@ -410,7 +441,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span><span class="va">model</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gear <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>, wt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-0.10, 0.10]:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |      0.00 %</span>
@@ -422,14 +453,14 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 90% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1      | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1      | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> overall |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 95% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1      | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1      | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> overall |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -443,7 +474,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?rope'.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-0.60, 0.60]:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt        |      0.00 %</span>
@@ -456,7 +487,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 90% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt        |      0.00 %</span>
@@ -465,7 +496,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 95% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt        |      0.00 %</span>
@@ -487,7 +518,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ROPE with depends on outcome variable.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | inside ROPE |      ROPE width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | Inside ROPE |      ROPE width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg_Intercept  |      0.00 % |   [-0.60, 0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg_wt         |      0.00 % |   [-0.60, 0.60]</span>
@@ -505,7 +536,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 90% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | inside ROPE |      ROPE width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | Inside ROPE |      ROPE width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg_Intercept  |      0.00 % |   [-0.60, 0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg_wt         |      0.00 % |   [-0.60, 0.60]</span>
@@ -517,7 +548,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 95% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | inside ROPE |      ROPE width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | Inside ROPE |      ROPE width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg_Intercept  |      0.00 % |   [-0.60, 0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg_wt         |      0.00 % |   [-0.60, 0.60]</span>
@@ -544,7 +575,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ROPE with depends on outcome variable.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | inside ROPE |    ROPE width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter      | Inside ROPE |    ROPE width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg_Intercept  |      0.00 % | [-0.10, 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg_wt         |      0.00 % | [-1.00, 1.00]</span>
@@ -558,7 +589,7 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-in"><span><span class="fu">rope</span><span class="op">(</span><span class="va">bf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Proportion of samples inside the ROPE [-0.10, 0.10]:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Difference |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -567,14 +598,14 @@ methods for model selection. Statistics and Computing, 27(3), 711–735.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 90% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Difference |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ROPE for the 95% HDI:</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | inside ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Inside ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Difference |      0.00 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
