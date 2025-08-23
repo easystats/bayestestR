@@ -22,7 +22,8 @@ withr::with_environment(
     )
     results_draws <- describe_posterior(mfx_samps,
       centrality = "MAP", ci_method = "hdi",
-      test = c("pd", "rope", "p_map", "equivalence_test")
+      test = c("pd", "rope", "p_map", "equivalence_test"),
+      verbose = FALSE
     )
 
     expect_true(all(c("term", "contrast") %in% colnames(results)))

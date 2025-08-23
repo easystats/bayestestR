@@ -243,7 +243,12 @@
   all_class <- class(results)
 
   # extract model info. if we have categorical, add "group" variable
-  model <- attributes(object)$model
+  if (inherits(results, c("emmGrid", "emm_list"))) {
+    model <- attributes(object)$model
+  } else {
+    insight::check_if_installed("marginaleffects")
+    model <- marginaleffects::components(object, "model")
+  }
   if (!long && !is.null(model)) {
     m_info <- insight::model_info(model, response = 1, verbose = FALSE)
     # check if we have ordinal and alike
