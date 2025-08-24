@@ -137,7 +137,7 @@ test_that("rope (brms)", {
   expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
 
   out <- describe_posterior(model, complement = TRUE)
-  expect_equal(out$p_Superiority, c(1, 0, 0.137895), tolerance = 0.01)
+  expect_equal(out$Superiority_Percentage, c(1, 0, 0.137895), tolerance = 0.01)
   expect_named(
     out,
     c(
