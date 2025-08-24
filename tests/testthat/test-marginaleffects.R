@@ -53,7 +53,7 @@ withr::with_environment(
           "6 - 4", "6 - 4", "8 - 4", "8 - 4",
           "dY/dX", "dY/dX", "dY/dX", "dY/dX"
         ),
-        am = c(0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,1, 1),
+        am = c(0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1),
         stringsAsFactors = FALSE
       )
     )
