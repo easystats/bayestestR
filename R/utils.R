@@ -243,7 +243,7 @@
   all_class <- class(results)
 
   # extract model info. if we have categorical, add "group" variable
-  if (inherits(results, c("emmGrid", "emm_list"))) {
+  if (inherits(object, c("emmGrid", "emm_list"))) {
     model <- attributes(object)$model
   } else {
     insight::check_if_installed("marginaleffects")
