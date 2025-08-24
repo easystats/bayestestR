@@ -14,6 +14,8 @@
 * The long deprecated `rnorm_perfect()` function has been removed. Use
   `distribution_normal()` instead.
 
+* Prepare for upcoming changes in *marginaleffects* (0.29.0).
+
 # bayestestR 0.16.1
 
 ## Changes

@@ -7,26 +7,33 @@ skip_if_not_installed("collapse")
 withr::with_environment(
   new.env(),
   test_that("marginaleffects descrive_posterior", {
-    # skip_on_ci()
-
     data("mtcars")
     mtcars$cyl <- factor(mtcars$cyl)
     mod <- rstanarm::stan_glm(mpg ~ cyl + hp * am, data = mtcars, refresh = 0)
 
     mfx <- marginaleffects::avg_slopes(mod, by = "am")
-    mfx_samps <- as.data.frame(t(attr(mfx, "posterior_draws")))
+    mfx_samps <- data.frame(suppressWarnings(marginaleffects::get_draws(
+      mfx,
+      shape = "DxP"
+    )))
 
-    results <- describe_posterior(mfx,
-      centrality = "MAP", ci_method = "hdi",
+    results <- describe_posterior(
+      mfx,
+      centrality = "MAP",
+      ci_method = "hdi",
       test = c("pd", "rope", "p_map", "equivalence_test")
     )
-    results_draws <- describe_posterior(mfx_samps,
-      centrality = "MAP", ci_method = "hdi",
-      test = c("pd", "rope", "p_map", "equivalence_test")
+    results_draws <- describe_posterior(
+      mfx_samps,
+      centrality = "MAP",
+      ci_method = "hdi",
+      test = c("pd", "rope", "p_map", "equivalence_test"),
+      verbose = FALSE
     )
 
     expect_true(all(c("term", "contrast") %in% colnames(results)))
-    expect_equal(results[setdiff(colnames(results), c("term", "contrast", "am"))],
+    expect_equal(
+      results[setdiff(colnames(results), c("term", "contrast", "am"))],
       results_draws[setdiff(colnames(results_draws), "Parameter")],
       ignore_attr = TRUE
     )
@@ -37,9 +44,8 @@ withr::with_environment(
       as.data.frame(res[1:3]),
       data.frame(
         term = c(
-          "am", "am", "am", "am", "cyl", "cyl",
-          "cyl", "cyl", "cyl", "cyl", "cyl", "cyl",
-          "hp", "hp", "hp", "hp"
+          "am", "am", "am", "am", "cyl", "cyl", "cyl", "cyl", "cyl", "cyl",
+          "cyl", "cyl", "hp", "hp", "hp", "hp"
         ),
         contrast = c(
           "1 - 0", "1 - 0", "1 - 0", "1 - 0",
@@ -47,15 +53,14 @@ withr::with_environment(
           "6 - 4", "6 - 4", "8 - 4", "8 - 4",
           "dY/dX", "dY/dX", "dY/dX", "dY/dX"
         ),
-        am = c(
-          0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
-          1, 1
-        ), stringsAsFactors = FALSE
+        am = c(0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1),
+        stringsAsFactors = FALSE
       )
     )
 
     # estimate_density
-    mfx <- marginaleffects::comparisons(mod,
+    mfx <- marginaleffects::comparisons(
+      mod,
       variables = "cyl",
       newdata = marginaleffects::datagrid(hp = 100, am = 0)
     )
@@ -63,7 +68,8 @@ withr::with_environment(
 
     res <- estimate_density(mfx)
     resref <- estimate_density(samps)
-    expect_equal(res[intersect(colnames(res), colnames(resref))],
+    expect_equal(
+      res[intersect(colnames(res), colnames(resref))],
       resref[intersect(colnames(res), colnames(resref))],
       ignore_attr = TRUE
     )
@@ -73,8 +79,6 @@ withr::with_environment(
 withr::with_environment(
   new.env(),
   test_that("marginaleffects bayesfactors", {
-    # skip_on_ci()
-
     data("mtcars")
     mtcars$cyl <- factor(mtcars$cyl)
     mod <- rstanarm::stan_glm(mpg ~ cyl + hp * am, data = mtcars, refresh = 0)
@@ -83,23 +87,35 @@ withr::with_environment(
     mfx <- marginaleffects::avg_slopes(mod, by = "am")
     mfxp <- marginaleffects::avg_slopes(modp, by = "am")
 
-    mfx_samps <- as.data.frame(t(attr(mfx, "posterior_draws")))
-    mfxp_samps <- as.data.frame(t(attr(mfxp, "posterior_draws")))
+    mfx_samps <- as.data.frame(suppressWarnings(marginaleffects::get_draws(
+      mfx,
+      shape = "DxP"
+    )))
+    mfxp_samps <- as.data.frame(suppressWarnings(marginaleffects::get_draws(
+      mfxp,
+      shape = "DxP"
+    )))
 
     # SI
     outsi <- si(mfx, prior = mfxp, verbose = FALSE)
     outsiref <- si(mfx_samps, prior = mfxp_samps, verbose = FALSE)
 
     expect_true(all(c("term", "contrast", "am") %in% colnames(outsi)))
-    expect_equal(outsi[setdiff(colnames(outsi), c("term", "contrast", "am"))],
+    expect_equal(
+      outsi[setdiff(colnames(outsi), c("term", "contrast", "am"))],
       outsiref[setdiff(colnames(outsiref), "Parameter")],
       ignore_attr = TRUE
     )
 
     # bayesfactor_parameters
     bfp <- bayesfactor_parameters(mfx, prior = mfxp, verbose = FALSE)
-    bfpref <- bayesfactor_parameters(mfx_samps, prior = mfxp_samps, verbose = FALSE)
-    expect_equal(bfp[setdiff(colnames(bfp), c("term", "contrast", "am"))],
+    bfpref <- bayesfactor_parameters(
+      mfx_samps,
+      prior = mfxp_samps,
+      verbose = FALSE
+    )
+    expect_equal(
+      bfp[setdiff(colnames(bfp), c("term", "contrast", "am"))],
       bfpref[setdiff(colnames(bfpref), "Parameter")],
       ignore_attr = TRUE
     )
