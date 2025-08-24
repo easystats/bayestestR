@@ -1,18 +1,61 @@
 test_that("rope, vector", {
-  expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1), verbose = FALSE)), 0.084, tolerance = 0.01)
-  expect_identical(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")
-  expect_length(capture.output(print(equivalence_test(distribution_normal(1000)))), 9)
-  expect_length(capture.output(print(equivalence_test(distribution_normal(1000), ci = c(0.8, 0.9)))), 14)
+  expect_equal(
+    as.numeric(rope(distribution_normal(1000, 0, 1), verbose = FALSE)),
+    0.084,
+    tolerance = 0.01
+  )
+  expect_identical(
+    equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence,
+    "Undecided"
+  )
+  expect_length(
+    capture.output(print(equivalence_test(distribution_normal(1000)))),
+    9
+  )
+  expect_length(
+    capture.output(print(equivalence_test(
+      distribution_normal(1000),
+      ci = c(0.8, 0.9)
+    ))),
+    14
+  )
 
-  expect_equal(as.numeric(rope(distribution_normal(1000, 2, 0.01), verbose = FALSE)), 0, tolerance = 0.01)
-  expect_identical(equivalence_test(distribution_normal(1000, 2, 0.01))$ROPE_Equivalence, "Rejected")
+  expect_equal(
+    as.numeric(rope(distribution_normal(1000, 2, 0.01), verbose = FALSE)),
+    0,
+    tolerance = 0.01
+  )
+  expect_identical(
+    equivalence_test(distribution_normal(1000, 2, 0.01))$ROPE_Equivalence,
+    "Rejected"
+  )
 
-  expect_equal(as.numeric(rope(distribution_normal(1000, 0, 0.001), verbose = FALSE)), 1, tolerance = 0.01)
-  expect_identical(equivalence_test(distribution_normal(1000, 0, 0.001))$ROPE_Equivalence, "Accepted")
+  expect_equal(
+    as.numeric(rope(distribution_normal(1000, 0, 0.001), verbose = FALSE)),
+    1,
+    tolerance = 0.01
+  )
+  expect_identical(
+    equivalence_test(distribution_normal(1000, 0, 0.001))$ROPE_Equivalence,
+    "Accepted"
+  )
 
-  expect_identical(equivalence_test(distribution_normal(1000, 0, 0.001), ci = 1)$ROPE_Equivalence, "Accepted")
+  expect_identical(
+    equivalence_test(
+      distribution_normal(1000, 0, 0.001),
+      ci = 1
+    )$ROPE_Equivalence,
+    "Accepted"
+  )
 
-  expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(0.1, 0.5, 0.9), verbose = FALSE)$CI, c(0.1, 0.5, 0.9))
+  expect_equal(
+    rope(
+      rnorm(1000, mean = 0, sd = 3),
+      ci = c(0.1, 0.5, 0.9),
+      verbose = FALSE
+    )$CI,
+    c(0.1, 0.5, 0.9)
+  )
 
   x <- equivalence_test(distribution_normal(1000, 1, 1), ci = c(0.50, 0.99))
   expect_equal(x$ROPE_Percentage[2], 0.0484, tolerance = 0.01)
@@ -21,12 +64,14 @@ test_that("rope, vector", {
   expect_error(rope(distribution_normal(1000, 0, 1), range = c(0.0, 0.1, 0.2)))
 
   set.seed(333)
-  expect_s3_class(rope(distribution_normal(1000, 0, 1), verbose = FALSE), "rope")
+  expect_s3_class(
+    rope(distribution_normal(1000, 0, 1), verbose = FALSE),
+    "rope"
+  )
   expect_error(rope(distribution_normal(1000, 0, 1), range = c("A", 0.1)))
   expect_equal(
-    as.numeric(rope(distribution_normal(1000, 0, 1),
-      range = c(-0.1, 0.1)
-    )), 0.084,
+    as.numeric(rope(distribution_normal(1000, 0, 1), range = c(-0.1, 0.1))),
+    0.084,
     tolerance = 0.01
   )
 
@@ -35,7 +80,10 @@ test_that("rope, vector", {
   out <- rope(x, complement = TRUE)
   expect_named(
     out,
-    c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Superiority_Percentage",  "Inferiority_Percentage")
+    c(
+      "CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Superiority_Percentage",
+      "Inferiority_Percentage"
+    )
   )
   expect_snapshot(print(out))
 
@@ -47,13 +95,13 @@ test_that("rope, vector", {
   expect_equal(out$p_Superiority, 0.497, tolerance = 1e-3)
   expect_equal(out$p_Inferiority, 0.4885, tolerance = 1e-3)
 
-  junk <- suppressWarnings(capture.output(describe_posterior(
+  out <- suppressWarnings(capture.output(describe_posterior(
     x,
     test = "p_rope",
     complement = TRUE
   )))
   expect_identical(
-    out,
+    out[3],
     "Parameter | Median |        95% CI |          ROPE | p (ROPE) | p (Superiority) | p (Inferiority)"
   )
 })
@@ -70,22 +118,40 @@ test_that("rope, bayes", {
   p <- insight::get_parameters(m, effects = "all")
   expect_equal(
     # fix range to -.1/.1, to compare to data frame method
-    rope(m, range = c(-0.1, 0.1), effects = "all", verbose = FALSE)$ROPE_Percentage,
+    rope(
+      m,
+      range = c(-0.1, 0.1),
+      effects = "all",
+      verbose = FALSE
+    )$ROPE_Percentage,
     rope(p, verbose = FALSE)$ROPE_Percentage,
     tolerance = 1e-3
   )
 
   # list range
   expect_equal(
-    rope(m, range = list(c(-1, 0.1), "default", "default", c(-1, 1), c(-1.5, -1)))$ROPE_Percentage,
+    rope(
+      m,
+      range = list(c(-1, 0.1), "default", "default", c(-1, 1), c(-1.5, -1))
+    )$ROPE_Percentage,
     c(0.15823, 1, 0, 0.3903, 0.38186),
     tolerance = 1e-3
   )
 
   # named elements, chooses "default" for unnamed
   expect_equal(
-    rope(m, range = list(c(-1, 0.1), "default", "default", c(-1, 1), c(-1.5, -1)))$ROPE_Percentage,
-    rope(m, range = list("(Intercept)" = c(-1, 0.1), period4 = c(-1.5, -1), period3 = c(-1, 1)))$ROPE_Percentage,
+    rope(
+      m,
+      range = list(c(-1, 0.1), "default", "default", c(-1, 1), c(-1.5, -1))
+    )$ROPE_Percentage,
+    rope(
+      m,
+      range = list(
+        "(Intercept)" = c(-1, 0.1),
+        period4 = c(-1.5, -1),
+        period3 = c(-1, 1)
+      )
+    )$ROPE_Percentage,
     tolerance = 1e-3
   )
 
@@ -98,7 +164,14 @@ test_that("rope, bayes", {
     regex = "should be 'default'"
   )
   expect_error(
-    rope(m, range = list("(Intercept)" = c(-1, 0.1), pointout = c(-1.5, -1), period3 = c(-1, 1))),
+    rope(
+      m,
+      range = list(
+        "(Intercept)" = c(-1, 0.1),
+        pointout = c(-1.5, -1),
+        period3 = c(-1, 1)
+      )
+    ),
     regex = "Not all elements"
   )
 })
@@ -164,7 +237,12 @@ test_that("rope (brms, multivariate)", {
   skip_if_not_or_load_if_installed("brms")
   skip_on_os(c("windows", "mac"))
 
-  model <- suppressWarnings(brm(bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE), data = mtcars, iter = 500, refresh = 0))
+  model <- suppressWarnings(brm(
+    bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE),
+    data = mtcars,
+    iter = 500,
+    refresh = 0
+  ))
   rope <- rope(model, verbose = FALSE)
 
   expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
