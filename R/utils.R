@@ -98,7 +98,30 @@
 }
 
 
+#' Prepare output data frame for printing
+#'
+#' @description
+#' This is an internal helper function to standardize and enrich the output of
+#' various `bayestestR` functions (like `ci()`, `hdi()`, `rope()`, etc.).
+#' Its main purpose is to merge a data frame containing analysis results
+#' (e.g., credible intervals) with a data frame of "cleaned" parameter
+#' information (from `insight::clean_parameters()`).
+#'
+#' This process adds human-readable parameter names and model component
+#' information (like fixed or random effects) to the output. It also includes
+#' special handling for complex models, such as multivariate models from
+#' `rstanarm` or `brms`, where response variables need to be parsed from
+#' parameter names.
+#'
+#' @param temp A data frame with estimation results, like CIs or point estimates.
+#' @param cleaned_parameters A data frame as returned by
+#'   `insight::clean_parameters()`.
+#' @param is_stan_mv Logical, indicates if the model is a `stanmvreg` object.
+#' @param is_brms_mv Logical, indicates if the model is a `brms` multivariate
+#'   model.
+#'
 #' @keywords internal
+#' @noRd
 .prepare_output <- function(temp,
                             cleaned_parameters,
                             is_stan_mv = FALSE,
