@@ -43,7 +43,7 @@
 #' }
 #' @export
 display.describe_posterior <- function(object, format = "markdown", ...) {
-  insight::validate_argument(format, c("md", "markdown", "html", "tt"))
+  format <- .display_default_format(format)
   if (format %in% c("html", "tt")) {
     print_html(object, backend = format, ...)
   } else {
@@ -99,4 +99,9 @@ display.bayesfactor_inclusion <- display.describe_posterior
   } else {
     "html"
   }
+}
+
+.display_default_format <- function(format) {
+  format <- getOption("easystats_display_format", "markdown")
+  insight::validate_argument(format, c("markdown", "html", "md", "tt"))
 }
