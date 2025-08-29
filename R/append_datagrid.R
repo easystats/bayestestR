@@ -16,7 +16,7 @@
   if (inherits(object, c("emmGrid", "emm_list"))) {
     model <- attributes(object)$model
   } else {
-    insight::check_if_installed("marginaleffects")
+    insight::check_if_installed("marginaleffects", minimum_version = "0.29.0")
     model <- marginaleffects::components(object, "model")
   }
   if (!long && !is.null(model)) {
