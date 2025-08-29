@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.1.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -242,7 +242,7 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## Parameter |   Median |        95% CI |     pd |   ps</span></span>
 <span><span class="co">## ----------------------------------------------------</span></span>
-<span><span class="co">## Posterior | 8.95e-03 | [-1.97, 1.94] | 50.37% | 0.47</span></span></code></pre></div>
+<span><span class="co">## Posterior | 5.94e-04 | [-1.91, 1.92] | 50.05% | 0.46</span></span></code></pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">zinb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"http://stats.idre.ucla.edu/stat/data/fish.csv"</span><span class="op">)</span></span>
@@ -267,49 +267,31 @@
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="do">## Summary of Posterior Distribution</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="do">## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="do">## --------------------------------------------------------------------------------------</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="do">## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.81,  2.51] | 90.00% | 0.88 | 1.011 | 110.00</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="do">## child       |  -1.16 | -1.16 | -1.16 | [-1.36, -0.94] |   100% | 1.00 | 0.996 | 278.00</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="do">## camper      |   0.73 |  0.72 |  0.73 | [ 0.54,  0.91] |   100% | 1.00 | 0.996 | 271.00</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="do">## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat | ESS</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="do">## -----------------------------------------------------------------------------------</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="do">## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.81,  2.51] | 90.00% | 0.88 | 1.011 | 110</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="do">## child       |  -1.16 | -1.16 | -1.16 | [-1.36, -0.94] |   100% | 1.00 | 0.996 | 278</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="do">## camper      |   0.73 |  0.72 |  0.73 | [ 0.54,  0.91] |   100% | 1.00 | 0.996 | 271</span></span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="do">## # Fixed effects (zero-inflated)</span></span>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="do">## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="do">## --------------------------------------------------------------------------------------</span></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="do">## (Intercept) |  -0.48 | -0.51 | -0.22 | [-2.03,  0.89] | 78.00% | 0.73 | 0.997 | 138.00</span></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="do">## child       |   1.85 |  1.86 |  1.81 | [ 1.19,  2.54] |   100% | 1.00 | 0.996 | 303.00</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="do">## camper      |  -0.88 | -0.86 | -0.99 | [-1.61, -0.07] | 98.40% | 0.96 | 0.996 | 292.00</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="do">## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat | ESS</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="do">## -----------------------------------------------------------------------------------</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="do">## (Intercept) |  -0.48 | -0.51 | -0.22 | [-2.03,  0.89] | 78.00% | 0.73 | 0.997 | 138</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="do">## child       |   1.85 |  1.86 |  1.81 | [ 1.19,  2.54] |   100% | 1.00 | 0.996 | 303</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="do">## camper      |  -0.88 | -0.86 | -0.99 | [-1.61, -0.07] | 98.40% | 0.96 | 0.996 | 292</span></span>
 <span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="do">## # Random effects (conditional) Intercept: persons</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="do">## # Random effects (conditional) (SD/Cor: persons)</span></span>
 <span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="do">## Parameter |    Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------------------</span></span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="do">## persons.1 |     -0.99 | -1.01 | -0.84 | [-2.68,  0.80] | 92.00% | 0.90 | 1.007 | 106.00</span></span>
-<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="do">## persons.2 | -4.65e-03 | -0.04 |  0.03 | [-1.63,  1.66] | 50.00% | 0.45 | 1.013 | 109.00</span></span>
-<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="do">## persons.3 |      0.69 |  0.66 |  0.69 | [-0.95,  2.34] | 79.60% | 0.78 | 1.010 | 114.00</span></span>
-<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="do">## persons.4 |      1.57 |  1.56 |  1.56 | [-0.05,  3.29] | 96.80% | 0.96 | 1.009 | 114.00</span></span>
-<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="do">## # Random effects (zero-inflated) Intercept: persons</span></span>
-<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="do">## Parameter | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="do">## ------------------------------------------------------------------------------------</span></span>
-<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="do">## persons.1 |   1.10 |  1.11 |  1.08 | [-0.23,  2.72] | 94.80% | 0.93 | 0.997 | 166.00</span></span>
-<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="do">## persons.2 |   0.18 |  0.18 |  0.22 | [-0.94,  1.58] | 63.20% | 0.54 | 0.996 | 154.00</span></span>
-<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="do">## persons.3 |  -0.30 | -0.31 | -0.54 | [-1.79,  1.02] | 64.00% | 0.59 | 0.997 | 154.00</span></span>
-<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="do">## persons.4 |  -1.45 | -1.46 | -1.44 | [-2.90, -0.10] | 98.00% | 0.97 | 1.000 | 189.00</span></span>
-<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="do">## # Random effects (conditional) SD/Cor: persons</span></span>
-<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="do">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="do">## ----------------------------------------------------------------------------------</span></span>
-<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="do">## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.71,  3.58] | 100% | 1.00 | 1.010 | 126.00</span></span>
-<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="do">## # Random effects (zero-inflated) SD/Cor: persons</span></span>
-<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="do">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="do">## ----------------------------------------------------------------------------------</span></span>
-<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="do">## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.63,  3.41] | 100% | 1.00 | 0.996 | 129.00</span></span></code></pre></div>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="do">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat | ESS</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="do">## -------------------------------------------------------------------------------</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="do">## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.71,  3.58] | 100% | 1.00 | 1.010 | 126</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="do">## # Random effects (zero-inflated) (SD/Cor: persons)</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="do">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat | ESS</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="do">## -------------------------------------------------------------------------------</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="do">## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.63,  3.41] | 100% | 1.00 | 0.996 | 129</span></span></code></pre></div>
 <p><em>bayestestR</em> also includes <a href="https://easystats.github.io/bayestestR/reference/index.html"><strong>many other features</strong></a> useful for your Bayesian analyses. Here are some more examples:</p>
 <div class="section level2">
 <h2 id="point-estimates">Point-estimates<a class="anchor" aria-label="anchor" href="#point-estimates"></a>
@@ -374,7 +356,7 @@
 <span><span class="fu"><a href="reference/rope.html">rope</a></span><span class="op">(</span><span class="va">posterior</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## # Proportion of samples inside the ROPE [-0.10, 0.10]:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## inside ROPE</span></span>
+<span><span class="co">## Inside ROPE</span></span>
 <span><span class="co">## -----------</span></span>
 <span><span class="co">## 4.40 %</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-14-1.png"><!-- --></p>
@@ -430,7 +412,7 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><code>density_at()</code></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/density_at.html">density_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">## [1] 0.4</span></span></code></pre></div>
+<span><span class="co">## [1] 0.37</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

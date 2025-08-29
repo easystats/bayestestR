@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.1.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,16 @@
       <small>Source: <a href="https://github.com/easystats/bayestestR/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.17.0" id="bayestestr-0170">bayestestR 0.17.0<a class="anchor" aria-label="anchor" href="#bayestestr-0170"></a></h2><p class="text-muted">CRAN release: 2025-08-29</p>
+<div class="section level3">
+<h3 id="changes-0-17-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-17-0"></a></h3>
+<ul><li><p><code><a href="../reference/rope.html">rope()</a></code> (and by extension <code><a href="../reference/p_rope.html">p_rope()</a></code>) gain a new <code>complement</code> argument such that <code>rope(x, complement = TRUE)</code> returns the ROPE posterior probability together with the posterior probabilities above/below the ROPE (the <em>complementary</em> probabilities).</p></li>
+<li><p>Added <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods for <em>bayestestR</em> objects. The <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods also get a new <code>format</code> option, <code>format = "tt"</code>, to produce tables with the <code>tinytable</code> package.</p></li>
+<li><p>The long deprecated <code>rnorm_perfect()</code> function has been removed. Use <code><a href="../reference/distribution.html">distribution_normal()</a></code> instead.</p></li>
+<li><p>Prepare for upcoming changes in <em>marginaleffects</em> (0.29.0).</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.16.1" id="bayestestr-0161">bayestestR 0.16.1<a class="anchor" aria-label="anchor" href="#bayestestr-0161"></a></h2><p class="text-muted">CRAN release: 2025-07-01</p>
 <div class="section level3">
