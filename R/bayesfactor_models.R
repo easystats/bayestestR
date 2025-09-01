@@ -53,6 +53,9 @@
 #' @return A data frame containing the models' formulas (reconstructed fixed and
 #'   random effects) and their `log(BF)`s  (Use `as.numeric()` to extract the
 #'   non-log Bayes factors; see examples), that prints nicely.
+#'   \cr\cr
+#'   For `as.matrix()` a square matrix of (log) Bayes factors, with rows as
+#'   numerators and columns as denominators.
 #'
 #' @examplesIf require("lme4") && require("BayesFactor") && require("rstanarm") && require("brms")
 #' # With lm objects:

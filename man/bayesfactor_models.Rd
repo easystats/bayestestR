@@ -46,6 +46,9 @@ model.}
 A data frame containing the models' formulas (reconstructed fixed and
 random effects) and their \code{log(BF)}s  (Use \code{as.numeric()} to extract the
 non-log Bayes factors; see examples), that prints nicely.
+\cr\cr
+For \code{as.matrix()} a square matrix of (log) Bayes factors, with rows as
+numerators and columns as denominators.
 }
 \description{
 This function computes or extracts Bayes factors from fitted
