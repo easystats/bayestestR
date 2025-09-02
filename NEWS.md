@@ -4,6 +4,7 @@
 
 * `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes 
   factors between all restricted models.
+* New dedicated docs for Bayes factor methods `?bayesfactor_methods`
 
 ## Changes
 

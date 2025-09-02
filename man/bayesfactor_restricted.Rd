@@ -8,8 +8,6 @@
 \alias{bayesfactor_restricted.blavaan}
 \alias{bayesfactor_restricted.emmGrid}
 \alias{bayesfactor_restricted.data.frame}
-\alias{as.logical.bayesfactor_restricted}
-\alias{as.matrix.bayesfactor_restricted}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
 bayesfactor_restricted(posterior, ...)
@@ -59,10 +57,6 @@ bf_restricted(posterior, ...)
   rvar_col = NULL,
   ...
 )
-
-\method{as.logical}{bayesfactor_restricted}(x, which = c("posterior", "prior"), ...)
-
-\method{as.matrix}{bayesfactor_restricted}(x, ...)
 }
 \arguments{
 \item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing
@@ -113,10 +107,6 @@ parameters) are returned.
 
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
-
-\item{x}{An object of class \code{bayesfactor_restricted}}
-
-\item{which}{Should the logical matrix be of the posterior or prior distribution(s)?}
 }
 \value{
 A data frame containing the (log) Bayes factor representing evidence
@@ -124,18 +114,14 @@ A data frame containing the (log) Bayes factor representing evidence
 non-log Bayes factors; see examples). (A \code{bool_results} attribute contains
 the results for each sample, indicating if they are included or not in the
 hypothesized restriction.)
-\cr\cr
-For \code{as.matrix()} a square matrix of (log) Bayes factors, with rows as
-denominators and columns as numerators.
 }
 \description{
 This method computes Bayes factors for comparing a model with an order restrictions on its parameters
 with the fully unrestricted model. \emph{Note that this method should only be used for confirmatory analyses}.
-\cr \cr
+\cr\cr
 The \verb{bf_*} function is an alias of the main function.
 \cr \cr
-\strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
-see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+\strong{For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
 This method is used to compute Bayes factors for order-restricted
@@ -144,25 +130,27 @@ and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
 \cr\cr
 (Though it is possible to use \code{bayesfactor_restricted()} to test interval restrictions,
 it is more suitable for testing order restrictions; see examples).
-}
-\section{Setting the correct \code{prior}}{
+\subsection{Additional methods}{
 
-For the computation of Bayes factors, the model priors must be proper priors
-(at the very least they should be \emph{not flat}, and it is preferable that
-they be \emph{informative}); As the priors for the alternative get wider, the
-likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this
-is called \emph{the Jeffreys-Lindley-Bartlett paradox}). Thus, you should
-only ever try (or want) to compute a Bayes factor when you have an informed
-prior.
-\cr\cr
-(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
-See example below.)
-\cr\cr
+The resulting output is supported by the following methods:
+\itemize{
+\item \code{as.matrix()}: Extract a full matrix of (log-)Bayes factors between all
+models (using the transitivity of Bayes factors).
+\item \code{as.logical()}: Extract boolean vectors indicating which (prior/posterior)
+samples are included in the hypothesized restriction.
+\item \code{as.numeric()}: Extract the (possibly log-)Bayes factor values.
+}
+
+See examples and \link{bayesfactor_methods}.
+}
+}
+\section{Obtaining prior samples}{
+
+
 It is important to provide the correct \code{prior} for meaningful results,
 to match the \code{posterior}-type input:
 \itemize{
-\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-estimate.
+\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-distribution
 \item \strong{A data frame} - \code{prior} should also be a \emph{data frame}, representing the prior-estimates, in matching column order.
 \itemize{
 \item If \code{rvar_col} is specified, \code{prior} should be \emph{the name of an \code{rvar} column} that represents the prior-estimates.
@@ -195,8 +183,9 @@ factor for comparing model \emph{A} to model \emph{B} by dividing them:
 \cr\cr
 \deqn{BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}}
 \cr\cr
-A full matrix comparing all models can be obtained with \code{as.matrix()} (see
-examples).
+(Where \emph{ML} is the \emph{marginal likelihood}.)
+\cr\cr
+A full matrix comparing all models can be obtained with \code{as.matrix()}.
 }
 
 \section{Interpreting Bayes Factors}{
@@ -205,7 +194,7 @@ A Bayes factor greater than 1 can be interpreted as evidence against the
 null, at which one convention is that a Bayes factor greater than 3 can be
 considered as "substantial" evidence against the null (and vice versa, a
 Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
-null-model) (\cite{Wetzels et al. 2011}).
+null-model). See also \code{effectsize::interpret_bf()}.
 }
 
 \examples{
@@ -299,3 +288,10 @@ Psychological methods, 16(4), 406.
 Retrieved from https://richarddmorey.org/category/order-restrictions/.
 }
 }
+\seealso{
+Other Bayes factors: 
+\code{\link{bayesfactor_inclusion}()},
+\code{\link{bayesfactor_models}()},
+\code{\link{bayesfactor_parameters}()}
+}
+\concept{Bayes factors}

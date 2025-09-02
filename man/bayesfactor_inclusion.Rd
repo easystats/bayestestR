@@ -3,7 +3,11 @@
 \name{bayesfactor_inclusion}
 \alias{bayesfactor_inclusion}
 \alias{bf_inclusion}
-\title{Inclusion Bayes Factors for testing predictors across Bayesian models}
+\title{Inclusion Bayes Factors for testing predictors across Bayesian models
+\cr\cr
+The \verb{bf_*} function is an alias of the main function.
+\cr\cr
+\strong{For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}}
 \usage{
 bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 
@@ -25,8 +29,11 @@ log(BF) for each effect (Use \code{as.numeric()} to extract the non-log Bayes
 factors; see examples).
 }
 \description{
-The \verb{bf_*} function is an alias of the main function. For more info, see
-\href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+Inclusion Bayes Factors for testing predictors across Bayesian models
+\cr\cr
+The \verb{bf_*} function is an alias of the main function.
+\cr\cr
+\strong{For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
 Inclusion Bayes factors answer the question: Are the observed data
@@ -34,14 +41,24 @@ more probable under models with a particular effect, than they are under
 models without that particular effect? In other words, on average - are
 models with effect \eqn{X} more likely to have produced the observed data
 than models without effect \eqn{X}?
-
 \subsection{Match Models}{
+
 If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing
 all models with a term against all models without that term. If \code{TRUE},
 comparison is restricted to models that (1) do not include any interactions
 with the term of interest; (2) for interaction terms, averaging is done only
-across models that containe the main effect terms from which the interaction
+across models that contain the main effect terms from which the interaction
 term is comprised.
+}
+
+\subsection{Additional methods}{
+
+The resulting output is supported by the following methods:
+\itemize{
+\item \code{as.numeric()}: Extract the (possibly log-)Bayes factor values.
+}
+
+See \link{bayesfactor_methods}.
 }
 }
 \note{
@@ -54,7 +71,7 @@ A Bayes factor greater than 1 can be interpreted as evidence against the
 null, at which one convention is that a Bayes factor greater than 3 can be
 considered as "substantial" evidence against the null (and vice versa, a
 Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
-null-model) (\cite{Wetzels et al. 2011}).
+null-model). See also \code{effectsize::interpret_bf()}.
 }
 
 \examples{
@@ -97,7 +114,13 @@ for variable selection and model averaging. Journal of Computational and Graphic
 }
 \seealso{
 \code{\link[=weighted_posteriors]{weighted_posteriors()}} for Bayesian parameter averaging.
+
+Other Bayes factors: 
+\code{\link{bayesfactor_models}()},
+\code{\link{bayesfactor_parameters}()},
+\code{\link{bayesfactor_restricted}()}
 }
 \author{
 Mattan S. Ben-Shachar
 }
+\concept{Bayes factors}
