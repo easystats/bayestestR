@@ -33,8 +33,8 @@ test_that("bayesfactor_models BIC", {
 
   # update reference
   expect_equal(update(BFM2, reference = 1)$log_BF,
-    c(0, -2.8, -6.2, -57.4),
-    tolerance = 0.1
+               c(0, -2.8, -6.2, -57.4),
+               tolerance = 0.1
   )
 })
 
@@ -71,6 +71,24 @@ test_that("bayesfactor_models BIC (unsupported / diff nobs)", {
 
   # Should fail
   suppressWarnings(expect_message(bayesfactor_models(fit1, fit2b), "Unable"))
+})
+
+test_that("bayesfactor_models | bayesfactor_matrix", {
+  data("mtcars")
+  lm1 <- lm(mpg ~ 1, data = mtcars)
+  lm2 <- lm(mpg ~ hp, data = mtcars)
+  lm3 <- lm(mpg ~ hp + drat, data = mtcars)
+  lm4 <- lm(mpg ~ hp * drat, data = mtcars)
+  BFM1 <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
+  BFM2 <- update(BFM1, reference = 2)
+
+  bfmat <- as.matrix(BFM1)
+  expect_identical(as.matrix(BFM2), bfmat)
+
+  expect_identical(unname(diag(bfmat)), rep(0, 4))
+  expect_identical(-t(bfmat)[upper.tri(bfmat)], bfmat[upper.tri(bfmat)])
+
+  expect_output(print(bfmat), regexp = "Denominator\\\\Numerator")
 })
 
 
@@ -213,3 +231,4 @@ test_that("bayesfactor_inclusion | LMM", {
   expect_equal(bfinc_matched$p_posterior, c(1, 0.875, 0.125, 0.009, 0.002), tolerance = 0.1)
   expect_equal(bfinc_matched$log_BF, c(NaN, 58.904, -3.045, -3.573, -1.493), tolerance = 0.1)
 })
+
