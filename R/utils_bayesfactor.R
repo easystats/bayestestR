@@ -387,39 +387,6 @@
   )
 }
 
-# As numeric vector -------------------------------------------------------
-
-#' @export
-as.numeric.bayesfactor_inclusion <- function(x, log = FALSE, ...) {
-  out <- x[["log_BF"]]
-  if (!log) out <- exp(out)
-  return(out)
-}
-
-#' @export
-as.numeric.bayesfactor_models <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.numeric.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.numeric.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
-
-## Double:
-
-#' @export
-as.double.bayesfactor_inclusion <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.double.bayesfactor_models <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.double.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
-
-
 # logspline ---------------------------------------------------------------
 
 #' @keywords internal

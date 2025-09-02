@@ -5,9 +5,8 @@
 #' updating factor greater or equal than *k*. From the perspective of the Savage-Dickey Bayes factor, testing
 #' against a point null hypothesis for any value within the support interval will yield a Bayes factor smaller
 #' than *1/k*.
-#'
-#' **For more info, in particular on specifying correct priors for factors with more than 2 levels,
-#' see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
+#' \cr\cr
+#' \strong{For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
 #' @param BF The amount of support required to be included in the support interval.
 #' @inheritParams bayesfactor_parameters
@@ -16,9 +15,6 @@
 #' @family ci
 #'
 #' @details This method is used to compute support intervals based on prior and posterior distributions.
-#' For the computation of support intervals, the model priors must be proper priors (at the very least
-#' they should be *not flat*, and it is preferable that they be *informative* - note
-#' that by default, `brms::brm()` uses flat priors for fixed-effects; see example below).
 #'
 #' @section Choosing a value of `BF`:
 #' The choice of `BF` (the level of support) depends on what we want our interval
@@ -32,7 +28,9 @@
 #'   E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null
 #'   will be larger than 3.
 #'
-#' @inheritSection bayesfactor_parameters Setting the correct `prior`
+#' @inheritSection bayesfactor_methods Prior and posterior considerations
+#'
+#' @inheritSection bayesfactor_parameters Obtaining prior samples
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
