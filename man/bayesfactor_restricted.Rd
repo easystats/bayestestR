@@ -126,7 +126,7 @@ the results for each sample, indicating if they are included or not in the
 hypothesized restriction.)
 \cr\cr
 For \code{as.matrix()} a square matrix of (log) Bayes factors, with rows as
-numerators and columns as denominators.
+denominators and columns as numerators.
 }
 \description{
 This method computes Bayes factors for comparing a model with an order restrictions on its parameters

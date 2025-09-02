@@ -34,7 +34,7 @@
 #'   hypothesized restriction.)
 #'   \cr\cr
 #'   For `as.matrix()` a square matrix of (log) Bayes factors, with rows as
-#'   numerators and columns as denominators.
+#'   denominators and columns as numerators.
 #'
 #' @examples
 #' set.seed(444)

@@ -48,7 +48,7 @@ random effects) and their \code{log(BF)}s  (Use \code{as.numeric()} to extract t
 non-log Bayes factors; see examples), that prints nicely.
 \cr\cr
 For \code{as.matrix()} a square matrix of (log) Bayes factors, with rows as
-numerators and columns as denominators.
+denominators and columns as numerators.
 }
 \description{
 This function computes or extracts Bayes factors from fitted

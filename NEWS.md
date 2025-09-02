@@ -7,7 +7,7 @@
 
 ## Changes
 
-* `as.matrix(<bf>)` now returs class `bayesfactor_matrix` and has a simpler printing.
+* `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler printing.
 
 # bayestestR 0.17.0
 
