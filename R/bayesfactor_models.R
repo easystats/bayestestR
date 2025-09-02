@@ -217,9 +217,9 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
     # Get BIC
     if (were_checked && estimator == "REML" &&
-        any(vapply(mods, insight::is_mixed_model, TRUE)) &&
-        !isTRUE(attr(model_objects, "same_fixef")) &&
-        verbose) {
+      any(vapply(mods, insight::is_mixed_model, TRUE)) &&
+      !isTRUE(attr(model_objects, "same_fixef")) &&
+      verbose) {
       insight::format_warning(paste(
         "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
         "are not recommended for comparison between models with different fixed effects.",
@@ -250,10 +250,10 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   )
 
   .bf_models_output(res,
-                    denominator = denominator,
-                    bf_method = "BIC approximation",
-                    unsupported_models = !all(supported_models),
-                    model_names = names(mods)
+    denominator = denominator,
+    bf_method = "BIC approximation",
+    unsupported_models = !all(supported_models),
+    model_names = names(mods)
   )
 }
 
@@ -283,9 +283,9 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   }
 
   .bf_models_output(res,
-                    denominator = denominator,
-                    bf_method = bf_method,
-                    unsupported_models = unsupported_models
+    denominator = denominator,
+    bf_method = bf_method,
+    unsupported_models = unsupported_models
   )
 }
 
@@ -297,8 +297,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
   from_same_data_as_den <- sapply(resps[-denominator],
-                                  identical,
-                                  y = resps[[denominator]]
+    identical,
+    y = resps[[denominator]]
   )
 
   if (!all(from_same_data_as_den)) {
@@ -394,9 +394,9 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   )
 
   .bf_models_output(res,
-                    denominator = 1,
-                    bf_method = "JZS (BayesFactor)",
-                    unsupported_models = !inherits(models@denominator, "BFlinearModel")
+    denominator = 1,
+    bf_method = "JZS (BayesFactor)",
+    unsupported_models = !inherits(models@denominator, "BFlinearModel")
   )
 }
 

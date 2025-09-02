@@ -150,8 +150,8 @@ bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
                                            component = "conditional",
                                            ...) {
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        effects = effects, component = component,
-                                        verbose = verbose
+    effects = effects, component = component,
+    verbose = verbose
   )
 
   # Get savage-dickey BFs
@@ -170,7 +170,7 @@ bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 bayesfactor_restricted.blavaan <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE, ...) {
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose
+    verbose = verbose
   )
 
   # Get savage-dickey BFs
@@ -187,7 +187,7 @@ bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE,
                                            ...) {
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose
+    verbose = verbose
   )
 
   bayesfactor_restricted.data.frame(
@@ -283,12 +283,11 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
 #' @export
 bayesfactor_restricted.draws <- function(posterior, hypothesis, prior = NULL, ...) {
   bayesfactor_restricted(.posterior_draws_to_df(posterior),
-                         hypothesis = hypothesis,
-                         prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
-                         ...
+    hypothesis = hypothesis,
+    prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
+    ...
   )
 }
 
 #' @export
 bayesfactor_restricted.rvar <- bayesfactor_restricted.draws
-

@@ -70,7 +70,6 @@ as.matrix.bayestestRBF <- function(x, log = TRUE, ...) {
     log_BFs <- c(0, x$log_BF)
     models <- c("(Un-restricted)", x$Hypothesis)
     bf_fun <- "bayesfactor_restricted()"
-
   } else if (inherits(x, "bayesfactor_models")) {
     log_BFs <- x$log_BF
     models <- x$Model
@@ -131,8 +130,7 @@ print.bayesfactor_matrix <- function(x, log = FALSE, ...) {
   )
 
   # caption and footer
-  caption <- switch(
-    attr(orig_x, "bf_fun"),
+  caption <- switch(attr(orig_x, "bf_fun"),
     "bayesfactor_restricted()" = "# Bayes Factors for Restricted Models",
     "# Bayes Factors for Model Comparison"
   )

@@ -33,8 +33,8 @@ test_that("bayesfactor_models BIC", {
 
   # update reference
   expect_equal(update(BFM2, reference = 1)$log_BF,
-               c(0, -2.8, -6.2, -57.4),
-               tolerance = 0.1
+    c(0, -2.8, -6.2, -57.4),
+    tolerance = 0.1
   )
 })
 
@@ -231,4 +231,3 @@ test_that("bayesfactor_inclusion | LMM", {
   expect_equal(bfinc_matched$p_posterior, c(1, 0.875, 0.125, 0.009, 0.002), tolerance = 0.1)
   expect_equal(bfinc_matched$log_BF, c(NaN, 58.904, -3.045, -3.573, -1.493), tolerance = 0.1)
 })
-
