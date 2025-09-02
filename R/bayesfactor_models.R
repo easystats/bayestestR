@@ -48,11 +48,27 @@
 #'
 #' See also [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
+#' @section Transitivity of Bayes factors:
+#' For multiple inputs (models or hypotheses), the function will return multiple
+#' Bayes factors between each model and _the same_ reference model (the
+#' `denominator` or un-restricted model). However, we can take advantage of the
+#' transitivity of Bayes factors - where if we have two Bayes factors for Model
+#' _A_ and model _B_ against the _same reference model C_, we can obtain a Bayes
+#' factor for comparing model _A_ to model _B_ by dividing them:
+#' \cr\cr
+#' \deqn{BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}}
+#' \cr\cr
+#' A full matrix comparing all models can be obtained with `as.matrix()` (see
+#' examples).
+#'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
 #' @return A data frame containing the models' formulas (reconstructed fixed and
 #'   random effects) and their `log(BF)`s  (Use `as.numeric()` to extract the
 #'   non-log Bayes factors; see examples), that prints nicely.
+#'   \cr\cr
+#'   For `as.matrix()` a square matrix of (log) Bayes factors, with rows as
+#'   denominators and columns as numerators.
 #'
 #' @examplesIf require("lme4") && require("BayesFactor") && require("rstanarm") && require("brms")
 #' # With lm objects:
@@ -435,7 +451,9 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 
   # out <- exp(out)
 
-  class(out) <- c("bayesfactor_models_matrix", class(out))
+  class(out) <- c("bayesfactor_matrix", class(out))
+  attr(out, "log_BF") <- TRUE
+  attr(out, "bf_fun") <- "bayesfactor_models()"
   out
 }
 

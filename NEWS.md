@@ -1,3 +1,14 @@
+# bayestestR 0.17.0.xxx
+
+## New functionality
+
+* `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes 
+  factors between all restricted models.
+
+## Changes
+
+* `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler printing.
+
 # bayestestR 0.17.0
 
 ## Changes

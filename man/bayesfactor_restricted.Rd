@@ -9,6 +9,7 @@
 \alias{bayesfactor_restricted.emmGrid}
 \alias{bayesfactor_restricted.data.frame}
 \alias{as.logical.bayesfactor_restricted}
+\alias{as.matrix.bayesfactor_restricted}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
 bayesfactor_restricted(posterior, ...)
@@ -60,6 +61,8 @@ bf_restricted(posterior, ...)
 )
 
 \method{as.logical}{bayesfactor_restricted}(x, which = c("posterior", "prior"), ...)
+
+\method{as.matrix}{bayesfactor_restricted}(x, ...)
 }
 \arguments{
 \item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing
@@ -121,6 +124,9 @@ A data frame containing the (log) Bayes factor representing evidence
 non-log Bayes factors; see examples). (A \code{bool_results} attribute contains
 the results for each sample, indicating if they are included or not in the
 hypothesized restriction.)
+\cr\cr
+For \code{as.matrix()} a square matrix of (log) Bayes factors, with rows as
+denominators and columns as numerators.
 }
 \description{
 This method computes Bayes factors for comparing a model with an order restrictions on its parameters
@@ -132,9 +138,9 @@ The \verb{bf_*} function is an alias of the main function.
 see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
-This method is used to compute Bayes factors for order-restricted models vs un-restricted
-models by setting an order restriction on the prior and posterior distributions
-(\cite{Morey & Wagenmakers, 2013}).
+This method is used to compute Bayes factors for order-restricted
+models vs un-restricted models by setting an order restriction on the prior
+and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
 \cr\cr
 (Though it is possible to use \code{bayesfactor_restricted()} to test interval restrictions,
 it is more suitable for testing order restrictions; see examples).
@@ -178,6 +184,21 @@ any transformations -- \code{"log"}, \code{"response"}, etc. -- or any \code{reg
 }
 }
 
+\section{Transitivity of Bayes factors}{
+
+For multiple inputs (models or hypotheses), the function will return multiple
+Bayes factors between each model and \emph{the same} reference model (the
+\code{denominator} or un-restricted model). However, we can take advantage of the
+transitivity of Bayes factors - where if we have two Bayes factors for Model
+\emph{A} and model \emph{B} against the \emph{same reference model C}, we can obtain a Bayes
+factor for comparing model \emph{A} to model \emph{B} by dividing them:
+\cr\cr
+\deqn{BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}}
+\cr\cr
+A full matrix comparing all models can be obtained with \code{as.matrix()} (see
+examples).
+}
+
 \section{Interpreting Bayes Factors}{
 
 A Bayes factor greater than 1 can be interpreted as evidence against the
@@ -210,6 +231,9 @@ hyps <- c(
 
 
 (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
+
+# See the matrix of BFs
+as.matrix(b)
 
 bool <- as.logical(b, which = "posterior")
 head(bool)

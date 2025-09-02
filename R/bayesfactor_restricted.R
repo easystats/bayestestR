@@ -14,14 +14,16 @@
 #' @param prior An object representing a prior distribution (see Details).
 #' @inheritParams hdi
 #'
-#' @details This method is used to compute Bayes factors for order-restricted models vs un-restricted
-#' models by setting an order restriction on the prior and posterior distributions
-#' (\cite{Morey & Wagenmakers, 2013}).
+#' @details This method is used to compute Bayes factors for order-restricted
+#'   models vs un-restricted models by setting an order restriction on the prior
+#'   and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
 #' \cr\cr
 #' (Though it is possible to use `bayesfactor_restricted()` to test interval restrictions,
 #' it is more suitable for testing order restrictions; see examples).
 #'
 #' @inheritSection bayesfactor_parameters Setting the correct `prior`
+#'
+#' @inheritSection bayesfactor_models Transitivity of Bayes factors
 #'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
@@ -30,6 +32,9 @@
 #'   non-log Bayes factors; see examples). (A `bool_results` attribute contains
 #'   the results for each sample, indicating if they are included or not in the
 #'   hypothesized restriction.)
+#'   \cr\cr
+#'   For `as.matrix()` a square matrix of (log) Bayes factors, with rows as
+#'   denominators and columns as numerators.
 #'
 #' @examples
 #' set.seed(444)
@@ -54,6 +59,9 @@
 #'
 #'
 #' (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
+#'
+#' # See the matrix of BFs
+#' as.matrix(b)
 #'
 #' bool <- as.logical(b, which = "posterior")
 #' head(bool)
@@ -284,4 +292,21 @@ bayesfactor_restricted.rvar <- bayesfactor_restricted.draws
 as.logical.bayesfactor_restricted <- function(x, which = c("posterior", "prior"), ...) {
   which <- match.arg(which)
   as.matrix(attr(x, "bool_results")[[which]])
+}
+
+#' @rdname bayesfactor_restricted
+#' @export
+as.matrix.bayesfactor_restricted <- function(x, ...) {
+  log_BFs <- c(0, x$log_BF)
+  models <- c("(Un-restricted)", x$Hypothesis)
+
+  out <- -outer(log_BFs, log_BFs, FUN = "-")
+  rownames(out) <- colnames(out) <- models
+
+  # out <- exp(out)
+
+  class(out) <- c("bayesfactor_matrix", class(out))
+  attr(out, "log_BF") <- TRUE
+  attr(out, "bf_fun") <- "bayesfactor_restricted()"
+  out
 }
