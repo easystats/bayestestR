@@ -85,6 +85,21 @@ See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.htm
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
 implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
+\section{Transitivity of Bayes factors}{
+
+For multiple inputs (models or hypotheses), the function will return multiple
+Bayes factors between each model and \emph{the same} reference model (the
+\code{denominator} or un-restricted model). However, we can take advantage of the
+transitivity of Bayes factors - where if we have two Bayes factors for Model
+\emph{A} and model \emph{B} against the \emph{same reference model C}, we can obtain a Bayes
+factor for comparing model \emph{A} to model \emph{B} by dividing them:
+\cr\cr
+\deqn{BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}}
+\cr\cr
+A full matrix comparing all models can be obtained with \code{as.matrix()} (see
+examples).
+}
+
 \section{Interpreting Bayes Factors}{
 
 A Bayes factor greater than 1 can be interpreted as evidence against the

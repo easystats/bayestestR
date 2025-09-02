@@ -48,6 +48,19 @@
 #'
 #' See also [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
+#' @section Transitivity of Bayes factors:
+#' For multiple inputs (models or hypotheses), the function will return multiple
+#' Bayes factors between each model and _the same_ reference model (the
+#' `denominator` or un-restricted model). However, we can take advantage of the
+#' transitivity of Bayes factors - where if we have two Bayes factors for Model
+#' _A_ and model _B_ against the _same reference model C_, we can obtain a Bayes
+#' factor for comparing model _A_ to model _B_ by dividing them:
+#' \cr\cr
+#' \deqn{BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}}
+#' \cr\cr
+#' A full matrix comparing all models can be obtained with `as.matrix()` (see
+#' examples).
+#'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
 #' @return A data frame containing the models' formulas (reconstructed fixed and

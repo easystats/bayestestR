@@ -23,6 +23,8 @@
 #'
 #' @inheritSection bayesfactor_parameters Setting the correct `prior`
 #'
+#' @inheritSection bayesfactor_models Transitivity of Bayes factors
+#'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
 #' @return A data frame containing the (log) Bayes factor representing evidence
