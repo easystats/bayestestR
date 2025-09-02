@@ -1,5 +1,5 @@
 #' @export
-print.bayesfactor_models_matrix <- function(x, log = FALSE, exact = TRUE, ...) {
+print.bayesfactor_matrix <- function(x, log = FALSE, exact = TRUE, ...) {
   orig_x <- x
 
   # Format values
@@ -34,12 +34,22 @@ print.bayesfactor_models_matrix <- function(x, log = FALSE, exact = TRUE, ...) {
     paste0(" [", seq_along(models), "] ")
   )
 
+  # caption and footer
+  caption <- switch(
+    attr(orig_x, "bf_fun"),
+    "bayesfactor_restricted()" = "# Bayes Factors for Restricted Models",
+    "# Bayes Factors for Model Comparison"
+  )
+  footer <- if (log) c("\nBayes Factors are on the log-scale.\n", "red")
+
   out <- insight::export_table(
     df,
-    caption = c("# Bayes Factors for Model Comparison", "blue"),
-    footer = if (log) c("\nBayes Factors are on the log-scale.\n", "red")
+    caption = c(caption, "blue"),
+    footer = footer
   )
+  # Fix spacing
   out <- sub("Denominator", " Denominator", out, fixed = TRUE)
+
   cat(out)
 
   invisible(orig_x)

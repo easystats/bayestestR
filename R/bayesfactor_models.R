@@ -438,7 +438,9 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 
   # out <- exp(out)
 
-  class(out) <- c("bayesfactor_models_matrix", class(out))
+  class(out) <- c("bayesfactor_matrix", class(out))
+  attr(out, "log_BF") <- TRUE
+  attr(out, "bf_fun") <- "bayesfactor_models()"
   out
 }
 
