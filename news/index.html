@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,13 +67,26 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/easystats/bayestestR/blob/v0.17.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/easystats/bayestestR/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.17.0" id="bayestestr-0170">bayestestR 0.17.0<a class="anchor" aria-label="anchor" href="#bayestestr-0170"></a></h2><p class="text-muted">CRAN release: 2025-08-29</p>
+<h2 class="pkg-version" data-toc-text="0.17.0" id="bayestestr-0170xxx">bayestestR 0.17.0.xxx<a class="anchor" aria-label="anchor" href="#bayestestr-0170xxx"></a></h2><p class="text-muted">CRAN release: 2025-08-29</p>
+<div class="section level3">
+<h3 id="new-functionality-0-17-0">New functionality<a class="anchor" aria-label="anchor" href="#new-functionality-0-17-0"></a></h3>
+<ul><li>
+<code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> for <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>, to obtain a matrix of Bayes factors between all restricted models.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="changes-0-17-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-17-0"></a></h3>
+<ul><li>
+<code>as.matrix(&lt;bf&gt;)</code> now returns class <code>bayesfactor_matrix</code> and has a simpler printing.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.17.0" id="bayestestr-0170">bayestestR 0.17.0<a class="anchor" aria-label="anchor" href="#bayestestr-0170"></a></h2><p class="text-muted">CRAN release: 2025-08-29</p>
+<div class="section level3">
+<h3 id="changes-0-17-0-1">Changes<a class="anchor" aria-label="anchor" href="#changes-0-17-0-1"></a></h3>
 <ul><li><p><code><a href="../reference/rope.html">rope()</a></code> (and by extension <code><a href="../reference/p_rope.html">p_rope()</a></code>) gain a new <code>complement</code> argument such that <code>rope(x, complement = TRUE)</code> returns the ROPE posterior probability together with the posterior probabilities above/below the ROPE (the <em>complementary</em> probabilities).</p></li>
 <li><p>Added <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods for <em>bayestestR</em> objects. The <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods also get a new <code>format</code> option, <code>format = "tt"</code>, to produce tables with the <code>tinytable</code> package.</p></li>
 <li><p>The long deprecated <code>rnorm_perfect()</code> function has been removed. Use <code><a href="../reference/distribution.html">distribution_normal()</a></code> instead.</p></li>

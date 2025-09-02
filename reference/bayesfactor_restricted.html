@@ -19,7 +19,7 @@ see the Bayes factors vignette."><meta property="og:image" content="https://easy
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@ see the Bayes factors vignette."><meta property="og:image" content="https://easy
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Bayes Factors (BF) for Order Restricted Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/v0.17.0/R/bayesfactor_restricted.R" class="external-link"><code>R/bayesfactor_restricted.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/main/R/bayesfactor_restricted.R" class="external-link"><code>R/bayesfactor_restricted.R</code></a></small>
       <div class="d-none name"><code>bayesfactor_restricted.Rd</code></div>
     </div>
 
@@ -148,7 +148,10 @@ see <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'bayesfactor_restricted'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">as.logical</a></span><span class="op">(</span><span class="va">x</span>, which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"posterior"</span>, <span class="st">"prior"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">as.logical</a></span><span class="op">(</span><span class="va">x</span>, which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"posterior"</span>, <span class="st">"prior"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'bayesfactor_restricted'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -229,13 +232,16 @@ frame to be processed. See example in <code><a href="p_direction.html">p_directi
 <em>against</em> the un-restricted model (Use <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> to extract the
 non-log Bayes factors; see examples). (A <code>bool_results</code> attribute contains
 the results for each sample, indicating if they are included or not in the
-hypothesized restriction.)</p>
+hypothesized restriction.)
+<br><br>
+For <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> a square matrix of (log) Bayes factors, with rows as
+denominators and columns as numerators.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This method is used to compute Bayes factors for order-restricted models vs un-restricted
-models by setting an order restriction on the prior and posterior distributions
-(<cite>Morey &amp; Wagenmakers, 2013</cite>).
+    <p>This method is used to compute Bayes factors for order-restricted
+models vs un-restricted models by setting an order restriction on the prior
+and posterior distributions (<cite>Morey &amp; Wagenmakers, 2013</cite>).
 <br><br>
 (Though it is possible to use <code>bayesfactor_restricted()</code> to test interval restrictions,
 it is more suitable for testing order restrictions; see examples).</p>
@@ -271,6 +277,22 @@ will try to "unupdate" the estimates (not supported if the estimates have underg
 any transformations – <code>"log"</code>, <code>"response"</code>, etc. – or any <code>regrid</code>ing).</p></li>
 </ul></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="transitivity-of-bayes-factors">Transitivity of Bayes factors<a class="anchor" aria-label="anchor" href="#transitivity-of-bayes-factors"></a></h2>
+
+
+<p>For multiple inputs (models or hypotheses), the function will return multiple
+Bayes factors between each model and <em>the same</em> reference model (the
+<code>denominator</code> or un-restricted model). However, we can take advantage of the
+transitivity of Bayes factors - where if we have two Bayes factors for Model
+<em>A</em> and model <em>B</em> against the <em>same reference model C</em>, we can obtain a Bayes
+factor for comparing model <em>A</em> to model <em>B</em> by dividing them:
+<br><br>
+$$BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}$$
+<br><br>
+A full matrix comparing all models can be obtained with <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> (see
+examples).</p>
+    </div>
     <div class="section level2">
     <h2 id="interpreting-bayes-factors">Interpreting Bayes Factors<a class="anchor" aria-label="anchor" href="#interpreting-bayes-factors"></a></h2>
 
@@ -324,6 +346,17 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> C &gt; A             0.46         0.34 0.742</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Bayes factors for the restricted model vs. the un-restricted model.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># See the matrix of BFs</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Bayes Factors for Restricted Models</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Denominator\Numerator |   [1] |   [2] |   [3] |   [4]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] (Un-restricted)    |     1 |  1.39 |  1.61 | 0.742</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] A &gt; B &amp; B &gt; C      | 0.719 |     1 |  1.16 | 0.534</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] A &gt; B &amp; A &gt; C      | 0.621 | 0.864 |     1 | 0.461</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] C &gt; A              |  1.35 |  1.87 |  2.17 |     1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">bool</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">as.logical</a></span><span class="op">(</span><span class="va">b</span>, which <span class="op">=</span> <span class="st">"posterior"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bool</span><span class="op">)</span></span></span>
@@ -398,15 +431,15 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.031 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.038 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.069 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.068 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 2e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1.1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
@@ -423,9 +456,9 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.031 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.03 seconds (Warm-up)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.04 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.071 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.07 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).</span>
@@ -449,8 +482,8 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.03 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.038 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.068 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.039 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.069 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).</span>
@@ -474,8 +507,8 @@ Retrieved from https://richarddmorey.org/category/order-restrictions/.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.029 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.039 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.068 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.04 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.069 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">em_condition</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_model</span>, <span class="op">~</span><span class="va">condition</span>, data <span class="op">=</span> <span class="va">disgust</span><span class="op">)</span></span></span>
