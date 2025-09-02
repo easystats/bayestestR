@@ -4,7 +4,7 @@
 #' @param ... Additional arguments (currently not used).
 #'
 #' @return
-#' - `as.numeric()` / `as.double()` / `as.vector()`: a numeric vector of (log)
+#' - `as.numeric()` / `as.double()`: a numeric vector of (log)
 #'   Bayes factors.
 #' - `as.logical()`: a logical data frame with a column for each
 #'   order-restricted hypothesis.
@@ -203,8 +203,6 @@ as.numeric.bayestestRBF <- function(x, log = FALSE, ...) {
 #' @export
 as.double.bayestestRBF <- as.numeric.bayestestRBF
 
-#' @export
-as.vector.bayestestRBF <- as.numeric.bayestestRBF
 
 ## as.logical -----------------------------------------------------------------
 
@@ -216,21 +214,3 @@ as.logical.bayesfactor_restricted <- function(x, which = c("posterior", "prior")
   which <- match.arg(which)
   as.matrix(attr(x, "bool_results")[[which]])
 }
-
-
-
-
-# Utils -----------------------------
-# We need this to avoid argument conflicts with the non-generic as.vector
-# For as.vector.bayestestRBF and as.vector.p_direction
-
-#' @export
-as.vector <- function(x, ...) {
-  UseMethod("as.vector")
-}
-
-#' @export
-as.vector.default <- function(x, ...) {
-  base::as.vector(x)
-}
-

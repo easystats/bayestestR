@@ -33,7 +33,7 @@ model.}
 }
 \value{
 \itemize{
-\item \code{as.numeric()} / \code{as.double()} / \code{as.vector()}: a numeric vector of (log)
+\item \code{as.numeric()} / \code{as.double()}: a numeric vector of (log)
 Bayes factors.
 \item \code{as.logical()}: a logical data frame with a column for each
 order-restricted hypothesis.
