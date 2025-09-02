@@ -131,8 +131,8 @@ print.bayesfactor_matrix <- function(x, log = FALSE, ...) {
 
   # caption and footer
   caption <- switch(attr(orig_x, "bf_fun"),
-    "bayesfactor_restricted()" = "# Bayes Factors for Restricted Models",
-    "# Bayes Factors for Model Comparison"
+                    "bayesfactor_restricted()" = "# Bayes Factors for Restricted Models",
+                    "# Bayes Factors for Model Comparison"
   )
   footer <- if (log) c("\nBayes Factors are on the log-scale.\n", "red")
 
@@ -216,3 +216,21 @@ as.logical.bayesfactor_restricted <- function(x, which = c("posterior", "prior")
   which <- match.arg(which)
   as.matrix(attr(x, "bool_results")[[which]])
 }
+
+
+
+
+# Utils -----------------------------
+# We need this to avoid argument conflicts with the non-generic as.vector
+# For as.vector.bayestestRBF and as.vector.p_direction
+
+#' @export
+as.vector <- function(x, ...) {
+  UseMethod("as.vector")
+}
+
+#' @export
+as.vector.default <- function(x, ...) {
+  base::as.vector(x)
+}
+
