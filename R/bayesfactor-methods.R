@@ -1,6 +1,7 @@
 #' Methods for Bayes factors
 #'
 #' @param x,object Bayes factor object
+#' @param ... Additional arguments (currently not used).
 #'
 #' @return
 #' - `as.numeric()` / `as.double()` / `as.vector()`: a numeric vector of (log)

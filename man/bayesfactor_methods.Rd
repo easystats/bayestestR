@@ -21,6 +21,8 @@
 
 \item{log}{Return log(BF) (default), or BF values.}
 
+\item{...}{Additional arguments (currently not used).}
+
 \item{subset}{Vector of model indices to keep or remove.}
 
 \item{reference}{Index of model to reference to, or \code{"top"} to
