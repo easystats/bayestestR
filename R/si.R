@@ -120,7 +120,7 @@ si.stanreg <- function(posterior, prior = NULL,
                        component = "location",
                        parameters = NULL,
                        ...) {
-  cleaned_parameters <- insight::clean_parameters(posterior)
+  cleaned_parameters <- .get_cleaned_parameters(posterior, ...)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
     effects = effects, component = component,
@@ -181,13 +181,10 @@ si.predictions <- si.emmGrid
 
 
 #' @export
-si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = "fixed", ...) {
-  out <- si(insight::get_parameters(posterior, effects = effects),
-    prior = prior, BF = BF, verbose = verbose
-  )
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
-  out
-}
+si.stanfit <- si.stanreg
+
+#' @export
+si.CmdStanFit <- si.stanreg
 
 
 #' @rdname si
