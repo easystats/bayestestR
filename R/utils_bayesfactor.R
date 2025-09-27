@@ -201,6 +201,35 @@
 
 .clean_priors_and_posteriors.comparisons <- .clean_priors_and_posteriors.slopes
 
+.clean_priors_and_posteriors.stanfit <- function(posterior, prior,
+                                                 verbose = TRUE,
+                                                 ...) {
+  posterior <- insight::get_parameters(posterior)
+
+  # Get Priors
+  if (!is.null(prior)) {
+    prior <- insight::get_parameters(prior)
+  }
+
+  list(
+    posterior = posterior,
+    prior = prior
+  )
+}
+
+.clean_priors_and_posteriors.CmdStanFit <- .clean_priors_and_posteriors.stanfit
+
+
+#' @keywords internal
+get_parameters.CmdStanFit <- function(x, ...) {
+  insight::check_if_installed("cmdstanr")
+
+  out <- as.data.frame(x$draws(format = "draws_df"))
+  out[c(".chain", ".iteration", ".draw")] <- NULL
+  out[grepl("^lp_", colnames(out))] <- NULL
+  out
+}
+
 
 # BMA ---------------------------------------------------------------------
 

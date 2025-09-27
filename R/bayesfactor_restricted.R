@@ -165,6 +165,12 @@ bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
 #' @export
 bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 
+#' @export
+bayesfactor_restricted.CmdStanFit <- bayesfactor_restricted.stanreg
+
+#' @export
+bayesfactor_restricted.stanfit <- bayesfactor_restricted.stanreg
+
 #' @rdname bayesfactor_restricted
 #' @export
 bayesfactor_restricted.blavaan <- function(posterior, hypothesis, prior = NULL,

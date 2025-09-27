@@ -318,6 +318,12 @@ bayesfactor_parameters.stanreg <- function(posterior,
 #' @export
 bayesfactor_parameters.brmsfit <- bayesfactor_parameters.stanreg
 
+#' @export
+bayesfactor_parameters.CmdStanFit <- bayesfactor_parameters.stanreg
+
+#' @export
+bayesfactor_parameters.stanfit <- bayesfactor_parameters.stanreg
+
 
 #' @export
 bayesfactor_parameters.blavaan <- function(posterior,
