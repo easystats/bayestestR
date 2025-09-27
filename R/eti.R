@@ -253,6 +253,9 @@ eti.stanfit <- eti.stanreg
 #' @export
 eti.blavaan <- eti.stanreg
 
+#' @export
+eti.CmdStanFit <- eti.stanreg
+
 
 #' @rdname eti
 #' @export

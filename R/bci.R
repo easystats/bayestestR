@@ -228,6 +228,9 @@ bci.stanreg <- function(x,
 bci.stanfit <- bci.stanreg
 
 #' @export
+bci.CmdStanFit <- bci.stanreg
+
+#' @export
 bci.blavaan <- bci.stanreg
 
 
