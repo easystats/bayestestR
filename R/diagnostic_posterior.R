@@ -317,7 +317,7 @@ diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects 
 
 
 #' @export
-diagnostic_posterior.CmdStanFit <- function(model,
+diagnostic_posterior.CmdStanFit <- function(posterior,
                                             diagnostic = "all",
                                             ...) {
   if ("all" %in% diagnostic) {
@@ -328,7 +328,7 @@ diagnostic_posterior.CmdStanFit <- function(model,
   insight::check_if_installed("cmdstanr")
 
 
-  draws <- model$draws(format = "draws_df")
+  draws <- posterior$draws(format = "draws_df")
 
   out <- posterior::summarize_draws(draws,
                                     posterior::default_convergence_measures(),
