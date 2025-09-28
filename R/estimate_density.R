@@ -436,6 +436,9 @@ estimate_density.stanreg <- function(x,
 estimate_density.stanfit <- estimate_density.stanreg
 
 #' @export
+estimate_density.CmdStanFit <- estimate_density.stanreg
+
+#' @export
 estimate_density.blavaan <- estimate_density.stanreg
 
 
