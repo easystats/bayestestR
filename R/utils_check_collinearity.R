@@ -2,6 +2,8 @@
 .check_multicollinearity <- function(model,
                                      method = "equivalence_test",
                                      threshold = 0.7, ...) {
+  if (inherits(model, "CmdStanFit")) return()
+
   valid_parameters <- insight::find_parameters(
     model,
     parameters = "^(?!(r_|sd_|prior_|cor_|lp__|b\\[))",

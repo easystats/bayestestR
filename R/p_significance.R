@@ -324,6 +324,9 @@ p_significance.stanreg <- function(x,
 p_significance.stanfit <- p_significance.stanreg
 
 #' @export
+p_significance.CmdStanFit <- p_significance.stanreg
+
+#' @export
 p_significance.blavaan <- p_significance.stanreg
 
 
