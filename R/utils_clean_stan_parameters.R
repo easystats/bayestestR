@@ -46,6 +46,3 @@
 }
 
 .get_cleaned_parameters.CmdStanFit <- .get_cleaned_parameters.stanfit
-
-
-

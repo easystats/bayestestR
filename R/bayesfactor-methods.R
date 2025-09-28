@@ -131,8 +131,8 @@ print.bayesfactor_matrix <- function(x, log = FALSE, ...) {
 
   # caption and footer
   caption <- switch(attr(orig_x, "bf_fun"),
-                    "bayesfactor_restricted()" = "# Bayes Factors for Restricted Models",
-                    "# Bayes Factors for Model Comparison"
+    "bayesfactor_restricted()" = "# Bayes Factors for Restricted Models",
+    "# Bayes Factors for Model Comparison"
   )
   footer <- if (log) c("\nBayes Factors are on the log-scale.\n", "red")
 

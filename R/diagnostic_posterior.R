@@ -209,10 +209,10 @@ diagnostic_posterior.brmsfit <- function(posterior,
                                          ...) {
   # Find parameters
   params <- insight::find_parameters(posterior,
-                                     effects = effects,
-                                     component = component,
-                                     parameters = parameters,
-                                     flatten = TRUE
+    effects = effects,
+    component = component,
+    parameters = parameters,
+    flatten = TRUE
   )
 
   # If no diagnostic
@@ -286,8 +286,8 @@ diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects 
   insight::check_if_installed("rstan")
 
   all_params <- insight::find_parameters(posterior,
-                                         effects = effects,
-                                         flatten = TRUE
+    effects = effects,
+    flatten = TRUE
   )
 
   diagnostic_df <- data.frame(
@@ -331,15 +331,20 @@ diagnostic_posterior.CmdStanFit <- function(posterior,
   draws <- posterior$draws(format = "draws_df")
 
   out <- posterior::summarize_draws(draws,
-                                    posterior::default_convergence_measures(),
-                                    MCSE = posterior::mcse_mean)
-  out <- datawizard::data_rename(as.data.frame(out),
-                                 c(Parameter = "variable",
-                                   ESS = "ess_bulk",
-                                   ESS_tail = "ess_tail",
-                                   Rhat = "rhat"))
+    posterior::default_convergence_measures(),
+    MCSE = posterior::mcse_mean
+  )
+  out <- datawizard::data_rename(
+    as.data.frame(out),
+    c(
+      Parameter = "variable",
+      ESS = "ess_bulk",
+      ESS_tail = "ess_tail",
+      Rhat = "rhat"
+    )
+  )
 
-  out[!grepl("^lp_", out$Parameter), c("Parameter", diagnostic), drop  = FALSE]
+  out[!grepl("^lp_", out$Parameter), c("Parameter", diagnostic), drop = FALSE]
 }
 
 
