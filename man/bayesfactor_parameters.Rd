@@ -319,7 +319,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("logspline")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = .5, sd = .3)
@@ -327,7 +327,7 @@ posterior <- distribution_normal(1000, mean = .5, sd = .3)
 
 as.numeric(BF_pars)
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("rstanarm") && require("emmeans") && require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("emmeans") && require("logspline")) withAutoprint(\{ # examplesIf}
 \donttest{
 # rstanarm models
 # ---------------
@@ -350,7 +350,7 @@ bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
 # bayesfactor_parameters(group_diff, prior = group_diff_prior, verbose = FALSE)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("brms") && require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("brms") && require("logspline")) withAutoprint(\{ # examplesIf}
 # brms models
 # -----------
 \dontrun{

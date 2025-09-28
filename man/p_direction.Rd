@@ -252,7 +252,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (requireNamespace("rstanarm", quietly = TRUE) && requireNamespace("emmeans", quietly = TRUE) && requireNamespace("brms", quietly = TRUE) && requireNamespace("BayesFactor", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("rstanarm", quietly = TRUE) && requireNamespace("emmeans", quietly = TRUE) && requireNamespace("brms", quietly = TRUE) && requireNamespace("BayesFactor", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 # Simulate a posterior distribution of mean 1 and SD 1
@@ -294,7 +294,7 @@ p_direction(bf)
 p_direction(bf, method = "kernel")
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (requireNamespace("posterior", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("posterior", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 # Using "rvar_col"
 x <- data.frame(mu = c(0, 0.5, 1), sigma = c(1, 0.5, 0.25))
 x$my_rvar <- posterior::rvar_rng(rnorm, 3, mean = x$mu, sd = x$sigma)

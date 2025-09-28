@@ -126,7 +126,7 @@ null-model). See also \code{effectsize::interpret_bf()}.
 }
 
 \examples{
-\dontshow{if (require("lme4") && require("BayesFactor") && require("rstanarm") && require("brms")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("lme4") && require("BayesFactor") && require("rstanarm") && require("brms")) withAutoprint(\{ # examplesIf}
 # With lm objects:
 # ----------------
 lm1 <- lm(mpg ~ 1, data = mtcars)

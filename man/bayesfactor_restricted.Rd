@@ -227,7 +227,7 @@ as.matrix(b)
 bool <- as.logical(b, which = "posterior")
 head(bool)
 
-\dontshow{if (require("see") && require("patchwork")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("see") && require("patchwork")) withAutoprint(\{ # examplesIf}
 
 see::plots(
   plot(estimate_density(posterior)),
@@ -238,7 +238,7 @@ see::plots(
   guides = "collect"
 )
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
 # rstanarm models
 # ---------------
@@ -256,7 +256,7 @@ hyps <- c(
 bayesfactor_restricted(fit_stan, hypothesis = hyps)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("rstanarm") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("emmeans")) withAutoprint(\{ # examplesIf}
 \donttest{
 # emmGrid objects
 # ---------------

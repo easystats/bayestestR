@@ -75,7 +75,7 @@ null-model). See also \code{effectsize::interpret_bf()}.
 }
 
 \examples{
-\dontshow{if (require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("BayesFactor")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 # Using bayesfactor_models:
