@@ -134,6 +134,9 @@ p_rope.stanreg <- function(x,
 p_rope.stanfit <- p_rope.stanreg
 
 #' @export
+p_rope.CmdStanFit <- p_rope.stanreg
+
+#' @export
 p_rope.blavaan <- p_rope.stanreg
 
 

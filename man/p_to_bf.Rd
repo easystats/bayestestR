@@ -33,7 +33,7 @@ It might therefore be not reliable. Use at your own risks. For more accurate
 approximate Bayes factors, use \code{\link[=bic_to_bf]{bic_to_bf()}} instead.
 }
 \examples{
-\dontshow{if (require("parameters")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("parameters")) withAutoprint(\{ # examplesIf}
 data(iris)
 model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 p_to_bf(model)

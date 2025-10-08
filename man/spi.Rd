@@ -117,7 +117,7 @@ and slightly modified to be more robust for Stan models. Thus, credits go
 to Ying Liu for the original SPI algorithm and R implementation.
 }
 \examples{
-\dontshow{if (require("quadprog") && require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("quadprog") && require("rstanarm")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 posterior <- rnorm(1000)

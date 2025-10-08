@@ -152,7 +152,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (require("logspline") && require("KernSmooth") && require("mclust") && require("emmeans") && require("rstanarm") && require("brms")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("logspline") && require("KernSmooth") && require("mclust") && require("emmeans") && require("rstanarm") && require("brms")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 set.seed(1)
