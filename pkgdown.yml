@@ -1,6 +1,6 @@
-pandoc: 3.8.1
+pandoc: 3.8.2
 pkgdown: 2.1.3.9000
-pkgdown_sha: fe04924b3df129bea60ac871614b01d87bcae147
+pkgdown_sha: 1f2f7401ca3d9d1983eb705a2203c4c4abd4184d
 articles:
   bayes_factors: bayes_factors.html
   bayestestR: bayestestR.html
@@ -15,7 +15,7 @@ articles:
   overview_of_vignettes: overview_of_vignettes.html
   probability_of_direction: probability_of_direction.html
   region_of_practical_equivalence: region_of_practical_equivalence.html
-last_built: 2025-10-01T06:40Z
+last_built: 2025-10-08T09:16Z
 urls:
   reference: https://easystats.github.io/bayestestR/reference
   article: https://easystats.github.io/bayestestR/articles
