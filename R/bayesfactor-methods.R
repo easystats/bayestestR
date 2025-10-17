@@ -111,7 +111,9 @@ print.bayesfactor_matrix <- function(x, log = FALSE, ...) {
 
     diag(x) <- "0"
   } else {
-    if (orig_log) x <- exp(x)
+    if (orig_log) {
+      x <- exp(x)
+    }
     x <- insight::format_bf(x, name = NULL, exact = TRUE, ...)
 
     diag(x) <- "1"
