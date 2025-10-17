@@ -99,7 +99,9 @@ print.bayesfactor_matrix <- function(x, log = FALSE, ...) {
   # Format values
   x <- unclass(x)
   if (log) {
-    if (!orig_log) x <- log(x)
+    if (!orig_log) {
+      x <- log(x)
+    }
     sgn <- sign(x) < 0
     x <- insight::format_value(abs(x), digits = 2, ...)
 
