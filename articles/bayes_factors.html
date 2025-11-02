@@ -205,7 +205,7 @@ answer the question:</p>
 effect become more or less credible?”</p>
 </blockquote>
 <div class="figure" style="text-align: center">
-<img src="https://github.com/easystats/bayestestR/raw/main/man/figures/deathsticks.jpg" alt="Bayesian analysis of the Students' (1908) Sleep data set." width="80%"><p class="caption">
+<img src="https://github.com/easystats/bayestestR/raw/main/man/figures/deathsticks.jpg" class="r-plt" alt="Bayesian analysis of the Students' (1908) Sleep data set." width="80%"><p class="caption">
 Bayesian analysis of the Students’ (1908) Sleep data set.
 </p>
 </div>
@@ -220,7 +220,7 @@ answering the following research question using Bayes factors:</p>
 of extra sleep (variable <code>extra</code>) become more of less
 credible?</strong></p>
 </blockquote>
-<p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" class="r-plt" width="100%"></p>
 <p>The <strong>boxplot</strong> suggests that the second group has a
 higher number of hours of extra sleep. <em>By how much?</em></p>
 <p>Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1.html">Bayesian
@@ -258,7 +258,7 @@ would define our prior odds as:</p>
 </span></p>
 <p>Given our prior has a normal distribution centered at 0 hours with a
 scale (an SD) of 3 hours, our priors would look like this:</p>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="100%"></p>
 <p>and the prior odds would be 2.8.</p>
 <p>By looking at the posterior distribution, we can now compute the
 posterior probability of the drug’s effect falling <em>outside the
@@ -270,7 +270,7 @@ odds</em>:</p>
 {P(b_{drug} \notin [-1,1] | Data)}
 {P(b_{drug} \in [-1,1] | Data)}
 </span></p>
-<p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" class="r-plt" width="100%"></p>
 <p>We can see that the center of the posterior distribution has shifted
 away from 0 (to ~1.5). Likewise, the posterior odds are 2.5, which seems
 to favor <strong>the effect being non-null</strong>.
@@ -307,7 +307,7 @@ each of the model’s parameters:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/" class="external-link">see</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">My_first_BF</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="100%"></p>
 <p>Note that <strong>interpretation guides</strong> for Bayes factors
 can be found in the <code>effectsize</code> package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -354,7 +354,7 @@ for <span class="math inline">\theta</span>, at the point of interest.”
 &gt; * Evidence Against The Null: 0</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">My_second_BF</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level4">
 <h4 id="directional-hypotheses">Directional hypotheses<a class="anchor" aria-label="anchor" href="#directional-hypotheses"></a>
@@ -381,7 +381,7 @@ the right of the null (point or interval):</p>
 &gt; *                 Direction: Right-Sided test</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_group2_right</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="100%"></p>
 <p>As we can see, given that we have an <em>a priori</em> assumption
 about the direction of the effect (that the effect is positive),
 <strong>the presence of an effect is 2.8 times more likely than the
@@ -414,7 +414,7 @@ effects</em>.</p>
 &gt; * Evidence Against The Null: [-Inf, 0.000]</code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_group2_dividing</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="100%"></p>
 <p>We can see that this test produces even stronger (more conclusive)
 evidence than the one-sided vs. point-null test! And indeed, as a rule
 of thumb, the more specific the two hypotheses are, and the more
@@ -473,7 +473,7 @@ this interval has increased (and likewise the credibility of all the
 values outside this interval has decreased):</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_first_si</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="100%"></p>
 <p>We can also see the this support interval (just barely) excludes the
 point null (0) - whose credibility we’ve already seen has decreased by
 the observed data. This emphasizes the relationship between the support
@@ -790,7 +790,7 @@ sepal length than for a model with not such restriction.</p>
 with a BF favoring the <em>unrestricted</em> model many many times over.
 How is this possible? It seems that when <em>controlling for petal
 length</em>, versicolor and virginica actually have shorter sepals!</p>
-<p><img src="bayes_factors_files/figure-html/plot_iris-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/plot_iris-1.png" class="r-plt" width="100%"></p>
 <p>Note that these Bayes factors compare the restricted model to the
 unrestricted model. If we wanted to compare the restricted model to the
 null model, we could use the transitive property of Bayes factors like
@@ -907,7 +907,7 @@ compared to <em>Stan</em>-based packages.)</p>
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP1.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP1.jpg" class="r-plt" width="100%"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>
 <strong>Across matched models</strong>:</li>
@@ -923,7 +923,7 @@ compared to <em>Stan</em>-based packages.)</p>
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP2.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP2.jpg" class="r-plt" width="100%"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>
 <strong>With Nuisance Effects</strong>:</li>
@@ -956,7 +956,7 @@ same in <code>R</code>:</p>
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP3.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/main/man/figures/JASP3.jpg" class="r-plt" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="weighted_posteriors">Averaging posteriors<a class="anchor" aria-label="anchor" href="#weighted_posteriors"></a>
@@ -1045,7 +1045,7 @@ distribution, and estimate the HDI.</p>
 &gt; wt          | [-6.77, -2.18]
 &gt; am          | [-2.59,  5.47]
 &gt; carb        | [-1.69,  0.00]</code></pre>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-24-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" width="100%"></p>
 <p>We can see that across both models under consideration, the posterior
 of the <code>carb</code> effect is almost equally weighted between the
 alternative model and the null model - as represented by about half of
@@ -1169,7 +1169,7 @@ dataset.</p>
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-33-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-33-1.png" class="r-plt" width="100%"></p>
 <p>Notice that, though the prior estimate for all 3 pairwise contrasts
 is ~0, the scale or the HDI is much narrower for the prior of the
 <code>setosa - versicolor</code> contrast!</p>
@@ -1214,7 +1214,7 @@ differences:</p>
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-39-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-39-1.png" class="r-plt" width="100%"></p>
 <p>We can see that using the <code>contr.equalprior_pairs</code> coding
 scheme, we have equal priors on all pairwise contrasts, with the width
 corresponding to the <code>normal(0, c(1, 1), autoscale = FALSE)</code>
@@ -1262,8 +1262,8 @@ restriction):</p>
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 2.2e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+&gt; Chain 1: Gradient evaluation took 2.1e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -1280,9 +1280,9 @@ restriction):</p>
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.027 seconds (Warm-up)
-&gt; Chain 1:                0.044 seconds (Sampling)
-&gt; Chain 1:                0.071 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.028 seconds (Warm-up)
+&gt; Chain 1:                0.045 seconds (Sampling)
+&gt; Chain 1:                0.073 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -1312,8 +1312,8 @@ restriction):</p>
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 1.1e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+&gt; Chain 3: Gradient evaluation took 1e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -1331,14 +1331,14 @@ restriction):</p>
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
 &gt; Chain 3:  Elapsed Time: 0.028 seconds (Warm-up)
-&gt; Chain 3:                0.039 seconds (Sampling)
-&gt; Chain 3:                0.067 seconds (Total)
+&gt; Chain 3:                0.038 seconds (Sampling)
+&gt; Chain 3:                0.066 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1.1e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+&gt; Chain 4: Gradient evaluation took 1e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 

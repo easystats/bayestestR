@@ -1,0 +1,31 @@
+# Moral Disgust Judgment
+
+A sample (simulated) dataset, used in tests and some examples.
+
+## Format
+
+A data frame with 500 rows and 5 variables:
+
+- score:
+
+  Score on the questionnaire, which ranges from 0 to 50 with higher
+  scores representing harsher moral judgment
+
+- condition:
+
+  one of three conditions, differing by the odor present in the room: a
+  pleasant scent associated with cleanliness (lemon), a disgusting scent
+  (sulfur), and a control condition in which no unusual odor is present
+
+    data("disgust")
+    head(disgust, n = 5)
+    #>   score condition
+    #> 1    13   control
+    #> 2    26   control
+    #> 3    30   control
+    #> 4    23   control
+    #> 5    34   control
+
+## Author
+
+Richard D. Morey

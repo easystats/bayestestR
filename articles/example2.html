@@ -278,7 +278,7 @@ is one exception: pizza charts.</p>
 <p>It is an intuitive way of interpreting the strength of evidence
 provided by BFs as an amount of surprise.</p>
 <div class="figure" style="text-align: center">
-<img src="../reference/figures/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great &lt;www.bayesianspectacles.org&gt; blog." width="80%"><p class="caption">
+<img src="../reference/figures/LetsPokeAPizza.jpg" class="r-plt" alt="Wagenmakers' pizza poking analogy. From the great &lt;www.bayesianspectacles.org&gt; blog." width="80%"><p class="caption">
 Wagenmakers’ pizza poking analogy. From the great
 &lt;www.bayesianspectacles.org&gt; blog.
 </p>
@@ -291,7 +291,7 @@ install it by running <code>install.packages("see")</code>):</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_pizza.html" class="external-link">scale_fill_pizza</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="100%"></p>
 <p>So, after seeing this pizza, how much would you be surprised by the
 outcome of a blinded poke?</p>
 </div>
@@ -328,7 +328,7 @@ then visualise the observations and the distribution of the
 <span>  <span class="fu"><a href="https://easystats.github.io/see/reference/geom_violindot.html" class="external-link">geom_violindot</a></span><span class="op">(</span>fill_dots <span class="op">=</span> <span class="st">"black"</span>, size_dots <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_material.html" class="external-link">scale_fill_material</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="100%"></p>
 <p>It <em>seems</em> (visually) that <em>virgnica</em> flowers have, on
 average, a slightly higer width of sepals. Let’s assess this difference
 statistically by using the <code><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF()</a></code> function in the
@@ -401,7 +401,7 @@ package.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Probability of being virginica"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="performance-and-parameters">Performance and Parameters<a class="anchor" aria-label="anchor" href="#performance-and-parameters"></a>
@@ -443,7 +443,7 @@ distribution using our old pal <code><a href="../reference/describe_posterior.ht
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/" class="external-link">see</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-16-1.png" width="100%"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="diagnostic-indices">Diagnostic Indices<a class="anchor" aria-label="anchor" href="#diagnostic-indices"></a>
