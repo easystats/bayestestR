@@ -94,7 +94,7 @@ print_md.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", 
 print_md.bayesfactor_models <- function(x,
                                         digits = 3,
                                         log = FALSE,
-                                        show_names = TRUE,
+                                        show_names = FALSE,
                                         caption = "Bayes Factors for Model Comparison",
                                         ...) {
   .print_bf_md_default(

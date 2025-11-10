@@ -86,13 +86,14 @@ as.matrix.bayestestRBF <- function(x, log = TRUE, ...) {
   }
 
   class(out) <- c("bayesfactor_matrix", class(out))
+  attr(out, "model_names") <- rownames(x)
   attr(out, "log_BF") <- log
   attr(out, "bf_fun") <- bf_fun
   out
 }
 
 #' @export
-print.bayesfactor_matrix <- function(x, log = FALSE, ...) {
+print.bayesfactor_matrix <- function(x, log = FALSE, show_names = FALSE, ...) {
   orig_x <- x
   orig_log <- attr(x, "log_BF")
 
@@ -124,14 +125,22 @@ print.bayesfactor_matrix <- function(x, log = FALSE, ...) {
   # Model names
   models <- colnames(df)
   models[models == "1"] <- "(Intercept only)"
-  models <- paste0("[", seq_along(models), "] ", models)
+
+  if (show_names && !is.null(attr(orig_x, "model_names"))) {
+    model_names <- attr(orig_x, "model_names")
+    if (attr(orig_x, "bf_fun") == "bayesfactor_restricted()") {
+      model_names <- c(1, model_names)
+    }
+  } else {
+    model_names <- seq_along(models)
+  }
+
+  rowmodels <- paste0("[", model_names, "] ", models)
+  colmodels <- c("Denominator\\Numerator", paste0(" [", model_names, "] "))
 
   rownames(df) <- colnames(df) <- NULL
-  df <- cbind(modl = models, df)
-  colnames(df) <- c(
-    "Denominator\\Numerator",
-    paste0(" [", seq_along(models), "] ")
-  )
+  df <- cbind(modl = rowmodels, df)
+  colnames(df) <- colmodels
 
   # caption and footer
   caption <- switch(attr(orig_x, "bf_fun"),
@@ -180,14 +189,15 @@ update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, .
     if (all(subset < 0)) {
       subset <- seq_len(nrow(object))[subset]
     }
-    object_subset <- object[subset, ]
 
-    if (denominator %in% subset) {
-      attr(object_subset, "denominator") <- which(denominator == subset)
-    } else {
-      object_subset <- rbind(object[denominator, ], object_subset)
-      attr(object_subset, "denominator") <- 1
+    subset <- unique(c(denominator, subset))
+    object_subset <- datawizard::data_filter(object, subset)
+
+    model_names <- attr(object, "model_names")
+    if (!is.null(model_names)) {
+      attr(object_subset, "model_names") <- model_names[subset]
     }
+    attr(object_subset, "denominator") <- 1
     object <- object_subset
   }
   object

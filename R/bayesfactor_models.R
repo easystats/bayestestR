@@ -451,6 +451,9 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   if (!is.null(res$log_BF) && all(is.na(res$log_BF))) {
     insight::format_error("Could not calculate Bayes Factor for these models. You may report this problem at {https://github.com/easystats/bayestestR/issues/}.") # nolint
   }
+
+  if (is.null(model_names)) model_names <- rownames(res)
+
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- bf_method
   attr(res, "unsupported_models") <- unsupported_models
