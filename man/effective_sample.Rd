@@ -122,7 +122,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "posterior"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "posterior"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 \donttest{
 model <- suppressWarnings(rstanarm::stan_glm(
   mpg ~ wt + gear,
