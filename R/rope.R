@@ -344,7 +344,7 @@ rope.emmGrid <- function(x,
                          complement = FALSE,
                          verbose = TRUE,
                          ...) {
-  xdf <- insight::get_parameters(x)
+  xdf <- insight::get_parameters(x, verbose = verbose)
   dat <- rope(
     xdf,
     range = range,
@@ -405,7 +405,7 @@ rope.BFBayesFactor <- function(x,
     range <- rope_range(x, verbose = verbose)
   }
   out <- rope(
-    insight::get_parameters(x),
+    insight::get_parameters(x, verbose = verbose),
     range = range,
     ci = ci,
     ci_method = ci_method,
@@ -476,7 +476,7 @@ rope.bcplm <- function(x,
                        verbose = TRUE,
                        ...) {
   out <- rope(
-    insight::get_parameters(x),
+    insight::get_parameters(x, verbose = verbose),
     range = range,
     ci = ci,
     ci_method = ci_method,
@@ -528,7 +528,8 @@ rope.stanreg <- function(x,
       x,
       effects = effects,
       component = component,
-      parameters = parameters
+      parameters = parameters,
+      verbose = verbose
     ),
     range = range,
     ci = ci,
@@ -609,6 +610,7 @@ rope.brmsfit <- function(x,
             effects = effects,
             component = component,
             parameters = parameters,
+            verbose = verbose,
             ...
           ),
           range = range[[dv_item]],
@@ -636,7 +638,7 @@ rope.brmsfit <- function(x,
     )
   } else {
     rope_data <- rope(
-      insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+      insight::get_parameters(x, effects = effects, component = component, parameters = parameters, verbose = verbose),
       range = range,
       ci = ci,
       ci_method = ci_method,
@@ -673,7 +675,7 @@ rope.sim.merMod <- function(x,
   }
 
   rope_list <- lapply(c("fixed", "random"), function(.x) {
-    parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
+    parms <- insight::get_parameters(x, effects = .x, parameters = parameters, verbose = verbose)
 
     getropedata <- .prepare_rope_df(parms, range, ci, ci_method, complement, verbose)
     tmp <- getropedata$tmp
@@ -742,7 +744,7 @@ rope.sim <- function(x,
     insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  parms <- insight::get_parameters(x, parameters = parameters)
+  parms <- insight::get_parameters(x, parameters = parameters, verbose = verbose)
   getropedata <- .prepare_rope_df(parms, range, ci, ci_method, complement, verbose)
 
   dat <- getropedata$tmp
