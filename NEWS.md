@@ -4,6 +4,9 @@
 
 * `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes 
   factors between all restricted models.
+* New dedicated docs for Bayes factor methods `?bayesfactor_methods`
+* Added support for `CmdStanFit` models from `{cmdstanr}` and expanded support for `stanfit` models from `rstan`.
+
 
 ## Changes
 

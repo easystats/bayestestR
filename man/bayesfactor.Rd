@@ -78,7 +78,7 @@ For a complete overview of these functions, read the \href{https://easystats.git
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
-\dontshow{if (require("rstanarm") && require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("logspline")) withAutoprint(\{ # examplesIf}
 \dontrun{
 library(bayestestR)
 

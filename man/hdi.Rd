@@ -185,7 +185,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 posterior <- rnorm(1000)
