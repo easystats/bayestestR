@@ -240,7 +240,7 @@ hdi.bamlss <- function(x,
                        verbose = TRUE,
                        ...) {
   ci_fun <- .check_ci_fun(list(...))
-  d <- insight::get_parameters(x, component = component)
+  d <- insight::get_parameters(x, component = component, verbose = verbose)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
   dat <- .add_clean_parameters_attribute(dat, x)
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
@@ -261,7 +261,7 @@ hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 hdi.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   ci_fun <- .check_ci_fun(list(...))
-  d <- insight::get_parameters(x)
+  d <- insight::get_parameters(x, verbose = verbose)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -321,7 +321,7 @@ hdi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 
 #' @export
 hdi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xdf <- insight::get_parameters(x)
+  xdf <- insight::get_parameters(x, verbose = verbose)
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)
   out <- .append_datagrid(out, x, long = length(ci) > 1L)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -363,7 +363,8 @@ hdi.stanreg <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        verbose = verbose
       ),
       ci = ci,
       verbose = verbose,
@@ -406,7 +407,8 @@ hdi.brmsfit <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        verbose = verbose
       ),
       ci = ci,
       verbose = verbose,

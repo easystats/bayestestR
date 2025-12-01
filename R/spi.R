@@ -161,7 +161,7 @@ spi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 
 #' @export
 spi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xdf <- insight::get_parameters(x)
+  xdf <- insight::get_parameters(x, verbose = verbose)
   out <- spi(xdf, ci = ci, verbose = verbose, ...)
   out <- .append_datagrid(out, x, long = length(ci) > 1L)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -203,7 +203,8 @@ spi.stanreg <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        verbose = verbose
       ),
       ci = ci,
       verbose = verbose,

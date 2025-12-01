@@ -102,7 +102,7 @@ bci.bamlss <- function(x,
                        component = "all",
                        verbose = TRUE,
                        ...) {
-  d <- insight::get_parameters(x, component = component)
+  d <- insight::get_parameters(x, component = component, verbose = verbose)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "bci")
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -111,7 +111,7 @@ bci.bamlss <- function(x,
 
 #' @export
 bci.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  d <- insight::get_parameters(x)
+  d <- insight::get_parameters(x, verbose = verbose)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "bci")
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -169,7 +169,7 @@ bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 
 #' @export
 bci.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xdf <- insight::get_parameters(x)
+  xdf <- insight::get_parameters(x, verbose = verbose)
   dat <- bci(xdf, ci = ci, verbose = verbose, ...)
   dat <- .append_datagrid(dat, x, long = length(ci) > 1L)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -208,7 +208,8 @@ bci.stanreg <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        verbose = verbose
       ),
       ci = ci,
       verbose = verbose,
@@ -249,7 +250,8 @@ bci.brmsfit <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        verbose = verbose
       ),
       ci = ci,
       verbose = verbose,

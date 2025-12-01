@@ -364,7 +364,7 @@ ci.bamlss <- function(x,
                       verbose = TRUE,
                       ...) {
   ci(
-    insight::get_parameters(x, component = component),
+    insight::get_parameters(x, component = component, verbose = verbose),
     ci = ci,
     method = method,
     verbose = verbose,
