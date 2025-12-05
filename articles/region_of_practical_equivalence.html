@@ -276,7 +276,7 @@ linear relationship between <strong>Sepal.Length</strong> and
 <strong>Sepal.Width</strong> are respectively of about
 <code>92.95%</code> and <code>15.95%</code>, corresponding to an
 <strong>uncertain</strong> and <strong>not significant</strong> effect.
-What happen if we scale our predictor?</p>
+What happens if we scale our predictor?</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width_scaled</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">/</span> <span class="fl">100</span> <span class="co"># Divide predictor by 100</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width_scaled</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="co"># Fit model</span></span></code></pre></div>

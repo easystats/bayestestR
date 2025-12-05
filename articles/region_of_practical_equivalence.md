@@ -170,7 +170,7 @@ percentage_in_rope
 We can see that the *pd* and the percentage in ROPE of the linear
 relationship between **Sepal.Length** and **Sepal.Width** are
 respectively of about `92.95%` and `15.95%`, corresponding to an
-**uncertain** and **not significant** effect. What happen if we scale
+**uncertain** and **not significant** effect. What happens if we scale
 our predictor?
 
 ``` r

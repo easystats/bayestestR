@@ -229,15 +229,15 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.052 seconds (Warm-up)
-#> Chain 1:                0.044 seconds (Sampling)
-#> Chain 1:                0.096 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.051 seconds (Warm-up)
+#> Chain 1:                0.043 seconds (Sampling)
+#> Chain 1:                0.094 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 9e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 2: Gradient evaluation took 1e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -304,9 +304,9 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.045 seconds (Warm-up)
-#> Chain 4:                0.046 seconds (Sampling)
-#> Chain 4:                0.091 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.044 seconds (Warm-up)
+#> Chain 4:                0.044 seconds (Sampling)
+#> Chain 4:                0.088 seconds (Total)
 #> Chain 4: 
 map_estimate(model)
 #> MAP Estimate
@@ -341,9 +341,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 1:  Elapsed Time: 0.019 seconds (Warm-up)
 #> Chain 1:                0.017 seconds (Sampling)
-#> Chain 1:                0.035 seconds (Total)
+#> Chain 1:                0.036 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -391,9 +391,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 3:  Elapsed Time: 0.02 seconds (Warm-up)
 #> Chain 3:                0.016 seconds (Sampling)
-#> Chain 3:                0.035 seconds (Total)
+#> Chain 3:                0.036 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).

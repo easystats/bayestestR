@@ -202,9 +202,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.019 seconds (Warm-up)
-#> Chain 1:                0.019 seconds (Sampling)
-#> Chain 1:                0.038 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.02 seconds (Warm-up)
+#> Chain 1:                0.02 seconds (Sampling)
+#> Chain 1:                0.04 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -227,9 +227,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 2:  Elapsed Time: 0.02 seconds (Warm-up)
 #> Chain 2:                0.018 seconds (Sampling)
-#> Chain 2:                0.037 seconds (Total)
+#> Chain 2:                0.038 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -253,8 +253,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
 #> Chain 3:  Elapsed Time: 0.019 seconds (Warm-up)
-#> Chain 3:                0.019 seconds (Sampling)
-#> Chain 3:                0.038 seconds (Total)
+#> Chain 3:                0.02 seconds (Sampling)
+#> Chain 3:                0.039 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -277,9 +277,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.018 seconds (Warm-up)
-#> Chain 4:                0.016 seconds (Sampling)
-#> Chain 4:                0.034 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 4:                0.017 seconds (Sampling)
+#> Chain 4:                0.036 seconds (Total)
 #> Chain 4: 
 diagnostic_posterior(model)
 #>     Parameter      Rhat      ESS       MCSE

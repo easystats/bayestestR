@@ -1324,9 +1324,9 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
     > Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     > Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
     > Chain 1: 
-    > Chain 1:  Elapsed Time: 0.028 seconds (Warm-up)
+    > Chain 1:  Elapsed Time: 0.027 seconds (Warm-up)
     > Chain 1:                0.045 seconds (Sampling)
-    > Chain 1:                0.073 seconds (Total)
+    > Chain 1:                0.072 seconds (Total)
     > Chain 1: 
     > 
     > SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -1349,9 +1349,9 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
     > Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     > Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
     > Chain 2: 
-    > Chain 2:  Elapsed Time: 0.029 seconds (Warm-up)
-    > Chain 2:                0.041 seconds (Sampling)
-    > Chain 2:                0.07 seconds (Total)
+    > Chain 2:  Elapsed Time: 0.028 seconds (Warm-up)
+    > Chain 2:                0.04 seconds (Sampling)
+    > Chain 2:                0.068 seconds (Total)
     > Chain 2: 
     > 
     > SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
