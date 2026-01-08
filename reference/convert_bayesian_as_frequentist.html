@@ -142,6 +142,10 @@ likelihood (<code>FALSE</code>)?</p></dd>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">iris</span>, chains <span class="op">=</span> <span class="fl">2</span>, refresh <span class="op">=</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bayesian_as_frequentist</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>package version mismatch: </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> glmmTMB was built with TMB package version 1.9.18</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Current TMB package version is 1.9.19</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please re-install glmmTMB from source or restore original ‘TMB’ package (see '?reinstalling' for more information)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear mixed model fit by REML ['lmerMod']</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula: Sepal.Length ~ Petal.Length + (1 | Species)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Data: data</span>
