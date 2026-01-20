@@ -68,6 +68,7 @@ diagnostic_posterior <- function(posterior, ...) {
 diagnostic_posterior.default <- function(posterior, ...) {
   if (!require("rstan", quietly = TRUE)) {
     stop("please install the rstan package")
+  }
   if (is.list(posterior)) {
     for (i in seq_along(posterior)) {
       p <- posterior[[i]]
