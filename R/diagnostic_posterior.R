@@ -42,6 +42,13 @@
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' diagnostic_posterior(model)
 #' }
+#' @examplesIf require("rstan")
+#' set.seed(101)
+#' mkdata <- function(nrow = 1000, ncol = 2, parnm = LETTERS[1:ncol]) {
+#'    replicate(ncol, rnorm(nrow)) |> as.data.frame() |> setNames(parnm)
+#' }
+#' dd <- replicate(5, mkdata(), simplify = FALSE)
+#' x <- diagnostic_posterior(dd)
 #' @references
 #' - Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation
 #'   using multiple sequences. Statistical science, 7(4), 457-472.
@@ -58,8 +65,40 @@ diagnostic_posterior <- function(posterior, ...) {
 
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.default <- function(posterior, diagnostic = c("ESS", "Rhat"), ...) {
-  insight::format_error("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.")
+diagnostic_posterior.default <- function(posterior, ...) {
+  if (!require("rstan", quietly = TRUE))
+    stop("please install the rstan package")
+  if (is.list(posterior)) {
+    for (i in seq_along(posterior)) {
+      p <- posterior[[i]]
+      if (!(
+        (inherits(p, "data.frame") || inherits(p, "matrix")) &&
+        (length(dim(p)) == 2) &&
+        (ncol(p) == ncol(posterior[[1]])))
+        ) stop("'posterior' must be a 3D array or a list of data frames with equal numbers of columns")
+    }
+    posterior <- abind(posterior)
+  }
+  if (!(inherits(posterior, "array") && length(dim(posterior)) == 3)) {
+    stop("expecting a 3D array")
+  }
+  ret <- rstan::monitor(posterior)
+  class(ret) <- "data.frame" ## get rid of simsummary() class
+  ret <- ret |> tibble::rownames_to_column(var = "Parameter")
+  return(tibble::as_tibble(ret))
+}
+
+## shim: combine list into a 3D array (with parameter names if available)
+abind <- function(x) {
+  nchains <- length(x)
+  a <- array(dim = c(nrow(x[[1]]), nchains, ncol(x[[1]])))
+  for (i in seq(nchains)) {
+    a[,i,] <- as.matrix(x[[i]])
+  }
+  if (!is.null(parnames <- dimnames(x[[1]])[[2]])) {
+    dimnames(a)[[3]] <- parnames
+  }
+  return(a)
 }
 
 #' @inheritParams insight::get_parameters.BFBayesFactor
