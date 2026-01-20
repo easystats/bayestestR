@@ -94,7 +94,7 @@ abind <- function(x) {
   nchains <- length(x)
   a <- array(dim = c(nrow(x[[1]]), nchains, ncol(x[[1]])))
   for (i in seq(nchains)) {
-    a[,i,] <- as.matrix(x[[i]])
+    a[, i, ] <- as.matrix(x[[i]])
   }
   if (!is.null(parnames <- dimnames(x[[1]])[[2]])) {
     dimnames(a)[[3]] <- parnames
