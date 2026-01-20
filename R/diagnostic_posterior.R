@@ -66,7 +66,7 @@ diagnostic_posterior <- function(posterior, ...) {
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.default <- function(posterior, ...) {
-  if (!require("rstan", quietly = TRUE))
+  if (!require("rstan", quietly = TRUE)) {
     stop("please install the rstan package")
   if (is.list(posterior)) {
     for (i in seq_along(posterior)) {
