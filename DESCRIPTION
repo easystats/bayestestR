@@ -83,6 +83,7 @@ Suggests:
     brms,
     collapse,
     curl,
+    distributional,
     effectsize,
     emmeans,
     gamm4,

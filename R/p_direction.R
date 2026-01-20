@@ -286,6 +286,45 @@ p_direction.draws <- function(x,
 #' @export
 p_direction.rvar <- p_direction.draws
 
+#' @export
+p_direction.distribution <- function(x,
+                                     null = 0,
+                                     as_p = FALSE,
+                                     remove_na = TRUE,
+                                     ...) {
+  obj_name <- insight::safe_deparse_symbol(substitute(x))
+  x <- .clean_distributional(x)
+  pd <- numeric(length = length(x))
+
+  for (i in seq_along(pd)) {
+    low <- distributional::cdf(x[[i]], q = null)
+    high <- 1 - low
+    if (.is_discrete_dist(x[[i]])) {
+      low <- low - stats::density(x[[i]], at = null)
+    }
+    pd[i] <- max(low, high)
+  }
+
+  out <- data.frame(
+    Parameter = names(x),
+    pd = pd,
+    row.names = NULL,
+    stringsAsFactors = FALSE
+  )
+
+  # rename column
+  if (as_p) {
+    out$pd <- pd_to_p(out$pd)
+    colnames(out)[2] <- "p"
+  }
+
+  attr(out, "object_name") <- obj_name
+  attr(out, "as_p") <- as_p
+  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
+
+  out
+}
+
 
 #' @export
 p_direction.MCMCglmm <- function(x,
