@@ -72,11 +72,15 @@ diagnostic_posterior.default <- function(posterior, ...) {
   if (is.list(posterior)) {
     for (i in seq_along(posterior)) {
       p <- posterior[[i]]
-      if (!(
-        (inherits(p, "data.frame") || inherits(p, "matrix")) &&
-        (length(dim(p)) == 2) &&
-        (ncol(p) == ncol(posterior[[1]])))
-        ) stop("'posterior' must be a 3D array or a list of data frames with equal numbers of columns")
+      if (
+        !((inherits(p, "data.frame") || inherits(p, "matrix")) &&
+          (length(dim(p)) == 2) &&
+          (ncol(p) == ncol(posterior[[1]])))
+      ) {
+        stop(
+          "'posterior' must be a 3D array or a list of data frames with equal numbers of columns"
+        )
+      }
     }
     posterior <- abind(posterior)
   }
