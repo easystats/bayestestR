@@ -85,7 +85,7 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
     posterior <- .abind_from_list(posterior)
   }
   if (!(inherits(posterior, "array") && length(dim(posterior)) == 3)) {
-      insight::format_error("expecting a 3D array")
+    insight::format_error("expecting a 3D array")
   }
 
   ret <- data.frame(Parameter = colnames(x[[1]]))
