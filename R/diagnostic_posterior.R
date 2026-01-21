@@ -67,8 +67,7 @@ diagnostic_posterior <- function(posterior, ...) {
 
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.default <- function(posterior,
-                                         diagnostic = "all", ...) {
+diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
   ## check input, coerce to array
   if (is.list(posterior)) {
     for (i in seq_along(posterior)) {
