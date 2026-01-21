@@ -45,10 +45,12 @@
 #' @examplesIf require("rstan")
 #' set.seed(101)
 #' mkdata <- function(nrow = 1000, ncol = 2, parnm = LETTERS[1:ncol]) {
-#'    replicate(ncol, rnorm(nrow)) |> as.data.frame() |> setNames(parnm)
+#'    x <- as.data.frame(replicate(ncol, rnorm(nrow)))
+#'    names(x) <- parnm
+#'    x
 #' }
 #' dd <- replicate(5, mkdata(), simplify = FALSE)
-#' x <- diagnostic_posterior(dd)
+#' diagnostic_posterior(dd)
 #' @references
 #' - Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation
 #'   using multiple sequences. Statistical science, 7(4), 457-472.
@@ -65,10 +67,9 @@ diagnostic_posterior <- function(posterior, ...) {
 
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.default <- function(posterior, ...) {
-  if (!require("rstan", quietly = TRUE)) {
-    stop("please install the rstan package")
-  }
+diagnostic_posterior.default <- function(posterior,
+                                         diagnostic = "all", ...) {
+  ## check input, coerce to array
   if (is.list(posterior)) {
     for (i in seq_along(posterior)) {
       p <- posterior[[i]]
@@ -82,19 +83,28 @@ diagnostic_posterior.default <- function(posterior, ...) {
         )
       }
     }
-    posterior <- abind(posterior)
+    posterior <- .abind_from_list(posterior)
   }
   if (!(inherits(posterior, "array") && length(dim(posterior)) == 3)) {
-    stop("expecting a 3D array")
+      insight::format_error("expecting a 3D array")
   }
-  ret <- rstan::monitor(posterior)
-  class(ret) <- "data.frame" ## get rid of simsummary() class
-  ret <- ret |> tibble::rownames_to_column(var = "Parameter")
-  return(tibble::as_tibble(ret))
+
+  ret <- data.frame(Parameter = colnames(x[[1]]))
+  if (is.null(diagnostic)) return(ret)
+
+  .diag_opts <- c("Rhat", "ESS", "MCSE")
+  if (diagnostic == "all") diagnostic <- .diag_opts
+
+  ## need ESS for MCSE, so compute these in any case
+  insight::check_if_installed("rstan")
+  mon <- rstan::monitor(posterior, print = FALSE, probs = 0.5)
+  ret <- with(mon, data.frame(Parameter = rownames(mon), ESS = n_eff, Rhat, MCSE = MCSE_Q50))
+  ret <- ret[c("Parameter", diagnostic)]
+  ret
 }
 
 ## shim: combine list into a 3D array (with parameter names if available)
-abind <- function(x) {
+.abind_from_list <- function(x) {
   nchains <- length(x)
   a <- array(dim = c(nrow(x[[1]]), nchains, ncol(x[[1]])))
   for (i in seq(nchains)) {
