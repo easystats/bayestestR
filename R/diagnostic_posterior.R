@@ -92,7 +92,9 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
   if (is.null(diagnostic)) return(ret)
 
   .diag_opts <- c("Rhat", "ESS", "MCSE")
-  if (diagnostic == "all") diagnostic <- .diag_opts
+  if (diagnostic == "all") {
+    diagnostic <- .diag_opts
+  }
 
   ## need ESS for MCSE, so compute these in any case
   insight::check_if_installed("rstan")
