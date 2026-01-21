@@ -97,7 +97,10 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
   ## need ESS for MCSE, so compute these in any case
   insight::check_if_installed("rstan")
   mon <- rstan::monitor(posterior, print = FALSE, probs = 0.5)
-  ret <- with(mon, data.frame(Parameter = rownames(mon), ESS = n_eff, Rhat, MCSE = MCSE_Q50))
+  ret <- with(
+    mon,
+    data.frame(Parameter = rownames(mon), ESS = n_eff, Rhat, MCSE = MCSE_Q50)
+  )
   ret <- ret[c("Parameter", diagnostic)]
   ret
 }
