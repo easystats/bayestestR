@@ -89,7 +89,9 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
   }
 
   ret <- data.frame(Parameter = colnames(x[[1]]))
-  if (is.null(diagnostic)) return(ret)
+  if (is.null(diagnostic)) {
+    return(ret)
+  }
 
   .diag_opts <- c("Rhat", "ESS", "MCSE")
   if (diagnostic == "all") {
