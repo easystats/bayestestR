@@ -3,7 +3,7 @@
 #' Extract diagnostic metrics (Effective Sample Size (`ESS`), `Rhat` and Monte
 #' Carlo Standard Error `MCSE`).
 #'
-#' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object.
+#' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object; a list of data frames or matrices representing MCMC chains (rows as samples, columns as parameters); or a 3D array (dimensions: {samples, chains, parameters})
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
 #'   with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
 #'
