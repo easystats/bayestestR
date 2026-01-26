@@ -31,6 +31,15 @@ test_that("diagnostic_posterior default", {
     ESS = c(1930, 1976),
     MCSE = c(0.03291257472426944, 0.03590011166377985)
     )
+  )
+  dp2 <- diagnostic_posterior(dd2)
+  expect_equal(
+    dp2,
+    data.frame(
+      Parameter = c("A", "B"),
+      Rhat = c(1.0012553633007766, 1.0008730199159905),
+      ESS = c(1930, 1976),
+      MCSE = c(0.03291257472426944, 0.03590011166377985)
     )
 
 })
