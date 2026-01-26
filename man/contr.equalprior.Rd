@@ -21,7 +21,7 @@ contr.equalprior_deviations(n, contrasts = TRUE, sparse = FALSE)
     computed.}
 
 \item{sparse}{logical indicating if the result should be sparse
-    (of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}), using
+    (of class \code{\linkS4class[Matrix]{dgCMatrix}}), using
     package \href{https://CRAN.R-project.org/package=Matrix}{\pkg{Matrix}}.}
 }
 \value{
