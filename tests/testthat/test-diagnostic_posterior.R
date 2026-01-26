@@ -9,12 +9,15 @@ test_that("diagnostic_posterior default", {
   }
   dd <- replicate(5, mkdata(), simplify = FALSE)
   dp <- diagnostic_posterior(dd)
-  expect_equal(dp,
-               data.frame(
-                 Parameter = c("A", "B"),
-                 Rhat = c(1.001218705610197, 0.9997185343161158),
-                 ESS = c(2584, 2564),
-                 MCSE = c(0.02455353655881737, 0.019981604021430396)))
+  expect_equal(
+    dp,
+    data.frame(
+      Parameter = c("A", "B"),
+      Rhat = c(1.001218705610197, 0.9997185343161158),
+      ESS = c(2584, 2564),
+      MCSE = c(0.02455353655881737, 0.019981604021430396)
+    )
+  )
 
   adims <- list(npar = 2, nchains = 4, nsamp = 1000)
   dd2 <- with(adims,
