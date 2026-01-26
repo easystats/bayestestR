@@ -5,8 +5,8 @@
 #'
 #' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object; a
 #' list of data frames or matrices representing MCMC chains (rows as samples,
-#' columns as parameters); or a 3D array (dimensions: (samples, chains,
-#' parameters))
+#' columns as parameters); or a 3D array (dimensions: samples, chains,
+#' parameters)
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
 #' with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
 #'
@@ -48,9 +48,9 @@
 #' @examplesIf require("rstan")
 #' set.seed(101)
 #' mkdata <- function(nrow = 1000, ncol = 2, parnm = LETTERS[1:ncol]) {
-#'    x <- as.data.frame(replicate(ncol, rnorm(nrow)))
-#'    names(x) <- parnm
-#'    x
+#'   x <- as.data.frame(replicate(ncol, rnorm(nrow)))
+#'   names(x) <- parnm
+#'   x
 #' }
 #' dd <- replicate(5, mkdata(), simplify = FALSE)
 #' diagnostic_posterior(dd)
