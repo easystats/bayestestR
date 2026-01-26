@@ -81,11 +81,25 @@ test_that("rope, vector", {
   expect_named(
     out,
     c(
-      "CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Superiority_Percentage",
+      "CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "Superiority_Percentage",
       "Inferiority_Percentage"
     )
   )
-  expect_snapshot(print(out))
+  expect_identical(
+    capture.output(print(out)),
+    c(
+      "# Proportion of samples inside the ROPE [-0.10, 0.10]:",
+      "",
+      "Inside ROPE | Above ROPE | Below ROPE",
+      "-------------------------------------",
+      "1.53 %      |    49.68 % |    48.79 %",
+      ""
+    )
+  )
 
   out <- p_rope(x, complement = TRUE)
   expect_named(
@@ -224,9 +238,20 @@ test_that("rope (brms)", {
   expect_named(
     out,
     c(
-      "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-      "ROPE_low", "ROPE_high", "ROPE_Percentage", "Superiority_Percentage",
-      "Inferiority_Percentage", "Rhat", "ESS"
+      "Parameter",
+      "Median",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "Superiority_Percentage",
+      "Inferiority_Percentage",
+      "Rhat",
+      "ESS"
     )
   )
 })
