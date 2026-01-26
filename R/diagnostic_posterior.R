@@ -5,8 +5,8 @@
 #'
 #' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object; a
 #' list of data frames or matrices representing MCMC chains (rows as samples,
-#' columns as parameters); or a 3D array (dimensions: {samples, chains,
-#' parameters})
+#' columns as parameters); or a 3D array (dimensions: (samples, chains,
+#' parameters))
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
 #' with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
 #'
@@ -91,7 +91,7 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
     insight::format_error("Expecting a 3D array for 'posterior'.")
   }
 
-  ret <- data.frame(Parameter = colnames(x[[1]]))
+  ret <- data.frame(Parameter = colnames(posterior[[1]]))
   if (is.null(diagnostic)) {
     return(ret)
   }
