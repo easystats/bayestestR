@@ -3,9 +3,12 @@
 #' Extract diagnostic metrics (Effective Sample Size (`ESS`), `Rhat` and Monte
 #' Carlo Standard Error `MCSE`).
 #'
-#' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object; a list of data frames or matrices representing MCMC chains (rows as samples, columns as parameters); or a 3D array (dimensions: {samples, chains, parameters})
+#' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object; a
+#' list of data frames or matrices representing MCMC chains (rows as samples,
+#' columns as parameters); or a 3D array (dimensions: {samples, chains,
+#' parameters})
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
-#'   with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
+#' with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
 #'
 #' @inheritSection hdi Model components
 #'
@@ -77,15 +80,15 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
           (length(dim(p)) == 2) &&
           (ncol(p) == ncol(posterior[[1]])))
       ) {
-        stop(
-          "'posterior' must be a 3D array or a list of data frames with equal numbers of columns"
+        insight::format_error(
+          "'posterior' must be a 3D array or a list of data frames with equal numbers of columns."
         )
       }
     }
     posterior <- .abind_from_list(posterior)
   }
   if (!(inherits(posterior, "array") && length(dim(posterior)) == 3)) {
-    insight::format_error("expecting a 3D array")
+    insight::format_error("Expecting a 3D array for 'posterior'.")
   }
 
   ret <- data.frame(Parameter = colnames(x[[1]]))
@@ -126,12 +129,14 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posterior,
-                                         diagnostic = "all",
-                                         effects = "fixed",
-                                         component = "location",
-                                         parameters = NULL,
-                                         ...) {
+diagnostic_posterior.stanreg <- function(
+  posterior,
+  diagnostic = "all",
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
   # Find parameters
   params <- insight::find_parameters(
     posterior,
@@ -185,11 +190,13 @@ diagnostic_posterior.stanreg <- function(posterior,
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.stanmvreg <- function(posterior,
-                                           diagnostic = "all",
-                                           effects = "fixed",
-                                           parameters = NULL,
-                                           ...) {
+diagnostic_posterior.stanmvreg <- function(
+  posterior,
+  diagnostic = "all",
+  effects = "fixed",
+  parameters = NULL,
+  ...
+) {
   # Find parameters
   all_params <- insight::find_parameters(
     posterior,
@@ -198,10 +205,13 @@ diagnostic_posterior.stanmvreg <- function(posterior,
     flatten = FALSE
   )
 
-  params <- unlist(lapply(names(all_params), function(i) {
-    all_params[[i]]$sigma <- NULL
-    unlist(all_params[[i]], use.names = FALSE)
-  }), use.names = FALSE)
+  params <- unlist(
+    lapply(names(all_params), function(i) {
+      all_params[[i]]$sigma <- NULL
+      unlist(all_params[[i]], use.names = FALSE)
+    }),
+    use.names = FALSE
+  )
 
   # If no diagnostic
   if (is.null(diagnostic)) {
@@ -261,14 +271,17 @@ diagnostic_posterior.stanmvreg <- function(posterior,
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.brmsfit <- function(posterior,
-                                         diagnostic = "all",
-                                         effects = "fixed",
-                                         component = "conditional",
-                                         parameters = NULL,
-                                         ...) {
+diagnostic_posterior.brmsfit <- function(
+  posterior,
+  diagnostic = "all",
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  ...
+) {
   # Find parameters
-  params <- insight::find_parameters(posterior,
+  params <- insight::find_parameters(
+    posterior,
     effects = effects,
     component = component,
     parameters = parameters,
@@ -319,7 +332,13 @@ diagnostic_posterior.brmsfit <- function(posterior,
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects = "fixed", parameters = NULL, ...) {
+diagnostic_posterior.stanfit <- function(
+  posterior,
+  diagnostic = "all",
+  effects = "fixed",
+  parameters = NULL,
+  ...
+) {
   # Find parameters
   params <- insight::find_parameters(
     posterior,
@@ -345,10 +364,7 @@ diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects 
 
   insight::check_if_installed("rstan")
 
-  all_params <- insight::find_parameters(posterior,
-    effects = effects,
-    flatten = TRUE
-  )
+  all_params <- insight::find_parameters(posterior, effects = effects, flatten = TRUE)
 
   diagnostic_df <- data.frame(
     Parameter = all_params,
@@ -416,7 +432,6 @@ diagnostic_posterior.blavaan <- function(posterior, diagnostic = "all", ...) {
     ESS <- effective_sample(posterior)
     out <- merge(out, ESS, by = "Parameter", all = TRUE)
   }
-
 
   if ("MCSE" %in% diagnostic) {
     MCSE <- mcse(posterior)
