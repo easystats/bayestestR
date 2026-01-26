@@ -41,5 +41,5 @@ test_that("diagnostic_posterior default", {
       ESS = c(1930, 1976),
       MCSE = c(0.03291257472426944, 0.03590011166377985)
     )
-
+  )
 })
