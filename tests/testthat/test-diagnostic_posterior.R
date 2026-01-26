@@ -20,10 +20,14 @@ test_that("diagnostic_posterior default", {
   )
 
   adims <- list(npar = 2, nchains = 4, nsamp = 1000)
-  dd2 <- with(adims,
-             array(rnorm(npar*nchains*nsamp),
-                   dim = c(nsamp, nchains, npar),
-                   dimnames = list(NULL, NULL, LETTERS[1:npar])))
+  dd2 <- with(
+    adims,
+    array(
+      rnorm(npar * nchains * nsamp),
+      dim = c(nsamp, nchains, npar),
+      dimnames = list(NULL, NULL, LETTERS[1:npar])
+    )
+  )
   dp2 <- diagnostic_posterior(dd2)
   expect_equal(dp2, data.frame(
     Parameter = c("A", "B"),
