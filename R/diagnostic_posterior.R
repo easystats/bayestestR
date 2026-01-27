@@ -85,7 +85,10 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
         )
       }
     }
-    posterior <- .abind_from_list(posterior)
+    insight::check_if_installed("posterior")
+    posterior <- posterior::as_draws_array(posterior)
+    ## draws_array() class messes things up downstream ...
+    class(posterior) <- "array"
   }
   if (!(inherits(posterior, "array") && length(dim(posterior)) == 3)) {
     insight::format_error("Expecting a 3D array for 'posterior'.")
@@ -109,20 +112,6 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
     data.frame(Parameter = rownames(mon), ESS = n_eff, Rhat, MCSE = MCSE_Q50)
   )
   ret[c("Parameter", diagnostic)]
-}
-
-## shim: combine list into a 3D array (with parameter names if available)
-.abind_from_list <- function(x) {
-  nchains <- length(x)
-  a <- array(dim = c(nrow(x[[1]]), nchains, ncol(x[[1]])))
-  for (i in seq(nchains)) {
-    a[, i, ] <- as.matrix(x[[i]])
-  }
-  parnames <- dimnames(x[[1]])[[2]]
-  if (!is.null(parnames)) {
-    dimnames(a)[[3]] <- parnames
-  }
-  a
 }
 
 #' @inheritParams insight::get_parameters.BFBayesFactor
