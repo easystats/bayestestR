@@ -108,8 +108,7 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
     mon,
     data.frame(Parameter = rownames(mon), ESS = n_eff, Rhat, MCSE = MCSE_Q50)
   )
-  ret <- ret[c("Parameter", diagnostic)]
-  ret
+  ret[c("Parameter", diagnostic)]
 }
 
 ## shim: combine list into a 3D array (with parameter names if available)
@@ -119,10 +118,11 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
   for (i in seq(nchains)) {
     a[, i, ] <- as.matrix(x[[i]])
   }
-  if (!is.null(parnames <- dimnames(x[[1]])[[2]])) {
+  parnames <- dimnames(x[[1]])[[2]]
+  if (!is.null(parnames)) {
     dimnames(a)[[3]] <- parnames
   }
-  return(a)
+  a
 }
 
 #' @inheritParams insight::get_parameters.BFBayesFactor
