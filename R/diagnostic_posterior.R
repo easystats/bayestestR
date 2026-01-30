@@ -317,6 +317,38 @@ diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects 
 
 
 #' @export
+diagnostic_posterior.CmdStanFit <- function(posterior,
+                                            diagnostic = "all",
+                                            ...) {
+  if ("all" %in% diagnostic) {
+    diagnostic <- c("ESS", "Rhat", "MCSE")
+  }
+
+  insight::check_if_installed("posterior")
+  insight::check_if_installed("cmdstanr")
+
+
+  draws <- posterior$draws(format = "draws_df")
+
+  out <- posterior::summarize_draws(draws,
+    posterior::default_convergence_measures(),
+    MCSE = posterior::mcse_mean
+  )
+  out <- datawizard::data_rename(
+    as.data.frame(out),
+    c(
+      Parameter = "variable",
+      ESS = "ess_bulk",
+      ESS_tail = "ess_tail",
+      Rhat = "rhat"
+    )
+  )
+
+  out[!grepl("^lp_", out$Parameter), c("Parameter", diagnostic), drop = FALSE]
+}
+
+
+#' @export
 diagnostic_posterior.blavaan <- function(posterior, diagnostic = "all", ...) {
   # Find parameters
   params <- suppressWarnings(insight::find_parameters(posterior, flatten = TRUE))

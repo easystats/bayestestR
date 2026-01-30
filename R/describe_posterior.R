@@ -148,7 +148,7 @@ describe_posterior.default <- function(posterior, ...) {
 
   if (!is.data.frame(x) && !is.numeric(x)) {
     is_stanmvreg <- inherits(x, "stanmvreg")
-    cleaned_parameters <- insight::clean_parameters(x)
+    cleaned_parameters <- .get_cleaned_parameters(x)
     # rename to use `x` in bayes factor later
     x_df <- insight::get_parameters(x, ...)
   } else {
@@ -289,7 +289,7 @@ describe_posterior.default <- function(posterior, ...) {
     }
 
     ## TODO no BF for arm::sim
-    if (inherits(x, c("sim", "sim.merMod", "mcmc", "stanfit"))) {
+    if (inherits(x, c("sim", "sim.merMod", "mcmc"))) {
       test <- setdiff(test, "bf")
     }
 
@@ -1252,6 +1252,9 @@ describe_posterior.brmsfit <- function(posterior,
 
 #' @export
 describe_posterior.blavaan <- describe_posterior.stanfit
+
+#' @export
+describe_posterior.CmdStanFit <- describe_posterior.stanfit
 
 
 # other models --------------------------------

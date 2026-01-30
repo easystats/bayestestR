@@ -143,7 +143,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (require("rstanarm", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 posterior <- rnorm(1000)
@@ -161,12 +161,12 @@ model <- suppressWarnings(rstanarm::stan_glm(
 ci(model, method = "ETI", ci = c(0.80, 0.89))
 ci(model, method = "HDI", ci = c(0.80, 0.89))
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("BayesFactor", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("BayesFactor", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 ci(bf, method = "ETI")
 ci(bf, method = "HDI")
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 model <- emmeans::emtrends(model, ~1, "wt", data = mtcars)
 ci(model, method = "ETI")
 ci(model, method = "HDI")

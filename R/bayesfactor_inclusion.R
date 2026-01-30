@@ -1,7 +1,8 @@
 #' Inclusion Bayes Factors for testing predictors across Bayesian models
-#'
-#' The `bf_*` function is an alias of the main function. For more info, see
-#' [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
+#' \cr\cr
+#' The `bf_*` function is an alias of the main function.
+#' \cr\cr
+#' \strong{For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
 #' @author Mattan S. Ben-Shachar
 #' @param models An object of class [bayesfactor_models()] or `BFBayesFactor`.
@@ -20,21 +21,28 @@
 #'   models with effect \eqn{X} more likely to have produced the observed data
 #'   than models without effect \eqn{X}?
 #'
-#' \subsection{Match Models}{
+#' ## Match Models
 #' If `match_models=FALSE` (default), Inclusion BFs are computed by comparing
 #' all models with a term against all models without that term. If `TRUE`,
 #' comparison is restricted to models that (1) do not include any interactions
 #' with the term of interest; (2) for interaction terms, averaging is done only
-#' across models that containe the main effect terms from which the interaction
+#' across models that contain the main effect terms from which the interaction
 #' term is comprised.
-#' }
 #'
-#' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
+#' ## Additional methods
+#' The resulting output is supported by the following methods:
+#'
+#' - `as.numeric()`: Extract the (possibly log-)Bayes factor values.
+#'
+#' See [bayesfactor_methods].
+#'
+#' @inheritSection bayesfactor_methods Interpreting Bayes Factors
 #'
 #' @note Random effects in the `lmer` style are converted to interaction terms:
 #' i.e., `(X|G)` will become the terms `1:G` and `X:G`.
 #'
 #' @seealso [weighted_posteriors()] for Bayesian parameter averaging.
+#' @family Bayes factors
 #'
 #' @examplesIf require("BayesFactor")
 #' library(bayestestR)
@@ -158,7 +166,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models,
   colnames(df.effect) <- c("p_prior", "p_posterior", "log_BF")
   rownames(df.effect) <- effnames
 
-  class(df.effect) <- c("bayesfactor_inclusion", class(df.effect))
+  class(df.effect) <- c("bayestestRBF", "bayesfactor_inclusion", class(df.effect))
   attr(df.effect, "matched") <- match_models
   attr(df.effect, "priorOdds") <- prior_odds
 

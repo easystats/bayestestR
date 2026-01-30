@@ -319,6 +319,9 @@ equivalence_test.stanreg <- function(x,
 equivalence_test.stanfit <- equivalence_test.stanreg
 
 #' @export
+equivalence_test.CmdStanFit <- equivalence_test.stanreg
+
+#' @export
 equivalence_test.blavaan <- equivalence_test.stanreg
 
 

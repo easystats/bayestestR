@@ -33,7 +33,7 @@ the groups.}
 Simulate data with specific characteristics.
 }
 \examples{
-\dontshow{if (requireNamespace("MASS", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("MASS", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 
 # Correlation --------------------------------
 data <- simulate_correlation(r = 0.5)

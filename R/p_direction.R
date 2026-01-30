@@ -555,6 +555,9 @@ p_direction.stanreg <- function(x,
 p_direction.stanfit <- p_direction.stanreg
 
 #' @export
+p_direction.CmdStanFit <- p_direction.stanreg
+
+#' @export
 p_direction.blavaan <- p_direction.stanreg
 
 

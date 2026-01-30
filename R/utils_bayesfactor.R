@@ -201,6 +201,35 @@
 
 .clean_priors_and_posteriors.comparisons <- .clean_priors_and_posteriors.slopes
 
+.clean_priors_and_posteriors.stanfit <- function(posterior, prior,
+                                                 verbose = TRUE,
+                                                 ...) {
+  posterior <- insight::get_parameters(posterior)
+
+  # Get Priors
+  if (!is.null(prior)) {
+    prior <- insight::get_parameters(prior)
+  }
+
+  list(
+    posterior = posterior,
+    prior = prior
+  )
+}
+
+.clean_priors_and_posteriors.CmdStanFit <- .clean_priors_and_posteriors.stanfit
+
+
+#' @keywords internal
+get_parameters.CmdStanFit <- function(x, ...) {
+  insight::check_if_installed("cmdstanr")
+
+  out <- as.data.frame(x$draws(format = "draws_df"))
+  out[c(".chain", ".iteration", ".draw")] <- NULL
+  out[grepl("^lp_", colnames(out))] <- NULL
+  out
+}
+
 
 # BMA ---------------------------------------------------------------------
 
@@ -386,39 +415,6 @@
     d_points = rbind(posterior[[2]], prior[[2]])
   )
 }
-
-# As numeric vector -------------------------------------------------------
-
-#' @export
-as.numeric.bayesfactor_inclusion <- function(x, log = FALSE, ...) {
-  out <- x[["log_BF"]]
-  if (!log) out <- exp(out)
-  return(out)
-}
-
-#' @export
-as.numeric.bayesfactor_models <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.numeric.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.numeric.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
-
-## Double:
-
-#' @export
-as.double.bayesfactor_inclusion <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.double.bayesfactor_models <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.double.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
-
 
 # logspline ---------------------------------------------------------------
 

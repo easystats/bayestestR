@@ -171,6 +171,9 @@ map_estimate.stanreg <- function(x,
 map_estimate.stanfit <- map_estimate.stanreg
 
 #' @export
+map_estimate.CmdStanFit <- map_estimate.stanreg
+
+#' @export
 map_estimate.blavaan <- map_estimate.stanreg
 
 

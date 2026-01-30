@@ -195,7 +195,7 @@ spi.stanreg <- function(x,
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     spi(
@@ -222,6 +222,9 @@ spi.stanreg <- function(x,
 
 #' @export
 spi.stanfit <- spi.stanreg
+
+#' @export
+spi.CmdStanFit <- spi.stanreg
 
 #' @export
 spi.blavaan <- spi.stanreg

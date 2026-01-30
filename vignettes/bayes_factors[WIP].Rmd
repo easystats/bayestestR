@@ -1,0 +1,521 @@
+---
+title: "Bayes Factors"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, bayes factors]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Bayes Factors}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+bibliography: bibliography.bib
+csl: apa.csl
+---
+
+This vignette can be referred to by citing the following:
+
+- Makowski, D., Ben-Shachar, M. S., \& Lüdecke, D. (2019). *bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework*. Journal of Open Source Software, 4(40), 1541. https://doi.org/10.21105/joss.01541
+
+- Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Retrieved from [10.3389/fpsyg.2019.02767](https://doi.org/10.3389/fpsyg.2019.02767)
+
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+
+options(knitr.kable.NA = "", digits = 2)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = ">",
+  out.width = "100%",
+  message = FALSE,
+  warning = FALSE,
+  dpi = 150
+)
+
+pkgs <- c(
+  "bayestestR",
+  "ggplot2", "see",
+  "rstanarm", "bridgesampling"
+  # "BayesFactor", "emmeans", "logspline", "lme4", "ggplot2",
+  # "see", "insight", "knitr", "effectsize", 
+  
+)
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  theme_set(theme_modern())
+}
+```
+
+The adoption of the Bayesian framework, especially in the
+social and psychological sciences, seems to be developing in two distinct directions,
+with their separation often marked by their opinion of the **Bayes factor**.
+In short, one school of thought (e.g., the *Amsterdam school*, led by [E. J. Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use, and emphasize its qualities as a statistical index,
+while another point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.).
+
+The `bayestestR` package does **not** take a side in this debate, 
+and offers tools to carry out analysis irrespective of the school you subscribe to.
+Instead, it strongly supports the notion of an *informed choice*:
+
+**discover the methods, learn about them, understand them, try them, and decide for yourself**.
+
+Having said that, here's an introduction to Bayes factors :)
+
+# The Bayes Factor
+
+There are many ways to conceptualize Bayes factors (BFs), but fundamentally: 
+**BFs are indices of *relative* evidence between two *hypotheses* over another**.
+
+According to Bayes' theorem, 
+given a the prior probability of some hypothesis $\mathcal{H}$ ($P(\mathcal{H})$) 
+and some data $D$, 
+we can find the posterior probability of the hypothesis ($P(\mathcal{H}|D)$)
+by accounting for the probability of observing that datum were the hypothesis true ($P(D|\mathcal{H})$, 
+also known as the *likelihood*):^[normalized by the marginal probability of observing the data, ($P(D)$, which we will soon see is often not needed.]
+
+$$
+P(\mathcal{H}|D) = \frac{P(D|\mathcal{H})\times P(\mathcal{H})}{P(D)}
+$$
+
+Within this context, an hypothesis is formalized through the specification of an a-priori model: 
+Priors on the parameters ($\Theta$) the define the data generating process.
+
+If we have two hypothesis, we can find their posterior probability-odds as such:
+
+$$
+\underbrace{\frac{P(\mathcal{H}_1|D)}{P(\mathcal{H}_2|D)}}_{\text{Posterior Odds}} =
+\underbrace{\frac{P(D|\mathcal{H}_1)}{P(D|\mathcal{H}_2)}}_{\text{Likelihood Ratio}}
+\times
+\underbrace{\frac{P(\mathcal{H}_1)}{P(\mathcal{H}_2)}}_{\text{Prior Odds}}
+$$
+
+Where the *likelihood ratio* (the middle term) is the *Bayes factor* - 
+it is the ***factor*** by which some **prior odds** have been updated _after_ observing the data to **posterior odds**.
+
+Thus, Bayes factors can be calculated in two ways: {#bf-definitions}
+
+- As a ratio quantifying **the relative probability of the observed data under each of the two hypotheses**: (In some contexts, these probabilities are also called *marginal likelihoods*.)
+
+$$
+BF_{12}=\frac{P(D|\mathcal{H}_1)}{P(D|\mathcal{H}_2)}
+$$
+
+- As **the degree of shift in prior beliefs** about the relative credibility of
+two hypotheses (since they can be computed by dividing posterior odds by prior
+odds).
+
+$$
+BF_{12}=\frac{\text{Posterior Odds}_{12}}{\text{Prior Odds}_{12}}
+$$
+
+
+
+
+
+Here we provide functions for computing Bayes factors in two different contexts:
+
+- **Comparing statistical models that differ on their priors, representing two competing hypotheses**
+- **Testing single estimates (parameters, coefficients, transformed parameters) within a given model**
+
+# 1. Comparing Models using Bayes Factors {#bayesfactor_models}
+
+Let's take a look at the _kid IQ_ dataset from the `{rstanarm}` package.
+
+```{r}
+data("kidiq", package = "rstanarm")
+
+kidiq <- kidiq[c("kid_score", "mom_hs")]
+kidiq$mom_hs <- factor(kidiq$mom_hs, levels = 0:1, labels = c("no", "yes"))
+
+head(kidiq)
+```
+
+We'll be typing to answer a simple question:
+what is the mean difference in IQ scores between children whose mothers completed high-school and those whose mothers did not complete high school (as indicated by the `mom_hs` variable).
+
+There are many hypothesis we might have about this difference. Let's start by examining:  
+
+- $\mathcal{H}_0$: There's no difference in IQ between the two groups.  
+- $\mathcal{H}_1$: The difference is probably around 20 point in favor of kids whose mothers completed high school.  
+- $\mathcal{H}_2$: A more conservative hypothesis that the difference, if it exists, is probably no more than about 5 point in either direction.
+
+Let's plot these:
+
+```{r, echo=FALSE}
+p_prior0 <- ggplot() +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  geom_segment(aes(x = 0, xend = 0, y = 0, yend = 1), 
+               linewidth = 1, color = "royalblue") +
+  geom_point(aes(x = 0, y = 1), 
+             size = 3, color = "royalblue") +
+  theme(axis.text.y = element_blank()) +
+  expand_limits(y = 1.5, x = c(-50, 50)) +
+  labs(
+    x = "Difference",
+    y = NULL,
+    title = expression(H[0]~":"~theta==0)
+  )
+
+p_prior1 <- ggplot() +
+  stat_function(
+    geom = "area", 
+    fun = dnorm,
+    args = list(mean = 20, sd = 10), 
+    xlim = c(-50, 50),
+    fill = "royalblue",
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  theme(axis.text.y = element_blank()) +
+  expand_limits(y = 0.05) +
+  labs(
+    x = "Difference",
+    y = NULL,
+    title = expression(H[1]~":"~theta%~%norma(20, 10^2))
+  )
+
+p_prior2 <- ggplot() +
+  stat_function(
+    geom = "area", 
+    fun = dnorm,
+    args = list(mean = 0, sd = 5), 
+    xlim = c(-50, 50),
+    fill = "royalblue",
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  theme(axis.text.y = element_blank()) +
+  expand_limits(y = 0.05) +
+  labs(
+    x = "Difference",
+    y = NULL,
+    title = expression(H[2]~":"~theta%~%norma(0, 5^2))
+  )
+
+plots(p_prior0, p_prior1, p_prior2, n_columns = 1)
+
+```
+
+We can build models with these different priors with `{brms}` or `{rstanarm}`:^[We will be using `{rstanarm}` throughout this vignette, but `bayestestR` also supports `{brms}`, `{blavaan}`, `{rstan}`, `{cmdstanr}`, `{BayesFactor}` and more.]
+
+In any case, note the we will always require _many_ posterior samples for the stability of our BF estimation (typically 10 times more than what we would need for posterior estimation alone; @gronau2020bridgesampling).
+
+```{r}
+mod_H0 <- stan_glm(
+  kid_score ~ 1,
+  family = gaussian(),
+  data = kidiq,
+  
+  diagnostic_file = file.path(tempdir(), "df0.csv"), # required for BF computation
+  
+  chains = 10, iter = 5000, warmup = 1000,
+  refresh = 0
+)
+
+mod_H1 <- stan_glm(
+  kid_score ~ mom_hs,
+  family = gaussian(),
+  data = kidiq,
+  
+  prior = normal(location = 20, scale = 10),
+  diagnostic_file = file.path(tempdir(), "df1.csv"),
+  
+  chains = 10, iter = 5000, warmup = 1000,
+  refresh = 0
+)
+
+mod_H2 <- stan_glm(
+  kid_score ~ mom_hs,
+  family = gaussian(),
+  data = kidiq,
+  
+  prior = normal(location = 0, scale = 5),
+  diagnostic_file = file.path(tempdir(), "df2.csv"),
+  
+  chains = 10, iter = 5000, warmup = 1000,
+  refresh = 0
+)
+```
+
+We can now ask: which a-priori model (each representing a different hypothesis) is more likely to have produced the observed data?
+
+This is usually done by comparing the marginal likelihoods of two models. In
+such a case, the Bayes factor is a measure of the **relative** evidence for one
+hypothesis over the other.
+
+```{r}
+bfs <- bayesfactor_models(mod_H1, mod_H2, denominator = mod_H0, verbose = FALSE)
+
+print(bfs, show_names = TRUE)
+```
+
+
+We can see that the both models that allow for a difference between the groups
+are much more supported by the data - 
+with $BF>`r insight::format_value(exp(bfs$log_BF[2]))`$ -
+compared to the null (intercept only).
+
+Due to the transitive property of Bayes factors, 
+we can easily change the reference model to the model representing $\mathcal{H}_2$:
+
+```{r update_models1}
+bfs2 <- update(bfs, reference = 2, subset = 1)
+
+print(bfs2, show_names = TRUE)
+```
+
+As we can see, the data supports the a-priori model that suggests a positive difference almost 4 times over the model that suggests a small difference.
+
+We can also get a matrix of Bayes factors of all the pairwise model comparisons:
+
+```{r}
+print(as.matrix(bfs), show_names = TRUE)
+```
+
+Overall, we can see that both models that allow for some non-0 difference are much more supported by the data compared to the 0-difference model. Let's take a look at the data:
+
+```{r, echo=FALSE}
+ggplot(kidiq, aes(mom_hs, kid_score, fill = mom_hs, color = mom_hs)) +
+  geom_violindot() +
+  geom_boxplot(fill = NA, position = position_nudge(-0.2), width = 0.1) +
+  labs(x = "Mom completed high-school?", y = "Kids' IQ") +
+  guides(fill = "none", color = "none")
+```
+
+And indeed both models 1 and 2's posteriors reflect this difference:
+
+```{r, echo=FALSE}
+plots(
+  plot(hdi(mod_H1)) + 
+    labs(y = NULL, title = "Model 1") +
+    expand_limits(x = c(-10, 30)) + 
+    scale_y_discrete(expand = expansion(0.1, 0)) +
+    guides(fill = "none"),
+  plot(hdi(mod_H2)) + 
+    expand_limits(x = c(-10, 30)) + 
+    scale_y_discrete(expand = expansion(0.1, 0)) +
+    labs(y = NULL, title = "Model 2"), 
+  
+  n_columns = 1, 
+  guides = "collect"
+)
+```
+
+Note that these posterior distributions are _very_ similar,
+but BFs do not compare posterior models - only _a-priori_ models!
+
+For this reason, computing BFs only makes sense if we are able to formulate our hypotheses
+into distinct priors. 
+
+## The BIC approximation
+
+It is also possible to compute approximate Bayes factors for the comparison of frequentist models.
+This is done by comparing BIC indices, allowing a Bayesian comparison
+of nested as well as non-nested frequentist models [@wagenmakers2007practical].
+
+Since frequentist modeling does not allow for specification of priors, we are limited to either restricting parameters to 0 or not.
+
+```{r}
+mod_H0f <- lm(kid_score ~ 1, data = kidiq)
+
+mod_H1f <- lm(kid_score ~ mom_hs, data = kidiq)
+
+bayesfactor_models(mod_H1f, denominator = mod_H0f)
+```
+
+(Note how similar this approximate BF is to the proper BFs estimated above.)
+
+
+## Model averaging
+
+In the previous section, we discussed the direct comparison of two models to
+determine if an hypothesis is supported by the data. 
+However, in many cases there are too many models to consider, 
+or perhaps it is not straightforward which models we should be comparing to determine if an effect is supported by the data. 
+For such cases, we can use Bayesian model averaging (BMA) to determine the support
+provided by the data for a parameter or model-term across many models.
+
+### Inclusion Bayes factors {#bayesfactor_inclusion}
+
+Inclusion Bayes factors answer the question:
+
+> **Are the observed data more probable under models with a particular predictor, than they are under models without that particular predictor?**
+
+In other words, on average, are models with predictor $X$ more likely to have
+produced the observed data than models without predictor $X$?^[A model without
+predictor $X$ can be thought of as a model in which the parameter(s) of the
+predictor have been restricted to a null-point of 0.]
+
+These Bayes factors are computed not as the ratios of marginal likelihoods, 
+but as **the degree of shift in prior beliefs**: 
+Since each model has a prior probability, it is possible to sum the prior
+probability of all models that include a predictor of interest (the *prior inclusion probability*), and of all models that do not include that predictor
+(the *prior exclusion probability*). After the data are observed, and each model
+is assigned a posterior probability, we can similarly consider the sums of the
+posterior models' probabilities to obtain the *posterior inclusion probability*
+and the *posterior exclusion probability*. The change from prior
+inclusion odds to the posterior inclusion odds is the **Inclusion Bayes factor**
+["$BF_{Inclusion}$"; @clyde2011bayesian].
+
+```{r}
+(bfinc <- bayesfactor_inclusion(bfs))
+```
+
+We can see that across the 3 models under consideration, models _with_ the `mom_hs` term fit the data `r insight::format_value(exp(bfinc$log_BF))` times more than the model _without_ that term.
+
+### Averaging posteriors {#weighted_posteriors}
+
+Similar to how we can average evidence for a predictor across models, we can
+also average the **posterior estimate** across models.
+
+```{r}
+ppp <- weighted_posteriors(mod_H0, mod_H1, mod_H2)
+
+plot(hdi(ppp$mom_hsyes))
+```
+
+This looks a lot like the posterior obtained from the second model, which shouldn't be surprising since about 80% of the averaged posterior comes from the second model.
+
+```{r}
+attr(ppp, "weights")
+```
+
+
+## Order restricted models {#bayesfactor_restricted}
+
+We've already seen we can formalize hypothesis into distributional priors
+(e.g., _the difference is probably no more than about 5 point in either direction._ became $theta \sim Normal(0, 5^2)$). 
+These priors are **unrestricted** - that is, **all values** between $-\infty$
+and $\infty$ of all parameters in the model have some non-zero credibility (no
+matter how small; this is true for both the prior and posterior distribution).
+
+But we can also formalize hypotheses as **order restrictions** [@morey_2015_blog;
+@morey2011bayesinterval].
+
+For example, we can impose an _additional_ order restriction 
+that the difference _must be positive_, which we can write like this (if we had to):
+
+$$
+\mathcal{H}_{2r}: theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\ 0 \end{bmatrix}
+$$
+
+By testing the probabilities of these restrictions on prior and posterior samples, 
+we can see how the probabilities of the restricted distributions change after observing the data.
+This can be achieved with `bayesfactor_restricted()`, that compute a Bayes
+factor for these restricted model vs the unrestricted model.
+
+```{r}
+bayesfactor_restricted(mod_H2, hypothesis = "mom_hsyes > 0")
+```
+
+
+In other words, the data fits the restricted model (where the difference must be small _and positive_) twice as much as it fits the un-restircted model (where the difference must be small).
+
+We can compare multiple restricted hypotheses. For example: that the difference isn't just positive, it's larger than 5.
+
+```{r}
+bf_rstr2 <- bayesfactor_restricted(mod_H2, hypothesis = c(
+  positive = "mom_hsyes > 0",
+  strong = "mom_hsyes > 4"
+))
+
+```
+
+Here too we can obtain a matrix of BFs between all models:
+
+```{r}
+print(as.matrix(bf_rstr2), show_names = TRUE)
+```
+
+We can see the "strong" model is preferred over both the un-restricted model and the "positive" model. 
+
+
+Again, we can use the transitive properties of Bayes factors to find the BF comparing $\mathcal{H}_{2r}$ and $\mathcal{H}_1$:
+
+$$
+BF_{2r,1} = BF_{2,0} \times BF_{2r,2} = \frac{P(D|\mathcal{H}_{2})}{P(D|\mathcal{H}_0)} \times \frac{P(D|\mathcal{H}_{2r})}{P(D|\mathcal{H}_2)} = \frac{P(D|\mathcal{H}_{2r})}{P(D|\mathcal{H}_0)}
+$$
+
+```{r}
+BF_2.0 <- as.numeric(bfs)[2]
+BF_2r.2 <- as.numeric(bf_rstr)
+
+(BF_2r.0 <- BF_2.0 * BF_2r.2)
+```
+
+So the data support the hypothesis that the difference is small but strictly positive 
+`r insight::format_value(BF_2r.0)` times more than the hypothesis that the difference is exactly 0.
+
+**Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].**
+
+---
+
+We are not limited to a single order restrictions - we can compound them to create complex restrictions.
+
+Let's look at the [`disgust` dataset](http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html), were 150 individuals rated "moral harshness" of undocumented migrants in one of three conditions: no odor, clean odor (lemon), or disgusting (sulfur) odor during questionnaire.
+
+```{r}
+data("disgust", package = "bayestestR")
+
+str(disgust)
+```
+
+
+Let's build our simple one-way-ANOVA-like model:
+
+```{r}
+mod_odor <- stan_glm(
+  score ~ condition,
+  family = gaussian(),
+  data = disgust,
+  
+  prior = normal(location = 0, scale = 4),
+  diagnostic_file = file.path(tempdir(), "df2.csv"),
+  
+  chains = 10, iter = 5000, warmup = 1000,
+  refresh = 0
+)
+```
+
+```{r}
+hyps <- c(
+  "control < lemon" = "conditionlemon < 0",
+  "control < lemon" = "conditionlemon < 0",
+)
+
+bayesfactor_restricted(mod_odor, hypothesis = hyps)
+```
+
+
+**NOTE**: See the *Specifying Correct Priors for Factors with More Than 2 Levels* appendix below.
+
+
+# 2. Testing Models' Parameters with Bayes Factors {#bayesfactor_parameters}
+
+### Testing against a null-*region*
+
+### Directional hypotheses
+
+### Support intervals and curves {#si}
+
+A continuous extension of the density ratio...
+
+# Appendices
+
+
+```{r}
+
+```
+
+## Specifying correct priors for factors {#contr_bayes}
+
+## Contrasts (and marginal means)
+
+
+# References
+

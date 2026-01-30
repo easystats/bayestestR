@@ -1,7 +1,11 @@
 #' Bayes Factors (BF) for model comparison
 #'
 #' @description This function computes or extracts Bayes factors from fitted
-#' models. The `bf_*` function is an alias of the main function.
+#' models.
+#' \cr\cr
+#' The `bf_*` function is an alias of the main function.
+#' \cr\cr
+#' \strong{For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
 #' @author Mattan S. Ben-Shachar
 #'
@@ -14,11 +18,7 @@
 #' @param denominator Either an integer indicating which of the models to use as
 #'   the denominator, or a model to be used as a denominator. Ignored for
 #'   `BFBayesFactor`.
-#' @param object,x A [`bayesfactor_models()`] object.
-#' @param subset Vector of model indices to keep or remove.
-#' @param reference Index of model to reference to, or `"top"` to
-#'   reference to the best model, or `"bottom"` to reference to the worst
-#'   model.
+#'
 #' @inheritParams hdi
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
@@ -27,41 +27,31 @@
 #' @details
 #' If the passed models are supported by **insight** the DV of all models will
 #' be tested for equality (else this is assumed to be true), and the models'
-#' terms will be extracted (allowing for follow-up analysis with `bayesfactor_inclusion`).
+#' terms will be extracted (allowing for follow-up analysis with [bayesfactor_inclusion]).
 #'
 #' - For `brmsfit` or `stanreg` models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 #'   - `brmsfit` models must have been fitted with `save_pars = save_pars(all = TRUE)`.
 #'   - `stanreg` models must have been fitted with a defined `diagnostic_file`.
-#' - For `BFBayesFactor`, `bayesfactor_models()` is mostly a wraparound `BayesFactor::extractBF()`.
+#' - For `BFBayesFactor`, `bayesfactor_models()` is a wraparound `BayesFactor::extractBF()`.
 #' - For all other model types, Bayes factors are computed using the BIC approximation.
 #'   Note that BICs are extracted from using [insight::get_loglikelihood], see documentation
 #'   there for options for dealing with transformed responses and REML estimation.
 #'
-#' In order to correctly and precisely estimate Bayes factors, a rule of thumb
-#' are the 4 P's: **P**roper **P**riors and **P**lentiful
-#' **P**osteriors. How many? The number of posterior samples needed for
-#' testing is substantially larger than for estimation (the default of 4000
-#' samples may not be enough in many cases). A conservative rule of thumb is to
-#' obtain 10 times more samples than would be required for estimation
-#' (_Gronau, Singmann, & Wagenmakers, 2017_). If less than 40,000 samples
-#' are detected, `bayesfactor_models()` gives a warning.
+#' ## Additional methods
+#' The resulting output is supported by the following methods:
 #'
-#' See also [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
+#' - `as.matrix()`: Extract a full matrix of (log-)Bayes factors between all
+#'   models (using the transitivity of Bayes factors).
+#' - `update()`: subset and/or re-reference the Bayes factors to a different model.
+#' - `as.numeric()`: Extract the (possibly log-)Bayes factor values.
 #'
-#' @section Transitivity of Bayes factors:
-#' For multiple inputs (models or hypotheses), the function will return multiple
-#' Bayes factors between each model and _the same_ reference model (the
-#' `denominator` or un-restricted model). However, we can take advantage of the
-#' transitivity of Bayes factors - where if we have two Bayes factors for Model
-#' _A_ and model _B_ against the _same reference model C_, we can obtain a Bayes
-#' factor for comparing model _A_ to model _B_ by dividing them:
-#' \cr\cr
-#' \deqn{BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}}
-#' \cr\cr
-#' A full matrix comparing all models can be obtained with `as.matrix()` (see
-#' examples).
+#' See examples and [bayesfactor_methods].
 #'
-#' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
+#' @inheritSection bayesfactor_methods Prior and posterior considerations
+#'
+#' @inheritSection bayesfactor_methods Transitivity of Bayes factors
+#'
+#' @inheritSection bayesfactor_methods Interpreting Bayes Factors
 #'
 #' @return A data frame containing the models' formulas (reconstructed fixed and
 #'   random effects) and their `log(BF)`s  (Use `as.numeric()` to extract the
@@ -165,6 +155,9 @@
 #' - Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011).
 #'   Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests.
 #'   Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
+#'
+#' @seealso [bayesfactor_inclusion()] for testing predictors across Bayesian models.
+#' @family Bayes factors
 #'
 #' @export
 bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
@@ -286,7 +279,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   } else {
     res <- .bayesfactor_models_stan_REG(mods, denominator, verbose)
     bf_method <- "marginal likelihoods (bridgesampling)"
-    unsupported_models <- FALSE
+    unsupported_models <- if (inherits(mods[[1]], c("stanfit", "CmdStanFit"))) TRUE else FALSE
   }
 
   .bf_models_output(res,
@@ -303,13 +296,18 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
-  from_same_data_as_den <- sapply(resps[-denominator],
-    identical,
-    y = resps[[denominator]]
-  )
+  if (all(!sapply(resps, is.null))) {
+    from_same_data_as_den <- sapply(
+      resps[-denominator],
+      identical,
+      y = resps[[denominator]]
+    )
 
-  if (!all(from_same_data_as_den)) {
-    insight::format_error("Models were not computed from the same data.")
+    if (!all(from_same_data_as_den)) {
+      insight::format_error("Models were not computed from the same data.")
+    }
+  } else if (verbose) {
+    insight::format_alert("Unable to validate that all models were fit with the same data.")
   }
 
   mML <- lapply(mods, .get_marglik, verbose = verbose)
@@ -321,6 +319,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   # Get formula
   mforms <- sapply(mods, .find_full_formula)
+  mforms[!nzchar(mforms)] <- names(mforms)[!nzchar(mforms)]
 
   res <- data.frame(
     Model = mforms,
@@ -380,6 +379,10 @@ bayesfactor_models.blavaan <- bayesfactor_models.stanreg
 
 
 #' @export
+bayesfactor_models.stanfit <- bayesfactor_models.stanreg
+
+
+#' @export
 bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   models <- c(...)
 
@@ -405,56 +408,6 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
     bf_method = "JZS (BayesFactor)",
     unsupported_models = !inherits(models@denominator, "BFlinearModel")
   )
-}
-
-
-# Methods -----------------------------------------------------------------
-
-#' @rdname bayesfactor_models
-#' @export
-update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
-  if (!is.null(reference)) {
-    if (reference == "top") {
-      reference <- which.max(object$log_BF)
-    } else if (reference == "bottom") {
-      reference <- which.min(object$log_BF)
-    }
-    object$log_BF <- object$log_BF - object$log_BF[reference]
-    attr(object, "denominator") <- reference
-  }
-
-  denominator <- attr(object, "denominator")
-
-  if (!is.null(subset)) {
-    if (all(subset < 0)) {
-      subset <- seq_len(nrow(object))[subset]
-    }
-    object_subset <- object[subset, ]
-
-    if (denominator %in% subset) {
-      attr(object_subset, "denominator") <- which(denominator == subset)
-    } else {
-      object_subset <- rbind(object[denominator, ], object_subset)
-      attr(object_subset, "denominator") <- 1
-    }
-    object <- object_subset
-  }
-  object
-}
-
-
-#' @rdname bayesfactor_models
-#' @export
-as.matrix.bayesfactor_models <- function(x, ...) {
-  out <- -outer(x$log_BF, x$log_BF, FUN = "-")
-  rownames(out) <- colnames(out) <- x$Model
-
-  # out <- exp(out)
-
-  class(out) <- c("bayesfactor_matrix", class(out))
-  attr(out, "log_BF") <- TRUE
-  attr(out, "bf_fun") <- "bayesfactor_models()"
-  out
 }
 
 # Helpers -----------------------------------------------------------------
@@ -498,11 +451,14 @@ as.matrix.bayesfactor_models <- function(x, ...) {
   if (!is.null(res$log_BF) && all(is.na(res$log_BF))) {
     insight::format_error("Could not calculate Bayes Factor for these models. You may report this problem at {https://github.com/easystats/bayestestR/issues/}.") # nolint
   }
+
+  if (is.null(model_names)) model_names <- rownames(res)
+
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- bf_method
   attr(res, "unsupported_models") <- unsupported_models
   attr(res, "model_names") <- model_names
-  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
+  class(res) <- c("bayestestRBF", "bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
 }
