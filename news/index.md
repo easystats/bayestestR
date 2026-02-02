@@ -15,6 +15,11 @@ CRAN release: 2025-08-29
 - `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a
   simpler printing.
 
+- [`diagnostic_posterior()`](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.md)
+  works with ‘raw’ MCMC samples (i.e., lists of data frames or matrices
+  representing samples of parameters from chains, or 3D arrays) as well
+  as objects from rstanarm/brms/lavaan models.
+
 ## bayestestR 0.17.0
 
 CRAN release: 2025-08-29

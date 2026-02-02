@@ -67,10 +67,6 @@ model <- rstanarm::stan_glmer(
   data = iris, chains = 2, refresh = 0
 )
 bayesian_as_frequentist(model)
-#> Warning: package version mismatch: 
-#> glmmTMB was built with TMB package version 1.9.18
-#> Current TMB package version is 1.9.19
-#> Please re-install glmmTMB from source or restore original ‘TMB’ package (see '?reinstalling' for more information)
 #> Linear mixed model fit by REML ['lmerMod']
 #> Formula: Sepal.Length ~ Petal.Length + (1 | Species)
 #>    Data: data

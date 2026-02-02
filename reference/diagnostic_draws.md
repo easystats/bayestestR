@@ -14,7 +14,10 @@ diagnostic_draws(posterior, ...)
 
 - posterior:
 
-  A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object.
+  A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object; a list of data
+  frames or matrices representing MCMC chains (rows as samples, columns
+  as parameters); or a 3D array (dimensions: samples, chains,
+  parameters)
 
 - ...:
 

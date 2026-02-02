@@ -160,7 +160,7 @@ describe_posterior(
 ## 
 ## Parameter |   Median |        95% CI |     pd |   ps
 ## ----------------------------------------------------
-## Posterior | 5.94e-04 | [-1.91, 1.92] | 50.05% | 0.46
+## Posterior | 7.75e-03 | [-1.95, 1.98] | 50.36% | 0.46
 ```
 
 [`describe_posterior()`](https://easystats.github.io/bayestestR/reference/describe_posterior.md)
@@ -246,7 +246,7 @@ As for other [**easystats**](https://github.com/easystats) packages,
 available from the [**see**](https://easystats.github.io/see/) package
 for many functions:
 
-![](reference/figures/unnamed-chunk-8-1.png)
+![](reference/figures/centrality-2-1.png)
 
 While the **median** and the **mean** are available through base R
 functions,
@@ -283,7 +283,7 @@ eti(posterior, ci = 0.89)
 ## 89% ETI: [0.75, 9.25]
 ```
 
-![](reference/figures/unnamed-chunk-10-1.png)
+![](reference/figures/uncertainty-plot-1.png)
 
 ## Existence and Significance Testing
 
@@ -320,7 +320,7 @@ p_direction(posterior)
 ## Posterior | 97.72%
 ```
 
-![](reference/figures/unnamed-chunk-12-1.png)
+![](reference/figures/tests-plot-1.png)
 
 ### ROPE
 
@@ -361,7 +361,7 @@ rope(posterior, range = c(-0.1, 0.1))
 ## 4.40 %
 ```
 
-![](reference/figures/unnamed-chunk-14-1.png)
+![](reference/figures/rope-2-1.png)
 
 ### Bayes Factor
 
@@ -396,7 +396,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0, verb
 ## * Evidence Against The Null: 0
 ```
 
-![](reference/figures/unnamed-chunk-16-1.png)
+![](reference/figures/unnamed-chunk-1-1.png)
 
 ^(*The lollipops represent the density of a point-null on the prior distribution (the blue lollipop on the dotted distribution) and on the posterior distribution (the red lollipop on the yellow distribution). The ratio between the two - the Savage-Dickey ratio - indicates the degree by which the mass of the parameter distribution has shifted away from or closer to the null.*)
 
@@ -452,7 +452,7 @@ Compute the density of a given point of a distribution.
 ``` r
 
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.37
+## [1] 0.4
 ```
 
 ## Code of Conduct

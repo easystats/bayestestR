@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,9 +123,9 @@
 <p>The <em>bayestestR</em> package is available on CRAN, while its latest development version is available on R-universe (from <em>rOpenSci</em>).</p>
 <table class="table">
 <colgroup>
-<col width="33%">
-<col width="33%">
-<col width="33%">
+<col width="12%">
+<col width="11%">
+<col width="75%">
 </colgroup>
 <thead><tr>
 <th>Type</th>
@@ -242,7 +242,7 @@
 <span><span class="co">## </span></span>
 <span><span class="co">## Parameter |   Median |        95% CI |     pd |   ps</span></span>
 <span><span class="co">## ----------------------------------------------------</span></span>
-<span><span class="co">## Posterior | 5.94e-04 | [-1.91, 1.92] | 50.05% | 0.46</span></span></code></pre></div>
+<span><span class="co">## Posterior | 7.75e-03 | [-1.95, 1.98] | 50.36% | 0.46</span></span></code></pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">zinb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"http://stats.idre.ucla.edu/stat/data/fish.csv"</span><span class="op">)</span></span>
@@ -308,7 +308,7 @@
 <span><span class="co">## --------------------</span></span>
 <span><span class="co">## 1.18   | 1.50 | 0.51</span></span></code></pre></div>
 <p>As for other <a href="https://github.com/easystats" class="external-link"><strong>easystats</strong></a> packages, <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> methods are available from the <a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong></a> package for many functions:</p>
-<p><img src="reference/figures/unnamed-chunk-8-1.png"><!-- --></p>
+<p><img src="reference/figures/centrality-2-1.png"><!-- --></p>
 <p>While the <strong>median</strong> and the <strong>mean</strong> are available through base R functions, <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><code>map_estimate()</code></a> in <em>bayestestR</em> can be used to directly find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.</em>, the value associated with the highest probability density (the “peak” of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters.</p>
 </div>
 <div class="section level2">
@@ -324,7 +324,7 @@
 <span></span>
 <span><span class="fu"><a href="reference/eti.html">eti</a></span><span class="op">(</span><span class="va">posterior</span>, ci <span class="op">=</span> <span class="fl">0.89</span><span class="op">)</span></span>
 <span><span class="co">## 89% ETI: [0.75, 9.25]</span></span></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-10-1.png"><!-- --></p>
+<p><img src="reference/figures/uncertainty-plot-1.png"><!-- --></p>
 </div>
 <div class="section level2">
 <h2 id="existence-and-significance-testing">Existence and Significance Testing<a class="anchor" aria-label="anchor" href="#existence-and-significance-testing"></a>
@@ -342,7 +342,7 @@
 <span><span class="co">## Parameter |     pd</span></span>
 <span><span class="co">## ------------------</span></span>
 <span><span class="co">## Posterior | 97.72%</span></span></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-12-1.png"><!-- --></p>
+<p><img src="reference/figures/tests-plot-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="rope">ROPE<a class="anchor" aria-label="anchor" href="#rope"></a>
@@ -359,7 +359,7 @@
 <span><span class="co">## Inside ROPE</span></span>
 <span><span class="co">## -----------</span></span>
 <span><span class="co">## 4.40 %</span></span></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-14-1.png"><!-- --></p>
+<p><img src="reference/figures/rope-2-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="bayes-factor">Bayes Factor<a class="anchor" aria-label="anchor" href="#bayes-factor"></a>
@@ -378,7 +378,7 @@
 <span><span class="co">## 1.94</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## * Evidence Against The Null: 0</span></span></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-16-1.png"><!-- --></p>
+<p><img src="reference/figures/unnamed-chunk-1-1.png"><!-- --></p>
 <p><sup><em>The lollipops represent the density of a point-null on the prior distribution (the blue lollipop on the dotted distribution) and on the posterior distribution (the red lollipop on the yellow distribution). The ratio between the two - the Savage-Dickey ratio - indicates the degree by which the mass of the parameter distribution has shifted away from or closer to the null.</em></sup></p>
 <p>For more info, see <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html">the Bayes factors vignette</a>.</p>
 </div>
@@ -412,7 +412,7 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><code>density_at()</code></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/density_at.html">density_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">## [1] 0.37</span></span></code></pre></div>
+<span><span class="co">## [1] 0.4</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -424,7 +424,7 @@
 <div class="section level1">
 <h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h1>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-kruschke2018rejecting" class="csl-entry">
 Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(2), 270–280.
 </div>
