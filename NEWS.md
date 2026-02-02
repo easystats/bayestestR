@@ -2,12 +2,16 @@
 
 ## New functionality
 
-* `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes 
+* `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes
   factors between all restricted models.
 
 ## Changes
 
 * `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler printing.
+
+* `diagnostic_posterior()` works with 'raw' MCMC samples (i.e., lists of data
+  frames or matrices representing samples of parameters from chains, or 3D arrays)
+  as well as objects from rstanarm/brms/lavaan models.
 
 # bayestestR 0.17.0
 

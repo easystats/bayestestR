@@ -6,7 +6,7 @@ csl: vignettes/apa.csl
 
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
-```{r, echo = FALSE, warning=FALSE, message=FALSE}
+```{r setup, echo = FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
 library(bayestestR)
 
@@ -51,7 +51,7 @@ Development | R-universe | `install.packages("bayestestR", repos = "https://easy
 
 Once you have downloaded the package, you can then load it using:
 
-```{r, eval=FALSE}
+```{r load-pkg, eval=FALSE}
 library("bayestestR")
 ```
 
@@ -112,7 +112,7 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
 
 [`describe_posterior()`](https://easystats.github.io/bayestestR/reference/describe_posterior.html) is the master function with which you can compute all of the indices cited below at once.
 
-```{r message=FALSE, warning=FALSE}
+```{r describe-posterior, message=FALSE, warning=FALSE}
 describe_posterior(
   rnorm(10000),
   centrality = "median",
@@ -123,7 +123,7 @@ describe_posterior(
 
 `describe_posterior()` works for many objects, including more complex *brmsfit*-models. For better readability, the output is separated by model components:
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r fish-example, message=FALSE, warning=FALSE, eval=FALSE}
 zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
 set.seed(123)
 model <- brm(
@@ -146,7 +146,7 @@ describe_posterior(
 )
 ```
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
+```{r describe-posterior-3, message=FALSE, warning=FALSE, echo=FALSE}
 model <- insight::download_model("brms_zi_3")
 describe_posterior(
   model,
@@ -163,7 +163,7 @@ describe_posterior(
 
 ## Point-estimates
 
-```{r message=FALSE, warning=FALSE}
+```{r point-estimate1, message=FALSE, warning=FALSE}
 library(bayestestR)
 
 posterior <- distribution_gamma(10000, 1.5) # Generate a skewed distribution
@@ -175,20 +175,25 @@ centrality
 As for other [**easystats**](https://github.com/easystats) packages, `plot()` methods are available from the [**see**](https://easystats.github.io/see/) package for many functions:
 
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r see-pkg, message=FALSE, warning=FALSE, include=FALSE}
 library(see)
 
 plot(centrality)
 ```
-```{r message=FALSE, warning=FALSE, echo=FALSE}
+```{r centrality-2, message=FALSE, warning=FALSE, echo=FALSE}
 library(ggplot2)
 library(see)
 
-plot(centrality) +
+## need suppressWarnings + print() to override options(warn=2)
+## set somewhere 
+suppressWarnings(
+print(plot(centrality) +
   xlab("nParameter Value") +
   theme(axis.text.y = element_blank()) +
   scale_x_continuous(limits = c(NA, 8)) +
   see::theme_modern()
+))
+
 ```
 
 While the **median** and the **mean** are available through base R functions, [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html) in *bayestestR* can be used to directly find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior, *i.e.*, the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the *mode* for continuous parameters.
@@ -201,7 +206,7 @@ While the **median** and the **mean** are available through base R functions, [`
 
 Unlike equal-tailed intervals (see [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)) that typically exclude 2.5\% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions.
 
-```{r message=FALSE, warning=FALSE}
+```{r uncertainty-1, message=FALSE, warning=FALSE}
 posterior <- distribution_chisquared(10000, 4)
 
 hdi(posterior, ci = 0.89)
@@ -209,7 +214,7 @@ hdi(posterior, ci = 0.89)
 eti(posterior, ci = 0.89)
 ```
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
+```{r uncertainty-plot, message=FALSE, warning=FALSE, echo=FALSE}
 posterior <- distribution_chisquared(10000, 4)
 
 dat <- as.data.frame(density(posterior))
@@ -258,12 +263,12 @@ see::plots(p1, p2, tags = TRUE)
 
 **Relationship with the p-value**: In most cases, it seems that the *pd* corresponds to the frequentist one-sided *p*-value through the formula `p-value = (1-pd/100)` and to the two-sided *p*-value (the most commonly reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a `pd` of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See the [*reporting guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
-```{r message=FALSE, warning=FALSE}
+```{r tests-1, message=FALSE, warning=FALSE}
 posterior <- distribution_normal(10000, 0.4, 0.2)
 p_direction(posterior)
 ```
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
+```{r tests-plot, message=FALSE, warning=FALSE, echo=FALSE}
 posterior <- distribution_normal(10000, 0.4, 0.2)
 
 dat3 <- as.data.frame(density(posterior))
@@ -292,12 +297,12 @@ Kruschke suggests that such null value could be set, by default, to the -0.1 to 
 
 Kruschke suggests using the proportion of the 95\% (or 90\%, considered more stable) HDI that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
-```{r message=FALSE, warning=FALSE}
+```{r rope-1, message=FALSE, warning=FALSE}
 posterior <- distribution_normal(10000, 0.4, 0.2)
 rope(posterior, range = c(-0.1, 0.1))
 ```
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
+```{r rope-2, message=FALSE, warning=FALSE, echo=FALSE}
 posterior <- distribution_normal(10000, 0.4, 0.2)
 
 dat4 <- as.data.frame(density(posterior))
@@ -327,7 +332,7 @@ ggplot(dat4, aes(x = x, y = y, fill = fill)) +
 When the null is an interval, the Bayes factor is computed by comparing the prior and posterior odds of the parameter falling within or outside the null; When the null is a point, a Savage-Dickey density ratio is computed, which is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null [@wagenmakers2010bayesian].
 
 
-```{r message=FALSE, warning=FALSE}
+```{r bf-1, message=FALSE, warning=FALSE}
 prior <- distribution_normal(10000, mean = 0, sd = 1)
 posterior <- distribution_normal(10000, mean = 1, sd = 0.7)
 

@@ -46,3 +46,5 @@ tests\^spelling
 ^vignettes/p.
 ^vignettes/r.
 ^vignettes/web_only
+
+air.toml

@@ -8,7 +8,7 @@
 \usage{
 diagnostic_posterior(posterior, ...)
 
-\method{diagnostic_posterior}{default}(posterior, diagnostic = c("ESS", "Rhat"), ...)
+\method{diagnostic_posterior}{default}(posterior, diagnostic = "all", ...)
 
 \method{diagnostic_posterior}{stanreg}(
   posterior,
@@ -20,7 +20,10 @@ diagnostic_posterior(posterior, ...)
 )
 }
 \arguments{
-\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
+\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object; a
+list of data frames or matrices representing MCMC chains (rows as samples,
+columns as parameters); or a 3D array (dimensions: samples, chains,
+parameters)}
 
 \item{...}{Currently only used for models of class \code{brmsfit}, where a \code{variable}
 argument can be used, which is directly passed to the \code{as.data.frame()}
@@ -123,7 +126,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (require("rstanarm") && require("brms")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("brms")) withAutoprint(\{ # examplesIf}
 \donttest{
 # rstanarm models
 # -----------------------------------------------
@@ -137,6 +140,16 @@ diagnostic_posterior(model)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 diagnostic_posterior(model)
 }
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("rstan")) withAutoprint(\{ # examplesIf}
+set.seed(101)
+mkdata <- function(nrow = 1000, ncol = 2, parnm = LETTERS[1:ncol]) {
+  x <- as.data.frame(replicate(ncol, rnorm(nrow)))
+  names(x) <- parnm
+  x
+}
+dd <- replicate(5, mkdata(), simplify = FALSE)
+diagnostic_posterior(dd)
 \dontshow{\}) # examplesIf}
 }
 \references{

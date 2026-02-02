@@ -23,7 +23,7 @@ likelihood (\code{FALSE})?}
 Refit Bayesian model as frequentist. Can be useful for comparisons.
 }
 \examples{
-\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
 # Rstanarm ----------------------
 # Simple regressions

@@ -97,7 +97,7 @@ samples of the effects, which can be used for further processing in the
 \strong{bayestestR} package.
 }
 \examples{
-\dontshow{if (require("mediation") && require("brms") && require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("mediation") && require("brms") && require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(mediation)
 library(brms)
