@@ -25,6 +25,7 @@ tests\^spelling
 ^CRAN-SUBMISSION$
 ^data-raw$
 ^tests/testthat/_snaps/.
+^GEMINI\.md$
 
 ^man/figures/JASP.
 ^man/figures/b.
