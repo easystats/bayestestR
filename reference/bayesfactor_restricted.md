@@ -2,10 +2,10 @@
 
 This method computes Bayes factors for comparing a model with an order
 restrictions on its parameters with the fully unrestricted model. *Note
-that this method should only be used for confirmatory analyses*.  
-  
-The `bf_*` function is an alias of the main function.  
-  
+that this method should only be used for confirmatory analyses*.\
+\
+The `bf_*` function is an alias of the main function.\
+\
 **For more info, in particular on specifying correct priors for factors
 with more than 2 levels, see [the Bayes factors
 vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
@@ -164,8 +164,8 @@ A data frame containing the (log) Bayes factor representing evidence
 [`as.numeric()`](https://rdrr.io/r/base/numeric.html) to extract the
 non-log Bayes factors; see examples). (A `bool_results` attribute
 contains the results for each sample, indicating if they are included or
-not in the hypothesized restriction.)  
-  
+not in the hypothesized restriction.)\
+\
 For [`as.matrix()`](https://rdrr.io/r/base/matrix.html) a square matrix
 of (log) Bayes factors, with rows as denominators and columns as
 numerators.
@@ -174,8 +174,8 @@ numerators.
 
 This method is used to compute Bayes factors for order-restricted models
 vs un-restricted models by setting an order restriction on the prior and
-posterior distributions (Morey & Wagenmakers, 2013).  
-  
+posterior distributions (Morey & Wagenmakers, 2013).\
+\
 (Though it is possible to use `bayesfactor_restricted()` to test
 interval restrictions, it is more suitable for testing order
 restrictions; see examples).
@@ -189,12 +189,12 @@ alternative get wider, the likelihood of the null value(s) increases, to
 the extreme that for completely flat priors the null is infinitely more
 favorable than the alternative (this is called *the
 Jeffreys-Lindley-Bartlett paradox*). Thus, you should only ever try (or
-want) to compute a Bayes factor when you have an informed prior.  
-  
+want) to compute a Bayes factor when you have an informed prior.\
+\
 (Note that by default,
 [`brms::brm()`](https://paulbuerkner.com/brms/reference/brm.html) uses
-flat priors for fixed-effects; See example below.)  
-  
+flat priors for fixed-effects; See example below.)\
+\
 It is important to provide the correct `prior` for meaningful results,
 to match the `posterior`-type input:
 
@@ -241,12 +241,12 @@ multiple Bayes factors between each model and *the same* reference model
 advantage of the transitivity of Bayes factors - where if we have two
 Bayes factors for Model *A* and model *B* against the *same reference
 model C*, we can obtain a Bayes factor for comparing model *A* to model
-*B* by dividing them:  
-  
+*B* by dividing them:\
+\
 \$\$BF\_{AB} = \frac{BF\_{AC}}{BF\_{BC}} =
 \frac{\frac{ML\_{A}}{ML\_{C}}}{\frac{ML\_{B}}{ML\_{C}}} =
-\frac{ML\_{A}}{ML\_{B}}\$\$  
-  
+\frac{ML\_{A}}{ML\_{B}}\$\$\
+\
 A full matrix comparing all models can be obtained with
 [`as.matrix()`](https://rdrr.io/r/base/matrix.html) (see examples).
 
@@ -371,8 +371,8 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.2e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+#> Chain 1: Gradient evaluation took 2.1e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -389,15 +389,15 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)
-#> Chain 1:                0.038 seconds (Sampling)
-#> Chain 1:                0.068 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.029 seconds (Warm-up)
+#> Chain 1:                0.037 seconds (Sampling)
+#> Chain 1:                0.066 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 9e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 2: Gradient evaluation took 1.1e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -414,15 +414,15 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.03 seconds (Warm-up)
-#> Chain 2:                0.039 seconds (Sampling)
-#> Chain 2:                0.069 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.029 seconds (Warm-up)
+#> Chain 2:                0.038 seconds (Sampling)
+#> Chain 2:                0.067 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 9e-06 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 3: Gradient evaluation took 1.1e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -440,14 +440,14 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
 #> Chain 3:  Elapsed Time: 0.029 seconds (Warm-up)
-#> Chain 3:                0.038 seconds (Sampling)
-#> Chain 3:                0.067 seconds (Total)
+#> Chain 3:                0.037 seconds (Sampling)
+#> Chain 3:                0.066 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 9e-06 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 4: Gradient evaluation took 1.1e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -464,9 +464,9 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.028 seconds (Warm-up)
+#> Chain 4:  Elapsed Time: 0.027 seconds (Warm-up)
 #> Chain 4:                0.038 seconds (Sampling)
-#> Chain 4:                0.066 seconds (Total)
+#> Chain 4:                0.065 seconds (Total)
 #> Chain 4: 
 
 em_condition <- emmeans::emmeans(fit_model, ~condition, data = disgust)

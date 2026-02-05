@@ -1,7 +1,7 @@
 # Convert BIC indices to Bayes Factors via the BIC-approximation method.
 
 The difference between two Bayesian information criterion (BIC) indices
-of two models can be used to approximate Bayes factors via:  
+of two models can be used to approximate Bayes factors via:\
 \$\$BF\_{10} = e^{(BIC_0 - BIC_1)/2}\$\$
 
 ## Usage

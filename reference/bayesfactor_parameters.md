@@ -6,8 +6,8 @@ parameter. This Bayes factor indicates the degree by which the mass of
 the posterior distribution has shifted further away from or closer to
 the null value(s) (relative to the prior distribution), thus indicating
 if the null value has become less or more likely given the observed
-data.  
-  
+data.\
+\
 When the null is an interval, the Bayes factor is computed by comparing
 the prior and posterior odds of the parameter falling within or outside
 the null interval (Morey & Rouder, 2011; Liao et al., 2020); When the
@@ -15,17 +15,17 @@ null is a point, a Savage-Dickey density ratio is computed, which is
 also an approximation of a Bayes factor comparing the marginal
 likelihoods of the model against a model in which the tested parameter
 has been restricted to the point null (Wagenmakers et al., 2010; Heck,
-2019).  
-  
+2019).\
+\
 Note that the `logspline` package is used for estimating densities and
-probabilities, and must be installed for the function to work.  
-  
+probabilities, and must be installed for the function to work.\
+\
 `bayesfactor_pointnull()` and `bayesfactor_rope()` are wrappers around
 `bayesfactor_parameters` with different defaults for the null to be
 tested against (a point and a range, respectively). Aliases of the main
 functions are prefixed with `bf_*`, like `bf_parameters()` or
-`bf_pointnull()`.  
-  
+`bf_pointnull()`.\
+\
 **For more info, in particular on specifying correct priors for factors
 with more than 2 levels, see [the Bayes factors
 vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
@@ -234,8 +234,8 @@ we have a prior hypothesis that the parameter should be positive, the
 alternative will be restricted to the region to the right of the null
 (point or interval). For example, for a Bayes factor comparing the
 "null" of `0-0.1` to the alternative `>0.1`, we would set
-`bayesfactor_parameters(null = c(0, 0.1), direction = ">")`.  
-  
+`bayesfactor_parameters(null = c(0, 0.1), direction = ">")`.\
+\
 It is also possible to compute a Bayes factor for **dividing**
 hypotheses - that is, for a null and alternative that are complementary,
 opposing one-sided hypotheses (Morey & Wagenmakers, 2014). For example,
@@ -257,12 +257,12 @@ alternative get wider, the likelihood of the null value(s) increases, to
 the extreme that for completely flat priors the null is infinitely more
 favorable than the alternative (this is called *the
 Jeffreys-Lindley-Bartlett paradox*). Thus, you should only ever try (or
-want) to compute a Bayes factor when you have an informed prior.  
-  
+want) to compute a Bayes factor when you have an informed prior.\
+\
 (Note that by default,
 [`brms::brm()`](https://paulbuerkner.com/brms/reference/brm.html) uses
-flat priors for fixed-effects; See example below.)  
-  
+flat priors for fixed-effects; See example below.)\
+\
 It is important to provide the correct `prior` for meaningful results,
 to match the `posterior`-type input:
 

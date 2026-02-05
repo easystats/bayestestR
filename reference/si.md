@@ -187,12 +187,12 @@ alternative get wider, the likelihood of the null value(s) increases, to
 the extreme that for completely flat priors the null is infinitely more
 favorable than the alternative (this is called *the
 Jeffreys-Lindley-Bartlett paradox*). Thus, you should only ever try (or
-want) to compute a Bayes factor when you have an informed prior.  
-  
+want) to compute a Bayes factor when you have an informed prior.\
+\
 (Note that by default,
 [`brms::brm()`](https://paulbuerkner.com/brms/reference/brm.html) uses
-flat priors for fixed-effects; See example below.)  
-  
+flat priors for fixed-effects; See example below.)\
+\
 It is important to provide the correct `prior` for meaningful results,
 to match the `posterior`-type input:
 
@@ -265,8 +265,8 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 3e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.3 seconds.
+#> Chain 1: Gradient evaluation took 2.6e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -283,15 +283,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.2 seconds (Warm-up)
-#> Chain 1:                0.214 seconds (Sampling)
-#> Chain 1:                0.414 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.196 seconds (Warm-up)
+#> Chain 1:                0.208 seconds (Sampling)
+#> Chain 1:                0.404 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.5e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+#> Chain 2: Gradient evaluation took 1.4e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -308,9 +308,9 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.192 seconds (Warm-up)
-#> Chain 2:                0.171 seconds (Sampling)
-#> Chain 2:                0.363 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.186 seconds (Warm-up)
+#> Chain 2:                0.165 seconds (Sampling)
+#> Chain 2:                0.351 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -333,15 +333,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.178 seconds (Warm-up)
-#> Chain 3:                0.172 seconds (Sampling)
-#> Chain 3:                0.35 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.172 seconds (Warm-up)
+#> Chain 3:                0.166 seconds (Sampling)
+#> Chain 3:                0.338 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1.5e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+#> Chain 4: Gradient evaluation took 1.4e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -358,9 +358,9 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.195 seconds (Warm-up)
-#> Chain 4:                0.135 seconds (Sampling)
-#> Chain 4:                0.33 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.19 seconds (Warm-up)
+#> Chain 4:                0.131 seconds (Sampling)
+#> Chain 4:                0.321 seconds (Total)
 #> Chain 4: 
 si(stan_model, verbose = FALSE)
 #> Support Interval
