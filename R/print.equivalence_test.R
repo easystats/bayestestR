@@ -10,8 +10,8 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   # fix "sd" pattern
   model <- .retrieve_model(x)
   if (!is.null(model) && !is.data.frame(model)) {
-    cp <- insight::clean_parameters(model)
-    if (!is.null(cp$Group) && any(startsWith(cp$Group, "SD/Cor"))) {
+    cp <- .get_cleaned_parameters(model)
+    if (!is.null(cp) && !is.null(cp$Group) && any(startsWith(cp$Group, "SD/Cor"))) {
       cp <- cp[startsWith(cp$Group, "SD/Cor"), ]
       matches <- match(cp$Parameter, x$Parameter)
       if (length(matches)) {

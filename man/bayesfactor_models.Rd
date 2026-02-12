@@ -4,8 +4,6 @@
 \alias{bayesfactor_models}
 \alias{bf_models}
 \alias{bayesfactor_models.default}
-\alias{update.bayesfactor_models}
-\alias{as.matrix.bayesfactor_models}
 \title{Bayes Factors (BF) for model comparison}
 \usage{
 bayesfactor_models(..., denominator = 1, verbose = TRUE)
@@ -13,10 +11,6 @@ bayesfactor_models(..., denominator = 1, verbose = TRUE)
 bf_models(..., denominator = 1, verbose = TRUE)
 
 \method{bayesfactor_models}{default}(..., denominator = 1, verbose = TRUE)
-
-\method{update}{bayesfactor_models}(object, subset = NULL, reference = NULL, ...)
-
-\method{as.matrix}{bayesfactor_models}(x, ...)
 }
 \arguments{
 \item{...}{Fitted models (see details), all fit on the same data, or a single
@@ -33,14 +27,6 @@ the denominator, or a model to be used as a denominator. Ignored for
 \code{BFBayesFactor}.}
 
 \item{verbose}{Toggle off warnings.}
-
-\item{object, x}{A \code{\link[=bayesfactor_models]{bayesfactor_models()}} object.}
-
-\item{subset}{Vector of model indices to keep or remove.}
-
-\item{reference}{Index of model to reference to, or \code{"top"} to
-reference to the best model, or \code{"bottom"} to reference to the worst
-model.}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and
@@ -52,39 +38,68 @@ denominators and columns as numerators.
 }
 \description{
 This function computes or extracts Bayes factors from fitted
-models. The \verb{bf_*} function is an alias of the main function.
+models.
+\cr\cr
+The \verb{bf_*} function is an alias of the main function.
+\cr\cr
+\strong{For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
 If the passed models are supported by \strong{insight} the DV of all models will
 be tested for equality (else this is assumed to be true), and the models'
-terms will be extracted (allowing for follow-up analysis with \code{bayesfactor_inclusion}).
+terms will be extracted (allowing for follow-up analysis with \link{bayesfactor_inclusion}).
 \itemize{
 \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 \itemize{
 \item \code{brmsfit} models must have been fitted with \code{save_pars = save_pars(all = TRUE)}.
 \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
 }
-\item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
+\item For \code{BFBayesFactor}, \code{bayesfactor_models()} is a wraparound \code{BayesFactor::extractBF()}.
 \item For all other model types, Bayes factors are computed using the BIC approximation.
 Note that BICs are extracted from using \link[insight:get_loglikelihood]{insight::get_loglikelihood}, see documentation
 there for options for dealing with transformed responses and REML estimation.
 }
+\subsection{Additional methods}{
 
-In order to correctly and precisely estimate Bayes factors, a rule of thumb
-are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
-\strong{P}osteriors. How many? The number of posterior samples needed for
-testing is substantially larger than for estimation (the default of 4000
-samples may not be enough in many cases). A conservative rule of thumb is to
-obtain 10 times more samples than would be required for estimation
-(\emph{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000 samples
-are detected, \code{bayesfactor_models()} gives a warning.
+The resulting output is supported by the following methods:
+\itemize{
+\item \code{as.matrix()}: Extract a full matrix of (log-)Bayes factors between all
+models (using the transitivity of Bayes factors).
+\item \code{update()}: subset and/or re-reference the Bayes factors to a different model.
+\item \code{as.numeric()}: Extract the (possibly log-)Bayes factor values.
+}
 
-See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+See examples and \link{bayesfactor_methods}.
+}
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
 implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
+\section{Prior and posterior considerations}{
+
+In order to correctly and precisely estimate Bayes factors, a rule of thumb
+are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
+\strong{P}osteriors.
+\cr\cr
+For the computation of Bayes factors, the model priors must be proper priors
+(at the very least they should be \emph{not flat}, and it is preferable that they
+be \emph{informative}) (Note that by default, \code{brms::brm()} uses flat priors for
+fixed-effects); Wide priors result in smaller marginal likelihoods, and thus
+models with wider priors are trivially less likely than models with narrower
+priors - where, at the extreme, that a model with completely flat priors is
+infinitely less favorable than a point null model (this is called \emph{the
+Jeffreys-Lindley-Bartlett paradox}). Thus, you should only ever try (or want)
+to compute a Bayes factor when you have an informed prior.
+\cr\cr
+Additionally, for models using MCMC estimation the number of posterior
+samples needed for testing is substantially larger than for estimation (the
+default of 4000 samples may not be enough in many cases). A conservative rule
+of thumb is to obtain 10 times more samples than would be required for
+estimation (\emph{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000
+samples are detected, a warning is issued.
+}
+
 \section{Transitivity of Bayes factors}{
 
 For multiple inputs (models or hypotheses), the function will return multiple
@@ -96,8 +111,9 @@ factor for comparing model \emph{A} to model \emph{B} by dividing them:
 \cr\cr
 \deqn{BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}}
 \cr\cr
-A full matrix comparing all models can be obtained with \code{as.matrix()} (see
-examples).
+(Where \emph{ML} is the \emph{marginal likelihood}.)
+\cr\cr
+A full matrix comparing all models can be obtained with \code{as.matrix()}.
 }
 
 \section{Interpreting Bayes Factors}{
@@ -106,7 +122,7 @@ A Bayes factor greater than 1 can be interpreted as evidence against the
 null, at which one convention is that a Bayes factor greater than 3 can be
 considered as "substantial" evidence against the null (and vice versa, a
 Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
-null-model) (\cite{Wetzels et al. 2011}).
+null-model). See also \code{effectsize::interpret_bf()}.
 }
 
 \examples{
@@ -205,6 +221,15 @@ Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 8
 Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 }
 }
+\seealso{
+\code{\link[=bayesfactor_inclusion]{bayesfactor_inclusion()}} for testing predictors across Bayesian models.
+
+Other Bayes factors: 
+\code{\link{bayesfactor_inclusion}()},
+\code{\link{bayesfactor_parameters}()},
+\code{\link{bayesfactor_restricted}()}
+}
 \author{
 Mattan S. Ben-Shachar
 }
+\concept{Bayes factors}
