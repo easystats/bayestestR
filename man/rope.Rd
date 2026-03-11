@@ -138,7 +138,7 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \description{
-Compute the proportion of the HDI (default to the 95\% HDI) of a posterior
+Compute the proportion of the CI (default to the 95\% ETI) of a posterior
 distribution that lies within a region of practical equivalence.
 }
 \note{

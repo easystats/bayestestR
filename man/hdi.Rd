@@ -118,8 +118,8 @@ estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_i
 for a discussion about the differences between these two values).
 
 The 89\% intervals (\code{ci = 0.89}) are deemed to be more stable than, for
-instance, 95\% intervals (\emph{Kruschke, 2014}), typically having a smaller monte
-carlo standard error (MCSE) and a higher effective sample size (ESS) than 95\%
+instance, 95\% intervals (\emph{Kruschke, 2014}), typically having a smaller Monte
+Carlo standard error (MCSE) and a higher effective sample size (ESS) than 95\%
 intervals. Moreover, 89 indicates the arbitrariness of interval limits - its
 only remarkable property is being the highest prime number that does not
 exceed the common 95\% threshold (\emph{McElreath, 2015}).

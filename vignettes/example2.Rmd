@@ -276,8 +276,8 @@ ggplot(vizdata, aes(x = Sepal.Width, y = Predicted)) +
   geom_line() +
   ylab("Probability of being virginica") +
   theme_modern()
-``
-`
+```
+
 ```{r echo=FALSE}
 library(modelbased)
 
@@ -314,9 +314,9 @@ TO DO.
 library(see)
 
 plot(rope(result))
-`
-``
-```{r echo=FALSE}
+```
+
+```{r echo = FALSE}
 library(see)
 
 suppressWarnings(plot(rope(result), data = result))

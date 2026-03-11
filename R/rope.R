@@ -1,6 +1,6 @@
 #' Region of Practical Equivalence (ROPE) Analysis
 #'
-#' Compute the proportion of the HDI (default to the 95% HDI) of a posterior
+#' Compute the proportion of the CI (default to the 95% ETI) of a posterior
 #' distribution that lies within a region of practical equivalence.
 #'
 #' @param x Vector representing a posterior distribution. Can also be a
