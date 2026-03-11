@@ -157,11 +157,7 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
   weighted_samps <- round(iterations * Probs)
 
   # pass to .weighted_posteriors
-  res <- .weighted_posteriors(Mods, weighted_samps, missing)
-
-  # make weights table
-  attr(res, "weights") <- data.frame(Model = mnames, weights = weighted_samps)
-  return(res)
+  .weighted_posteriors(Mods, weighted_samps, missing, mnames)
 }
 
 
@@ -175,6 +171,7 @@ weighted_posteriors.stanreg <- function(...,
                                         component = "conditional",
                                         parameters = NULL) {
   Mods <- list(...)
+  mnames <- sapply(match.call(expand.dots = FALSE)$`...`, insight::safe_deparse)
 
   # Get Bayes factors
   BFMods <- bayesfactor_models(..., denominator = 1, verbose = verbose)
@@ -194,9 +191,7 @@ weighted_posteriors.stanreg <- function(...,
     parameters = parameters
   )
 
-  res <- .weighted_posteriors(params, weighted_samps, missing)
-  attr(res, "weights") <- data.frame(Model = BFMods$Model, weights = weighted_samps)
-  return(res)
+  .weighted_posteriors(params, weighted_samps, missing, mnames)
 }
 
 #' @export
@@ -253,13 +248,18 @@ weighted_posteriors.BFBayesFactor <- function(...,
 
   params <- lapply(params, data.frame)
 
-  res <- .weighted_posteriors(params, weighted_samps, missing)
-  attr(res, "weights") <- data.frame(Model = BFMods$Model, weights = weighted_samps)
-  return(res)
+  .weighted_posteriors(params, weighted_samps, missing, BFMods$Model)
 }
 
-.weighted_posteriors <- function(params, weighted_samps, missing) {
+.weighted_posteriors <- function(params, weighted_samps, missing, mnames) {
   par_names <- unique(unlist(sapply(params, colnames), recursive = TRUE))
+
+  # Table of weights
+  weights <- data.frame(
+    Model = mnames,
+    weights = weighted_samps,
+    pweights = weighted_samps / sum(weighted_samps)
+  )
 
   # remove empty (0 sample) models
   params <- params[weighted_samps != 0]
@@ -278,7 +278,9 @@ weighted_posteriors.BFBayesFactor <- function(...,
   }
 
   # combine all
-  do.call("rbind", params)
+  res <- do.call("rbind", params)
+  attr(res, "weights") <- weights
+  return(res)
 }
 
 #' @keywords internal

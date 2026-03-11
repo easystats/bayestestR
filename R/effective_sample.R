@@ -182,6 +182,10 @@ effective_sample.stanfit <- function(model,
   )
 }
 
+#' @export
+effective_sample.CmdStanFit <- function(model, ...) {
+  diagnostic_posterior(model, diagnostic = c("ESS", "ESS_tail"))
+}
 
 #' @export
 effective_sample.blavaan <- function(model, parameters = NULL, ...) {

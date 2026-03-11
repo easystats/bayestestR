@@ -384,6 +384,9 @@ hdi.stanreg <- function(x,
 hdi.stanfit <- hdi.stanreg
 
 #' @export
+hdi.CmdStanFit <- hdi.stanreg
+
+#' @export
 hdi.blavaan <- hdi.stanreg
 
 

@@ -179,7 +179,7 @@ print.bayestestR_si <- function(x,
 print.bayesfactor_models <- function(x,
                                      digits = 3,
                                      log = FALSE,
-                                     show_names = TRUE,
+                                     show_names = FALSE,
                                      caption = "Bayes Factors for Model Comparison",
                                      ...) {
   show_names <- show_names & !attr(x, "unsupported_models")
