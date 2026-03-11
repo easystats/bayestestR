@@ -86,6 +86,7 @@ to be more stable than, for instance, 95\% intervals [@kruschke2014doing],
 typically having a smaller Monte Carlo standard error (MCSE)
 and a higher effective sample size (ESS; see [here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html))
 than 95% intervals.
+
 In either case, it is advised to check the _tail_ effective sample size (ESS)
 or Monte Carlo standard error (MCSE) to ensure that the number of posterior
 samples is sufficient to estimate the interval at the desired probability
