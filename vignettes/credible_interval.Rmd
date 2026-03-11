@@ -84,8 +84,8 @@ conventions [@mcelreath2018statistical].
 Thus, CIs computed with 89\% intervals (`ci = 0.89`), are deemed
 to be more stable than, for instance, 95\% intervals [@kruschke2014doing].
 The 89% intervals (`ci = 0.89`) are deemed to be more stable than, for
-instance, 95% intervals (_Kruschke, 2014_), typically having a smaller monte
-carlo standard error (MCSE) and a higher effective sample size (ESS; see
+instance, 95% intervals (_Kruschke, 2014_), typically having a smaller Monte
+Carlo standard error (MCSE) and a higher effective sample size (ESS; see
 [here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html)) than 95%
 intervals.
 In either case, it is advised to check the _tail_ effective sample size (ESS)

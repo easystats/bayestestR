@@ -80,8 +80,8 @@
 #' for a discussion about the differences between these two values).
 #'
 #' The 89% intervals (`ci = 0.89`) are deemed to be more stable than, for
-#' instance, 95% intervals (_Kruschke, 2014_), typically having a smaller monte
-#' carlo standard error (MCSE) and a higher effective sample size (ESS) than 95%
+#' instance, 95% intervals (_Kruschke, 2014_), typically having a smaller Monte
+#' Carlo standard error (MCSE) and a higher effective sample size (ESS) than 95%
 #' intervals. Moreover, 89 indicates the arbitrariness of interval limits - its
 #' only remarkable property is being the highest prime number that does not
 #' exceed the common 95% threshold (_McElreath, 2015_).
