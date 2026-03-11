@@ -11,7 +11,7 @@
 #'   documented in the 'Usage' section, because methods for other classes mostly
 #'   resemble the arguments of the `.numeric` or `.data.frame`methods.
 #' @param ci Value or vector of probability of the (credible) interval - CI
-#'   (between 0 and 1) to be estimated. Default to `.95` (`95%`).
+#'   (between 0 and 1) to be estimated. Default to `.95` (95%).
 #' @param component Which type of parameters to return, such as parameters for
 #' the conditional model, the zero-inflated part of the model, the dispersion
 #' term, etc. See details in section _Model Components_. May be abbreviated.
@@ -68,36 +68,38 @@
 #' here. See also [`?insight::find_parameters`](https://easystats.github.io/insight/reference/find_parameters.BGGM.html).
 #'
 #' @details Unlike equal-tailed intervals (see [`eti()`]) that typically exclude
-#' `2.5%` from each tail of the distribution and always include the median, the
+#' 2.5% from each tail of the distribution and always include the median, the
 #' HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior
 #' distributions. While this can be useful to better represent the credibility
 #' mass of a distribution, the HDI also has some limitations. See [`spi()`] for
 #' details.
 #'
-#' The [`95%` or `89%` Credible Intervals (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+#' The [95% or 89% Credible Intervals (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 #' are two reasonable ranges to characterize the uncertainty related to the
 #' estimation (see [here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 #' for a discussion about the differences between these two values).
 #'
-#' The `89%` intervals (`ci = 0.89`) are deemed to be more stable than, for
-#' instance, `95%` intervals (_Kruschke, 2014_). An effective sample size
-#' of at least 10.000 is recommended if one wants to estimate `95%` intervals
-#' with high precision (_Kruschke, 2014, p. 183ff_). Unfortunately, the
-#' default number of posterior samples for most Bayes packages (e.g., `rstanarm`
-#' or `brms`) is only 4.000 (thus, you might want to increase it when fitting
-#' your model). Moreover, 89 indicates the arbitrariness of interval limits -
-#' its only remarkable property is being the highest prime number that does not
-#' exceed the already unstable `95%` threshold (_McElreath, 2015_).
+#' The 89% intervals (`ci = 0.89`) are deemed to be more stable than, for
+#' instance, 95% intervals (_Kruschke, 2014_), typically having a smaller monte
+#' carlo standard error (MCSE) and a higher effective sample size (ESS) than 95%
+#' intervals. Moreover, 89 indicates the arbitrariness of interval limits - its
+#' only remarkable property is being the highest prime number that does not
+#' exceed the common 95% threshold (_McElreath, 2015_).
 #'
-#' However, `95%` has some [advantages too](https://easystats.github.io/blog/posts/bayestestr_95/).
+#' However, 95% has some [advantages too](https://easystats.github.io/blog/posts/bayestestr_95/).
 #' For instance, it shares (in the case of a normal posterior distribution) an
 #' intuitive relationship with the standard deviation and it conveys a more
 #' accurate image of the (artificial) bounds of the distribution. Also, because
 #' it is wider, it makes analyses more conservative (i.e., the probability of
-#' covering zero is larger for the `95%` CI than for lower ranges such as `89%`),
+#' covering zero is larger for the 95% CI than for lower ranges such as 89%),
 #' which is a good thing in the context of the reproducibility crisis.
 #'
-#' A `95%` equal-tailed interval (ETI) has `2.5%` of the distribution on either
+#' In either case, it is advised to check the _tail_ effective sample size (ESS)
+#' or Monte Carlo standard error (MCSE) to ensure that the number of posterior
+#' samples is sufficient to estimate the interval at the desired probability
+#' level with good precision.
+#'
+#' A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
 #' side of its limits. It indicates the 2.5th percentile and the 97.5th
 #' percentile. In symmetric distributions, the two methods of computing credible
 #' intervals, the ETI and the [HDI][hdi], return similar results.
@@ -164,7 +166,8 @@ hdi <- function(x, ...) {
 hdi.default <- function(x, ...) {
   insight::format_error(paste0(
     "'hdi()' is not yet implemented for objects of class '",
-    class(x)[1], "'."
+    class(x)[1],
+    "'."
   ))
 }
 
@@ -172,10 +175,19 @@ hdi.default <- function(x, ...) {
 #' @rdname hdi
 #' @export
 hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  out <- do.call(rbind, lapply(ci, function(i) {
-    .hdi(x, ci = i, verbose = verbose)
-  }))
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_ci", "see_ci", class(out)))
+  out <- do.call(
+    rbind,
+    lapply(ci, function(i) {
+      .hdi(x, ci = i, verbose = verbose)
+    })
+  )
+  class(out) <- unique(c(
+    "bayestestR_hdi",
+    "see_hdi",
+    "bayestestR_ci",
+    "see_ci",
+    class(out)
+  ))
   attr(out, "data") <- x
   out
 }
@@ -234,11 +246,7 @@ hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
 
 
 #' @export
-hdi.bamlss <- function(x,
-                       ci = 0.95,
-                       component = "all",
-                       verbose = TRUE,
-                       ...) {
+hdi.bamlss <- function(x, ci = 0.95, component = "all", verbose = TRUE, ...) {
   ci_fun <- .check_ci_fun(list(...))
   d <- insight::get_parameters(x, component = component, verbose = verbose)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
@@ -281,12 +289,14 @@ hdi.BGGM <- hdi.bcplm
 
 
 #' @export
-hdi.sim.merMod <- function(x,
-                           ci = 0.95,
-                           effects = "fixed",
-                           parameters = NULL,
-                           verbose = TRUE,
-                           ...) {
+hdi.sim.merMod <- function(
+  x,
+  ci = 0.95,
+  effects = "fixed",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   ci_fun <- .check_ci_fun(list(...))
 
   dat <- .compute_interval_simMerMod(
@@ -348,13 +358,15 @@ hdi.predictions <- hdi.slopes
 
 
 #' @export
-hdi.stanreg <- function(x,
-                        ci = 0.95,
-                        effects = "fixed",
-                        component = "location",
-                        parameters = NULL,
-                        verbose = TRUE,
-                        ...) {
+hdi.stanreg <- function(
+  x,
+  ci = 0.95,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
@@ -389,13 +401,15 @@ hdi.blavaan <- hdi.stanreg
 
 #' @rdname hdi
 #' @export
-hdi.brmsfit <- function(x,
-                        ci = 0.95,
-                        effects = "fixed",
-                        component = "conditional",
-                        parameters = NULL,
-                        verbose = TRUE,
-                        ...) {
+hdi.brmsfit <- function(
+  x,
+  ci = 0.95,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
@@ -434,7 +448,12 @@ hdi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
 hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...) {
   if (isTRUE(use_iterations)) {
     if ("iterations" %in% names(attributes(x))) {
-      out <- hdi(as.data.frame(t(attributes(x)$iterations)), ci = ci, verbose = verbose, ...)
+      out <- hdi(
+        as.data.frame(t(attributes(x)$iterations)),
+        ci = ci,
+        verbose = verbose,
+        ...
+      )
     } else {
       insight::format_error("No iterations present in the output.")
     }
@@ -447,7 +466,6 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 
 
 # Helper ------------------------------------------------------------------
-
 
 #' @keywords internal
 .hdi <- function(x, ci = 0.95, verbose = TRUE) {
@@ -464,7 +482,9 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 
   if (window_size < 2) {
     if (verbose) {
-      insight::format_alert("`ci` is too small or x does not contain enough data points, returning NAs.")
+      insight::format_alert(
+        "`ci` is too small or x does not contain enough data points, returning NAs."
+      )
     }
     return(data.frame(
       CI = ci,
@@ -477,7 +497,9 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 
   if (nCIs < 1) {
     if (verbose) {
-      insight::format_alert("`ci` is too large or x does not contain enough data points, returning NAs.")
+      insight::format_alert(
+        "`ci` is too large or x does not contain enough data points, returning NAs."
+      )
     }
     return(data.frame(
       CI = ci,
@@ -495,7 +517,9 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   if (n_candies > 1) {
     if (any(diff(sort(min_i)) != 1)) {
       if (verbose) {
-        insight::format_alert("Identical densities found along different segments of the distribution, choosing rightmost.")
+        insight::format_alert(
+          "Identical densities found along different segments of the distribution, choosing rightmost."
+        )
       }
       min_i <- max(min_i)
     } else {

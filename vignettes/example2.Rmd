@@ -1,6 +1,6 @@
 ---
 title: "2. Confirmation of Bayesian skills"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{2. Confirmation of Bayesian skills}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 csl: apa.csl
@@ -23,12 +23,14 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r , include=FALSE}
-if (!requireNamespace("see", quietly = TRUE) ||
-  !requireNamespace("datawizard", quietly = TRUE) ||
-  !requireNamespace("ggplot2", quietly = TRUE) ||
-  !requireNamespace("performance", quietly = TRUE) ||
-  !requireNamespace("BayesFactor", quietly = TRUE) ||
-  !requireNamespace("rstanarm", quietly = TRUE)) {
+if (
+  !requireNamespace("see", quietly = TRUE) ||
+    !requireNamespace("datawizard", quietly = TRUE) ||
+    !requireNamespace("ggplot2", quietly = TRUE) ||
+    !requireNamespace("performance", quietly = TRUE) ||
+    !requireNamespace("BayesFactor", quietly = TRUE) ||
+    !requireNamespace("rstanarm", quietly = TRUE)
+) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -61,7 +63,7 @@ indices, such as the **Bayes factor**.
 
 ## Correlations
 
-### Frequentist version 
+### Frequentist version
 
 Once again, let us begin with a **frequentist correlation** between two
 continuous variables, the **width** and the **length** of the sepals of some
@@ -76,21 +78,21 @@ result <- cor.test(iris$Sepal.Width, iris$Sepal.Length)
 result
 ```
 
-As you can see in the output, the test actually compared **two** hypotheses: 
-- the **null hypothesis** (*h0*; no correlation), 
+As you can see in the output, the test actually compared **two** hypotheses:
+- the **null hypothesis** (*h0*; no correlation),
 - the **alternative hypothesis** (*h1*; a non-null correlation).
 
 Based on the *p*-value, the null hypothesis cannot be rejected: the correlation
 between the two variables is **negative but non-significant** ($r = -.12, p > .05$).
 
-### Bayesian correlation 
+### Bayesian correlation
 
 To compute a Bayesian correlation test, we will need the
 [`BayesFactor`](https://richarddmorey.github.io/BayesFactor/) package (you can
 install it by running `install.packages("BayesFactor")`). We can then load this
 package, compute the correlation using the `correlationBF()` function, and store
 the result.
- 
+
 ```{r, results='hide'}
 library(BayesFactor)
 result <- correlationBF(iris$Sepal.Width, iris$Sepal.Length)
@@ -142,13 +144,13 @@ evidence in favour of the other model (*the denominator*).
 That's one of the reason why the Bayesian framework is sometimes considered as
 superior to the frequentist framework. Remember from your stats lessons, that
 the ***p*-value can only be used to reject *h0***, but not *accept* it. With the
-**Bayes factor**, you can measure **evidence against - and in favour of - the null**. 
+**Bayes factor**, you can measure **evidence against - and in favour of - the null**.
 In other words, in the frequentist framework, if the *p*-value is not
 significant, we can conclude that **evidence for the effect is absent**, but not
 that there is **evidence for the absence of the effect**. In Bayesian framework,
 we can do the latter. This is important since sometimes our hypotheses are about
 no effect.
- 
+
 BFs representing evidence for the alternative against the null can be reversed
 using $BF_{01}=1/BF_{10}$ (the *01* and *10* correspond to *h0* against *h1* and
 *h1* against *h0*, respectively) to provide evidence of the null against the
@@ -172,7 +174,7 @@ way^[An exception would be when the pie slices are well-labeled so that our
 brain's perception system does not have to do the decoding work.]. Nevertheless,
 there is one exception: pizza charts.
 
-It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise. 
+It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise.
 
 ```{r echo=FALSE, fig.cap="Wagenmakers' pizza poking analogy. From the great <www.bayesianspectacles.org> blog.", fig.align='center', out.width="80%"}
 knitr::include_graphics("../man/figures/LetsPokeAPizza.jpg")
@@ -189,11 +191,11 @@ plot(bayesfactor_models(result)) +
   scale_fill_pizza()
 ```
 
-So, after seeing this pizza, how much would you be surprised by the outcome of a blinded poke? 
+So, after seeing this pizza, how much would you be surprised by the outcome of a blinded poke?
 
 ## *t*-tests
 
-> **"I know that I know nothing, and especially not if *versicolor* and *virginica* differ in terms of their Sepal.Width" - Socrates**. 
+> **"I know that I know nothing, and especially not if *versicolor* and *virginica* differ in terms of their Sepal.Width" - Socrates**.
 
 Time to finally answer this crucial question!
 
@@ -230,7 +232,7 @@ result <- BayesFactor::ttestBF(formula = Sepal.Width ~ Species, data = data)
 describe_posterior(result)
 ```
 
-From the indices, we can say that the difference of `Sepal.Width` between *virginica* and *versicolor* has a probability of **100% of being negative** [*from the pd and the sign of the median*] (median = -0.19, 89% CI [-0.29, -0.092]). The data provides a **strong evidence against the null hypothesis** (BF = 18).
+From the indices, we can say that the difference of `Sepal.Width` between *virginica* and *versicolor* has a probability of **100% of being negative** [*from the pd and the sign of the median*] (median = -0.19, 95% CI [-0.31, -0.07]). The data provides a **strong evidence against the null hypothesis** (BF = 18).
 
 Keep that in mind as we will see another way of investigating this question.
 
@@ -249,9 +251,13 @@ In the case of the difference of `Sepal.Width` between *virginica* and
 ```{r}
 library(rstanarm)
 
-model <- stan_glm(Species ~ Sepal.Width,
-  data = data, family = "binomial",
-  chains = 10, iter = 5000, warmup = 1000,
+model <- stan_glm(
+  Species ~ Sepal.Width,
+  data = data,
+  family = "binomial",
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
   refresh = 0
 )
 ```
@@ -270,7 +276,8 @@ ggplot(vizdata, aes(x = Sepal.Width, y = Predicted)) +
   geom_line() +
   ylab("Probability of being virginica") +
   theme_modern()
-```
+``
+`
 ```{r echo=FALSE}
 library(modelbased)
 
@@ -307,7 +314,8 @@ TO DO.
 library(see)
 
 plot(rope(result))
-```
+`
+``
 ```{r echo=FALSE}
 library(see)
 

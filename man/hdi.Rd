@@ -36,7 +36,7 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 \item{...}{Currently not used.}
 
 \item{ci}{Value or vector of probability of the (credible) interval - CI
-(between 0 and 1) to be estimated. Default to \code{.95} (\verb{95\%}).}
+(between 0 and 1) to be estimated. Default to \code{.95} (95\%).}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -106,36 +106,38 @@ characterisation of posterior distributions as \strong{Credible Interval (CI)}.
 }
 \details{
 Unlike equal-tailed intervals (see \code{\link[=eti]{eti()}}) that typically exclude
-\verb{2.5\%} from each tail of the distribution and always include the median, the
+2.5\% from each tail of the distribution and always include the median, the
 HDI is \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
 distributions. While this can be useful to better represent the credibility
 mass of a distribution, the HDI also has some limitations. See \code{\link[=spi]{spi()}} for
 details.
 
-The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{\verb{95\%} or \verb{89\%} Credible Intervals (CI)}
+The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{95\% or 89\% Credible Intervals (CI)}
 are two reasonable ranges to characterize the uncertainty related to the
 estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here}
 for a discussion about the differences between these two values).
 
-The \verb{89\%} intervals (\code{ci = 0.89}) are deemed to be more stable than, for
-instance, \verb{95\%} intervals (\emph{Kruschke, 2014}). An effective sample size
-of at least 10.000 is recommended if one wants to estimate \verb{95\%} intervals
-with high precision (\emph{Kruschke, 2014, p. 183ff}). Unfortunately, the
-default number of posterior samples for most Bayes packages (e.g., \code{rstanarm}
-or \code{brms}) is only 4.000 (thus, you might want to increase it when fitting
-your model). Moreover, 89 indicates the arbitrariness of interval limits -
-its only remarkable property is being the highest prime number that does not
-exceed the already unstable \verb{95\%} threshold (\emph{McElreath, 2015}).
+The 89\% intervals (\code{ci = 0.89}) are deemed to be more stable than, for
+instance, 95\% intervals (\emph{Kruschke, 2014}), typically having a smaller monte
+carlo standard error (MCSE) and a higher effective sample size (ESS) than 95\%
+intervals. Moreover, 89 indicates the arbitrariness of interval limits - its
+only remarkable property is being the highest prime number that does not
+exceed the common 95\% threshold (\emph{McElreath, 2015}).
 
-However, \verb{95\%} has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}.
+However, 95\% has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}.
 For instance, it shares (in the case of a normal posterior distribution) an
 intuitive relationship with the standard deviation and it conveys a more
 accurate image of the (artificial) bounds of the distribution. Also, because
 it is wider, it makes analyses more conservative (i.e., the probability of
-covering zero is larger for the \verb{95\%} CI than for lower ranges such as \verb{89\%}),
+covering zero is larger for the 95\% CI than for lower ranges such as 89\%),
 which is a good thing in the context of the reproducibility crisis.
 
-A \verb{95\%} equal-tailed interval (ETI) has \verb{2.5\%} of the distribution on either
+In either case, it is advised to check the \emph{tail} effective sample size (ESS)
+or Monte Carlo standard error (MCSE) to ensure that the number of posterior
+samples is sufficient to estimate the interval at the desired probability
+level with good precision.
+
+A 95\% equal-tailed interval (ETI) has 2.5\% of the distribution on either
 side of its limits. It indicates the 2.5th percentile and the 97.5th
 percentile. In symmetric distributions, the two methods of computing credible
 intervals, the ETI and the \link[=hdi]{HDI}, return similar results.
