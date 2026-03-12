@@ -295,7 +295,7 @@ Statistically, the probability of a posterior distribution of being different fr
 
 Kruschke suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE range can be automatically computed for models using the [rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html) function.
 
-Kruschke suggests using the proportion of the 95\% (or 90\%, considered more stable) HDI that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
+Kruschke suggests using the proportion of the CI that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ```{r rope-1, message=FALSE, warning=FALSE}
 posterior <- distribution_normal(10000, 0.4, 0.2)

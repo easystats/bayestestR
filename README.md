@@ -154,9 +154,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |   Median |        95% CI |     pd |   ps
-## ----------------------------------------------------
-## Posterior | 3.19e-03 | [-1.92, 1.97] | 50.07% | 0.46
+## Parameter |    Median |        95% CI |     pd |   ps
+## -----------------------------------------------------
+## Posterior | -5.70e-03 | [-2.00, 1.99] | 50.23% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -333,10 +333,9 @@ range can be automatically computed for models using the
 [rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
 function.
 
-Kruschke suggests using the proportion of the 95% (or 90%, considered
-more stable) HDI that falls within the ROPE as an index for
-“null-hypothesis” testing (as understood under the Bayesian framework,
-see
+Kruschke suggests using the proportion of the CI that falls within the
+ROPE as an index for “null-hypothesis” testing (as understood under the
+Bayesian framework, see
 [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
@@ -441,7 +440,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.38
+## [1] 0.39
 ```
 
 ## Code of Conduct
