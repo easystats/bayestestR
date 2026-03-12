@@ -1,6 +1,6 @@
 ---
 title: "Credible Intervals (CI)"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{Credible Intervals (CI)}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 csl: apa.csl
@@ -28,8 +28,10 @@ options(knitr.kable.NA = "")
 knitr::opts_chunk$set(comment = ">")
 options(digits = 2)
 
-if (!requireNamespace("ggplot2", quietly = TRUE) ||
-  !requireNamespace("logspline", quietly = TRUE)) {
+if (
+  !requireNamespace("ggplot2", quietly = TRUE) ||
+    !requireNamespace("logspline", quietly = TRUE)
+) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -60,35 +62,34 @@ compared to the frequentist one. Indeed, the Bayesian framework allows us to say
 computing a confidence interval from data of this sort, the effect falls within
 this range*".
 
-# 89\% vs. 95\% CI
+# Choosing a Credibal Level (89\% vs. 95\% CI)
 
 Using 89\% is another popular choice, and used to be the default for a long time
-([read here the story of the change](https://github.com/easystats/bayestestR/discussions/250)). 
+([read here the story of the change](https://github.com/easystats/bayestestR/discussions/250)).
 How did it start?
 
 Naturally, when it came about choosing the CI level to report by default,
-**people started using 95\%**, the arbitrary convention used in the
-**frequentist** world. However, some authors suggested that 95\% might not be
-the most appropriate for Bayesian posterior distributions, potentially lacking
-stability if not enough posterior samples are drawn [@kruschke2014doing].
+**people started using 95\%**, the arbitrary convention used in the **frequentist** world.
+However, some authors suggested that 95\% might not be the most appropriate for Bayesian posterior distributions [@kruschke2014doing].
 
-The proposition was to use 90\% instead of 95\%. However, recently, McElreath
-(2014, 2018) suggested that if we were to use arbitrary thresholds in the first
-place, why not use 89\%? Moreover, 89 is the highest **prime number** that
-does not exceed the already unstable 95\% threshold. What does it have to do
-with anything? *Nothing*, but it reminds us of the total arbitrariness of these
-conventions [@mcelreath2018statistical].
-
-Thus, CIs computed with 89\% intervals (`ci = 0.89`), are deemed
-to be more stable than, for instance, 95\% intervals [@kruschke2014doing]. An
-effective sample size (ESS; see
-[here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html))
-of at least 10.000 is recommended if one wants to compute precise 95\% intervals (Kruschke, 2014, p. 183ff).
-Unfortunately, the default number of posterior samples for most Bayes packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might want to increase it when fitting your model).
+The proposition was to use 90\% instead of 95\%,
+as smaller levels of credibility often produce more stable intervals
+(in the sense of having smaller Monte Carlo standard errors, MCSE;
+see [here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html))
+compared to wider intervals [@kruschke2014doing].
+Later, McElreath (2014, 2018) suggested that if we were to use arbitrary thresholds in the first place, why not use 89\%?
+Moreover, 89 is the highest **prime number** that does not exceed the 95\% threshold.
+What does it have to do with anything?
+*Nothing*, but it reminds us of the total arbitrariness of these conventions [@mcelreath2018statistical].
 
 However, 95\% has some [**advantages too**](https://easystats.github.io/blog/posts/bayestestr_95/). For instance, it shares (in the case of a normal posterior distribution) an intuitive relationship with the standard deviation and it conveys a more accurate image of the (artificial) bounds of the distribution. Also, because it is wider, it makes analyses more conservative (i.e., the probability of covering 0 is larger for the 95\% CI than for lower ranges such as 89\%), which is a good thing in the context of the reproducibility crisis.
 
-To add to the mess, some other software use different default, such as for instance 90\%. Ultimately, **you as the user should make an informed decision**, based on your needs and goals, and justify your choice.
+To add to the mess, some other software use different default, such as for instance 90\%.
+Ultimately, **you as the user should make an informed decision**, based on your needs and goals, and justify your choice.
+
+Whatever level is used, it is advised to check the _tail_ effective sample size (ESS)
+or Monte Carlo standard error (MCSE)
+to ensure that the number of posterior samples is sufficient to estimate the interval at the desired probability level with good precision.
 
 # Different types of CIs
 
@@ -192,7 +193,10 @@ ggplot(mapping = aes(x = x, y = y)) +
   ) +
   # The prior
   geom_area(
-    color = "black", fill = NA, linewidth = 1, linetype = "dashed",
+    color = "black",
+    fill = NA,
+    linewidth = 1,
+    linetype = "dashed",
     data = estimate_density(prior, extend = TRUE)
   ) +
   # BF = 1 SI in blue

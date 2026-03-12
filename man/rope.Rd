@@ -6,7 +6,7 @@
 \alias{rope.data.frame}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
-\title{Region of Practical Equivalence (ROPE)}
+\title{Region of Practical Equivalence (ROPE) Analysis}
 \usage{
 rope(x, ...)
 
@@ -138,7 +138,7 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \description{
-Compute the proportion of the HDI (default to the \verb{89\%} HDI) of a posterior
+Compute the proportion of the CI (default to the 95\% ETI) of a posterior
 distribution that lies within a region of practical equivalence.
 }
 \note{
@@ -160,10 +160,9 @@ according to Cohen, 1988). This could be generalized: For instance, for
 linear models, the ROPE could be set as \verb{0 +/- .1 * sd(y)}. This ROPE range
 can be automatically computed for models using the \code{\link[=rope_range]{rope_range()}} function.
 
-Kruschke (2010, 2011, 2014) suggests using the proportion of  the \verb{95\%} (or
-\verb{89\%}, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as an
-index for "null-hypothesis" testing (as understood under the Bayesian
-framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
+Kruschke (2010, 2011, 2014) suggests using the proportion of \link[=hdi]{HDI} that
+falls within the ROPE as an index for "null-hypothesis" testing (as
+understood under the Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
 }
 
 \section{Sensitivity to parameter's scale}{

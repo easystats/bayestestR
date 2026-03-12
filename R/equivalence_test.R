@@ -11,7 +11,7 @@
 #' *"HDI+ROPE decision rule"* (\cite{Kruschke, 2014, 2018}) to check whether
 #' parameter values should be accepted or rejected against an explicitly
 #' formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the
-#' percentage of the `89%` [HDI][hdi] that is the null region (the ROPE). If
+#' percentage of the 95% [HDI][hdi] that is the null region (the ROPE). If
 #' this percentage is sufficiently low, the null hypothesis is rejected. If this
 #' percentage is sufficiently high, the null hypothesis is accepted.
 #'
@@ -20,16 +20,16 @@
 #' @inheritSection hdi Model components
 #'
 #' @details Using the [ROPE][rope] and the [HDI][hdi], \cite{Kruschke (2018)}
-#'   suggests using the percentage of the `95%` (or `89%`, considered more stable)
+#'   suggests using the percentage of the 95%
 #'   HDI that falls within the ROPE as a decision rule. If the HDI
 #'   is completely outside the ROPE, the "null hypothesis" for this parameter is
 #'   "rejected". If the ROPE completely covers the HDI, i.e., all most credible
 #'   values of a parameter are inside the region of practical equivalence, the
 #'   null hypothesis is accepted. Else, it is undecided whether to accept or
-#'   reject the null hypothesis. If the full ROPE is used (i.e., `100%` of the
+#'   reject the null hypothesis. If the full ROPE is used (i.e., 100% of the
 #'   HDI), then the null hypothesis is rejected or accepted if the percentage
-#'   of the posterior within the ROPE is smaller than to `2.5%` or greater than
-#'   `97.5%`. Desirable results are low proportions inside the ROPE  (the closer
+#'   of the posterior within the ROPE is smaller than to 2.5% or greater than
+#'   97.5%. Desirable results are low proportions inside the ROPE  (the closer
 #'   to zero the better).
 #'
 #'   Some attention is required for finding suitable values for the ROPE limits
@@ -118,7 +118,13 @@ equivalence_test.default <- function(x, ...) {
 
 
 #' @export
-equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
+equivalence_test.numeric <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  verbose = TRUE,
+  ...
+) {
   rope_data <- rope(x, range = range, ci = ci, verbose = verbose)
   out <- as.data.frame(rope_data)
 
@@ -152,7 +158,14 @@ equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = 
 #' @rdname equivalence_test
 #' @inheritParams p_direction
 #' @export
-equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
+equivalence_test.data.frame <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  rvar_col = NULL,
+  verbose = TRUE,
+  ...
+) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
   x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
@@ -213,7 +226,13 @@ equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, rvar_co
 
 #' @export
 equivalence_test.draws <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
-  equivalence_test(.posterior_draws_to_df(x), range = range, ci = ci, verbose = verbose, ...)
+  equivalence_test(
+    .posterior_draws_to_df(x),
+    range = range,
+    ci = ci,
+    verbose = verbose,
+    ...
+  )
 }
 
 #' @export
@@ -221,7 +240,13 @@ equivalence_test.rvar <- equivalence_test.draws
 
 
 #' @export
-equivalence_test.emmGrid <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
+equivalence_test.emmGrid <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  verbose = TRUE,
+  ...
+) {
   xdf <- insight::get_parameters(x, verbose = verbose)
   out <- equivalence_test(xdf, range = range, ci = ci, verbose = verbose, ...)
   out <- .append_datagrid(out, x)
@@ -234,7 +259,13 @@ equivalence_test.emm_list <- equivalence_test.emmGrid
 
 
 #' @export
-equivalence_test.slopes <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
+equivalence_test.slopes <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  verbose = TRUE,
+  ...
+) {
   xrvar <- .get_marginaleffects_draws(x)
   out <- equivalence_test(xrvar, range = range, ci = ci, verbose = verbose, ...)
   out <- .append_datagrid(out, x)
@@ -250,28 +281,46 @@ equivalence_test.predictions <- equivalence_test.slopes
 
 
 #' @export
-equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
-  out <- equivalence_test(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
+equivalence_test.BFBayesFactor <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  verbose = TRUE,
+  ...
+) {
+  out <- equivalence_test(
+    insight::get_parameters(x),
+    range = range,
+    ci = ci,
+    verbose = verbose,
+    ...
+  )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
 
 #' @keywords internal
-.equivalence_test_models <- function(x,
-                                     range = "default",
-                                     ci = 0.95,
-                                     effects = "fixed",
-                                     component = "conditional",
-                                     parameters = NULL,
-                                     verbose = TRUE) {
+.equivalence_test_models <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE
+) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2L)) {
-    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    insight::format_error(
+      "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
+    )
   }
 
-  if (verbose && !inherits(x, "blavaan")) .check_multicollinearity(x)
+  if (verbose && !inherits(x, "blavaan")) {
+    .check_multicollinearity(x)
+  }
   params <- insight::get_parameters(
     x,
     component = component,
@@ -285,14 +334,16 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
 
 
 #' @export
-equivalence_test.stanreg <- function(x,
-                                     range = "default",
-                                     ci = 0.95,
-                                     effects = "fixed",
-                                     component = "location",
-                                     parameters = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+equivalence_test.stanreg <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .equivalence_test_models(
     x,
     range,
@@ -324,14 +375,16 @@ equivalence_test.blavaan <- equivalence_test.stanreg
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.brmsfit <- function(x,
-                                     range = "default",
-                                     ci = 0.95,
-                                     effects = "fixed",
-                                     component = "conditional",
-                                     parameters = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+equivalence_test.brmsfit <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .equivalence_test_models(
     x,
     range,
@@ -355,12 +408,14 @@ equivalence_test.brmsfit <- function(x,
 
 
 #' @export
-equivalence_test.sim.merMod <- function(x,
-                                        range = "default",
-                                        ci = 0.95,
-                                        parameters = NULL,
-                                        verbose = TRUE,
-                                        ...) {
+equivalence_test.sim.merMod <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .equivalence_test_models(
     x,
     range,
@@ -380,12 +435,14 @@ equivalence_test.sim <- equivalence_test.sim.merMod
 
 
 #' @export
-equivalence_test.mcmc <- function(x,
-                                  range = "default",
-                                  ci = 0.95,
-                                  parameters = NULL,
-                                  verbose = TRUE,
-                                  ...) {
+equivalence_test.mcmc <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .equivalence_test_models(
     as.data.frame(x),
     range,
@@ -402,12 +459,14 @@ equivalence_test.mcmc <- function(x,
 
 
 #' @export
-equivalence_test.bcplm <- function(x,
-                                   range = "default",
-                                   ci = 0.95,
-                                   parameters = NULL,
-                                   verbose = TRUE,
-                                   ...) {
+equivalence_test.bcplm <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .equivalence_test_models(
     insight::get_parameters(x),
     range,
@@ -433,13 +492,15 @@ equivalence_test.bayesQR <- equivalence_test.bcplm
 
 
 #' @export
-equivalence_test.bamlss <- function(x,
-                                    range = "default",
-                                    ci = 0.95,
-                                    component = "all",
-                                    parameters = NULL,
-                                    verbose = TRUE,
-                                    ...) {
+equivalence_test.bamlss <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  component = "all",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .equivalence_test_models(
     insight::get_parameters(x, component = component),
     range,

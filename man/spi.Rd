@@ -36,7 +36,7 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 \item{...}{Currently not used.}
 
 \item{ci}{Value or vector of probability of the (credible) interval - CI
-(between 0 and 1) to be estimated. Default to \code{.95} (\verb{95\%}).}
+(between 0 and 1) to be estimated. Default to \code{.95} (95\%).}
 
 \item{verbose}{Toggle off warnings.}
 
