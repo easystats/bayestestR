@@ -48,10 +48,9 @@
 #' linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE range
 #' can be automatically computed for models using the [`rope_range()`] function.
 #'
-#' Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95% (or
-#' 89%, considered more stable) [HDI][hdi] that falls within the ROPE as an
-#' index for "null-hypothesis" testing (as understood under the Bayesian
-#' framework, see [`equivalence_test()`]).
+#' Kruschke (2010, 2011, 2014) suggests using the proportion of [HDI][hdi] that
+#' falls within the ROPE as an index for "null-hypothesis" testing (as
+#' understood under the Bayesian framework, see [`equivalence_test()`]).
 #'
 #' @section Sensitivity to parameter's scale:
 #'

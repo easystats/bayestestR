@@ -160,10 +160,9 @@ according to Cohen, 1988). This could be generalized: For instance, for
 linear models, the ROPE could be set as \verb{0 +/- .1 * sd(y)}. This ROPE range
 can be automatically computed for models using the \code{\link[=rope_range]{rope_range()}} function.
 
-Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\% (or
-89\%, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as an
-index for "null-hypothesis" testing (as understood under the Bayesian
-framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
+Kruschke (2010, 2011, 2014) suggests using the proportion of \link[=hdi]{HDI} that
+falls within the ROPE as an index for "null-hypothesis" testing (as
+understood under the Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
 }
 
 \section{Sensitivity to parameter's scale}{

@@ -20,7 +20,7 @@
 #' @inheritSection hdi Model components
 #'
 #' @details Using the [ROPE][rope] and the [HDI][hdi], \cite{Kruschke (2018)}
-#'   suggests using the percentage of the 95% (or 89%, considered more stable)
+#'   suggests using the percentage of the 95%
 #'   HDI that falls within the ROPE as a decision rule. If the HDI
 #'   is completely outside the ROPE, the "null hypothesis" for this parameter is
 #'   "rejected". If the ROPE completely covers the HDI, i.e., all most credible

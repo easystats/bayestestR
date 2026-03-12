@@ -112,31 +112,6 @@ distributions. While this can be useful to better represent the credibility
 mass of a distribution, the HDI also has some limitations. See \code{\link[=spi]{spi()}} for
 details.
 
-The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{95\% or 89\% Credible Intervals (CI)}
-are two reasonable ranges to characterize the uncertainty related to the
-estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here}
-for a discussion about the differences between these two values).
-
-The 89\% intervals (\code{ci = 0.89}) are deemed to be more stable than, for
-instance, 95\% intervals (\emph{Kruschke, 2014}), typically having a smaller Monte
-Carlo standard error (MCSE) and a higher effective sample size (ESS) than 95\%
-intervals. Moreover, 89 indicates the arbitrariness of interval limits - its
-only remarkable property is being the highest prime number that does not
-exceed the common 95\% threshold (\emph{McElreath, 2015}).
-
-However, 95\% has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}.
-For instance, it shares (in the case of a normal posterior distribution) an
-intuitive relationship with the standard deviation and it conveys a more
-accurate image of the (artificial) bounds of the distribution. Also, because
-it is wider, it makes analyses more conservative (i.e., the probability of
-covering zero is larger for the 95\% CI than for lower ranges such as 89\%),
-which is a good thing in the context of the reproducibility crisis.
-
-In either case, it is advised to check the \emph{tail} effective sample size (ESS)
-or Monte Carlo standard error (MCSE) to ensure that the number of posterior
-samples is sufficient to estimate the interval at the desired probability
-level with good precision.
-
 A 95\% equal-tailed interval (ETI) has 2.5\% of the distribution on either
 side of its limits. It indicates the 2.5th percentile and the 97.5th
 percentile. In symmetric distributions, the two methods of computing credible
@@ -153,6 +128,11 @@ the lower and higher bounds of the transformed distribution will correspond
 to the transformed lower and higher bounds of the original distribution.
 On the contrary, applying transformations to the distribution will change
 the resulting HDI.
+
+The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{95\% or 89\% Credible Intervals (CI)}
+are two reasonable ranges to characterize the uncertainty related to the
+estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here}
+for a discussion about the differences between these two values).
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
