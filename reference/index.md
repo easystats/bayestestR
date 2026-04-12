@@ -64,7 +64,7 @@ Functions for Bayesian Inference
   [`bf_rope()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   : Bayes Factors (BF) for a Single Parameter
 - [`rope()`](https://easystats.github.io/bayestestR/reference/rope.md) :
-  Region of Practical Equivalence (ROPE)
+  Region of Practical Equivalence (ROPE) Analysis
 - [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.md)
   : Find Default Equivalence (ROPE) Region Bounds
 - [`equivalence_test()`](https://easystats.github.io/bayestestR/reference/equivalence_test.md)

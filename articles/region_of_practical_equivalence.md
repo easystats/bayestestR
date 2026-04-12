@@ -47,11 +47,7 @@ is accepted.
 
 Using the ROPE and the HDI as Credible Interval, Kruschke (2018)
 suggests using the percentage of the 95% HDI that falls within the ROPE
-as a decision rule. However, as the 89% HDI [is considered a better
-choice](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-(J. Kruschke, 2014; R. McElreath, 2014; Richard McElreath, 2018),
-`bayestestR` provides by default the percentage of the 89% HDI that
-falls within the ROPE.
+as a decision rule.
 
 However, [*simulation studies
 data*](https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full)
@@ -255,12 +251,6 @@ Bayesian methods for data analysis in the organizational sciences.
 Kruschke, J. K., & Liddell, T. M. (2018). The bayesian new statistics:
 Hypothesis testing, estimation, meta-analysis, and power analysis from a
 bayesian perspective. *Psychonomic Bulletin & Review*, *25*(1), 178–206.
-
-McElreath, R. (2014). *Rethinking: Statistical rethinking book package.
-R package version 1.391*.
-
-McElreath, Richard. (2018). *Statistical rethinking: A bayesian course
-with examples in r and stan*. Chapman; Hall/CRC.
 
 Piironen, J., & Vehtari, A. (2017). Comparison of bayesian predictive
 methods for model selection. *Statistics and Computing*, *27*(3),

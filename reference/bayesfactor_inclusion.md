@@ -129,9 +129,9 @@ bayesfactor_inclusion(BF)
 #> Inclusion Bayes Factors (Model Averaged)
 #> 
 #>           P(prior) P(posterior) Inclusion BF
-#> supp          0.60         0.98        37.31
-#> dose          0.60         1.00     6.11e+12
-#> dose:supp     0.20         0.58         5.63
+#> supp          0.60         0.98        35.18
+#> dose          0.60         1.00     5.77e+12
+#> dose:supp     0.20         0.56         5.08
 #> 
 #> * Compared among: all models
 #> *    Priors odds: uniform-equal
@@ -141,9 +141,9 @@ bayesfactor_inclusion(BF, match_models = TRUE)
 #> Inclusion Bayes Factors (Model Averaged)
 #> 
 #>           P(prior) P(posterior) Inclusion BF
-#> supp          0.40         0.40        22.65
-#> dose          0.40         0.42     3.81e+12
-#> dose:supp     0.20         0.58         1.47
+#> supp          0.40         0.42        22.68
+#> dose          0.40         0.44     3.81e+12
+#> dose:supp     0.20         0.56         1.33
 #> 
 #> * Compared among: matched models only
 #> *    Priors odds: uniform-equal

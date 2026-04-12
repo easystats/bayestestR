@@ -173,7 +173,13 @@ We can change that, for instance:
 
 ``` r
 
-model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris, chains = 2, iter = 1000, warmup = 250)
+model <- stan_glm(
+  Sepal.Length ~ Petal.Length,
+  data = iris,
+  chains = 2,
+  iter = 1000,
+  warmup = 250
+)
 
 nrow(get_parameters(model)) # Size (number of rows)
 ```
@@ -291,7 +297,11 @@ ggplot(posteriors, aes(x = Petal.Length)) +
   # The median in red
   geom_vline(xintercept = median(posteriors$Petal.Length), color = "red", linewidth = 1) +
   # The MAP in purple
-  geom_vline(xintercept = as.numeric(map_estimate(posteriors$Petal.Length)), color = "purple", linewidth = 1)
+  geom_vline(
+    xintercept = as.numeric(map_estimate(posteriors$Petal.Length)),
+    color = "purple",
+    linewidth = 1
+  )
 ```
 
 ![](example1_files/figure-html/unnamed-chunk-17-1.png)
@@ -326,10 +336,8 @@ Interval
 (HDI)](https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis).
 It will give us the range containing the 89% most probable effect
 values. **Note that we will use 89% CIs instead of 95%** CIs (as in the
-frequentist framework), as the 89% level gives more [stable
-results](https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89)
-(Kruschke, 2014) and reminds us about the arbitrariness of such
-conventions (McElreath, 2018).
+frequentist framework) - see discussion on choice of credibility level
+[here](https://easystats.github.io/bayestestR/articles/credible_interval.html).
 
 ``` r
 
@@ -654,9 +662,3 @@ to see the next example.
 ## References
 
 Cohen, J. (1988). *Statistical power analysis for the social sciences*.
-
-Kruschke, J. (2014). *Doing bayesian data analysis: A tutorial with r,
-JAGS, and stan*. Academic Press.
-
-McElreath, R. (2018). *Statistical rethinking: A bayesian course with
-examples in r and stan*. Chapman; Hall/CRC.

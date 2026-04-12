@@ -272,7 +272,7 @@ describe_posterior(result)
 From the indices, we can say that the difference of `Sepal.Width`
 between *virginica* and *versicolor* has a probability of **100% of
 being negative** \[*from the pd and the sign of the median*\] (median =
--0.19, 89% CI \[-0.29, -0.092\]). The data provides a **strong evidence
+-0.19, 95% CI \[-0.31, -0.07\]). The data provides a **strong evidence
 against the null hypothesis** (BF = 18).
 
 Keep that in mind as we will see another way of investigating this
@@ -297,9 +297,13 @@ species using only* `Sepal.Width`.
 
 library(rstanarm)
 
-model <- stan_glm(Species ~ Sepal.Width,
-  data = data, family = "binomial",
-  chains = 10, iter = 5000, warmup = 1000,
+model <- stan_glm(
+  Species ~ Sepal.Width,
+  data = data,
+  family = "binomial",
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
   refresh = 0
 )
 ```

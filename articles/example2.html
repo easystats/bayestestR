@@ -353,7 +353,7 @@ statistically by using the <code><a href="https://rdrr.io/pkg/BayesFactor/man/tt
 <code>Sepal.Width</code> between <em>virginica</em> and
 <em>versicolor</em> has a probability of <strong>100% of being
 negative</strong> [<em>from the pd and the sign of the median</em>]
-(median = -0.19, 89% CI [-0.29, -0.092]). The data provides a
+(median = -0.19, 95% CI [-0.31, -0.07]). The data provides a
 <strong>strong evidence against the null hypothesis</strong> (BF =
 18).</p>
 <p>Keep that in mind as we will see another way of investigating this
@@ -380,9 +380,13 @@ However, these models are much more powerful than a <em>t</em>-test.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">Sepal.Width</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="st">"binomial"</span>,</span>
-<span>  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Species</span> <span class="op">~</span> <span class="va">Sepal.Width</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>  family <span class="op">=</span> <span class="st">"binomial"</span>,</span>
+<span>  chains <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  iter <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>  warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  refresh <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -459,7 +463,7 @@ distribution using our old pal <code><a href="../reference/describe_posterior.ht
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Micah K. Wilson, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://www.indrapatil.com/" class="external-link">Indrajeet Patil</a>, Micah K. Wilson, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -253,7 +253,13 @@ for posterior draws equals
 <strong><code>4 chains * (2000 iterations - 1000 warm-up) = 4000</code></strong>.</p>
 <p>We can change that, for instance:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">250</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">iris</span>,</span>
+<span>  chains <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  iter <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  warmup <span class="op">=</span> <span class="fl">250</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="co"># Size (number of rows)</span></span></code></pre></div>
 <pre><code>[1] 1500</code></pre>
@@ -352,7 +358,11 @@ distribution? In the Bayesian framework, this value is called the
 <span>  <span class="co"># The median in red</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"red"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># The MAP in purple</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="../reference/map_estimate.html">map_estimate</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"purple"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span></span>
+<span>    xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="../reference/map_estimate.html">map_estimate</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"purple"</span>,</span>
+<span>    linewidth <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="100%"></p>
 <p>Well, all these values give very similar results. Thus, <strong>we
 will choose the median</strong>, as this value has a direct meaning from
@@ -377,10 +387,8 @@ interpret and easier to compute — <em>and it makes more sense</em>.</p>
 <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">Highest
 Density Interval (HDI)</a>. It will give us the range containing the 89%
 most probable effect values. <strong>Note that we will use 89% CIs
-instead of 95%</strong> CIs (as in the frequentist framework), as the
-89% level gives more <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89">stable
-results</a> <span class="citation">(Kruschke, 2014)</span> and reminds
-us about the arbitrariness of such conventions <span class="citation">(McElreath, 2018)</span>.</p>
+instead of 95%</strong> CIs (as in the frequentist framework) - see
+discussion on choice of credibility level <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">here</a>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span>, ci <span class="op">=</span> <span class="fl">0.89</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; 89% HDI: [0.38, 0.44]</code></pre>
@@ -654,14 +662,6 @@ here</strong></a> to see the next example.</p>
 Cohen, J. (1988). <em>Statistical power analysis for the social
 sciences</em>.
 </div>
-<div id="ref-kruschke2014doing" class="csl-entry">
-Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with
-r, JAGS, and stan</em>. Academic Press.
-</div>
-<div id="ref-mcelreath2018statistical" class="csl-entry">
-McElreath, R. (2018). <em>Statistical rethinking: A bayesian course with
-examples in r and stan</em>. Chapman; Hall/CRC.
-</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -671,7 +671,7 @@ examples in r and stan</em>. Chapman; Hall/CRC.
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Micah K. Wilson, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://www.indrapatil.com/" class="external-link">Indrajeet Patil</a>, Micah K. Wilson, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

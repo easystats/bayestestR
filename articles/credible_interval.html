@@ -145,7 +145,7 @@ computing a confidence interval from data of this sort, the effect falls
 within this range</em>”.</p>
 </div>
 <div class="section level2">
-<h2 id="vs--95-ci">89% vs. 95% CI<a class="anchor" aria-label="anchor" href="#vs--95-ci"></a>
+<h2 id="choosing-a-credibal-level-89-vs--95-ci">Choosing a Credibal Level (89% vs. 95% CI)<a class="anchor" aria-label="anchor" href="#choosing-a-credibal-level-89-vs--95-ci"></a>
 </h2>
 <p>Using 89% is another popular choice, and used to be the default for a
 long time (<a href="https://github.com/easystats/bayestestR/discussions/250" class="external-link">read here
@@ -154,24 +154,17 @@ the story of the change</a>). How did it start?</p>
 default, <strong>people started using 95%</strong>, the arbitrary
 convention used in the <strong>frequentist</strong> world. However, some
 authors suggested that 95% might not be the most appropriate for
-Bayesian posterior distributions, potentially lacking stability if not
-enough posterior samples are drawn <span class="citation">(Kruschke,
+Bayesian posterior distributions <span class="citation">(Kruschke,
 2014)</span>.</p>
-<p>The proposition was to use 90% instead of 95%. However, recently,
-McElreath (2014, 2018) suggested that if we were to use arbitrary
-thresholds in the first place, why not use 89%? Moreover, 89 is the
-highest <strong>prime number</strong> that does not exceed the already
-unstable 95% threshold. What does it have to do with anything?
-<em>Nothing</em>, but it reminds us of the total arbitrariness of these
-conventions <span class="citation">(McElreath, 2018)</span>.</p>
-<p>Thus, CIs computed with 89% intervals (<code>ci = 0.89</code>), are
-deemed to be more stable than, for instance, 95% intervals <span class="citation">(Kruschke, 2014)</span>. An effective sample size (ESS;
-see <a href="https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html">here</a>)
-of at least 10.000 is recommended if one wants to compute precise 95%
-intervals (Kruschke, 2014, p. 183ff). Unfortunately, the default number
-of posterior samples for most Bayes packages (e.g.,
-<code>rstanarm</code> or <code>brms</code>) is only 4.000 (thus, you
-might want to increase it when fitting your model).</p>
+<p>The proposition was to use 90% instead of 95%, as smaller levels of
+credibility often produce more stable intervals (in the sense of having
+smaller Monte Carlo standard errors, MCSE; see <a href="https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html">here</a>)
+compared to wider intervals <span class="citation">(Kruschke,
+2014)</span>. Later, McElreath (2014, 2018) suggested that if we were to
+use arbitrary thresholds in the first place, why not use 89%? Moreover,
+89 is the highest <strong>prime number</strong> that does not exceed the
+95% threshold. What does it have to do with anything? <em>Nothing</em>,
+but it reminds us of the total arbitrariness of these conventions <span class="citation">(McElreath, 2018)</span>.</p>
 <p>However, 95% has some <a href="https://easystats.github.io/blog/posts/bayestestr_95/" class="external-link"><strong>advantages
 too</strong></a>. For instance, it shares (in the case of a normal
 posterior distribution) an intuitive relationship with the standard
@@ -184,6 +177,10 @@ context of the reproducibility crisis.</p>
 as for instance 90%. Ultimately, <strong>you as the user should make an
 informed decision</strong>, based on your needs and goals, and justify
 your choice.</p>
+<p>Whatever level is used, it is advised to check the <em>tail</em>
+effective sample size (ESS) or Monte Carlo standard error (MCSE) to
+ensure that the number of posterior samples is sufficient to estimate
+the interval at the desired probability level with good precision.</p>
 </div>
 <div class="section level2">
 <h2 id="different-types-of-cis">Different types of CIs<a class="anchor" aria-label="anchor" href="#different-types-of-cis"></a>
@@ -291,7 +288,10 @@ to <em>k</em> <span class="citation">(Wagenmakers, Gronau, Dablander,
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># The prior</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span></span>
-<span>    color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="cn">NA</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    fill <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    linewidth <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    linetype <span class="op">=</span> <span class="st">"dashed"</span>,</span>
 <span>    data <span class="op">=</span> <span class="fu"><a href="../reference/estimate_density.html">estimate_density</a></span><span class="op">(</span><span class="va">prior</span>, extend <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># BF = 1 SI in blue</span></span>
@@ -335,7 +335,7 @@ Wagenmakers, E.-J., Gronau, Q. F., Dablander, F., &amp; Etz, A. (2018).
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Micah K. Wilson, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://www.indrapatil.com/" class="external-link">Indrajeet Patil</a>, Micah K. Wilson, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

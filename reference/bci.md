@@ -49,7 +49,7 @@ bci(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 - ci:
 
   Value or vector of probability of the (credible) interval - CI
-  (between 0 and 1) to be estimated. Default to `.95` (`95%`).
+  (between 0 and 1) to be estimated. Default to `.95` (95%).
 
 - verbose:
 
@@ -138,7 +138,7 @@ A data frame with following columns:
 
 Unlike equal-tailed intervals (see
 [`eti()`](https://easystats.github.io/bayestestR/reference/eti.md)) that
-typically exclude `2.5%` from each tail of the distribution and always
+typically exclude 2.5% from each tail of the distribution and always
 include the median, the HDI is *not* equal-tailed and therefore always
 includes the mode(s) of posterior distributions. While this can be
 useful to better represent the credibility mass of a distribution, the
@@ -146,38 +146,10 @@ HDI also has some limitations. See
 [`spi()`](https://easystats.github.io/bayestestR/reference/spi.md) for
 details.
 
-The [`95%` or `89%` Credible Intervals
-(CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-are two reasonable ranges to characterize the uncertainty related to the
-estimation (see
-[here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-for a discussion about the differences between these two values).
-
-The `89%` intervals (`ci = 0.89`) are deemed to be more stable than, for
-instance, `95%` intervals (*Kruschke, 2014*). An effective sample size
-of at least 10.000 is recommended if one wants to estimate `95%`
-intervals with high precision (*Kruschke, 2014, p. 183ff*).
-Unfortunately, the default number of posterior samples for most Bayes
-packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might
-want to increase it when fitting your model). Moreover, 89 indicates the
-arbitrariness of interval limits - its only remarkable property is being
-the highest prime number that does not exceed the already unstable `95%`
-threshold (*McElreath, 2015*).
-
-However, `95%` has some [advantages
-too](https://easystats.github.io/blog/posts/bayestestr_95/). For
-instance, it shares (in the case of a normal posterior distribution) an
-intuitive relationship with the standard deviation and it conveys a more
-accurate image of the (artificial) bounds of the distribution. Also,
-because it is wider, it makes analyses more conservative (i.e., the
-probability of covering zero is larger for the `95%` CI than for lower
-ranges such as `89%`), which is a good thing in the context of the
-reproducibility crisis.
-
-A `95%` equal-tailed interval (ETI) has `2.5%` of the distribution on
-either side of its limits. It indicates the 2.5th percentile and the
-97.5th percentile. In symmetric distributions, the two methods of
-computing credible intervals, the ETI and the
+A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
+side of its limits. It indicates the 2.5th percentile and the 97.5th
+percentile. In symmetric distributions, the two methods of computing
+credible intervals, the ETI and the
 [HDI](https://easystats.github.io/bayestestR/reference/hdi.md), return
 similar results.
 
@@ -192,6 +164,13 @@ probabilities): the lower and higher bounds of the transformed
 distribution will correspond to the transformed lower and higher bounds
 of the original distribution. On the contrary, applying transformations
 to the distribution will change the resulting HDI.
+
+The [95% or 89% Credible Intervals
+(CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+are two reasonable ranges to characterize the uncertainty related to the
+estimation (see
+[here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+for a discussion about the differences between these two values).
 
 ## Model components
 
@@ -244,11 +223,11 @@ Other ci:
 ``` r
 posterior <- rnorm(1000)
 bci(posterior)
-#> 95% ETI: [-1.78, 2.10]
+#> 95% ETI: [-1.78, 2.11]
 bci(posterior, ci = c(0.80, 0.89, 0.95))
 #> Equal-Tailed Interval
 #> 
 #> 80% ETI       |       89% ETI |       95% ETI
 #> ---------------------------------------------
-#> [-1.17, 1.33] | [-1.52, 1.69] | [-1.78, 2.10]
+#> [-1.17, 1.34] | [-1.52, 1.70] | [-1.78, 2.11]
 ```

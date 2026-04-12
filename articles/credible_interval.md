@@ -36,7 +36,7 @@ Interval**) would be “*there is a 95% probability that when computing a
 confidence interval from data of this sort, the effect falls within this
 range*”.
 
-## 89% vs. 95% CI
+## Choosing a Credibal Level (89% vs. 95% CI)
 
 Using 89% is another popular choice, and used to be the default for a
 long time ([read here the story of the
@@ -46,27 +46,19 @@ did it start?
 Naturally, when it came about choosing the CI level to report by
 default, **people started using 95%**, the arbitrary convention used in
 the **frequentist** world. However, some authors suggested that 95%
-might not be the most appropriate for Bayesian posterior distributions,
-potentially lacking stability if not enough posterior samples are drawn
+might not be the most appropriate for Bayesian posterior distributions
 (Kruschke, 2014).
 
-The proposition was to use 90% instead of 95%. However, recently,
-McElreath (2014, 2018) suggested that if we were to use arbitrary
-thresholds in the first place, why not use 89%? Moreover, 89 is the
-highest **prime number** that does not exceed the already unstable 95%
-threshold. What does it have to do with anything? *Nothing*, but it
-reminds us of the total arbitrariness of these conventions (McElreath,
-2018).
-
-Thus, CIs computed with 89% intervals (`ci = 0.89`), are deemed to be
-more stable than, for instance, 95% intervals (Kruschke, 2014). An
-effective sample size (ESS; see
+The proposition was to use 90% instead of 95%, as smaller levels of
+credibility often produce more stable intervals (in the sense of having
+smaller Monte Carlo standard errors, MCSE; see
 [here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html))
-of at least 10.000 is recommended if one wants to compute precise 95%
-intervals (Kruschke, 2014, p. 183ff). Unfortunately, the default number
-of posterior samples for most Bayes packages (e.g., `rstanarm` or
-`brms`) is only 4.000 (thus, you might want to increase it when fitting
-your model).
+compared to wider intervals (Kruschke, 2014). Later, McElreath (2014,
+2018) suggested that if we were to use arbitrary thresholds in the first
+place, why not use 89%? Moreover, 89 is the highest **prime number**
+that does not exceed the 95% threshold. What does it have to do with
+anything? *Nothing*, but it reminds us of the total arbitrariness of
+these conventions (McElreath, 2018).
 
 However, 95% has some [**advantages
 too**](https://easystats.github.io/blog/posts/bayestestr_95/). For
@@ -81,6 +73,11 @@ reproducibility crisis.
 To add to the mess, some other software use different default, such as
 for instance 90%. Ultimately, **you as the user should make an informed
 decision**, based on your needs and goals, and justify your choice.
+
+Whatever level is used, it is advised to check the *tail* effective
+sample size (ESS) or Monte Carlo standard error (MCSE) to ensure that
+the number of posterior samples is sufficient to estimate the interval
+at the desired probability level with good precision.
 
 ## Different types of CIs
 
@@ -198,7 +195,10 @@ ggplot(mapping = aes(x = x, y = y)) +
   ) +
   # The prior
   geom_area(
-    color = "black", fill = NA, linewidth = 1, linetype = "dashed",
+    color = "black",
+    fill = NA,
+    linewidth = 1,
+    linetype = "dashed",
     data = estimate_density(prior, extend = TRUE)
   ) +
   # BF = 1 SI in blue

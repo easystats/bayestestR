@@ -123,9 +123,9 @@
 <p>The <em>bayestestR</em> package is available on CRAN, while its latest development version is available on R-universe (from <em>rOpenSci</em>).</p>
 <table class="table">
 <colgroup>
-<col width="12%">
-<col width="11%">
-<col width="75%">
+<col width="33%">
+<col width="33%">
+<col width="33%">
 </colgroup>
 <thead><tr>
 <th>Type</th>
@@ -240,9 +240,9 @@
 <span><span class="op">)</span></span>
 <span><span class="co">## Summary of Posterior Distribution</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Parameter |   Median |        95% CI |     pd |   ps</span></span>
-<span><span class="co">## ----------------------------------------------------</span></span>
-<span><span class="co">## Posterior | 7.75e-03 | [-1.95, 1.98] | 50.36% | 0.46</span></span></code></pre></div>
+<span><span class="co">## Parameter |    Median |        95% CI |     pd |   ps</span></span>
+<span><span class="co">## -----------------------------------------------------</span></span>
+<span><span class="co">## Posterior | -5.70e-03 | [-2.00, 1.99] | 50.23% | 0.47</span></span></code></pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">zinb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"http://stats.idre.ucla.edu/stat/data/fish.csv"</span><span class="op">)</span></span>
@@ -319,11 +319,11 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distribution.html">distribution_chisquared</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posterior</span>, ci <span class="op">=</span> <span class="fl">0.89</span><span class="op">)</span></span>
-<span><span class="co">## 89% HDI: [0.18, 7.63]</span></span>
+<span><span class="fu"><a href="reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span>
+<span><span class="co">## 95% HDI: [0.08, 9.53]</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/eti.html">eti</a></span><span class="op">(</span><span class="va">posterior</span>, ci <span class="op">=</span> <span class="fl">0.89</span><span class="op">)</span></span>
-<span><span class="co">## 89% ETI: [0.75, 9.25]</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/eti.html">eti</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span>
+<span><span class="co">## 95% ETI: [0.48, 11.14]</span></span></code></pre></div>
 <p><img src="reference/figures/uncertainty-plot-1.png"><!-- --></p>
 </div>
 <div class="section level2">
@@ -347,10 +347,10 @@
 <div class="section level3">
 <h3 id="rope">ROPE<a class="anchor" aria-label="anchor" href="#rope"></a>
 </h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/rope.html"><code>rope()</code></a> computes the proportion (in percentage) of the HDI (default to the 89% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/rope.html"><code>rope()</code></a> computes the proportion (in percentage) of the CI (default to the 95% ETI) of a posterior distribution that lies within a region of practical equivalence.</p>
 <p>Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <em>equivalent to the null</em> value for practical purposes Kruschke (2018).</p>
 <p>Kruschke suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>. This ROPE range can be automatically computed for models using the <a href="https://easystats.github.io/bayestestR/reference/rope_range.html">rope_range</a> function.</p>
-<p>Kruschke suggests using the proportion of the 95% (or 90%, considered more stable) HDI that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test</a>).</p>
+<p>Kruschke suggests using the proportion of the CI that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test</a>).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distribution.html">distribution_normal</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/rope.html">rope</a></span><span class="op">(</span><span class="va">posterior</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
@@ -412,7 +412,7 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><code>density_at()</code></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/density_at.html">density_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">## [1] 0.4</span></span></code></pre></div>
+<span><span class="co">## [1] 0.39</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -424,7 +424,7 @@
 <div class="section level1">
 <h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h1>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-kruschke2018rejecting" class="csl-entry">
 Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(2), 270–280.
 </div>
@@ -480,7 +480,7 @@ Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesi
 <li>
 <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4287-4801" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>
-<a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-1995-6531" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<a href="https://www.indrapatil.com/" class="external-link">Indrajeet Patil</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-1995-6531" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>Micah K. Wilson <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-4143-7308" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>
 <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9560-6336" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
@@ -495,7 +495,7 @@ Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesi
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Micah K. Wilson, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://www.indrapatil.com/" class="external-link">Indrajeet Patil</a>, Micah K. Wilson, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -224,8 +224,8 @@ p_significance(df)
 #> Parameter |   ps
 #> ----------------
 #> X1        | 0.51
-#> X2        | 0.53
-#> X3        | 0.46
+#> X2        | 0.55
+#> X3        | 0.47
 #> X4        | 0.47
 # \donttest{
 # rstanarm models

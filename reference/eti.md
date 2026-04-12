@@ -50,7 +50,7 @@ eti(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 - ci:
 
   Value or vector of probability of the (credible) interval - CI
-  (between 0 and 1) to be estimated. Default to `.95` (`95%`).
+  (between 0 and 1) to be estimated. Default to `.95` (95%).
 
 - verbose:
 
@@ -137,47 +137,19 @@ A data frame with following columns:
 
 ## Details
 
-Unlike equal-tailed intervals (see `eti()`) that typically exclude
-`2.5%` from each tail of the distribution and always include the median,
-the HDI is *not* equal-tailed and therefore always includes the mode(s)
-of posterior distributions. While this can be useful to better represent
+Unlike equal-tailed intervals (see `eti()`) that typically exclude 2.5%
+from each tail of the distribution and always include the median, the
+HDI is *not* equal-tailed and therefore always includes the mode(s) of
+posterior distributions. While this can be useful to better represent
 the credibility mass of a distribution, the HDI also has some
 limitations. See
 [`spi()`](https://easystats.github.io/bayestestR/reference/spi.md) for
 details.
 
-The [`95%` or `89%` Credible Intervals
-(CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-are two reasonable ranges to characterize the uncertainty related to the
-estimation (see
-[here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-for a discussion about the differences between these two values).
-
-The `89%` intervals (`ci = 0.89`) are deemed to be more stable than, for
-instance, `95%` intervals (*Kruschke, 2014*). An effective sample size
-of at least 10.000 is recommended if one wants to estimate `95%`
-intervals with high precision (*Kruschke, 2014, p. 183ff*).
-Unfortunately, the default number of posterior samples for most Bayes
-packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might
-want to increase it when fitting your model). Moreover, 89 indicates the
-arbitrariness of interval limits - its only remarkable property is being
-the highest prime number that does not exceed the already unstable `95%`
-threshold (*McElreath, 2015*).
-
-However, `95%` has some [advantages
-too](https://easystats.github.io/blog/posts/bayestestr_95/). For
-instance, it shares (in the case of a normal posterior distribution) an
-intuitive relationship with the standard deviation and it conveys a more
-accurate image of the (artificial) bounds of the distribution. Also,
-because it is wider, it makes analyses more conservative (i.e., the
-probability of covering zero is larger for the `95%` CI than for lower
-ranges such as `89%`), which is a good thing in the context of the
-reproducibility crisis.
-
-A `95%` equal-tailed interval (ETI) has `2.5%` of the distribution on
-either side of its limits. It indicates the 2.5th percentile and the
-97.5th percentile. In symmetric distributions, the two methods of
-computing credible intervals, the ETI and the
+A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
+side of its limits. It indicates the 2.5th percentile and the 97.5th
+percentile. In symmetric distributions, the two methods of computing
+credible intervals, the ETI and the
 [HDI](https://easystats.github.io/bayestestR/reference/hdi.md), return
 similar results.
 
@@ -192,6 +164,13 @@ probabilities): the lower and higher bounds of the transformed
 distribution will correspond to the transformed lower and higher bounds
 of the original distribution. On the contrary, applying transformations
 to the distribution will change the resulting HDI.
+
+The [95% or 89% Credible Intervals
+(CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+are two reasonable ranges to characterize the uncertainty related to the
+estimation (see
+[here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+for a discussion about the differences between these two values).
 
 ## Model components
 
@@ -241,13 +220,13 @@ library(bayestestR)
 
 posterior <- rnorm(1000)
 eti(posterior)
-#> 95% ETI: [-1.99, 1.84]
+#> 95% ETI: [-1.93, 1.84]
 eti(posterior, ci = c(0.80, 0.89, 0.95))
 #> Equal-Tailed Interval
 #> 
 #> 80% ETI       |       89% ETI |       95% ETI
 #> ---------------------------------------------
-#> [-1.29, 1.25] | [-1.58, 1.53] | [-1.99, 1.84]
+#> [-1.29, 1.25] | [-1.58, 1.53] | [-1.93, 1.84]
 
 df <- data.frame(replicate(4, rnorm(100)))
 eti(df)
@@ -255,7 +234,7 @@ eti(df)
 #> 
 #> Parameter |       95% ETI
 #> -------------------------
-#> X1        | [-1.80, 2.19]
+#> X1        | [-1.93, 2.19]
 #> X2        | [-1.70, 1.96]
 #> X3        | [-1.91, 1.63]
 #> X4        | [-1.87, 1.87]
@@ -264,8 +243,8 @@ eti(df, ci = c(0.80, 0.89, 0.95))
 #> 
 #> Parameter |       80% ETI |       89% ETI |       95% ETI
 #> ---------------------------------------------------------
-#> X1        | [-1.09, 1.33] | [-1.72, 1.78] | [-1.80, 2.19]
-#> X2        | [-0.96, 1.59] | [-1.40, 1.70] | [-1.70, 1.96]
+#> X1        | [-1.16, 1.28] | [-1.74, 1.78] | [-1.93, 2.19]
+#> X2        | [-0.96, 1.62] | [-1.40, 1.70] | [-1.70, 1.96]
 #> X3        | [-1.07, 0.88] | [-1.52, 1.15] | [-1.91, 1.63]
 #> X4        | [-1.20, 1.18] | [-1.67, 1.47] | [-1.87, 1.87]
 # \donttest{
@@ -277,24 +256,24 @@ eti(model)
 #> 
 #> Parameter   |        95% ETI | Effects |   Component
 #> ----------------------------------------------------
-#> (Intercept) | [27.81, 47.11] |   fixed | conditional
-#> wt          | [-6.63, -4.01] |   fixed | conditional
-#> gear        | [-2.12,  1.63] |   fixed | conditional
+#> (Intercept) | [29.80, 50.38] |   fixed | conditional
+#> wt          | [-6.99, -3.94] |   fixed | conditional
+#> gear        | [-2.21,  1.24] |   fixed | conditional
 eti(model, ci = c(0.80, 0.89, 0.95))
 #> Equal-Tailed Interval
 #> 
 #> Parameter   |        80% ETI |        89% ETI |        95% ETI | Effects |   Component
 #> --------------------------------------------------------------------------------------
-#> (Intercept) | [32.55, 44.06] | [30.67, 45.94] | [27.81, 47.11] |   fixed | conditional
-#> wt          | [-6.20, -4.60] | [-6.38, -4.34] | [-6.63, -4.01] |   fixed | conditional
-#> gear        | [-1.35,  0.86] | [-1.61,  1.33] | [-2.12,  1.63] |   fixed | conditional
+#> (Intercept) | [32.43, 45.66] | [31.18, 47.98] | [29.80, 50.38] |   fixed | conditional
+#> wt          | [-6.44, -4.62] | [-6.66, -4.35] | [-6.99, -3.94] |   fixed | conditional
+#> gear        | [-1.52,  0.79] | [-1.88,  0.99] | [-2.21,  1.24] |   fixed | conditional
 
 eti(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 #> Equal-Tailed Interval
 #> 
 #> X1      |        95% ETI
 #> ------------------------
-#> overall | [-6.63, -4.01]
+#> overall | [-6.99, -3.94]
 
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Compiling Stan program...
@@ -345,15 +324,15 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.02 seconds (Warm-up)
+#> Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)
 #> Chain 2:                0.016 seconds (Sampling)
-#> Chain 2:                0.036 seconds (Total)
+#> Chain 2:                0.035 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 2.6e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
+#> Chain 3: Gradient evaluation took 3e-06 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -370,9 +349,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.021 seconds (Warm-up)
-#> Chain 3:                0.018 seconds (Sampling)
-#> Chain 3:                0.039 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.02 seconds (Warm-up)
+#> Chain 3:                0.017 seconds (Sampling)
+#> Chain 3:                0.037 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -395,9 +374,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.021 seconds (Warm-up)
+#> Chain 4:  Elapsed Time: 0.02 seconds (Warm-up)
 #> Chain 4:                0.017 seconds (Sampling)
-#> Chain 4:                0.038 seconds (Total)
+#> Chain 4:                0.037 seconds (Total)
 #> Chain 4: 
 eti(model)
 #> Equal-Tailed Interval

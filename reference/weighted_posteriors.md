@@ -206,7 +206,7 @@ if (require("BayesFactor")) {
 #> 
 #> Parameter | Median |        95% CI
 #> ----------------------------------
-#> Posterior |  -0.09 | [-1.37, 0.07]
+#> Posterior |  -0.09 | [-1.38, 0.07]
 
 
 ## weighted prediction distributions via data.frames

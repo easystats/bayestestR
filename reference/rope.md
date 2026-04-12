@@ -1,8 +1,7 @@
-# Region of Practical Equivalence (ROPE)
+# Region of Practical Equivalence (ROPE) Analysis
 
-Compute the proportion of the HDI (default to the `89%` HDI) of a
-posterior distribution that lies within a region of practical
-equivalence.
+Compute the proportion of the CI (default to the 95% ETI) of a posterior
+distribution that lies within a region of practical equivalence.
 
 ## Usage
 
@@ -199,8 +198,7 @@ ROPE range can be automatically computed for models using the
 [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.md)
 function.
 
-Kruschke (2010, 2011, 2014) suggests using the proportion of the `95%`
-(or `89%`, considered more stable)
+Kruschke (2010, 2011, 2014) suggests using the proportion of
 [HDI](https://easystats.github.io/bayestestR/reference/hdi.md) that
 falls within the ROPE as an index for "null-hypothesis" testing (as
 understood under the Bayesian framework, see
@@ -366,7 +364,7 @@ rope(model)
 #> -------------------------
 #> (Intercept) |      0.00 %
 #> wt          |      0.00 %
-#> gear        |     52.11 %
+#> gear        |     43.68 %
 #> 
 rope(model, ci = c(0.90, 0.95))
 #> # Proportions of samples inside the ROPE [-0.60, 0.60]:
@@ -377,7 +375,7 @@ rope(model, ci = c(0.90, 0.95))
 #> -------------------------
 #> (Intercept) |      0.00 %
 #> wt          |      0.00 %
-#> gear        |     55.00 %
+#> gear        |     46.11 %
 #> 
 #> 
 #> ROPE for the 95% HDI:
@@ -386,7 +384,7 @@ rope(model, ci = c(0.90, 0.95))
 #> -------------------------
 #> (Intercept) |      0.00 %
 #> wt          |      0.00 %
-#> gear        |     52.11 %
+#> gear        |     43.68 %
 #> 
 #> 
 
@@ -398,7 +396,7 @@ rope(model, range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #> -------------------------
 #> (Intercept) |      0.00 %
 #> wt          |      0.00 %
-#> gear        |      9.47 %
+#> gear        |     10.53 %
 #> 
 
 # named ROPE ranges

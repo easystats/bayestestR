@@ -212,33 +212,33 @@ point_estimate(rnorm(1000), centrality = "all", dispersion = TRUE)
 #> 
 #> Median |  MAD |      Mean |   SD |  MAP
 #> ---------------------------------------
-#> -0.02  | 0.98 | -3.69e-03 | 1.00 | 0.05
+#> -0.02  | 0.97 | -5.33e-03 | 1.00 | 0.05
 point_estimate(rnorm(1000), centrality = c("median", "MAP"))
 #> Point Estimate
 #> 
 #> Median |   MAP
 #> --------------
-#> 0.03   | -0.06
+#> 0.03   | -0.07
 
 df <- data.frame(replicate(4, rnorm(100)))
 point_estimate(df, centrality = "all", dispersion = TRUE)
 #> Point Estimate
 #> 
-#> Parameter | Median |  MAD |     Mean |   SD |   MAP
-#> ---------------------------------------------------
-#> X1        |  -0.12 | 1.32 | 9.73e-03 | 1.12 |  0.85
-#> X2        |  -0.07 | 1.12 |    -0.13 | 1.02 | -0.12
-#> X3        |  -0.22 | 0.92 |    -0.28 | 0.88 | -0.06
-#> X4        |  -0.12 | 0.88 |    -0.16 | 0.89 | -0.02
+#> Parameter | Median |  MAD |  Mean |   SD |   MAP
+#> ------------------------------------------------
+#> X1        |  -0.02 | 1.21 |  0.02 | 1.12 |  0.85
+#> X2        |  -0.07 | 1.07 | -0.10 | 1.00 | -0.18
+#> X3        |  -0.29 | 1.02 | -0.33 | 0.89 | -0.10
+#> X4        |  -0.08 | 0.90 | -0.14 | 0.89 |  0.11
 point_estimate(df, centrality = c("median", "MAP"))
 #> Point Estimate
 #> 
 #> Parameter | Median |   MAP
 #> --------------------------
-#> X1        |  -0.12 |  0.85
-#> X2        |  -0.07 | -0.12
-#> X3        |  -0.22 | -0.06
-#> X4        |  -0.12 | -0.02
+#> X1        |  -0.02 |  0.85
+#> X2        |  -0.07 | -0.18
+#> X3        |  -0.29 | -0.10
+#> X4        |  -0.08 |  0.11
 # \donttest{
 # rstanarm models
 # -----------------------------------------------
@@ -246,8 +246,8 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
+#> Chain 1: Gradient evaluation took 2.2e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -264,15 +264,15 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.042 seconds (Warm-up)
-#> Chain 1:                0.037 seconds (Sampling)
-#> Chain 1:                0.079 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.043 seconds (Warm-up)
+#> Chain 1:                0.04 seconds (Sampling)
+#> Chain 1:                0.083 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 9e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 2: Gradient evaluation took 1e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -289,9 +289,9 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.043 seconds (Warm-up)
-#> Chain 2:                0.043 seconds (Sampling)
-#> Chain 2:                0.086 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.044 seconds (Warm-up)
+#> Chain 2:                0.039 seconds (Sampling)
+#> Chain 2:                0.083 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -314,9 +314,9 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.044 seconds (Warm-up)
-#> Chain 3:                0.041 seconds (Sampling)
-#> Chain 3:                0.085 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.043 seconds (Warm-up)
+#> Chain 3:                0.048 seconds (Sampling)
+#> Chain 3:                0.091 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -339,26 +339,26 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.045 seconds (Warm-up)
-#> Chain 4:                0.052 seconds (Sampling)
-#> Chain 4:                0.097 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.044 seconds (Warm-up)
+#> Chain 4:                0.041 seconds (Sampling)
+#> Chain 4:                0.085 seconds (Total)
 #> Chain 4: 
 point_estimate(model, centrality = "all", dispersion = TRUE)
 #> Point Estimate 
 #> 
 #> Parameter   | Median |  MAD |  Mean |   SD |   MAP
 #> --------------------------------------------------
-#> (Intercept) |  39.72 | 1.78 | 39.70 | 1.78 | 39.79
-#> wt          |  -3.21 | 0.75 | -3.22 | 0.79 | -3.33
-#> cyl         |  -1.50 | 0.42 | -1.49 | 0.44 | -1.52
+#> (Intercept) |  39.65 | 1.86 | 39.69 | 1.84 | 39.57
+#> wt          |  -3.19 | 0.81 | -3.18 | 0.82 | -3.19
+#> cyl         |  -1.51 | 0.44 | -1.52 | 0.44 | -1.54
 point_estimate(model, centrality = c("median", "MAP"))
 #> Point Estimate 
 #> 
 #> Parameter   | Median |   MAP
 #> ----------------------------
-#> (Intercept) |  39.72 | 39.79
-#> wt          |  -3.21 | -3.33
-#> cyl         |  -1.50 | -1.52
+#> (Intercept) |  39.65 | 39.57
+#> wt          |  -3.19 | -3.19
+#> cyl         |  -1.51 | -1.54
 
 
 # emmeans estimates
@@ -371,7 +371,7 @@ point_estimate(
 #> 
 #> X1      | Median |   MAP
 #> ------------------------
-#> overall |  -3.21 | -3.33
+#> overall |  -3.19 | -3.19
 
 # brms models
 # -----------------------------------------------
@@ -381,8 +381,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 5e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+#> Chain 1: Gradient evaluation took 6e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -424,9 +424,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.02 seconds (Warm-up)
+#> Chain 2:  Elapsed Time: 0.021 seconds (Warm-up)
 #> Chain 2:                0.018 seconds (Sampling)
-#> Chain 2:                0.038 seconds (Total)
+#> Chain 2:                0.039 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -450,8 +450,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
 #> Chain 3:  Elapsed Time: 0.02 seconds (Warm-up)
-#> Chain 3:                0.02 seconds (Sampling)
-#> Chain 3:                0.04 seconds (Total)
+#> Chain 3:                0.021 seconds (Sampling)
+#> Chain 3:                0.041 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -475,8 +475,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
 #> Chain 4:  Elapsed Time: 0.021 seconds (Warm-up)
-#> Chain 4:                0.019 seconds (Sampling)
-#> Chain 4:                0.04 seconds (Total)
+#> Chain 4:                0.02 seconds (Sampling)
+#> Chain 4:                0.041 seconds (Total)
 #> Chain 4: 
 point_estimate(model, centrality = "all", dispersion = TRUE)
 #> Point Estimate 

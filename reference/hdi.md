@@ -50,7 +50,7 @@ hdi(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 - ci:
 
   Value or vector of probability of the (credible) interval - CI
-  (between 0 and 1) to be estimated. Default to `.95` (`95%`).
+  (between 0 and 1) to be estimated. Default to `.95` (95%).
 
 - verbose:
 
@@ -139,7 +139,7 @@ A data frame with following columns:
 
 Unlike equal-tailed intervals (see
 [`eti()`](https://easystats.github.io/bayestestR/reference/eti.md)) that
-typically exclude `2.5%` from each tail of the distribution and always
+typically exclude 2.5% from each tail of the distribution and always
 include the median, the HDI is *not* equal-tailed and therefore always
 includes the mode(s) of posterior distributions. While this can be
 useful to better represent the credibility mass of a distribution, the
@@ -147,39 +147,10 @@ HDI also has some limitations. See
 [`spi()`](https://easystats.github.io/bayestestR/reference/spi.md) for
 details.
 
-The [`95%` or `89%` Credible Intervals
-(CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-are two reasonable ranges to characterize the uncertainty related to the
-estimation (see
-[here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-for a discussion about the differences between these two values).
-
-The `89%` intervals (`ci = 0.89`) are deemed to be more stable than, for
-instance, `95%` intervals (*Kruschke, 2014*). An effective sample size
-of at least 10.000 is recommended if one wants to estimate `95%`
-intervals with high precision (*Kruschke, 2014, p. 183ff*).
-Unfortunately, the default number of posterior samples for most Bayes
-packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might
-want to increase it when fitting your model). Moreover, 89 indicates the
-arbitrariness of interval limits - its only remarkable property is being
-the highest prime number that does not exceed the already unstable `95%`
-threshold (*McElreath, 2015*).
-
-However, `95%` has some [advantages
-too](https://easystats.github.io/blog/posts/bayestestr_95/). For
-instance, it shares (in the case of a normal posterior distribution) an
-intuitive relationship with the standard deviation and it conveys a more
-accurate image of the (artificial) bounds of the distribution. Also,
-because it is wider, it makes analyses more conservative (i.e., the
-probability of covering zero is larger for the `95%` CI than for lower
-ranges such as `89%`), which is a good thing in the context of the
-reproducibility crisis.
-
-A `95%` equal-tailed interval (ETI) has `2.5%` of the distribution on
-either side of its limits. It indicates the 2.5th percentile and the
-97.5th percentile. In symmetric distributions, the two methods of
-computing credible intervals, the ETI and the HDI, return similar
-results.
+A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
+side of its limits. It indicates the 2.5th percentile and the 97.5th
+percentile. In symmetric distributions, the two methods of computing
+credible intervals, the ETI and the HDI, return similar results.
 
 This is not the case for skewed distributions. Indeed, it is possible
 that parameter values in the ETI have lower credibility (are less
@@ -192,6 +163,13 @@ probabilities): the lower and higher bounds of the transformed
 distribution will correspond to the transformed lower and higher bounds
 of the original distribution. On the contrary, applying transformations
 to the distribution will change the resulting HDI.
+
+The [95% or 89% Credible Intervals
+(CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+are two reasonable ranges to characterize the uncertainty related to the
+estimation (see
+[here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+for a discussion about the differences between these two values).
 
 ## Note
 
@@ -266,13 +244,13 @@ library(bayestestR)
 
 posterior <- rnorm(1000)
 hdi(posterior, ci = 0.89)
-#> 89% HDI: [-1.46, 1.78]
+#> 89% HDI: [-1.46, 1.79]
 hdi(posterior, ci = c(0.80, 0.90, 0.95))
 #> Highest Density Interval
 #> 
 #> 80% HDI       |       90% HDI |       95% HDI
 #> ---------------------------------------------
-#> [-1.39, 1.23] | [-1.56, 1.80] | [-2.06, 1.82]
+#> [-1.39, 1.24] | [-1.59, 1.77] | [-2.10, 1.80]
 
 hdi(iris[1:4])
 #> Identical densities found along different segments of the distribution,
@@ -309,24 +287,24 @@ hdi(model)
 #> 
 #> Parameter   |        95% HDI
 #> ----------------------------
-#> (Intercept) | [28.15, 49.37]
-#> wt          | [-7.09, -4.08]
-#> gear        | [-2.17,  1.51]
+#> (Intercept) | [29.21, 49.50]
+#> wt          | [-6.99, -4.05]
+#> gear        | [-2.18,  1.68]
 hdi(model, ci = c(0.80, 0.90, 0.95))
 #> Highest Density Interval 
 #> 
 #> Parameter   |        80% HDI |        90% HDI |        95% HDI
 #> --------------------------------------------------------------
-#> (Intercept) | [33.23, 46.04] | [31.50, 49.37] | [28.15, 49.37]
-#> wt          | [-6.54, -4.65] | [-6.69, -4.18] | [-7.09, -4.08]
-#> gear        | [-1.30,  1.01] | [-1.77,  1.31] | [-2.17,  1.51]
+#> (Intercept) | [31.68, 46.67] | [29.21, 47.18] | [29.21, 49.50]
+#> wt          | [-6.30, -4.23] | [-6.70, -4.11] | [-6.99, -4.05]
+#> gear        | [-1.53,  1.08] | [-1.89,  1.41] | [-2.18,  1.68]
 
 hdi(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 #> Highest Density Interval
 #> 
 #> X1      |        95% HDI
 #> ------------------------
-#> overall | [-7.09, -4.08]
+#> overall | [-6.99, -4.05]
 
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Compiling Stan program...
@@ -334,8 +312,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 5e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+#> Chain 1: Gradient evaluation took 6e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -352,9 +330,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.02 seconds (Warm-up)
-#> Chain 1:                0.016 seconds (Sampling)
-#> Chain 1:                0.036 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.021 seconds (Warm-up)
+#> Chain 1:                0.017 seconds (Sampling)
+#> Chain 1:                0.038 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -378,8 +356,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
 #> Chain 2:  Elapsed Time: 0.02 seconds (Warm-up)
-#> Chain 2:                0.017 seconds (Sampling)
-#> Chain 2:                0.037 seconds (Total)
+#> Chain 2:                0.018 seconds (Sampling)
+#> Chain 2:                0.038 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -403,8 +381,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
 #> Chain 3:  Elapsed Time: 0.021 seconds (Warm-up)
-#> Chain 3:                0.017 seconds (Sampling)
-#> Chain 3:                0.038 seconds (Total)
+#> Chain 3:                0.018 seconds (Sampling)
+#> Chain 3:                0.039 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -427,9 +405,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 4:  Elapsed Time: 0.02 seconds (Warm-up)
 #> Chain 4:                0.018 seconds (Sampling)
-#> Chain 4:                0.037 seconds (Total)
+#> Chain 4:                0.038 seconds (Total)
 #> Chain 4: 
 hdi(model)
 #> Highest Density Interval 

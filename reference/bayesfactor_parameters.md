@@ -404,8 +404,8 @@ bayesfactor_parameters(stan_model, verbose = FALSE)
 #> 
 #> Parameter   |   BF
 #> ------------------
-#> (Intercept) | 2.82
-#> group1      | 2.96
+#> (Intercept) | 4.55
+#> group1      | 3.74
 #> 
 #> * Evidence Against The Null: 0
 #> 
@@ -415,8 +415,8 @@ bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 #> 
 #> Parameter   |   BF
 #> ------------------
-#> (Intercept) | 2.68
-#> group1      | 2.68
+#> (Intercept) | 4.17
+#> group1      | 3.36
 #> 
 #> * Evidence Against The Null: [-0.202, 0.202]
 #> 
@@ -429,7 +429,7 @@ bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
 #> 
 #> contrast        |   BF
 #> ----------------------
-#> group1 - group2 | 2.65
+#> group1 - group2 | 3.81
 #> 
 #> * Evidence Against The Null: 0
 #> 

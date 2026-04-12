@@ -97,7 +97,7 @@ say that:
 - To characterize statistical significance of our effects, we do not
   need *p*-values, or any other such indices. We simply *describe* the
   posterior distribution of the effect. For example, we can report the
-  median, the [89% Credible
+  median, the [95% Credible
   Interval](https://easystats.github.io/bayestestR/articles/credible_interval.html)
   or [other
   indices](https://easystats.github.io/bayestestR/articles/guidelines.html).

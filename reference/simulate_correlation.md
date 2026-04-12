@@ -72,11 +72,11 @@ summary(lm(V2 ~ V1, data = data))
 #> 
 #> Residuals:
 #>     Min      1Q  Median      3Q     Max 
-#> -1.8766 -0.5691 -0.1028  0.5029  2.4303 
+#> -1.8566 -0.5694 -0.1116  0.5070  2.4567 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)    
-#> (Intercept) -5.201e-17  8.704e-02   0.000        1    
+#> (Intercept) -1.548e-17  8.704e-02   0.000        1    
 #> V1           5.000e-01  8.748e-02   5.715 1.18e-07 ***
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -112,7 +112,7 @@ summary(lm(V2 ~ V1, data = data))
 #> 
 #> Residuals:
 #>     Min      1Q  Median      3Q     Max 
-#> -3.5307 -0.9430  0.2124  0.7561  2.9882 
+#> -3.2354 -0.9753 -0.0633  1.2648  3.3477 
 #> 
 #> Coefficients:
 #>             Estimate Std. Error t value Pr(>|t|)    
@@ -149,11 +149,11 @@ summary(lm(y ~ x1, data = data))
 #> 
 #> Residuals:
 #>      Min       1Q   Median       3Q      Max 
-#> -2.32830 -0.63976  0.03418  0.53242  2.58234 
+#> -2.12568 -0.76836 -0.08657  0.61647  2.76996 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)  
-#> (Intercept) -8.900e-18  9.848e-02   0.000    1.000  
+#> (Intercept) -2.077e-17  9.848e-02   0.000    1.000  
 #> x1           2.000e-01  9.897e-02   2.021    0.046 *
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -171,24 +171,24 @@ round(c(mean(data$V1), sd(data$V1)), 1)
 #> [1] 0 1
 diff(t.test(data$V1 ~ data$V0)$estimate)
 #> mean in group 1 
-#>      0.08559378 
+#>      0.09185722 
 summary(lm(V1 ~ V0, data = data))
 #> 
 #> Call:
 #> lm(formula = V1 ~ V0, data = data)
 #> 
 #> Residuals:
-#>      Min       1Q   Median       3Q      Max 
-#> -2.09095 -0.63342  0.03709  0.66480  2.16514 
+#>     Min      1Q  Median      3Q     Max 
+#> -2.0821 -0.6721  0.0000  0.6032  2.0821 
 #> 
 #> Coefficients:
 #>             Estimate Std. Error t value Pr(>|t|)
-#> (Intercept) -0.03709    0.24557  -0.151    0.881
-#> V01          0.08559    0.37305   0.229    0.820
+#> (Intercept) -0.04593    0.26139  -0.176    0.862
+#> V01          0.09186    0.36966   0.248    0.806
 #> 
-#> Residual standard error: 1.013 on 28 degrees of freedom
-#> Multiple R-squared:  0.001877,   Adjusted R-squared:  -0.03377 
-#> F-statistic: 0.05265 on 1 and 28 DF,  p-value: 0.8202
+#> Residual standard error: 1.012 on 28 degrees of freedom
+#> Multiple R-squared:  0.0022, Adjusted R-squared:  -0.03344 
+#> F-statistic: 0.06175 on 1 and 28 DF,  p-value: 0.8056
 #> 
 summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #> 
@@ -196,17 +196,17 @@ summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #> glm(formula = V0 ~ V1, family = "binomial", data = data)
 #> 
 #> Coefficients:
-#>             Estimate Std. Error z value Pr(>|z|)
-#> (Intercept) -0.26877    0.36881  -0.729    0.466
-#> V1           0.08944    0.37724   0.237    0.813
+#>               Estimate Std. Error z value Pr(>|z|)
+#> (Intercept) -2.983e-17  3.656e-01   0.000    1.000
+#> V1           9.601e-02  3.740e-01   0.257    0.797
 #> 
 #> (Dispersion parameter for binomial family taken to be 1)
 #> 
-#>     Null deviance: 41.054  on 29  degrees of freedom
-#> Residual deviance: 40.998  on 28  degrees of freedom
-#> AIC: 44.998
+#>     Null deviance: 41.589  on 29  degrees of freedom
+#> Residual deviance: 41.523  on 28  degrees of freedom
+#> AIC: 45.523
 #> 
-#> Number of Fisher Scoring iterations: 4
+#> Number of Fisher Scoring iterations: 3
 #> 
 
 # Difference --------------------------------

@@ -105,7 +105,7 @@ and the total effect (mean value of sums of posterior samples used for
 the direct and indirect effect). The *proportion mediated* is the
 indirect effect divided by the total effect.
 
-For all values, the `89%` credible intervals are calculated by default.
+For all values, the 95% credible intervals are calculated by default.
 Use `ci` to calculate a different interval.
 
 The arguments `treatment` and `mediator` do not necessarily need to be

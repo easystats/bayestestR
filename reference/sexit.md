@@ -56,7 +56,7 @@ sexit(x, significant = "default", large = "default", ci = 0.95, ...)
 - ci:
 
   Value or vector of probability of the (credible) interval - CI
-  (between 0 and 1) to be estimated. Default to `.95` (`95%`).
+  (between 0 and 1) to be estimated. Default to `.95` (95%).
 
 - ...:
 
@@ -225,9 +225,9 @@ if (require("rstanarm")) {
 }
 #> # The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.30| and |1.81| (corresponding respectively to 0.05 and 0.30 of the outcome's SD).
 #> 
-#> - (Intercept) (Median = 53.30, 95% CI [40.76, 65.33]) has 100.00%, 100.00% and 100.00% probability of being positive (> 0), significant (> 0.30) and large (> 1.81)
-#> - wt (Median = -8.24, 95% CI [-12.74, -3.47]) has 100.00%, 100.00% and 99.62% probability of being negative (< 0), significant (< -0.30) and large (< -1.81)
-#> - cyl (Median = -3.62, 95% CI [-5.50, -1.57]) has 99.88%, 99.62% and 96.25% probability of being negative (< 0), significant (< -0.30) and large (< -1.81)
-#> - wt:cyl (Median = 0.75, 95% CI [0.09, 1.38]) has 98.25%, 91.25% and 0.12% probability of being positive (> 0), significant (> 0.30) and large (> 1.81)
+#> - (Intercept) (Median = 52.52, 95% CI [40.70, 64.08]) has 100.00%, 100.00% and 100.00% probability of being positive (> 0), significant (> 0.30) and large (> 1.81)
+#> - wt (Median = -8.04, 95% CI [-12.59, -3.18]) has 100.00%, 99.88% and 99.50% probability of being negative (< 0), significant (< -0.30) and large (< -1.81)
+#> - cyl (Median = -3.49, 95% CI [-5.59, -1.60]) has 100.00%, 99.88% and 96.00% probability of being negative (< 0), significant (< -0.30) and large (< -1.81)
+#> - wt:cyl (Median = 0.71, 95% CI [0.08, 1.32]) has 98.88%, 89.12% and 0.00% probability of being positive (> 0), significant (> 0.30) and large (> 1.81)
 # }
 ```

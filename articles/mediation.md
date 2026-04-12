@@ -112,7 +112,7 @@ Typically,
 [`mediation()`](https://easystats.github.io/bayestestR/reference/mediation.md)
 finds the treatment and mediator variables automatically. If this does
 not work, use the `treatment` and `mediator` arguments to specify the
-related variable names. For all values, the 89% credible intervals are
+related variable names. For all values, the 95% credible intervals are
 calculated by default. Use `ci` to calculate a different interval.
 
 ## Comparison to the mediation package

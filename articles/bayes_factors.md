@@ -1306,8 +1306,8 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
     > 
     > SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
     > Chain 1: 
-    > Chain 1: Gradient evaluation took 2.3e-05 seconds
-    > Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
+    > Chain 1: Gradient evaluation took 2.1e-05 seconds
+    > Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
     > Chain 1: Adjust your expectations accordingly!
     > Chain 1: 
     > Chain 1: 
@@ -1325,14 +1325,14 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
     > Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
     > Chain 1: 
     > Chain 1:  Elapsed Time: 0.027 seconds (Warm-up)
-    > Chain 1:                0.044 seconds (Sampling)
-    > Chain 1:                0.071 seconds (Total)
+    > Chain 1:                0.045 seconds (Sampling)
+    > Chain 1:                0.072 seconds (Total)
     > Chain 1: 
     > 
     > SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
     > Chain 2: 
-    > Chain 2: Gradient evaluation took 9e-06 seconds
-    > Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+    > Chain 2: Gradient evaluation took 8e-06 seconds
+    > Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
     > Chain 2: Adjust your expectations accordingly!
     > Chain 2: 
     > Chain 2: 
@@ -1350,14 +1350,14 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
     > Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
     > Chain 2: 
     > Chain 2:  Elapsed Time: 0.028 seconds (Warm-up)
-    > Chain 2:                0.04 seconds (Sampling)
-    > Chain 2:                0.068 seconds (Total)
+    > Chain 2:                0.041 seconds (Sampling)
+    > Chain 2:                0.069 seconds (Total)
     > Chain 2: 
     > 
     > SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
     > Chain 3: 
-    > Chain 3: Gradient evaluation took 8e-06 seconds
-    > Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
+    > Chain 3: Gradient evaluation took 9e-06 seconds
+    > Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
     > Chain 3: Adjust your expectations accordingly!
     > Chain 3: 
     > Chain 3: 
@@ -1381,8 +1381,8 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
     > 
     > SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
     > Chain 4: 
-    > Chain 4: Gradient evaluation took 1.1e-05 seconds
-    > Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+    > Chain 4: Gradient evaluation took 9e-06 seconds
+    > Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
     > Chain 4: Adjust your expectations accordingly!
     > Chain 4: 
     > Chain 4: 
@@ -1400,8 +1400,8 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
     > Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
     > Chain 4: 
     > Chain 4:  Elapsed Time: 0.026 seconds (Warm-up)
-    > Chain 4:                0.04 seconds (Sampling)
-    > Chain 4:                0.066 seconds (Total)
+    > Chain 4:                0.041 seconds (Sampling)
+    > Chain 4:                0.067 seconds (Total)
     > Chain 4:
 
     > Bayes Factor (Order-Restriction)

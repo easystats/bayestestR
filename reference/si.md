@@ -283,15 +283,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.193 seconds (Warm-up)
-#> Chain 1:                0.205 seconds (Sampling)
-#> Chain 1:                0.398 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.191 seconds (Warm-up)
+#> Chain 1:                0.196 seconds (Sampling)
+#> Chain 1:                0.387 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.2e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
+#> Chain 2: Gradient evaluation took 1.5e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -308,15 +308,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.184 seconds (Warm-up)
-#> Chain 2:                0.164 seconds (Sampling)
-#> Chain 2:                0.348 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.195 seconds (Warm-up)
+#> Chain 2:                0.174 seconds (Sampling)
+#> Chain 2:                0.369 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 3.4e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.34 seconds.
+#> Chain 3: Gradient evaluation took 1.4e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -333,15 +333,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.17 seconds (Warm-up)
-#> Chain 3:                0.165 seconds (Sampling)
-#> Chain 3:                0.335 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.168 seconds (Warm-up)
+#> Chain 3:                0.253 seconds (Sampling)
+#> Chain 3:                0.421 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1.2e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
+#> Chain 4: Gradient evaluation took 1.5e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -358,24 +358,24 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.188 seconds (Warm-up)
-#> Chain 4:                0.13 seconds (Sampling)
-#> Chain 4:                0.318 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.169 seconds (Warm-up)
+#> Chain 4:                0.185 seconds (Sampling)
+#> Chain 4:                0.354 seconds (Total)
 #> Chain 4: 
 si(stan_model, verbose = FALSE)
 #> Support Interval
 #> 
 #> Parameter   |    BF = 1 SI | Effects |   Component
 #> --------------------------------------------------
-#> (Intercept) | [0.39, 2.64] |   fixed | conditional
-#> group1      | [0.39, 2.73] |   fixed | conditional
+#> (Intercept) | [0.41, 2.72] |   fixed | conditional
+#> group1      | [0.44, 2.75] |   fixed | conditional
 si(stan_model, BF = 3, verbose = FALSE)
 #> Support Interval
 #> 
 #> Parameter   |    BF = 3 SI | Effects |   Component
 #> --------------------------------------------------
-#> (Intercept) | [0.73, 2.32] |   fixed | conditional
-#> group1      | [0.68, 2.44] |   fixed | conditional
+#> (Intercept) | [0.83, 2.33] |   fixed | conditional
+#> group1      | [0.66, 2.44] |   fixed | conditional
 
 # emmGrid objects
 # ---------------
@@ -386,7 +386,7 @@ si(group_diff, prior = stan_model, verbose = FALSE)
 #> 
 #> contrast        |      BF = 1 SI
 #> --------------------------------
-#> group1 - group2 | [-2.75, -0.37]
+#> group1 - group2 | [-2.76, -0.34]
 
 # brms models
 # -----------
