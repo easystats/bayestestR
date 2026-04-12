@@ -158,8 +158,8 @@ model <- suppressWarnings(rstanarm::stan_glm(
   mpg ~ wt,
   data = mtcars, chains = 2, iter = 200, refresh = 0
 ))
-ci(model, method = "ETI", ci = c(0.80, 0.89))
-ci(model, method = "HDI", ci = c(0.80, 0.89))
+ci(model, method = "ETI", ci = c(0.80, 0.89, 0.95))
+ci(model, method = "HDI", ci = c(0.80, 0.89, 0.95))
 \dontshow{\}) # examplesIf}
 \dontshow{if (require("BayesFactor", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))

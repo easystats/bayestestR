@@ -1,6 +1,6 @@
 ---
 title: "Region of Practical Equivalence (ROPE)"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{Region of Practical Equivalence (ROPE)}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 csl: apa.csl
@@ -72,11 +72,6 @@ If this percentage is sufficiently high, the null hypothesis is accepted.
 
 Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using
 the percentage of the 95\% HDI that falls within the ROPE as a decision rule.
-However, as the 89\% HDI [is considered a better
-choice](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-[@kruschke2014doing; @mcelreath2014rethinking; @mcelreath2018statistical],
-`bayestestR` provides by default the percentage of the 89\% HDI that falls
-within the ROPE.
 
 However, [*simulation studies data*](https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full)
 suggest that using the percentage of the full posterior distribution, instead of

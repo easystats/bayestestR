@@ -37,9 +37,9 @@ badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-
 The *bayestestR* package is available on CRAN, while its latest
 development version is available on R-universe (from *rOpenSci*).
 
-| Type        | Source     | Command                                                                      |
-|-------------|------------|------------------------------------------------------------------------------|
-| Release     | CRAN       | `install.packages("bayestestR")`                                             |
+| Type | Source | Command |
+|----|----|----|
+| Release | CRAN | `install.packages("bayestestR")` |
 | Development | R-universe | `install.packages("bayestestR", repos = "https://easystats.r-universe.dev")` |
 
 Once you have downloaded the package, you can then load it using:
@@ -154,9 +154,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |   Median |        95% CI |     pd |   ps
-## ----------------------------------------------------
-## Posterior | 7.75e-03 | [-1.95, 1.98] | 50.36% | 0.46
+## Parameter |    Median |        95% CI |     pd |   ps
+## -----------------------------------------------------
+## Posterior | -5.70e-03 | [-2.00, 1.99] | 50.23% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -266,11 +266,11 @@ posterior distributions.
 ``` r
 posterior <- distribution_chisquared(10000, 4)
 
-hdi(posterior, ci = 0.89)
-## 89% HDI: [0.18, 7.63]
+hdi(posterior)
+## 95% HDI: [0.08, 9.53]
 
-eti(posterior, ci = 0.89)
-## 89% ETI: [0.75, 9.25]
+eti(posterior)
+## 95% ETI: [0.48, 11.14]
 ```
 
 ![](man/figures/uncertainty-plot-1.png)<!-- -->
@@ -314,8 +314,8 @@ p_direction(posterior)
 ### ROPE
 
 [`rope()`](https://easystats.github.io/bayestestR/reference/rope.html)
-computes the proportion (in percentage) of the HDI (default to the 89%
-HDI) of a posterior distribution that lies within a region of practical
+computes the proportion (in percentage) of the CI (default to the 95%
+ETI) of a posterior distribution that lies within a region of practical
 equivalence.
 
 Statistically, the probability of a posterior distribution of being
@@ -333,10 +333,9 @@ range can be automatically computed for models using the
 [rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
 function.
 
-Kruschke suggests using the proportion of the 95% (or 90%, considered
-more stable) HDI that falls within the ROPE as an index for
-“null-hypothesis” testing (as understood under the Bayesian framework,
-see
+Kruschke suggests using the proportion of the CI that falls within the
+ROPE as an index for “null-hypothesis” testing (as understood under the
+Bayesian framework, see
 [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
@@ -441,7 +440,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.4
+## [1] 0.39
 ```
 
 ## Code of Conduct
@@ -454,7 +453,7 @@ By contributing to this project, you agree to abide by its terms.
 # References
 
 <div id="refs" class="references csl-bib-body hanging-indent"
-line-spacing="2">
+entry-spacing="0" line-spacing="2">
 
 <div id="ref-kruschke2018rejecting" class="csl-entry">
 
