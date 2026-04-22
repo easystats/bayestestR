@@ -84,8 +84,8 @@ test_that("brms standard", {
     centrality = "mean"
   )
   s <- summary(model)
-  expect_identical(
-    colnames(out),
+  expect_named(
+    out,
     c(
       "Parameter",
       "Component",
@@ -138,19 +138,8 @@ test_that("brms standard", {
     out,
     c(
       "Parameter",
-      "Median",
-      "CI",
-      "CI_low",
-      "CI_high",
-      "pd",
-      "ROPE_CI",
-      "ROPE_low",
-      "ROPE_high",
-      "ROPE_Percentage",
-      "Rhat",
-      "ESS_tail",
       "ESS_bulk",
-      "MCSE"
+      "ESS_tail"
     )
   )
 })

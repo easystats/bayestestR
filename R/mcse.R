@@ -88,7 +88,29 @@ mcse.stanfit <- mcse.stanreg
 
 
 #' @export
-mcse.blavaan <- mcse.stanreg
+mcse.blavaan <- function(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
+  params <- insight::get_parameters(
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+
+  ess <- effective_sample(
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+
+  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
+}
 
 
 #' @keywords internal

@@ -194,11 +194,11 @@ diagnostic_posterior.stanreg <- function(
     )
     if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
-      diagnostic_df$ESS_tail <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
     }
     if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
       # fmt: skip
-      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS_bulk, ess_data$Parameter)[diagnostic_df$Parameter]
     }
   }
 
@@ -275,11 +275,11 @@ diagnostic_posterior.stanmvreg <- function(
     )
     if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
-      diagnostic_df$ESS_tail <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
     }
     if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
       # fmt: skip
-      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS_bulk, ess_data$Parameter)[diagnostic_df$Parameter]
     }
   }
 
@@ -449,11 +449,11 @@ diagnostic_posterior.stanfit <- function(
     ess_data <- effective_sample(posterior, effects = effects, parameters = parameters)
     if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
-      diagnostic_df$ESS_tail <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
     }
     if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
       # fmt: skip
-      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS_bulk, ess_data$Parameter)[diagnostic_df$Parameter]
     }
   }
 

@@ -1,4 +1,4 @@
-test_that("describe_posterior", {
+test_that("describe_posterior-1", {
   skip_if(getRversion() < "4.2")
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -32,19 +32,47 @@ test_that("describe_posterior", {
   )))
 
   expect_identical(dim(rez), c(1L, 19L))
-  expect_identical(colnames(rez), c(
-    "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
-    "CI_high", "p_MAP", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
-    "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "log_BF"
-  ))
+  expect_identical(
+    colnames(rez),
+    c(
+      "Parameter",
+      "Median",
+      "MAD",
+      "Mean",
+      "SD",
+      "MAP",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "p_MAP",
+      "pd",
+      "p_ROPE",
+      "ps",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "ROPE_Equivalence",
+      "log_BF"
+    )
+  )
 
-  expect_warning(expect_warning(expect_warning(describe_posterior(
-    x,
-    centrality = "all",
-    dispersion = TRUE,
-    test = "all",
-    ci = c(0.8, 0.9)
-  ), regex = "ROPE range"), regex = "Prior not specified"), regex = "not be precise")
+  expect_warning(
+    expect_warning(
+      expect_warning(
+        describe_posterior(
+          x,
+          centrality = "all",
+          dispersion = TRUE,
+          test = "all",
+          ci = c(0.8, 0.9)
+        ),
+        regex = "ROPE range"
+      ),
+      regex = "Prior not specified"
+    ),
+    regex = "not be precise"
+  )
   rez <- suppressWarnings(describe_posterior(
     x,
     centrality = "all",
@@ -76,7 +104,12 @@ test_that("describe_posterior", {
     )
   ))
 
-  rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+  rez <- suppressWarnings(describe_posterior(
+    x,
+    centrality = "all",
+    dispersion = TRUE,
+    test = "all"
+  ))
   expect_identical(dim(rez), c(4L, 19L))
   expect_warning(expect_warning(
     describe_posterior(
@@ -108,7 +141,7 @@ test_that("describe_posterior", {
 })
 
 
-test_that("describe_posterior", {
+test_that("describe_posterior-2", {
   skip_on_os(c("mac", "linux"))
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -127,12 +160,32 @@ test_that("describe_posterior", {
     regex = "not be precise"
   )
   expect_identical(dim(rez), c(2L, 21L))
-  expect_identical(colnames(rez), c(
-    "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
-    "CI_high", "p_MAP", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
-    "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "log_BF", "Rhat",
-    "ESS"
-  ))
+  expect_identical(
+    colnames(rez),
+    c(
+      "Parameter",
+      "Median",
+      "MAD",
+      "Mean",
+      "SD",
+      "MAP",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "p_MAP",
+      "pd",
+      "p_ROPE",
+      "ps",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "ROPE_Equivalence",
+      "log_BF",
+      "Rhat",
+      "ESS"
+    )
+  )
   expect_warning(
     {
       rez <- describe_posterior(
@@ -175,15 +228,35 @@ test_that("describe_posterior", {
   # brms -------------------------------------------------
 
   skip_on_os("windows")
-  x <- suppressWarnings(brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0))
+  x <- suppressWarnings(brms::brm(
+    mpg ~ wt + (1 | cyl) + (1 + wt | gear),
+    data = mtcars,
+    refresh = 0
+  ))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, ci = c(0.8, 0.9))
 
   expect_identical(dim(rez), c(4L, 16L))
-  expect_identical(colnames(rez), c(
-    "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
-    "CI_high", "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
-    "Rhat", "ESS"
-  ))
+  expect_identical(
+    colnames(rez),
+    c(
+      "Parameter",
+      "Median",
+      "MAD",
+      "Mean",
+      "SD",
+      "MAP",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "Rhat",
+      "ESS"
+    )
+  )
 
   rez <- describe_posterior(
     x,
@@ -208,7 +281,8 @@ test_that("describe_posterior", {
 
   # rstanarm -------------------------------------------------
 
-  model <- rstanarm::stan_glm(mpg ~ drat,
+  model <- rstanarm::stan_glm(
+    mpg ~ drat,
     data = mtcars,
     algorithm = "meanfield",
     refresh = 0
@@ -216,7 +290,8 @@ test_that("describe_posterior", {
 
   expect_identical(nrow(describe_posterior(model)), 2L)
 
-  model <- suppressWarnings(rstanarm::stan_glm(mpg ~ drat,
+  model <- suppressWarnings(rstanarm::stan_glm(
+    mpg ~ drat,
     data = mtcars,
     algorithm = "optimizing",
     refresh = 0
@@ -224,7 +299,8 @@ test_that("describe_posterior", {
 
   expect_identical(nrow(describe_posterior(model)), 2L)
 
-  model <- rstanarm::stan_glm(mpg ~ drat,
+  model <- rstanarm::stan_glm(
+    mpg ~ drat,
     data = mtcars,
     algorithm = "fullrank",
     refresh = 0
@@ -240,14 +316,26 @@ test_that("describe_posterior", {
   x <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
   expect_identical(dim(rez), c(1L, 23L))
-  rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
+  rez <- describe_posterior(
+    x,
+    centrality = "all",
+    dispersion = TRUE,
+    test = "all",
+    ci = c(0.8, 0.9)
+  )
   expect_identical(dim(rez), c(2L, 23L))
-  rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
+  rez <- describe_posterior(
+    x,
+    centrality = NULL,
+    dispersion = TRUE,
+    test = NULL,
+    ci_method = "quantile"
+  )
   expect_identical(dim(rez), c(1L, 7L))
 })
 
 
-test_that("describe_posterior", {
+test_that("describe_posterior-3", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
@@ -265,7 +353,7 @@ test_that("describe_posterior", {
   )
 })
 
-test_that("describe_posterior", {
+test_that("describe_posterior-4", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
@@ -277,7 +365,9 @@ test_that("describe_posterior", {
   p <- insight::get_parameters(m, effects = "all", component = "all")
 
   expect_equal(
-    suppressWarnings(describe_posterior(m, effects = "all", component = "all", verbose = FALSE)$Median),
+    suppressWarnings(
+      describe_posterior(m, effects = "all", component = "all", verbose = FALSE)$Median
+    ),
     suppressWarnings(describe_posterior(p, verbose = FALSE)$Median),
     tolerance = 1e-3
   )
@@ -298,7 +388,6 @@ test_that("describe_posterior w/ BF+SI", {
   expect_warning(expect_warning({
     rez <- describe_posterior(x, ci_method = "SI", test = "bf")
   }))
-
 
   # test si
   set.seed(555)
@@ -384,8 +473,10 @@ test_that("describe_posterior: BayesFactor", {
         Prior_Location = 0,
         Prior_Scale = 0.707106781186548
       ),
-      row.names = 1L, class = c("describe_posterior", "see_describe_posterior", "data.frame"),
-      ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"
+      row.names = 1L,
+      class = c("describe_posterior", "see_describe_posterior", "data.frame"),
+      ci_method = "hdi",
+      object_name = "ttestBF(mtcars$wt, mu = 3)"
     ),
     tolerance = 0.1,
     ignore_attr = TRUE
@@ -422,7 +513,12 @@ test_that("describe_posterior: BayesFactor", {
           NA
         ),
         CI = c(
-          0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
           NA
         ),
         CI_low = c(
@@ -445,15 +541,30 @@ test_that("describe_posterior: BayesFactor", {
         ),
         pd = c(1, 1, 1, 1, 1, 1, NA),
         ROPE_CI = c(
-          0.95, 0.95, 0.95,
-          0.95, 0.95, 0.95, NA
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          NA
         ),
         ROPE_low = c(
-          -0.1, -0.1, -0.1, -0.1,
-          -0.1, -0.1, NA
+          -0.1,
+          -0.1,
+          -0.1,
+          -0.1,
+          -0.1,
+          -0.1,
+          NA
         ),
         ROPE_high = c(
-          0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
           NA
         ),
         ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA),
@@ -479,12 +590,22 @@ test_that("describe_posterior: BayesFactor", {
         Prior_Location = c(NA, NA, NA, NA, NA, NA, 0),
         Prior_Scale = c(
           NA,
-          NA, NA, NA, NA, NA, 1
+          NA,
+          NA,
+          NA,
+          NA,
+          NA,
+          1
         )
       ),
       row.names = c(
-        1L, 4L, 2L, 5L, 3L,
-        6L, 7L
+        1L,
+        4L,
+        2L,
+        5L,
+        3L,
+        6L,
+        7L
       ),
       class = c("describe_posterior", "see_describe_posterior")
     ),
@@ -524,7 +645,12 @@ test_that("describe_posterior: BayesFactor", {
           NA
         ),
         CI = c(
-          0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
           NA
         ),
         CI_low = c(
@@ -547,15 +673,30 @@ test_that("describe_posterior: BayesFactor", {
         ),
         pd = c(1, 1, 1, 1, 1, 1, NA),
         ROPE_CI = c(
-          0.95, 0.95, 0.95,
-          0.95, 0.95, 0.95, NA
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          NA
         ),
         ROPE_low = c(
-          -0.1, -0.1, -0.1, -0.1,
-          -0.1, -0.1, NA
+          -0.1,
+          -0.1,
+          -0.1,
+          -0.1,
+          -0.1,
+          -0.1,
+          NA
         ),
         ROPE_high = c(
-          0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
           NA
         ),
         ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA),
@@ -581,15 +722,26 @@ test_that("describe_posterior: BayesFactor", {
         Prior_Location = c(NA, NA, NA, NA, NA, NA, 0),
         Prior_Scale = c(
           NA,
-          NA, NA, NA, NA, NA, 1.6
+          NA,
+          NA,
+          NA,
+          NA,
+          NA,
+          1.6
         )
       ),
       row.names = c(
-        1L, 4L, 2L, 5L,
-        3L, 6L, 7L
+        1L,
+        4L,
+        2L,
+        5L,
+        3L,
+        6L,
+        7L
       ),
       class = c(
-        "describe_posterior", "see_describe_posterior",
+        "describe_posterior",
+        "see_describe_posterior",
         "data.frame"
       ),
       ci_method = "hdi",
@@ -603,11 +755,18 @@ test_that("describe_posterior: BayesFactor", {
 
   set.seed(123)
   expect_equal(
-    describe_posterior(anovaBF(extra ~ group, data = sleep, progress = FALSE), ci_method = "hdi", ci = 0.95),
+    describe_posterior(
+      anovaBF(extra ~ group, data = sleep, progress = FALSE),
+      ci_method = "hdi",
+      ci = 0.95
+    ),
     structure(
       list(
         Parameter = c(
-          "mu", "group-1", "group-2", "sig2",
+          "mu",
+          "group-1",
+          "group-2",
+          "sig2",
           "g_group"
         ),
         Median = c(
@@ -619,7 +778,10 @@ test_that("describe_posterior: BayesFactor", {
         ),
         CI = c(
           0.95,
-          0.95, 0.95, 0.95, 0.95
+          0.95,
+          0.95,
+          0.95,
+          0.95
         ),
         CI_low = c(
           0.691696017646264,
@@ -637,8 +799,11 @@ test_that("describe_posterior: BayesFactor", {
         ),
         pd = c(0.99975, 0.927, 0.927, 1, 1),
         ROPE_CI = c(
-          0.95, 0.95,
-          0.95, 0.95, 0.95
+          0.95,
+          0.95,
+          0.95,
+          0.95,
+          0.95
         ),
         ROPE_low = c(
           -0.201791972090071,
@@ -656,7 +821,10 @@ test_that("describe_posterior: BayesFactor", {
         ),
         ROPE_Percentage = c(
           0,
-          0.162325703762168, 0.162325703762168, 0, 0.346487766377269
+          0.162325703762168,
+          0.162325703762168,
+          0,
+          0.346487766377269
         ),
         log_BF = c(
           0.235803198474248,
@@ -676,13 +844,17 @@ test_that("describe_posterior: BayesFactor", {
         Prior_Location = c(NA, 0, 0, NA, NA),
         Prior_Scale = c(
           NA,
-          0.5, 0.5, NA, NA
+          0.5,
+          0.5,
+          NA,
+          NA
         )
       ),
       row.names = c(4L, 2L, 3L, 5L, 1L),
       class = c(
         "describe_posterior",
-        "see_describe_posterior", "data.frame"
+        "see_describe_posterior",
+        "data.frame"
       ),
       ci_method = "hdi",
       object_name = "anovaBF(extra ~ group, data = sleep, progress = FALSE)"
@@ -708,8 +880,17 @@ test_that("describe_posterior: response column for marginaleffects", {
   expect_named(
     post,
     c(
-      "mpg", "group", "Median", "CI", "CI_low", "CI_high", "pd",
-      "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
+      "mpg",
+      "group",
+      "Median",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage"
     )
   )
   expect_identical(
