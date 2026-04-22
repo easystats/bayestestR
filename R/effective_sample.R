@@ -5,8 +5,9 @@
 #' samples. A higher ESS indicates more reliable estimates. For most
 #' applications, an effective sample size greater than 1,000 is sufficient for
 #' stable estimates (Bürkner, 2017). This function returns the effective sample
-#' size (ESS) for various Bayesian model objects. For `brmsfit` objects, the
-#' returned ESS corresponds to the bulk-ESS (and the tail-ESS is also returned).
+#' size (ESS) for various Bayesian model objects. For `brmsfit`, `stanreg`, and
+#' `stanfit` objects, the returned `ESS` corresponds to the **bulk-ESS** and
+#' `ESS_tail` to the **tail-ESS**.
 #'
 #' @param model A `stanreg`, `stanfit`, `brmsfit`, `blavaan`, or `MCMCglmm` object.
 #' @param ... Currently not used.
@@ -14,7 +15,8 @@
 #'
 #' @inheritSection hdi Model components
 #'
-#' @return A data frame with two columns: Parameter name and effective sample size (ESS).
+#' @return A data frame with columns for the parameter name, bulk ESS (`ESS`),
+#'   and (where available) tail ESS (`ESS_tail`).
 #'
 #' @details
 #'   - **Effective Sample (ESS)** should be as large as possible, altough
@@ -169,14 +171,16 @@ effective_sample.stanfit <- function(model,
     parameters = parameters
   )
 
-  insight::check_if_installed("rstan")
-
-  s <- as.data.frame(rstan::summary(model)$summary)
-  s <- s[rownames(s) %in% colnames(pars), ]
+  insight::check_if_installed("posterior")
+  idx <- as.data.frame(posterior::summarise_draws(model))
+  rows_to_keep <- idx$variable %in% colnames(pars)
+  # ess_*() functions are defined in:
+  # https://github.com/stan-dev/posterior/blob/master/R/convergence.R
 
   data.frame(
-    Parameter = rownames(s),
-    ESS = s[["n_eff"]],
+    Parameter = idx$variable[rows_to_keep],
+    ESS = round(idx[rows_to_keep, "ess_bulk"]),
+    ESS_tail = round(idx[rows_to_keep, "ess_tail"]),
     stringsAsFactors = FALSE,
     row.names = NULL
   )

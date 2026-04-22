@@ -30,7 +30,15 @@ argument can be used, which is directly passed to the \code{as.data.frame()}
 method (i.e., \code{as.data.frame(x, variable = variable)}).}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
-with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
+with one or more of these options: \code{"ESS"}, \code{"ESS_bulk"}, \code{"Rhat"}, \code{"MCSE"}
+or \code{"all"}. \code{"ESS"} returns the \strong{tail-ESS} (the minimum of the effective
+sample sizes for the 5\% and 95\% quantiles), which is the most relevant
+diagnostic for assessing the reliability of credible intervals and other
+tail-based quantities. \code{"ESS_bulk"} additionally returns the \strong{bulk-ESS}
+(the effective sample size for the bulk of the posterior, useful for
+assessing the reliability of central tendency estimates such as the mean or
+median). \code{"all"} includes \code{"ESS"}, \code{"Rhat"}, and \code{"MCSE"} (but not
+\code{"ESS_bulk"}; request \code{"ESS_bulk"} explicitly if needed).}
 
 \item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
 (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
@@ -81,10 +89,15 @@ Carlo Standard Error \code{MCSE}).
 \details{
 \strong{Effective Sample (ESS)} should be as large as possible, although for
 most applications, an effective sample size greater than 1000 is sufficient
-for stable estimates (\emph{Bürkner, 2017}). The ESS corresponds to the number of
-independent samples with the same estimation power as the N autocorrelated
-samples. It is is a measure of "how much independent information there is
-in autocorrelated chains" (\emph{Kruschke 2015, p182-3}).
+for stable estimates (\emph{Bürkner, 2017}). The ESS returned by
+\code{diagnostic_posterior()} is the \strong{tail-ESS}: it corresponds to the
+minimum of the effective sample sizes for the 5\% and 95\% quantiles, and
+is a diagnostic for the sampling efficiency in the tails of the posterior
+distribution. It is more relevant than the bulk-ESS for assessing
+the reliability of credible intervals, probabilities of direction, and
+other tail-based quantities. Note that the tail-ESS may differ from the
+ESS reported by \code{brms} (\code{Bulk_ESS}) or other tools; use \code{"ESS_bulk"} to
+also retrieve the bulk-ESS.
 
 \strong{Rhat} should be the closest to 1. It should not be larger than 1.1
 (\emph{Gelman and Rubin, 1992}) or 1.01 (\emph{Vehtari et al., 2019}). The split
