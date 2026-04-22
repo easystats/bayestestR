@@ -374,7 +374,7 @@ diagnostic_posterior.brmsfit <- function(
     if ("ESS" %in% diagnostic) {
       ess_df <- data.frame(
         Parameter = idx$variable,
-        ESS = round(idx$ess_tail),
+        ESS_tail = round(idx$ess_tail),
         stringsAsFactors = FALSE
       )
       diagnostic_df <- merge(diagnostic_df, ess_df, by = "Parameter", all.x = TRUE)
@@ -461,7 +461,7 @@ diagnostic_posterior.stanfit <- function(
         ess_col <- ess_data$ESS
       }
       # fmt: skip
-      diagnostic_df$ESS <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_tail <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
     }
     if ("ESS_bulk" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
