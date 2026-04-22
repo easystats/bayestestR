@@ -178,7 +178,7 @@ diagnostic_posterior.stanreg <- function(
   diagnostic_df <- as.data.frame(posterior$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "full")
+  MCSE <- mcse(posterior, effects = effects, component = component, parameters = parameters)
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # ESS: use tail ESS by default, with optional bulk ESS
@@ -339,41 +339,41 @@ diagnostic_posterior.brmsfit <- function(
 
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
-  } else if ("Rhat" %in% diagnostic) {
-    diagnostic <- c(diagnostic, "khat")
   }
 
   # Initialize diagnostic dataframe
   diagnostic_df <- data.frame(Parameter = params, stringsAsFactors = FALSE)
 
-  # Rhat from rstan summary
-  if ("Rhat" %in% diagnostic || "khat" %in% diagnostic) {
-    insight::check_if_installed("rstan")
-    s <- as.data.frame(rstan::summary(posterior$fit)$summary)
-    s$Parameter <- row.names(s)
-    diagnostic_df <- merge(
-      diagnostic_df,
-      s[, c("Parameter", "Rhat"), drop = FALSE],
-      by = "Parameter",
-      all.x = TRUE
-    )
-  }
+  # Use posterior::summarise_draws() as single source for Rhat and ESS
+  if (any(c("ESS", "ESS_bulk", "Rhat") %in% diagnostic)) {
+    insight::check_if_installed("posterior")
+    idx <- as.data.frame(posterior::summarise_draws(posterior))
+    idx <- idx[idx$variable %in% params, ]
 
-  # ESS: tail ESS by default, with optional bulk ESS
-  if (any(c("ESS", "ESS_bulk") %in% diagnostic)) {
-    ess_data <- effective_sample(
-      posterior,
-      effects = effects,
-      component = component,
-      parameters = parameters
-    )
+    if ("Rhat" %in% diagnostic) {
+      rhat_df <- data.frame(
+        Parameter = idx$variable,
+        Rhat = idx$rhat,
+        stringsAsFactors = FALSE
+      )
+      diagnostic_df <- merge(diagnostic_df, rhat_df, by = "Parameter", all.x = TRUE)
+    }
+
     if ("ESS" %in% diagnostic) {
-      ess_col <- if ("ESS_tail" %in% names(ess_data)) ess_data$ESS_tail else ess_data$ESS
-      ess_df <- data.frame(Parameter = ess_data$Parameter, ESS = ess_col)
+      ess_df <- data.frame(
+        Parameter = idx$variable,
+        ESS = round(idx$ess_tail),
+        stringsAsFactors = FALSE
+      )
       diagnostic_df <- merge(diagnostic_df, ess_df, by = "Parameter", all.x = TRUE)
     }
-    if ("ESS_bulk" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
-      ess_bulk_df <- data.frame(Parameter = ess_data$Parameter, ESS_bulk = ess_data$ESS)
+
+    if ("ESS_bulk" %in% diagnostic) {
+      ess_bulk_df <- data.frame(
+        Parameter = idx$variable,
+        ESS_bulk = round(idx$ess_bulk),
+        stringsAsFactors = FALSE
+      )
       diagnostic_df <- merge(diagnostic_df, ess_bulk_df, by = "Parameter", all.x = TRUE)
     }
   }
