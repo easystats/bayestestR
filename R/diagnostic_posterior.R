@@ -171,7 +171,7 @@ diagnostic_posterior.stanreg <- function(
   )
 
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
+    diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- diagnostic
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
@@ -192,16 +192,11 @@ diagnostic_posterior.stanreg <- function(
       component = component,
       parameters = parameters
     )
-    if ("ESS" %in% diagnostic) {
-      if ("ESS_tail" %in% names(ess_data)) {
-        ess_col <- ess_data$ESS_tail
-      } else {
-        ess_col <- ess_data$ESS
-      }
+    if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
-      diagnostic_df$ESS <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_tail <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
     }
-    if ("ESS_bulk" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+    if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
       # fmt: skip
       diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
     }
@@ -258,7 +253,7 @@ diagnostic_posterior.stanmvreg <- function(
   )
 
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
+    diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- diagnostic
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
@@ -278,12 +273,11 @@ diagnostic_posterior.stanmvreg <- function(
       effects = effects,
       parameters = parameters
     )
-    if ("ESS" %in% diagnostic) {
-      ess_col <- if ("ESS_tail" %in% names(ess_data)) ess_data$ESS_tail else ess_data$ESS
+    if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
-      diagnostic_df$ESS <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
+      diagnostic_df$ESS_tail <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
     }
-    if ("ESS_bulk" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+    if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
       # fmt: skip
       diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
     }
@@ -453,16 +447,11 @@ diagnostic_posterior.stanfit <- function(
 
   if (any(c("ESS", "ESS_bulk") %in% diagnostic)) {
     ess_data <- effective_sample(posterior, effects = effects, parameters = parameters)
-    if ("ESS" %in% diagnostic) {
-      if ("ESS_tail" %in% names(ess_data)) {
-        ess_col <- ess_data$ESS_tail
-      } else {
-        ess_col <- ess_data$ESS
-      }
+    if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
       diagnostic_df$ESS_tail <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
     }
-    if ("ESS_bulk" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+    if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
       # fmt: skip
       diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
     }

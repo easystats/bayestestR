@@ -72,8 +72,7 @@ samples. A higher ESS indicates more reliable estimates. For most
 applications, an effective sample size greater than 1,000 is sufficient for
 stable estimates (Bürkner, 2017). This function returns the effective sample
 size (ESS) for various Bayesian model objects. For \code{brmsfit}, \code{stanreg}, and
-\code{stanfit} objects, the returned \code{ESS} corresponds to the \strong{bulk-ESS} and
-\code{ESS_tail} to the \strong{tail-ESS}.
+\code{stanfit} objects, both \strong{bulk-ESS} and \strong{tail-ESS} are returned.
 }
 \details{
 \itemize{

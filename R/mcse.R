@@ -30,11 +30,13 @@ mcse <- function(model, ...) {
 
 
 #' @export
-mcse.brmsfit <- function(model,
-                         effects = "fixed",
-                         component = "conditional",
-                         parameters = NULL,
-                         ...) {
+mcse.brmsfit <- function(
+  model,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  ...
+) {
   # check arguments
   params <- insight::get_parameters(
     model,
@@ -50,17 +52,19 @@ mcse.brmsfit <- function(model,
     parameters = parameters
   )
 
-  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
+  .mcse(params, stats::setNames(ess$ESS_bulk, ess$Parameter))
 }
 
 
 #' @rdname mcse
 #' @export
-mcse.stanreg <- function(model,
-                         effects = "fixed",
-                         component = "location",
-                         parameters = NULL,
-                         ...) {
+mcse.stanreg <- function(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
   params <- insight::get_parameters(
     model,
     effects = effects,
@@ -75,7 +79,7 @@ mcse.stanreg <- function(model,
     parameters = parameters
   )
 
-  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
+  .mcse(params, stats::setNames(ess$ESS_bulk, ess$Parameter))
 }
 
 

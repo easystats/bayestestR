@@ -6,8 +6,7 @@
 #' applications, an effective sample size greater than 1,000 is sufficient for
 #' stable estimates (Bürkner, 2017). This function returns the effective sample
 #' size (ESS) for various Bayesian model objects. For `brmsfit`, `stanreg`, and
-#' `stanfit` objects, the returned `ESS` corresponds to the **bulk-ESS** and
-#' `ESS_tail` to the **tail-ESS**.
+#' `stanfit` objects, both **bulk-ESS** and **tail-ESS** are returned.
 #'
 #' @param model A `stanreg`, `stanfit`, `brmsfit`, `blavaan`, or `MCMCglmm` object.
 #' @param ... Currently not used.
@@ -86,11 +85,13 @@ effective_sample.default <- function(model, ...) {
 
 #' @rdname effective_sample
 #' @export
-effective_sample.brmsfit <- function(model,
-                                     effects = "fixed",
-                                     component = "conditional",
-                                     parameters = NULL,
-                                     ...) {
+effective_sample.brmsfit <- function(
+  model,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  ...
+) {
   pars <- insight::find_parameters(
     model,
     effects = effects,
@@ -107,7 +108,7 @@ effective_sample.brmsfit <- function(model,
 
   data.frame(
     Parameter = idx$variable[rows_to_keep],
-    ESS = round(idx[rows_to_keep, "ess_bulk"]),
+    ESS_bulk = round(idx[rows_to_keep, "ess_bulk"]),
     ESS_tail = round(idx[rows_to_keep, "ess_tail"]),
     stringsAsFactors = FALSE,
     row.names = NULL
@@ -116,11 +117,13 @@ effective_sample.brmsfit <- function(model,
 
 
 #' @export
-effective_sample.stanreg <- function(model,
-                                     effects = "fixed",
-                                     component = "location",
-                                     parameters = NULL,
-                                     ...) {
+effective_sample.stanreg <- function(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
   effective_sample.brmsfit(
     model,
     effects = effects,
@@ -132,11 +135,13 @@ effective_sample.stanreg <- function(model,
 
 
 #' @export
-effective_sample.stanmvreg <- function(model,
-                                       effects = "fixed",
-                                       component = "location",
-                                       parameters = NULL,
-                                       ...) {
+effective_sample.stanmvreg <- function(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
   pars <- insight::get_parameters(
     model,
     effects = effects,
@@ -152,7 +157,7 @@ effective_sample.stanmvreg <- function(model,
 
   data.frame(
     Parameter = idx$variable[rows_to_keep],
-    ESS = round(idx[rows_to_keep, "ess_bulk"]),
+    ESS_bulk = round(idx[rows_to_keep, "ess_bulk"]),
     ESS_tail = round(idx[rows_to_keep, "ess_tail"]),
     stringsAsFactors = FALSE,
     row.names = NULL
@@ -161,10 +166,7 @@ effective_sample.stanmvreg <- function(model,
 
 
 #' @export
-effective_sample.stanfit <- function(model,
-                                     effects = "fixed",
-                                     parameters = NULL,
-                                     ...) {
+effective_sample.stanfit <- function(model, effects = "fixed", parameters = NULL, ...) {
   pars <- insight::get_parameters(
     model,
     effects = effects,
@@ -179,7 +181,7 @@ effective_sample.stanfit <- function(model,
 
   data.frame(
     Parameter = idx$variable[rows_to_keep],
-    ESS = round(idx[rows_to_keep, "ess_bulk"]),
+    ESS_bulk = round(idx[rows_to_keep, "ess_bulk"]),
     ESS_tail = round(idx[rows_to_keep, "ess_tail"]),
     stringsAsFactors = FALSE,
     row.names = NULL
@@ -203,10 +205,7 @@ effective_sample.blavaan <- function(model, parameters = NULL, ...) {
 
 
 #' @export
-effective_sample.MCMCglmm <- function(model,
-                                      effects = "fixed",
-                                      parameters = NULL,
-                                      ...) {
+effective_sample.MCMCglmm <- function(model, effects = "fixed", parameters = NULL, ...) {
   pars <- insight::get_parameters(
     model,
     effects = effects,
@@ -225,12 +224,15 @@ effective_sample.MCMCglmm <- function(model,
   )
 
   if (nrow(s.random) > 0L) {
-    es <- rbind(es, data.frame(
-      Parameter = rownames(s.random),
-      ESS = round(s.random[["eff.samp"]]),
-      stringsAsFactors = FALSE,
-      row.names = NULL
-    ))
+    es <- rbind(
+      es,
+      data.frame(
+        Parameter = rownames(s.random),
+        ESS = round(s.random[["eff.samp"]]),
+        stringsAsFactors = FALSE,
+        row.names = NULL
+      )
+    )
   }
 
   es[match(pars[[1]], es$Parameter), ]
