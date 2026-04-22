@@ -13,9 +13,9 @@
       
       Parameter   |  Rhat | ESS
       -------------------------
-      (Intercept) | 1.011 | 110
-      child       | 0.996 | 278
-      camper      | 0.996 | 271
+      (Intercept) | 1.009 | 152
+      child       | 0.999 | 190
+      camper      | 1.023 | 113
 
 ---
 
@@ -32,9 +32,9 @@
       
       Parameter   |  Rhat | ESS
       -------------------------
-      (Intercept) | 1.011 | 110
-      child       | 0.996 | 278
-      camper      | 0.996 | 271
+      (Intercept) | 1.009 | 152
+      child       | 0.999 | 190
+      camper      | 1.023 | 113
       
       # Fixed effects (zero-inflated)
       
@@ -46,9 +46,9 @@
       
       Parameter   |  Rhat | ESS
       -------------------------
-      (Intercept) | 0.997 | 138
-      child       | 0.996 | 303
-      camper      | 0.996 | 292
+      (Intercept) | 1.012 | 161
+      child       | 1.004 | 241
+      camper      | 0.997 | 137
       
       # Random effects (conditional) (SD/Cor: persons)
       
@@ -58,7 +58,7 @@
       
       Parameter   |  Rhat | ESS
       -------------------------
-      (Intercept) | 1.010 | 126
+      (Intercept) | 1.008 | 133
       
       # Random effects (zero-inflated) (SD/Cor: persons)
       
@@ -68,5 +68,5 @@
       
       Parameter   |  Rhat | ESS
       -------------------------
-      (Intercept) | 0.996 | 129
+      (Intercept) | 1.005 | 161
 
