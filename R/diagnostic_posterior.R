@@ -15,8 +15,7 @@
 #' tail-based quantities. `"ESS_bulk"` additionally returns the **bulk-ESS**
 #' (the effective sample size for the bulk of the posterior, useful for
 #' assessing the reliability of central tendency estimates such as the mean or
-#' median). `"all"` includes `"ESS"`, `"Rhat"`, and `"MCSE"` (but not
-#' `"ESS_bulk"`; request `"ESS_bulk"` explicitly if needed).
+#' median). `"all"` includes both tail and bulk `"ESS"`, `"Rhat"`, and `"MCSE"`.
 #'
 #' @inheritSection hdi Model components
 #'
@@ -350,7 +349,7 @@ diagnostic_posterior.brmsfit <- function(
   )
 
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE")
+    diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE")
   }
 
   # Initialize diagnostic dataframe
@@ -440,7 +439,7 @@ diagnostic_posterior.stanfit <- function(
     several.ok = TRUE
   )
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE")
+    diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE")
   }
 
   insight::check_if_installed("rstan")

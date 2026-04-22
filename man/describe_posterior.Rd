@@ -127,8 +127,7 @@ diagnostic for assessing the reliability of credible intervals and other
 tail-based quantities. \code{"ESS_bulk"} additionally returns the \strong{bulk-ESS}
 (the effective sample size for the bulk of the posterior, useful for
 assessing the reliability of central tendency estimates such as the mean or
-median). \code{"all"} includes \code{"ESS"}, \code{"Rhat"}, and \code{"MCSE"} (but not
-\code{"ESS_bulk"}; request \code{"ESS_bulk"} explicitly if needed).}
+median). \code{"all"} includes both tail and bulk \code{"ESS"}, \code{"Rhat"}, and \code{"MCSE"}.}
 
 \item{priors}{Add the prior used for each parameter.}
 
