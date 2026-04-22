@@ -122,7 +122,11 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
   mon <- rstan::monitor(posterior, print = FALSE, probs = 0.5)
   mon_df <- as.data.frame(mon)
   # Use Tail_ESS if available (rstan >= 2.21), otherwise fall back to n_eff
-  ess_col <- if ("Tail_ESS" %in% names(mon_df)) round(mon_df[["Tail_ESS"]]) else mon_df[["n_eff"]]
+  ess_col <- if ("Tail_ESS" %in% names(mon_df)) {
+    round(mon_df[["Tail_ESS"]])
+  } else {
+    mon_df[["n_eff"]]
+  }
   ret <- data.frame(
     Parameter = rownames(mon),
     ESS = ess_col,
@@ -178,7 +182,7 @@ diagnostic_posterior.stanreg <- function(
   diagnostic_df <- as.data.frame(posterior$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = effects, component = component, parameters = parameters)
+  MCSE <- mcse(posterior, effects = "full")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # ESS: use tail ESS by default, with optional bulk ESS
@@ -190,10 +194,16 @@ diagnostic_posterior.stanreg <- function(
       parameters = parameters
     )
     if ("ESS" %in% diagnostic) {
-      ess_col <- if ("ESS_tail" %in% names(ess_data)) ess_data$ESS_tail else ess_data$ESS
+      if ("ESS_tail" %in% names(ess_data)) {
+        ess_col <- ess_data$ESS_tail
+      } else {
+        ess_col <- ess_data$ESS
+      }
+      # fmt: skip
       diagnostic_df$ESS <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
     }
     if ("ESS_bulk" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+      # fmt: skip
       diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
     }
   }
@@ -271,9 +281,11 @@ diagnostic_posterior.stanmvreg <- function(
     )
     if ("ESS" %in% diagnostic) {
       ess_col <- if ("ESS_tail" %in% names(ess_data)) ess_data$ESS_tail else ess_data$ESS
+      # fmt: skip
       diagnostic_df$ESS <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
     }
     if ("ESS_bulk" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+      # fmt: skip
       diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
     }
   }
@@ -380,7 +392,12 @@ diagnostic_posterior.brmsfit <- function(
 
   # MCSE
   if ("MCSE" %in% diagnostic) {
-    MCSE <- mcse(posterior, effects = effects, component = component, parameters = parameters)
+    MCSE <- mcse(
+      posterior,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    )
     diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all.x = TRUE)
   }
 
@@ -438,10 +455,16 @@ diagnostic_posterior.stanfit <- function(
   if (any(c("ESS", "ESS_bulk") %in% diagnostic)) {
     ess_data <- effective_sample(posterior, effects = effects, parameters = parameters)
     if ("ESS" %in% diagnostic) {
-      ess_col <- if ("ESS_tail" %in% names(ess_data)) ess_data$ESS_tail else ess_data$ESS
+      if ("ESS_tail" %in% names(ess_data)) {
+        ess_col <- ess_data$ESS_tail
+      } else {
+        ess_col <- ess_data$ESS
+      }
+      # fmt: skip
       diagnostic_df$ESS <- stats::setNames(ess_col, ess_data$Parameter)[diagnostic_df$Parameter]
     }
     if ("ESS_bulk" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+      # fmt: skip
       diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS, ess_data$Parameter)[diagnostic_df$Parameter]
     }
   }
