@@ -37,6 +37,7 @@ mcse.brmsfit <- function(
   parameters = NULL,
   ...
 ) {
+  insight::check_if_installed("posterior")
   # check arguments
   params <- insight::get_parameters(
     model,
@@ -44,15 +45,12 @@ mcse.brmsfit <- function(
     component = component,
     parameters = parameters
   )
-
-  ess <- effective_sample(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
+  data.frame(
+    Parameter = colnames(params),
+    MCSE = vapply(params, posterior::mcse_mean, numeric(1)),
+    stringsAsFactors = FALSE,
+    row.names = NULL
   )
-
-  .mcse(params, stats::setNames(ess$ESS_bulk, ess$Parameter))
 }
 
 
@@ -65,21 +63,7 @@ mcse.stanreg <- function(
   parameters = NULL,
   ...
 ) {
-  params <- insight::get_parameters(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
-  )
-
-  ess <- effective_sample(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
-  )
-
-  .mcse(params, stats::setNames(ess$ESS_bulk, ess$Parameter))
+  mcse.brmsfit(model, effects, component, parameters, ...)
 }
 
 
