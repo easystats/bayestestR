@@ -1,4 +1,4 @@
-test_that("rstanarm", {
+test_that("rstanarm-1", {
   skip_on_cran()
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -29,10 +29,14 @@ test_that("rstanarm", {
 
   model <- insight::download_model("stanreg_gam_1")
   invisible(capture.output(
-    expect_warning(params <- describe_posterior(model,
-      centrality = "all",
-      test = "all", dispersion = TRUE
-    ))
+    expect_warning(
+      params <- describe_posterior(
+        model,
+        centrality = "all",
+        test = "all",
+        dispersion = TRUE
+      )
+    )
   ))
   expect_equal(c(nrow(params), ncol(params)), c(4, 22))
 
@@ -47,7 +51,7 @@ test_that("rstanarm", {
   expect_error(equivalence_test(model, range = c(0.1, 0.3, 0.5)))
 })
 
-test_that("rstanarm", {
+test_that("rstanarm-2", {
   skip_on_cran()
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -57,17 +61,41 @@ test_that("rstanarm", {
   set.seed(333)
   model <- insight::download_model("stanreg_glm_3")
 
-  out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
+  out <- describe_posterior(
+    model,
+    effects = "all",
+    component = "all",
+    centrality = "mean"
+  )
   s <- summary(model)
-  expect_identical(colnames(out), c(
-    "Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-    "ROPE_low", "ROPE_high", "ROPE_Percentage", "Rhat", "ESS"
-  ))
+  expect_named(
+    out,
+    c(
+      "Parameter",
+      "Mean",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "Rhat",
+      "ESS_tail"
+    )
+  )
   expect_equal(as.vector(s[1:4, 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
   expect_equal(as.vector(s[1:4, 8, drop = TRUE]), out$Rhat, tolerance = 1e-1)
+
+  out <- diagnostic_posterior(model)
+  expect_named(
+    out,
+    c("Parameter", "Rhat", "MCSE", "ESS_tail", "ESS_bulk")
+  )
 })
 
-test_that("rstanarm", {
+test_that("rstanarm-3", {
   skip_on_cran()
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -77,26 +105,46 @@ test_that("rstanarm", {
   set.seed(333)
   model <- insight::download_model("stanreg_merMod_3")
 
-  out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
+  out <- describe_posterior(
+    model,
+    effects = "all",
+    component = "all",
+    centrality = "mean"
+  )
   s <- summary(model)
   expect_named(
     out,
     c(
-      "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
-      "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
-      "Rhat", "ESS"
+      "Parameter",
+      "Effects",
+      "Mean",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "Rhat",
+      "ESS_tail"
     )
   )
   expect_equal(as.vector(s[c(1:4, 8), 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
   expect_equal(as.vector(s[c(1:4, 8), 8, drop = TRUE]), out$Rhat, tolerance = 1e-1)
 
-  out <- describe_posterior(model, effects = "full", component = "all", centrality = "mean")
+  out <- describe_posterior(
+    model,
+    effects = "full",
+    component = "all",
+    centrality = "mean"
+  )
   s <- summary(model)
   expect_equal(as.vector(s[1:8, 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
   expect_equal(as.vector(s[1:8, 8, drop = TRUE]), out$Rhat, tolerance = 1e-1)
 })
 
-test_that("rstanarm", {
+test_that("rstanarm-4", {
   skip_on_cran()
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -106,13 +154,25 @@ test_that("rstanarm", {
   set.seed(333)
   model <- insight::download_model("stanmvreg_1")
 
-  out <- describe_posterior(model, effects = "fixed", component = "all", centrality = "mean", test = NULL)
+  out <- describe_posterior(
+    model,
+    effects = "fixed",
+    component = "all",
+    centrality = "mean",
+    test = NULL
+  )
   s <- summary(model)
   expect_named(
     out,
     c(
-      "Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
-      "Rhat", "ESS"
+      "Parameter",
+      "Response",
+      "Mean",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Rhat",
+      "ESS_tail"
     )
   )
   expect_equal(as.vector(s[c(1:2, 5:7), 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
@@ -120,7 +180,7 @@ test_that("rstanarm", {
 })
 
 
-test_that("rstanarm", {
+test_that("rstanarm-5", {
   skip_on_cran()
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -138,10 +198,21 @@ test_that("rstanarm", {
     test = NULL,
     priors = TRUE
   )
-  expect_identical(colnames(out), c(
-    "Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
-    "Rhat", "ESS", "Prior_Distribution", "Prior_Location",
-    "Prior_Scale"
-  ))
+  expect_identical(
+    colnames(out),
+    c(
+      "Parameter",
+      "Response",
+      "Mean",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "Rhat",
+      "ESS_tail",
+      "Prior_Distribution",
+      "Prior_Location",
+      "Prior_Scale"
+    )
+  )
   expect_equal(nrow(out), 5)
 })
