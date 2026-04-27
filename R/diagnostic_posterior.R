@@ -259,7 +259,7 @@ diagnostic_posterior.stanmvreg <- function(
   )
 
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE", "khat")
+    diagnostic <- c("ESS_tail", "ESS_bulk", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- diagnostic
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
@@ -353,7 +353,7 @@ diagnostic_posterior.brmsfit <- function(
   )
 
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE")
+    diagnostic <- c("ESS_tail", "ESS_bulk", "Rhat", "MCSE")
   }
   # ESS: use tail ESS by default, with optional bulk ESS
   if ("ESS" %in% diagnostic) {
@@ -447,7 +447,7 @@ diagnostic_posterior.stanfit <- function(
     several.ok = TRUE
   )
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE")
+    diagnostic <- c("ESS_tail", "ESS_bulk", "Rhat", "MCSE")
   }
   # ESS: use tail ESS by default, with optional bulk ESS
   if ("ESS" %in% diagnostic) {
