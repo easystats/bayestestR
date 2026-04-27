@@ -195,12 +195,12 @@ posteriors <- describe_posterior(model)
 print_md(posteriors, digits = 2)
 ```
 
-| Parameter    | Median | 95% CI         | pd   | ROPE            | % in ROPE | Rhat  | ESS  |
-|:-------------|-------:|:---------------|:-----|:----------------|----------:|:------|:-----|
-| (Intercept)  |   4.30 | \[4.15, 4.46\] | 100% | \[-0.08, 0.08\] |        0% | 1.000 | 4057 |
-| Petal.Length |   0.41 | \[0.37, 0.45\] | 100% | \[-0.08, 0.08\] |        0% | 1.000 | 4115 |
+| Parameter | Median | 95% CI | pd | ROPE | % in ROPE | Rhat | ESS (tail) |
+|:---|---:|:---|:---|:---|---:|:---|---:|
+| (Intercept) | 4.30 | \[4.15, 4.46\] | 100% | \[-0.08, 0.08\] | 0% | 1.000 | 2562 |
+| Petal.Length | 0.41 | \[0.37, 0.45\] | 100% | \[-0.08, 0.08\] | 0% | 1.000 | 2584 |
 
-Summary of Posterior Distribution {.table}
+Summary of Posterior Distribution {.table style="width:100%;"}
 
 **That’s it!**
 

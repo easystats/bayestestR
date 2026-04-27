@@ -4,14 +4,14 @@ there is in autocorrelated chains. It is used to assess the quality of MCMC
 samples. A higher ESS indicates more reliable estimates. For most
 applications, an effective sample size greater than 1,000 is sufficient for
 stable estimates (Bürkner, 2017). This function returns the effective sample
-size (ESS) for various Bayesian model objects. For brmsfit objects, the
-returned ESS corresponds to the bulk-ESS (and the tail-ESS is also returned)."><meta property="og:description" content="Effective Sample Size (ESS) is a measure of how much independent information
+size (ESS) for various Bayesian model objects. For brmsfit, stanreg, and
+stanfit objects, both bulk-ESS and tail-ESS are returned."><meta property="og:description" content="Effective Sample Size (ESS) is a measure of how much independent information
 there is in autocorrelated chains. It is used to assess the quality of MCMC
 samples. A higher ESS indicates more reliable estimates. For most
 applications, an effective sample size greater than 1,000 is sufficient for
 stable estimates (Bürkner, 2017). This function returns the effective sample
-size (ESS) for various Bayesian model objects. For brmsfit objects, the
-returned ESS corresponds to the bulk-ESS (and the tail-ESS is also returned)."><meta property="og:image" content="https://easystats.github.io/bayestestR/reference/figures/card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@easystats4u"><meta name="twitter:site" content="@easystats4u"></head><body>
+size (ESS) for various Bayesian model objects. For brmsfit, stanreg, and
+stanfit objects, both bulk-ESS and tail-ESS are returned."><meta property="og:image" content="https://easystats.github.io/bayestestR/reference/figures/card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@easystats4u"><meta name="twitter:site" content="@easystats4u"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -19,7 +19,7 @@ returned ESS corresponds to the bulk-ESS (and the tail-ESS is also returned)."><
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,8 +89,8 @@ there is in autocorrelated chains. It is used to assess the quality of MCMC
 samples. A higher ESS indicates more reliable estimates. For most
 applications, an effective sample size greater than 1,000 is sufficient for
 stable estimates (Bürkner, 2017). This function returns the effective sample
-size (ESS) for various Bayesian model objects. For <code>brmsfit</code> objects, the
-returned ESS corresponds to the bulk-ESS (and the tail-ESS is also returned).</p>
+size (ESS) for various Bayesian model objects. For <code>brmsfit</code>, <code>stanreg</code>, and
+<code>stanfit</code> objects, both <strong>bulk-ESS</strong> and <strong>tail-ESS</strong> are returned.</p>
     </div>
 
     <div class="section level2">
@@ -163,7 +163,8 @@ for the output.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame with two columns: Parameter name and effective sample size (ESS).</p>
+    <p>A data frame with columns for the parameter name, bulk ESS (<code>ESS</code>),
+and (where available) tail ESS (<code>ESS_tail</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -233,10 +234,10 @@ for assessing convergence of MCMC. Bayesian Analysis, 16(2), 667-718.</p></li>
 <span class="r-in"><span>  refresh <span class="op">=</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">effective_sample</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter ESS ESS_tail</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 162      131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          wt 217      108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        gear 177      108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter ESS_bulk ESS_tail</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept)      162      131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          wt      217      108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        gear      177      108</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>,</span></span>
@@ -248,9 +249,9 @@ for assessing convergence of MCMC. Bayesian Analysis, 16(2), 667-718.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Compiling Stan program...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start sampling</span>
 <span class="r-in"><span><span class="fu">effective_sample</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter ESS ESS_tail</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 b_Intercept  56       94</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        b_wt  67       86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter ESS_bulk ESS_tail</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 b_Intercept       56       94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        b_wt       67       86</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

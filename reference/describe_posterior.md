@@ -171,7 +171,15 @@ describe_posterior(
 - diagnostic:
 
   Diagnostic metrics to compute. Character (vector) or list with one or
-  more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
+  more of these options: `"ESS"`, `"ESS_bulk"`, `"Rhat"`, `"MCSE"` or
+  `"all"`. `"ESS"` returns the **tail-ESS** (the minimum of the
+  effective sample sizes for the 5% and 95% quantiles), which is the
+  most relevant diagnostic for assessing the reliability of credible
+  intervals and other tail-based quantities. `"ESS_bulk"` additionally
+  returns the **bulk-ESS** (the effective sample size for the bulk of
+  the posterior, useful for assessing the reliability of central
+  tendency estimates such as the mean or median). `"all"` includes both
+  tail and bulk `"ESS"`, `"Rhat"`, and `"MCSE"`.
 
 - priors:
 
@@ -412,11 +420,11 @@ describe_posterior(model)
 #> wt          |  -5.37 | [-6.57, -4.25] |   100% | [-0.60, 0.60] |        0%
 #> gear        |  -0.38 | [-2.03,  1.30] | 63.50% | [-0.60, 0.60] |    44.74%
 #> 
-#> Parameter   |  Rhat | ESS
-#> -------------------------
-#> (Intercept) | 1.011 | 190
-#> wt          | 1.017 | 156
-#> gear        | 1.007 | 173
+#> Parameter   |  Rhat | ESS (tail)
+#> --------------------------------
+#> (Intercept) | 1.011 |        152
+#> wt          | 1.017 |        155
+#> gear        | 1.007 |        138
 describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 #> Warning: Bayes factors might not be precise.
 #>   For precise Bayes factors, sampling at least 40,000 posterior samples is
@@ -435,11 +443,11 @@ describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 #> wt          |   100% |   < .001 | 1.00 | [-0.60, 0.60] |        0%
 #> gear        | 63.50% |   0.425  | 0.42 | [-0.60, 0.60] |    44.74%
 #> 
-#> Parameter   | Equivalence (ROPE) |       BF |  Rhat | ESS
-#> ---------------------------------------------------------
-#> (Intercept) |           Rejected | 1.14e+05 | 1.011 | 190
-#> wt          |           Rejected | 1.70e+04 | 1.017 | 156
-#> gear        |          Undecided |    0.049 | 1.007 | 173
+#> Parameter   | Equivalence (ROPE) |       BF |  Rhat | ESS (tail)
+#> ----------------------------------------------------------------
+#> (Intercept) |           Rejected | 1.14e+05 | 1.011 |        152
+#> wt          |           Rejected | 1.70e+04 | 1.017 |        155
+#> gear        |          Undecided |    0.049 | 1.007 |        138
 describe_posterior(model, ci = c(0.80, 0.90))
 #> Summary of Posterior Distribution 
 #> 
@@ -449,11 +457,11 @@ describe_posterior(model, ci = c(0.80, 0.90))
 #> wt          |  -5.37 | [-6.18, -4.57] | [-6.44, -4.40] |   100% | [-0.60, 0.60]
 #> gear        |  -0.38 | [-1.37,  0.86] | [-1.67,  1.20] | 63.50% | [-0.60, 0.60]
 #> 
-#> Parameter   | % in ROPE |  Rhat | ESS
-#> -------------------------------------
-#> (Intercept) |        0% | 1.011 | 190
-#> wt          |        0% | 1.017 | 156
-#> gear        |    44.74% | 1.007 | 173
+#> Parameter   | % in ROPE |  Rhat | ESS (tail)
+#> --------------------------------------------
+#> (Intercept) |        0% | 1.011 |        152
+#> wt          |        0% | 1.017 |        155
+#> gear        |    44.74% | 1.007 |        138
 describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #> Summary of Posterior Distribution 
 #> 
@@ -463,11 +471,11 @@ describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #> wt          |  -5.37 | [-6.57, -4.25] |   100% | [ -0.20, 0.20] |        0%
 #> gear        |  -0.38 | [-2.03,  1.30] | 63.50% | [ -0.10, 0.10] |     6.84%
 #> 
-#> Parameter   |  Rhat | ESS
-#> -------------------------
-#> (Intercept) | 1.011 | 190
-#> wt          | 1.017 | 156
-#> gear        | 1.007 | 173
+#> Parameter   |  Rhat | ESS (tail)
+#> --------------------------------
+#> (Intercept) | 1.011 |        152
+#> wt          | 1.017 |        155
+#> gear        | 1.007 |        138
 
 # emmeans estimates
 # -----------------------------------------------

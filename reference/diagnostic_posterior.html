@@ -9,7 +9,7 @@ Carlo Standard Error MCSE)."><meta property="og:image" content="https://easystat
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,7 +115,14 @@ method (i.e., <code>as.data.frame(x, variable = variable)</code>).</p></dd>
 
 <dt id="arg-diagnostic">diagnostic<a class="anchor" aria-label="anchor" href="#arg-diagnostic"></a></dt>
 <dd><p>Diagnostic metrics to compute.  Character (vector) or list
-with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></dd>
+with one or more of these options: <code>"ESS"</code>, <code>"ESS_bulk"</code>, <code>"Rhat"</code>, <code>"MCSE"</code>
+or <code>"all"</code>. <code>"ESS"</code> returns the <strong>tail-ESS</strong> (the minimum of the effective
+sample sizes for the 5% and 95% quantiles), which is the most relevant
+diagnostic for assessing the reliability of credible intervals and other
+tail-based quantities. <code>"ESS_bulk"</code> additionally returns the <strong>bulk-ESS</strong>
+(the effective sample size for the bulk of the posterior, useful for
+assessing the reliability of central tendency estimates such as the mean or
+median). <code>"all"</code> includes both tail and bulk <code>"ESS"</code>, <code>"Rhat"</code>, and <code>"MCSE"</code>.</p></dd>
 
 
 <dt id="arg-effects">effects<a class="anchor" aria-label="anchor" href="#arg-effects"></a></dt>
@@ -165,10 +172,15 @@ should be returned.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><strong>Effective Sample (ESS)</strong> should be as large as possible, although for
 most applications, an effective sample size greater than 1000 is sufficient
-for stable estimates (<em>Bürkner, 2017</em>). The ESS corresponds to the number of
-independent samples with the same estimation power as the N autocorrelated
-samples. It is is a measure of "how much independent information there is
-in autocorrelated chains" (<em>Kruschke 2015, p182-3</em>).</p>
+for stable estimates (<em>Bürkner, 2017</em>). The ESS returned by
+<code>diagnostic_posterior()</code> is the <strong>tail-ESS</strong>: it corresponds to the
+minimum of the effective sample sizes for the 5% and 95% quantiles, and
+is a diagnostic for the sampling efficiency in the tails of the posterior
+distribution. It is more relevant than the bulk-ESS for assessing
+the reliability of credible intervals, probabilities of direction, and
+other tail-based quantities. Note that the tail-ESS may differ from the
+ESS reported by <code>brms</code> (<code>Bulk_ESS</code>) or other tools; use <code>"ESS_bulk"</code> to
+also retrieve the bulk-ESS.</p>
 <p><strong>Rhat</strong> should be the closest to 1. It should not be larger than 1.1
 (<em>Gelman and Rubin, 1992</em>) or 1.01 (<em>Vehtari et al., 2019</em>). The split
 Rhat statistic quantifies the consistency of an ensemble of Markov chains.</p>
@@ -225,10 +237,10 @@ JAGS, and Stan. Academic Press.</p></li>
 <span class="r-in"><span>  <span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">gear</span>, data <span class="op">=</span> <span class="va">mtcars</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">200</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">diagnostic_posterior</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter      Rhat      ESS       MCSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 0.9980336 182.6025 0.35422559</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        gear 0.9917174 206.3058 0.06266168</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          wt 0.9978902 186.7773 0.04708337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter      Rhat       MCSE ESS_tail ESS_bulk</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 0.9980336 0.36239857      156      192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        gear 0.9917174 0.06502841      155      223</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          wt 0.9978902 0.04771990      150      192</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># brms models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -238,8 +250,8 @@ JAGS, and Stan. Academic Press.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 6e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 7e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -256,9 +268,9 @@ JAGS, and Stan. Academic Press.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.02 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.016 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.036 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.017 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.014 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.031 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span>
@@ -281,15 +293,15 @@ JAGS, and Stan. Academic Press.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.021 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.019 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.04 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.018 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.016 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.034 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Gradient evaluation took 3e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Gradient evaluation took 4e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
@@ -306,15 +318,15 @@ JAGS, and Stan. Academic Press.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.02 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.019 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.039 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.018 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.016 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.034 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 3e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 4e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
@@ -331,15 +343,15 @@ JAGS, and Stan. Academic Press.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.02 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.039 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.016 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.018 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.034 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">diagnostic_posterior</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter     Rhat      ESS        MCSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 b_Intercept 1.000297 4618.359 0.025634483</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       b_cyl 1.003470 1868.916 0.009916104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        b_wt 1.003250 1697.213 0.019012061</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter     Rhat ESS_tail ESS_bulk       MCSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 b_Intercept 1.002513     3129     4728 0.02600493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       b_cyl 1.003602     1961     1912 0.01004421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        b_wt 1.003249     1940     1743 0.01934729</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">101</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mkdata</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">nrow</span> <span class="op">=</span> <span class="fl">1000</span>, <span class="va">ncol</span> <span class="op">=</span> <span class="fl">2</span>, <span class="va">parnm</span> <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">ncol</span><span class="op">]</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -350,8 +362,8 @@ JAGS, and Stan. Academic Press.</p></li>
 <span class="r-in"><span><span class="va">dd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fu">mkdata</span><span class="op">(</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">diagnostic_posterior</span><span class="op">(</span><span class="va">dd</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter      Rhat  ESS       MCSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         A 1.0012187 2584 0.02455354</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         B 0.9997185 2564 0.01998160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         A 1.0012187 2460 0.02455354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         B 0.9997185 2279 0.01998160</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

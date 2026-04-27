@@ -130,8 +130,8 @@ model <- suppressWarnings(
 )
 mcse(model)
 #>     Parameter       MCSE
-#> 1 (Intercept) 0.16538278
-#> 2          wt 0.04132833
-#> 3          am 0.07838402
+#> 1 (Intercept) 0.16602969
+#> 2          wt 0.04191057
+#> 3          am 0.07894757
 # }
 ```

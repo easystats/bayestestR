@@ -41,7 +41,15 @@ diagnostic_posterior(
 - diagnostic:
 
   Diagnostic metrics to compute. Character (vector) or list with one or
-  more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
+  more of these options: `"ESS"`, `"ESS_bulk"`, `"Rhat"`, `"MCSE"` or
+  `"all"`. `"ESS"` returns the **tail-ESS** (the minimum of the
+  effective sample sizes for the 5% and 95% quantiles), which is the
+  most relevant diagnostic for assessing the reliability of credible
+  intervals and other tail-based quantities. `"ESS_bulk"` additionally
+  returns the **bulk-ESS** (the effective sample size for the bulk of
+  the posterior, useful for assessing the reliability of central
+  tendency estimates such as the mean or median). `"all"` includes both
+  tail and bulk `"ESS"`, `"Rhat"`, and `"MCSE"`.
 
 - effects:
 
@@ -101,11 +109,15 @@ diagnostic_posterior(
 
 **Effective Sample (ESS)** should be as large as possible, although for
 most applications, an effective sample size greater than 1000 is
-sufficient for stable estimates (*Bürkner, 2017*). The ESS corresponds
-to the number of independent samples with the same estimation power as
-the N autocorrelated samples. It is is a measure of "how much
-independent information there is in autocorrelated chains" (*Kruschke
-2015, p182-3*).
+sufficient for stable estimates (*Bürkner, 2017*). The ESS returned by
+`diagnostic_posterior()` is the **tail-ESS**: it corresponds to the
+minimum of the effective sample sizes for the 5% and 95% quantiles, and
+is a diagnostic for the sampling efficiency in the tails of the
+posterior distribution. It is more relevant than the bulk-ESS for
+assessing the reliability of credible intervals, probabilities of
+direction, and other tail-based quantities. Note that the tail-ESS may
+differ from the ESS reported by `brms` (`Bulk_ESS`) or other tools; use
+`"ESS_bulk"` to also retrieve the bulk-ESS.
 
 **Rhat** should be the closest to 1. It should not be larger than 1.1
 (*Gelman and Rubin, 1992*) or 1.01 (*Vehtari et al., 2019*). The split
@@ -174,10 +186,10 @@ model <- suppressWarnings(
   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
 diagnostic_posterior(model)
-#>     Parameter      Rhat      ESS       MCSE
-#> 1 (Intercept) 0.9980336 182.6025 0.35422559
-#> 2        gear 0.9917174 206.3058 0.06266168
-#> 3          wt 0.9978902 186.7773 0.04708337
+#>     Parameter      Rhat       MCSE ESS_tail ESS_bulk
+#> 1 (Intercept) 0.9980336 0.36239857      156      192
+#> 2        gear 0.9917174 0.06502841      155      223
+#> 3          wt 0.9978902 0.04771990      150      192
 
 # brms models
 # -----------------------------------------------
@@ -187,8 +199,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 6e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
+#> Chain 1: Gradient evaluation took 7e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -205,9 +217,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.02 seconds (Warm-up)
-#> Chain 1:                0.016 seconds (Sampling)
-#> Chain 1:                0.036 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.017 seconds (Warm-up)
+#> Chain 1:                0.014 seconds (Sampling)
+#> Chain 1:                0.031 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -230,15 +242,15 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.021 seconds (Warm-up)
-#> Chain 2:                0.019 seconds (Sampling)
-#> Chain 2:                0.04 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 2:                0.016 seconds (Sampling)
+#> Chain 2:                0.034 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 3e-06 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
+#> Chain 3: Gradient evaluation took 4e-06 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -255,15 +267,15 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.02 seconds (Warm-up)
-#> Chain 3:                0.019 seconds (Sampling)
-#> Chain 3:                0.039 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 3:                0.016 seconds (Sampling)
+#> Chain 3:                0.034 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 3e-06 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
+#> Chain 4: Gradient evaluation took 4e-06 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -280,15 +292,15 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)
-#> Chain 4:                0.02 seconds (Sampling)
-#> Chain 4:                0.039 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.016 seconds (Warm-up)
+#> Chain 4:                0.018 seconds (Sampling)
+#> Chain 4:                0.034 seconds (Total)
 #> Chain 4: 
 diagnostic_posterior(model)
-#>     Parameter     Rhat      ESS        MCSE
-#> 1 b_Intercept 1.000297 4618.359 0.025634483
-#> 2       b_cyl 1.003470 1868.916 0.009916104
-#> 3        b_wt 1.003250 1697.213 0.019012061
+#>     Parameter     Rhat ESS_tail ESS_bulk       MCSE
+#> 1 b_Intercept 1.002513     3129     4728 0.02600493
+#> 2       b_cyl 1.003602     1961     1912 0.01004421
+#> 3        b_wt 1.003249     1940     1743 0.01934729
 # }
 set.seed(101)
 mkdata <- function(nrow = 1000, ncol = 2, parnm = LETTERS[1:ncol]) {
@@ -299,6 +311,6 @@ mkdata <- function(nrow = 1000, ncol = 2, parnm = LETTERS[1:ncol]) {
 dd <- replicate(5, mkdata(), simplify = FALSE)
 diagnostic_posterior(dd)
 #>   Parameter      Rhat  ESS       MCSE
-#> 1         A 1.0012187 2584 0.02455354
-#> 2         B 0.9997185 2564 0.01998160
+#> 1         A 1.0012187 2460 0.02455354
+#> 2         B 0.9997185 2279 0.01998160
 ```

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +81,8 @@
 <h3 id="changes-0-17-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-17-0"></a></h3>
 <ul><li><p><code>as.matrix(&lt;bf&gt;)</code> now returns class <code>bayesfactor_matrix</code> and has a simpler printing.</p></li>
 <li><p><code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> works with ‘raw’ MCMC samples (i.e., lists of data frames or matrices representing samples of parameters from chains, or 3D arrays) as well as objects from rstanarm/brms/lavaan models.</p></li>
+<li><p><code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> now reports the <strong>tail-ESS</strong> (the minimum of the effective sample sizes for the 5% and 95% quantiles) in the <code>ESS</code> column, instead of the basic <code>n_eff</code> from older Stan versions. The tail-ESS is more relevant for assessing the reliability of credible intervals and other tail-based quantities. To also obtain the bulk-ESS (useful for central tendency estimates), pass <code>"ESS_bulk"</code> to the <code>diagnostic</code> argument.</p></li>
+<li><p><code><a href="../reference/effective_sample.html">effective_sample()</a></code> for <code>stanfit</code> objects now also returns the tail-ESS (<code>ESS_tail</code>), consistent with <code>brmsfit</code> and <code>stanreg</code> objects.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

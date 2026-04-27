@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -226,7 +226,14 @@ frame to be processed. See example in <code><a href="p_direction.html">p_directi
 
 <dt id="arg-diagnostic">diagnostic<a class="anchor" aria-label="anchor" href="#arg-diagnostic"></a></dt>
 <dd><p>Diagnostic metrics to compute.  Character (vector) or list
-with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></dd>
+with one or more of these options: <code>"ESS"</code>, <code>"ESS_bulk"</code>, <code>"Rhat"</code>, <code>"MCSE"</code>
+or <code>"all"</code>. <code>"ESS"</code> returns the <strong>tail-ESS</strong> (the minimum of the effective
+sample sizes for the 5% and 95% quantiles), which is the most relevant
+diagnostic for assessing the reliability of credible intervals and other
+tail-based quantities. <code>"ESS_bulk"</code> additionally returns the <strong>bulk-ESS</strong>
+(the effective sample size for the bulk of the posterior, useful for
+assessing the reliability of central tendency estimates such as the mean or
+median). <code>"all"</code> includes both tail and bulk <code>"ESS"</code>, <code>"Rhat"</code>, and <code>"MCSE"</code>.</p></dd>
 
 
 <dt id="arg-priors">priors<a class="anchor" aria-label="anchor" href="#arg-priors"></a></dt>
@@ -446,11 +453,11 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.37 | [-6.57, -4.25] |   100% | [-0.60, 0.60] |        0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.38 | [-2.03,  1.30] | 63.50% | [-0.60, 0.60] |    44.74%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |  Rhat | ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.011 | 190</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.017 | 156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 1.007 | 173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |  Rhat | ESS (tail)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.011 |        152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.017 |        155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 1.007 |        138</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">model</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span>, test <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bayes factors might not be precise.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   For precise Bayes factors, sampling at least 40,000 posterior samples is</span>
@@ -469,11 +476,11 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |   100% |   &lt; .001 | 1.00 | [-0.60, 0.60] |        0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 63.50% |   0.425  | 0.42 | [-0.60, 0.60] |    44.74%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Equivalence (ROPE) |       BF |  Rhat | ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |           Rejected | 1.14e+05 | 1.011 | 190</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |           Rejected | 1.70e+04 | 1.017 | 156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |          Undecided |    0.049 | 1.007 | 173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Equivalence (ROPE) |       BF |  Rhat | ESS (tail)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |           Rejected | 1.14e+05 | 1.011 |        152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |           Rejected | 1.70e+04 | 1.017 |        155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |          Undecided |    0.049 | 1.007 |        138</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.90</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Summary of Posterior Distribution</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -483,11 +490,11 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.37 | [-6.18, -4.57] | [-6.44, -4.40] |   100% | [-0.60, 0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.38 | [-1.37,  0.86] | [-1.67,  1.20] | 63.50% | [-0.60, 0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | % in ROPE |  Rhat | ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        0% | 1.011 | 190</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |        0% | 1.017 | 156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |    44.74% | 1.007 | 173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | % in ROPE |  Rhat | ESS (tail)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        0% | 1.011 |        152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |        0% | 1.017 |        155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        |    44.74% | 1.007 |        138</span>
 <span class="r-in"><span><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">model</span>, rope_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="st">"default"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Summary of Posterior Distribution</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -497,11 +504,11 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -5.37 | [-6.57, -4.25] |   100% | [ -0.20, 0.20] |        0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gear        |  -0.38 | [-2.03,  1.30] | 63.50% | [ -0.10, 0.10] |     6.84%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |  Rhat | ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.011 | 190</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.017 | 156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 1.007 | 173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |  Rhat | ESS (tail)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 1.011 |        152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | 1.017 |        155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gear        | 1.007 |        138</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># emmeans estimates</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>

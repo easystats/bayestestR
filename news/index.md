@@ -20,6 +20,18 @@ CRAN release: 2025-08-29
   representing samples of parameters from chains, or 3D arrays) as well
   as objects from rstanarm/brms/lavaan models.
 
+- [`diagnostic_posterior()`](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.md)
+  now reports the **tail-ESS** (the minimum of the effective sample
+  sizes for the 5% and 95% quantiles) in the `ESS` column, instead of
+  the basic `n_eff` from older Stan versions. The tail-ESS is more
+  relevant for assessing the reliability of credible intervals and other
+  tail-based quantities. To also obtain the bulk-ESS (useful for central
+  tendency estimates), pass `"ESS_bulk"` to the `diagnostic` argument.
+
+- [`effective_sample()`](https://easystats.github.io/bayestestR/reference/effective_sample.md)
+  for `stanfit` objects now also returns the tail-ESS (`ESS_tail`),
+  consistent with `brmsfit` and `stanreg` objects.
+
 ## bayestestR 0.17.0
 
 CRAN release: 2025-08-29

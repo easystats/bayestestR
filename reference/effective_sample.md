@@ -6,8 +6,8 @@ quality of MCMC samples. A higher ESS indicates more reliable estimates.
 For most applications, an effective sample size greater than 1,000 is
 sufficient for stable estimates (Bürkner, 2017). This function returns
 the effective sample size (ESS) for various Bayesian model objects. For
-`brmsfit` objects, the returned ESS corresponds to the bulk-ESS (and the
-tail-ESS is also returned).
+`brmsfit`, `stanreg`, and `stanfit` objects, both **bulk-ESS** and
+**tail-ESS** are returned.
 
 ## Usage
 
@@ -89,8 +89,8 @@ effective_sample(
 
 ## Value
 
-A data frame with two columns: Parameter name and effective sample size
-(ESS).
+A data frame with columns for the parameter name, bulk ESS (`ESS`), and
+(where available) tail ESS (`ESS_tail`).
 
 ## Details
 
@@ -171,10 +171,10 @@ model <- suppressWarnings(rstanarm::stan_glm(
   refresh = 0
 ))
 effective_sample(model)
-#>     Parameter ESS ESS_tail
-#> 1 (Intercept) 162      131
-#> 2          wt 217      108
-#> 3        gear 177      108
+#>     Parameter ESS_bulk ESS_tail
+#> 1 (Intercept)      162      131
+#> 2          wt      217      108
+#> 3        gear      177      108
 
 model <- suppressWarnings(brms::brm(
   mpg ~ wt,
@@ -186,8 +186,8 @@ model <- suppressWarnings(brms::brm(
 #> Compiling Stan program...
 #> Start sampling
 effective_sample(model)
-#>     Parameter ESS ESS_tail
-#> 1 b_Intercept  56       94
-#> 2        b_wt  67       86
+#>     Parameter ESS_bulk ESS_tail
+#> 1 b_Intercept       56       94
+#> 2        b_wt       67       86
 # }
 ```

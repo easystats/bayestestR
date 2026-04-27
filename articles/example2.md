@@ -346,10 +346,10 @@ describe_posterior(model, test = c("pd", "ROPE", "BF"))
     > (Intercept) |  -6.12 | [-10.45, -2.25] | 99.92% | [-0.18, 0.18] |        0%
     > Sepal.Width |   2.13 | [  0.79,  3.63] | 99.94% | [-0.18, 0.18] |        0%
     > 
-    > Parameter   |    BF |  Rhat |   ESS
-    > -----------------------------------
-    > (Intercept) | 13.38 | 1.000 | 26540
-    > Sepal.Width | 11.97 | 1.000 | 26693
+    > Parameter   |    BF |  Rhat | ESS (tail)
+    > ----------------------------------------
+    > (Intercept) | 13.38 | 1.000 |      22809
+    > Sepal.Width | 11.97 | 1.000 |      23303
 
 ``` r
 

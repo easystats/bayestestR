@@ -646,10 +646,10 @@ describe_posterior(model, test = c("p_direction", "rope", "bayesfactor"))
     > (Intercept)   | 277.13 | [240.57, 312.75] |   100% | [-6.17, 6.17] |        0%
     > feedsunflower |  51.69 | [  2.81, 102.04] | 98.09% | [-6.17, 6.17] |     1.01%
     > 
-    > Parameter     |       BF |  Rhat |   ESS
-    > ----------------------------------------
-    > (Intercept)   | 1.77e+13 | 1.000 | 32904
-    > feedsunflower |    0.770 | 1.000 | 32751
+    > Parameter     |       BF |  Rhat | ESS (tail)
+    > ---------------------------------------------
+    > (Intercept)   | 1.77e+13 | 1.000 |      24371
+    > feedsunflower |    0.770 | 1.000 |      24697
 
 **Tada!** There we have it! The **median**, the **CI**, the **pd** and
 the **ROPE percentage**!
