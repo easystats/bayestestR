@@ -30,11 +30,14 @@ mcse <- function(model, ...) {
 
 
 #' @export
-mcse.brmsfit <- function(model,
-                         effects = "fixed",
-                         component = "conditional",
-                         parameters = NULL,
-                         ...) {
+mcse.brmsfit <- function(
+  model,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  ...
+) {
+  insight::check_if_installed("posterior")
   # check arguments
   params <- insight::get_parameters(
     model,
@@ -42,40 +45,25 @@ mcse.brmsfit <- function(model,
     component = component,
     parameters = parameters
   )
-
-  ess <- effective_sample(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
+  data.frame(
+    Parameter = colnames(params),
+    MCSE = vapply(params, posterior::mcse_mean, numeric(1)),
+    stringsAsFactors = FALSE,
+    row.names = NULL
   )
-
-  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
 }
 
 
 #' @rdname mcse
 #' @export
-mcse.stanreg <- function(model,
-                         effects = "fixed",
-                         component = "location",
-                         parameters = NULL,
-                         ...) {
-  params <- insight::get_parameters(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
-  )
-
-  ess <- effective_sample(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
-  )
-
-  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
+mcse.stanreg <- function(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
+  mcse.brmsfit(model, effects, component, parameters, ...)
 }
 
 
@@ -84,7 +72,29 @@ mcse.stanfit <- mcse.stanreg
 
 
 #' @export
-mcse.blavaan <- mcse.stanreg
+mcse.blavaan <- function(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
+  params <- insight::get_parameters(
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+
+  ess <- effective_sample(
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+
+  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
+}
 
 
 #' @keywords internal
