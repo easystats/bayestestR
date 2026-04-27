@@ -171,10 +171,16 @@ diagnostic_posterior.stanreg <- function(
   )
 
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE", "khat")
+    diagnostic <- c("ESS_tail", "ESS_bulk", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- diagnostic
-    if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+    if ("Rhat" %in% diagnostic) {
+      diagnostic <- c(diagnostic, "khat")
+    }
+  }
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if ("ESS" %in% diagnostic) {
+    diagnostic[diagnostic == "ESS"] <- "ESS_tail"
   }
 
   # Get indices and rename
@@ -185,14 +191,14 @@ diagnostic_posterior.stanreg <- function(
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # ESS: use tail ESS by default, with optional bulk ESS
-  if (any(c("ESS", "ESS_bulk") %in% diagnostic)) {
+  if (any(c("ESS_tail", "ESS_bulk") %in% diagnostic)) {
     ess_data <- effective_sample(
       posterior,
       effects = effects,
       component = component,
       parameters = parameters
     )
-    if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+    if ("ESS_tail" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
       diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
     }
@@ -258,6 +264,10 @@ diagnostic_posterior.stanmvreg <- function(
     diagnostic <- diagnostic
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if ("ESS" %in% diagnostic) {
+    diagnostic[diagnostic == "ESS"] <- "ESS_tail"
+  }
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posterior$stan_summary)
@@ -267,13 +277,13 @@ diagnostic_posterior.stanmvreg <- function(
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # ESS: use tail ESS by default, with optional bulk ESS
-  if (any(c("ESS", "ESS_bulk") %in% diagnostic)) {
+  if (any(c("ESS_tail", "ESS_bulk") %in% diagnostic)) {
     ess_data <- effective_sample(
       posterior,
       effects = effects,
       parameters = parameters
     )
-    if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+    if ("ESS_tail" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
       diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
     }
@@ -345,12 +355,16 @@ diagnostic_posterior.brmsfit <- function(
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE")
   }
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if ("ESS" %in% diagnostic) {
+    diagnostic[diagnostic == "ESS"] <- "ESS_tail"
+  }
 
   # Initialize diagnostic dataframe
   diagnostic_df <- data.frame(Parameter = params, stringsAsFactors = FALSE)
 
   # Use posterior::summarise_draws() as single source for Rhat and ESS
-  if (any(c("ESS", "ESS_bulk", "Rhat") %in% diagnostic)) {
+  if (any(c("ESS_tail", "ESS_bulk", "Rhat") %in% diagnostic)) {
     insight::check_if_installed("posterior")
     idx <- as.data.frame(posterior::summarise_draws(posterior))
     idx <- idx[idx$variable %in% params, ]
@@ -364,7 +378,7 @@ diagnostic_posterior.brmsfit <- function(
       diagnostic_df <- merge(diagnostic_df, rhat_df, by = "Parameter", all.x = TRUE)
     }
 
-    if ("ESS" %in% diagnostic) {
+    if ("ESS_tail" %in% diagnostic) {
       ess_df <- data.frame(
         Parameter = idx$variable,
         ESS_tail = round(idx$ess_tail),
@@ -435,6 +449,10 @@ diagnostic_posterior.stanfit <- function(
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "ESS_bulk", "Rhat", "MCSE")
   }
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if ("ESS" %in% diagnostic) {
+    diagnostic[diagnostic == "ESS"] <- "ESS_tail"
+  }
 
   insight::check_if_installed("rstan")
 
@@ -445,9 +463,9 @@ diagnostic_posterior.stanfit <- function(
     stringsAsFactors = FALSE
   )
 
-  if (any(c("ESS", "ESS_bulk") %in% diagnostic)) {
+  if (any(c("ESS_tail", "ESS_bulk") %in% diagnostic)) {
     ess_data <- effective_sample(posterior, effects = effects, parameters = parameters)
-    if ("ESS" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+    if ("ESS_tail" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
       # fmt: skip
       diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
     }
