@@ -18,9 +18,6 @@ This document outlines the common coding conventions observed in the `easystats`
 *   **Spacing:**
     *   Use spaces around all infix operators (`<-`, `==`, `+`, etc.).
     *   Place a space after a comma, but not before.
-*   **Curly Braces:**
-    *   For function definitions, the opening `{` should be on its own line.
-    *   For `if`/`else` statements, the opening `{` can be on the same line.
 *   **Line Length:** Keep lines to a reasonable length (e.g., under 80-100 characters) to improve readability.
 
 ## Function Naming
@@ -80,7 +77,11 @@ All exported functions must be documented using `roxygen2`-style comments (`#'`)
 
 *   Use `tryCatch` for operations that might fail. The internal `.safe()` helper is a good example.
 *   Use the `insight` package's functions for user-facing messages:
-    *   `insight::format_error()`
-    *   `insight::format_warning()`
-    *   `insight::format_alert()`
-    *   `insight::print_color()`
+    *   For errors: `insight::format_error()`
+    *   For warnings: `insight::format_warning()`
+    *   For messages: `insight::format_alert()`
+    *   To highlight messages: `insight::print_color()`
+    Note that character vectors are not pasted together, unlike in `message()`,
+    thus you usually want to use something like `paste()` to concatenate the
+    string. Character vectors will add a new paragraph for each string element,
+    not paste them together.
