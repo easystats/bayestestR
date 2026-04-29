@@ -92,11 +92,6 @@
 <li>Place a space after a comma, but not before.</li>
 </ul></li>
 <li>
-<strong>Curly Braces:</strong>
-<ul><li>For function definitions, the opening <code>{</code> should be on its own line.</li>
-<li>For <code>if</code>/<code>else</code> statements, the opening <code>{</code> can be on the same line.</li>
-</ul></li>
-<li>
 <strong>Line Length:</strong> Keep lines to a reasonable length (e.g., under 80-100 characters) to improve readability.</li>
 </ul></div>
 <div class="section level2">
@@ -170,10 +165,13 @@
 <h2 id="error-handling-and-messaging">Error Handling and Messaging<a class="anchor" aria-label="anchor" href="#error-handling-and-messaging"></a></h2>
 <ul><li>Use <code>tryCatch</code> for operations that might fail. The internal <code>.safe()</code> helper is a good example.</li>
 <li>Use the <code>insight</code> package’s functions for user-facing messages:
-<ul><li><code><a href="https://easystats.github.io/insight/reference/format_message.html" class="external-link">insight::format_error()</a></code></li>
-<li><code><a href="https://easystats.github.io/insight/reference/format_message.html" class="external-link">insight::format_warning()</a></code></li>
-<li><code><a href="https://easystats.github.io/insight/reference/format_message.html" class="external-link">insight::format_alert()</a></code></li>
-<li><code><a href="https://easystats.github.io/insight/reference/print_color.html" class="external-link">insight::print_color()</a></code></li>
+<ul><li>For errors: <code><a href="https://easystats.github.io/insight/reference/format_message.html" class="external-link">insight::format_error()</a></code>
+</li>
+<li>For warnings: <code><a href="https://easystats.github.io/insight/reference/format_message.html" class="external-link">insight::format_warning()</a></code>
+</li>
+<li>For messages: <code><a href="https://easystats.github.io/insight/reference/format_message.html" class="external-link">insight::format_alert()</a></code>
+</li>
+<li>To highlight messages: <code><a href="https://easystats.github.io/insight/reference/print_color.html" class="external-link">insight::print_color()</a></code> Note that character vectors are not pasted together, unlike in <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code>, thus you usually want to use something like <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste()</a></code> to concatenate the string. Character vectors will add a new paragraph for each string element, not paste them together.</li>
 </ul></li>
 </ul></div>
 </div>

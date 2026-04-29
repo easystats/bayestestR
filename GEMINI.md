@@ -23,9 +23,6 @@ This document outlines the common coding conventions observed in the
 - **Spacing:**
   - Use spaces around all infix operators (`<-`, `==`, `+`, etc.).
   - Place a space after a comma, but not before.
-- **Curly Braces:**
-  - For function definitions, the opening `{` should be on its own line.
-  - For `if`/`else` statements, the opening `{` can be on the same line.
 - **Line Length:** Keep lines to a reasonable length (e.g., under 80-100
   characters) to improve readability.
 
@@ -131,7 +128,17 @@ comments (`#'`). The documentation should include:
 - Use `tryCatch` for operations that might fail. The internal `.safe()`
   helper is a good example.
 - Use the `insight` package’s functions for user-facing messages:
-  - [`insight::format_error()`](https://easystats.github.io/insight/reference/format_message.html)
-  - [`insight::format_warning()`](https://easystats.github.io/insight/reference/format_message.html)
-  - [`insight::format_alert()`](https://easystats.github.io/insight/reference/format_message.html)
-  - [`insight::print_color()`](https://easystats.github.io/insight/reference/print_color.html)
+  - For errors:
+    [`insight::format_error()`](https://easystats.github.io/insight/reference/format_message.html)
+  - For warnings:
+    [`insight::format_warning()`](https://easystats.github.io/insight/reference/format_message.html)
+  - For messages:
+    [`insight::format_alert()`](https://easystats.github.io/insight/reference/format_message.html)
+  - To highlight messages:
+    [`insight::print_color()`](https://easystats.github.io/insight/reference/print_color.html)
+    Note that character vectors are not pasted together, unlike in
+    [`message()`](https://rdrr.io/r/base/message.html), thus you usually
+    want to use something like
+    [`paste()`](https://rdrr.io/r/base/paste.html) to concatenate the
+    string. Character vectors will add a new paragraph for each string
+    element, not paste them together.
