@@ -312,7 +312,9 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
       insight::format_error("Models were not computed from the same data.")
     }
   } else if (verbose) {
-    insight::format_alert("Unable to validate that all models were fit with the same data.")
+    insight::format_alert(
+      "Unable to validate that all models were fit with the same data."
+    )
   }
 
   mML <- lapply(mods, .get_marglik, verbose = verbose)
