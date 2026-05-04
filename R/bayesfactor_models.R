@@ -286,7 +286,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     }
   }
 
-  .bf_models_output(res,
+  .bf_models_output(
+    res,
     denominator = denominator,
     bf_method = bf_method,
     unsupported_models = unsupported_models
