@@ -179,11 +179,14 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   estimator <- mods[["estimator"]]
   check_response <- mods[["check_response"]]
-  if (is.null(estimator)) estimator <- "ML"
-  if (is.null(check_response)) check_response <- FALSE
+  if (is.null(estimator)) {
+    estimator <- "ML"
+  }
+  if (is.null(check_response)) {
+    check_response <- FALSE
+  }
   mods[["check_response"]] <- mods[["estimator"]] <- NULL
   cl$...$estimator <- cl$...$check_response <- NULL
-
 
   names(mods) <- sapply(cl[["..."]], insight::safe_deparse)
   names(denominator) <- insight::safe_deparse(cl$denominator)
@@ -216,10 +219,13 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     }
 
     # Get BIC
-    if (were_checked && estimator == "REML" &&
-      any(vapply(mods, insight::is_mixed_model, TRUE)) &&
-      !isTRUE(attr(model_objects, "same_fixef")) &&
-      verbose) {
+    if (
+      were_checked &&
+        estimator == "REML" &&
+        any(vapply(mods, insight::is_mixed_model, TRUE)) &&
+        !isTRUE(attr(model_objects, "same_fixef")) &&
+        verbose
+    ) {
       insight::format_warning(paste(
         "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
         "are not recommended for comparison between models with different fixed effects.",
@@ -227,18 +233,26 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
       ))
     }
   } else if (verbose) {
-    insight::format_alert("Unable to validate that all models were fit with the same data.")
+    insight::format_alert(
+      "Unable to validate that all models were fit with the same data."
+    )
   }
 
-  mBIC <- tryCatch(sapply(mods, function(m) {
-    LL <- insight::get_loglikelihood(
-      m,
-      estimator = estimator, check_response = check_response
-    )
-    stats::BIC(LL)
-  }), error = function(...) NULL)
+  mBIC <- tryCatch(
+    sapply(mods, function(m) {
+      LL <- insight::get_loglikelihood(
+        m,
+        estimator = estimator,
+        check_response = check_response
+      )
+      stats::BIC(LL)
+    }),
+    error = function(...) NULL
+  )
 
-  if (is.null(mBIC)) mBIC <- sapply(mods, stats::BIC)
+  if (is.null(mBIC)) {
+    mBIC <- sapply(mods, stats::BIC)
+  }
 
   # Get BF
   mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator], log = TRUE)
@@ -249,7 +263,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     stringsAsFactors = FALSE
   )
 
-  .bf_models_output(res,
+  .bf_models_output(
+    res,
     denominator = denominator,
     bf_method = "BIC approximation",
     unsupported_models = !all(supported_models),
@@ -262,7 +277,9 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Warn
   n_samps <- sapply(mods, function(x) {
     alg <- insight::find_algorithm(x)
-    if (is.null(alg$iterations)) alg$iterations <- alg$sample
+    if (is.null(alg$iterations)) {
+      alg$iterations <- alg$sample
+    }
     (alg$iterations - alg$warmup) * alg$chains
   })
   if (any(n_samps < 4e4) && verbose) {
@@ -410,7 +427,8 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
     stringsAsFactors = FALSE
   )
 
-  .bf_models_output(res,
+  .bf_models_output(
+    res,
     denominator = 1,
     bf_method = "JZS (BayesFactor)",
     unsupported_models = !inherits(models@denominator, "BFlinearModel")
@@ -449,23 +467,34 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 
 
 #' @keywords internal
-.bf_models_output <- function(res,
-                              denominator = 1,
-                              bf_method = "method",
-                              unsupported_models = FALSE,
-                              model_names = NULL) {
+.bf_models_output <- function(
+  res,
+  denominator = 1,
+  bf_method = "method",
+  unsupported_models = FALSE,
+  model_names = NULL
+) {
   # sanity check - are all BF NA?
   if (!is.null(res$log_BF) && all(is.na(res$log_BF))) {
-    insight::format_error("Could not calculate Bayes Factor for these models. You may report this problem at {https://github.com/easystats/bayestestR/issues/}.") # nolint
+    insight::format_error(
+      "Could not calculate Bayes Factor for these models. You may report this problem at {https://github.com/easystats/bayestestR/issues/}."
+    )
   }
 
-  if (is.null(model_names)) model_names <- rownames(res)
+  if (is.null(model_names)) {
+    model_names <- rownames(res)
+  }
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- bf_method
   attr(res, "unsupported_models") <- unsupported_models
   attr(res, "model_names") <- model_names
-  class(res) <- c("bayestestRBF", "bayesfactor_models", "see_bayesfactor_models", class(res))
+  class(res) <- c(
+    "bayestestRBF",
+    "bayesfactor_models",
+    "see_bayesfactor_models",
+    class(res)
+  )
 
   res
 }
@@ -559,7 +588,9 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 
   # Else... Get marginal likelihood
   if (verbose) {
-    insight::format_alert("Computation of Marginal Likelihood: estimating marginal likelihood, please wait...")
+    insight::format_alert(
+      "Computation of Marginal Likelihood: estimating marginal likelihood, please wait..."
+    )
   }
   # Should probably allow additional arguments such as reps or cores to for bridge_sampler
   bridgesampling::bridge_sampler(mod, silent = TRUE)

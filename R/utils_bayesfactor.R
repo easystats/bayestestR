@@ -6,20 +6,18 @@
 }
 
 #' @keywords internal
-.clean_priors_and_posteriors.stanreg <- function(posterior, prior,
-                                                 verbose = TRUE,
-                                                 ...) {
+.clean_priors_and_posteriors.stanreg <- function(posterior, prior, verbose = TRUE, ...) {
   # Get Priors
   if (is.null(prior)) {
     prior <- posterior
   }
 
-
   prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
   if (methods::is(prior, "try-error")) {
     if (grepl("flat priors", prior, fixed = TRUE)) {
       prior <- paste0(
-        prior, "Could not therefore compute Bayes factors, as these inform about ",
+        prior,
+        "Could not therefore compute Bayes factors, as these inform about ",
         "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
         "likelihood.\n",
         "See '?bayesfactor_parameters' for more information.\n"
@@ -42,8 +40,7 @@
 
 
 #' @keywords internal
-.clean_priors_and_posteriors.blavaan <- function(posterior, prior,
-                                                 verbose = TRUE, ...) {
+.clean_priors_and_posteriors.blavaan <- function(posterior, prior, verbose = TRUE, ...) {
   # Get Priors
   if (is.null(prior)) {
     prior <- posterior
@@ -62,19 +59,17 @@
 
 
 #' @keywords internal
-.clean_priors_and_posteriors.emmGrid <- function(posterior,
-                                                 prior,
-                                                 verbose = TRUE,
-                                                 ...) {
+.clean_priors_and_posteriors.emmGrid <- function(posterior, prior, verbose = TRUE, ...) {
   insight::check_if_installed("emmeans")
 
   if (is.null(prior)) {
     prior <- posterior
     if (verbose) {
-      insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")
+      insight::format_warning(
+        "Prior not specified! Please provide the original model to get meaningful results."
+      )
     }
   }
-
 
   if (!inherits(prior, "emmGrid")) {
     # then is it a model
@@ -93,13 +88,13 @@
       insight::format_error("Cannot rebuild prior emmGrid from a brmsfit model.")
     }
 
-
     prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
     if (inherits(prior, "try-error")) {
       on.exit() # undo general error message
       if (grepl("flat priors", prior, fixed = TRUE)) {
         prior <- paste0(
-          prior, "Could not therefore compute Bayes factors, as these inform about ",
+          prior,
+          "Could not therefore compute Bayes factors, as these inform about ",
           "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
           "likelihood.\n",
           "See '?bayesfactor_parameters' for more information.\n"
@@ -127,12 +122,13 @@
   )
 }
 
-.clean_priors_and_posteriors.emm_list <- function(posterior, prior,
-                                                  verbose = TRUE, ...) {
+.clean_priors_and_posteriors.emm_list <- function(posterior, prior, verbose = TRUE, ...) {
   if (is.null(prior)) {
     prior <- posterior
     if (verbose) {
-      insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")
+      insight::format_warning(
+        "Prior not specified! Please provide the original model to get meaningful results."
+      )
     }
   }
 
@@ -147,7 +143,8 @@
     if (inherits(prior, "try-error")) {
       if (grepl("flat priors", prior, fixed = TRUE)) {
         prior <- paste0(
-          prior, "Could not therefore compute Bayes factors, as these inform about ",
+          prior,
+          "Could not therefore compute Bayes factors, as these inform about ",
           "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
           "likelihood.\n",
           "See '?bayesfactor_parameters' for more information.\n"
@@ -172,19 +169,19 @@
   posterior <- do.call("cbind", lapply(res, "[[", "posterior"))
   prior <- do.call("cbind", lapply(res, "[[", "prior"))
 
-
   list(
     posterior = posterior,
     prior = prior
   )
 }
 
-.clean_priors_and_posteriors.slopes <- function(posterior, prior,
-                                                verbose = TRUE, ...) {
+.clean_priors_and_posteriors.slopes <- function(posterior, prior, verbose = TRUE, ...) {
   if (is.null(prior)) {
     prior <- posterior
     if (verbose) {
-      insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")
+      insight::format_warning(
+        "Prior not specified! Please provide the original model to get meaningful results."
+      )
     }
   }
 
@@ -201,9 +198,7 @@
 
 .clean_priors_and_posteriors.comparisons <- .clean_priors_and_posteriors.slopes
 
-.clean_priors_and_posteriors.stanfit <- function(posterior, prior,
-                                                 verbose = TRUE,
-                                                 ...) {
+.clean_priors_and_posteriors.stanfit <- function(posterior, prior, verbose = TRUE, ...) {
   posterior <- insight::get_parameters(posterior)
 
   # Get Priors
@@ -270,7 +265,9 @@ get_parameters.CmdStanFit <- function(x, ...) {
       tmp_terms <- .make_terms(df.model$Modelnames[m])
       if (length(tmp_terms) > 0) {
         missing_terms <- !tmp_terms %in% colnames(df.model)
-        if (any(missing_terms)) df.model[, tmp_terms[missing_terms]] <- NA
+        if (any(missing_terms)) {
+          df.model[, tmp_terms[missing_terms]] <- NA
+        }
         df.model[m, tmp_terms] <- TRUE
       }
     }
@@ -316,7 +313,11 @@ get_parameters.CmdStanFit <- function(x, ...) {
     tmp_trms <- attr(stats::terms.formula(tmp_random[[i]]), "term.labels")
     tmp_trms <- sapply(tmp_trms, sort_interactions)
 
-    if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], " + ", fixed = TRUE)) == "0")) {
+    if (
+      !any(
+        unlist(strsplit(as.character(tmp_random[[i]])[[2]], " + ", fixed = TRUE)) == "0"
+      )
+    ) {
       tmp_trms <- c("1", tmp_trms)
     }
 
@@ -329,13 +330,15 @@ get_parameters.CmdStanFit <- function(x, ...) {
 # make_BF_plot_data -------------------------------------------------------
 
 #' @keywords internal
-.make_BF_plot_data <- function(posterior,
-                               prior,
-                               direction,
-                               null,
-                               extend_scale = 0.05,
-                               precision = 2^8,
-                               ...) {
+.make_BF_plot_data <- function(
+  posterior,
+  prior,
+  direction,
+  null,
+  extend_scale = 0.05,
+  precision = 2^8,
+  ...
+) {
   insight::check_if_installed("logspline")
 
   estimate_samples_density <- function(samples) {

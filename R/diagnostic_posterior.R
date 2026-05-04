@@ -493,9 +493,7 @@ diagnostic_posterior.stanfit <- function(
 
 
 #' @export
-diagnostic_posterior.CmdStanFit <- function(posterior,
-                                            diagnostic = "all",
-                                            ...) {
+diagnostic_posterior.CmdStanFit <- function(posterior, diagnostic = "all", ...) {
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
   }
@@ -503,10 +501,10 @@ diagnostic_posterior.CmdStanFit <- function(posterior,
   insight::check_if_installed("posterior")
   insight::check_if_installed("cmdstanr")
 
-
   draws <- posterior$draws(format = "draws_df")
 
-  out <- posterior::summarize_draws(draws,
+  out <- posterior::summarize_draws(
+    draws,
     posterior::default_convergence_measures(),
     MCSE = posterior::mcse_mean
   )

@@ -144,19 +144,27 @@ bf_restricted <- bayesfactor_restricted
 
 #' @rdname bayesfactor_restricted
 #' @export
-bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
-                                           verbose = TRUE,
-                                           effects = "fixed",
-                                           component = "conditional",
-                                           ...) {
-  samps <- .clean_priors_and_posteriors(posterior, prior,
-    effects = effects, component = component,
+bayesfactor_restricted.stanreg <- function(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  effects = "fixed",
+  component = "conditional",
+  ...
+) {
+  samps <- .clean_priors_and_posteriors(
+    posterior,
+    prior,
+    effects = effects,
+    component = component,
     verbose = verbose
   )
 
   # Get savage-dickey BFs
   bayesfactor_restricted.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
+    posterior = samps$posterior,
+    prior = samps$prior,
     hypothesis = hypothesis
   )
 }
@@ -173,15 +181,19 @@ bayesfactor_restricted.stanfit <- bayesfactor_restricted.stanreg
 
 #' @rdname bayesfactor_restricted
 #' @export
-bayesfactor_restricted.blavaan <- function(posterior, hypothesis, prior = NULL,
-                                           verbose = TRUE, ...) {
-  samps <- .clean_priors_and_posteriors(posterior, prior,
-    verbose = verbose
-  )
+bayesfactor_restricted.blavaan <- function(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  ...
+) {
+  samps <- .clean_priors_and_posteriors(posterior, prior, verbose = verbose)
 
   # Get savage-dickey BFs
   bayesfactor_restricted.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
+    posterior = samps$posterior,
+    prior = samps$prior,
     hypothesis = hypothesis
   )
 }
@@ -189,15 +201,18 @@ bayesfactor_restricted.blavaan <- function(posterior, hypothesis, prior = NULL,
 
 #' @rdname bayesfactor_restricted
 #' @export
-bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
-                                           verbose = TRUE,
-                                           ...) {
-  samps <- .clean_priors_and_posteriors(posterior, prior,
-    verbose = verbose
-  )
+bayesfactor_restricted.emmGrid <- function(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  ...
+) {
+  samps <- .clean_priors_and_posteriors(posterior, prior, verbose = verbose)
 
   bayesfactor_restricted.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
+    posterior = samps$posterior,
+    prior = samps$prior,
     hypothesis = hypothesis
   )
 }
@@ -217,7 +232,13 @@ bayesfactor_restricted.comparisons <- bayesfactor_restricted.emmGrid
 #' @export
 #' @rdname bayesfactor_restricted
 #' @inheritParams p_direction
-bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NULL, rvar_col = NULL, ...) {
+bayesfactor_restricted.data.frame <- function(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  rvar_col = NULL,
+  ...
+) {
   x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
   if (length(x_rvar) > 0L) {
     cl <- match.call()
@@ -230,7 +251,6 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
     }
     return(eval.parent(cl))
   }
-
 
   p_hypothesis <- parse(text = hypothesis)
 
@@ -259,10 +279,13 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
     x_logical
   }
 
-
   posterior_l <- as.data.frame(lapply(p_hypothesis, .test_hypothesis, data = posterior))
   prior_l <- as.data.frame(lapply(p_hypothesis, .test_hypothesis, data = prior))
-  colnames(posterior_l) <- colnames(prior_l) <- if (is.null(names(hypothesis))) hypothesis else names(hypothesis)
+  colnames(posterior_l) <- colnames(prior_l) <- if (is.null(names(hypothesis))) {
+    hypothesis
+  } else {
+    names(hypothesis)
+  }
 
   posterior_p <- sapply(posterior_l, mean)
   prior_p <- sapply(prior_l, mean)
@@ -288,7 +311,8 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
 
 #' @export
 bayesfactor_restricted.draws <- function(posterior, hypothesis, prior = NULL, ...) {
-  bayesfactor_restricted(.posterior_draws_to_df(posterior),
+  bayesfactor_restricted(
+    .posterior_draws_to_df(posterior),
     hypothesis = hypothesis,
     prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
     ...

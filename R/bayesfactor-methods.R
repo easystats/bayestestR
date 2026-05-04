@@ -143,7 +143,8 @@ print.bayesfactor_matrix <- function(x, log = FALSE, show_names = FALSE, ...) {
   colnames(df) <- colmodels
 
   # caption and footer
-  caption <- switch(attr(orig_x, "bf_fun"),
+  caption <- switch(
+    attr(orig_x, "bf_fun"),
     "bayesfactor_restricted()" = "# Bayes Factors for Restricted Models",
     "# Bayes Factors for Model Comparison"
   )
@@ -210,8 +211,10 @@ update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, .
 #' @export
 as.numeric.bayestestRBF <- function(x, log = FALSE, ...) {
   out <- x[["log_BF"]]
-  if (!log) out <- exp(out)
-  return(out)
+  if (!log) {
+    out <- exp(out)
+  }
+  out
 }
 
 #' @export

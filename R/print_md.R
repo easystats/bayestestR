@@ -1,6 +1,11 @@
 #' @rdname display.describe_posterior
 #' @export
-print_md.describe_posterior <- function(x, digits = 2, caption = "Summary of Posterior Distribution", ...) {
+print_md.describe_posterior <- function(
+  x,
+  digits = 2,
+  caption = "Summary of Posterior Distribution",
+  ...
+) {
   .print_md_default(x = x, digits = digits, caption = caption, ...)
 }
 
@@ -18,7 +23,12 @@ print_md.map_estimate <- function(x, digits = 2, caption = "MAP Estimate", ...) 
 
 
 #' @export
-print_md.p_direction <- function(x, digits = 2, caption = "Probability of Direction (pd)", ...) {
+print_md.p_direction <- function(
+  x,
+  digits = 2,
+  caption = "Probability of Direction (pd)",
+  ...
+) {
   .print_md_default(x = x, digits = digits, caption = caption, ...)
 }
 
@@ -70,13 +80,23 @@ print_md.p_significance <- function(x, digits = 2, ...) {
 
 
 #' @export
-print_md.bayestestR_hdi <- function(x, digits = 2, caption = "Highest Density Interval", ...) {
+print_md.bayestestR_hdi <- function(
+  x,
+  digits = 2,
+  caption = "Highest Density Interval",
+  ...
+) {
   .print_md_default(x = x, digits = digits, caption = caption, ci_string = "HDI", ...)
 }
 
 
 #' @export
-print_md.bayestestR_eti <- function(x, digits = 2, caption = "Equal-Tailed Interval", ...) {
+print_md.bayestestR_eti <- function(
+  x,
+  digits = 2,
+  caption = "Equal-Tailed Interval",
+  ...
+) {
   .print_md_default(x = x, digits = digits, caption = caption, ci_string = "ETI", ...)
 }
 
@@ -89,14 +109,15 @@ print_md.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", 
 
 # special handling for bayes factors ------------------
 
-
 #' @export
-print_md.bayesfactor_models <- function(x,
-                                        digits = 3,
-                                        log = FALSE,
-                                        show_names = FALSE,
-                                        caption = "Bayes Factors for Model Comparison",
-                                        ...) {
+print_md.bayesfactor_models <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  show_names = FALSE,
+  caption = "Bayes Factors for Model Comparison",
+  ...
+) {
   .print_bf_md_default(
     x = x,
     digits = digits,
@@ -110,11 +131,13 @@ print_md.bayesfactor_models <- function(x,
 
 
 #' @export
-print_md.bayesfactor_inclusion <- function(x,
-                                           digits = 3,
-                                           log = FALSE,
-                                           caption = "Inclusion Bayes Factors (Model Averaged)",
-                                           ...) {
+print_md.bayesfactor_inclusion <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  caption = "Inclusion Bayes Factors (Model Averaged)",
+  ...
+) {
   .print_bf_md_default(
     x = x,
     digits = digits,
@@ -127,11 +150,13 @@ print_md.bayesfactor_inclusion <- function(x,
 
 
 #' @export
-print_md.bayesfactor_restricted <- function(x,
-                                            digits = 3,
-                                            log = FALSE,
-                                            caption = "Bayes Factor (Order-Restriction)",
-                                            ...) {
+print_md.bayesfactor_restricted <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  caption = "Bayes Factor (Order-Restriction)",
+  ...
+) {
   .print_bf_md_default(x = x, digits = digits, log = log, caption = caption, ...)
 }
 
@@ -157,8 +182,14 @@ print_md.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 
 # util ---------------
 
-
-.print_md_default <- function(x, digits = 2, caption = NULL, subtitles = NULL, ci_string = "CI", ...) {
+.print_md_default <- function(
+  x,
+  digits = 2,
+  caption = NULL,
+  subtitles = NULL,
+  ci_string = "CI",
+  ...
+) {
   # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
 
@@ -184,13 +215,15 @@ print_md.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 }
 
 
-.print_bf_md_default <- function(x,
-                                 digits = 3,
-                                 log = FALSE,
-                                 show_names = NULL,
-                                 caption = NULL,
-                                 align = NULL,
-                                 ...) {
+.print_bf_md_default <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  show_names = NULL,
+  caption = NULL,
+  align = NULL,
+  ...
+) {
   formatted_table <- format(
     x,
     digits = digits,

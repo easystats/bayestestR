@@ -104,8 +104,11 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 
   # Get SIs
   out <- si.data.frame(
-    posterior = posterior, prior = prior,
-    BF = BF, verbose = verbose, ...
+    posterior = posterior,
+    prior = prior,
+    BF = BF,
+    verbose = verbose,
+    ...
   )
   out$Parameter <- NULL
   out
@@ -114,23 +117,34 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 
 #' @rdname si
 #' @export
-si.stanreg <- function(posterior, prior = NULL,
-                       BF = 1, verbose = TRUE,
-                       effects = "fixed",
-                       component = "location",
-                       parameters = NULL,
-                       ...) {
+si.stanreg <- function(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
   cleaned_parameters <- .get_cleaned_parameters(posterior, ...)
 
-  samps <- .clean_priors_and_posteriors(posterior, prior,
-    effects = effects, component = component,
-    parameters = parameters, verbose = verbose
+  samps <- .clean_priors_and_posteriors(
+    posterior,
+    prior,
+    effects = effects,
+    component = component,
+    parameters = parameters,
+    verbose = verbose
   )
 
   # Get SIs
   temp <- si.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
-    BF = BF, verbose = verbose, ...
+    posterior = samps$posterior,
+    prior = samps$prior,
+    BF = BF,
+    verbose = verbose,
+    ...
   )
 
   out <- .prepare_output(temp, cleaned_parameters, inherits(posterior, "stanmvreg"))
@@ -151,14 +165,16 @@ si.blavaan <- si.stanreg
 
 
 #' @export
-si.emmGrid <- function(posterior, prior = NULL,
-                       BF = 1, verbose = TRUE, ...) {
+si.emmGrid <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   samps <- .clean_priors_and_posteriors(posterior, prior, verbose = verbose)
 
   # Get SIs
   out <- si.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
-    BF = BF, verbose = verbose, ...
+    posterior = samps$posterior,
+    prior = samps$prior,
+    BF = BF,
+    verbose = verbose,
+    ...
   )
 
   out <- .append_datagrid(out, posterior, long = length(BF) > 1L)
@@ -181,9 +197,19 @@ si.predictions <- si.emmGrid
 
 
 #' @export
-si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = "fixed", ...) {
-  out <- si(insight::get_parameters(posterior, effects = effects, verbose = verbose),
-    prior = prior, BF = BF, verbose = verbose
+si.stanfit <- function(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  effects = "fixed",
+  ...
+) {
+  out <- si(
+    insight::get_parameters(posterior, effects = effects, verbose = verbose),
+    prior = prior,
+    BF = BF,
+    verbose = verbose
   )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   out
@@ -192,7 +218,14 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
 
 #' @rdname si
 #' @export
-si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = FALSE, verbose = TRUE, ...) {
+si.get_predicted <- function(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+) {
   if (isTRUE(use_iterations)) {
     if ("iterations" %in% names(attributes(posterior))) {
       out <- si(
@@ -207,7 +240,13 @@ si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = F
     }
     attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   } else {
-    out <- si(insight::get_parameters(posterior), prior = prior, BF = BF, verbose = verbose, ...)
+    out <- si(
+      insight::get_parameters(posterior),
+      prior = prior,
+      BF = BF,
+      verbose = verbose,
+      ...
+    )
   }
   out
 }
@@ -216,7 +255,14 @@ si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = F
 #' @rdname si
 #' @inheritParams p_direction
 #' @export
-si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verbose = TRUE, ...) {
+si.data.frame <- function(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  rvar_col = NULL,
+  verbose = TRUE,
+  ...
+) {
   x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
   if (length(x_rvar) > 0L) {
     cl <- match.call()
@@ -259,7 +305,13 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verb
   attr(out, "ci_method") <- "SI"
   attr(out, "ci") <- BF
   attr(out, "plot_data") <- .make_BF_plot_data(posterior, prior, 0, 0, ...)$plot_data
-  class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c(
+    "bayestestR_si",
+    "see_si",
+    "bayestestR_ci",
+    "see_ci",
+    class(out)
+  ))
 
   out
 }
@@ -267,9 +319,12 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verb
 
 #' @export
 si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
-  si(.posterior_draws_to_df(posterior),
+  si(
+    .posterior_draws_to_df(posterior),
     prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
-    BF = BF, verbose = verbose, ...
+    BF = BF,
+    verbose = verbose,
+    ...
   )
 }
 
@@ -282,12 +337,7 @@ si.rvar <- si.draws
 .si.data.frame <- function(posterior, prior, BF, verbose = TRUE, ...) {
   sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
   for (par in seq_along(posterior)) {
-    sis[par, ] <- .si(posterior[[par]],
-      prior[[par]],
-      BF = BF,
-      verbose = verbose,
-      ...
-    )
+    sis[par, ] <- .si(posterior[[par]], prior[[par]], BF = BF, verbose = verbose, ...)
   }
 
   data.frame(
@@ -301,7 +351,15 @@ si.rvar <- si.draws
 
 
 #' @keywords internal
-.si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, verbose = TRUE, ...) {
+.si <- function(
+  posterior,
+  prior,
+  BF = 1,
+  extend_scale = 0.05,
+  precision = 2^8,
+  verbose = TRUE,
+  ...
+) {
   insight::check_if_installed("logspline")
 
   if (isTRUE(all.equal(prior, posterior))) {

@@ -1,6 +1,11 @@
 #' @rdname display.describe_posterior
 #' @export
-print_html.describe_posterior <- function(x, digits = 2, caption = "Summary of Posterior Distribution", ...) {
+print_html.describe_posterior <- function(
+  x,
+  digits = 2,
+  caption = "Summary of Posterior Distribution",
+  ...
+) {
   .print_html_default(x = x, digits = digits, caption = caption, ...)
 }
 
@@ -18,7 +23,12 @@ print_html.map_estimate <- function(x, digits = 2, caption = "MAP Estimate", ...
 
 
 #' @export
-print_html.p_direction <- function(x, digits = 2, caption = "Probability of Direction (pd)", ...) {
+print_html.p_direction <- function(
+  x,
+  digits = 2,
+  caption = "Probability of Direction (pd)",
+  ...
+) {
   .print_html_default(x = x, digits = digits, caption = caption, ...)
 }
 
@@ -65,18 +75,34 @@ print_html.p_significance <- function(x, digits = 2, ...) {
     )
     ci_string <- NULL
   }
-  .print_html_default(x = x, digits = digits, caption = caption, ci_string = ci_string, ...)
+  .print_html_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ci_string = ci_string,
+    ...
+  )
 }
 
 
 #' @export
-print_html.bayestestR_hdi <- function(x, digits = 2, caption = "Highest Density Interval", ...) {
+print_html.bayestestR_hdi <- function(
+  x,
+  digits = 2,
+  caption = "Highest Density Interval",
+  ...
+) {
   .print_html_default(x = x, digits = digits, caption = caption, ci_string = "HDI", ...)
 }
 
 
 #' @export
-print_html.bayestestR_eti <- function(x, digits = 2, caption = "Equal-Tailed Interval", ...) {
+print_html.bayestestR_eti <- function(
+  x,
+  digits = 2,
+  caption = "Equal-Tailed Interval",
+  ...
+) {
   .print_html_default(x = x, digits = digits, caption = caption, ci_string = "ETI", ...)
 }
 
@@ -89,14 +115,15 @@ print_html.bayestestR_si <- function(x, digits = 2, caption = "Support Interval"
 
 # special handling for bayes factors ------------------
 
-
 #' @export
-print_html.bayesfactor_models <- function(x,
-                                          digits = 3,
-                                          log = FALSE,
-                                          show_names = FALSE,
-                                          caption = "Bayes Factors for Model Comparison",
-                                          ...) {
+print_html.bayesfactor_models <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  show_names = FALSE,
+  caption = "Bayes Factors for Model Comparison",
+  ...
+) {
   .print_bf_html_default(
     x = x,
     digits = digits,
@@ -110,11 +137,13 @@ print_html.bayesfactor_models <- function(x,
 
 
 #' @export
-print_html.bayesfactor_inclusion <- function(x,
-                                             digits = 3,
-                                             log = FALSE,
-                                             caption = "Inclusion Bayes Factors (Model Averaged)",
-                                             ...) {
+print_html.bayesfactor_inclusion <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  caption = "Inclusion Bayes Factors (Model Averaged)",
+  ...
+) {
   .print_bf_html_default(
     x = x,
     digits = digits,
@@ -127,11 +156,13 @@ print_html.bayesfactor_inclusion <- function(x,
 
 
 #' @export
-print_html.bayesfactor_restricted <- function(x,
-                                              digits = 3,
-                                              log = FALSE,
-                                              caption = "Bayes Factor (Order-Restriction)",
-                                              ...) {
+print_html.bayesfactor_restricted <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  caption = "Bayes Factor (Order-Restriction)",
+  ...
+) {
   .print_bf_html_default(x = x, digits = digits, log = log, caption = caption, ...)
 }
 
@@ -157,8 +188,14 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 
 # util ---------------
 
-
-.print_html_default <- function(x, digits = 2, caption = NULL, subtitles = NULL, ci_string = "CI", ...) {
+.print_html_default <- function(
+  x,
+  digits = 2,
+  caption = NULL,
+  subtitles = NULL,
+  ci_string = "CI",
+  ...
+) {
   # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
 
@@ -185,13 +222,15 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 }
 
 
-.print_bf_html_default <- function(x,
-                                   digits = 3,
-                                   log = FALSE,
-                                   show_names = NULL,
-                                   caption = NULL,
-                                   align = NULL,
-                                   ...) {
+.print_bf_html_default <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  show_names = NULL,
+  caption = NULL,
+  align = NULL,
+  ...
+) {
   formatted_table <- format(
     x,
     digits = digits,

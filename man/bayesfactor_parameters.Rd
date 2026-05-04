@@ -12,14 +12,7 @@
 \alias{bayesfactor_parameters.data.frame}
 \title{Bayes Factors (BF) for a Single Parameter}
 \usage{
-bayesfactor_parameters(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
-  ...,
-  verbose = TRUE
-)
+bayesfactor_parameters(posterior, ..., verbose = TRUE)
 
 bayesfactor_pointnull(
   posterior,
@@ -39,14 +32,7 @@ bayesfactor_rope(
   verbose = TRUE
 )
 
-bf_parameters(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
-  ...,
-  verbose = TRUE
-)
+bf_parameters(posterior, ..., verbose = TRUE)
 
 bf_pointnull(
   posterior,
@@ -102,6 +88,11 @@ bf_rope(
 \code{emmGrid} or a data frame - representing a posterior distribution(s)
 from (see 'Details').}
 
+\item{...}{Arguments passed to and from other methods. (Can be used to pass
+arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
+
+\item{verbose}{Toggle off warnings.}
+
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
 \item{direction}{Test type (see 'Details'). One of \code{0},
@@ -110,11 +101,6 @@ tailed) or \code{1}, \code{"right"} (right tailed).}
 
 \item{null}{Value of the null, either a scalar (for point-null) or a range
 (for a interval-null).}
-
-\item{...}{Arguments passed to and from other methods. (Can be used to pass
-arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
-
-\item{verbose}{Toggle off warnings.}
 
 \item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
 (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
