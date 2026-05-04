@@ -45,7 +45,7 @@
 #'  effect). The *proportion mediated* is the indirect effect divided
 #'  by the total effect.
 #'
-#'  For all values, the `89%` credible intervals are calculated by default.
+#'  For all values, the 95% credible intervals are calculated by default.
 #'  Use `ci` to calculate a different interval.
 #'
 #'  The arguments `treatment` and `mediator` do not necessarily
@@ -117,14 +117,16 @@ mediation <- function(model, ...) {
 
 #' @rdname mediation
 #' @export
-mediation.brmsfit <- function(model,
-                              treatment,
-                              mediator,
-                              response = NULL,
-                              centrality = "median",
-                              ci = 0.95,
-                              method = "ETI",
-                              ...) {
+mediation.brmsfit <- function(
+  model,
+  treatment,
+  mediator,
+  response = NULL,
+  centrality = "median",
+  ci = 0.95,
+  method = "ETI",
+  ...
+) {
   .mediation(
     model = model,
     treatment = treatment,
@@ -140,7 +142,16 @@ mediation.brmsfit <- function(model,
 
 
 #' @export
-mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = 0.95, method = "ETI", ...) {
+mediation.stanmvreg <- function(
+  model,
+  treatment,
+  mediator,
+  response = NULL,
+  centrality = "median",
+  ci = 0.95,
+  method = "ETI",
+  ...
+) {
   .mediation(
     model = model,
     treatment = treatment,
@@ -157,23 +168,28 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 
 # workhorse ---------------------------------
 
-
-.mediation <- function(model,
-                       treatment,
-                       mediator,
-                       response = NULL,
-                       centrality = "median",
-                       ci = 0.95,
-                       method = "ETI",
-                       pattern = "b_%s_%s",
-                       ...) {
+.mediation <- function(
+  model,
+  treatment,
+  mediator,
+  response = NULL,
+  centrality = "median",
+  ci = 0.95,
+  method = "ETI",
+  pattern = "b_%s_%s",
+  ...
+) {
   # only one HDI interval
-  if (length(ci) > 1) ci <- ci[1]
+  if (length(ci) > 1) {
+    ci <- ci[1]
+  }
 
   # check for binary response. In this case, user should rescale variables
   modelinfo <- insight::model_info(model, verbose = FALSE)
   if (any(sapply(modelinfo, function(i) i$is_binomial, simplify = TRUE))) {
-    insight::format_alert("One of moderator or outcome is binary, so direct and indirect effects may be on different scales. Consider rescaling model predictors, e.g. with `effectsize::standardize()`.")
+    insight::format_alert(
+      "One of moderator or outcome is binary, so direct and indirect effects may be on different scales. Consider rescaling model predictors, e.g. with `effectsize::standardize()`."
+    )
   }
 
   # model responses
@@ -200,11 +216,12 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
     treatment <- .fix_factor_name(model, treatment)
   }
 
-
   mediator.model <- which(response == mediator)
   treatment.model <- which(response != mediator)
 
-  if (fix_mediator) mediator <- .fix_factor_name(model, mediator)
+  if (fix_mediator) {
+    mediator <- .fix_factor_name(model, mediator)
+  }
 
   if (inherits(model, "brmsfit")) {
     response_name <- names(response)
@@ -216,7 +233,6 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
   # so we need to fix variable names here
 
   response <- names(response)
-
 
   # Direct effect: coef(treatment) from model_y_treatment
   coef_treatment <- sprintf(pattern, response[treatment.model], treatment)
@@ -235,14 +251,24 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
   effect_total <- effect_indirect + effect_direct
 
   # proportion mediated: indirect effect / total effect
-  proportion_mediated <- as.numeric(point_estimate(effect_indirect, centrality = centrality)) / as.numeric(point_estimate(effect_total, centrality = centrality))
+  proportion_mediated <- as.numeric(point_estimate(
+    effect_indirect,
+    centrality = centrality
+  )) /
+    as.numeric(point_estimate(effect_total, centrality = centrality))
   hdi_eff <- ci(effect_indirect / effect_total, ci = ci, method = method)
   prop_mediated_se <- (hdi_eff$CI_high - hdi_eff$CI_low) / 2
   prop_mediated_ci <- proportion_mediated + c(-1, 1) * prop_mediated_se
 
   res <- cbind(
     data.frame(
-      Effect = c("Direct Effect (ADE)", "Indirect Effect (ACME)", "Mediator Effect", "Total Effect", "Proportion Mediated"),
+      Effect = c(
+        "Direct Effect (ADE)",
+        "Indirect Effect (ACME)",
+        "Mediator Effect",
+        "Total Effect",
+        "Proportion Mediated"
+      ),
       Estimate = c(
         as.numeric(point_estimate(effect_direct, centrality = centrality)),
         as.numeric(point_estimate(effect_indirect, centrality = centrality)),
@@ -329,9 +355,20 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   prop_mediated <- prop_mediated_ori <- x[nrow(x), ]
   x <- x[-nrow(x), ]
 
-  x$CI <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto", missing = "NA")
+  x$CI <- insight::format_ci(
+    x$CI_low,
+    x$CI_high,
+    ci = NULL,
+    digits = digits,
+    width = "auto",
+    missing = "NA"
+  )
   x <- datawizard::data_remove(x, c("CI_low", "CI_high"), verbose = FALSE)
-  colnames(x)[ncol(x)] <- sprintf("%.5g%% %s", 100 * attributes(x)$ci, attributes(x)$ci_method)
+  colnames(x)[ncol(x)] <- sprintf(
+    "%.5g%% %s",
+    100 * attributes(x)$ci,
+    attributes(x)$ci_method
+  )
 
   # remove class, to avoid conflicts with "as.data.frame.bayestestR_mediation()"
   class(x) <- "data.frame"
@@ -342,13 +379,17 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   insight::print_color(
     sprintf(
       "Proportion mediated: %s [%s, %s]\n",
-      prop_mediated$Estimate, prop_mediated$CI_low, prop_mediated$CI_high
+      prop_mediated$Estimate,
+      prop_mediated$CI_low,
+      prop_mediated$CI_high
     ),
     "red"
   )
 
   if (any(prop_mediated_ori$Estimate < 0)) {
-    insight::format_alert("\nDirect and indirect effects have opposite directions. The proportion mediated is not meaningful.")
+    insight::format_alert(
+      "\nDirect and indirect effects have opposite directions. The proportion mediated is not meaningful."
+    )
   }
 }
 

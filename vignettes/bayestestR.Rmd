@@ -1,6 +1,6 @@
 ---
 title: "Get Started with Bayesian Analysis"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{Get Started with Bayesian Analysis}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 csl: apa.csl
@@ -96,7 +96,7 @@ with certain probabilities".
 
 - To characterize statistical significance of our effects, we do not need
 *p*-values, or any other such indices. We simply *describe* the posterior
-distribution of the effect. For example, we can report the median, the [89% Credible Interval](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+distribution of the effect. For example, we can report the median, the [95% Credible Interval](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 or [other indices](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
 ```{r echo=FALSE, fig.cap="Accurate depiction of a regular Bayesian user estimating a credible interval.", fig.align='center', out.width="50%"}
@@ -201,7 +201,7 @@ print_md(posteriors, digits = 2)
 ```
 
 
-**That's it!** 
+**That's it!**
 
 You just fitted a Bayesian version of the model by simply using the
 [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) function

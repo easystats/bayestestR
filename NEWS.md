@@ -2,7 +2,7 @@
 
 ## New functionality
 
-* `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes 
+* `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes
   factors between all restricted models.
 * New dedicated docs for Bayes factor methods `?bayesfactor_methods`
 * Added support for `CmdStanFit` models from `{cmdstanr}` and expanded support for `stanfit` models from `rstan`.
@@ -11,6 +11,20 @@
 ## Changes
 
 * `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler printing.
+
+* `diagnostic_posterior()` works with 'raw' MCMC samples (i.e., lists of data
+  frames or matrices representing samples of parameters from chains, or 3D arrays)
+  as well as objects from rstanarm/brms/lavaan models.
+
+* `diagnostic_posterior()` now reports the **tail-ESS** (the minimum of the
+  effective sample sizes for the 5% and 95% quantiles) in the `ESS` column,
+  instead of the basic `n_eff` from older Stan versions. The tail-ESS is more
+  relevant for assessing the reliability of credible intervals and other
+  tail-based quantities. To also obtain the bulk-ESS (useful for central
+  tendency estimates), pass `"ESS_bulk"` to the `diagnostic` argument.
+
+* `effective_sample()` for `stanfit` objects now also returns the tail-ESS
+  (`ESS_tail`), consistent with `brmsfit` and `stanreg` objects.
 
 # bayestestR 0.17.0
 
