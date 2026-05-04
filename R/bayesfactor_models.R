@@ -279,7 +279,11 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   } else {
     res <- .bayesfactor_models_stan_REG(mods, denominator, verbose)
     bf_method <- "marginal likelihoods (bridgesampling)"
-    unsupported_models <- if (inherits(mods[[1]], c("stanfit", "CmdStanFit"))) TRUE else FALSE
+    unsupported_models <- if (inherits(mods[[1]], c("stanfit", "CmdStanFit"))) {
+      TRUE
+    } else {
+      FALSE
+    }
   }
 
   .bf_models_output(res,
