@@ -32,13 +32,19 @@ test_that("blavaan, all", {
     y1 ~~ 0*y5
   "
   suppressWarnings(capture.output({
-    bfit <- blavaan::bsem(model,
+    bfit <- blavaan::bsem(
+      model,
       data = PoliticalDemocracy,
-      n.chains = 1, burnin = 50, sample = 100
+      n.chains = 1,
+      burnin = 50,
+      sample = 100
     )
-    bfit2 <- blavaan::bsem(model2,
+    bfit2 <- blavaan::bsem(
+      model2,
       data = PoliticalDemocracy,
-      n.chains = 1, burnin = 50, sample = 100
+      n.chains = 1,
+      burnin = 50,
+      sample = 100
     )
   }))
 
@@ -73,11 +79,13 @@ test_that("blavaan, all", {
   x <- estimate_density(bfit)
   expect_length(unique(x$Parameter), 10)
 
-
   ## Bayes factors ----
 
   # For these models, no BF available, see #627
-  expect_warning(bayesfactor_models(bfit, bfit2), regex = "Bayes factors might not be precise")
+  expect_warning(
+    bayesfactor_models(bfit, bfit2),
+    regex = "Bayes factors might not be precise"
+  )
 
   ## FIXME: rror in `Yp[[p]]$SY + tcrossprod(Yp[[p]]$MY - Mu[var.idx])`:
   ## ! non-conformable arrays
@@ -90,7 +98,7 @@ test_that("blavaan, all", {
 
   ## Prior/posterior checks ----
   suppressWarnings(x <- check_prior(bfit))
-  expect_identical(nrow(x), 9L)
+  expect_identical(nrow(x), 8L)
 
   ## FIXME: Error in `Yp[[p]]$SY + tcrossprod(Yp[[p]]$MY - Mu[var.idx])`:
   ## ! non-conformable arrays
@@ -102,12 +110,12 @@ test_that("blavaan, all", {
 
   ## FIXME: no longer 13, but now 9?
   x <- simulate_prior(bfit)
-  expect_identical(ncol(x), 9L)
+  expect_identical(ncol(x), 8L)
   # YES this is 13! We have two parameters with the same prior.
 
   ## FIXME: no longer 13, but now 9?
   x <- describe_prior(bfit)
-  expect_identical(nrow(x), 9L)
+  expect_identical(nrow(x), 8L)
   # YES this is 13! We have two parameters with the same prior.
 
   x <- describe_posterior(bfit, test = "all", rope_range = c(-0.1, 0.1))

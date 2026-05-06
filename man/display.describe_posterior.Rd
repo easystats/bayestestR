@@ -51,7 +51,7 @@ to PDF or Word files. See
 for examples.
 }
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("tinytable", "gt"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("tinytable", "gt"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 \donttest{
 d <- data.frame(replicate(4, rnorm(20)))
 result <- describe_posterior(d)

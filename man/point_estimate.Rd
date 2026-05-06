@@ -149,7 +149,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 point_estimate(rnorm(1000))

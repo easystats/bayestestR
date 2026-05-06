@@ -177,7 +177,7 @@ any transformations -- \code{"log"}, \code{"response"}, etc. -- or any \code{reg
 }
 
 \examples{
-\dontshow{if (require("logspline") && require("rstanarm") && require("brms") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("logspline") && require("rstanarm") && require("brms") && require("emmeans")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 prior <- distribution_normal(1000, mean = 0, sd = 1)

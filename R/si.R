@@ -184,7 +184,7 @@ si.predictions <- si.emmGrid
 
 #' @export
 si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = "fixed", ...) {
-  out <- si(insight::get_parameters(posterior, effects = effects),
+  out <- si(insight::get_parameters(posterior, effects = effects, verbose = verbose),
     prior = prior, BF = BF, verbose = verbose
   )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))

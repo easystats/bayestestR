@@ -120,7 +120,14 @@ case of models) ignored.}
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
-with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
+with one or more of these options: \code{"ESS"}, \code{"ESS_bulk"}, \code{"Rhat"}, \code{"MCSE"}
+or \code{"all"}. \code{"ESS"} returns the \strong{tail-ESS} (the minimum of the effective
+sample sizes for the 5\% and 95\% quantiles), which is the most relevant
+diagnostic for assessing the reliability of credible intervals and other
+tail-based quantities. \code{"ESS_bulk"} additionally returns the \strong{bulk-ESS}
+(the effective sample size for the bulk of the posterior, useful for
+assessing the reliability of central tendency estimates such as the mean or
+median). \code{"all"} includes both tail and bulk \code{"ESS"}, \code{"Rhat"}, and \code{"MCSE"}.}
 
 \item{priors}{Add the prior used for each parameter.}
 
@@ -203,7 +210,7 @@ here. See also \href{https://easystats.github.io/insight/reference/find_paramete
 }
 
 \examples{
-\dontshow{if (all(insight::check_if_installed(c("logspline", "rstanarm", "emmeans", "BayesFactor"), quietly = TRUE))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("logspline", "rstanarm", "emmeans", "BayesFactor"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 x <- rnorm(1000)

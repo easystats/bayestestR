@@ -1,14 +1,24 @@
 #' @export
-print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, exact = TRUE, ...) {
+print.bayesfactor_matrix <- function(x, log = FALSE, exact = TRUE, ...) {
   orig_x <- x
 
   # Format values
   x <- unclass(x)
-  if (!log) x <- exp(x)
-  sgn <- sign(x) < 0
-  x <- insight::format_bf(abs(x), name = NULL, exact = exact, ...)
-  diag(x) <- if (log) "0" else "1"
-  if (any(sgn)) x[sgn] <- paste0("-", x[sgn])
+  if (log) {
+    sgn <- sign(x) < 0
+    x <- insight::format_value(abs(x), digits = 2, ...)
+
+    if (any(sgn)) {
+      x[sgn] <- paste0("-", x[sgn])
+    }
+
+    diag(x) <- "0"
+  } else {
+    x <- exp(x)
+    x <- insight::format_bf(x, name = NULL, exact = exact, ...)
+
+    diag(x) <- "1"
+  }
 
   df <- as.data.frame(x)
 
@@ -16,19 +26,30 @@ print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, exact = 
   models <- colnames(df)
   models[models == "1"] <- "(Intercept only)"
   models <- paste0("[", seq_along(models), "] ", models)
-  k <- max(vapply(c(models, "Denominator"), nchar, numeric(1))) + 2
 
   rownames(df) <- colnames(df) <- NULL
-  df <- cbind(Model = models, df)
-  colnames(df) <- c("placeholder", paste0(" [", seq_along(models), "] "))
+  df <- cbind(modl = models, df)
+  colnames(df) <- c(
+    "Denominator\\Numerator",
+    paste0(" [", seq_along(models), "] ")
+  )
+
+  # caption and footer
+  caption <- switch(
+    attr(orig_x, "bf_fun"),
+    "bayesfactor_restricted()" = "# Bayes Factors for Restricted Models",
+    "# Bayes Factors for Model Comparison"
+  )
+  footer <- if (log) c("\nBayes Factors are on the log-scale.\n", "red")
 
   out <- insight::export_table(
     df,
-    caption = c("# Bayes Factors for Model Comparison", "blue"),
-    subtitle = c(sprintf("\n\n%sNumerator\nDenominator", strrep(" ", k)), "cyan"),
-    footer = if (log) c("\nBayes Factors are on the log-scale.\n", "red")
+    caption = c(caption, "blue"),
+    footer = footer
   )
-  out <- sub("placeholder", "\b\b", out, fixed = TRUE)
+  # Fix spacing
+  out <- sub("Denominator", " Denominator", out, fixed = TRUE)
+
   cat(out)
 
   invisible(orig_x)

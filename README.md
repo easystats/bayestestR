@@ -154,9 +154,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |   Median |        95% CI |     pd |   ps
-## ----------------------------------------------------
-## Posterior | 8.95e-03 | [-1.97, 1.94] | 50.37% | 0.47
+## Parameter |    Median |        95% CI |     pd |   ps
+## -----------------------------------------------------
+## Posterior | -5.70e-03 | [-2.00, 1.99] | 50.23% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -188,49 +188,31 @@ describe_posterior(
 
     ## Summary of Posterior Distribution
     ## 
-    ## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS
-    ## --------------------------------------------------------------------------------------
-    ## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.81,  2.51] | 90.00% | 0.88 | 1.011 | 110.00
-    ## child       |  -1.16 | -1.16 | -1.16 | [-1.36, -0.94] |   100% | 1.00 | 0.996 | 278.00
-    ## camper      |   0.73 |  0.72 |  0.73 | [ 0.54,  0.91] |   100% | 1.00 | 0.996 | 271.00
+    ## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat | ESS
+    ## -----------------------------------------------------------------------------------
+    ## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.81,  2.51] | 90.00% | 0.88 | 1.011 | 110
+    ## child       |  -1.16 | -1.16 | -1.16 | [-1.36, -0.94] |   100% | 1.00 | 0.996 | 278
+    ## camper      |   0.73 |  0.72 |  0.73 | [ 0.54,  0.91] |   100% | 1.00 | 0.996 | 271
     ## 
     ## # Fixed effects (zero-inflated)
     ## 
-    ## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS
-    ## --------------------------------------------------------------------------------------
-    ## (Intercept) |  -0.48 | -0.51 | -0.22 | [-2.03,  0.89] | 78.00% | 0.73 | 0.997 | 138.00
-    ## child       |   1.85 |  1.86 |  1.81 | [ 1.19,  2.54] |   100% | 1.00 | 0.996 | 303.00
-    ## camper      |  -0.88 | -0.86 | -0.99 | [-1.61, -0.07] | 98.40% | 0.96 | 0.996 | 292.00
+    ## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat | ESS
+    ## -----------------------------------------------------------------------------------
+    ## (Intercept) |  -0.48 | -0.51 | -0.22 | [-2.03,  0.89] | 78.00% | 0.73 | 0.997 | 138
+    ## child       |   1.85 |  1.86 |  1.81 | [ 1.19,  2.54] |   100% | 1.00 | 0.996 | 303
+    ## camper      |  -0.88 | -0.86 | -0.99 | [-1.61, -0.07] | 98.40% | 0.96 | 0.996 | 292
     ## 
-    ## # Random effects (conditional) Intercept: persons
+    ## # Random effects (conditional) (SD/Cor: persons)
     ## 
-    ## Parameter |    Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS
-    ## ---------------------------------------------------------------------------------------
-    ## persons.1 |     -0.99 | -1.01 | -0.84 | [-2.68,  0.80] | 92.00% | 0.90 | 1.007 | 106.00
-    ## persons.2 | -4.65e-03 | -0.04 |  0.03 | [-1.63,  1.66] | 50.00% | 0.45 | 1.013 | 109.00
-    ## persons.3 |      0.69 |  0.66 |  0.69 | [-0.95,  2.34] | 79.60% | 0.78 | 1.010 | 114.00
-    ## persons.4 |      1.57 |  1.56 |  1.56 | [-0.05,  3.29] | 96.80% | 0.96 | 1.009 | 114.00
+    ## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat | ESS
+    ## -------------------------------------------------------------------------------
+    ## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.71,  3.58] | 100% | 1.00 | 1.010 | 126
     ## 
-    ## # Random effects (zero-inflated) Intercept: persons
+    ## # Random effects (zero-inflated) (SD/Cor: persons)
     ## 
-    ## Parameter | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS
-    ## ------------------------------------------------------------------------------------
-    ## persons.1 |   1.10 |  1.11 |  1.08 | [-0.23,  2.72] | 94.80% | 0.93 | 0.997 | 166.00
-    ## persons.2 |   0.18 |  0.18 |  0.22 | [-0.94,  1.58] | 63.20% | 0.54 | 0.996 | 154.00
-    ## persons.3 |  -0.30 | -0.31 | -0.54 | [-1.79,  1.02] | 64.00% | 0.59 | 0.997 | 154.00
-    ## persons.4 |  -1.45 | -1.46 | -1.44 | [-2.90, -0.10] | 98.00% | 0.97 | 1.000 | 189.00
-    ## 
-    ## # Random effects (conditional) SD/Cor: persons
-    ## 
-    ## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS
-    ## ----------------------------------------------------------------------------------
-    ## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.71,  3.58] | 100% | 1.00 | 1.010 | 126.00
-    ## 
-    ## # Random effects (zero-inflated) SD/Cor: persons
-    ## 
-    ## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS
-    ## ----------------------------------------------------------------------------------
-    ## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.63,  3.41] | 100% | 1.00 | 0.996 | 129.00
+    ## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat | ESS
+    ## -------------------------------------------------------------------------------
+    ## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.63,  3.41] | 100% | 1.00 | 0.996 | 129
 
 *bayestestR* also includes [**many other
 features**](https://easystats.github.io/bayestestR/reference/index.html)
@@ -255,7 +237,7 @@ As for other [**easystats**](https://github.com/easystats) packages,
 `plot()` methods are available from the
 [**see**](https://easystats.github.io/see/) package for many functions:
 
-![](man/figures/unnamed-chunk-8-1.png)<!-- -->
+![](man/figures/centrality-2-1.png)<!-- -->
 
 While the **median** and the **mean** are available through base R
 functions,
@@ -284,14 +266,14 @@ posterior distributions.
 ``` r
 posterior <- distribution_chisquared(10000, 4)
 
-hdi(posterior, ci = 0.89)
-## 89% HDI: [0.18, 7.63]
+hdi(posterior)
+## 95% HDI: [0.08, 9.53]
 
-eti(posterior, ci = 0.89)
-## 89% ETI: [0.75, 9.25]
+eti(posterior)
+## 95% ETI: [0.48, 11.14]
 ```
 
-![](man/figures/unnamed-chunk-10-1.png)<!-- -->
+![](man/figures/uncertainty-plot-1.png)<!-- -->
 
 ## Existence and Significance Testing
 
@@ -327,13 +309,13 @@ p_direction(posterior)
 ## Posterior | 97.72%
 ```
 
-![](man/figures/unnamed-chunk-12-1.png)<!-- -->
+![](man/figures/tests-plot-1.png)<!-- -->
 
 ### ROPE
 
 [`rope()`](https://easystats.github.io/bayestestR/reference/rope.html)
-computes the proportion (in percentage) of the HDI (default to the 89%
-HDI) of a posterior distribution that lies within a region of practical
+computes the proportion (in percentage) of the CI (default to the 95%
+ETI) of a posterior distribution that lies within a region of practical
 equivalence.
 
 Statistically, the probability of a posterior distribution of being
@@ -351,10 +333,9 @@ range can be automatically computed for models using the
 [rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
 function.
 
-Kruschke suggests using the proportion of the 95% (or 90%, considered
-more stable) HDI that falls within the ROPE as an index for
-“null-hypothesis” testing (as understood under the Bayesian framework,
-see
+Kruschke suggests using the proportion of the CI that falls within the
+ROPE as an index for “null-hypothesis” testing (as understood under the
+Bayesian framework, see
 [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
@@ -362,12 +343,12 @@ posterior <- distribution_normal(10000, 0.4, 0.2)
 rope(posterior, range = c(-0.1, 0.1))
 ## # Proportion of samples inside the ROPE [-0.10, 0.10]:
 ## 
-## inside ROPE
+## Inside ROPE
 ## -----------
 ## 4.40 %
 ```
 
-![](man/figures/unnamed-chunk-14-1.png)<!-- -->
+![](man/figures/rope-2-1.png)<!-- -->
 
 ### Bayes Factor
 
@@ -401,7 +382,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0, verb
 ## * Evidence Against The Null: 0
 ```
 
-![](man/figures/unnamed-chunk-16-1.png)<!-- -->
+![](man/figures/unnamed-chunk-1-1.png)<!-- -->
 
 <sup>*The lollipops represent the density of a point-null on the prior
 distribution (the blue lollipop on the dotted distribution) and on the
@@ -459,7 +440,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.4
+## [1] 0.39
 ```
 
 ## Code of Conduct

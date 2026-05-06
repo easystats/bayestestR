@@ -88,7 +88,7 @@ posterior. This idea, and the accompanying heuristics, were discussed in
 \emph{Gelman et al. 2017}.
 }
 \examples{
-\dontshow{if (require("rstanarm") && require("see")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("see")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(bayestestR)
 model <- rstanarm::stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)

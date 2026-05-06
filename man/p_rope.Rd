@@ -27,7 +27,7 @@ p_rope(x, ...)
 \item{x}{Vector representing a posterior distribution. Can also be a
 \code{stanreg} or \code{brmsfit} model.}
 
-\item{...}{Currently not used.}
+\item{...}{Other arguments passed to \code{\link[=rope]{rope()}}.}
 
 \item{range}{ROPE's lower and higher bounds. Should be \code{"default"} or
 depending on the number of outcome variables a vector or a list. For models

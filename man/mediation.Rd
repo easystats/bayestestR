@@ -79,7 +79,7 @@ value of sums of posterior samples used for the direct and indirect
 effect). The \emph{proportion mediated} is the indirect effect divided
 by the total effect.
 
-For all values, the \verb{89\%} credible intervals are calculated by default.
+For all values, the 95\% credible intervals are calculated by default.
 Use \code{ci} to calculate a different interval.
 
 The arguments \code{treatment} and \code{mediator} do not necessarily
@@ -97,7 +97,7 @@ samples of the effects, which can be used for further processing in the
 \strong{bayestestR} package.
 }
 \examples{
-\dontshow{if (require("mediation") && require("brms") && require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("mediation") && require("brms") && require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(mediation)
 library(brms)

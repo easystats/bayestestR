@@ -30,7 +30,7 @@ antagonistic prior (a prior of same shape located on the opposite of the
 effect).
 }
 \examples{
-\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(bayestestR)
 

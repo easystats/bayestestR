@@ -66,7 +66,7 @@ distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{n}{the number of observations}
+\item{n}{number of observations.}
 
 \item{random}{Generate near-perfect or random (simple wrappers for the base R
 \verb{r*} functions) distributions. When \code{random = FALSE}, these function return
@@ -90,7 +90,7 @@ distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 
 \item{sd}{vector of standard deviations.}
 
-\item{mu}{the mean}
+\item{mu}{vector of mean \eqn{\mu}{mu}.}
 
 \item{phi}{Corresponding to \code{glmmTMB}'s implementation of nbinom
 distribution, where \code{size=mu/phi}.}

@@ -1,6 +1,36 @@
-# bayestestR (devel)
+# bayestestR 0.17.0.xxx
+
+## New functionality
+
+* `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes
+  factors between all restricted models.
 
 ## Changes
+
+* `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler printing.
+
+* `diagnostic_posterior()` works with 'raw' MCMC samples (i.e., lists of data
+  frames or matrices representing samples of parameters from chains, or 3D arrays)
+  as well as objects from rstanarm/brms/lavaan models.
+
+* `diagnostic_posterior()` now reports the **tail-ESS** (the minimum of the
+  effective sample sizes for the 5% and 95% quantiles) in the `ESS` column,
+  instead of the basic `n_eff` from older Stan versions. The tail-ESS is more
+  relevant for assessing the reliability of credible intervals and other
+  tail-based quantities. To also obtain the bulk-ESS (useful for central
+  tendency estimates), pass `"ESS_bulk"` to the `diagnostic` argument.
+
+* `effective_sample()` for `stanfit` objects now also returns the tail-ESS
+  (`ESS_tail`), consistent with `brmsfit` and `stanreg` objects.
+
+# bayestestR 0.17.0
+
+## Changes
+
+* `rope()` (and by extension `p_rope()`) gain a new `complement` argument such
+  that `rope(x, complement = TRUE)` returns the ROPE posterior probability
+  together with the posterior probabilities above/below the ROPE (the
+  _complementary_ probabilities).
 
 * Added `display()` methods for *bayestestR* objects. The `display()` methods
   also get a new `format` option, `format = "tt"`, to produce tables with the
@@ -8,6 +38,8 @@
 
 * The long deprecated `rnorm_perfect()` function has been removed. Use
   `distribution_normal()` instead.
+
+* Prepare for upcoming changes in *marginaleffects* (0.29.0).
 
 # bayestestR 0.16.1
 
