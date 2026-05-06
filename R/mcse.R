@@ -46,10 +46,9 @@ mcse.brmsfit <- function(
   insight::check_if_installed("posterior")
 
   # check arguments
-  if (is.null(centrality)) {
-    centrality <- "median"
-  }
-  if (length(centrality) > 1 || !centrality %in% c("median", "mean")) {
+  if (
+    is.null(centrality) || length(centrality) > 1 || !centrality %in% c("median", "mean")
+  ) {
     centrality <- "median"
   }
 
@@ -62,7 +61,7 @@ mcse.brmsfit <- function(
 
   mcse <- switch(
     centrality,
-    median = vapply(params, posterior::mcse_mean, numeric(1)),
+    median = vapply(params, posterior::mcse_median, numeric(1)),
     mean = vapply(params, posterior::mcse_mean, numeric(1))
   )
 
