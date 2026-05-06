@@ -7,7 +7,8 @@
 
 ## Changes
 
-* `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler printing.
+* `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler
+  printing.
 
 * `diagnostic_posterior()` works with 'raw' MCMC samples (i.e., lists of data
   frames or matrices representing samples of parameters from chains, or 3D arrays)
