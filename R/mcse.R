@@ -2,6 +2,11 @@
 #'
 #' This function returns the Monte Carlo Standard Error (MCSE).
 #'
+#' @param centrality The point-estimate (centrality index) for which to compute
+#' the MCSE. Can be `"median"` (default) or `"mean"`. To not break other
+#' functions like `describe_posterior()` or `diagnostic_posterior()`, all other
+#' values are silently converted to `"median"`.
+#' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams effective_sample
 #'
 #' @inheritSection hdi Model components
@@ -35,19 +40,35 @@ mcse.brmsfit <- function(
   effects = "fixed",
   component = "conditional",
   parameters = NULL,
+  centrality = "median",
   ...
 ) {
   insight::check_if_installed("posterior")
+
   # check arguments
+  if (is.null(centrality)) {
+    centrality <- "median"
+  }
+  if (length(centrality) > 1 || !centrality %in% c("median", "mean")) {
+    centrality <- "median"
+  }
+
   params <- insight::get_parameters(
     model,
     effects = effects,
     component = component,
     parameters = parameters
   )
+
+  mcse <- switch(
+    centrality,
+    median = vapply(params, posterior::mcse_mean, numeric(1)),
+    mean = vapply(params, posterior::mcse_mean, numeric(1))
+  )
+
   data.frame(
     Parameter = colnames(params),
-    MCSE = vapply(params, posterior::mcse_mean, numeric(1)),
+    MCSE = mcse,
     stringsAsFactors = FALSE,
     row.names = NULL
   )
@@ -61,9 +82,10 @@ mcse.stanreg <- function(
   effects = "fixed",
   component = "location",
   parameters = NULL,
+  centrality = "median",
   ...
 ) {
-  mcse.brmsfit(model, effects, component, parameters, ...)
+  mcse.brmsfit(model, effects, component, parameters, centrality, ...)
 }
 
 

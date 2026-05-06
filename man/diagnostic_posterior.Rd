@@ -16,6 +16,7 @@ diagnostic_posterior(posterior, ...)
   effects = "fixed",
   component = "location",
   parameters = NULL,
+  centrality = "median",
   ...
 )
 }
@@ -80,6 +81,11 @@ parameters) are returned.
 
 \item{parameters}{Regular expression pattern that describes the parameters that
 should be returned.}
+
+\item{centrality}{The point-estimate (centrality index) for which to compute
+the MCSE. Can be \code{"median"} (default) or \code{"mean"}. To not break other
+functions like \code{describe_posterior()} or \code{diagnostic_posterior()}, all other
+values are silently converted to \code{"median"}.}
 }
 \description{
 Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte
