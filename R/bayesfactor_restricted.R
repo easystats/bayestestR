@@ -217,6 +217,35 @@ bayesfactor_restricted.emmGrid <- function(
   )
 }
 
+#' @rdname bayesfactor_restricted
+#' @export
+bayesfactor_restricted.matrix <- function(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  ...
+) {
+  if (is.null(prior)) {
+    prior <- posterior
+    insight::format_warning(
+      "Prior not specified! ",
+      "Please specify priors (with column names matching 'posterior')",
+      " to get meaningful results."
+    )
+  }
+
+  if (is.null(colnames(posterior)) || is.null(colnames(prior))) {
+    insight::format_error("Posterior / Prior must have column names.")
+  }
+
+  bayesfactor_restricted.data.frame(
+    posterior = as.data.frame(posterior),
+    prior = as.data.frame(prior),
+    hypothesis = hypothesis
+  )
+}
+
 #' @export
 bayesfactor_restricted.emm_list <- bayesfactor_restricted.emmGrid
 

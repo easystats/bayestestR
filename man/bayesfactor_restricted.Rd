@@ -7,6 +7,7 @@
 \alias{bayesfactor_restricted.brmsfit}
 \alias{bayesfactor_restricted.blavaan}
 \alias{bayesfactor_restricted.emmGrid}
+\alias{bayesfactor_restricted.matrix}
 \alias{bayesfactor_restricted.data.frame}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
@@ -43,6 +44,14 @@ bf_restricted(posterior, ...)
 )
 
 \method{bayesfactor_restricted}{emmGrid}(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  ...
+)
+
+\method{bayesfactor_restricted}{matrix}(
   posterior,
   hypothesis,
   prior = NULL,
