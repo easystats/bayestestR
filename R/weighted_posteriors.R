@@ -187,10 +187,6 @@ weighted_posteriors.stanreg <- function(
   model_tab <- .get_model_table(BFMods, priorOdds = prior_odds)
   postProbs <- model_tab$postProbs
 
-  # Compute weighted number of samples
-  iterations <- min(sapply(Mods, .total_samps))
-  weighted_samps <- round(iterations * postProbs)
-
   # extract parameters
   params <- lapply(
     Mods,
@@ -200,6 +196,10 @@ weighted_posteriors.stanreg <- function(
     parameters = parameters
   )
 
+  # Compute weighted number of samples
+  iterations <- min(sapply(params, nrow))
+  weighted_samps <- round(iterations * postProbs)
+
   .weighted_posteriors(params, weighted_samps, missing, mnames)
 }
 
@@ -208,6 +208,9 @@ weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 
 #' @export
 weighted_posteriors.blavaan <- weighted_posteriors.stanreg
+
+#' @export
+weighted_posteriors.CmdStanMCMC <- weighted_posteriors.stanreg
 
 #' @rdname weighted_posteriors
 #' @export
@@ -297,13 +300,4 @@ weighted_posteriors.BFBayesFactor <- function(
   res <- do.call("rbind", params)
   attr(res, "weights") <- weights
   return(res)
-}
-
-#' @keywords internal
-.total_samps <- function(mod) {
-  x <- insight::find_algorithm(mod)
-  if (is.null(x$iterations)) {
-    x$iterations <- x$sample
-  }
-  x$chains * (x$iterations - x$warmup)
 }

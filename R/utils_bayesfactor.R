@@ -216,12 +216,17 @@
 
 
 #' @keywords internal
-get_parameters.CmdStanFit <- function(x, ...) {
+get_parameters.CmdStanFit <- function(x, parameters = NULL, ...) {
   insight::check_if_installed("cmdstanr")
 
   out <- as.data.frame(x$draws(format = "draws_df"))
   out[c(".chain", ".iteration", ".draw")] <- NULL
   out[grepl("^lp_", colnames(out))] <- NULL
+
+  if (!is.null(parameters)) {
+    out <- out[, grepl(parameters, colnames(out)), drop = FALSE]
+  }
+
   out
 }
 
