@@ -205,6 +205,7 @@ print.bayesfactor_restricted <- function(
   x,
   digits = 3,
   log = FALSE,
+  show_names = FALSE,
   caption = "Bayes Factor (Order-Restriction)",
   ...
 ) {
@@ -212,6 +213,7 @@ print.bayesfactor_restricted <- function(
     x = x,
     digits = digits,
     log = log,
+    show_names = show_names,
     caption = caption,
     ...
   )

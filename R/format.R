@@ -216,6 +216,7 @@ format.bayesfactor_restricted <- function(
   x,
   digits = 3,
   log = FALSE,
+  show_names = TRUE,
   format = "text",
   caption = NULL,
   exact = TRUE,
@@ -234,6 +235,10 @@ format.bayesfactor_restricted <- function(
   BFE$log_BF <- NULL
   colnames(BFE)[colnames(BFE) == "p_prior"] <- "P(Prior)"
   colnames(BFE)[colnames(BFE) == "p_posterior"] <- "P(Posterior)"
+
+  if (isTRUE(show_names) && !is.null(rownames(BFE))) {
+    BFE$Hypothesis <- paste0("[", rownames(BFE), "] ", BFE$Hypothesis)
+  }
 
   # footer
   if (is.null(format) || format == "text") {
