@@ -79,7 +79,7 @@ Suggests:
     betareg,
     BH,
     blavaan,
-    bridgesampling,
+    bridgesampling (>= 1.2-1),
     brms,
     collapse,
     curl,

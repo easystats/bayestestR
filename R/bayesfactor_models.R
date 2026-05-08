@@ -277,16 +277,26 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Warn
   n_samps <- sapply(mods, function(x) {
     alg <- insight::find_algorithm(x)
+    if (is.null(alg)) {
+      return(NA_integer_)
+    }
     if (is.null(alg$iterations)) {
       alg$iterations <- alg$sample
     }
     (alg$iterations - alg$warmup) * alg$chains
   })
-  if (any(n_samps < 4e4) && verbose) {
-    insight::format_warning(
-      "Bayes factors might not be precise.",
-      "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended."
-    )
+  if (verbose) {
+    if (any(n_samps < 4e4, na.rm = TRUE)) {
+      insight::format_warning(
+        "Bayes factors might not be precise.",
+        "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended."
+      )
+    } else if (any(is.na(n_samps))) {
+      insight::format_alert(
+        "Unable to determine the number of posterior samples.",
+        "Bayes factors might not be precise."
+      )
+    }
   }
 
   if (inherits(mods[[1]], "blavaan")) {
@@ -296,11 +306,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   } else {
     res <- .bayesfactor_models_stan_REG(mods, denominator, verbose)
     bf_method <- "marginal likelihoods (bridgesampling)"
-    unsupported_models <- if (inherits(mods[[1]], c("stanfit", "CmdStanFit"))) {
-      TRUE
-    } else {
-      FALSE
-    }
+    unsupported_models <- inherits(mods[[1]], c("stanfit", "CmdStanFit"))
   }
 
   .bf_models_output(
@@ -405,6 +411,9 @@ bayesfactor_models.blavaan <- bayesfactor_models.stanreg
 #' @export
 bayesfactor_models.stanfit <- bayesfactor_models.stanreg
 
+
+#' @export
+bayesfactor_models.CmdStanMCMC <- bayesfactor_models.stanreg
 
 #' @export
 bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
