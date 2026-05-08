@@ -1,12 +1,14 @@
 #' @export
-format.describe_posterior <- function(x,
-                                      cp = NULL,
-                                      digits = 2,
-                                      format = "text",
-                                      ci_string = "CI",
-                                      caption = NULL,
-                                      subtitles = NULL,
-                                      ...) {
+format.describe_posterior <- function(
+  x,
+  cp = NULL,
+  digits = 2,
+  format = "text",
+  ci_string = "CI",
+  caption = NULL,
+  subtitles = NULL,
+  ...
+) {
   # reshape CI
   if (is.data.frame(x) && insight::n_unique(x$CI) > 1) {
     att <- attributes(x)
@@ -82,16 +84,17 @@ format.rope <- format.describe_posterior
 
 # special handling for bayes factors ------------------
 
-
 #' @export
-format.bayesfactor_models <- function(x,
-                                      digits = 3,
-                                      log = FALSE,
-                                      show_names = TRUE,
-                                      format = "text",
-                                      caption = NULL,
-                                      exact = TRUE,
-                                      ...) {
+format.bayesfactor_models <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  show_names = TRUE,
+  format = "text",
+  caption = NULL,
+  exact = TRUE,
+  ...
+) {
   BFE <- x
   denominator <- attr(BFE, "denominator")
   grid.type <- attr(BFE, "BF_method")
@@ -154,13 +157,15 @@ format.bayesfactor_models <- function(x,
 
 
 #' @export
-format.bayesfactor_inclusion <- function(x,
-                                         digits = 3,
-                                         log = FALSE,
-                                         format = "text",
-                                         caption = NULL,
-                                         exact = TRUE,
-                                         ...) {
+format.bayesfactor_inclusion <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  format = "text",
+  caption = NULL,
+  exact = TRUE,
+  ...
+) {
   priorOdds <- attr(x, "priorOdds")
   matched <- attr(x, "matched")
 
@@ -207,13 +212,15 @@ format.bayesfactor_inclusion <- function(x,
 
 
 #' @export
-format.bayesfactor_restricted <- function(x,
-                                          digits = 3,
-                                          log = FALSE,
-                                          format = "text",
-                                          caption = NULL,
-                                          exact = TRUE,
-                                          ...) {
+format.bayesfactor_restricted <- function(
+  x,
+  digits = 3,
+  log = FALSE,
+  format = "text",
+  caption = NULL,
+  exact = TRUE,
+  ...
+) {
   BFE <- as.data.frame(x)
 
   # Format
@@ -252,13 +259,15 @@ format.bayesfactor_restricted <- function(x,
 
 
 #' @export
-format.bayesfactor_parameters <- function(x,
-                                          cp = NULL,
-                                          digits = 3,
-                                          log = FALSE,
-                                          format = "text",
-                                          exact = TRUE,
-                                          ...) {
+format.bayesfactor_parameters <- function(
+  x,
+  cp = NULL,
+  digits = 3,
+  log = FALSE,
+  format = "text",
+  exact = TRUE,
+  ...
+) {
   null <- attr(x, "hypothesis")
   direction <- attr(x, "direction")
 
@@ -286,14 +295,12 @@ format.bayesfactor_parameters <- function(x,
     caption <- c(caption, "blue")
   }
 
-
   # format null-value
   if (length(null) == 1) {
     null <- insight::format_value(null, digits = digits, protect_integers = TRUE)
   } else {
     null <- insight::format_ci(null[1], null[2], ci = NULL, digits = digits)
   }
-
 
   # footer
   if (is.null(format) || format == "text") {
@@ -315,7 +322,6 @@ format.bayesfactor_parameters <- function(x,
       if (log) "Bayes Factors are on the log-scale."
     ))
   }
-
 
   # match and split at components
   if (!is.null(cp) && !all(is.na(match(cp$Parameter, out$Parameter)))) {
