@@ -413,7 +413,7 @@ bayesfactor_models.stanfit <- bayesfactor_models.stanreg
 
 
 #' @export
-bayesfactor_models.CmdStanMCMC <- bayesfactor_models.stanreg
+bayesfactor_models.CmdStanFit <- bayesfactor_models.stanreg
 
 #' @export
 bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {

@@ -210,7 +210,7 @@ weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 weighted_posteriors.blavaan <- weighted_posteriors.stanreg
 
 #' @export
-weighted_posteriors.CmdStanMCMC <- weighted_posteriors.stanreg
+weighted_posteriors.CmdStanFit <- weighted_posteriors.stanreg
 
 #' @rdname weighted_posteriors
 #' @export
