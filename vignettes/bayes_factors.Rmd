@@ -27,7 +27,9 @@ This vignette can be referred to by citing the following:
 
 ```{r setup, include=FALSE}
 library(knitr)
+
 options(knitr.kable.NA = "", digits = 2)
+
 knitr::opts_chunk$set(
   echo = TRUE,
   comment = ">",
@@ -38,404 +40,681 @@ knitr::opts_chunk$set(
 )
 
 pkgs <- c(
-  "rstanarm", "BayesFactor", "emmeans", "logspline", "lme4", "ggplot2",
-  "see", "insight", "knitr", "effectsize", "bayestestR"
+  "effectsize",
+  "bayestestR",
+  "ggplot2",
+  "see",
+  "rstanarm",
+  "bridgesampling",
+  "emmeans",
+  "marginaleffects",
+  "logspline"
 )
+
 if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
-}
-
-set.seed(4)
-
-if (require("ggplot2") && require("see")) {
+} else {
   theme_set(theme_modern())
 }
 ```
 
-The adoption of the Bayesian framework for applied statistics, especially in the
-social and psychological sciences, seems to be developing in two distinct
-directions. One of the key topics marking their separation is their opinion
-about the **Bayes factor**. In short, one school of thought (e.g., the *Amsterdam school*, led by [E. J. Wagenmakers](https://www.bayesianspectacles.org/))
-advocate its use, and emphasize its qualities as a statistical index, while
-another point to its limits and prefer, instead, the precise description of
-posterior distributions (using
-[CIs](https://easystats.github.io/bayestestR/reference/hdi.html),
-[ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.).
+The adoption of the Bayesian framework, especially in the
+social and psychological sciences, seems to be developing in two distinct directions,
+with their separation often marked by their opinion of the **Bayes factor**.
+In short, one school of thought (e.g., the *Amsterdam school*, led by [E. J. Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use, and emphasize its qualities as a statistical index,
+while another point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.).
 
-The `bayestestR` package does **not** take a side in this debate, and offers tools to carry out analysis irrespective of the school you subscribe to. Instead, it strongly supports the notion of an *informed choice*:
+The `bayestestR` package does **not** take a side in this debate,
+and offers tools to carry out analysis irrespective of the school you subscribe to.
+Instead, it strongly supports the notion of an *informed choice*:
 
 **discover the methods, learn about them, understand them, try them, and decide for yourself**.
 
 Having said that, here's an introduction to Bayes factors :)
 
-
 # The Bayes Factor
 
-**Bayes Factors (BFs) are indices of *relative* evidence of one "model" over another**.
+There are many ways to conceptualize Bayes factors (BFs), but fundamentally:
+**BFs are indices of *relative* evidence between two *hypotheses* over another**.
 
-In their role as a hypothesis testing index, they are to Bayesian framework what
-a $p$-value is to the **classical/frequentist framework**. In significance-based
-testing, $p$-values are used to assess how unlikely are the observed data if the
-**null hypothesis** were true, while in the **Bayesian model selection framework**,
-Bayes factors assess evidence for different models, each model corresponding to
-a specific hypothesis.
-
-According to Bayes' theorem, we can update prior probabilities of some model $M$
-($P(M)$) to posterior probabilities ($P(M|D)$) after observing some datum $D$ by
-accounting for the probability of observing that datum given the model
-($P(D|M)$, also known as the *likelihood*):
+According to Bayes' theorem,
+given a the prior probability of some hypothesis $\mathcal{H}$ ($P(\mathcal{H})$)
+and some data $\mathcal{D}$,
+we can find the posterior probability of the hypothesis ($P(\mathcal{H|D})$)
+by accounting for the probability of observing that datum were the hypothesis true ($P(\mathcal{D|H})$,
+also known as the *likelihood*):^[normalized by the marginal probability of observing the data, $P(\mathcal{D})$, which we will soon see is often not needed.]
 
 $$
-P(M|D) = \frac{P(D|M)\times P(M)}{P(D)}
+P(\mathcal{H|D}) = \frac{P(\mathcal{D|H})\times P(\mathcal{H})}{P(\mathcal{D})}
 $$
 
-Using this equation, we can compare the probability-odds of two models:
+Within this context, an hypothesis is formalized through the specification of an a-priori model:
+Priors on the parameters ($\Theta$) that define the data generating process.
+
+If we have two hypothesis, we can find their posterior probability-odds as such:
 
 $$
-\underbrace{\frac{P(M_1|D)}{P(M_2|D)}}_{\text{Posterior Odds}} =
-\underbrace{\frac{P(D|M_1)}{P(D|M_2)}}_{\text{Likelihood Ratio}}
+\underbrace{\frac{P(\mathcal{H}_1|\mathcal{D})}{P(\mathcal{H}_2|\mathcal{D})}}_{\text{Posterior Odds}} =
+\underbrace{\frac{P(\mathcal{D}|\mathcal{H}_1)}{P(\mathcal{D}|\mathcal{H}_2)}}_{\text{Likelihood Ratio}}
 \times
-\underbrace{\frac{P(M_1)}{P(M_2)}}_{\text{Prior Odds}}
+\underbrace{\frac{P(\mathcal{H}_1)}{P(\mathcal{H}_2)}}_{\text{Prior Odds}}
 $$
 
-Where the *likelihood ratio* (the middle term) is the *Bayes factor* - it is the ***factor*** by which some **prior odds** have been updated after observing the data to **posterior odds**.
+Where the *likelihood ratio* (the middle term) is the ***Bayes factor*** -
+it is the ***factor*** by which some **prior odds** have been updated _after_ observing the data to **posterior odds**.
+This value can also be thought is _predictive terms_ - how well has a formalized prior model predicted the observed data compared to another formalized prior model?
 
-Thus, Bayes factors can be calculated in two ways:
+Thus, Bayes factors can be calculated in two ways: {#bf-definitions}
 
-- As a ratio quantifying **the relative probability of the observed data under each of the two models**. (In some contexts, these probabilities are also called *marginal likelihoods*.)
+- As a ratio quantifying **the relative probability of the observed data under each of the two hypotheses**: (In some contexts, these probabilities are also called *marginal likelihoods*.)
 
 $$
-BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
+BF_{12}=\frac{P(\mathcal{D}|\mathcal{H}_1)}{P(\mathcal{D}|\mathcal{H}_2)}
 $$
 
 - As **the degree of shift in prior beliefs** about the relative credibility of
-two models (since they can be computed by dividing posterior odds by prior
+two hypotheses (since they can be computed by dividing posterior odds by prior
 odds).
 
 $$
-BF_{12}=\frac{Posterior~Odds_{12}}{Prior~Odds_{12}}
+BF_{12}=\frac{\text{Posterior Odds}_{12}}{\text{Prior Odds}_{12}}
 $$
 
-Here we provide functions for computing Bayes factors in two different contexts:
 
-- **testing single parameters (coefficients) within a model**
-- **comparing statistical models themselves**
+`{bayestestR}` provides functions for computing Bayes factors in two different contexts:
 
-# 1. Testing Models' Parameters with Bayes Factors {#bayesfactor_parameters}
+- **Comparing statistical models that differ on their priors which represent two competing hypotheses**
+- **Testing single estimates (parameters, coefficients, transformed parameters) within a given model**
 
-A **Bayes factor for a single parameter** can be used to answer the question:
+# 1. Comparing Models using Bayes Factors {#bayesfactor_models}
 
-> "Given the observed data, has the null hypothesis of an absence of an effect
-become more or less credible?"
-
-
-```{r deathsticks_fig, echo=FALSE, fig.cap="Bayesian analysis of the Students' (1908) Sleep data set.", fig.align='center', out.width="80%"}
-knitr::include_graphics("https://github.com/easystats/bayestestR/raw/main/man/figures/deathsticks.jpg")
-```
-
-Let's use the Students' (1908) Sleep data set (`data("sleep")`). The data comes
-from a study in which participants were administered a drug and the researchers
-assessed the extra hours of sleep that participants slept afterwards. We will
-try answering the following research question using Bayes factors:
-
-> **Given the observed data, has the hypothesis that the drug (the effect of `group`) has no effect on the numbers of hours of extra sleep (variable `extra`) become more of less credible?**
-
-```{r sleep_boxplot, echo=FALSE}
-library(ggplot2)
-
-ggplot(sleep, aes(x = group, y = extra, fill = group)) +
-  geom_boxplot() +
-  theme_classic() +
-  theme(legend.position = "none")
-```
-
-The **boxplot** suggests that the second group has a higher number of hours of
-extra sleep. *By how much?*
-
-Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1.html), with a
-prior of $b_{group} \sim N(0, 3)$ (i.e. the prior follows a Gaussian/normal
-distribution with $mean = 0$ and $SD = 3$), using
-`rstanarm` package:
-
-```{r rstanarm_model, eval = FALSE}
-set.seed(123)
-library(rstanarm)
-
-model <- stan_glm(
-  formula = extra ~ group,
-  data = sleep,
-  prior = normal(0, 3, autoscale = FALSE),
-  chains = 10, iter = 5000, warmup = 1000
-)
-```
-
-```{r, echo=FALSE}
-model <- stan_glm(
-  formula = extra ~ group,
-  data = sleep,
-  prior = normal(0, 3, autoscale = FALSE),
-  refresh = 0,
-  chains = 4, iter = 2000, warmup = 1000 # to reduce time for build
-)
-```
-
-### Testing against a null-*region*
-
-One way of operationalizing the null-hypothesis is by setting a null region, such
-that an effect that falls within this interval would be *practically* equivalent
-to the null [@kruschke2010believe]. In our case, that means defining a range of
-effects we would consider equal to the drug having no effect at all. We can then
-compute the prior probability of the drug's effect falling *outside this null-region*,
-and the prior probability of the drug's effect falling *within the null-region*
-to get our *prior odds*. Say any effect smaller than an hour of extra sleep is
-practically equivalent to being no effect at all, we would define our prior odds
-as:
-
-$$
-\frac
-{P(b_{drug} \notin [-1, 1])}
-{P(b_{drug} \in [-1, 1])}
-$$
-
-Given our prior has a normal distribution centered at 0 hours with a scale (an
-SD) of 3 hours, our priors would look like this:
-
-```{r, echo=FALSE}
-null <- c(-1, 1)
-xrange <- c(-10, 10)
-
-x_vals <- seq(xrange[1], xrange[2], length.out = 400)
-d_vals <- dnorm(x_vals, sd = 3)
-in_null <- null[1] < x_vals & x_vals < null[2]
-range_groups <- rep(0, length(x_vals))
-range_groups[!in_null & x_vals < 0] <- -1
-range_groups[!in_null & x_vals > 0] <- 1
-
-ggplot(mapping = aes(x_vals, d_vals, fill = in_null, group = range_groups)) +
-  geom_area(color = "black", linewidth = 1) +
-  scale_fill_flat(name = "", labels = c("Alternative", "Null")) +
-  labs(x = "Drug effect", y = "Density") +
-  coord_cartesian(ylim = c(0, 0.45)) +
-  theme_modern() +
-  theme(legend.position.inside = c(0.2, 0.8))
-
-pnull <- diff(pnorm(null, sd = 3))
-prior_odds <- (1 - pnull) / pnull
-```
-
-and the prior odds would be 2.8.
-
-By looking at the posterior distribution, we can now compute the posterior probability of the drug's effect falling *outside the null-region*, and the posterior probability of the drug's effect falling *within the null-region* to get our *posterior odds*:
-
-$$
-\frac
-{P(b_{drug} \notin [-1,1] | Data)}
-{P(b_{drug} \in [-1,1] | Data)}
-$$
-
-```{r rstanarm_fit, echo=FALSE}
-library(bayestestR)
-model_prior <- unupdate(model)
-posterior <- insight::get_parameters(model)$group2
-prior <- insight::get_parameters(model_prior)$group2
-
-f_post <- logspline::logspline(posterior)
-
-d_vals_post <- logspline::dlogspline(x_vals, f_post)
-
-ggplot(mapping = aes(x_vals, d_vals_post, fill = in_null, group = range_groups)) +
-  geom_area(color = "black", linewidth = 1) +
-  scale_fill_flat(name = "", labels = c("Alternative", "Null")) +
-  labs(x = "Drug effect", y = "Density") +
-  coord_cartesian(ylim = c(0, 0.45)) +
-  theme_modern() +
-  theme(legend.position.inside = c(0.2, 0.8))
-
-My_first_BF <- bayesfactor_parameters(model, null = c(-1, 1), prior = model_prior)
-
-BF <- as.numeric(My_first_BF)[2]
-post_odds <- prior_odds * BF
-
-med_post <- point_estimate(posterior)$Median
-```
-
-We can see that the center of the posterior distribution has shifted away from 0
-(to ~1.5). Likewise, the posterior odds are 2.5, which seems to favor **the effect being non-null**. **But**, does this mean the data support the alternative over
-the null? Hard to say, since even before the data were observed, the priors
-already favored the alternative - so we need to take our priors into account
-here!
-
-Let's compute the Bayes factor as the change from the prior odds to the
-posterior odds: $BF_{10} = Odds_{posterior} / Odds_{prior} = 0.9$! This BF
-indicates that the data provide 1/0.9 = 1.1 times more evidence for the effect
-of the drug being practically nothing than it does for the drug having some
-clinically significant effect. Thus, although the center of distribution has
-shifted away from 0, and the posterior distribution seems to favor a non-null
-effect of the drug, it seems that given the observed data, the probability mass
-has *overall* shifted closer to the null interval, making the values in the null
-interval more probable! [see *Non-overlapping Hypotheses* in
-@morey2011bayesinterval]
-
-All of this can be achieved with the function `bayesfactor_parameters()`, which
-computes a Bayes factor for each of the model's parameters:
-
-```{r, eval=FALSE}
-My_first_BF <- bayesfactor_parameters(model, null = c(-1, 1))
-My_first_BF
-```
-
-```{r, echo=FALSE}
-print(My_first_BF)
-```
-
-We can also plot using the `see` package:
+Let's take a look at the _kid IQ_ dataset from the `{rstanarm}` package.
 
 ```{r}
-library(see)
-plot(My_first_BF)
+data("kidiq", package = "rstanarm")
+
+kidiq <- subset(kidiq, select = c(kid_score, mom_hs))
+kidiq <- transform(kidiq, mom_hs = factor(mom_hs, levels = 0:1, labels = c("no", "yes")))
+
+head(kidiq)
 ```
+
+We'll be trying to answer a simple question:
+what is the mean difference in IQ scores between children whose mothers completed high-school and those whose mothers did not complete high school (as indicated by the `mom_hs` variable).
+
+There are many hypothesis we might have about this difference. Let's start by examining:
+
+- $\mathcal{H}_0$: There's no difference in IQ between the two groups.
+- $\mathcal{H}_1$: The difference is probably around 20 point in favor of kids whose mothers completed high school.
+- $\mathcal{H}_2$: A more conservative hypothesis that the difference, if it exists, is probably no more than about 5 point in either direction.
+
+Let's plot these:
+
+```{r, echo=FALSE}
+p_prior0 <- ggplot() +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  geom_segment(
+    aes(x = 0, xend = 0, y = 0, yend = 1),
+    linewidth = 1,
+    color = "royalblue"
+  ) +
+  geom_point(aes(x = 0, y = 1), size = 3, color = "royalblue") +
+  theme(axis.text.y = element_blank()) +
+  expand_limits(y = 1.5, x = c(-50, 50)) +
+  labs(
+    x = "Difference",
+    y = NULL,
+    title = expression(H[0] ~ ":" ~ theta == 0)
+  )
+
+p_prior1 <- ggplot() +
+  stat_function(
+    geom = "area",
+    fun = dnorm,
+    args = list(mean = 20, sd = 10),
+    xlim = c(-50, 50),
+    fill = "royalblue",
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  theme(axis.text.y = element_blank()) +
+  expand_limits(y = 0.05) +
+  labs(
+    x = "Difference",
+    y = NULL,
+    title = expression(H[1] ~ ":" ~ theta %~% norma(20, 10^2))
+  )
+
+p_prior2 <- ggplot() +
+  stat_function(
+    geom = "area",
+    fun = dnorm,
+    args = list(mean = 0, sd = 5),
+    xlim = c(-50, 50),
+    fill = "royalblue",
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  theme(axis.text.y = element_blank()) +
+  expand_limits(y = 0.05) +
+  labs(
+    x = "Difference",
+    y = NULL,
+    title = expression(H[2] ~ ":" ~ theta %~% norma(0, 5^2))
+  )
+
+plots(p_prior0, p_prior1, p_prior2, n_columns = 1)
+```
+
+We can build models with these different priors with `{brms}` or `{rstanarm}`:^[We will be using `{rstanarm}` throughout this vignette, but `bayestestR` also supports `{brms}`, `{blavaan}`, `{rstan}`, `{cmdstanr}`, `{BayesFactor}` and more.]
+
+In any case, note the we will always require _many_ posterior samples for the stability of our BF estimation (typically 10 times more than what we would need for posterior estimation alone; @gronau2020bridgesampling).
+
+```{r}
+library(rstanarm)
+
+mod_H0 <- stan_glm(
+  kid_score ~ 1,
+  family = gaussian(),
+  data = kidiq,
+
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
+  refresh = 0,
+  # required for BF computation
+  diagnostic_file = file.path(tempdir(), "df0.csv")
+)
+
+mod_H1 <- stan_glm(
+  kid_score ~ mom_hs,
+  family = gaussian(),
+  data = kidiq,
+
+  prior = normal(location = 20, scale = 10),
+
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
+  refresh = 0,
+  diagnostic_file = file.path(tempdir(), "df1.csv")
+)
+
+mod_H2 <- stan_glm(
+  kid_score ~ mom_hs,
+  family = gaussian(),
+  data = kidiq,
+
+  prior = normal(location = 0, scale = 5),
+
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
+  refresh = 0,
+  diagnostic_file = file.path(tempdir(), "df2.csv")
+)
+```
+
+We can now ask: which a-priori model (each representing a different hypothesis) is more likely to have produced the observed data?
+
+This is usually done by comparing the marginal likelihoods of two models. In
+such a case, the Bayes factor is a measure of the **relative** evidence for one
+hypothesis over the other.
+
+```{r}
+bfs <- bayesfactor_models(mod_H1, mod_H2, denominator = mod_H0, verbose = FALSE)
+
+print(bfs, show_names = TRUE)
+```
+
+
+We can see that both models that allow for a difference between the groups
+are much more supported by the data -
+with $BF>`r insight::format_value(exp(bfs$log_BF[2]))`$ -
+compared to the null (intercept only).
 
 Note that **interpretation guides** for Bayes factors can be found in the `effectsize` package:
 
 ```{r}
-effectsize::interpret_bf(exp(My_first_BF$log_BF[2]), include_value = TRUE)
+effectsize::interpret_bf(bfs$log_BF[1:2], log = TRUE)
 ```
 
+Due to the transitive property of Bayes factors,
+we can easily change the reference model to the model representing $\mathcal{H}_2$:
 
-### Testing against the *point*-null (0)
+```{r update_models1}
+bfs2 <- update(bfs, reference = 2, subset = 1)
 
-> **What if we don't know what region would be practically equivalent to 0?**
-
-Or if we just want the null to be exactly zero? Not a problem - as the width of
-null region shrinks to a point, the change from the prior probability to the
-posterior probability of the null can be estimated by comparing the density of
-the null value between the two distributions.^[Note that as the width of null
-interval shrinks to zero, the prior probability and posterior probability of the
-alternative tends towards 1.00.] This ratio is called the **Savage-Dickey ratio**,
-and has the added benefit of also being an approximation of a Bayes factor
-comparing the estimated model against a model in which the parameter of interest
-has been restricted to a point-null:
-
-> "[...] the Bayes factor for $H_0$ versus $H_1$ could be obtained by
-analytically integrating out the model parameter $\theta$. However, the Bayes
-factor may likewise be obtained by only considering $H_1$, and dividing the
-height of the posterior for $\theta$ by the height of the prior for $\theta$, at
-the point of interest." [@wagenmakers2010bayesian]
-
-```{r, eval=FALSE}
-My_second_BF <- bayesfactor_parameters(model, null = 0)
-My_second_BF
+print(bfs2, show_names = TRUE)
 ```
 
-```{r, echo=FALSE}
-My_second_BF <- bayesfactor_parameters(
-  data.frame(group2 = posterior),
-  data.frame(group2 = prior),
-  null = 0,
-  verbose = FALSE
-)
+The data supports the a-priori model that suggests a positive difference almost 4 times over the model that suggests a small difference.
 
-print(My_second_BF)
-```
+We can also get a matrix of Bayes factors of all the pairwise model comparisons:
 
 ```{r}
-plot(My_second_BF)
+print(as.matrix(bfs), show_names = TRUE)
 ```
+
+Overall, we can see that both models that allow for some non-0 difference are much more supported by the data compared to the 0-difference model. Let's take a look at the data:
+
+```{r, echo=FALSE}
+ggplot(kidiq, aes(mom_hs, kid_score, fill = mom_hs, color = mom_hs)) +
+  geom_violindot() +
+  geom_boxplot(fill = NA, position = position_nudge(-0.2), width = 0.1) +
+  labs(x = "Mom completed high-school?", y = "Kids' IQ") +
+  guides(fill = "none", color = "none")
+```
+
+And indeed both models 1 and 2's posteriors reflect this difference:
+
+```{r, echo=FALSE}
+plots(
+  plot(hdi(mod_H1)) +
+    labs(y = NULL, title = "Model 1") +
+    coord_cartesian(xlim = c(-20, 20)) +
+    scale_y_discrete(expand = expansion(0.1, 0)) +
+    guides(fill = "none"),
+  plot(hdi(mod_H2)) +
+    coord_cartesian(xlim = c(-20, 20)) +
+    scale_y_discrete(expand = expansion(0.1, 0)) +
+    labs(y = NULL, title = "Model 2"),
+
+  n_columns = 1,
+  guides = "collect"
+)
+```
+
+Note that these posterior distributions are _very_ similar,
+but BFs do not compare posterior models - only _a-priori_ models!
+
+For this reason, computing BFs only makes sense if we are able to formulate our hypotheses
+into distinct priors.
+
+## The BIC approximation
+
+It is also possible to compute *approximate* Bayes factors for the comparison of *frequentist* models (😱).
+This is done by comparing BIC indices, allowing a Bayesian comparison
+of nested as well as non-nested frequentist models [@wagenmakers2007practical].
+
+Since frequentist modeling does not allow for specification of priors, we are limited to either restricting parameters to 0 or not.
+
+```{r}
+mod_H0f <- lm(kid_score ~ 1, data = kidiq)
+
+mod_H1f <- lm(kid_score ~ mom_hs, data = kidiq)
+
+bayesfactor_models(mod_H1f, denominator = mod_H0f)
+```
+
+(Note how similar this approximate BF is to the proper BFs estimated above.)
+
+
+## Model averaging
+
+In the previous section, we discussed the direct comparison of two models to
+determine if a hypothesis is supported by the data.
+However, in many cases there are too many models to consider,
+or perhaps it is not straightforward which models we should be comparing to determine if an effect is supported by the data.
+For such cases, we can use Bayesian model averaging (BMA) to determine the support
+provided by the data for a parameter or model-term across many models.
+
+### Inclusion Bayes factors {#bayesfactor_inclusion}
+
+Inclusion Bayes factors answer the question:
+
+> **Are the observed data more probable under models with a particular predictor, than they are under models without that particular predictor?**
+
+In other words, on average, are models with predictor $X$ more likely to have
+produced the observed data than models without predictor $X$?^[A model without
+predictor $X$ can be thought of as a model in which the parameter(s) of the
+predictor have been restricted to a null-point of 0.]
+
+These Bayes factors are computed not as the ratios of marginal likelihoods,
+but as **the degree of shift in prior beliefs**:
+Since each model has a prior probability, it is possible to sum the prior
+probability of all models that include a predictor of interest (the *prior inclusion probability*), and of all models that do not include that predictor
+(the *prior exclusion probability*). After the data are observed, and each model
+is assigned a posterior probability, we can similarly consider the sums of the
+posterior models' probabilities to obtain the *posterior inclusion probability*
+and the *posterior exclusion probability*. The change from prior
+inclusion odds to the posterior inclusion odds is the **Inclusion Bayes factor**
+[$BF_{Inclusion}$; @clyde2011bayesian].
+
+```{r}
+(bfinc <- bayesfactor_inclusion(bfs))
+```
+
+(`bayesfactor_inclusion()` is meant to provide Bayes Factors per predictor, similar to JASP's *Effects* option.)
+
+We can see that across the 3 models under consideration, models _with_ the `mom_hs` term fit the data `r insight::format_value(exp(bfinc$log_BF))` times more than the model _without_ that term.
+
+### Averaging posteriors {#weighted_posteriors}
+
+Similar to how we can average evidence for a predictor across models, we can
+also average the **posterior estimate** across models.
+
+```{r}
+ppp <- weighted_posteriors(mod_H0, mod_H1, mod_H2)
+
+plot(hdi(ppp$mom_hsyes)) +
+  coord_cartesian(xlim = c(-20, 20))
+```
+
+This looks a lot like the posterior obtained from the second model,
+which shouldn't be surprising since about 80% of the averaged posterior comes from the second model.
+
+```{r}
+attr(ppp, "weights")
+```
+
+
+## Order restricted models {#bayesfactor_restricted}
+
+We've already seen we can formalize hypothesis into distributional priors
+(e.g., _the difference is probably no more than about 5 point in either direction._ became $theta \sim Normal(0, 5^2)$).
+These priors are **unrestricted** - that is, **all values** between $-\infty$
+and $\infty$ of all parameters in the model have some non-zero credibility (no
+matter how small; this is true for both the prior and posterior distribution).
+
+But we can also formalize hypotheses as **order restrictions** [@morey_2015_blog;
+@morey2011bayesinterval].
+
+For example, we can impose an _additional_ order restriction
+that the difference _must be positive_, which we can write like this (if we had to):
+
+$$
+\mathcal{H}_{2r}: theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\ 0 \end{bmatrix}
+$$
+
+By testing the probabilities of these restrictions on prior and posterior samples,
+we can see how the probabilities of the restricted distributions _change_ after observing the data -
+[this change is a Bayes factor](#bf-definitions).
+These can be achieved with `bayesfactor_restricted()`, that compute a Bayes
+factor for these restricted model vs the unrestricted model.
+
+```{r}
+bayesfactor_restricted(mod_H2, hypothesis = "mom_hsyes > 0")
+```
+
+
+In other words, the data fits the restricted model (where the difference must be small _and positive_) twice as much as it fits the un-restircted model (where the difference must be small).
+
+We can compare multiple restricted hypotheses. For example: that the difference isn't just positive, it's larger than 4.
+
+```{r}
+bf_rstr <- bayesfactor_restricted(
+  mod_H2,
+  hypothesis = c(
+    positive = "mom_hsyes > 0",
+    strong = "mom_hsyes > 4"
+  )
+)
+```
+
+Here too we can obtain a matrix of BFs between all models:
+
+```{r}
+print(as.matrix(bf_rstr), show_names = TRUE)
+```
+
+We can see the "strong" model is preferred over both the un-restricted model and the "positive" model.
+
+Again, we can use the transitive properties of Bayes factors to find the BF comparing $\mathcal{H}_{2r}$ and $\mathcal{H}_0$:
+
+$$
+\begin{align}
+BF_{2r,0} & = BF_{2,0} \times BF_{2r,2} \\
+& = \frac{P(\mathcal{D}|\mathcal{H}_{2})}{P(\mathcal{D}|\mathcal{H}_0)}
+\times \frac{P(\mathcal{D}|\mathcal{H}_{2r})}{P(\mathcal{D}|\mathcal{H}_2)} \\
+& = \frac{P(\mathcal{D}|\mathcal{H}_{2r})}{P(\mathcal{D}|\mathcal{H}_0)}
+\end{align}
+$$
+
+```{r}
+BF_2.0 <- as.numeric(bfs)[2]
+BF_2r.2 <- as.numeric(bf_rstr)[2]
+
+(BF_2r.0 <- BF_2.0 * BF_2r.2)
+```
+
+So the data support the hypothesis that the difference is small but strictly positive
+`r insight::format_value(BF_2r.0)` times more than the hypothesis that the difference is exactly 0.
+
+**Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].**
+
+---
+
+We are not limited to a single order restrictions - we can compound them to create complex restrictions.
+
+Let's look at the [`disgust` dataset](http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html), were 150 individuals rated "moral harshness" of undocumented migrants in one of three conditions: no odor, clean odor (lemon), or disgusting (sulfur) odor during questionnaire.
+
+```{r}
+data("disgust", package = "bayestestR")
+
+str(disgust)
+```
+
+
+Let's build our simple one-way-ANOVA-like model:
+
+```{r}
+mod_odor <- stan_glm(
+  score ~ condition,
+  family = gaussian(),
+  data = disgust,
+
+  prior = normal(location = 0, scale = 2),
+
+  contrasts = list(condition = "contr.equalprior_pairs"),
+
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
+  refresh = 0,
+  diagnostic_file = file.path(tempdir(), "df3.csv")
+)
+```
+
+**NOTE**: See the *Specifying Correct Priors for Factors with More Than 2 Levels* appendix below for more details on the contrast coding used here.
+
+Let's obtain the prior and posterior distributions of the condition means using `posterior_epred()`.
+
+```{r}
+mod_odor.prior <- unupdate(mod_odor) # get the priors-only model
+
+library(emmeans)
+
+disgust_means <- emmeans(mod_odor, ~condition)
+disgust_means.prior <- emmeans(mod_odor.prior, ~condition)
+```
+
+Our hypothesis is that the moral harshness ratings are lowest in the lemon condition, higher in the control condition, and highest in the sulfur condition - in other words, there is an _order_ of: $\text{lemon} < \text{control} < \text{sulfur}$.
+
+We can formalize this hypothesis as an order restriction on the means of the three conditions:
+
+```{r}
+bayesfactor_restricted(
+  posterior = disgust_means,
+  prior = disgust_means.prior,
+  hypothesis = "lemon < control & control < sulfur"
+)
+```
+
+We can see that a-priori, this specific ordering of the 3 means has a proability of $\frac{1}{6}$ (1 of 6 possible orderings of 3 values), but after observing the data, this ordering is about ~4 times more likely than any other ordering.
+
+The transitive properties of Bayes factors can also be used to compute a Bayes factor for **dividing** hypotheses -
+that is for two *complementary* opposing one-sided hypotheses [@morey2014simple].
+
+For example, above we compared $\mathcal{H}_{+}: \theta > 0$ - *the difference is positive*
+to the null $\mathcal{H}_{-}: \theta < 0$: *the difference is negative*:
+
+$$
+\begin{align}
+BF_{+,-} & = BF_{+,0} \times BF_{0,-} \\
+& = \frac{P(\mathcal{D}|\mathcal{H}_{+})}{P(\mathcal{D}|\mathcal{H}_0)}
+\times \frac{P(\mathcal{D}|\mathcal{H}_{0})}{P(\mathcal{D}|\mathcal{H}_-)} \\
+& = \frac{P(\mathcal{D}|\mathcal{H}_{+})}{P(\mathcal{D}|\mathcal{H}_{-})}
+\end{align}
+$$
+
+
+```{R}
+bf_div <- bayesfactor_restricted(
+  posterior = disgust_means,
+  prior = disgust_means.prior,
+  hypothesis = c(
+    positive = "lemon - sulfur > 0",
+    negative = "lemon - sulfur < 0"
+  )
+)
+
+print(as.matrix(bf_div), show_names = TRUE)
+```
+
+
+The hypothesis that the lemon condition yields lower ratings than the sulfur condition
+is about 60 times more supported by the data than
+the hypothesis that the lemon condition has higher ratings than the sulfur condition.
+
+Etc... etc... we can compound as many restrictions as we want, and compare them to each other, or to the unrestricted model, or to the null model, etc.
+
+---
+
+Overall, Bayes factors are a powerful tool for comparing the relative evidence of two _formalized_ hypotheses (i.e., hypotheses that have been formalized into distinct priors).
+
+Note that Bayes factors are _not_ a tool for comparing ***posterior*** models
+(for such comparisons, see the [`{loo}` package](https://mc-stan.org/loo/)) -
+and in fact two similar posterior models can have very different BFs if their priors are different.
+
+
+# 2. Testing Models' Parameters with Bayes Factors {#bayesfactor_parameters}
+
+For testing a point null hypothesis (e.g., $\mathcal{H}_0: \theta = 0$) against some alternative non-null hypothesis (e.g., $\mathcal{H}_1: \theta \sim Normal(0, 5^2)$), a nice "short cut" can be used to obtain a Bayes factor - via the Savage-Dickey density ratio [@wagenmakers2010bayesian].
+
+If we zoomed-in on the null value $\theta_0$ - what does it mean for the null's credability to have become _lower_ in the posterior distribution?
+Well, since the null is less credible, that necessarily means that the alternative is _more_ credible by the same amount!
+
+Note that for a point null on a continuous parameter, the _probability_ of the null is always 0, and the probability of all other values is 1. However, the _density_ of the null can be non-zero, and it is this density that quantifies the credibility of the null hypothesis. This means that the prior _odds_ of the null vs the alternative are:
+
+$$
+\text{Prior Odds} = \frac{P(\theta \neq \theta_0)}{P(\theta=\theta_0)} = \frac{1}{P(\theta=\theta_0)}
+$$
+
+Likewise, the posterior odds of the null vs the alternative are:
+
+$$
+\text{Posterior Odds} = \frac{P(\theta \neq \theta_0 \mid \mathcal{D})}{P(\theta=\theta_0 \mid \mathcal{D})}
+ = \frac{1}{P(\theta=\theta_0 \mid \mathcal{D})} \\
+$$
+
+Recall that a Bayes factor can be thought of as the degree of shift in the relative credibility of two hypotheses from the prior model to the posterior model:
+
+$$
+\begin{align}
+BF_{10} & = \frac{\text{Posterior Odds}_{10}}{\text{Prior Odds}_{10}}
+= \frac{\frac{1}{P(\theta=\theta_0 \mid \mathcal{D})}}{\frac{1}{P(\theta=\theta_0)}} = \\
+& = \frac{P(\theta=\theta_0)}{P(\theta=\theta_0 \mid \mathcal{D})}
+\end{align}
+$$
+
+In other words, it is sufficient to compare the density of the null under the prior distribution ($P(\theta=\theta_0)$) with the density of the null under posterior distribution ($P(\theta=\theta_0 \mid \mathcal{D})$) to obtain a Bayes factor comparing the null and alternative hypotheses - the degree to which the null has become more or less credible after observing the data.
+
+This can be done using the `bayesfactor_parameters()` - let's use it to test the null hypothesis that the difference in IQ between the two groups is exactly 0:
+
+```{R}
+(sddr <- bayesfactor_parameters(mod_H2, null = 0))
+```
+
+Looking at the Savage-Dickey density ratio for the `mom_hsyes` parameter,
+we can see that the null has become substantially less credible after observing the data -
+and therefore the alternative has become _more_ credible.
+
+```{R}
+plot(sddr)
+```
+
+We can see that the center of the posterior distribution has shifted away from 0 (to around 10), and the density at 0 has become much smaller in the posterior distribution compared to the prior distribution suggesting that the data is less compatible with the null value of 0 that with other values overall.
+
+Compare the Savage-Dickey density ratio for the `mom_hsyes` parameter
+with the Bayes factor comparing `mod_H2` (the alternative) and `mod_H0` (the null):
+
+```{R}
+print(update(bfs, subset = 2), show_names = TRUE)
+```
+
+Not perfect, but a good approximation.
+
+### Testing against a null-*region*
+
+One way of operationalizing the null-hypothesis is by setting a null _region_, such
+that an effect that falls within this interval would be *practically* equivalent
+to the null [@kruschke2010believe]. In our case, that means defining a range of
+effects we would consider equal to no difference in IQ between the two groups.
+Let's say we consider any difference between -5 and 5 points to be practically equivalent to no difference at all,
+we would define our null-region as $\mathcal{H}_0: \theta \in [-5, 5]$.
+
+The Bayes factor for this null-region can be obtained
+by comparing the change in the _relative_ credibility of the null-region $\mathcal{H}_0: \theta \in [-5, 5]$
+and the non-null region $\mathcal{H}_1: \theta \notin [-5, 5]$ from the prior to the posterior distribution -
+to achieve this, we combine the logic of the Savage-Dickey density ratio
+with the logic of the order-restricted Bayes factor!
+
+This too can be done with `bayesfactor_parameters()`, by specifying a null-region instead of a point null:
+
+```{R}
+(sddr_region <- bayesfactor_parameters(mod_H2, null = c(-5, 5)))
+
+plot(sddr_region)
+```
+
+We can see that the null-region has become much less credible by a factor of >100 after observing the data -
+suggesting that data is more compatible with non-null values than with null values,
+and therefore the alternative (that the difference is outside of the [-5, 5] range) has become relatively much more credible.
 
 ### Directional hypotheses
 
-We can also compute Bayes factors for directional hypotheses ("one sided"), if we have a prior hypotheses about the direction of the effect. This can be done by setting an *order restriction* on the prior distribution (which results in an order restriction on the posterior distribution) of the alternative [@morey2014simple]. For example, if we have a prior hypothesis that *the drug has a positive effect on the number of sleep hours*, the alternative will be restricted to the region to the right of the null (point or interval):
+We can also compute Bayes factors for directional hypotheses ("one sided"),
+if we have a prior hypotheses about the direction of the effect. This is similiar to the _dividing_ Bayes factor discussed above, but we are still comparing the (directional) alternative to the null (not between two directional hypotheses).
+This too can be done by setting an *order restriction* on the prior and posterior distributions [@morey2014simple].
+For example, if we have a prior hypothesis that *the difference in IQ between the two groups is positive*,
+the alternative will be restricted to the region to the right of the null (point or interval):
 
-```{r savagedickey_one_sided, eval=FALSE}
-test_group2_right <- bayesfactor_parameters(model, direction = ">")
-test_group2_right
+```{R}
+(sddr_directional <- bayesfactor_parameters(mod_H2, null = c(-5, 5), direction = "right"))
+
+plot(sddr_directional)
 ```
 
-```{r prior_n_post_plot_one_sided, echo=FALSE}
-test_group2_right <- bayesfactor_parameters(
-  data.frame(group2 = posterior),
-  data.frame(group2 = prior),
-  null = 0,
-  direction = ">",
-  verbose = FALSE
-)
+As we can see, given that we have an *a priori* assumption about the direction of the difference, the evidence against the null is even stronger. Again, given this order restriction on the alternative hypothesis, the posterior mass has substantially shifted away and outside the null value, giving some extreme evidence against the null and in favor of the alternative.
 
-BF <- as.numeric(test_group2_right)
-
-print(test_group2_right)
-```
-
-```{r}
-plot(test_group2_right)
-```
-
-As we can see, given that we have an *a priori* assumption about the direction of the effect (that the effect is positive), **the presence of an effect is 2.8 times more likely than the absence of an effect**, given the observed data (or that the data are 2.8 time more probable under $H_1$ than $H_0$). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite [weak evidence](https://easystats.github.io/effectsize/reference/interpret_bf.html)).
-
-Thanks to the flexibility of Bayesian framework, it is also possible to compute
-a Bayes factor for **dividing** hypotheses - that is, for a null and alternative
-that are *complementary*, opposing one-sided hypotheses [@morey2014simple].
-
-For example, above we compared an alternative of $H_A$: *the drug has a positive effects* to the null $H_0$: *the drug has no effect*. But we can also compare instead the same alternative to its *complementary* hypothesis: $H_{-A}$: *the drug has a negative effects*.
-
-```{r inteval_div, eval=FALSE}
-test_group2_dividing <- bayesfactor_parameters(model, null = c(-Inf, 0))
-test_group2_dividing
-```
-
-```{r inteval_div2, echo=FALSE}
-test_group2_dividing <- bayesfactor_parameters(
-  data.frame(group2 = posterior),
-  data.frame(group2 = prior),
-  null = c(-Inf, 0)
-)
-
-print(test_group2_dividing)
-```
-
-```{r}
-plot(test_group2_dividing)
-```
-
-We can see that this test produces even stronger (more conclusive) evidence than the one-sided vs. point-null test! And indeed, as a rule of thumb, the more specific the two hypotheses are, and the more distinct they are from one another, the more *power* our Bayes factor has! ^[For more, see [this talk by Richard D. Morey, minute 48](https://philstatwars.files.wordpress.com/2020/09/richard_presentation.mp4)]
-
-Thanks to the transitivity of Bayes factors, we can also use
-`bayesfactor_parameters()` to compare even more types of hypotheses, with some
-trickery. For example:
-
-$$
-\underbrace{BF_{0<b<1\text{ vs. }b=0}}_{\text{range vs. point}}
-=
-\underbrace{BF_{b<0\text{ vs. }b=0}}_{\text{directional vs. point}}
-/
-\underbrace{BF_{b<0\text{ vs. }0<b<1}}_{\text{directional vs. range}}
-$$
-
-**NOTE**: See the *Testing Contrasts* appendix below.
-
-### Support intervals {#si}
+### Support intervals and curves {#si}
 
 So far we've seen that Bayes factors quantify relative support between competing hypotheses. However, we can also ask:
 
 > **Upon observing the data, the credibility of which of the parameter’s values has increased (or decreased)?**
 
-For example, we've seen that the point null has become somewhat less credible
-after observing the data, but we might also ask which values have **gained**
-credibility given the observed data?. The resulting range of values is called
-**the support interval** as it indicates which values are supported by the data
-[@wagenmakers2018SI]. We can do this by once again comparing the prior and
-posterior distributions and checking where the posterior densities are higher
-than the prior densities.
+For example, we've seen that the point null has become less credible after observing the data,
+but we might also ask which values have **gained** credibility given the observed data?
+The resulting range of values is called **the support interval**
+as it indicates which values are supported by the data [@wagenmakers2018SI].
+We can do this by once again comparing the prior and posterior distributions and checking where the posterior densities are higher than the prior densities.
 
 In `bayestestR`, this can be achieved with the `si()` function:
 
 ```{r}
-my_first_si <- si(model, BF = 1, verbose = FALSE)
+my_first_si <- si(mod_H2, BF = 1, verbose = FALSE)
 
 print(my_first_si)
 ```
 
-The argument `BF = 1` indicates that we want the interval to contain values that
-have gained support by a factor of at least 1 (that is, any support at all).
+The argument `BF = 1` indicates that
+we want the interval to contain values that have gained support by a factor of at least 1
+(that is, _any_ support at all).
+
+Note that this is different from a credible interval, which contains values that have high credibility in the posterior distribution, regardless of how much their credibility has changed from the prior distribution:
+
+```{r}
+hdi(mod_H2)
+```
 
 Visually, we can see that the credibility of all the values within this interval
 has increased (and likewise the credibility of all the values outside this
@@ -445,7 +724,7 @@ interval has decreased):
 plot(my_first_si)
 ```
 
-We can also see the this support interval (just barely) excludes the point null
+We can also see the this support interval excludes the point null
 (0) - whose credibility we've already seen has decreased by the observed data.
 This emphasizes the relationship between the support interval and the Bayes
 factor:
@@ -466,767 +745,171 @@ observing the data.
 decreased by observing the data. Testing against values outside this interval
 will produce a Bayes factor larger than $1/BF$ in support of the alternative.
 
-# 2. Comparing Models using Bayes Factors {#bayesfactor_models}
+# Appendix: Specifying correct priors for factors {#contr_bayes}
 
-Bayes factors can also be used to compare statistical **models**. In this
-statistical context, they answer the following question:
+When modeling predictors with more than 2 levels (e.g., factors)
+there any many options for how to _encode_ the factor into the model (e.g., dummy coding, sum coding, etc.).
+Unlike frequentist modeling, where the choice of contrast coding is mostly a matter of interpretability and convenience,
+in Bayesian modeling different encodings -- and priors on those encodings --
+can lead to different implied priors.
 
-> **Under which model are the observed data more probable?**
+@rouder2017bayesian discuss how one might wish to set some global multidimensional prior (the _g_-prior)
+on the factor's levels that is not sensitive to the order of level or the choice of reference group.
+These are implamneted in `contr.equalprior()` and its siblings.
 
-In other words, which model is more likely to have produced the observed data?
-This is usually done by comparing the marginal likelihoods of two models. In
-such a case, the Bayes factor is a measure of the **relative** evidence for one
-model over the other.
+Below we demonstrate how the choice of contrast coding can lead to different implied priors regarding the possible _ordering_ and _differences_ between the factor's levels.
 
-Let's use Bayes factors for model comparison to find a model that best describes
-the length of an iris' sepal using the `iris` data set.
+Let us fit 3 models with different contrast codings for a factor with 3 levels:
 
-### For Bayesian models (`brms` and `rstanarm`)
-
-**Note: In order to compute Bayes factors for Bayesian models, non-default arguments must be added upon fitting:**
-
-  - `brmsfit` models **must** have been fitted with `save_pars = save_pars(all = TRUE)`
-  - `stanreg` models **must** have been fitted with a defined `diagnostic_file`.
-
-Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
-
-```{r brms_disp, eval = FALSE}
-library(brms)
-
-# intercept only model
-m0 <- brm(Sepal.Length ~ 1,
-  data = iris,
-  prior =
-    set_prior("student_t(3, 6, 6)", class = "Intercept") +
-      set_prior("student_t(3, 0, 6)", class = "sigma"),
-  chains = 10, iter = 5000, warmup = 1000,
-  save_pars = save_pars(all = TRUE)
-)
-
-# Petal.Length only
-m1 <- brm(Sepal.Length ~ Petal.Length,
-  data = iris,
-  prior =
-    set_prior("student_t(3, 6, 6)", class = "Intercept") +
-      set_prior("student_t(3, 0, 6)", class = "sigma") +
-      set_prior("normal(0, 1)", coef = "Petal.Length"),
-  chains = 10, iter = 5000, warmup = 1000,
-  save_pars = save_pars(all = TRUE)
-)
-
-# Species only
-m2 <- brm(Sepal.Length ~ Species,
-  data = iris,
-  prior =
-    set_prior("student_t(3, 6, 6)", class = "Intercept") +
-      set_prior("student_t(3, 0, 6)", class = "sigma") +
-      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
-  chains = 10, iter = 5000, warmup = 1000,
-  save_pars = save_pars(all = TRUE)
-)
-
-# Species + Petal.Length model
-m3 <- brm(Sepal.Length ~ Species + Petal.Length,
-  data = iris,
-  prior =
-    set_prior("student_t(3, 6, 6)", class = "Intercept") +
-      set_prior("student_t(3, 0, 6)", class = "sigma") +
-      set_prior("normal(0, 1)", coef = "Petal.Length") +
-      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
-  chains = 10, iter = 5000, warmup = 1000,
-  save_pars = save_pars(all = TRUE)
-)
-
-# full interactive model
-m4 <- brm(Sepal.Length ~ Species * Petal.Length,
-  data = iris,
-  prior =
-    set_prior("student_t(3, 6, 6)", class = "Intercept") +
-      set_prior("student_t(3, 0, 6)", class = "sigma") +
-      set_prior("normal(0, 1)", coef = "Petal.Length") +
-      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")) +
-      set_prior("normal(0, 2)", coef = c("Speciesversicolor:Petal.Length", "Speciesvirginica:Petal.Length")),
-  chains = 10, iter = 5000, warmup = 1000,
-  save_pars = save_pars(all = TRUE)
-)
-```
-
-We can now compare these models with the `bayesfactor_models()` function, using
-the `denominator` argument to specify the model against which the rest of the
-models will be compared (in this case, the intercept-only model):
-
-```{r brms_models_disp, eval = FALSE}
+```{r}
+library(rstanarm)
 library(bayestestR)
 
-comparison <- bayesfactor_models(m1, m2, m3, m4, denominator = m0)
-comparison
-```
+data("disgust", package = "bayestestR")
 
-```{r, echo = FALSE}
-comparison <- structure(
-  list(
-    Model = c("Petal.Length", "Species", "Species + Petal.Length", "Species * Petal.Length", "1"),
-    log_BF = c(101.556419030653, 64.2903334815192, 122.864721399001, 119.712908243647, 0)
-  ),
-  class = c("bayesfactor_models", "see_bayesfactor_models", "data.frame"),
-  row.names = c("m1", "m2", "m3", "m4", "m0"),
-  denominator = 5L,
-  BF_method = "marginal likelihoods (bridgesampling)",
-  unsupported_models = FALSE
+# Use R's default treatment contrasts (first level as reference)
+mod_odor.treatment <- stan_glm(
+  score ~ condition,
+  family = gaussian(),
+  data = disgust,
+
+  prior = normal(location = 0, scale = 2),
+
+  contrasts = list(condition = "contr.treatment"),
+
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
+  refresh = 0,
+  diagnostic_file = file.path(tempdir(), "df5.csv")
 )
-print(comparison)
+
+# Use effects contrasts (sum-to-zero)
+mod_odor.sum <- stan_glm(
+  score ~ condition,
+  family = gaussian(),
+  data = disgust,
+
+  prior = normal(location = 0, scale = 2),
+
+  contrasts = list(condition = "contr.sum"),
+
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
+  refresh = 0,
+  diagnostic_file = file.path(tempdir(), "df6.csv")
+)
+
+mod_odor.equalprior <- stan_glm(
+  score ~ condition,
+  family = gaussian(),
+  data = disgust,
+
+  prior = normal(location = 0, scale = 2),
+
+  contrasts = list(condition = "contr.equalprior"),
+
+  chains = 10,
+  iter = 5000,
+  warmup = 1000,
+  refresh = 0,
+  diagnostic_file = file.path(tempdir(), "df7.csv")
+)
 ```
 
+Let's use `{marginaleffects}` to obtain estimates from these Bayesian (prior) models
+(after we already showed how do do so with `{emmeans}` above).
 
-We can see that the `Species + Petal.Length` model is the best model - with $BF=2\times 10^{53}$ compared to the null (intercept only).
 
-Due to the transitive property of Bayes factors, we can easily change the reference model to the full `Species * Petal.Length` model:
 
-```{r update_models1}
-update(comparison, reference = 4)
-```
-
-As we can see, the `Species + Petal.Length` model is also favored compared to the `Species * Petal.Length` model, though to several orders of magnitude less - is is only supported 23.38 times more!)
-
-We can also change the reference model to the `Species` model:
-```{r update_models2}
-update(comparison, reference = 2)
-```
-
-Notice that, in the Bayesian framework the compared models *do not* need to be
-nested models, as happened here when we compared the `Petal.Length`-only model
-to the `Species`-only model (something that cannot be done in the frequentist
-framework, where compared models must be nested in one another).
-
-We can also get a matrix of Bayes factors of all the pairwise model comparisons:
 
 ```{r}
-as.matrix(comparison)
+mod_odor.treatment_prior <- unupdate(mod_odor.treatment)
+mod_odor.sum_prior <- unupdate(mod_odor.sum)
+mod_odor.equalprior_prior <- unupdate(mod_odor.equalprior)
+
+(pr_treatment_prior <- avg_predictions(
+  mod_odor.treatment_prior,
+  variables = "condition"
+))
+
+(pr_sum_prior <- avg_predictions(
+  mod_odor.sum_prior,
+  variables = "condition"
+))
+
+(pr_equalprior_prior <- avg_predictions(
+  mod_odor.equalprior_prior,
+  variables = "condition"
+))
 ```
 
-**NOTE:** In order to correctly and precisely estimate Bayes Factors, you always need the 4 P's: **P**roper **P**riors ^[[Robert, 2016](https://doi.org/10.1016/j.jmp.2015.08.002); [Kass & Raftery, 1993](https://doi.org/10.1080/01621459.1995.10476572); [Fernández, Ley, & Steel, 2001](https://doi.org/10.1016/S0304-4076(00)00076-2)], and a **P**lentiful **P**osterior ^[[Gronau, Singmann, & Wagenmakers, 2017](https://arxiv.org/abs/1710.08162)].
+We can see that for all 3 models, the means of all three groups have about the same prior distribution:
+$Md=60$, $95 CI [-3, +63]$.
 
-### For Frequentist models via the BIC approximation
-
-It is also possible to compute Bayes factors for the comparison of frequentist
-models. This is done by comparing BIC measures, allowing a Bayesian comparison
-of nested as well as non-nested frequentist models [@wagenmakers2007practical].
-
-Let's try it out on some **linear mixed-effects models**:
-
-```{r lme4_models}
-library(lme4)
-
-# define models with increasing complexity
-m0 <- lmer(Sepal.Length ~ (1 | Species), data = iris)
-m1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-m2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-m3 <- lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
-m4 <- lmer(Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species), data = iris)
-
-# model comparison
-bayesfactor_models(m1, m2, m3, m4, denominator = m0)
-```
-
-### Order restricted models {#bayesfactor_restricted}
-
-As stated above when discussing one-sided hypothesis tests, we can create new
-models by imposing order restrictions on a given model. For example, consider
-the following model, in which we predict the length of an iris' sepal from the
-length of its petal, as well as from its species, with priors:
-- $b_{petal} \sim N(0,2)$
-- $b_{versicolors}\ \&\  b_{virginica} \sim N(0,1.2)$
-
-```{r, eval=FALSE}
-iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
-  data = iris,
-  prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE),
-  chains = 10, iter = 5000, warmup = 1000
-)
-```
-
-```{r, echo=FALSE}
-iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
-  data = iris,
-  prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE),
-  chains = 4, iter = 2000, warmup = 1000, # to reduce build time
-  refresh = 0
-)
-```
-
-These priors are **unrestricted** - that is, **all values** between $-\infty$
-and $\infty$ of all parameters in the model have some non-zero credibility (no
-matter how small; this is true for both the prior and posterior distribution).
-Subsequently, *a priori* the ordering of the parameters relating to the iris
-species can have any ordering, such that *a priori* setosa can have larger
-sepals than virginica, but it is also possible for virginica to have larger
-sepals than setosa!
-
-Does it make sense to let our priors cover all of these possibilities? That
-depends on our *prior* knowledge or hypotheses. For example, even a novice
-botanist will assume that it is unlikely that petal length will be *negatively*
-associated with sepal length - an iris with longer petals is likely larger, and
-thus will also have a longer sepal. And an expert botanist will perhaps assume
-that setosas have smaller sepals than both versicolors and virginica.
-
-These priors can be formulated as **restricted** priors [@morey_2015_blog;
-@morey2011bayesinterval]:
-
-1. The novice botanist: $b_{petal} > 0$
-2. The expert botanist: $b_{versicolors} > 0\ \&\ b_{virginica} > 0$
-
-By testing these restrictions on prior and posterior samples, we can see how the
-probabilities of the restricted distributions change after observing the data.
-This can be achieved with `bayesfactor_restricted()`, that compute a Bayes
-factor for these restricted model vs the unrestricted model. Let's first specify
-these restrictions as logical conditions:
+We might expect the same for the differences between the groups, but this is not the case:
 
 ```{r}
-botanist_hypotheses <- c(
-  "Petal.Length > 0",
-  "(Speciesversicolor > 0) & (Speciesvirginica > 0)"
-)
+avg_comparisons(mod_odor.treatment_prior, variables = list("condition" = "pairwise"))
 ```
 
-Let's test these hypotheses:
+We can see that while the prior differences are all centered on 0,
+the prior difference of the `sulfer - lemon` comparison is much wider compared to the comparisons involving the `control` condition.
+
+With effects coding (sum-to-zero), we also get different implied priors for the differences between the groups,
+this time the `lemon - control` difference is much narrower than the other two differences involving the `sulfer` condition:
 
 ```{r}
-model_prior <- unupdate(iris_model)
-
-botanist_BFs <- bayesfactor_restricted(
-  posterior = iris_model,
-  prior = model_prior,
-  hypothesis = botanist_hypotheses
-)
-
-print(botanist_BFs)
+avg_comparisons(mod_odor.sum_prior, variables = list("condition" = "pairwise"))
 ```
-
-We can see that the novice botanist's hypothesis gets a Bayes factor of ~2,
-indicating the data provides twice as much evidence for a model in which petal
-length is restricted to be positively associated with sepal length than for a
-model with not such restriction.
-
-What about our expert botanist? He seems to have failed miserably, with a BF
-favoring the *unrestricted* model many many times over. How is
-this possible? It seems that when *controlling for petal length*, versicolor and
-virginica actually have shorter sepals!
-
-```{r plot_iris, echo=FALSE}
-ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) +
-  geom_point() +
-  scale_color_flat() +
-  theme(legend.position.inside = c(0.2, 0.8))
-```
-
-Note that these Bayes factors compare the restricted model to the unrestricted
-model. If we wanted to compare the restricted model to the null model, we could
-use the transitive property of Bayes factors like so:
-
-$$
-BF_{\text{restricted vs. NULL}} = \frac
-{BF_{\text{restricted vs. un-restricted}}}
-{BF_{\text{un-restricted vs NULL}}}
-$$
-
-**Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].**
-
-**NOTE**: See the *Specifying Correct Priors for Factors with More Than 2 Levels* appendix below.
-
-# 3. Bayesian Model Averaging
-
-In the previous section, we discussed the direct comparison of two models to
-determine if an effect is supported by the data. However, in many cases there
-are too many models to consider, or perhaps it is not straightforward which
-models we should compare to determine if an effect is supported by the data. For
-such cases, we can use Bayesian model averaging (BMA) to determine the support
-provided by the data for a parameter or term across many models.
-
-### Inclusion Bayes factors {#bayesfactor_inclusion}
-
-Inclusion Bayes factors answer the question:
-
-> **Are the observed data more probable under models with a particular predictor, than they are under models without that particular predictor?**
-
-In other words, on average, are models with predictor $X$ more likely to have
-produced the observed data than models without predictor $X$?^[A model without
-predictor $X$ can be thought of as a model in which the parameter(s) of the
-predictor have been restricted to a null-point of 0.]
-
-Since each model has a prior probability, it is possible to sum the prior
-probability of all models that include a predictor of interest (the *prior inclusion probability*), and of all models that do not include that predictor
-(the *prior exclusion probability*). After the data are observed, and each model
-is assigned a posterior probability, we can similarly consider the sums of the
-posterior models' probabilities to obtain the *posterior inclusion probability*
-and the *posterior exclusion probability*. Once again, the change from prior
-inclusion odds to the posterior inclusion odds is the **Inclusion Bayes factor**
-["$BF_{Inclusion}$"; @clyde2011bayesian].
-
-Lets use the `brms` example from above:
-
-```{r inclusion_brms}
-bayesfactor_inclusion(comparison)
-```
-
-If we examine the interaction term's inclusion Bayes factor, we can see that across all 5 models, a model with the term is *on average* (1/0.171) 5.84 times less supported than a model without the term.
-Note that `Species`, a factor represented in the model with several parameters, gets a *single* Bayes factor - inclusion Bayes factors are given **per predictor**!
-
-We can also compare only matched models - such that averaging is done only
-across models that (1) do not include any interactions with the predictor of
-interest; (2) for interaction predictors, averaging is done only across models
-that contain the main effects from which the interaction predictor is comprised
-(see explanation for why you might want to do this
-[here](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp)).
-
-```{r inclusion_brms2}
-bayesfactor_inclusion(comparison, match_models = TRUE)
-```
-
-### Comparison with JASP
-
-`bayesfactor_inclusion()` is meant to provide Bayes Factors per predictor,
-similar to JASP's *Effects* option.
-
-Let's compare the two.
-Note that for this comparison we will use the `{BayesFactor}` package, which is what _JASP_ uses under the hood.
-(Note that this package used different model-parameterization and different default prior-specifications compared to _Stan_-based packages.)
-
-1. **Across all models**:
-
-```{r JASP_all}
-library(BayesFactor)
-data(ToothGrowth)
-ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-
-BF_ToothGrowth <- anovaBF(len ~ dose * supp, ToothGrowth, progress = FALSE)
-
-bayesfactor_inclusion(BF_ToothGrowth)
-```
-
-```{r JASP_all_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/bayestestR/raw/main/man/figures/JASP1.jpg")
-```
-
-2. **Across matched models**:
-
-```{r JASP_matched}
-bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
-```
-
-
-```{r JASP_matched_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/bayestestR/raw/main/man/figures/JASP2.jpg")
-```
-
-3. **With Nuisance Effects**:
-
-We'll add `dose` to the null model in JASP, and do the same in `R`:
-
-```{r JASP_Nuisance}
-BF_ToothGrowth_against_dose <- BF_ToothGrowth[3:4] / BF_ToothGrowth[2] # OR:
-# update(bayesfactor_models(BF_ToothGrowth),
-#        subset = c(4, 5),
-#        reference = 3)
-BF_ToothGrowth_against_dose
-
-
-bayesfactor_inclusion(BF_ToothGrowth_against_dose)
-```
-
-```{r JASP_Nuisance_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/bayestestR/raw/main/man/figures/JASP3.jpg")
-```
-
-## Averaging posteriors {#weighted_posteriors}
-
-Similar to how we can average evidence for a predictor across models, we can
-also average the **posterior estimate** across models. This is useful in
-situations where Bayes factors seem to support a null effect, yet the *HDI* for
-the alternative excludes the null value (also see `si()` described above).
-
-For example, looking at Motor *Trend Car Road Tests* (`data(mtcars)`), we would
-naturally predict miles/gallon (`mpg`) from transition type (`am`) and weight
-(`wt`), but what about number of carburetors (`carb`)? Is this a good predictor?
-
-We can determine this by comparing the following models:
-
-```{r, eval=FALSE}
-mod <- stan_glm(mpg ~ wt + am,
-  data = mtcars,
-  prior = normal(0, c(10, 10), autoscale = FALSE),
-  chains = 10, iter = 5000, warmup = 1000,
-  diagnostic_file = file.path(tempdir(), "df1.csv"),
-  refresh = 0
-)
-
-mod_carb <- stan_glm(mpg ~ wt + am + carb,
-  data = mtcars,
-  prior = normal(0, c(10, 10, 20), autoscale = FALSE),
-  chains = 10, iter = 5000, warmup = 1000,
-  diagnostic_file = file.path(tempdir(), "df0.csv"),
-  refresh = 0
-)
-
-BF_carb <- bayesfactor_models(mod_carb, denominator = mod, verbose = FALSE)
-BF_carb
-```
-
-```{r, echo=FALSE}
-mod <- stan_glm(mpg ~ wt + am,
-  data = mtcars,
-  prior = normal(0, c(10, 10), autoscale = FALSE),
-  chains = 4, iter = 2000, warmup = 1000, # to reduce build time
-  diagnostic_file = file.path(tempdir(), "df1.csv"),
-  refresh = 0
-)
-
-mod_carb <- stan_glm(mpg ~ wt + am + carb,
-  data = mtcars,
-  prior = normal(0, c(10, 10, 20), autoscale = FALSE),
-  chains = 4, iter = 2000, warmup = 1000, # to reduce build time
-  diagnostic_file = file.path(tempdir(), "df0.csv"),
-  refresh = 0
-)
-
-BF_carb <- bayesfactor_models(mod_carb, denominator = mod, verbose = FALSE)
-BF_carb
-```
-
-
-It seems that the model without `carb` as a predictor is $1/BF=1.2$ times more
-likely than the model *with* `carb` as a predictor. We might then assume that in
-the latter model, the `HDI` will include the point-null value of 0 effect, to also
-indicate the credibility of the null in the posterior. However, this is not the
-case:
+But the `contr.equalprior()` coding gives us the same prior distribution for all differences between the groups:
 
 ```{r}
-hdi(mod_carb, ci = 0.95)
+avg_comparisons(mod_odor.equalprior_prior, variables = list("condition" = "pairwise"))
 ```
 
-How can this be? By estimating the HDI of the effect for `carb` in the full
-model, we are acting under the assumption that this model is correct. However,
-as we've just seen, both models are practically tied. If this is the case **why limit our estimation of the effect just to one model?** [@van2019cautionary].
-
-Using Bayesian Model Averaging, we can combine the posteriors samples from
-several models, weighted by the models' marginal likelihood (done via the
-`bayesfactor_models()` function). If some parameter is part of some of the
-models but is missing from others, it is assumed to be fixed a 0 (which can also
-be seen as a method of applying shrinkage to our estimates). This results in a
-posterior distribution across several models, which we can now treat like any
-posterior distribution, and estimate the HDI.
-
-In `bayestestR`, we can do this with the `weighted_posteriors()` function:
-
-```{r eval=FALSE}
-BMA_draws <- weighted_posteriors(mod, mod_carb, verbose = FALSE)
-
-BMA_hdi <- hdi(BMA_draws, ci = 0.95)
-BMA_hdi
-
-plot(BMA_hdi)
-```
-```{r echo=FALSE}
-BMA_draws <- weighted_posteriors(mod, mod_carb, verbose = FALSE)
-
-BMA_hdi <- hdi(BMA_draws, ci = 0.95)
-BMA_hdi
-
-plot(BMA_hdi, data = BMA_draws)
-```
-
-We can see that across both models under consideration, the posterior of the
-`carb` effect is almost equally weighted between the alternative model and the
-null model - as represented by about half of the posterior mass concentrated at
-0 - which makes sense as both models were almost equally supported by the data.
-We can also see that across both models, that now **the HDI does contain 0**.
-Thus we have resolved the conflict between the Bayes factor and the HDI
-[@rouder2018bayesian]!
-
-**Note**: Parameters might play different roles across different models.
-
-For example, the parameter `A` plays a different role in the model `Y ~ A + B`
-(where it is a *main* effect) than it does in the model `Y ~ A + B + A:B` (where
-it is a *simple* effect). In many cases centering of predictors (mean subtracting
-for continuous variables, and orthogonal coding for factors) can in some cases reduce this issue.
-
-# Appendices
-
-## Testing contrasts (with `emmeans` / `modelbased`)
-
-Besides testing parameter `bayesfactor_parameters()` can be used to test any
-estimate based on the prior and posterior distribution of the estimate. One way
-to achieve this is with a mix of `bayesfactor_parameters()` +
-[**`emmeans`**](https://cran.r-project.org/package=emmeans) to [test Bayesian
-contrasts](https://easystats.github.io/blog/posts/bayestestr_emmeans/).
-
-For example, in the `sleep` example from above, we can estimate the group means
-and the difference between them:
-
-```{r, echo=FALSE}
-set.seed(1)
-```
-
-```{r eval=FALSE}
-library(emmeans)
-
-(group_diff <- emmeans(model, pairwise ~ group, data = sleep))
-
-# pass the original model via prior
-bayesfactor_parameters(group_diff, prior = model)
-```
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-library(emmeans)
-
-suppressWarnings((group_diff <- emmeans(model, pairwise ~ group, data = sleep)))
-
-# pass the original model via prior
-suppressWarnings(bayesfactor_parameters(group_diff, prior = model))
-```
-
-That is strong evidence for the mean of group 1 being 0, and for group 2 for not
-being 0, but hardly any evidence for the difference between them being not 0.
-Conflict? Uncertainty? That is the Bayesian way!
-
-We can also use the `easystats`' [**`modelbased`**](https://cran.r-project.org/package=modelbased) package to compute Bayes factors for contrasts:
-
-```{r, echo=FALSE}
-set.seed(1)
-```
-
-```{r, eval=FALSE}
-library(modelbased)
-
-estimate_contrasts(model, test = "bf", bf_prior = model)
-```
-
-**NOTE**: See the *Specifying Correct Priors for Factors with More Than 2 Levels* section below.
-
-## Specifying correct priors for factors {#contr_bayes}
-
-This section introduces the biased priors obtained when using the common *effects* factor coding (`contr.sum`) or dummy factor coding (`contr.treatment`), and the solution of using orthonormal factor coding (`contr.equalprior`) [as outlined in @rouder2012default, section 7.2].
-
-**Special care should be taken when working with factors with 3 or more levels**.
-
-### Contrasts (and marginal means)
-
-The *effects* factor coding commonly used in factorial analysis carries a hidden
-bias when it is applies to Bayesian priors. For example, if we want to test all
-pairwise differences between 3 levels of the same factor, we would expect all *a priori* differences to have the same distribution, but...
-
-For our example, we will be test all ***prior*** pairwise differences between
-the 3 species in the `iris` dataset.
-
-```{r, eval=FALSE}
-df <- iris
-contrasts(df$Species) <- contr.sum
-
-fit_sum <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  prior_PD = TRUE, # sample priors
-  family = gaussian(),
-  chains = 10, iter = 5000, warmup = 1000,
-  refresh = 0
-)
-```
-
-```{r, echo=FALSE}
-df <- iris
-contrasts(df$Species) <- contr.sum
-
-fit_sum <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  prior_PD = TRUE, # sample priors
-  family = gaussian(),
-  chains = 4, iter = 2000, warmup = 1000, # reduce build time
-  refresh = 0
-)
-```
-
-```{r eval=FALSE}
-(pairs_sum <- pairs(emmeans(fit_sum, ~Species)))
-
-ggplot(stack(insight::get_parameters(pairs_sum)), aes(x = values, fill = ind)) +
-  geom_density(linewidth = 1) +
-  facet_grid(ind ~ .) +
-  labs(x = "prior difference values") +
-  theme(legend.position = "none")
-```
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-(pairs_sum <- suppressWarnings(pairs(emmeans(fit_sum, ~Species, data = iris))))
-
-ggplot(stack(insight::get_parameters(pairs_sum)), aes(x = values, fill = ind)) +
-  geom_density(linewidth = 1) +
-  facet_grid(ind ~ .) +
-  labs(x = "prior difference values") +
-  theme(legend.position = "none")
-```
-
-Notice that, though the prior estimate for all 3 pairwise contrasts is ~0, the
-scale or the HDI is much narrower for the prior of the `setosa - versicolor`
-contrast!
-
-**What happened???**
-
-This is caused by an inherent bias in the priors introduced by the *effects* coding (it's even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect's parameters). **And since it affects the priors, this bias will also bias the Bayes factors over / understating evidence for some contrasts over others!**
-
-The solution is to use *equal-prior* factor coding, a-la the `contr.equalprior*` family, which can either specify this factor coding per-factor:
+Likewise, the implied priors for the ordering of the groups are different across the three models:
 
 ```{r}
-contrasts(df$Species) <- contr.equalprior_pairs
-```
+pr_treatment <- avg_predictions(mod_odor.treatment, variables = "condition")
 
-Or you can set it globally:
-
-```{r, eval=FALSE}
-options(contrasts = c("contr.equalprior_pairs", "contr.poly"))
-```
-
-Let's again estimate the ***prior*** differences:
-
-```{r, eval=FALSE}
-fit_bayes <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  prior_PD = TRUE, # sample priors
-  family = gaussian(),
-  chains = 10, iter = 5000, warmup = 1000,
-  refresh = 0
+bayesfactor_restricted(
+  posterior = pr_treatment,
+  prior = pr_treatment_prior,
+  hypothesis = "b2 < b1 & b1 < b3"
 )
 ```
-
-```{r, echo=FALSE}
-fit_bayes <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  prior_PD = TRUE, # sample priors
-  family = gaussian(),
-  chains = 4, iter = 2000, warmup = 1000, # reduce build time
-  refresh = 0
-)
-```
-
-
-```{r eval=FALSE}
-(pairs_bayes <- pairs(emmeans(fit_bayes, ~Species)))
-
-ggplot(stack(insight::get_parameters(pairs_bayes)), aes(x = values, fill = ind)) +
-  geom_density(linewidth = 1) +
-  facet_grid(ind ~ .) +
-  labs(x = "prior difference values") +
-  theme(legend.position = "none")
-```
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-(pairs_bayes <- suppressWarnings(pairs(emmeans(fit_bayes, ~Species, data = iris))))
-
-ggplot(stack(insight::get_parameters(pairs_bayes)), aes(x = values, fill = ind)) +
-  geom_density(linewidth = 1) +
-  facet_grid(ind ~ .) +
-  labs(x = "prior difference values") +
-  theme(legend.position = "none")
-```
-
-We can see that using the `contr.equalprior_pairs` coding scheme, we have equal priors on all pairwise contrasts, with the width corresponding to the `normal(0, c(1, 1), autoscale = FALSE)` prior we set!
-
-There are other solutions to this problem of priors. You can read about them in [Solomon Kurz's blog post](https://solomonkurz.netlify.app/post/2020-12-09-multilevel-models-and-the-index-variable-approach/).
-
-### Order restrictions
-
-This bias also affect order restrictions involving 3 or more levels. For
-example, if we want to test an order restriction among A, B, and C, the *a
-priori* probability of obtaining the order A > C > B is 1/6 (reach back to
-*intro to stats* year 1), but...
-
-For our example, we will be interested in the following order restrictions in
-the `iris` dataset (each line is a separate restriction):
 
 ```{r}
-hyp <- c(
-  # comparing 2 levels
-  "setosa < versicolor",
-  "setosa < virginica",
-  "versicolor < virginica",
+pr_sum <- avg_predictions(mod_odor.sum, variables = "condition")
 
-  # comparing 3 (or more) levels
-  "setosa    < virginica  & virginica  < versicolor",
-  "virginica < setosa     & setosa     < versicolor",
-  "setosa    < versicolor & versicolor < virginica"
+bayesfactor_restricted(
+  posterior = pr_sum,
+  prior = pr_sum_prior,
+  hypothesis = "b2 < b1 & b1 < b3"
 )
 ```
 
-With the default factor coding, this looks like this:
+```{r}
+pr_equalprior <- avg_predictions(mod_odor.equalprior, variables = "condition")
 
-```{r, eval=FALSE}
-contrasts(df$Species) <- contr.sum
-
-fit_sum <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  family = gaussian(),
-  chains = 10, iter = 5000, warmup = 1000
+bayesfactor_restricted(
+  posterior = pr_equalprior,
+  prior = pr_equalprior_prior,
+  hypothesis = "b2 < b1 & b1 < b3"
 )
-
-em_sum <- emmeans(fit_sum, ~Species) # the posterior marginal means
-
-bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 ```
 
-```{r, echo=FALSE}
-contrasts(df$Species)[, ] <- contr.sum(3)
+We can see that while all models have the very similiar posterior distributions,
+the implied prior orders are different, with only the `contr.equalprior()` coding giving us a prior that does not favor any particular ordering of the groups (and gives 1/6 prior probability to each of the 6 possible orderings of 3 groups).
 
-fit_sum <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  family = gaussian(),
-  chains = 4, iter = 2000, warmup = 1000 # reduce build time
-)
+While `contr.equalprior()` gives the original formulation given by @rouder2017bayesian,
+the `contr.equalprior_pairs()` and `contr.equalprior_deviations()` give slightly more intuitive coding schemes:
 
-em_sum <- suppressWarnings(emmeans(fit_sum, ~Species, data = iris))
+- `contr.equalprior_pairs()` allows for setting a prior of what a all pairwise differences might be.
+- `contr.equalprior_deviations()` allows for setting a prior of what the difference between each group and the grand mean might be.
 
-bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
-```
-
-***What happened???***
-
-1. The comparison of 2 levels all have a prior of ~0.5, as expected.
-2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. **some orders are *a priori* more likely than others!!!**
-
-Again, this is solved by using the *equal prior* factor coding (from above).
-
-```{r, eval=FALSE}
-contrasts(df$Species) <- contr.equalprior_pairs
-
-fit_bayes <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  family = gaussian(),
-  chains = 10, iter = 5000, warmup = 1000
-)
-em_bayes <- emmeans(fit_sum, ~Species) # the posterior marginal means
-bayesfactor_restricted(em_bayes, fit_sum, hypothesis = hyp)
-```
-
-```{r, echo=FALSE}
-contrasts(df$Species)[, ] <- contr.equalprior_pairs(3)
-fit_bayes <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  family = gaussian(),
-  chains = 4, iter = 2000, warmup = 1000, # reduce build time
-  refresh = 0
-)
-em_bayes <- suppressWarnings(emmeans(fit_bayes, ~Species, data = iris))
-bayesfactor_restricted(em_bayes, fit_bayes, hypothesis = hyp)
-```
-
-### Conclusion
-
-When comparing the results from the two factor coding schemes, we find:
-1. In both cases, the estimated (posterior) means are quite similar (if not identical).
-2. The priors and Bayes factors differ between the two schemes.
-3. Only with `contr.equalprior*`, the prior distribution of the difference or the order of 3 (or more) means is balanced.
-
-Read more about the equal prior contrasts in the `contr.equalprior` docs!
+***Note:*** all priors set on these contrast codings _must_ be centered on 0 to work!
 
 # References
