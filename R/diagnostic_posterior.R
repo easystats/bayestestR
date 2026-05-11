@@ -493,7 +493,12 @@ diagnostic_posterior.stanfit <- function(
 
 
 #' @export
-diagnostic_posterior.CmdStanFit <- function(posterior, diagnostic = "all", ...) {
+diagnostic_posterior.CmdStanFit <- function(
+  posterior,
+  diagnostic = "all",
+  parameters = NULL,
+  ...
+) {
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
   }
@@ -501,7 +506,12 @@ diagnostic_posterior.CmdStanFit <- function(posterior, diagnostic = "all", ...) 
   insight::check_if_installed("posterior")
   insight::check_if_installed("cmdstanr")
 
-  draws <- posterior$draws(format = "draws_df")
+  pars <- insight::find_parameters(posterior, flatten = TRUE)
+  if (!is.null(parameters)) {
+    pars <- pars[!grepl(parameters, pars)]
+  }
+
+  draws <- posterior$draws(format = "draws_df", variables = pars)
 
   out <- posterior::summarize_draws(
     draws,
@@ -518,7 +528,7 @@ diagnostic_posterior.CmdStanFit <- function(posterior, diagnostic = "all", ...) 
     )
   )
 
-  out[!grepl("^lp_", out$Parameter), c("Parameter", diagnostic), drop = FALSE]
+  out[, c("Parameter", diagnostic), drop = FALSE]
 }
 
 
