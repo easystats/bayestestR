@@ -1,10 +1,13 @@
-# bayestestR 0.17.0.xxx
+# bayestestR 0.17.0.4
 
 ## New functionality
 
-* `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes
-  factors between all restricted models.
-* New dedicated docs for Bayes factor methods `?bayesfactor_methods`
+* Improved Bayes factor methods:
+
+  * New docs at `?bayesfactor_methods`
+
+  * `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes factors between all restricted models.
+
 * Added support for `CmdStanFit` models from `{cmdstanr}` and expanded support for `stanfit` models from `rstan`.
 
 
