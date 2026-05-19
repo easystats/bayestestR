@@ -150,7 +150,7 @@ There are many hypothesis we might have about this difference. Let's start by ex
 
 Let's plot these:
 
-```{r, echo=FALSE, fig_height = 12}
+```{r, echo=FALSE, fig.height = 12}
 p_prior0 <- ggplot() +
   geom_vline(xintercept = 0, linetype = "dashed") +
   geom_segment(
