@@ -551,15 +551,28 @@ Functions for Bayesian Inference
 
 - [`bayesfactor()`](https://easystats.github.io/bayestestR/reference/bayesfactor.md)
   : Bayes Factors (BF)
+
 - [`bayesfactor_inclusion()`](https://easystats.github.io/bayestestR/reference/bayesfactor_inclusion.md)
   [`bf_inclusion()`](https://easystats.github.io/bayestestR/reference/bayesfactor_inclusion.md)
-  : Inclusion Bayes Factors for testing predictors across Bayesian
-  models
+  :
+
+  Inclusion Bayes Factors for testing predictors across Bayesian models\
+  \
+  The `bf_*` function is an alias of the main function.\
+  \
+  **For more info, see [the Bayes factors
+  vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
+
+- [`as.matrix(`*`<bayestestRBF>`*`)`](https://easystats.github.io/bayestestR/reference/bayesfactor_methods.md)
+  [`update(`*`<bayesfactor_models>`*`)`](https://easystats.github.io/bayestestR/reference/bayesfactor_methods.md)
+  [`as.numeric(`*`<bayestestRBF>`*`)`](https://easystats.github.io/bayestestR/reference/bayesfactor_methods.md)
+  [`as.logical(`*`<bayesfactor_restricted>`*`)`](https://easystats.github.io/bayestestR/reference/bayesfactor_methods.md)
+  : Methods for Bayes factors
+
 - [`bayesfactor_models()`](https://easystats.github.io/bayestestR/reference/bayesfactor_models.md)
   [`bf_models()`](https://easystats.github.io/bayestestR/reference/bayesfactor_models.md)
-  [`update(`*`<bayesfactor_models>`*`)`](https://easystats.github.io/bayestestR/reference/bayesfactor_models.md)
-  [`as.matrix(`*`<bayesfactor_models>`*`)`](https://easystats.github.io/bayestestR/reference/bayesfactor_models.md)
   : Bayes Factors (BF) for model comparison
+
 - [`bayesfactor_parameters()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   [`bayesfactor_pointnull()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   [`bayesfactor_rope()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
@@ -567,18 +580,21 @@ Functions for Bayesian Inference
   [`bf_pointnull()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   [`bf_rope()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   : Bayes Factors (BF) for a Single Parameter
+
 - [`bayesfactor_restricted()`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)
   [`bf_restricted()`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)
-  [`as.logical(`*`<bayesfactor_restricted>`*`)`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)
-  [`as.matrix(`*`<bayesfactor_restricted>`*`)`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)
   : Bayes Factors (BF) for Order Restricted Models
+
 - [`si()`](https://easystats.github.io/bayestestR/reference/si.md) :
   Compute Support Intervals
+
 - [`weighted_posteriors()`](https://easystats.github.io/bayestestR/reference/weighted_posteriors.md)
   : Generate posterior distributions weighted across models
+
 - [`bic_to_bf()`](https://easystats.github.io/bayestestR/reference/bic_to_bf.md)
   : Convert BIC indices to Bayes Factors via the BIC-approximation
   method.
+
 - [`p_to_bf()`](https://easystats.github.io/bayestestR/reference/p_to_bf.md)
   : Convert p-values to (pseudo) Bayes Factors
 

@@ -1,8 +1,16 @@
-# Inclusion Bayes Factors for testing predictors across Bayesian models
+Inclusion Bayes Factors for testing predictors across Bayesian models\
+\
+The `bf_*` function is an alias of the main function.\
+\
+**For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
+========================================================================================================================
 
-The `bf_*` function is an alias of the main function. For more info, see
-[the Bayes factors
-vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
+Inclusion Bayes Factors for testing predictors across Bayesian models\
+\
+The `bf_*` function is an alias of the main function.\
+\
+**For more info, see [the Bayes factors
+vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
 
 ## Usage
 
@@ -54,8 +62,18 @@ If `match_models=FALSE` (default), Inclusion BFs are computed by
 comparing all models with a term against all models without that term.
 If `TRUE`, comparison is restricted to models that (1) do not include
 any interactions with the term of interest; (2) for interaction terms,
-averaging is done only across models that containe the main effect terms
+averaging is done only across models that contain the main effect terms
 from which the interaction term is comprised.
+
+### Additional methods
+
+The resulting output is supported by the following methods:
+
+- [`as.numeric()`](https://rdrr.io/r/base/numeric.html): Extract the
+  (possibly log-)Bayes factor values.
+
+See
+[bayesfactor_methods](https://easystats.github.io/bayestestR/reference/bayesfactor_methods.md).
 
 ## Note
 
@@ -68,7 +86,8 @@ A Bayes factor greater than 1 can be interpreted as evidence against the
 null, at which one convention is that a Bayes factor greater than 3 can
 be considered as "substantial" evidence against the null (and vice
 versa, a Bayes factor smaller than 1/3 indicates substantial evidence in
-favor of the null-model) (Wetzels et al. 2011).
+favor of the null-model). See also
+[`effectsize::interpret_bf()`](https://easystats.github.io/effectsize/reference/interpret_bf.html).
 
 ## References
 
@@ -89,6 +108,11 @@ favor of the null-model) (Wetzels et al. 2011).
 
 [`weighted_posteriors()`](https://easystats.github.io/bayestestR/reference/weighted_posteriors.md)
 for Bayesian parameter averaging.
+
+Other Bayes factors:
+[`bayesfactor_models()`](https://easystats.github.io/bayestestR/reference/bayesfactor_models.md),
+[`bayesfactor_parameters()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md),
+[`bayesfactor_restricted()`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)
 
 ## Author
 

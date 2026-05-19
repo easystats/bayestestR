@@ -6,7 +6,10 @@ are values of the parameter that are associated with an updating factor
 greater or equal than *k*. From the perspective of the Savage-Dickey
 Bayes factor, testing against a point null hypothesis for any value
 within the support interval will yield a Bayes factor smaller than
-*1/k*.
+*1/k*.\
+\
+**For more info, see [the Bayes factors
+vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
 
 ## Usage
 
@@ -143,17 +146,8 @@ the data, the interval will be `[NA,NA]`.
 
 ## Details
 
-**For more info, in particular on specifying correct priors for factors
-with more than 2 levels, see [the Bayes factors
-vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
-
 This method is used to compute support intervals based on prior and
-posterior distributions. For the computation of support intervals, the
-model priors must be proper priors (at the very least they should be
-*not flat*, and it is preferable that they be *informative* - note that
-by default,
-[`brms::brm()`](https://paulbuerkner.com/brms/reference/brm.html) uses
-flat priors for fixed-effects; see example below).
+posterior distributions.
 
 ## Note
 
@@ -178,26 +172,38 @@ interval to represent:
   in support of the alternative. E.g., if an SI (BF = 1/3) excludes 0,
   the Bayes factor against the point-null will be larger than 3.
 
-## Setting the correct `prior`
+## Prior and posterior considerations
 
+In order to correctly and precisely estimate Bayes factors, a rule of
+thumb are the 4 P's: **P**roper **P**riors and **P**lentiful
+**P**osteriors.\
+\
 For the computation of Bayes factors, the model priors must be proper
 priors (at the very least they should be *not flat*, and it is
-preferable that they be *informative*); As the priors for the
-alternative get wider, the likelihood of the null value(s) increases, to
-the extreme that for completely flat priors the null is infinitely more
-favorable than the alternative (this is called *the
-Jeffreys-Lindley-Bartlett paradox*). Thus, you should only ever try (or
-want) to compute a Bayes factor when you have an informed prior.\
-\
-(Note that by default,
+preferable that they be *informative*) (Note that by default,
 [`brms::brm()`](https://paulbuerkner.com/brms/reference/brm.html) uses
-flat priors for fixed-effects; See example below.)\
+flat priors for fixed-effects); Wide priors result in smaller marginal
+likelihoods, and thus models with wider priors are trivially less likely
+than models with narrower priors - where, at the extreme, that a model
+with completely flat priors is infinitely less favorable than a point
+null model (this is called *the Jeffreys-Lindley-Bartlett paradox*).
+Thus, you should only ever try (or want) to compute a Bayes factor when
+you have an informed prior.\
 \
+Additionally, for models using MCMC estimation the number of posterior
+samples needed for testing is substantially larger than for estimation
+(the default of 4000 samples may not be enough in many cases). A
+conservative rule of thumb is to obtain 10 times more samples than would
+be required for estimation (*Gronau, Singmann, & Wagenmakers, 2017*). If
+less than 40,000 samples are detected, a warning is issued.
+
+## Obtaining prior samples
+
 It is important to provide the correct `prior` for meaningful results,
 to match the `posterior`-type input:
 
 - **A numeric vector** - `prior` should also be a *numeric vector*,
-  representing the prior-estimate.
+  representing the prior-distribution
 
 - **A data frame** - `prior` should also be a *data frame*, representing
   the prior-estimates, in matching column order.
@@ -283,15 +289,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.199 seconds (Warm-up)
-#> Chain 1:                0.211 seconds (Sampling)
-#> Chain 1:                0.41 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.203 seconds (Warm-up)
+#> Chain 1:                0.209 seconds (Sampling)
+#> Chain 1:                0.412 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.6e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
+#> Chain 2: Gradient evaluation took 1.4e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -308,15 +314,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.212 seconds (Warm-up)
-#> Chain 2:                0.179 seconds (Sampling)
-#> Chain 2:                0.391 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.207 seconds (Warm-up)
+#> Chain 2:                0.185 seconds (Sampling)
+#> Chain 2:                0.392 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 1.5e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+#> Chain 3: Gradient evaluation took 1.3e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -333,15 +339,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.175 seconds (Warm-up)
-#> Chain 3:                0.262 seconds (Sampling)
-#> Chain 3:                0.437 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.178 seconds (Warm-up)
+#> Chain 3:                0.267 seconds (Sampling)
+#> Chain 3:                0.445 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1.5e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+#> Chain 4: Gradient evaluation took 1.4e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -358,9 +364,9 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.176 seconds (Warm-up)
-#> Chain 4:                0.19 seconds (Sampling)
-#> Chain 4:                0.366 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.179 seconds (Warm-up)
+#> Chain 4:                0.196 seconds (Sampling)
+#> Chain 4:                0.375 seconds (Total)
 #> Chain 4: 
 si(stan_model, verbose = FALSE)
 #> Support Interval

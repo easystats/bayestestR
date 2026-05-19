@@ -3,10 +3,9 @@
 This method computes Bayes factors against the null (either a point or
 an interval), based on prior and posterior samples of a single
 parameter. This Bayes factor indicates the degree by which the mass of
-the posterior distribution has shifted further away from or closer to
-the null value(s) (relative to the prior distribution), thus indicating
-if the null value has become less or more likely given the observed
-data.\
+the posterior distribution has shifted away from or closer to the null
+value(s) (relative to the prior distribution), thus indicating if the
+null value has become less or more likely given the observed data.\
 \
 When the null is an interval, the Bayes factor is computed by comparing
 the prior and posterior odds of the parameter falling within or outside
@@ -17,17 +16,12 @@ likelihoods of the model against a model in which the tested parameter
 has been restricted to the point null (Wagenmakers et al., 2010; Heck,
 2019).\
 \
-Note that the `logspline` package is used for estimating densities and
-probabilities, and must be installed for the function to work.\
-\
 `bayesfactor_pointnull()` and `bayesfactor_rope()` are wrappers around
-`bayesfactor_parameters` with different defaults for the null to be
-tested against (a point and a range, respectively). Aliases of the main
-functions are prefixed with `bf_*`, like `bf_parameters()` or
-`bf_pointnull()`.\
+`bayesfactor_parameters()` with different defaults for the null to be
+tested against (a point and a range, respectively; see details). The
+`bf_*` functions are aliases of the main functions.\
 \
-**For more info, in particular on specifying correct priors for factors
-with more than 2 levels, see [the Bayes factors
+**For more info, see [the Bayes factors
 vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
 
 ## Usage
@@ -223,9 +217,12 @@ non-log Bayes factors; see examples).
 ## Details
 
 This method is used to compute Bayes factors based on prior and
-posterior distributions.
+posterior distributions.\
+\
+Note that the `logspline` package is used for estimating densities and
+probabilities, and must be installed for the function to work.
 
-### One-sided & Dividing Tests (setting an order restriction)
+### One-sided & Dividing Tests (setting an order restriction):
 
 One sided tests (controlled by `direction`) are conducted by restricting
 the prior and posterior of the non-null values (the "alternative") to
@@ -242,32 +239,29 @@ opposing one-sided hypotheses (Morey & Wagenmakers, 2014). For example,
 for a Bayes factor comparing the "null" of `<0` to the alternative `>0`,
 we would set `bayesfactor_parameters(null = c(-Inf, 0))`.
 
+### Additional methods
+
+The resulting output is supported by the following methods:
+
+- [`as.numeric()`](https://rdrr.io/r/base/numeric.html): Extract the
+  (possibly log-)Bayes factor values.
+
+See
+[bayesfactor_methods](https://easystats.github.io/bayestestR/reference/bayesfactor_methods.md).
+
 ## Note
 
 There is also a
 [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
 implemented in the [see-package](https://easystats.github.io/see/).
 
-## Setting the correct `prior`
+## Obtaining prior samples
 
-For the computation of Bayes factors, the model priors must be proper
-priors (at the very least they should be *not flat*, and it is
-preferable that they be *informative*); As the priors for the
-alternative get wider, the likelihood of the null value(s) increases, to
-the extreme that for completely flat priors the null is infinitely more
-favorable than the alternative (this is called *the
-Jeffreys-Lindley-Bartlett paradox*). Thus, you should only ever try (or
-want) to compute a Bayes factor when you have an informed prior.\
-\
-(Note that by default,
-[`brms::brm()`](https://paulbuerkner.com/brms/reference/brm.html) uses
-flat priors for fixed-effects; See example below.)\
-\
 It is important to provide the correct `prior` for meaningful results,
 to match the `posterior`-type input:
 
 - **A numeric vector** - `prior` should also be a *numeric vector*,
-  representing the prior-estimate.
+  representing the prior-distribution
 
 - **A data frame** - `prior` should also be a *data frame*, representing
   the prior-estimates, in matching column order.
@@ -301,13 +295,39 @@ to match the `posterior`-type input:
     the estimates have undergone any transformations – `"log"`,
     `"response"`, etc. – or any `regrid`ing).
 
+## Prior and posterior considerations
+
+In order to correctly and precisely estimate Bayes factors, a rule of
+thumb are the 4 P's: **P**roper **P**riors and **P**lentiful
+**P**osteriors.\
+\
+For the computation of Bayes factors, the model priors must be proper
+priors (at the very least they should be *not flat*, and it is
+preferable that they be *informative*) (Note that by default,
+[`brms::brm()`](https://paulbuerkner.com/brms/reference/brm.html) uses
+flat priors for fixed-effects); Wide priors result in smaller marginal
+likelihoods, and thus models with wider priors are trivially less likely
+than models with narrower priors - where, at the extreme, that a model
+with completely flat priors is infinitely less favorable than a point
+null model (this is called *the Jeffreys-Lindley-Bartlett paradox*).
+Thus, you should only ever try (or want) to compute a Bayes factor when
+you have an informed prior.\
+\
+Additionally, for models using MCMC estimation the number of posterior
+samples needed for testing is substantially larger than for estimation
+(the default of 4000 samples may not be enough in many cases). A
+conservative rule of thumb is to obtain 10 times more samples than would
+be required for estimation (*Gronau, Singmann, & Wagenmakers, 2017*). If
+less than 40,000 samples are detected, a warning is issued.
+
 ## Interpreting Bayes Factors
 
 A Bayes factor greater than 1 can be interpreted as evidence against the
 null, at which one convention is that a Bayes factor greater than 3 can
 be considered as "substantial" evidence against the null (and vice
 versa, a Bayes factor smaller than 1/3 indicates substantial evidence in
-favor of the null-model) (Wetzels et al. 2011).
+favor of the null-model). See also
+[`effectsize::interpret_bf()`](https://easystats.github.io/effectsize/reference/interpret_bf.html).
 
 ## Model components
 
@@ -367,6 +387,13 @@ detail here. See also
   Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on
   Psychological Science, 6(3), 291–298.
   [doi:10.1177/1745691611406923](https://doi.org/10.1177/1745691611406923)
+
+## See also
+
+Other Bayes factors:
+[`bayesfactor_inclusion()`](https://easystats.github.io/bayestestR/reference/bayesfactor_inclusion.md),
+[`bayesfactor_models()`](https://easystats.github.io/bayestestR/reference/bayesfactor_models.md),
+[`bayesfactor_restricted()`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)
 
 ## Author
 

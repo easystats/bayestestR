@@ -59,7 +59,8 @@ distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 
 - n:
 
-  number of observations.
+  number of observations. If `length(n) > 1`, the length is taken to be
+  the number required.
 
 - random:
 
@@ -105,7 +106,7 @@ distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 
 - mu:
 
-  vector of mean \\\mu\\.
+  alternative parametrization via mean: see ‘Details’.
 
 - phi:
 

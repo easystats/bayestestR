@@ -1,14 +1,20 @@
 # Changelog
 
-## bayestestR 0.17.0.xxx
-
-CRAN release: 2025-08-29
+## bayestestR 0.17.0.4
 
 ### New functionality
 
-- [`as.matrix()`](https://rdrr.io/r/base/matrix.html) for
-  [`bayesfactor_restricted()`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md),
-  to obtain a matrix of Bayes factors between all restricted models.
+- Improved Bayes factor methods:
+
+  - New docs at
+    [`?bayesfactor_methods`](https://easystats.github.io/bayestestR/reference/bayesfactor_methods.md)
+
+  - [`as.matrix()`](https://rdrr.io/r/base/matrix.html) for
+    [`bayesfactor_restricted()`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md),
+    to obtain a matrix of Bayes factors between all restricted models.
+
+- Added support for `CmdStanFit` models from `{cmdstanr}` and expanded
+  support for `stanfit` models from `rstan`.
 
 ### Changes
 
