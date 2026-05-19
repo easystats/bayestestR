@@ -73,7 +73,7 @@ value can also be thought is *predictive terms* - how well has a
 formalized prior model predicted the observed data compared to another
 formalized prior model?
 
-Thus, Bayes factors can be calculated in two ways: {#bf-definitions}
+Thus, Bayes factors can be calculated in two ways:
 
 - As a ratio quantifying **the relative probability of the observed data
   under each of the two hypotheses**: (In some contexts, these
