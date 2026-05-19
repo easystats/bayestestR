@@ -104,7 +104,7 @@ Where the *likelihood ratio* (the middle term) is the ***Bayes factor*** -
 it is the ***factor*** by which some **prior odds** have been updated _after_ observing the data to **posterior odds**.
 This value can also be thought is _predictive terms_ - how well has a formalized prior model predicted the observed data compared to another formalized prior model?
 
-Thus, Bayes factors can be calculated in two ways: {#bf-definitions}
+<a id="bf-definitions">Thus, Bayes factors can be calculated in two ways:</a>
 
 - As a ratio quantifying **the relative probability of the observed data under each of the two hypotheses**: (In some contexts, these probabilities are also called *marginal likelihoods*.)
 
