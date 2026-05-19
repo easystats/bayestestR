@@ -309,6 +309,9 @@ point_estimate.stanreg <- function(x,
 point_estimate.stanfit <- point_estimate.stanreg
 
 #' @export
+point_estimate.CmdStanFit <- point_estimate.stanreg
+
+#' @export
 point_estimate.blavaan <- point_estimate.stanreg
 
 

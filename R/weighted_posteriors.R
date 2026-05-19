@@ -133,7 +133,12 @@ weighted_posteriors <- function(..., prior_odds = NULL, missing = 0, verbose = T
 
 #' @export
 #' @rdname weighted_posteriors
-weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE) {
+weighted_posteriors.data.frame <- function(
+  ...,
+  prior_odds = NULL,
+  missing = 0,
+  verbose = TRUE
+) {
   Mods <- list(...)
   mnames <- sapply(match.call(expand.dots = FALSE)$`...`, insight::safe_deparse)
 
@@ -157,24 +162,23 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
   weighted_samps <- round(iterations * Probs)
 
   # pass to .weighted_posteriors
-  res <- .weighted_posteriors(Mods, weighted_samps, missing)
-
-  # make weights table
-  attr(res, "weights") <- data.frame(Model = mnames, weights = weighted_samps)
-  return(res)
+  .weighted_posteriors(Mods, weighted_samps, missing, mnames)
 }
 
 
 #' @export
 #' @rdname weighted_posteriors
-weighted_posteriors.stanreg <- function(...,
-                                        prior_odds = NULL,
-                                        missing = 0,
-                                        verbose = TRUE,
-                                        effects = "fixed",
-                                        component = "conditional",
-                                        parameters = NULL) {
+weighted_posteriors.stanreg <- function(
+  ...,
+  prior_odds = NULL,
+  missing = 0,
+  verbose = TRUE,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL
+) {
   Mods <- list(...)
+  mnames <- sapply(match.call(expand.dots = FALSE)$`...`, insight::safe_deparse)
 
   # Get Bayes factors
   BFMods <- bayesfactor_models(..., denominator = 1, verbose = verbose)
@@ -183,20 +187,20 @@ weighted_posteriors.stanreg <- function(...,
   model_tab <- .get_model_table(BFMods, priorOdds = prior_odds)
   postProbs <- model_tab$postProbs
 
-  # Compute weighted number of samples
-  iterations <- min(sapply(Mods, .total_samps))
-  weighted_samps <- round(iterations * postProbs)
-
   # extract parameters
-  params <- lapply(Mods, insight::get_parameters,
+  params <- lapply(
+    Mods,
+    insight::get_parameters,
     effects = effects,
     component = component,
     parameters = parameters
   )
 
-  res <- .weighted_posteriors(params, weighted_samps, missing)
-  attr(res, "weights") <- data.frame(Model = BFMods$Model, weights = weighted_samps)
-  return(res)
+  # Compute weighted number of samples
+  iterations <- min(sapply(params, nrow))
+  weighted_samps <- round(iterations * postProbs)
+
+  .weighted_posteriors(params, weighted_samps, missing, mnames)
 }
 
 #' @export
@@ -205,13 +209,18 @@ weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 #' @export
 weighted_posteriors.blavaan <- weighted_posteriors.stanreg
 
+#' @export
+weighted_posteriors.CmdStanFit <- weighted_posteriors.stanreg
+
 #' @rdname weighted_posteriors
 #' @export
-weighted_posteriors.BFBayesFactor <- function(...,
-                                              prior_odds = NULL,
-                                              missing = 0,
-                                              verbose = TRUE,
-                                              iterations = 4000) {
+weighted_posteriors.BFBayesFactor <- function(
+  ...,
+  prior_odds = NULL,
+  missing = 0,
+  verbose = TRUE,
+  iterations = 4000
+) {
   Mods <- c(...)
 
   # Get Bayes factors
@@ -242,24 +251,34 @@ weighted_posteriors.BFBayesFactor <- function(...,
       )
     } else if (m == 1) {
       # If the model is the "den" model
-      params[[m]] <- BayesFactor::posterior(1 / Mods[1], iterations = iterations, progress = FALSE)
+      params[[m]] <- BayesFactor::posterior(
+        1 / Mods[1],
+        iterations = iterations,
+        progress = FALSE
+      )
     } else {
       params[[m]] <- BayesFactor::posterior(
         Mods[m - 1],
-        iterations = iterations, progress = FALSE
+        iterations = iterations,
+        progress = FALSE
       )
     }
   }
 
   params <- lapply(params, data.frame)
 
-  res <- .weighted_posteriors(params, weighted_samps, missing)
-  attr(res, "weights") <- data.frame(Model = BFMods$Model, weights = weighted_samps)
-  return(res)
+  .weighted_posteriors(params, weighted_samps, missing, BFMods$Model)
 }
 
-.weighted_posteriors <- function(params, weighted_samps, missing) {
+.weighted_posteriors <- function(params, weighted_samps, missing, mnames) {
   par_names <- unique(unlist(sapply(params, colnames), recursive = TRUE))
+
+  # Table of weights
+  weights <- data.frame(
+    Model = mnames,
+    weights = weighted_samps,
+    pweights = weighted_samps / sum(weighted_samps)
+  )
 
   # remove empty (0 sample) models
   params <- params[weighted_samps != 0]
@@ -278,12 +297,7 @@ weighted_posteriors.BFBayesFactor <- function(...,
   }
 
   # combine all
-  do.call("rbind", params)
-}
-
-#' @keywords internal
-.total_samps <- function(mod) {
-  x <- insight::find_algorithm(mod)
-  if (is.null(x$iterations)) x$iterations <- x$sample
-  x$chains * (x$iterations - x$warmup)
+  res <- do.call("rbind", params)
+  attr(res, "weights") <- weights
+  return(res)
 }
