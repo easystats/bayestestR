@@ -134,7 +134,10 @@ Let's take a look at the _kid IQ_ dataset from the `{rstanarm}` package.
 data("kidiq", package = "rstanarm")
 
 kidiq <- subset(kidiq, select = c(kid_score, mom_hs))
-kidiq <- transform(kidiq, mom_hs = factor(mom_hs, levels = 0:1, labels = c("no", "yes")))
+kidiq <- transform(
+  kidiq,
+  mom_hs = factor(mom_hs, levels = 0:1, labels = c("no", "yes"))
+)
 
 head(kidiq)
 ```
@@ -422,7 +425,7 @@ For example, we can impose an _additional_ order restriction
 that the difference _must be positive_, which we can write like this (if we had to):
 
 $$
-\mathcal{H}_{2r}: theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\ 0 \end{bmatrix}
+\mathcal{H}_{2r}: \theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\ 0 \end{bmatrix}
 $$
 
 By testing the probabilities of these restrictions on prior and posterior samples,
@@ -544,8 +547,8 @@ We can see that a-priori, this specific ordering of the 3 means has a proability
 The transitive properties of Bayes factors can also be used to compute a Bayes factor for **dividing** hypotheses -
 that is for two *complementary* opposing one-sided hypotheses [@morey2014simple].
 
-For example, above we compared $\mathcal{H}_{+}: \theta > 0$ - *the difference is positive*
-to the null $\mathcal{H}_{-}: \theta < 0$: *the difference is negative*:
+For example, we can compare $\mathcal{H}_{+}: \theta > 0$ - *the difference is positive*
+to $\mathcal{H}_{-}: \theta < 0$: *the difference is negative*:
 
 $$
 \begin{align}
@@ -851,7 +854,10 @@ $Md=60$, $95 CI [-3, +63]$.
 We might expect the same for the differences between the groups, but this is not the case:
 
 ```{r}
-avg_comparisons(mod_odor.treatment_prior, variables = list("condition" = "pairwise"))
+avg_comparisons(
+  mod_odor.treatment_prior,
+  variables = list("condition" = "pairwise")
+)
 ```
 
 We can see that while the prior differences are all centered on 0,
@@ -866,7 +872,10 @@ avg_comparisons(mod_odor.sum_prior, variables = list("condition" = "pairwise"))
 But the `contr.equalprior()` coding gives us the same prior distribution for all differences between the groups:
 
 ```{r}
-avg_comparisons(mod_odor.equalprior_prior, variables = list("condition" = "pairwise"))
+avg_comparisons(
+  mod_odor.equalprior_prior,
+  variables = list("condition" = "pairwise")
+)
 ```
 
 Likewise, the implied priors for the ordering of the groups are different across the three models:
