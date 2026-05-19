@@ -105,7 +105,10 @@ Let’s take a look at the *kid IQ* dataset from the
 data("kidiq", package = "rstanarm")
 
 kidiq <- subset(kidiq, select = c(kid_score, mom_hs))
-kidiq <- transform(kidiq, mom_hs = factor(mom_hs, levels = 0:1, labels = c("no", "yes")))
+kidiq <- transform(
+  kidiq,
+  mom_hs = factor(mom_hs, levels = 0:1, labels = c("no", "yes"))
+)
 
 head(kidiq)
 ```
@@ -412,7 +415,7 @@ For example, we can impose an *additional* order restriction that the
 difference *must be positive*, which we can write like this (if we had
 to):
 
-\mathcal{H}\_{2r}: theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\ 0
+\mathcal{H}\_{2r}: \theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\ 0
 \end{bmatrix}
 
 By testing the probabilities of these restrictions on prior and
@@ -595,8 +598,8 @@ Bayes factor for **dividing** hypotheses - that is for two
 *complementary* opposing one-sided hypotheses (Morey & Wagenmakers,
 2014).
 
-For example, above we compared \mathcal{H}\_{+}: \theta \> 0 - *the
-difference is positive* to the null \mathcal{H}\_{-}: \theta \< 0: *the
+For example, we can compare \mathcal{H}\_{+}: \theta \> 0 - *the
+difference is positive* to \mathcal{H}\_{-}: \theta \< 0: *the
 difference is negative*:
 
 \begin{align} BF\_{+,-} & = BF\_{+,0} \times BF\_{0,-} \\ & =
@@ -1077,7 +1080,10 @@ this is not the case:
 
 ``` r
 
-avg_comparisons(mod_odor.treatment_prior, variables = list("condition" = "pairwise"))
+avg_comparisons(
+  mod_odor.treatment_prior,
+  variables = list("condition" = "pairwise")
+)
 ```
 
     > 
@@ -1119,7 +1125,10 @@ the groups:
 
 ``` r
 
-avg_comparisons(mod_odor.equalprior_prior, variables = list("condition" = "pairwise"))
+avg_comparisons(
+  mod_odor.equalprior_prior,
+  variables = list("condition" = "pairwise")
+)
 ```
 
     > 
