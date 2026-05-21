@@ -1,5 +1,4 @@
-# bayestestR 0.17.0.4
-
+# bayestestR 0.18.0
 ## New functionality
 
 * Improved Bayes factor methods:
