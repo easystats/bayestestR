@@ -359,6 +359,9 @@ p_map.stanreg <- function(x,
 #' @export
 p_map.stanfit <- p_map.stanreg
 
+#' @export
+p_map.CmdStanFit <- p_map.stanreg
+
 
 #' @export
 p_map.blavaan <- p_map.stanreg

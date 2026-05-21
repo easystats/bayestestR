@@ -370,6 +370,9 @@ equivalence_test.stanreg <- function(
 equivalence_test.stanfit <- equivalence_test.stanreg
 
 #' @export
+equivalence_test.CmdStanFit <- equivalence_test.stanreg
+
+#' @export
 equivalence_test.blavaan <- equivalence_test.stanreg
 
 

@@ -140,3 +140,8 @@ mcse.blavaan <- function(
     row.names = NULL
   )
 }
+
+#' @export
+mcse.CmdStanFit <- function(model, ...) {
+  diagnostic_posterior(model, diagnostic = "MCSE")
+}

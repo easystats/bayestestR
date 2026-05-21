@@ -347,6 +347,9 @@ ci.brmsfit <- function(
 ci.stanfit <- ci.stanreg
 
 #' @export
+ci.CmdStanFit <- ci.stanreg
+
+#' @export
 ci.blavaan <- ci.stanreg
 
 #' @export

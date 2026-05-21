@@ -583,6 +583,9 @@ rope.stanreg <- function(
 rope.stanfit <- rope.stanreg
 
 #' @export
+rope.CmdStanFit <- rope.stanreg
+
+#' @export
 rope.blavaan <- rope.stanreg
 
 

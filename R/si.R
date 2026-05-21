@@ -5,9 +5,8 @@
 #' updating factor greater or equal than *k*. From the perspective of the Savage-Dickey Bayes factor, testing
 #' against a point null hypothesis for any value within the support interval will yield a Bayes factor smaller
 #' than *1/k*.
-#'
-#' **For more info, in particular on specifying correct priors for factors with more than 2 levels,
-#' see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).**
+#' \cr\cr
+#' \strong{For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
 #' @param BF The amount of support required to be included in the support interval.
 #' @inheritParams bayesfactor_parameters
@@ -16,9 +15,6 @@
 #' @family ci
 #'
 #' @details This method is used to compute support intervals based on prior and posterior distributions.
-#' For the computation of support intervals, the model priors must be proper priors (at the very least
-#' they should be *not flat*, and it is preferable that they be *informative* - note
-#' that by default, `brms::brm()` uses flat priors for fixed-effects; see example below).
 #'
 #' @section Choosing a value of `BF`:
 #' The choice of `BF` (the level of support) depends on what we want our interval
@@ -32,7 +28,9 @@
 #'   E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null
 #'   will be larger than 3.
 #'
-#' @inheritSection bayesfactor_parameters Setting the correct `prior`
+#' @inheritSection bayesfactor_methods Prior and posterior considerations
+#'
+#' @inheritSection bayesfactor_parameters Obtaining prior samples
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -106,8 +104,11 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 
   # Get SIs
   out <- si.data.frame(
-    posterior = posterior, prior = prior,
-    BF = BF, verbose = verbose, ...
+    posterior = posterior,
+    prior = prior,
+    BF = BF,
+    verbose = verbose,
+    ...
   )
   out$Parameter <- NULL
   out
@@ -116,23 +117,34 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 
 #' @rdname si
 #' @export
-si.stanreg <- function(posterior, prior = NULL,
-                       BF = 1, verbose = TRUE,
-                       effects = "fixed",
-                       component = "location",
-                       parameters = NULL,
-                       ...) {
-  cleaned_parameters <- insight::clean_parameters(posterior)
+si.stanreg <- function(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
+  cleaned_parameters <- .get_cleaned_parameters(posterior, ...)
 
-  samps <- .clean_priors_and_posteriors(posterior, prior,
-    effects = effects, component = component,
-    parameters = parameters, verbose = verbose
+  samps <- .clean_priors_and_posteriors(
+    posterior,
+    prior,
+    effects = effects,
+    component = component,
+    parameters = parameters,
+    verbose = verbose
   )
 
   # Get SIs
   temp <- si.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
-    BF = BF, verbose = verbose, ...
+    posterior = samps$posterior,
+    prior = samps$prior,
+    BF = BF,
+    verbose = verbose,
+    ...
   )
 
   out <- .prepare_output(temp, cleaned_parameters, inherits(posterior, "stanmvreg"))
@@ -153,14 +165,16 @@ si.blavaan <- si.stanreg
 
 
 #' @export
-si.emmGrid <- function(posterior, prior = NULL,
-                       BF = 1, verbose = TRUE, ...) {
+si.emmGrid <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   samps <- .clean_priors_and_posteriors(posterior, prior, verbose = verbose)
 
   # Get SIs
   out <- si.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
-    BF = BF, verbose = verbose, ...
+    posterior = samps$posterior,
+    prior = samps$prior,
+    BF = BF,
+    verbose = verbose,
+    ...
   )
 
   out <- .append_datagrid(out, posterior, long = length(BF) > 1L)
@@ -183,9 +197,19 @@ si.predictions <- si.emmGrid
 
 
 #' @export
-si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = "fixed", ...) {
-  out <- si(insight::get_parameters(posterior, effects = effects, verbose = verbose),
-    prior = prior, BF = BF, verbose = verbose
+si.stanfit <- function(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  effects = "fixed",
+  ...
+) {
+  out <- si(
+    insight::get_parameters(posterior, effects = effects, verbose = verbose),
+    prior = prior,
+    BF = BF,
+    verbose = verbose
   )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   out
@@ -194,7 +218,14 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
 
 #' @rdname si
 #' @export
-si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = FALSE, verbose = TRUE, ...) {
+si.get_predicted <- function(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+) {
   if (isTRUE(use_iterations)) {
     if ("iterations" %in% names(attributes(posterior))) {
       out <- si(
@@ -209,7 +240,13 @@ si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = F
     }
     attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   } else {
-    out <- si(insight::get_parameters(posterior), prior = prior, BF = BF, verbose = verbose, ...)
+    out <- si(
+      insight::get_parameters(posterior),
+      prior = prior,
+      BF = BF,
+      verbose = verbose,
+      ...
+    )
   }
   out
 }
@@ -218,7 +255,14 @@ si.get_predicted <- function(posterior, prior = NULL, BF = 1, use_iterations = F
 #' @rdname si
 #' @inheritParams p_direction
 #' @export
-si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verbose = TRUE, ...) {
+si.data.frame <- function(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  rvar_col = NULL,
+  verbose = TRUE,
+  ...
+) {
   x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
   if (length(x_rvar) > 0L) {
     cl <- match.call()
@@ -261,7 +305,13 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verb
   attr(out, "ci_method") <- "SI"
   attr(out, "ci") <- BF
   attr(out, "plot_data") <- .make_BF_plot_data(posterior, prior, 0, 0, ...)$plot_data
-  class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c(
+    "bayestestR_si",
+    "see_si",
+    "bayestestR_ci",
+    "see_ci",
+    class(out)
+  ))
 
   out
 }
@@ -269,9 +319,12 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, rvar_col = NULL, verb
 
 #' @export
 si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
-  si(.posterior_draws_to_df(posterior),
+  si(
+    .posterior_draws_to_df(posterior),
     prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
-    BF = BF, verbose = verbose, ...
+    BF = BF,
+    verbose = verbose,
+    ...
   )
 }
 
@@ -284,12 +337,7 @@ si.rvar <- si.draws
 .si.data.frame <- function(posterior, prior, BF, verbose = TRUE, ...) {
   sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
   for (par in seq_along(posterior)) {
-    sis[par, ] <- .si(posterior[[par]],
-      prior[[par]],
-      BF = BF,
-      verbose = verbose,
-      ...
-    )
+    sis[par, ] <- .si(posterior[[par]], prior[[par]], BF = BF, verbose = verbose, ...)
   }
 
   data.frame(
@@ -303,7 +351,15 @@ si.rvar <- si.draws
 
 
 #' @keywords internal
-.si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, verbose = TRUE, ...) {
+.si <- function(
+  posterior,
+  prior,
+  BF = 1,
+  extend_scale = 0.05,
+  precision = 2^8,
+  verbose = TRUE,
+  ...
+) {
   insight::check_if_installed("logspline")
 
   if (isTRUE(all.equal(prior, posterior))) {

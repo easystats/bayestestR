@@ -3,7 +3,7 @@
 #' This method computes Bayes factors against the null (either a point or an
 #' interval), based on prior and posterior samples of a single parameter. This
 #' Bayes factor indicates the degree by which the mass of the posterior
-#' distribution has shifted further away from or closer to the null value(s)
+#' distribution has shifted away from or closer to the null value(s)
 #' (relative to the prior distribution), thus indicating if the null value has
 #' become less or more likely given the observed data.
 #' \cr \cr
@@ -15,19 +15,12 @@
 #' model in which the tested parameter has been restricted to the point null
 #' (Wagenmakers et al., 2010; Heck, 2019).
 #' \cr \cr
-#' Note that the `logspline` package is used for estimating densities and
-#' probabilities, and must be installed for the function to work.
+#' `bayesfactor_pointnull()` and `bayesfactor_rope()` are wrappers around
+#' `bayesfactor_parameters()` with different defaults for the null to be tested
+#' against (a point and a range, respectively; see details). The `bf_*`
+#' functions are aliases of the main functions.
 #' \cr \cr
-#' `bayesfactor_pointnull()` and `bayesfactor_rope()` are wrappers
-#' around `bayesfactor_parameters` with different defaults for the null to
-#' be tested against (a point and a range, respectively). Aliases of the main
-#' functions are prefixed with `bf_*`, like `bf_parameters()` or
-#' `bf_pointnull()`.
-#' \cr \cr
-#' \strong{For more info, in particular on specifying correct priors for factors
-#' with more than 2 levels, see
-#' [the
-#' Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
+#' \strong{For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
 #' @param posterior A numerical vector, `stanreg` / `brmsfit` object,
 #'   `emmGrid` or a data frame - representing a posterior distribution(s)
@@ -42,8 +35,6 @@
 #'   arguments to internal [logspline::logspline()].)
 #' @inheritParams hdi
 #'
-#' @inheritSection hdi Model components
-#'
 #' @return A data frame containing the (log) Bayes factor representing evidence
 #'   *against* the null  (Use `as.numeric()` to extract the non-log Bayes
 #'   factors; see examples).
@@ -56,8 +47,12 @@
 #' @details
 #' This method is used to compute Bayes factors based on prior and posterior
 #' distributions.
+#' \cr \cr
+#' Note that the `logspline` package is used for estimating densities and
+#' probabilities, and must be installed for the function to work.
 #'
-#' \subsection{One-sided & Dividing Tests (setting an order restriction)}{
+#'
+#' ## One-sided & Dividing Tests (setting an order restriction):
 #' One sided tests (controlled by `direction`) are conducted by restricting
 #' the prior and posterior of the non-null values (the "alternative") to one
 #' side of the null only (\cite{Morey & Wagenmakers, 2014}). For example, if we
@@ -72,25 +67,23 @@
 #' opposing one-sided hypotheses (\cite{Morey & Wagenmakers, 2014}). For
 #' example, for a Bayes factor comparing the "null" of `<0` to the alternative
 #' `>0`, we would set `bayesfactor_parameters(null = c(-Inf, 0))`.
-#' }
 #'
-#' @section Setting the correct `prior`:
-#' For the computation of Bayes factors, the model priors must be proper priors
-#' (at the very least they should be *not flat*, and it is preferable that
-#' they be *informative*); As the priors for the alternative get wider, the
-#' likelihood of the null value(s) increases, to the extreme that for completely
-#' flat priors the null is infinitely more favorable than the alternative (this
-#' is called *the Jeffreys-Lindley-Bartlett paradox*). Thus, you should
-#' only ever try (or want) to compute a Bayes factor when you have an informed
-#' prior.
-#' \cr\cr
-#' (Note that by default, `brms::brm()` uses flat priors for fixed-effects;
-#' See example below.)
-#' \cr\cr
+#'
+#' ## Additional methods
+#' The resulting output is supported by the following methods:
+#'
+#' - `as.numeric()`: Extract the (possibly log-)Bayes factor values.
+#'
+#' See [bayesfactor_methods].
+#'
+#' @inheritSection bayesfactor_methods Prior and posterior considerations
+#'
+#' @section Obtaining prior samples:
+#'
 #' It is important to provide the correct `prior` for meaningful results,
 #' to match the `posterior`-type input:
 #'
-#' - **A numeric vector** - `prior` should also be a _numeric vector_, representing the prior-estimate.
+#' - **A numeric vector** - `prior` should also be a _numeric vector_, representing the prior-distribution
 #' - **A data frame** - `prior` should also be a _data frame_, representing the prior-estimates, in matching column order.
 #'   - If `rvar_col` is specified, `prior` should be _the name of an `rvar` column_ that represents the prior-estimates.
 #' - **Supported Bayesian model (`stanreg`, `brmsfit`, etc.)**
@@ -104,12 +97,9 @@
 #'      will try to "unupdate" the estimates (not supported if the estimates have undergone
 #'      any transformations -- `"log"`, `"response"`, etc. -- or any `regrid`ing).
 #'
-#' @section Interpreting Bayes Factors:
-#' A Bayes factor greater than 1 can be interpreted as evidence against the
-#' null, at which one convention is that a Bayes factor greater than 3 can be
-#' considered as "substantial" evidence against the null (and vice versa, a
-#' Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
-#' null-model) (\cite{Wetzels et al. 2011}).
+#' @inheritSection bayesfactor_methods Interpreting Bayes Factors
+#'
+#' @inheritSection hdi Model components
 #'
 #' @examplesIf require("logspline")
 #' library(bayestestR)
@@ -186,24 +176,30 @@
 #'
 #' @author Mattan S. Ben-Shachar
 #'
+#' @family Bayes factors
+#'
 #' @export
-bayesfactor_parameters <- function(posterior,
-                                   prior = NULL,
-                                   direction = "two-sided",
-                                   null = 0,
-                                   ...,
-                                   verbose = TRUE) {
+bayesfactor_parameters <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  ...,
+  verbose = TRUE
+) {
   UseMethod("bayesfactor_parameters")
 }
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_pointnull <- function(posterior,
-                                  prior = NULL,
-                                  direction = "two-sided",
-                                  null = 0,
-                                  ...,
-                                  verbose = TRUE) {
+bayesfactor_pointnull <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  ...,
+  verbose = TRUE
+) {
   if (length(null) > 1L && verbose) {
     insight::format_alert("`null` is a range - computing a ROPE based Bayes factor.")
   }
@@ -220,14 +216,18 @@ bayesfactor_pointnull <- function(posterior,
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_rope <- function(posterior,
-                             prior = NULL,
-                             direction = "two-sided",
-                             null = rope_range(posterior, verbose = FALSE),
-                             ...,
-                             verbose = TRUE) {
+bayesfactor_rope <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = rope_range(posterior, verbose = FALSE),
+  ...,
+  verbose = TRUE
+) {
   if (length(null) < 2 && verbose) {
-    insight::format_alert("'null' is a point - computing a Savage-Dickey (point null) Bayes factor.")
+    insight::format_alert(
+      "'null' is a point - computing a Savage-Dickey (point null) Bayes factor."
+    )
   }
 
   bayesfactor_parameters(
@@ -254,12 +254,14 @@ bf_rope <- bayesfactor_rope
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_parameters.numeric <- function(posterior,
-                                           prior = NULL,
-                                           direction = "two-sided",
-                                           null = 0,
-                                           ...,
-                                           verbose = TRUE) {
+bayesfactor_parameters.numeric <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  ...,
+  verbose = TRUE
+) {
   # nm <- insight::safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
@@ -276,9 +278,12 @@ bayesfactor_parameters.numeric <- function(posterior,
 
   # Get BFs
   sdbf <- bayesfactor_parameters.data.frame(
-    posterior = posterior, prior = prior,
-    direction = direction, null = null,
-    verbose = verbose, ...
+    posterior = posterior,
+    prior = prior,
+    direction = direction,
+    null = null,
+    verbose = verbose,
+    ...
   )
   sdbf$Parameter <- NULL
   sdbf
@@ -287,27 +292,36 @@ bayesfactor_parameters.numeric <- function(posterior,
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_parameters.stanreg <- function(posterior,
-                                           prior = NULL,
-                                           direction = "two-sided",
-                                           null = 0,
-                                           effects = "fixed",
-                                           component = "conditional",
-                                           parameters = NULL,
-                                           ...,
-                                           verbose = TRUE) {
+bayesfactor_parameters.stanreg <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  ...,
+  verbose = TRUE
+) {
   cleaned_parameters <- .get_cleaned_parameters(posterior, ...)
 
-  samps <- .clean_priors_and_posteriors(posterior, prior,
-    effects = effects, component = component,
-    parameters = parameters, verbose = verbose
+  samps <- .clean_priors_and_posteriors(
+    posterior,
+    prior,
+    effects = effects,
+    component = component,
+    parameters = parameters,
+    verbose = verbose
   )
 
   # Get BFs
   temp <- bayesfactor_parameters.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
-    direction = direction, null = null,
-    verbose = verbose, ...
+    posterior = samps$posterior,
+    prior = samps$prior,
+    direction = direction,
+    null = null,
+    verbose = verbose,
+    ...
   )
 
   bf_val <- .prepare_output(temp, cleaned_parameters, inherits(posterior, "stanmvreg"))
@@ -326,25 +340,34 @@ bayesfactor_parameters.stanreg <- function(posterior,
 #' @export
 bayesfactor_parameters.brmsfit <- bayesfactor_parameters.stanreg
 
+#' @export
+bayesfactor_parameters.CmdStanFit <- bayesfactor_parameters.stanreg
 
 #' @export
-bayesfactor_parameters.blavaan <- function(posterior,
-                                           prior = NULL,
-                                           direction = "two-sided",
-                                           null = 0,
-                                           ...,
-                                           verbose = TRUE) {
+bayesfactor_parameters.stanfit <- bayesfactor_parameters.stanreg
+
+
+#' @export
+bayesfactor_parameters.blavaan <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  ...,
+  verbose = TRUE
+) {
   cleaned_parameters <- insight::clean_parameters(posterior)
 
-  samps <- .clean_priors_and_posteriors(posterior, prior,
-    verbose = verbose
-  )
+  samps <- .clean_priors_and_posteriors(posterior, prior, verbose = verbose)
 
   # Get BFs
   temp <- bayesfactor_parameters.data.frame(
-    posterior = samps$posterior, prior = samps$prior,
-    direction = direction, null = null,
-    verbose = verbose, ...
+    posterior = samps$posterior,
+    prior = samps$prior,
+    direction = direction,
+    null = null,
+    verbose = verbose,
+    ...
   )
 
   bf_val <- .prepare_output(temp, cleaned_parameters)
@@ -361,12 +384,14 @@ bayesfactor_parameters.blavaan <- function(posterior,
 
 
 #' @export
-bayesfactor_parameters.emmGrid <- function(posterior,
-                                           prior = NULL,
-                                           direction = "two-sided",
-                                           null = 0,
-                                           ...,
-                                           verbose = TRUE) {
+bayesfactor_parameters.emmGrid <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  ...,
+  verbose = TRUE
+) {
   samps <- .clean_priors_and_posteriors(
     posterior,
     prior,
@@ -401,13 +426,15 @@ bayesfactor_parameters.comparisons <- bayesfactor_parameters.emmGrid
 #' @rdname bayesfactor_parameters
 #' @inheritParams p_direction
 #' @export
-bayesfactor_parameters.data.frame <- function(posterior,
-                                              prior = NULL,
-                                              direction = "two-sided",
-                                              null = 0,
-                                              rvar_col = NULL,
-                                              ...,
-                                              verbose = TRUE) {
+bayesfactor_parameters.data.frame <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  rvar_col = NULL,
+  ...,
+  verbose = TRUE
+) {
   x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
   if (length(x_rvar) > 0L) {
     cl <- match.call()
@@ -445,7 +472,6 @@ bayesfactor_parameters.data.frame <- function(posterior,
     )
   }
 
-
   sdlogbf <- numeric(ncol(posterior))
   for (par in seq_along(posterior)) {
     sdlogbf[par] <- .logbayesfactor_parameters(
@@ -464,6 +490,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
   )
 
   class(bf_val) <- unique(c(
+    "bayestestRBF",
     "bayesfactor_parameters",
     "see_bayesfactor_parameters",
     class(bf_val)
@@ -478,12 +505,14 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
 
 #' @export
-bayesfactor_parameters.draws <- function(posterior,
-                                         prior = NULL,
-                                         direction = "two-sided",
-                                         null = 0,
-                                         ...,
-                                         verbose = TRUE) {
+bayesfactor_parameters.draws <- function(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  ...,
+  verbose = TRUE
+) {
   bayesfactor_parameters(
     .posterior_draws_to_df(posterior),
     prior = if (!is.null(prior)) .posterior_draws_to_df(prior),
@@ -499,11 +528,7 @@ bayesfactor_parameters.rvar <- bayesfactor_parameters.draws
 
 
 #' @keywords internal
-.logbayesfactor_parameters <- function(posterior,
-                                       prior,
-                                       direction = 0,
-                                       null = 0,
-                                       ...) {
+.logbayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0, ...) {
   stopifnot(length(null) %in% c(1, 2))
 
   if (isTRUE(all.equal(posterior, prior))) {
