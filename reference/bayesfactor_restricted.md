@@ -393,15 +393,15 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.029 seconds (Warm-up)
-#> Chain 1:                0.037 seconds (Sampling)
-#> Chain 1:                0.066 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)
+#> Chain 1:                0.038 seconds (Sampling)
+#> Chain 1:                0.068 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.3e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
+#> Chain 2: Gradient evaluation took 1.1e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -418,9 +418,9 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.029 seconds (Warm-up)
-#> Chain 2:                0.038 seconds (Sampling)
-#> Chain 2:                0.067 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.03 seconds (Warm-up)
+#> Chain 2:                0.039 seconds (Sampling)
+#> Chain 2:                0.069 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -444,8 +444,8 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
 #> Chain 3:  Elapsed Time: 0.029 seconds (Warm-up)
-#> Chain 3:                0.037 seconds (Sampling)
-#> Chain 3:                0.066 seconds (Total)
+#> Chain 3:                0.038 seconds (Sampling)
+#> Chain 3:                0.067 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -468,9 +468,9 @@ fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaus
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.027 seconds (Warm-up)
-#> Chain 4:                0.037 seconds (Sampling)
-#> Chain 4:                0.064 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.028 seconds (Warm-up)
+#> Chain 4:                0.039 seconds (Sampling)
+#> Chain 4:                0.067 seconds (Total)
 #> Chain 4: 
 
 em_condition <- emmeans::emmeans(fit_model, ~condition, data = disgust)
