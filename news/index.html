@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,9 +71,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.17.0.4" id="bayestestr-01704">bayestestR 0.17.0.4<a class="anchor" aria-label="anchor" href="#bayestestr-01704"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.18.0" id="bayestestr-0180">bayestestR 0.18.0<a class="anchor" aria-label="anchor" href="#bayestestr-0180"></a></h2>
 <div class="section level3">
-<h3 id="new-functionality-0-17-0-4">New functionality<a class="anchor" aria-label="anchor" href="#new-functionality-0-17-0-4"></a></h3>
+<h3 id="new-functionality-0-18-0">New functionality<a class="anchor" aria-label="anchor" href="#new-functionality-0-18-0"></a></h3>
 <ul><li>
 <p>Improved Bayes factor methods:</p>
 <ul><li><p>New docs at <code><a href="../reference/bayesfactor_methods.html">?bayesfactor_methods</a></code></p></li>
@@ -82,7 +82,7 @@
 <li><p>Added support for <code>CmdStanFit</code> models from <code>{cmdstanr}</code> and expanded support for <code>stanfit</code> models from <code>rstan</code>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-0-17-0-4">Changes<a class="anchor" aria-label="anchor" href="#changes-0-17-0-4"></a></h3>
+<h3 id="changes-0-18-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-18-0"></a></h3>
 <ul><li><p><code>as.matrix(&lt;bf&gt;)</code> now returns class <code>bayesfactor_matrix</code> and has a simpler printing.</p></li>
 <li><p><code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> works with ‘raw’ MCMC samples (i.e., lists of data frames or matrices representing samples of parameters from chains, or 3D arrays) as well as objects from rstanarm/brms/lavaan models.</p></li>
 <li><p><code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> now reports the <strong>tail-ESS</strong> (the minimum of the effective sample sizes for the 5% and 95% quantiles) in the <code>ESS</code> column, instead of the basic <code>n_eff</code> from older Stan versions. The tail-ESS is more relevant for assessing the reliability of credible intervals and other tail-based quantities. To also obtain the bulk-ESS (useful for central tendency estimates), pass <code>"ESS_bulk"</code> to the <code>diagnostic</code> argument.</p></li>
