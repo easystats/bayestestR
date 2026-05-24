@@ -2,6 +2,8 @@
 
 ## bayestestR 0.18.1
 
+CRAN release: 2026-05-24
+
 ### Changes
 
 - [`mcse()`](https://easystats.github.io/bayestestR/reference/mcse.md)

@@ -35,7 +35,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/easystats/bayestestR/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/easystats/bayestestR/blob/v0.18.1/inst/CITATION)
 
 Makowski, D., Ben-Shachar, M., & Lüdecke, D. (2019). bayestestR:
 Describing Effects and their Uncertainty, Existence and Significance
