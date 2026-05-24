@@ -30,8 +30,8 @@ contr.equalprior_deviations(n, contrasts = TRUE, sparse = FALSE)
 - sparse:
 
   logical indicating if the result should be sparse (of class
-  [`dgCMatrix`](https://rdrr.io/pkg/Matrix/man/dgCMatrix-class.html)),
-  using package [Matrix](https://CRAN.R-project.org/package=Matrix).
+  `dgCMatrix`), using package
+  [Matrix](https://CRAN.R-project.org/package=Matrix).
 
 ## Value
 

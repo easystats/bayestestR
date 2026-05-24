@@ -8,7 +8,14 @@ This function returns the Monte Carlo Standard Error (MCSE).
 mcse(model, ...)
 
 # S3 method for class 'stanreg'
-mcse(model, effects = "fixed", component = "location", parameters = NULL, ...)
+mcse(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  centrality = "median",
+  ...
+)
 ```
 
 ## Arguments
@@ -19,7 +26,7 @@ mcse(model, effects = "fixed", component = "location", parameters = NULL, ...)
 
 - ...:
 
-  Currently not used.
+  Additional arguments to be passed to or from methods.
 
 - effects:
 
@@ -73,6 +80,16 @@ mcse(model, effects = "fixed", component = "location", parameters = NULL, ...)
   default, so only parameters that typically appear in the
   [`summary()`](https://rdrr.io/r/base/summary.html) are returned. Use
   `parameters` to select specific parameters for the output.
+
+- centrality:
+
+  The point-estimate (centrality index) for which to compute the MCSE.
+  Can be `"median"` (default) or `"mean"`. To not break other functions
+  like
+  [`describe_posterior()`](https://easystats.github.io/bayestestR/reference/describe_posterior.md)
+  or
+  [`diagnostic_posterior()`](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.md),
+  all other values are silently converted to `"median"`.
 
 ## Details
 
@@ -130,8 +147,8 @@ model <- suppressWarnings(
 )
 mcse(model)
 #>     Parameter       MCSE
-#> 1 (Intercept) 0.16602969
-#> 2          wt 0.04191057
-#> 3          am 0.07894757
+#> 1 (Intercept) 0.22157861
+#> 2          wt 0.05058589
+#> 3          am 0.07727318
 # }
 ```

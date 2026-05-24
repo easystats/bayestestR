@@ -40,6 +40,9 @@ CRAN release: 2026-05-21
   for `stanfit` objects now also returns the tail-ESS (`ESS_tail`),
   consistent with `brmsfit` and `stanreg` objects.
 
+- [`mcse()`](https://easystats.github.io/bayestestR/reference/mcse.md)
+  gains a `centrality` argument to return the appropriate MCSE.
+
 ## bayestestR 0.17.0
 
 CRAN release: 2025-08-29
