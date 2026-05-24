@@ -249,8 +249,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 4e-06 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+#> Chain 3: Gradient evaluation took 3e-06 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -293,8 +293,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
 #> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)
-#> Chain 4:                0.022 seconds (Sampling)
-#> Chain 4:                0.041 seconds (Total)
+#> Chain 4:                0.021 seconds (Sampling)
+#> Chain 4:                0.04 seconds (Total)
 #> Chain 4: 
 diagnostic_posterior(model)
 #>     Parameter     Rhat ESS_tail ESS_bulk       MCSE

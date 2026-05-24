@@ -2,6 +2,8 @@
 
 ## bayestestR 0.18.0
 
+CRAN release: 2026-05-21
+
 ### New functionality
 
 - Improved Bayes factor methods:
