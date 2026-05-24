@@ -7,12 +7,19 @@
 \usage{
 mcse(model, ...)
 
-\method{mcse}{stanreg}(model, effects = "fixed", component = "location", parameters = NULL, ...)
+\method{mcse}{stanreg}(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  centrality = "median",
+  ...
+)
 }
 \arguments{
 \item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
 
-\item{...}{Currently not used.}
+\item{...}{Additional arguments to be passed to or from methods.}
 
 \item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
 (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
@@ -54,6 +61,11 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{centrality}{The point-estimate (centrality index) for which to compute
+the MCSE. Can be \code{"median"} (default) or \code{"mean"}. To not break other
+functions like \code{describe_posterior()} or \code{diagnostic_posterior()}, all other
+values are silently converted to \code{"median"}.}
 }
 \description{
 This function returns the Monte Carlo Standard Error (MCSE).

@@ -12,7 +12,8 @@
 
 ## Changes
 
-* `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler printing.
+* `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler
+  printing.
 
 * `diagnostic_posterior()` works with 'raw' MCMC samples (i.e., lists of data
   frames or matrices representing samples of parameters from chains, or 3D arrays)
@@ -27,6 +28,8 @@
 
 * `effective_sample()` for `stanfit` objects now also returns the tail-ESS
   (`ESS_tail`), consistent with `brmsfit` and `stanreg` objects.
+
+* `mcse()` gains a `centrality` argument to return the appropriate MCSE.
 
 # bayestestR 0.17.0
 

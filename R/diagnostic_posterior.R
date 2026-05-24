@@ -16,6 +16,10 @@
 #' (the effective sample size for the bulk of the posterior, useful for
 #' assessing the reliability of central tendency estimates such as the mean or
 #' median). `"all"` includes both tail and bulk `"ESS"`, `"Rhat"`, and `"MCSE"`.
+#' @param centrality The point-estimate (centrality index) for which to compute
+#' the MCSE. Can be `"median"` (default) or `"mean"`. To not break other
+#' functions like `describe_posterior()` or `diagnostic_posterior()`, all other
+#' values are silently converted to `"median"`.
 #'
 #' @inheritSection hdi Model components
 #'
@@ -140,6 +144,7 @@ diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
 
 #' @inheritParams insight::get_parameters.BFBayesFactor
 #' @inheritParams insight::get_parameters
+#'
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.stanreg <- function(
@@ -148,6 +153,7 @@ diagnostic_posterior.stanreg <- function(
   effects = "fixed",
   component = "location",
   parameters = NULL,
+  centrality = "median",
   ...
 ) {
   # Find parameters
@@ -187,7 +193,7 @@ diagnostic_posterior.stanreg <- function(
   diagnostic_df <- as.data.frame(posterior$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "full")
+  MCSE <- mcse(posterior, effects = "full", centrality = centrality)
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # ESS: use tail ESS by default, with optional bulk ESS
@@ -229,6 +235,7 @@ diagnostic_posterior.stanmvreg <- function(
   diagnostic = "all",
   effects = "fixed",
   parameters = NULL,
+  centrality = "median",
   ...
 ) {
   # Find parameters
@@ -273,7 +280,7 @@ diagnostic_posterior.stanmvreg <- function(
   diagnostic_df <- as.data.frame(posterior$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = effects)
+  MCSE <- mcse(posterior, effects = effects, centrality = centrality)
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # ESS: use tail ESS by default, with optional bulk ESS
@@ -329,6 +336,7 @@ diagnostic_posterior.brmsfit <- function(
   effects = "fixed",
   component = "conditional",
   parameters = NULL,
+  centrality = "median",
   ...
 ) {
   # Find parameters
@@ -403,7 +411,8 @@ diagnostic_posterior.brmsfit <- function(
       posterior,
       effects = effects,
       component = component,
-      parameters = parameters
+      parameters = parameters,
+      centrality = centrality
     )
     diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all.x = TRUE)
   }
@@ -425,6 +434,7 @@ diagnostic_posterior.stanfit <- function(
   diagnostic = "all",
   effects = "fixed",
   parameters = NULL,
+  centrality = "median",
   ...
 ) {
   # Find parameters
@@ -476,7 +486,7 @@ diagnostic_posterior.stanfit <- function(
   }
 
   if ("MCSE" %in% diagnostic) {
-    diagnostic_df$MCSE <- mcse(posterior, effects = effects)$MCSE
+    diagnostic_df$MCSE <- mcse(posterior, effects = effects, centrality = centrality)$MCSE
   }
 
   if ("Rhat" %in% diagnostic) {
