@@ -1,4 +1,15 @@
+# bayestestR 0.18.1
+
+## Changes
+
+* `mcse()` gains a `centrality` argument to return the appropriate MCSE.
+
+## Bug fixes
+
+* Fixed failing CRAN checks.
+
 # bayestestR 0.18.0
+
 ## New functionality
 
 * Improved Bayes factor methods:
@@ -28,8 +39,6 @@
 
 * `effective_sample()` for `stanfit` objects now also returns the tail-ESS
   (`ESS_tail`), consistent with `brmsfit` and `stanreg` objects.
-
-* `mcse()` gains a `centrality` argument to return the appropriate MCSE.
 
 # bayestestR 0.17.0
 
