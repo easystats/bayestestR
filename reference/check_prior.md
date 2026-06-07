@@ -118,6 +118,10 @@ Gelman, A., Simpson, D., and Betancourt, M. (2017). The Prior Can Often
 Only Be Understood in the Context of the Likelihood. Entropy, 19(10),
 555. [doi:10.3390/e19100555](https://doi.org/10.3390/e19100555)
 
+## See also
+
+`performance::check_priors()`
+
 ## Examples
 
 ``` r

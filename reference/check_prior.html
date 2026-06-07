@@ -110,17 +110,17 @@ distribution, see <code>performance::check_priors()</code>.</p>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Can be <code>"gelman"</code> or <code>"lakeland"</code>. For the
-<code>"gelman"</code> method, if the SD of the posterior is more than 0.1 times
-the SD of the prior, then the prior is considered as informative. For the
-<code>"lakeland"</code> method, the prior is considered as informative if the
-posterior falls within the <code>95%</code> HDI of the prior.</p></dd>
+<dd><p>Can be <code>"gelman"</code> or <code>"lakeland"</code>. For the <code>"gelman"</code> method,
+if the SD of the posterior is more than 0.1 times the SD of the prior, then
+the prior is considered as informative. For the <code>"lakeland"</code> method, the
+prior is considered as informative if the posterior falls within the <code>95%</code>
+HDI of the prior.</p></dd>
 
 
 <dt id="arg-simulate-priors">simulate_priors<a class="anchor" aria-label="anchor" href="#arg-simulate-priors"></a></dt>
 <dd><p>Should prior distributions be simulated using
-<code><a href="simulate_prior.html">simulate_prior()</a></code> (default; faster) or sampled via
-<code><a href="unupdate.html">unupdate()</a></code> (slower, more accurate).</p></dd>
+<code><a href="simulate_prior.html">simulate_prior()</a></code> (default; faster) or sampled via <code><a href="unupdate.html">unupdate()</a></code> (slower,
+more accurate).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -175,16 +175,19 @@ for the output.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame with two columns: The parameter names and the quality
-of the prior (which might be <code>"informative"</code>, <code>"uninformative"</code>)
-or <code>"not determinable"</code> if the prior distribution could not be
-determined).</p>
+    <p>A data frame with two columns: The parameter names and the quality of
+the prior (which might be <code>"informative"</code>, <code>"uninformative"</code>) or
+<code>"not determinable"</code> if the prior distribution could not be determined).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Gelman, A., Simpson, D., and Betancourt, M. (2017). The Prior Can Often Only
 Be Understood in the Context of the Likelihood. Entropy, 19(10), 555.
 <a href="https://doi.org/10.3390/e19100555" class="external-link">doi:10.3390/e19100555</a></p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code>performance::check_priors()</code></p></div>
     </div>
 
     <div class="section level2">

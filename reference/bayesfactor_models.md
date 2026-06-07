@@ -283,8 +283,8 @@ stan_m0 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ 1,
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
+#> Chain 1: Gradient evaluation took 2.4e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -302,14 +302,14 @@ stan_m0 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ 1,
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
 #> Chain 1:  Elapsed Time: 0.017 seconds (Warm-up)
-#> Chain 1:                0.035 seconds (Sampling)
-#> Chain 1:                0.052 seconds (Total)
+#> Chain 1:                0.036 seconds (Sampling)
+#> Chain 1:                0.053 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.2e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
+#> Chain 2: Gradient evaluation took 1.1e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -326,15 +326,15 @@ stan_m0 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ 1,
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.015 seconds (Warm-up)
-#> Chain 2:                0.035 seconds (Sampling)
-#> Chain 2:                0.05 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.016 seconds (Warm-up)
+#> Chain 2:                0.036 seconds (Sampling)
+#> Chain 2:                0.052 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 1e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+#> Chain 3: Gradient evaluation took 1.2e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -352,14 +352,14 @@ stan_m0 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ 1,
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
 #> Chain 3:  Elapsed Time: 0.017 seconds (Warm-up)
-#> Chain 3:                0.034 seconds (Sampling)
-#> Chain 3:                0.051 seconds (Total)
+#> Chain 3:                0.035 seconds (Sampling)
+#> Chain 3:                0.052 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+#> Chain 4: Gradient evaluation took 1.1e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -388,8 +388,8 @@ stan_m1 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species,
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.3e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
+#> Chain 1: Gradient evaluation took 2.4e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -413,8 +413,8 @@ stan_m1 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species,
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.1e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+#> Chain 2: Gradient evaluation took 1.3e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -432,14 +432,14 @@ stan_m1 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species,
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
 #> Chain 2:  Elapsed Time: 0.028 seconds (Warm-up)
-#> Chain 2:                0.047 seconds (Sampling)
-#> Chain 2:                0.075 seconds (Total)
+#> Chain 2:                0.046 seconds (Sampling)
+#> Chain 2:                0.074 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 1.1e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+#> Chain 3: Gradient evaluation took 1.3e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -457,14 +457,14 @@ stan_m1 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species,
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
 #> Chain 3:  Elapsed Time: 0.027 seconds (Warm-up)
-#> Chain 3:                0.047 seconds (Sampling)
-#> Chain 3:                0.074 seconds (Total)
+#> Chain 3:                0.046 seconds (Sampling)
+#> Chain 3:                0.073 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1.1e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+#> Chain 4: Gradient evaluation took 1.2e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -493,8 +493,8 @@ stan_m2 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Le
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.1e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
+#> Chain 1: Gradient evaluation took 2.7e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.27 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -511,15 +511,15 @@ stan_m2 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Le
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.093 seconds (Warm-up)
-#> Chain 1:                0.109 seconds (Sampling)
-#> Chain 1:                0.202 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.092 seconds (Warm-up)
+#> Chain 1:                0.107 seconds (Sampling)
+#> Chain 1:                0.199 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.1e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+#> Chain 2: Gradient evaluation took 1.3e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -536,15 +536,15 @@ stan_m2 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Le
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.085 seconds (Warm-up)
-#> Chain 2:                0.106 seconds (Sampling)
-#> Chain 2:                0.191 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.083 seconds (Warm-up)
+#> Chain 2:                0.104 seconds (Sampling)
+#> Chain 2:                0.187 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 1.1e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+#> Chain 3: Gradient evaluation took 1.5e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -561,15 +561,15 @@ stan_m2 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Le
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.085 seconds (Warm-up)
-#> Chain 3:                0.109 seconds (Sampling)
-#> Chain 3:                0.194 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.084 seconds (Warm-up)
+#> Chain 3:                0.107 seconds (Sampling)
+#> Chain 3:                0.191 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1.1e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+#> Chain 4: Gradient evaluation took 1.3e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -586,9 +586,9 @@ stan_m2 <- suppressWarnings(rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Le
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.079 seconds (Warm-up)
-#> Chain 4:                0.097 seconds (Sampling)
-#> Chain 4:                0.176 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.077 seconds (Warm-up)
+#> Chain 4:                0.095 seconds (Sampling)
+#> Chain 4:                0.172 seconds (Total)
 #> Chain 4: 
 bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0, verbose = FALSE)
 #> Bayes Factors for Model Comparison
@@ -610,8 +610,8 @@ brm1 <- brms::brm(Sepal.Length ~ 1, data = iris, save_pars = save_pars(all = TRU
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.3e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
+#> Chain 1: Gradient evaluation took 2.5e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.25 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -628,15 +628,15 @@ brm1 <- brms::brm(Sepal.Length ~ 1, data = iris, save_pars = save_pars(all = TRU
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.029 seconds (Warm-up)
-#> Chain 1:                0.028 seconds (Sampling)
-#> Chain 1:                0.057 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.025 seconds (Warm-up)
+#> Chain 1:                0.024 seconds (Sampling)
+#> Chain 1:                0.049 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 8e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
+#> Chain 2: Gradient evaluation took 7e-06 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -653,15 +653,15 @@ brm1 <- brms::brm(Sepal.Length ~ 1, data = iris, save_pars = save_pars(all = TRU
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.028 seconds (Warm-up)
-#> Chain 2:                0.025 seconds (Sampling)
-#> Chain 2:                0.053 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.025 seconds (Warm-up)
+#> Chain 2:                0.022 seconds (Sampling)
+#> Chain 2:                0.047 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 8e-06 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
+#> Chain 3: Gradient evaluation took 7e-06 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -678,15 +678,15 @@ brm1 <- brms::brm(Sepal.Length ~ 1, data = iris, save_pars = save_pars(all = TRU
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.029 seconds (Warm-up)
-#> Chain 3:                0.032 seconds (Sampling)
-#> Chain 3:                0.061 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.026 seconds (Warm-up)
+#> Chain 3:                0.028 seconds (Sampling)
+#> Chain 3:                0.054 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 8e-06 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
+#> Chain 4: Gradient evaluation took 7e-06 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -703,9 +703,9 @@ brm1 <- brms::brm(Sepal.Length ~ 1, data = iris, save_pars = save_pars(all = TRU
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.031 seconds (Warm-up)
-#> Chain 4:                0.034 seconds (Sampling)
-#> Chain 4:                0.065 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.027 seconds (Warm-up)
+#> Chain 4:                0.029 seconds (Sampling)
+#> Chain 4:                0.056 seconds (Total)
 #> Chain 4: 
 brm2 <- brms::brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all = TRUE))
 #> Compiling Stan program...
@@ -713,8 +713,8 @@ brm2 <- brms::brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 7e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
+#> Chain 1: Gradient evaluation took 8e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -731,9 +731,9 @@ brm2 <- brms::brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.017 seconds (Warm-up)
-#> Chain 1:                0.016 seconds (Sampling)
-#> Chain 1:                0.033 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.015 seconds (Warm-up)
+#> Chain 1:                0.014 seconds (Sampling)
+#> Chain 1:                0.029 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -756,9 +756,9 @@ brm2 <- brms::brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.017 seconds (Warm-up)
-#> Chain 2:                0.017 seconds (Sampling)
-#> Chain 2:                0.034 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.016 seconds (Warm-up)
+#> Chain 2:                0.015 seconds (Sampling)
+#> Chain 2:                0.031 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -781,9 +781,9 @@ brm2 <- brms::brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.017 seconds (Warm-up)
-#> Chain 3:                0.015 seconds (Sampling)
-#> Chain 3:                0.032 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.015 seconds (Warm-up)
+#> Chain 3:                0.013 seconds (Sampling)
+#> Chain 3:                0.028 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -806,9 +806,9 @@ brm2 <- brms::brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.018 seconds (Warm-up)
-#> Chain 4:                0.016 seconds (Sampling)
-#> Chain 4:                0.034 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.016 seconds (Warm-up)
+#> Chain 4:                0.014 seconds (Sampling)
+#> Chain 4:                0.03 seconds (Total)
 #> Chain 4: 
 brm3 <- brms::brm(
   Sepal.Length ~ Species + Petal.Length,
@@ -838,9 +838,9 @@ brm3 <- brms::brm(
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.05 seconds (Warm-up)
-#> Chain 1:                0.06 seconds (Sampling)
-#> Chain 1:                0.11 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.046 seconds (Warm-up)
+#> Chain 1:                0.054 seconds (Sampling)
+#> Chain 1:                0.1 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -863,9 +863,9 @@ brm3 <- brms::brm(
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.052 seconds (Warm-up)
-#> Chain 2:                0.055 seconds (Sampling)
-#> Chain 2:                0.107 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.046 seconds (Warm-up)
+#> Chain 2:                0.05 seconds (Sampling)
+#> Chain 2:                0.096 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -888,9 +888,9 @@ brm3 <- brms::brm(
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.049 seconds (Warm-up)
-#> Chain 3:                0.054 seconds (Sampling)
-#> Chain 3:                0.103 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.044 seconds (Warm-up)
+#> Chain 3:                0.05 seconds (Sampling)
+#> Chain 3:                0.094 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -913,9 +913,9 @@ brm3 <- brms::brm(
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.053 seconds (Warm-up)
-#> Chain 4:                0.054 seconds (Sampling)
-#> Chain 4:                0.107 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.049 seconds (Warm-up)
+#> Chain 4:                0.051 seconds (Sampling)
+#> Chain 4:                0.1 seconds (Total)
 #> Chain 4: 
 
 bayesfactor_models(brm1, brm2, brm3, denominator = 1, verbose = FALSE)
