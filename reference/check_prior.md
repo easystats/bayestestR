@@ -2,7 +2,8 @@
 
 Performs a simple test to check whether the prior is informative to the
 posterior. This idea, and the accompanying heuristics, were discussed in
-*Gelman et al. 2017*.
+*Gelman et al. 2017*. For a visual check of the prior predictive
+distribution, see `performance::check_priors()`.
 
 ## Usage
 

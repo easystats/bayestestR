@@ -35,6 +35,9 @@ Useful links:
 
 Authors:
 
+- Dominique Makowski <officialeasystats@gmail.com>
+  ([ORCID](https://orcid.org/0000-0001-5375-9967))
+
 - Daniel Lüdecke <d.luedecke@uke.de>
   ([ORCID](https://orcid.org/0000-0002-8895-3206))
 

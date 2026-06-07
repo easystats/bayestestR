@@ -157,7 +157,6 @@ model <- lm(Sepal.Length ~ Petal.Length, data = iris)
 summary(model)
 ```
 
-
     Call:
     lm(formula = Sepal.Length ~ Petal.Length, data = iris)
 
