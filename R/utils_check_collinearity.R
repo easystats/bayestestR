@@ -55,11 +55,11 @@
 
         # Filter by first threshold
         threshold <- pmin(threshold, 0.9)
-        results <- results[results$corr > threshold & results$corr <= 0.9, ]
-        if (nrow(results) > 0) {
+        possible_collinear <- results[results$corr > threshold & results$corr <= 0.9, ]
+        if (nrow(possible_collinear) > 0) {
           where <- paste0(
             "between ",
-            toString(paste0(results$where, " (r = ", round(results$corr, 2), ")")),
+            toString(paste0(possible_collinear$where, " (r = ", round(possible_collinear$corr, 2), ")")),
             ""
           )
           insight::format_alert(paste0(
@@ -72,11 +72,11 @@
         }
 
         # Filter by second threshold
-        results <- results[results$corr > 0.9, ]
-        if (nrow(results) > 0) {
+        probable_collinear <- results[results$corr > 0.9, ]
+        if (nrow(probable_collinear) > 0) {
           where <- paste0(
             "between ",
-            toString(paste0(results$where, " (r = ", round(results$corr, 2), ")")),
+            toString(paste0(probable_collinear$where, " (r = ", round(probable_collinear$corr, 2), ")")),
             ""
           )
           insight::format_alert(paste0(
