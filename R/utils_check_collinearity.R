@@ -55,7 +55,8 @@
 
         # Filter by first threshold
         threshold <- pmin(threshold, 0.9)
-        possible_collinear <- results[results$corr > threshold & results$corr <= 0.9, ]
+        possible_collinear <- results[which(results$corr > threshold & results$corr <= 0.9), ]
+
         if (nrow(possible_collinear) > 0) {
           where <- paste0(
             "between ",
@@ -72,7 +73,7 @@
         }
 
         # Filter by second threshold
-        probable_collinear <- results[results$corr > 0.9, ]
+        probable_collinear <- results[which(results$corr > 0.9), ]
         if (nrow(probable_collinear) > 0) {
           where <- paste0(
             "between ",
