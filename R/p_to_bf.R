@@ -125,7 +125,14 @@ p_to_bf.default <- function(x, n_obs = NULL, log = FALSE, ...) {
     inherits(x, "aovlist") || insight::is_mixed_model(x),
     error = function(e) FALSE
   )
-  if (!(is_mixed)) {
+  if (is_mixed) {
+    if (is.null(n_obs)) {
+      insight::format_error(
+        "Argument `n_obs` must be specified for mixed models."
+      )
+    }
+    n_ess <- n_obs
+  } else {
     # Do this only for non-mixed models (for mixed models we need to use the
     # effective sample size)
     n_ess <- insight::n_obs(x)
@@ -140,13 +147,6 @@ p_to_bf.default <- function(x, n_obs = NULL, log = FALSE, ...) {
       # user may also pass n_obs via dots...
       n_ess <- n_obs
     }
-  } else {
-    if (is.null(n_obs)) {
-      insight::format_error(
-        "Argument `n_obs` must be specified for mixed models."
-      )
-    }
-    n_ess <- n_obs
   }
 
   insight::check_if_installed("parameters")
