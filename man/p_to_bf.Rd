@@ -8,65 +8,81 @@
 \usage{
 p_to_bf(x, ...)
 
-\method{p_to_bf}{numeric}(x, log = FALSE, n_obs = NULL, ...)
+\method{p_to_bf}{numeric}(x, n_obs = NULL, log = FALSE, ...)
 
-\method{p_to_bf}{default}(x, log = FALSE, ...)
+\method{p_to_bf}{default}(x, n_obs = NULL, log = FALSE, ...)
 }
 \arguments{
-\item{x}{A (frequentist) model object, or a (numeric) vector of p-values.}
+\item{x}{A (frequentist) model object, or a (numeric) vector of p-values.
+p-values must come from a \emph{two-tailed} \emph{z}- or \emph{t}-test or from an \emph{F}- or
+a \eqn{\chi^2}-test with a single degree of freedom. p-values must not be
+corrected for multiple testing.}
 
-\item{...}{Other arguments to be passed (not used for now).}
+\item{...}{Arguments passed to \code{\link[parameters:p_value]{parameters::p_value()}} if \code{x} is a model object.}
 
-\item{log}{Wether to return log Bayes Factors. \strong{Note:} The \code{print()} method
-always shows \code{BF} - the \code{"log_BF"} column is only accessible from the returned
-data frame.}
+\item{n_obs}{(Effective) number of observations. For mixed models this must
+be supplied and generally corresponds to the number of clusters. Either
+length 1, or same length as \code{p}.}
 
-\item{n_obs}{Number of observations. Either length 1, or same length as \code{p}.}
+\item{log}{Whether to return log Bayes Factors. \strong{Note:} The \code{print()}
+method always shows \code{BF} - the \code{"log_BF"} column is only accessible from
+the returned data frame.}
 }
 \value{
 A data frame with the p-values and pseudo-Bayes factors (against the null).
 }
 \description{
 Convert p-values to (pseudo) Bayes Factors. This transformation has been
-suggested by Wagenmakers (2022), but is based on a vast amount of assumptions.
-It might therefore be not reliable. Use at your own risks. For more accurate
-approximate Bayes factors, use \code{\link[=bic_to_bf]{bic_to_bf()}} instead.
+suggested by Aust, Pawel, and Wagenmakers (2026), but is based on a vast
+amount of assumptions. It might therefore be not reliable. Use at your own
+risks.
 }
 \examples{
 \dontshow{if (require("parameters")) withAutoprint(\{ # examplesIf}
-data(iris)
-model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
-p_to_bf(model)
 
-# Examples that demonstrate comparison between
-# BIC-approximated and pseudo BF
+# Compare to BIC-approximated and pseudo BF
 # --------------------------------------------
-m0 <- lm(mpg ~ 1, mtcars)
-m1 <- lm(mpg ~ am, mtcars)
-m2 <- lm(mpg ~ factor(cyl), mtcars)
-
-# In this first example, BIC-approximated BF and
-# pseudo-BF based on p-values are close...
+m0 <- lm(mpg ~ 1, data = mtcars)
+m1 <- lm(mpg ~ am, data = mtcars)
+m2 <- lm(mpg ~ factor(cyl), data = mtcars)
 
 # BIC-approximated BF, m1 against null model
-bic_to_bf(BIC(m1), denominator = BIC(m0))
+bayesfactor_models(m1, denominator = m0)
+# bic_to_bf(BIC(m1), denominator = BIC(m0)) # equivalent
 
-# pseudo-BF based on p-values - dropping intercept
-p_to_bf(m1)[-1, ]
+# pseudo-BF based on p-values
+p_to_bf(m1)[-1, ] # dropping intercept
 
-# The second example shows that results from pseudo-BF are less accurate
-# and should be handled wit caution!
-bic_to_bf(BIC(m2), denominator = BIC(m0))
+# When using a p-value from an F/chisq-test with more than one degree of
+# freedom, the pseudo-BF is not reliable:
+bayesfactor_models(m2, denominator = m0)
 p_to_bf(anova(m2), n_obs = nrow(mtcars))
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("parameters") && require("lmerTest")) withAutoprint(\{ # examplesIf}
+
+# Mixed models
+# ------------------
+
+data("sleepstudy", package = "lme4")
+mixed0 <- lmerTest::lmer(Reaction ~ 1 + (Days | Subject), data = sleepstudy)
+mixed1 <- lmerTest::lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+
+bayesfactor_models(mixed1, denominator = mixed0)
+
+p_to_bf(
+  mixed1,
+  n_obs = nlevels(lme4::sleepstudy$Subject), # *effective* sample size here
+  method = "S" # make sure to get the correct p-values for the fixed effects
+)[-1, ] # dropping intercept
 \dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
-\item Wagenmakers, E.J. (2022). Approximate objective Bayes factors from p-values
-and sample size: The 3p(sqrt(n)) rule. Preprint available on ArXiv:
-https://psyarxiv.com/egydq
+\item Aust, F., Pawel, S., & Wagenmakers, E.J. (2026). Extracting Bayesian
+Evidence from Frequentist p-Values. Preprint available on ArXiv:
+https://arxiv.org/abs/2607.12132
 }
 }
 \seealso{
-\code{\link[=bic_to_bf]{bic_to_bf()}} for more accurate approximate Bayes factors.
+\code{\link[=bic_to_bf]{bic_to_bf()}} for approximate Bayes factors based on BICs.
 }

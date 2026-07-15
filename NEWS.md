@@ -1,3 +1,9 @@
+# bayestestR 0.18.1.0001
+
+## Changes
+
+* `p_to_bf()` documentation improvements as well as better implementation for models (and mixed models).
+
 # bayestestR 0.18.1
 
 ## Changes
