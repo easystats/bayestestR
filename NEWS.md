@@ -1,4 +1,8 @@
-# bayestestR 0.18.1.0001
+# bayestestR 0.18.1.x
+
+## Breaking Changes
+
+* `p_to_bf()` arguments `n_obs` and `log` have changed positions in the function call.
 
 ## Changes
 
