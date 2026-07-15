@@ -1,7 +1,7 @@
 #' Reshape estimations with multiple iterations (draws) to long format
 #'
 #' Reshape a wide data.frame of iterations (such as posterior draws or
-#' bootsrapped samples) as columns to long format. Instead of having all
+#' bootstrapped samples) as columns to long format. Instead of having all
 #' iterations as columns (e.g., `iter_1, iter_2, ...`), will return 3 columns
 #' with the `\*_index` (the previous index of the row), the `\*_group` (the
 #' iteration number) and the `\*_value` (the value of said iteration).
@@ -29,7 +29,9 @@ reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")
   }
 
   # Find columns' name
-  prefix <- prefix[min(which(sapply(tolower(prefix), function(prefix) sum(grepl(prefix, tolower(names(x)), fixed = TRUE)) > 1)))]
+  prefix <- prefix[min(which(sapply(tolower(prefix), function(prefix) {
+    sum(grepl(prefix, tolower(names(x)), fixed = TRUE)) > 1
+  })))]
 
   if (is.na(prefix) || is.null(prefix)) {
     insight::format_error(
@@ -45,11 +47,14 @@ reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")
 
   # Create Index column
   index_col <- paste0(newname, "_index")
-  if (index_col %in% names(x)) index_col <- paste0(".", newname, "_index")
+  if (index_col %in% names(x)) {
+    index_col <- paste0(".", newname, "_index")
+  }
   x[[index_col]] <- seq_len(nrow(x))
 
   # Reshape
-  long <- stats::reshape(x,
+  long <- stats::reshape(
+    x,
     varying = iter_cols,
     idvar = index_col,
     v.names = paste0(newname, "_value"),

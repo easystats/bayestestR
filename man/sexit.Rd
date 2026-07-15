@@ -111,7 +111,7 @@ scenarios include:
 \itemize{
 \item The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.
 \item The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).
-\item The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).
+\item The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centered around 0).
 }
 }
 }

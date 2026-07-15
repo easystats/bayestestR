@@ -19,10 +19,12 @@ csl: apa.csl
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 
-if (!requireNamespace("see", quietly = TRUE) ||
-  !requireNamespace("parameters", quietly = TRUE) ||
-  !requireNamespace("ggplot2", quietly = TRUE) ||
-  !requireNamespace("datawizard", quietly = TRUE)) {
+if (
+  !requireNamespace("see", quietly = TRUE) ||
+    !requireNamespace("parameters", quietly = TRUE) ||
+    !requireNamespace("ggplot2", quietly = TRUE) ||
+    !requireNamespace("datawizard", quietly = TRUE)
+) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -109,7 +111,18 @@ df <- read.csv("https://raw.github.com/easystats/circus/main/data/bayesSim_study
 
 ```{r, message=FALSE, warning=FALSE}
 dat <- df
-dat <- data_select(dat, select = c("error", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
+dat <- data_select(
+  dat,
+  select = c(
+    "error",
+    "true_effect",
+    "outcome_type",
+    "Coefficient",
+    "Median",
+    "Mean",
+    "MAP"
+  )
+)
 dat <- reshape_longer(
   dat,
   select = -c("error", "true_effect", "outcome_type"),
@@ -126,14 +139,27 @@ tmp <- lapply(split(dat, dat$temp), function(x) {
 dat <- do.call(rbind, tmp)
 dat <- data_filter(dat, value < 6)
 
-ggplot(dat, aes(x = error_group, y = value, fill = estimate, group = interaction(estimate, error_group))) +
+ggplot(
+  dat,
+  aes(
+    x = error_group,
+    y = value,
+    fill = estimate,
+    group = interaction(estimate, error_group)
+  )
+) +
   # geom_hline(yintercept = 0) +
   # geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +
   # geom_smooth(method="loess") +
   geom_boxplot(outlier.shape = NA) +
   theme_modern() +
   scale_fill_manual(
-    values = c("Coefficient" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+    values = c(
+      "Coefficient" = "#607D8B",
+      "MAP" = "#795548",
+      "Mean" = "#FF9800",
+      "Median" = "#FFEB3B"
+    ),
     name = "Index"
   ) +
   ylab("Point-estimate") +
@@ -146,7 +172,18 @@ ggplot(dat, aes(x = error_group, y = value, fill = estimate, group = interaction
 
 ```{r, message=FALSE, warning=FALSE}
 dat <- df
-dat <- data_select(dat, select = c("sample_size", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
+dat <- data_select(
+  dat,
+  select = c(
+    "sample_size",
+    "true_effect",
+    "outcome_type",
+    "Coefficient",
+    "Median",
+    "Mean",
+    "MAP"
+  )
+)
 dat <- reshape_longer(
   dat,
   select = -c("sample_size", "true_effect", "outcome_type"),
@@ -163,14 +200,27 @@ tmp <- lapply(split(dat, dat$temp), function(x) {
 dat <- do.call(rbind, tmp)
 dat <- data_filter(dat, value < 6)
 
-ggplot(dat, aes(x = size_group, y = value, fill = estimate, group = interaction(estimate, size_group))) +
+ggplot(
+  dat,
+  aes(
+    x = size_group,
+    y = value,
+    fill = estimate,
+    group = interaction(estimate, size_group)
+  )
+) +
   # geom_hline(yintercept = 0) +
   # geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +
   # geom_smooth(method="loess") +
   geom_boxplot(outlier.shape = NA) +
   theme_modern() +
   scale_fill_manual(
-    values = c("Coefficient" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+    values = c(
+      "Coefficient" = "#607D8B",
+      "MAP" = "#795548",
+      "Mean" = "#FF9800",
+      "Median" = "#FFEB3B"
+    ),
     name = "Index"
   ) +
   ylab("Point-estimate") +
@@ -187,7 +237,18 @@ their interaction with noise and sample size.
 
 ```{r, message=FALSE, warning=FALSE}
 dat <- df
-dat <- data_select(dat, select = c("sample_size", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
+dat <- data_select(
+  dat,
+  select = c(
+    "sample_size",
+    "true_effect",
+    "outcome_type",
+    "Coefficient",
+    "Median",
+    "Mean",
+    "MAP"
+  )
+)
 dat <- reshape_longer(
   dat,
   select = -c("sample_size", "true_effect", "outcome_type"),
@@ -231,7 +292,7 @@ iterations).
 
 We generated 3 datasets for each combination of these characteristics, resulting
 in a total of `2 * 2 * 8 * 40 * 9 * 3 = 34560` Bayesian and frequentist models.
-The code used for generation is avaible
+The code used for generation is available
 [here](https://easystats.github.io/circus/articles/bayesian_indices.html)
 (please note that it takes usually several days/weeks to complete).
 
@@ -245,7 +306,10 @@ df <- read.csv("https://raw.github.com/easystats/circus/main/data/bayesSim_study
 
 ```{r, message=FALSE, warning=FALSE}
 dat <- df
-dat <- data_select(dat, select = c("iterations", "true_effect", "outcome_type", "beta", "Median", "Mean", "MAP"))
+dat <- data_select(
+  dat,
+  select = c("iterations", "true_effect", "outcome_type", "beta", "Median", "Mean", "MAP")
+)
 dat <- reshape_longer(
   dat,
   select = -c("iterations", "true_effect", "outcome_type"),
@@ -262,11 +326,24 @@ tmp <- lapply(split(dat, dat$temp), function(x) {
 dat <- do.call(rbind, tmp)
 dat <- data_filter(dat, value < 6)
 
-ggplot(dat, aes(x = iterations_group, y = value, fill = estimate, group = interaction(estimate, iterations_group))) +
+ggplot(
+  dat,
+  aes(
+    x = iterations_group,
+    y = value,
+    fill = estimate,
+    group = interaction(estimate, iterations_group)
+  )
+) +
   geom_boxplot(outlier.shape = NA) +
   theme_classic() +
   scale_fill_manual(
-    values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+    values = c(
+      "beta" = "#607D8B",
+      "MAP" = "#795548",
+      "Mean" = "#FF9800",
+      "Median" = "#FFEB3B"
+    ),
     name = "Index"
   ) +
   ylab("Point-estimate of the true value 0\n") +
@@ -279,7 +356,10 @@ ggplot(dat, aes(x = iterations_group, y = value, fill = estimate, group = intera
 ```{r, message=FALSE, warning=FALSE}
 dat <- df
 dat$warmup <- dat$warmup / dat$iterations
-dat <- data_select(dat, select = c("warmup", "true_effect", "outcome_type", "beta", "Median", "Mean", "MAP"))
+dat <- data_select(
+  dat,
+  select = c("warmup", "true_effect", "outcome_type", "beta", "Median", "Mean", "MAP")
+)
 dat <- reshape_longer(
   dat,
   select = -c("warmup", "true_effect", "outcome_type"),
@@ -296,11 +376,24 @@ tmp <- lapply(split(dat, dat$temp), function(x) {
 dat <- do.call(rbind, tmp)
 dat <- data_filter(dat, value < 6)
 
-ggplot(dat, aes(x = warmup_group, y = value, fill = estimate, group = interaction(estimate, warmup_group))) +
+ggplot(
+  dat,
+  aes(
+    x = warmup_group,
+    y = value,
+    fill = estimate,
+    group = interaction(estimate, warmup_group)
+  )
+) +
   geom_boxplot(outlier.shape = NA) +
   theme_classic() +
   scale_fill_manual(
-    values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+    values = c(
+      "beta" = "#607D8B",
+      "MAP" = "#795548",
+      "Mean" = "#FF9800",
+      "Median" = "#FFEB3B"
+    ),
     name = "Index"
   ) +
   ylab("Point-estimate of the true value 0\n") +

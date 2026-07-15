@@ -22,7 +22,7 @@ Data frame of reshaped draws in long format.
 }
 \description{
 Reshape a wide data.frame of iterations (such as posterior draws or
-bootsrapped samples) as columns to long format. Instead of having all
+bootstrapped samples) as columns to long format. Instead of having all
 iterations as columns (e.g., \verb{iter_1, iter_2, ...}), will return 3 columns
 with the \verb{\\*_index} (the previous index of the row), the \verb{\\*_group} (the
 iteration number) and the \verb{\\*_value} (the value of said iteration).

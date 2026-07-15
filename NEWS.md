@@ -467,7 +467,7 @@
 
 ## Bug fixes
 
-- Link transformation are now taken into account for `emmeans` objets. E.g., in
+- Link transformation are now taken into account for `emmeans` objects. E.g., in
   `describe_posterior()`.
 
 - Fix `diagnostic_posterior()` when algorithm is not "sampling".
@@ -485,7 +485,7 @@
 
 - `p_significance()` now also works on `parameters::simulate_model()`.
 
-- `rope_range()` supports more (frequentis) models.
+- `rope_range()` supports more (frequentist) models.
 
 ## Bug fixes
 
