@@ -94,6 +94,7 @@ Suggests:
     knitr,
     lavaan,
     lme4,
+    lmerTest,
     logspline (>= 2.1.21),
     marginaleffects (>= 0.29.0),
     MASS,
