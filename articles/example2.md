@@ -246,7 +246,7 @@ ggplot(data, aes(x = Species, y = Sepal.Width, fill = Species)) +
 ![](example2_files/figure-html/unnamed-chunk-8-1.png)
 
 It *seems* (visually) that *virgnica* flowers have, on average, a
-slightly higer width of sepals. Let’s assess this difference
+slightly higher width of sepals. Let’s assess this difference
 statistically by using the
 [`ttestBF()`](https://rdrr.io/pkg/BayesFactor/man/ttestBF.html) function
 in the `BayesFactor` package.

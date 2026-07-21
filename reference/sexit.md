@@ -154,7 +154,7 @@ scenarios include:
   between the significance and the large thresholds).
 
 - The 3 indices are very low: this suggests that the effect is null with
-  high confidence (the posterior is closely centred around 0).
+  high confidence (the posterior is closely centered around 0).
 
 ## References
 

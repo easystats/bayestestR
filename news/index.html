@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,9 +71,22 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.18.1" id="bayestestr-0181">bayestestR 0.18.1<a class="anchor" aria-label="anchor" href="#bayestestr-0181"></a></h2><p class="text-muted">CRAN release: 2026-05-24</p>
+<h2 class="pkg-version" data-toc-text="0.18.1" id="bayestestr-0181x">bayestestR 0.18.1.x<a class="anchor" aria-label="anchor" href="#bayestestr-0181x"></a></h2><p class="text-muted">CRAN release: 2026-05-24</p>
+<div class="section level3">
+<h3 id="breaking-changes-0-18-1">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-18-1"></a></h3>
+<ul><li>
+<code><a href="../reference/p_to_bf.html">p_to_bf()</a></code> arguments <code>n_obs</code> and <code>log</code> have changed positions in the function call.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="changes-0-18-1">Changes<a class="anchor" aria-label="anchor" href="#changes-0-18-1"></a></h3>
+<ul><li>
+<code><a href="../reference/p_to_bf.html">p_to_bf()</a></code> documentation improvements as well as better implementation for models (and mixed models).</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.18.1" id="bayestestr-0181">bayestestR 0.18.1<a class="anchor" aria-label="anchor" href="#bayestestr-0181"></a></h2><p class="text-muted">CRAN release: 2026-05-24</p>
+<div class="section level3">
+<h3 id="changes-0-18-1-1">Changes<a class="anchor" aria-label="anchor" href="#changes-0-18-1-1"></a></h3>
 <ul><li>
 <code><a href="../reference/mcse.html">mcse()</a></code> gains a <code>centrality</code> argument to return the appropriate MCSE.</li>
 </ul></div>
@@ -430,7 +443,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-7-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0"></a></h3>
-<ul><li><p>Link transformation are now taken into account for <code>emmeans</code> objets. E.g., in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</p></li>
+<ul><li><p>Link transformation are now taken into account for <code>emmeans</code> objects. E.g., in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</p></li>
 <li><p>Fix <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> when algorithm is not “sampling”.</p></li>
 <li><p>Minor revisions to some documentations.</p></li>
 <li><p>Fix CRAN check issues for win-old-release.</p></li>
@@ -442,7 +455,7 @@
 <h3 id="changes-to-functions-0-6-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-6-0"></a></h3>
 <ul><li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> now also works on <code><a href="https://easystats.github.io/parameters/reference/standardize_parameters.html" class="external-link">effectsize::standardize_posteriors()</a></code>.</p></li>
 <li><p><code><a href="../reference/p_significance.html">p_significance()</a></code> now also works on <code><a href="https://easystats.github.io/parameters/reference/simulate_model.html" class="external-link">parameters::simulate_model()</a></code>.</p></li>
-<li><p><code><a href="../reference/rope_range.html">rope_range()</a></code> supports more (frequentis) models.</p></li>
+<li><p><code><a href="../reference/rope_range.html">rope_range()</a></code> supports more (frequentist) models.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-6-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0"></a></h3>
@@ -639,7 +652,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.9000.</p>
 </div>
 
     </footer></div>

@@ -1,5 +1,21 @@
 # Changelog
 
+## bayestestR 0.18.1.x
+
+CRAN release: 2026-05-24
+
+### Breaking Changes
+
+- [`p_to_bf()`](https://easystats.github.io/bayestestR/reference/p_to_bf.md)
+  arguments `n_obs` and `log` have changed positions in the function
+  call.
+
+### Changes
+
+- [`p_to_bf()`](https://easystats.github.io/bayestestR/reference/p_to_bf.md)
+  documentation improvements as well as better implementation for models
+  (and mixed models).
+
 ## bayestestR 0.18.1
 
 CRAN release: 2026-05-24
@@ -641,7 +657,7 @@ CRAN release: 2020-06-19
 
 ### Bug fixes
 
-- Link transformation are now taken into account for `emmeans` objets.
+- Link transformation are now taken into account for `emmeans` objects.
   E.g., in
   [`describe_posterior()`](https://easystats.github.io/bayestestR/reference/describe_posterior.md).
 
@@ -668,7 +684,7 @@ CRAN release: 2020-04-20
   [`parameters::simulate_model()`](https://easystats.github.io/parameters/reference/simulate_model.html).
 
 - [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.md)
-  supports more (frequentis) models.
+  supports more (frequentist) models.
 
 ### Bug fixes
 

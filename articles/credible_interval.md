@@ -36,7 +36,7 @@ Interval**) would be “*there is a 95% probability that when computing a
 confidence interval from data of this sort, the effect falls within this
 range*”.
 
-## Choosing a Credibal Level (89% vs. 95% CI)
+## Choosing a Credible Level (89% vs. 95% CI)
 
 Using 89% is another popular choice, and used to be the default for a
 long time ([read here the story of the

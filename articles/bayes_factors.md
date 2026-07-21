@@ -439,7 +439,7 @@ bayesfactor_restricted(mod_H2, hypothesis = "mom_hsyes > 0")
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
 In other words, the data fits the restricted model (where the difference
-must be small *and positive*) twice as much as it fits the un-restircted
+must be small *and positive*) twice as much as it fits the un-restricted
 model (where the difference must be small).
 
 We can compare multiple restricted hypotheses. For example: that the
@@ -589,7 +589,7 @@ bayesfactor_restricted(
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
 We can see that a-priori, this specific ordering of the 3 means has a
-proability of \frac{1}{6} (1 of 6 possible orderings of 3 values), but
+probability of \frac{1}{6} (1 of 6 possible orderings of 3 values), but
 after observing the data, this ordering is about ~4 times more likely
 than any other ordering.
 
@@ -661,7 +661,7 @@ Bayes factor - via the Savage-Dickey density ratio (Wagenmakers,
 Lodewyckx, Kuriyal, & Grasman, 2010).
 
 If we zoomed-in on the null value \theta_0 - what does it mean for the
-null’s credability to have become *lower* in the posterior distribution?
+null’s credibility to have become *lower* in the posterior distribution?
 Well, since the null is less credible, that necessarily means that the
 alternative is *more* credible by the same amount!
 
@@ -806,7 +806,7 @@ become relatively much more credible.
 
 We can also compute Bayes factors for directional hypotheses (“one
 sided”), if we have a prior hypotheses about the direction of the
-effect. This is similiar to the *dividing* Bayes factor discussed above,
+effect. This is similar to the *dividing* Bayes factor discussed above,
 but we are still comparing the (directional) alternative to the null
 (not between two directional hypotheses). This too can be done by
 setting an *order restriction* on the prior and posterior distributions
@@ -947,7 +947,7 @@ those encodings – can lead to different implied priors.
 Rouder, Morey, Verhagen, Swagman, & Wagenmakers (2017) discuss how one
 might wish to set some global multidimensional prior (the *g*-prior) on
 the factor’s levels that is not sensitive to the order of level or the
-choice of reference group. These are implamneted in
+choice of reference group. These are implemented in
 [`contr.equalprior()`](https://easystats.github.io/bayestestR/reference/contr.equalprior.md)
 and its siblings.
 
@@ -1197,7 +1197,7 @@ bayesfactor_restricted(
     > 
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
-We can see that while all models have the very similiar posterior
+We can see that while all models have the very similar posterior
 distributions, the implied prior orders are different, with only the
 [`contr.equalprior()`](https://easystats.github.io/bayestestR/reference/contr.equalprior.md)
 coding giving us a prior that does not favor any particular ordering of

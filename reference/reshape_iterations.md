@@ -1,7 +1,7 @@
 # Reshape estimations with multiple iterations (draws) to long format
 
 Reshape a wide data.frame of iterations (such as posterior draws or
-bootsrapped samples) as columns to long format. Instead of having all
+bootstrapped samples) as columns to long format. Instead of having all
 iterations as columns (e.g., `iter_1, iter_2, ...`), will return 3
 columns with the `\*_index` (the previous index of the row), the
 `\*_group` (the iteration number) and the `\*_value` (the value of said

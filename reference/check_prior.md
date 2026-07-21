@@ -3,7 +3,8 @@
 Performs a simple test to check whether the prior is informative to the
 posterior. This idea, and the accompanying heuristics, were discussed in
 *Gelman et al. 2017*. For a visual check of the prior predictive
-distribution, see `performance::check_priors()`.
+distribution, see
+[`performance::check_priors()`](https://easystats.github.io/performance/reference/check_priors.html).
 
 ## Usage
 
@@ -120,7 +121,7 @@ Only Be Understood in the Context of the Likelihood. Entropy, 19(10),
 
 ## See also
 
-`performance::check_priors()`
+[`performance::check_priors()`](https://easystats.github.io/performance/reference/check_priors.html)
 
 ## Examples
 

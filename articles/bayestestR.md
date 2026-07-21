@@ -108,7 +108,7 @@ interval.](../reference/figures/bayesianMaster.jpg)
 Accurate depiction of a regular Bayesian user estimating a credible
 interval.
 
-*Note: Altough the very purpose of this package is to advocate for the
+*Note: Although the very purpose of this package is to advocate for the
 use of Bayesian statistics, please note that there are serious arguments
 supporting frequentist indices (see for instance [this
 thread](https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16)).

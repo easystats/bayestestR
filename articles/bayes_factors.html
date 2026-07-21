@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -499,7 +499,7 @@ Bayes factor for these restricted model vs the unrestricted model.</p>
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>In other words, the data fits the restricted model (where the
 difference must be small <em>and positive</em>) twice as much as it fits
-the un-restircted model (where the difference must be small).</p>
+the un-restricted model (where the difference must be small).</p>
 <p>We can compare multiple restricted hypotheses. For example: that the
 difference isn’t just positive, it’s larger than 4.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
@@ -610,7 +610,7 @@ of the three conditions:</p>
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>We can see that a-priori, this specific ordering of the 3 means has a
-proability of <span class="math inline">\frac{1}{6}</span> (1 of 6
+probability of <span class="math inline">\frac{1}{6}</span> (1 of 6
 possible orderings of 3 values), but after observing the data, this
 ordering is about ~4 times more likely than any other ordering.</p>
 <p>The transitive properties of Bayes factors can also be used to
@@ -675,7 +675,7 @@ nice “short cut” can be used to obtain a Bayes factor - via the
 Savage-Dickey density ratio <span class="citation">(Wagenmakers,
 Lodewyckx, Kuriyal, &amp; Grasman, 2010)</span>.</p>
 <p>If we zoomed-in on the null value <span class="math inline">\theta_0</span> - what does it mean for the null’s
-credability to have become <em>lower</em> in the posterior distribution?
+credibility to have become <em>lower</em> in the posterior distribution?
 Well, since the null is less credible, that necessarily means that the
 alternative is <em>more</em> credible by the same amount!</p>
 <p>Note that for a point null on a continuous parameter, the
@@ -794,7 +794,7 @@ range) has become relatively much more credible.</p>
 </h4>
 <p>We can also compute Bayes factors for directional hypotheses (“one
 sided”), if we have a prior hypotheses about the direction of the
-effect. This is similiar to the <em>dividing</em> Bayes factor discussed
+effect. This is similar to the <em>dividing</em> Bayes factor discussed
 above, but we are still comparing the (directional) alternative to the
 null (not between two directional hypotheses). This too can be done by
 setting an <em>order restriction</em> on the prior and posterior
@@ -916,7 +916,7 @@ implied priors.</p>
 Wagenmakers (2017)</span> discuss how one might wish to set some global
 multidimensional prior (the <em>g</em>-prior) on the factor’s levels
 that is not sensitive to the order of level or the choice of reference
-group. These are implamneted in <code><a href="../reference/contr.equalprior.html">contr.equalprior()</a></code> and its
+group. These are implemented in <code><a href="../reference/contr.equalprior.html">contr.equalprior()</a></code> and its
 siblings.</p>
 <p>Below we demonstrate how the choice of contrast coding can lead to
 different implied priors regarding the possible <em>ordering</em> and
@@ -1116,7 +1116,7 @@ different across the three models:</p>
 &gt; b2 &lt; b1 &amp; b1 &lt; b3     0.17         0.72 4.25
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
-<p>We can see that while all models have the very similiar posterior
+<p>We can see that while all models have the very similar posterior
 distributions, the implied prior orders are different, with only the
 <code><a href="../reference/contr.equalprior.html">contr.equalprior()</a></code> coding giving us a prior that does not
 favor any particular ordering of the groups (and gives 1/6 prior
@@ -1205,7 +1205,7 @@ savage–dickey method. <em>Cognitive Psychology</em>, <em>60</em>(3),
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.9000.</p>
 </div>
 
     </footer>

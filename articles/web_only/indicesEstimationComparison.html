@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -185,7 +185,18 @@ and frequentist models. The code used for generation is available <a href="https
 </h5>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">df</span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span><span class="va">dat</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span>, <span class="st">"Coefficient"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"error"</span>,</span>
+<span>    <span class="st">"true_effect"</span>,</span>
+<span>    <span class="st">"outcome_type"</span>,</span>
+<span>    <span class="st">"Coefficient"</span>,</span>
+<span>    <span class="st">"Median"</span>,</span>
+<span>    <span class="st">"Mean"</span>,</span>
+<span>    <span class="st">"MAP"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_to_long.html" class="external-link">reshape_longer</a></span><span class="op">(</span></span>
 <span>  <span class="va">dat</span>,</span>
 <span>  select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span><span class="op">)</span>,</span>
@@ -202,14 +213,27 @@ and frequentist models. The code used for generation is available <a href="https
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">tmp</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_match.html" class="external-link">data_filter</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">error_group</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">estimate</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">error_group</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">error_group</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">value</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">estimate</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">error_group</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># geom_hline(yintercept = 0) +</span></span>
 <span>  <span class="co"># geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +</span></span>
 <span>  <span class="co"># geom_smooth(method="loess") +</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span></span>
-<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Coefficient"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,</span>
+<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"Coefficient"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>,</span>
+<span>      <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>,</span>
+<span>      <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>,</span>
+<span>      <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span></span>
+<span>    <span class="op">)</span>,</span>
 <span>    name <span class="op">=</span> <span class="st">"Index"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Point-estimate"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -222,7 +246,18 @@ and frequentist models. The code used for generation is available <a href="https
 </h5>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">df</span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span><span class="va">dat</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span>, <span class="st">"Coefficient"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"sample_size"</span>,</span>
+<span>    <span class="st">"true_effect"</span>,</span>
+<span>    <span class="st">"outcome_type"</span>,</span>
+<span>    <span class="st">"Coefficient"</span>,</span>
+<span>    <span class="st">"Median"</span>,</span>
+<span>    <span class="st">"Mean"</span>,</span>
+<span>    <span class="st">"MAP"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_to_long.html" class="external-link">reshape_longer</a></span><span class="op">(</span></span>
 <span>  <span class="va">dat</span>,</span>
 <span>  select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span><span class="op">)</span>,</span>
@@ -239,14 +274,27 @@ and frequentist models. The code used for generation is available <a href="https
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">tmp</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_match.html" class="external-link">data_filter</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">size_group</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">estimate</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">size_group</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">size_group</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">value</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">estimate</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">size_group</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># geom_hline(yintercept = 0) +</span></span>
 <span>  <span class="co"># geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +</span></span>
 <span>  <span class="co"># geom_smooth(method="loess") +</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span></span>
-<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Coefficient"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,</span>
+<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"Coefficient"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>,</span>
+<span>      <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>,</span>
+<span>      <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>,</span>
+<span>      <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span></span>
+<span>    <span class="op">)</span>,</span>
 <span>    name <span class="op">=</span> <span class="st">"Index"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Point-estimate"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -262,7 +310,18 @@ test the the predict the presence or absence of effect with the
 estimates as well as their interaction with noise and sample size.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">df</span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span><span class="va">dat</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span>, <span class="st">"Coefficient"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"sample_size"</span>,</span>
+<span>    <span class="st">"true_effect"</span>,</span>
+<span>    <span class="st">"outcome_type"</span>,</span>
+<span>    <span class="st">"Coefficient"</span>,</span>
+<span>    <span class="st">"Median"</span>,</span>
+<span>    <span class="st">"Mean"</span>,</span>
+<span>    <span class="st">"MAP"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_to_long.html" class="external-link">reshape_longer</a></span><span class="op">(</span></span>
 <span>  <span class="va">dat</span>,</span>
 <span>  select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span><span class="op">)</span>,</span>
@@ -377,7 +436,7 @@ iterations).</li>
 <p>We generated 3 datasets for each combination of these
 characteristics, resulting in a total of
 <code>2 * 2 * 8 * 40 * 9 * 3 = 34560</code> Bayesian and frequentist
-models. The code used for generation is avaible <a href="https://easystats.github.io/circus/articles/bayesian_indices.html" class="external-link">here</a>
+models. The code used for generation is available <a href="https://easystats.github.io/circus/articles/bayesian_indices.html" class="external-link">here</a>
 (please note that it takes usually several days/weeks to complete).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.github.com/easystats/circus/main/data/bayesSim_study2.csv"</span><span class="op">)</span></span></code></pre></div>
@@ -390,7 +449,10 @@ models. The code used for generation is avaible <a href="https://easystats.githu
 </h5>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">df</span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span><span class="va">dat</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"iterations"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span>, <span class="st">"beta"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"iterations"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span>, <span class="st">"beta"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"MAP"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_to_long.html" class="external-link">reshape_longer</a></span><span class="op">(</span></span>
 <span>  <span class="va">dat</span>,</span>
 <span>  select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"iterations"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span><span class="op">)</span>,</span>
@@ -407,11 +469,24 @@ models. The code used for generation is avaible <a href="https://easystats.githu
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">tmp</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_match.html" class="external-link">data_filter</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iterations_group</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">estimate</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">iterations_group</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">iterations_group</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">value</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">estimate</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">iterations_group</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span></span>
-<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"beta"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,</span>
+<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"beta"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>,</span>
+<span>      <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>,</span>
+<span>      <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>,</span>
+<span>      <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span></span>
+<span>    <span class="op">)</span>,</span>
 <span>    name <span class="op">=</span> <span class="st">"Index"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Point-estimate of the true value 0\n"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -425,7 +500,10 @@ models. The code used for generation is avaible <a href="https://easystats.githu
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">df</span></span>
 <span><span class="va">dat</span><span class="op">$</span><span class="va">warmup</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">warmup</span> <span class="op">/</span> <span class="va">dat</span><span class="op">$</span><span class="va">iterations</span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span><span class="va">dat</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"warmup"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span>, <span class="st">"beta"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/extract_column_names.html" class="external-link">data_select</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"warmup"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span>, <span class="st">"beta"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"MAP"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_to_long.html" class="external-link">reshape_longer</a></span><span class="op">(</span></span>
 <span>  <span class="va">dat</span>,</span>
 <span>  select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"warmup"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span><span class="op">)</span>,</span>
@@ -442,11 +520,24 @@ models. The code used for generation is avaible <a href="https://easystats.githu
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">tmp</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_match.html" class="external-link">data_filter</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">warmup_group</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">estimate</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">warmup_group</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">warmup_group</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">value</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">estimate</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">warmup_group</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span></span>
-<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"beta"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,</span>
+<span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"beta"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>,</span>
+<span>      <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>,</span>
+<span>      <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>,</span>
+<span>      <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span></span>
+<span>    <span class="op">)</span>,</span>
 <span>    name <span class="op">=</span> <span class="st">"Index"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Point-estimate of the true value 0\n"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -482,7 +573,7 @@ thread</a> or making a pull request.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.9000.</p>
 </div>
 
     </footer>
