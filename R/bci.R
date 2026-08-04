@@ -306,10 +306,24 @@ bci.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   z.inv <- length(x[x < mean(x, na.rm = TRUE)]) / sims
 
   z <- stats::qnorm(z.inv)
-  U <- (sims - 1) * (mean(x, na.rm = TRUE) - x)
-  top <- sum(U^3)
-  under <- 6 * (sum(U^2))^1.5
-  a <- top / under
+
+  # no draw below the mean: the draws are constant, the interval is a point
+  if (!is.finite(z)) {
+    return(data.frame(
+      CI = ci,
+      CI_low = min(x, na.rm = TRUE),
+      CI_high = max(x, na.rm = TRUE)
+    ))
+  }
+
+  # The draws estimate the distribution of the statistic directly, so the
+  # acceleration is one sixth of their standardized third moment: for a smooth
+  # statistic this converges to the jackknife estimator of DiCiccio & Efron
+  # (1996, eq. 6.6), and unlike the influence formula it does not depend on
+  # the number of draws.
+  deviation <- x - mean(x, na.rm = TRUE)
+  a <- mean(deviation^3, na.rm = TRUE) / (6 * mean(deviation^2, na.rm = TRUE)^1.5)
+  if (!is.finite(a)) a <- 0
 
   lower.inv <- stats::pnorm(z + (z + stats::qnorm(low)) / (1 - a * (z + stats::qnorm(low))))
   lower <- stats::quantile(x, lower.inv, names = FALSE, na.rm = TRUE)
