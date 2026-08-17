@@ -44,3 +44,13 @@ test_that("bci() handles constant draws", {
   out <- bci(rep(1, 100), verbose = FALSE)
   expect_identical(c(out$CI_low, out$CI_high), c(1, 1))
 })
+
+test_that("bci() handles missing draws", {
+  x <- c(seq_len(100), NA_real_)
+  out <- bci(x)
+  expected <- bci(x[!is.na(x)])
+  expect_equal(out[c("CI", "CI_low", "CI_high")], expected[c("CI", "CI_low", "CI_high")])
+
+  out <- bci(rep(NA_real_, 100), verbose = FALSE)
+  expect_true(all(is.na(c(out$CI_low, out$CI_high))))
+})

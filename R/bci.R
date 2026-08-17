@@ -294,6 +294,7 @@ bci.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 
 
 .bci <- function(x, ci, verbose = TRUE) {
+  x <- x[!is.na(x)]
   check_ci <- .check_ci_argument(x, ci, verbose)
 
   if (!is.null(check_ci)) {
