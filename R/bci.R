@@ -9,6 +9,15 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
+#' @section Draws-only approximation:
+#' Classical bootstrap BCa intervals use the original estimate (`t0`) for the
+#' bias correction and empirical influence or jackknife values for the
+#' acceleration. These quantities are not available when `x` contains only
+#' draws. In that case, `bci()` uses the mean of the draws as the reference
+#' estimate and one sixth of their standardized third moment as the
+#' acceleration. The resulting interval is therefore an approximation and can
+#' differ from `boot::boot.ci()`, which has access to `t0` and the original data.
+#'
 #' @inheritSection hdi Model components
 #'
 #' @references
@@ -35,7 +44,15 @@ bci.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .bci(x = x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("bayestestR_eti", "see_eti", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c(
+    "bayestestR_bci",
+    "see_bci",
+    "bayestestR_eti",
+    "see_eti",
+    "bayestestR_ci",
+    "see_ci",
+    class(out)
+  ))
   attr(out, "data") <- x
   out
 }
@@ -219,7 +236,7 @@ bci.stanreg <- function(x,
     inherits(x, "stanmvreg")
   )
 
-  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
+  class(out) <- unique(c("bayestestR_bci", "see_bci", "bayestestR_eti", "see_eti", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -260,7 +277,7 @@ bci.brmsfit <- function(x,
     .get_cleaned_parameters(x, ...)
   )
 
-  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
+  class(out) <- unique(c("bayestestR_bci", "see_bci", "bayestestR_eti", "see_eti", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

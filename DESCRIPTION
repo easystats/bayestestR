@@ -55,7 +55,12 @@ Authors@R:
              family = "Crawley",
              role = "ctb",
              email = "sam@crawley.nz",
-             comment = c(ORCID = "0000-0002-7847-0411")))
+             comment = c(ORCID = "0000-0002-7847-0411")),
+      person(given = "Miura",
+             family = "Meng",
+             role = "ctb",
+             email = "haomeng797@gmail.com",
+             comment = c(ORCID = "0009-0004-1522-1997")))
 Maintainer: Dominique Makowski <officialeasystats@gmail.com>
 Description: Provides utilities to describe posterior
     distributions and Bayesian models. It includes point-estimates such as

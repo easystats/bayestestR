@@ -54,3 +54,12 @@ test_that("bci() handles missing draws", {
   out <- bci(rep(NA_real_, 100), verbose = FALSE)
   expect_true(all(is.na(c(out$CI_low, out$CI_high))))
 })
+
+test_that("bci() prints as a BCa interval", {
+  out <- bcai(matrix(rchisq(200, 2), ncol = 1))
+  printed <- capture.output(print(out, digits = 3))
+
+  expect_s3_class(out, "bayestestR_bci")
+  expect_true(any(grepl("BCa", printed, fixed = TRUE)))
+  expect_false(any(grepl("ETI", printed, fixed = TRUE)))
+})

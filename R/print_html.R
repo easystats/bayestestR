@@ -97,6 +97,17 @@ print_html.bayestestR_hdi <- function(
 
 
 #' @export
+print_html.bayestestR_bci <- function(
+  x,
+  digits = 2,
+  caption = "Bias-Corrected and Accelerated Interval",
+  ...
+) {
+  .print_html_default(x = x, digits = digits, caption = caption, ci_string = "BCa", ...)
+}
+
+
+#' @export
 print_html.bayestestR_eti <- function(
   x,
   digits = 2,
