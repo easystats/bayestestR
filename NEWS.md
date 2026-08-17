@@ -1,4 +1,4 @@
-# bayestestR 0.18.1.x
+# bayestestR (devel)
 
 ## Breaking Changes
 
