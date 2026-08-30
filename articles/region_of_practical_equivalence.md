@@ -120,30 +120,26 @@ represent the growth **by year**). The coefficient will now be around
 **3550** cm (`10 * 355`), which we would now consider as
 **significant**.
 
-``` r
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rstanarm`](https://mc-stan.org/rstanarm/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`bayestestR`](https://easystats.github.io/bayestestR/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`see`](https://easystats.github.io/see/)`)`\
+\
+`data`` ``<-`` ``iris`` ``# Use the iris data`\
+`model`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(``Sepal.Length`` ``~`` ``Sepal.Width``, data ``=`` ``data``)`` ``# Fit model`
 
-library(rstanarm)
-library(bayestestR)
-library(see)
-
-data <- iris # Use the iris data
-model <- stan_glm(Sepal.Length ~ Sepal.Width, data = data) # Fit model
-```
-
-``` r
-
-# Compute indices
-pd <- p_direction(model)
-percentage_in_rope <- rope(model, ci = 1)
-
-# Visualise the pd
-plot(pd)
-pd
-
-# Visualise the percentage in ROPE
-plot(percentage_in_rope)
-percentage_in_rope
-```
+\
+`# Compute indices`\
+`pd`` ``<-`` `[`p_direction`](https://easystats.github.io/bayestestR/reference/p_direction.md)`(``model``)`\
+`percentage_in_rope`` ``<-`` `[`rope`](https://easystats.github.io/bayestestR/reference/rope.md)`(``model``, ci ``=`` ``1``)`\
+\
+`# Visualise the pd`\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``pd``)`\
+`pd`\
+\
+`# Visualise the percentage in ROPE`\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``percentage_in_rope``)`\
+`percentage_in_rope`
 
 ![](region_of_practical_equivalence_files/figure-html/unnamed-chunk-5-1.png)
 
@@ -169,26 +165,22 @@ respectively of about `92.95%` and `15.95%`, corresponding to an
 **uncertain** and **not significant** effect. What happens if we scale
 our predictor?
 
-``` r
+\
+`data``$``Sepal.Width_scaled`` ``<-`` ``data``$``Sepal.Width`` ``/`` ``100`` ``# Divide predictor by 100`\
+`model`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(``Sepal.Length`` ``~`` ``Sepal.Width_scaled``, data ``=`` ``data``)`` ``# Fit model`
 
-data$Sepal.Width_scaled <- data$Sepal.Width / 100 # Divide predictor by 100
-model <- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data = data) # Fit model
-```
-
-``` r
-
-# Compute indices
-pd <- p_direction(model)
-percentage_in_rope <- rope(model, ci = 1)
-
-# Visualise the pd
-plot(pd)
-pd
-
-# Visualise the percentage in ROPE
-plot(percentage_in_rope)
-percentage_in_rope
-```
+\
+`# Compute indices`\
+`pd`` ``<-`` `[`p_direction`](https://easystats.github.io/bayestestR/reference/p_direction.md)`(``model``)`\
+`percentage_in_rope`` ``<-`` `[`rope`](https://easystats.github.io/bayestestR/reference/rope.md)`(``model``, ci ``=`` ``1``)`\
+\
+`# Visualise the pd`\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``pd``)`\
+`pd`\
+\
+`# Visualise the percentage in ROPE`\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``percentage_in_rope``)`\
+`percentage_in_rope`
 
 ![](region_of_practical_equivalence_files/figure-html/unnamed-chunk-9-1.png)
 

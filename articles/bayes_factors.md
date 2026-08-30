@@ -100,18 +100,16 @@ for computing Bayes factors in two different contexts:
 Let’s take a look at the *kid IQ* dataset from the
 [rstanarm](https://mc-stan.org/rstanarm/) package.
 
-``` r
-
-data("kidiq", package = "rstanarm")
-
-kidiq <- subset(kidiq, select = c(kid_score, mom_hs))
-kidiq <- transform(
-  kidiq,
-  mom_hs = factor(mom_hs, levels = 0:1, labels = c("no", "yes"))
-)
-
-head(kidiq)
-```
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"kidiq"``, package ``=`` ``"rstanarm"``)`\
+\
+`kidiq`` ``<-`` `[`subset`](https://rdrr.io/r/base/subset.html)`(``kidiq``, select ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``kid_score``, ``mom_hs``)``)`\
+`kidiq`` ``<-`` `[`transform`](https://rdrr.io/r/base/transform.html)`(`\
+`  ``kidiq``,`\
+`  mom_hs ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``mom_hs``, levels ``=`` ``0``:``1``, labels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"no"``, ``"yes"``)``)`\
+`)`\
+\
+[`head`](https://rdrr.io/r/utils/head.html)`(``kidiq``)`
 
     >   kid_score mom_hs
     > 1        65    yes
@@ -148,51 +146,49 @@ for the stability of our BF estimation (typically 10 times more than
 what we would need for posterior estimation alone; Gronau, Singmann, &
 Wagenmakers (2020)).
 
-``` r
-
-library(rstanarm)
-
-mod_H0 <- stan_glm(
-  kid_score ~ 1,
-  family = gaussian(),
-  data = kidiq,
-
-  chains = 10,
-  iter = 5000,
-  warmup = 1000,
-  refresh = 0,
-  # required for BF computation
-  diagnostic_file = file.path(tempdir(), "df0.csv")
-)
-
-mod_H1 <- stan_glm(
-  kid_score ~ mom_hs,
-  family = gaussian(),
-  data = kidiq,
-
-  prior = normal(location = 20, scale = 10),
-
-  chains = 10,
-  iter = 5000,
-  warmup = 1000,
-  refresh = 0,
-  diagnostic_file = file.path(tempdir(), "df1.csv")
-)
-
-mod_H2 <- stan_glm(
-  kid_score ~ mom_hs,
-  family = gaussian(),
-  data = kidiq,
-
-  prior = normal(location = 0, scale = 5),
-
-  chains = 10,
-  iter = 5000,
-  warmup = 1000,
-  refresh = 0,
-  diagnostic_file = file.path(tempdir(), "df2.csv")
-)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rstanarm`](https://mc-stan.org/rstanarm/)`)`\
+\
+`mod_H0`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(`\
+`  ``kid_score`` ``~`` ``1``,`\
+`  family ``=`` `[`gaussian`](https://rdrr.io/r/stats/family.html)`(``)``,`\
+`  data ``=`` ``kidiq``,`\
+\
+`  chains ``=`` ``10``,`\
+`  iter ``=`` ``5000``,`\
+`  warmup ``=`` ``1000``,`\
+`  refresh ``=`` ``0``,`\
+`  ``# required for BF computation`\
+`  diagnostic_file ``=`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(`[`tempdir`](https://rdrr.io/r/base/tempfile.html)`(``)``, ``"df0.csv"``)`\
+`)`\
+\
+`mod_H1`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(`\
+`  ``kid_score`` ``~`` ``mom_hs``,`\
+`  family ``=`` `[`gaussian`](https://rdrr.io/r/stats/family.html)`(``)``,`\
+`  data ``=`` ``kidiq``,`\
+\
+`  prior ``=`` `[`normal`](https://mc-stan.org/rstanarm/reference/priors.html)`(``location ``=`` ``20``, scale ``=`` ``10``)``,`\
+\
+`  chains ``=`` ``10``,`\
+`  iter ``=`` ``5000``,`\
+`  warmup ``=`` ``1000``,`\
+`  refresh ``=`` ``0``,`\
+`  diagnostic_file ``=`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(`[`tempdir`](https://rdrr.io/r/base/tempfile.html)`(``)``, ``"df1.csv"``)`\
+`)`\
+\
+`mod_H2`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(`\
+`  ``kid_score`` ``~`` ``mom_hs``,`\
+`  family ``=`` `[`gaussian`](https://rdrr.io/r/stats/family.html)`(``)``,`\
+`  data ``=`` ``kidiq``,`\
+\
+`  prior ``=`` `[`normal`](https://mc-stan.org/rstanarm/reference/priors.html)`(``location ``=`` ``0``, scale ``=`` ``5``)``,`\
+\
+`  chains ``=`` ``10``,`\
+`  iter ``=`` ``5000``,`\
+`  warmup ``=`` ``1000``,`\
+`  refresh ``=`` ``0``,`\
+`  diagnostic_file ``=`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(`[`tempdir`](https://rdrr.io/r/base/tempfile.html)`(``)``, ``"df2.csv"``)`\
+`)`
 
 We can now ask: which a-priori model (each representing a different
 hypothesis) is more likely to have produced the observed data?
@@ -201,12 +197,10 @@ This is usually done by comparing the marginal likelihoods of two
 models. In such a case, the Bayes factor is a measure of the
 **relative** evidence for one hypothesis over the other.
 
-``` r
-
-bfs <- bayesfactor_models(mod_H1, mod_H2, denominator = mod_H0, verbose = FALSE)
-
-print(bfs, show_names = TRUE)
-```
+\
+`bfs`` ``<-`` `[`bayesfactor_models`](https://easystats.github.io/bayestestR/reference/bayesfactor_models.md)`(``mod_H1``, ``mod_H2``, denominator ``=`` ``mod_H0``, verbose ``=`` ``FALSE``)`\
+\
+[`print`](https://rdrr.io/r/base/print.html)`(``bfs``, show_names ``=`` ``TRUE``)`
 
     > Bayes Factors for Model Comparison
     > 
@@ -224,10 +218,8 @@ compared to the null (intercept only).
 Note that **interpretation guides** for Bayes factors can be found in
 the `effectsize` package:
 
-``` r
-
-effectsize::interpret_bf(bfs$log_BF[1:2], log = TRUE)
-```
+\
+`effectsize``::`[`interpret_bf`](https://easystats.github.io/effectsize/reference/interpret_bf.html)`(``bfs``$``log_BF``[``1``:``2``]``, log ``=`` ``TRUE``)`
 
     > [1] "extreme evidence in favour of" "extreme evidence in favour of"
     > (Rules: jeffreys1961)
@@ -235,12 +227,10 @@ effectsize::interpret_bf(bfs$log_BF[1:2], log = TRUE)
 Due to the transitive property of Bayes factors, we can easily change
 the reference model to the model representing \mathcal{H}\_2:
 
-``` r
-
-bfs2 <- update(bfs, reference = 2, subset = 1)
-
-print(bfs2, show_names = TRUE)
-```
+\
+`bfs2`` ``<-`` `[`update`](https://rdrr.io/r/stats/update.html)`(``bfs``, reference ``=`` ``2``, subset ``=`` ``1``)`\
+\
+[`print`](https://rdrr.io/r/base/print.html)`(``bfs2``, show_names ``=`` ``TRUE``)`
 
     > Bayes Factors for Model Comparison
     > 
@@ -256,10 +246,8 @@ almost 4 times over the model that suggests a small difference.
 We can also get a matrix of Bayes factors of all the pairwise model
 comparisons:
 
-``` r
-
-print(as.matrix(bfs), show_names = TRUE)
-```
+\
+[`print`](https://rdrr.io/r/base/print.html)`(`[`as.matrix`](https://rdrr.io/r/base/matrix.html)`(``bfs``)``, show_names ``=`` ``TRUE``)`
 
     > # Bayes Factors for Model Comparison
     > 
@@ -295,14 +283,12 @@ frequentist models (Wagenmakers, 2007).
 Since frequentist modeling does not allow for specification of priors,
 we are limited to either restricting parameters to 0 or not.
 
-``` r
-
-mod_H0f <- lm(kid_score ~ 1, data = kidiq)
-
-mod_H1f <- lm(kid_score ~ mom_hs, data = kidiq)
-
-bayesfactor_models(mod_H1f, denominator = mod_H0f)
-```
+\
+`mod_H0f`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``kid_score`` ``~`` ``1``, data ``=`` ``kidiq``)`\
+\
+`mod_H1f`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``kid_score`` ``~`` ``mom_hs``, data ``=`` ``kidiq``)`\
+\
+[`bayesfactor_models`](https://easystats.github.io/bayestestR/reference/bayesfactor_models.md)`(``mod_H1f``, denominator ``=`` ``mod_H0f``)`
 
     > Bayes Factors for Model Comparison
     > 
@@ -349,10 +335,8 @@ exclusion probability*. The change from prior inclusion odds to the
 posterior inclusion odds is the **Inclusion Bayes factor**
 \[BF\_{Inclusion}; Clyde, Ghosh, & Littman (2011)\].
 
-``` r
-
-(bfinc <- bayesfactor_inclusion(bfs))
-```
+\
+`(``bfinc`` ``<-`` `[`bayesfactor_inclusion`](https://easystats.github.io/bayestestR/reference/bayesfactor_inclusion.md)`(``bfs``)``)`
 
     > Inclusion Bayes Factors (Model Averaged)
     > 
@@ -375,13 +359,11 @@ the `mom_hs` term fit the data 27977.06 times more than the model
 Similar to how we can average evidence for a predictor across models, we
 can also average the **posterior estimate** across models.
 
-``` r
-
-ppp <- weighted_posteriors(mod_H0, mod_H1, mod_H2)
-
-plot(hdi(ppp$mom_hsyes)) +
-  coord_cartesian(xlim = c(-20, 20))
-```
+\
+`ppp`` ``<-`` `[`weighted_posteriors`](https://easystats.github.io/bayestestR/reference/weighted_posteriors.md)`(``mod_H0``, ``mod_H1``, ``mod_H2``)`\
+\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(`[`hdi`](https://easystats.github.io/bayestestR/reference/hdi.md)`(``ppp``$``mom_hsyes``)``)`` ``+`\
+`  `[`coord_cartesian`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html)`(``xlim ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``-``20``, ``20``)``)`
 
 ![](bayes_factors_files/figure-html/unnamed-chunk-11-1.png)
 
@@ -389,10 +371,8 @@ This looks a lot like the posterior obtained from the second model,
 which shouldn’t be surprising since about 80% of the averaged posterior
 comes from the second model.
 
-``` r
-
-attr(ppp, "weights")
-```
+\
+[`attr`](https://rdrr.io/r/base/attr.html)`(``ppp``, ``"weights"``)`
 
     >    Model weights pweights
     > 1 mod_H0       1  2.5e-05
@@ -426,10 +406,8 @@ Bayes factor](#bf-definitions). These can be achieved with
 that compute a Bayes factor for these restricted model vs the
 unrestricted model.
 
-``` r
-
-bayesfactor_restricted(mod_H2, hypothesis = "mom_hsyes > 0")
-```
+\
+[`bayesfactor_restricted`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)`(``mod_H2``, hypothesis ``=`` ``"mom_hsyes > 0"``)`
 
     > Bayes Factor (Order-Restriction)
     > 
@@ -445,23 +423,19 @@ model (where the difference must be small).
 We can compare multiple restricted hypotheses. For example: that the
 difference isn’t just positive, it’s larger than 4.
 
-``` r
-
-bf_rstr <- bayesfactor_restricted(
-  mod_H2,
-  hypothesis = c(
-    positive = "mom_hsyes > 0",
-    strong = "mom_hsyes > 4"
-  )
-)
-```
+\
+`bf_rstr`` ``<-`` `[`bayesfactor_restricted`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)`(`\
+`  ``mod_H2``,`\
+`  hypothesis ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`\
+`    positive ``=`` ``"mom_hsyes > 0"``,`\
+`    strong ``=`` ``"mom_hsyes > 4"`\
+`  ``)`\
+`)`
 
 Here too we can obtain a matrix of BFs between all models:
 
-``` r
-
-print(as.matrix(bf_rstr), show_names = TRUE)
-```
+\
+[`print`](https://rdrr.io/r/base/print.html)`(`[`as.matrix`](https://rdrr.io/r/base/matrix.html)`(``bf_rstr``)``, show_names ``=`` ``TRUE``)`
 
     > # Bayes Factors for Restricted Models
     > 
@@ -485,13 +459,11 @@ BF comparing \mathcal{H}\_{2r} and \mathcal{H}\_0:
 \frac{P(\mathcal{D}\|\mathcal{H}\_{2r})}{P(\mathcal{D}\|\mathcal{H}\_0)}
 \end{align}
 
-``` r
-
-BF_2.0 <- as.numeric(bfs)[2]
-BF_2r.2 <- as.numeric(bf_rstr)[2]
-
-(BF_2r.0 <- BF_2.0 * BF_2r.2)
-```
+\
+`BF_2.0`` ``<-`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(``bfs``)``[``2``]`\
+`BF_2r.2`` ``<-`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(``bf_rstr``)``[``2``]`\
+\
+`(``BF_2r.0`` ``<-`` ``BF_2.0`` ``*`` ``BF_2r.2``)`
 
     > [1] 54865
 
@@ -514,12 +486,10 @@ were 150 individuals rated “moral harshness” of undocumented migrants in
 one of three conditions: no odor, clean odor (lemon), or disgusting
 (sulfur) odor during questionnaire.
 
-``` r
-
-data("disgust", package = "bayestestR")
-
-str(disgust)
-```
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"disgust"``, package ``=`` ``"bayestestR"``)`\
+\
+[`str`](https://rdrr.io/r/utils/str.html)`(``disgust``)`
 
     > 'data.frame': 150 obs. of  2 variables:
     >  $ score    : int  13 26 30 23 34 37 33 34 35 33 ...
@@ -527,24 +497,22 @@ str(disgust)
 
 Let’s build our simple one-way-ANOVA-like model:
 
-``` r
-
-mod_odor <- stan_glm(
-  score ~ condition,
-  family = gaussian(),
-  data = disgust,
-
-  prior = normal(location = 0, scale = 2),
-
-  contrasts = list(condition = "contr.equalprior_pairs"),
-
-  chains = 10,
-  iter = 5000,
-  warmup = 1000,
-  refresh = 0,
-  diagnostic_file = file.path(tempdir(), "df3.csv")
-)
-```
+\
+`mod_odor`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(`\
+`  ``score`` ``~`` ``condition``,`\
+`  family ``=`` `[`gaussian`](https://rdrr.io/r/stats/family.html)`(``)``,`\
+`  data ``=`` ``disgust``,`\
+\
+`  prior ``=`` `[`normal`](https://mc-stan.org/rstanarm/reference/priors.html)`(``location ``=`` ``0``, scale ``=`` ``2``)``,`\
+\
+`  contrasts ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``condition ``=`` ``"contr.equalprior_pairs"``)``,`\
+\
+`  chains ``=`` ``10``,`\
+`  iter ``=`` ``5000``,`\
+`  warmup ``=`` ``1000``,`\
+`  refresh ``=`` ``0``,`\
+`  diagnostic_file ``=`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(`[`tempdir`](https://rdrr.io/r/base/tempfile.html)`(``)``, ``"df3.csv"``)`\
+`)`
 
 **NOTE**: See the *Specifying Correct Priors for Factors with More Than
 2 Levels* appendix below for more details on the contrast coding used
@@ -554,15 +522,13 @@ Let’s obtain the prior and posterior distributions of the condition
 means using
 [`posterior_epred()`](https://mc-stan.org/rstantools/reference/posterior_epred.html).
 
-``` r
-
-mod_odor.prior <- unupdate(mod_odor) # get the priors-only model
-
-library(emmeans)
-
-disgust_means <- emmeans(mod_odor, ~condition)
-disgust_means.prior <- emmeans(mod_odor.prior, ~condition)
-```
+\
+`mod_odor.prior`` ``<-`` `[`unupdate`](https://easystats.github.io/bayestestR/reference/unupdate.md)`(``mod_odor``)`` ``# get the priors-only model`\
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`emmeans`](https://rvlenth.github.io/emmeans/)`)`\
+\
+`disgust_means`` ``<-`` `[`emmeans`](https://rvlenth.github.io/emmeans/reference/emmeans.html)`(``mod_odor``, ``~``condition``)`\
+`disgust_means.prior`` ``<-`` `[`emmeans`](https://rvlenth.github.io/emmeans/reference/emmeans.html)`(``mod_odor.prior``, ``~``condition``)`
 
 Our hypothesis is that the moral harshness ratings are lowest in the
 lemon condition, higher in the control condition, and highest in the
@@ -572,14 +538,12 @@ sulfur condition - in other words, there is an *order* of: \text{lemon}
 We can formalize this hypothesis as an order restriction on the means of
 the three conditions:
 
-``` r
-
-bayesfactor_restricted(
-  posterior = disgust_means,
-  prior = disgust_means.prior,
-  hypothesis = "lemon < control & control < sulfur"
-)
-```
+\
+[`bayesfactor_restricted`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)`(`\
+`  posterior ``=`` ``disgust_means``,`\
+`  prior ``=`` ``disgust_means.prior``,`\
+`  hypothesis ``=`` ``"lemon < control & control < sulfur"`\
+`)`
 
     > Bayes Factor (Order-Restriction)
     > 
@@ -610,19 +574,17 @@ difference is negative*:
 \frac{P(\mathcal{D}\|\mathcal{H}\_{+})}{P(\mathcal{D}\|\mathcal{H}\_{-})}
 \end{align}
 
-``` r
-
-bf_div <- bayesfactor_restricted(
-  posterior = disgust_means,
-  prior = disgust_means.prior,
-  hypothesis = c(
-    positive = "lemon - sulfur > 0",
-    negative = "lemon - sulfur < 0"
-  )
-)
-
-print(as.matrix(bf_div), show_names = TRUE)
-```
+\
+`bf_div`` ``<-`` `[`bayesfactor_restricted`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)`(`\
+`  posterior ``=`` ``disgust_means``,`\
+`  prior ``=`` ``disgust_means.prior``,`\
+`  hypothesis ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`\
+`    positive ``=`` ``"lemon - sulfur > 0"``,`\
+`    negative ``=`` ``"lemon - sulfur < 0"`\
+`  ``)`\
+`)`\
+\
+[`print`](https://rdrr.io/r/base/print.html)`(`[`as.matrix`](https://rdrr.io/r/base/matrix.html)`(``bf_div``)``, show_names ``=`` ``TRUE``)`
 
     > # Bayes Factors for Restricted Models
     > 
@@ -702,10 +664,8 @@ This can be done using the
 let’s use it to test the null hypothesis that the difference in IQ
 between the two groups is exactly 0:
 
-``` r
-
-(sddr <- bayesfactor_parameters(mod_H2, null = 0))
-```
+\
+`(``sddr`` ``<-`` `[`bayesfactor_parameters`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)`(``mod_H2``, null ``=`` ``0``)``)`
 
     > Bayes Factor (Savage-Dickey density ratio)
     > 
@@ -721,10 +681,8 @@ parameter, we can see that the null has become substantially less
 credible after observing the data - and therefore the alternative has
 become *more* credible.
 
-``` r
-
-plot(sddr)
-```
+\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``sddr``)`
 
 ![](bayes_factors_files/figure-html/unnamed-chunk-23-1.png)
 
@@ -738,10 +696,8 @@ Compare the Savage-Dickey density ratio for the `mom_hsyes` parameter
 with the Bayes factor comparing `mod_H2` (the alternative) and `mod_H0`
 (the null):
 
-``` r
-
-print(update(bfs, subset = 2), show_names = TRUE)
-```
+\
+[`print`](https://rdrr.io/r/base/print.html)`(`[`update`](https://rdrr.io/r/stats/update.html)`(``bfs``, subset ``=`` ``2``)``, show_names ``=`` ``TRUE``)`
 
     > Bayes Factors for Model Comparison
     > 
@@ -775,10 +731,8 @@ This too can be done with
 [`bayesfactor_parameters()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md),
 by specifying a null-region instead of a point null:
 
-``` r
-
-(sddr_region <- bayesfactor_parameters(mod_H2, null = c(-5, 5)))
-```
+\
+`(``sddr_region`` ``<-`` `[`bayesfactor_parameters`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)`(``mod_H2``, null ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``-``5``, ``5``)``)``)`
 
     > Bayes Factor (Null-Interval)
     > 
@@ -789,10 +743,8 @@ by specifying a null-region instead of a point null:
     > 
     > * Evidence Against The Null: [-5.000, 5.000]
 
-``` r
-
-plot(sddr_region)
-```
+\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``sddr_region``)`
 
 ![](bayes_factors_files/figure-html/unnamed-chunk-25-1.png)
 
@@ -815,10 +767,8 @@ that *the difference in IQ between the two groups is positive*, the
 alternative will be restricted to the region to the right of the null
 (point or interval):
 
-``` r
-
-(sddr_directional <- bayesfactor_parameters(mod_H2, null = c(-5, 5), direction = "right"))
-```
+\
+`(``sddr_directional`` ``<-`` `[`bayesfactor_parameters`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)`(``mod_H2``, null ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``-``5``, ``5``)``, direction ``=`` ``"right"``)``)`
 
     > Bayes Factor (Null-Interval)
     > 
@@ -830,10 +780,8 @@ alternative will be restricted to the region to the right of the null
     > * Evidence Against The Null: [-5.000, 5.000]
     > *                 Direction: Right-Sided test
 
-``` r
-
-plot(sddr_directional)
-```
+\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``sddr_directional``)`
 
 ![](bayes_factors_files/figure-html/unnamed-chunk-26-1.png)
 
@@ -865,12 +813,10 @@ In `bayestestR`, this can be achieved with the
 [`si()`](https://easystats.github.io/bayestestR/reference/si.md)
 function:
 
-``` r
-
-my_first_si <- si(mod_H2, BF = 1, verbose = FALSE)
-
-print(my_first_si)
-```
+\
+`my_first_si`` ``<-`` `[`si`](https://easystats.github.io/bayestestR/reference/si.md)`(``mod_H2``, BF ``=`` ``1``, verbose ``=`` ``FALSE``)`\
+\
+[`print`](https://rdrr.io/r/base/print.html)`(``my_first_si``)`
 
     > Support Interval
     > 
@@ -888,10 +834,8 @@ values that have high credibility in the posterior distribution,
 regardless of how much their credibility has changed from the prior
 distribution:
 
-``` r
-
-hdi(mod_H2)
-```
+\
+[`hdi`](https://easystats.github.io/bayestestR/reference/hdi.md)`(``mod_H2``)`
 
     > Highest Density Interval
     > 
@@ -904,10 +848,8 @@ Visually, we can see that the credibility of all the values within this
 interval has increased (and likewise the credibility of all the values
 outside this interval has decreased):
 
-``` r
-
-plot(my_first_si)
-```
+\
+[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``my_first_si``)`
 
 ![](bayes_factors_files/figure-html/unnamed-chunk-29-1.png)
 
@@ -958,79 +900,75 @@ different implied priors regarding the possible *ordering* and
 Let us fit 3 models with different contrast codings for a factor with 3
 levels:
 
-``` r
-
-library(rstanarm)
-library(bayestestR)
-
-data("disgust", package = "bayestestR")
-
-# Use R's default treatment contrasts (first level as reference)
-mod_odor.treatment <- stan_glm(
-  score ~ condition,
-  family = gaussian(),
-  data = disgust,
-
-  prior = normal(location = 0, scale = 2),
-
-  contrasts = list(condition = "contr.treatment"),
-
-  chains = 10,
-  iter = 5000,
-  warmup = 1000,
-  refresh = 0,
-  diagnostic_file = file.path(tempdir(), "df5.csv")
-)
-
-# Use effects contrasts (sum-to-zero)
-mod_odor.sum <- stan_glm(
-  score ~ condition,
-  family = gaussian(),
-  data = disgust,
-
-  prior = normal(location = 0, scale = 2),
-
-  contrasts = list(condition = "contr.sum"),
-
-  chains = 10,
-  iter = 5000,
-  warmup = 1000,
-  refresh = 0,
-  diagnostic_file = file.path(tempdir(), "df6.csv")
-)
-
-mod_odor.equalprior <- stan_glm(
-  score ~ condition,
-  family = gaussian(),
-  data = disgust,
-
-  prior = normal(location = 0, scale = 2),
-
-  contrasts = list(condition = "contr.equalprior"),
-
-  chains = 10,
-  iter = 5000,
-  warmup = 1000,
-  refresh = 0,
-  diagnostic_file = file.path(tempdir(), "df7.csv")
-)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rstanarm`](https://mc-stan.org/rstanarm/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`bayestestR`](https://easystats.github.io/bayestestR/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"disgust"``, package ``=`` ``"bayestestR"``)`\
+\
+`# Use R's default treatment contrasts (first level as reference)`\
+`mod_odor.treatment`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(`\
+`  ``score`` ``~`` ``condition``,`\
+`  family ``=`` `[`gaussian`](https://rdrr.io/r/stats/family.html)`(``)``,`\
+`  data ``=`` ``disgust``,`\
+\
+`  prior ``=`` `[`normal`](https://mc-stan.org/rstanarm/reference/priors.html)`(``location ``=`` ``0``, scale ``=`` ``2``)``,`\
+\
+`  contrasts ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``condition ``=`` ``"contr.treatment"``)``,`\
+\
+`  chains ``=`` ``10``,`\
+`  iter ``=`` ``5000``,`\
+`  warmup ``=`` ``1000``,`\
+`  refresh ``=`` ``0``,`\
+`  diagnostic_file ``=`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(`[`tempdir`](https://rdrr.io/r/base/tempfile.html)`(``)``, ``"df5.csv"``)`\
+`)`\
+\
+`# Use effects contrasts (sum-to-zero)`\
+`mod_odor.sum`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(`\
+`  ``score`` ``~`` ``condition``,`\
+`  family ``=`` `[`gaussian`](https://rdrr.io/r/stats/family.html)`(``)``,`\
+`  data ``=`` ``disgust``,`\
+\
+`  prior ``=`` `[`normal`](https://mc-stan.org/rstanarm/reference/priors.html)`(``location ``=`` ``0``, scale ``=`` ``2``)``,`\
+\
+`  contrasts ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``condition ``=`` ``"contr.sum"``)``,`\
+\
+`  chains ``=`` ``10``,`\
+`  iter ``=`` ``5000``,`\
+`  warmup ``=`` ``1000``,`\
+`  refresh ``=`` ``0``,`\
+`  diagnostic_file ``=`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(`[`tempdir`](https://rdrr.io/r/base/tempfile.html)`(``)``, ``"df6.csv"``)`\
+`)`\
+\
+`mod_odor.equalprior`` ``<-`` `[`stan_glm`](https://mc-stan.org/rstanarm/reference/stan_glm.html)`(`\
+`  ``score`` ``~`` ``condition``,`\
+`  family ``=`` `[`gaussian`](https://rdrr.io/r/stats/family.html)`(``)``,`\
+`  data ``=`` ``disgust``,`\
+\
+`  prior ``=`` `[`normal`](https://mc-stan.org/rstanarm/reference/priors.html)`(``location ``=`` ``0``, scale ``=`` ``2``)``,`\
+\
+`  contrasts ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``condition ``=`` ``"contr.equalprior"``)``,`\
+\
+`  chains ``=`` ``10``,`\
+`  iter ``=`` ``5000``,`\
+`  warmup ``=`` ``1000``,`\
+`  refresh ``=`` ``0``,`\
+`  diagnostic_file ``=`` `[`file.path`](https://rdrr.io/r/base/file.path.html)`(`[`tempdir`](https://rdrr.io/r/base/tempfile.html)`(``)``, ``"df7.csv"``)`\
+`)`
 
 Let’s use [marginaleffects](https://marginaleffects.com/) to obtain
 estimates from these Bayesian (prior) models (after we already showed
 how do do so with [emmeans](https://rvlenth.github.io/emmeans/) above).
 
-``` r
-
-mod_odor.treatment_prior <- unupdate(mod_odor.treatment)
-mod_odor.sum_prior <- unupdate(mod_odor.sum)
-mod_odor.equalprior_prior <- unupdate(mod_odor.equalprior)
-
-(pr_treatment_prior <- avg_predictions(
-  mod_odor.treatment_prior,
-  variables = "condition"
-))
-```
+\
+`mod_odor.treatment_prior`` ``<-`` `[`unupdate`](https://easystats.github.io/bayestestR/reference/unupdate.md)`(``mod_odor.treatment``)`\
+`mod_odor.sum_prior`` ``<-`` `[`unupdate`](https://easystats.github.io/bayestestR/reference/unupdate.md)`(``mod_odor.sum``)`\
+`mod_odor.equalprior_prior`` ``<-`` `[`unupdate`](https://easystats.github.io/bayestestR/reference/unupdate.md)`(``mod_odor.equalprior``)`\
+\
+`(``pr_treatment_prior`` ``<-`` ``avg_predictions``(`\
+`  ``mod_odor.treatment_prior``,`\
+`  variables ``=`` ``"condition"`\
+`)``)`
 
     > 
     >  condition Estimate 2.5 % 97.5 %
@@ -1040,13 +978,11 @@ mod_odor.equalprior_prior <- unupdate(mod_odor.equalprior)
     > 
     > Type: response
 
-``` r
-
-(pr_sum_prior <- avg_predictions(
-  mod_odor.sum_prior,
-  variables = "condition"
-))
-```
+\
+`(``pr_sum_prior`` ``<-`` ``avg_predictions``(`\
+`  ``mod_odor.sum_prior``,`\
+`  variables ``=`` ``"condition"`\
+`)``)`
 
     > 
     >  condition Estimate 2.5 % 97.5 %
@@ -1056,13 +992,11 @@ mod_odor.equalprior_prior <- unupdate(mod_odor.equalprior)
     > 
     > Type: response
 
-``` r
-
-(pr_equalprior_prior <- avg_predictions(
-  mod_odor.equalprior_prior,
-  variables = "condition"
-))
-```
+\
+`(``pr_equalprior_prior`` ``<-`` ``avg_predictions``(`\
+`  ``mod_odor.equalprior_prior``,`\
+`  variables ``=`` ``"condition"`\
+`)``)`
 
     > 
     >  condition Estimate 2.5 % 97.5 %
@@ -1078,13 +1012,11 @@ about the same prior distribution: Md=60, 95 CI \[-3, +63\].
 We might expect the same for the differences between the groups, but
 this is not the case:
 
-``` r
-
-avg_comparisons(
-  mod_odor.treatment_prior,
-  variables = list("condition" = "pairwise")
-)
-```
+\
+`avg_comparisons``(`\
+`  ``mod_odor.treatment_prior``,`\
+`  variables ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``"condition"`` ``=`` ``"pairwise"``)`\
+`)`
 
     > 
     >          Contrast Estimate 2.5 % 97.5 %
@@ -1104,10 +1036,8 @@ for the differences between the groups, this time the `lemon - control`
 difference is much narrower than the other two differences involving the
 `sulfer` condition:
 
-``` r
-
-avg_comparisons(mod_odor.sum_prior, variables = list("condition" = "pairwise"))
-```
+\
+`avg_comparisons``(``mod_odor.sum_prior``, variables ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``"condition"`` ``=`` ``"pairwise"``)``)`
 
     > 
     >          Contrast Estimate 2.5 % 97.5 %
@@ -1123,13 +1053,11 @@ But the
 coding gives us the same prior distribution for all differences between
 the groups:
 
-``` r
-
-avg_comparisons(
-  mod_odor.equalprior_prior,
-  variables = list("condition" = "pairwise")
-)
-```
+\
+`avg_comparisons``(`\
+`  ``mod_odor.equalprior_prior``,`\
+`  variables ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``"condition"`` ``=`` ``"pairwise"``)`\
+`)`
 
     > 
     >          Contrast Estimate 2.5 % 97.5 %
@@ -1143,16 +1071,14 @@ avg_comparisons(
 Likewise, the implied priors for the ordering of the groups are
 different across the three models:
 
-``` r
-
-pr_treatment <- avg_predictions(mod_odor.treatment, variables = "condition")
-
-bayesfactor_restricted(
-  posterior = pr_treatment,
-  prior = pr_treatment_prior,
-  hypothesis = "b2 < b1 & b1 < b3"
-)
-```
+\
+`pr_treatment`` ``<-`` ``avg_predictions``(``mod_odor.treatment``, variables ``=`` ``"condition"``)`\
+\
+[`bayesfactor_restricted`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)`(`\
+`  posterior ``=`` ``pr_treatment``,`\
+`  prior ``=`` ``pr_treatment_prior``,`\
+`  hypothesis ``=`` ``"b2 < b1 & b1 < b3"`\
+`)`
 
     > Bayes Factor (Order-Restriction)
     > 
@@ -1161,16 +1087,14 @@ bayesfactor_restricted(
     > 
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
-``` r
-
-pr_sum <- avg_predictions(mod_odor.sum, variables = "condition")
-
-bayesfactor_restricted(
-  posterior = pr_sum,
-  prior = pr_sum_prior,
-  hypothesis = "b2 < b1 & b1 < b3"
-)
-```
+\
+`pr_sum`` ``<-`` ``avg_predictions``(``mod_odor.sum``, variables ``=`` ``"condition"``)`\
+\
+[`bayesfactor_restricted`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)`(`\
+`  posterior ``=`` ``pr_sum``,`\
+`  prior ``=`` ``pr_sum_prior``,`\
+`  hypothesis ``=`` ``"b2 < b1 & b1 < b3"`\
+`)`
 
     > Bayes Factor (Order-Restriction)
     > 
@@ -1179,16 +1103,14 @@ bayesfactor_restricted(
     > 
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
-``` r
-
-pr_equalprior <- avg_predictions(mod_odor.equalprior, variables = "condition")
-
-bayesfactor_restricted(
-  posterior = pr_equalprior,
-  prior = pr_equalprior_prior,
-  hypothesis = "b2 < b1 & b1 < b3"
-)
-```
+\
+`pr_equalprior`` ``<-`` ``avg_predictions``(``mod_odor.equalprior``, variables ``=`` ``"condition"``)`\
+\
+[`bayesfactor_restricted`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md)`(`\
+`  posterior ``=`` ``pr_equalprior``,`\
+`  prior ``=`` ``pr_equalprior_prior``,`\
+`  hypothesis ``=`` ``"b2 < b1 & b1 < b3"`\
+`)`
 
     > Bayes Factor (Order-Restriction)
     > 
@@ -1266,8 +1188,8 @@ savage–dickey method. *Cognitive Psychology*, *60*(3), 158–189.
 [^2]: We will be using [rstanarm](https://mc-stan.org/rstanarm/)
     throughout this vignette, but `bayestestR` also supports
     [brms](https://github.com/paul-buerkner/brms),
-    [blavaan](https://ecmerkle.github.io/blavaan/),
-    [rstan](https://mc-stan.org/rstan/), `{cmdstanr}`,
+    [blavaan](https://blavaan.org), [rstan](https://mc-stan.org/rstan/),
+    `{cmdstanr}`,
     [BayesFactor](https://richarddmorey.github.io/BayesFactor/) and
     more.
 

@@ -32,6 +32,8 @@
 - **Sam Crawley**. Contributor.
   [](https://orcid.org/0000-0002-7847-0411)
 
+- **Miura Meng**. Contributor. [](https://orcid.org/0009-0004-1522-1997)
+
 ## Citation
 
 Source:
@@ -42,14 +44,14 @@ Describing Effects and their Uncertainty, Existence and Significance
 within the Bayesian Framework. Journal of Open Source Software, 4(40),
 1541. doi:10.21105/joss.01541
 
-    @Article{,
-      title = {bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework.},
-      author = {Dominique Makowski and Mattan S. Ben-Shachar and Daniel Lüdecke},
-      journal = {Journal of Open Source Software},
-      doi = {10.21105/joss.01541},
-      year = {2019},
-      number = {40},
-      volume = {4},
-      pages = {1541},
-      url = {https://joss.theoj.org/papers/10.21105/joss.01541},
-    }
+@Article{,\
+  title = {bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework.},\
+  author = {Dominique Makowski and Mattan S. Ben-Shachar and Daniel Lüdecke},\
+  journal = {Journal of Open Source Software},\
+  doi = {10.21105/joss.01541},\
+  year = {2019},\
+  number = {40},\
+  volume = {4},\
+  pages = {1541},\
+  url = {https://joss.theoj.org/papers/10.21105/joss.01541},\
+}

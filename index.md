@@ -43,10 +43,8 @@ development version is available on R-universe (from *rOpenSci*).
 
 Once you have downloaded the package, you can then load it using:
 
-``` r
-
-library("bayestestR")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`"bayestestR"`](https://easystats.github.io/bayestestR/)`)`
 
 > **Tip**
 >
@@ -148,48 +146,44 @@ described by reporting four types of indices:
 is the master function with which you can compute all of the indices
 cited below at once.
 
-``` r
-
-describe_posterior(
-  rnorm(10000),
-  centrality = "median",
-  test = c("p_direction", "p_significance"),
-  verbose = FALSE
-)
-## Summary of Posterior Distribution
-##
-## Parameter |    Median |        95% CI |     pd |   ps
-## -----------------------------------------------------
-## Posterior | -5.70e-03 | [-2.00, 1.99] | 50.23% | 0.47
-```
+\
+[`describe_posterior`](https://easystats.github.io/bayestestR/reference/describe_posterior.md)`(`\
+`  `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``10000``)``,`\
+`  centrality ``=`` ``"median"``,`\
+`  test ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"p_direction"``, ``"p_significance"``)``,`\
+`  verbose ``=`` ``FALSE`\
+`)`\
+`## Summary of Posterior Distribution`\
+`##`\
+`## Parameter |    Median |        95% CI |     pd |   ps`\
+`## -----------------------------------------------------`\
+`## Posterior | -5.70e-03 | [-2.00, 1.99] | 50.23% | 0.47`
 
 [`describe_posterior()`](https://easystats.github.io/bayestestR/reference/describe_posterior.md)
 works for many objects, including more complex *brmsfit*-models. For
 better readability, the output is separated by model components:
 
-``` r
-
-zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
-set.seed(123)
-model <- brm(
-  bf(
-    count ~ child + camper + (1 | persons),
-    zi ~ child + camper + (1 | persons)
-  ),
-  data = zinb,
-  family = zero_inflated_poisson(),
-  chains = 1,
-  iter = 500
-)
-
-describe_posterior(
-  model,
-  effects = "all",
-  component = "all",
-  test = c("p_direction", "p_significance"),
-  centrality = "all"
-)
-```
+\
+`zinb`` ``<-`` `[`read.csv`](https://rdrr.io/r/utils/read.table.html)`(``"http://stats.idre.ucla.edu/stat/data/fish.csv"``)`\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
+`model`` ``<-`` ``brm``(`\
+`  ``bf``(`\
+`    ``count`` ``~`` ``child`` ``+`` ``camper`` ``+`` ``(``1`` ``|`` ``persons``)``,`\
+`    ``zi`` ``~`` ``child`` ``+`` ``camper`` ``+`` ``(``1`` ``|`` ``persons``)`\
+`  ``)``,`\
+`  data ``=`` ``zinb``,`\
+`  family ``=`` ``zero_inflated_poisson``(``)``,`\
+`  chains ``=`` ``1``,`\
+`  iter ``=`` ``500`\
+`)`\
+\
+[`describe_posterior`](https://easystats.github.io/bayestestR/reference/describe_posterior.md)`(`\
+`  ``model``,`\
+`  effects ``=`` ``"all"``,`\
+`  component ``=`` ``"all"``,`\
+`  test ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"p_direction"``, ``"p_significance"``)``,`\
+`  centrality ``=`` ``"all"`\
+`)`
 
 ``` R
 ## Summary of Posterior Distribution
@@ -227,19 +221,17 @@ useful for your Bayesian analyses. Here are some more examples:
 
 ## Point-estimates
 
-``` r
-
-library(bayestestR)
-
-posterior <- distribution_gamma(10000, 1.5) # Generate a skewed distribution
-centrality <- point_estimate(posterior) # Get indices of centrality
-centrality
-## Point Estimate
-##
-## Median | Mean |  MAP
-## --------------------
-## 1.18   | 1.50 | 0.51
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`bayestestR`](https://easystats.github.io/bayestestR/)`)`\
+\
+`posterior`` ``<-`` `[`distribution_gamma`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``10000``, ``1.5``)`` ``# Generate a skewed distribution`\
+`centrality`` ``<-`` `[`point_estimate`](https://easystats.github.io/bayestestR/reference/point_estimate.md)`(``posterior``)`` ``# Get indices of centrality`\
+`centrality`\
+`## Point Estimate`\
+`##`\
+`## Median | Mean |  MAP`\
+`## --------------------`\
+`## 1.18   | 1.50 | 0.51`
 
 As for other [**easystats**](https://github.com/easystats) packages,
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods are
@@ -272,16 +264,14 @@ that typically exclude 2.5% from each tail of the distribution, the HDI
 is *not* equal-tailed and therefore always includes the mode(s) of
 posterior distributions.
 
-``` r
-
-posterior <- distribution_chisquared(10000, 4)
-
-hdi(posterior)
-## 95% HDI: [0.08, 9.53]
-
-eti(posterior)
-## 95% ETI: [0.48, 11.14]
-```
+\
+`posterior`` ``<-`` `[`distribution_chisquared`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``10000``, ``4``)`\
+\
+[`hdi`](https://easystats.github.io/bayestestR/reference/hdi.md)`(``posterior``)`\
+`## 95% HDI: [0.08, 9.53]`\
+\
+[`eti`](https://easystats.github.io/bayestestR/reference/eti.md)`(``posterior``)`\
+`## 95% ETI: [0.48, 11.14]`
 
 ![](reference/figures/uncertainty-plot-1.png)
 
@@ -309,16 +299,14 @@ two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See
 the [*reporting
 guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
-``` r
-
-posterior <- distribution_normal(10000, 0.4, 0.2)
-p_direction(posterior)
-## Probability of Direction
-##
-## Parameter |     pd
-## ------------------
-## Posterior | 97.72%
-```
+\
+`posterior`` ``<-`` `[`distribution_normal`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``10000``, ``0.4``, ``0.2``)`\
+[`p_direction`](https://easystats.github.io/bayestestR/reference/p_direction.md)`(``posterior``)`\
+`## Probability of Direction`\
+`##`\
+`## Parameter |     pd`\
+`## ------------------`\
+`## Posterior | 97.72%`
 
 ![](reference/figures/tests-plot-1.png)
 
@@ -349,16 +337,14 @@ ROPE as an index for “null-hypothesis” testing (as understood under the
 Bayesian framework, see
 [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
-``` r
-
-posterior <- distribution_normal(10000, 0.4, 0.2)
-rope(posterior, range = c(-0.1, 0.1))
-## # Proportion of samples inside the ROPE [-0.10, 0.10]:
-##
-## Inside ROPE
-## -----------
-## 4.40 %
-```
+\
+`posterior`` ``<-`` `[`distribution_normal`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``10000``, ``0.4``, ``0.2``)`\
+[`rope`](https://easystats.github.io/bayestestR/reference/rope.md)`(``posterior``, range ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``-``0.1``, ``0.1``)``)`\
+`## # Proportion of samples inside the ROPE [-0.10, 0.10]:`\
+`##`\
+`## Inside ROPE`\
+`## -----------`\
+`## 4.40 %`
 
 ![](reference/figures/rope-2-1.png)
 
@@ -380,20 +366,18 @@ marginal likelihoods of the model against a model in which the tested
 parameter has been restricted to the point null (Wagenmakers, Lodewyckx,
 Kuriyal, & Grasman, 2010).
 
-``` r
-
-prior <- distribution_normal(10000, mean = 0, sd = 1)
-posterior <- distribution_normal(10000, mean = 1, sd = 0.7)
-
-bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0, verbose = FALSE)
-## Bayes Factor (Savage-Dickey density ratio)
-##
-## BF
-## ----
-## 1.94
-##
-## * Evidence Against The Null: 0
-```
+\
+`prior`` ``<-`` `[`distribution_normal`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``10000``, mean ``=`` ``0``, sd ``=`` ``1``)`\
+`posterior`` ``<-`` `[`distribution_normal`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``10000``, mean ``=`` ``1``, sd ``=`` ``0.7``)`\
+\
+[`bayesfactor_parameters`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)`(``posterior``, ``prior``, direction ``=`` ``"two-sided"``, null ``=`` ``0``, verbose ``=`` ``FALSE``)`\
+`## Bayes Factor (Savage-Dickey density ratio)`\
+`##`\
+`## BF`\
+`## ----`\
+`## 1.94`\
+`##`\
+`## * Evidence Against The Null: 0`
 
 ![](reference/figures/unnamed-chunk-1-1.png)
 
@@ -417,10 +401,8 @@ expressed in log odds ratio can be converted to standardized difference
 through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to
 `0.05`.
 
-``` r
-
-rope_range(model)
-```
+\
+[`rope_range`](https://easystats.github.io/bayestestR/reference/rope_range.md)`(``model``)`
 
 ### Density Estimation
 
@@ -437,22 +419,18 @@ accurate.
 [`distribution()`](https://easystats.github.io/bayestestR/reference/distribution.html):
 Generate a sample of size n with near-perfect distributions.
 
-``` r
-
-distribution(n = 10)
-##  [1] -1.55 -1.00 -0.66 -0.38 -0.12  0.12  0.38  0.66  1.00  1.55
-```
+\
+[`distribution`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``n ``=`` ``10``)`\
+`##  [1] -1.55 -1.00 -0.66 -0.38 -0.12  0.12  0.38  0.66  1.00  1.55`
 
 ### Probability of a Value
 
 [`density_at()`](https://easystats.github.io/bayestestR/reference/density_at.html):
 Compute the density of a given point of a distribution.
 
-``` r
-
-density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.39
-```
+\
+[`density_at`](https://easystats.github.io/bayestestR/reference/density_at.md)`(`[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``1000``, ``1``, ``1``)``, ``1``)`\
+`## [1] 0.39`
 
 ## Code of Conduct
 

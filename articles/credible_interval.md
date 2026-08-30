@@ -90,30 +90,28 @@ These methods can also be changed via the `method` argument of the
 [`ci()`](https://easystats.github.io/bayestestR/reference/ci.md)
 function. What is the difference? Let’s see:
 
-``` r
-
-library(bayestestR)
-library(ggplot2)
-
-# Generate a normal distribution
-posterior <- distribution_normal(1000)
-
-# Compute HDI and ETI
-ci_hdi <- ci(posterior, method = "HDI")
-ci_eti <- ci(posterior, method = "ETI")
-
-# Plot the distribution and add the limits of the two CIs
-out <- estimate_density(posterior, extend = TRUE)
-ggplot(out, aes(x = x, y = y)) +
-  geom_area(fill = "orange") +
-  theme_classic() +
-  # HDI in blue
-  geom_vline(xintercept = ci_hdi$CI_low, color = "royalblue", linewidth = 3) +
-  geom_vline(xintercept = ci_hdi$CI_high, color = "royalblue", linewidth = 3) +
-  # Quantile in red
-  geom_vline(xintercept = ci_eti$CI_low, color = "red", linewidth = 1) +
-  geom_vline(xintercept = ci_eti$CI_high, color = "red", linewidth = 1)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`bayestestR`](https://easystats.github.io/bayestestR/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`ggplot2`](https://ggplot2.tidyverse.org)`)`\
+\
+`# Generate a normal distribution`\
+`posterior`` ``<-`` `[`distribution_normal`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``1000``)`\
+\
+`# Compute HDI and ETI`\
+`ci_hdi`` ``<-`` `[`ci`](https://easystats.github.io/bayestestR/reference/ci.md)`(``posterior``, method ``=`` ``"HDI"``)`\
+`ci_eti`` ``<-`` `[`ci`](https://easystats.github.io/bayestestR/reference/ci.md)`(``posterior``, method ``=`` ``"ETI"``)`\
+\
+`# Plot the distribution and add the limits of the two CIs`\
+`out`` ``<-`` `[`estimate_density`](https://easystats.github.io/bayestestR/reference/estimate_density.md)`(``posterior``, extend ``=`` ``TRUE``)`\
+[`ggplot`](https://ggplot2.tidyverse.org/reference/ggplot.html)`(``out``, `[`aes`](https://ggplot2.tidyverse.org/reference/aes.html)`(``x ``=`` ``x``, y ``=`` ``y``)``)`` ``+`\
+`  `[`geom_area`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html)`(``fill ``=`` ``"orange"``)`` ``+`\
+`  `[`theme_classic`](https://ggplot2.tidyverse.org/reference/ggtheme.html)`(``)`` ``+`\
+`  ``# HDI in blue`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``ci_hdi``$``CI_low``, color ``=`` ``"royalblue"``, linewidth ``=`` ``3``)`` ``+`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``ci_hdi``$``CI_high``, color ``=`` ``"royalblue"``, linewidth ``=`` ``3``)`` ``+`\
+`  ``# Quantile in red`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``ci_eti``$``CI_low``, color ``=`` ``"red"``, linewidth ``=`` ``1``)`` ``+`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``ci_eti``$``CI_high``, color ``=`` ``"red"``, linewidth ``=`` ``1``)`
 
 ![](credible_interval_files/figure-html/unnamed-chunk-2-1.png)
 
@@ -121,27 +119,25 @@ ggplot(out, aes(x = x, y = y)) +
 
 But is it also the case for other types of distributions?
 
-``` r
-
-# Generate a beta distribution
-posterior <- distribution_beta(1000, 6, 2)
-
-# Compute HDI and Quantile CI
-ci_hdi <- ci(posterior, method = "HDI")
-ci_eti <- ci(posterior, method = "ETI")
-
-# Plot the distribution and add the limits of the two CIs
-out <- estimate_density(posterior, extend = TRUE)
-ggplot(out, aes(x = x, y = y)) +
-  geom_area(fill = "orange") +
-  theme_classic() +
-  # HDI in blue
-  geom_vline(xintercept = ci_hdi$CI_low, color = "royalblue", linewidth = 3) +
-  geom_vline(xintercept = ci_hdi$CI_high, color = "royalblue", linewidth = 3) +
-  # ETI in red
-  geom_vline(xintercept = ci_eti$CI_low, color = "red", linewidth = 1) +
-  geom_vline(xintercept = ci_eti$CI_high, color = "red", linewidth = 1)
-```
+\
+`# Generate a beta distribution`\
+`posterior`` ``<-`` `[`distribution_beta`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``1000``, ``6``, ``2``)`\
+\
+`# Compute HDI and Quantile CI`\
+`ci_hdi`` ``<-`` `[`ci`](https://easystats.github.io/bayestestR/reference/ci.md)`(``posterior``, method ``=`` ``"HDI"``)`\
+`ci_eti`` ``<-`` `[`ci`](https://easystats.github.io/bayestestR/reference/ci.md)`(``posterior``, method ``=`` ``"ETI"``)`\
+\
+`# Plot the distribution and add the limits of the two CIs`\
+`out`` ``<-`` `[`estimate_density`](https://easystats.github.io/bayestestR/reference/estimate_density.md)`(``posterior``, extend ``=`` ``TRUE``)`\
+[`ggplot`](https://ggplot2.tidyverse.org/reference/ggplot.html)`(``out``, `[`aes`](https://ggplot2.tidyverse.org/reference/aes.html)`(``x ``=`` ``x``, y ``=`` ``y``)``)`` ``+`\
+`  `[`geom_area`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html)`(``fill ``=`` ``"orange"``)`` ``+`\
+`  `[`theme_classic`](https://ggplot2.tidyverse.org/reference/ggtheme.html)`(``)`` ``+`\
+`  ``# HDI in blue`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``ci_hdi``$``CI_low``, color ``=`` ``"royalblue"``, linewidth ``=`` ``3``)`` ``+`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``ci_hdi``$``CI_high``, color ``=`` ``"royalblue"``, linewidth ``=`` ``3``)`` ``+`\
+`  ``# ETI in red`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``ci_eti``$``CI_low``, color ``=`` ``"red"``, linewidth ``=`` ``1``)`` ``+`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``ci_eti``$``CI_high``, color ``=`` ``"red"``, linewidth ``=`` ``1``)`
 
 ![](credible_interval_files/figure-html/unnamed-chunk-3-1.png)
 
@@ -178,36 +174,34 @@ words, it indicates which values of a parameter have gained support by
 the observed data by some factor greater or equal to *k* (Wagenmakers,
 Gronau, Dablander, & Etz, 2018).
 
-``` r
-
-prior <- distribution_normal(40000, mean = 0, sd = 1)
-posterior <- distribution_normal(40000, mean = 0.5, sd = 0.3)
-
-si_1 <- si(posterior, prior, BF = 1)
-si_3 <- si(posterior, prior, BF = 3)
-
-ggplot(mapping = aes(x = x, y = y)) +
-  theme_classic() +
-  # The posterior
-  geom_area(
-    fill = "orange",
-    data = estimate_density(posterior, extend = TRUE)
-  ) +
-  # The prior
-  geom_area(
-    color = "black",
-    fill = NA,
-    linewidth = 1,
-    linetype = "dashed",
-    data = estimate_density(prior, extend = TRUE)
-  ) +
-  # BF = 1 SI in blue
-  geom_vline(xintercept = si_1$CI_low, color = "royalblue", linewidth = 1) +
-  geom_vline(xintercept = si_1$CI_high, color = "royalblue", linewidth = 1) +
-  # BF = 3 SI in red
-  geom_vline(xintercept = si_3$CI_low, color = "red", linewidth = 1) +
-  geom_vline(xintercept = si_3$CI_high, color = "red", linewidth = 1)
-```
+\
+`prior`` ``<-`` `[`distribution_normal`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``40000``, mean ``=`` ``0``, sd ``=`` ``1``)`\
+`posterior`` ``<-`` `[`distribution_normal`](https://easystats.github.io/bayestestR/reference/distribution.md)`(``40000``, mean ``=`` ``0.5``, sd ``=`` ``0.3``)`\
+\
+`si_1`` ``<-`` `[`si`](https://easystats.github.io/bayestestR/reference/si.md)`(``posterior``, ``prior``, BF ``=`` ``1``)`\
+`si_3`` ``<-`` `[`si`](https://easystats.github.io/bayestestR/reference/si.md)`(``posterior``, ``prior``, BF ``=`` ``3``)`\
+\
+[`ggplot`](https://ggplot2.tidyverse.org/reference/ggplot.html)`(``mapping ``=`` `[`aes`](https://ggplot2.tidyverse.org/reference/aes.html)`(``x ``=`` ``x``, y ``=`` ``y``)``)`` ``+`\
+`  `[`theme_classic`](https://ggplot2.tidyverse.org/reference/ggtheme.html)`(``)`` ``+`\
+`  ``# The posterior`\
+`  `[`geom_area`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html)`(`\
+`    fill ``=`` ``"orange"``,`\
+`    data ``=`` `[`estimate_density`](https://easystats.github.io/bayestestR/reference/estimate_density.md)`(``posterior``, extend ``=`` ``TRUE``)`\
+`  ``)`` ``+`\
+`  ``# The prior`\
+`  `[`geom_area`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html)`(`\
+`    color ``=`` ``"black"``,`\
+`    fill ``=`` ``NA``,`\
+`    linewidth ``=`` ``1``,`\
+`    linetype ``=`` ``"dashed"``,`\
+`    data ``=`` `[`estimate_density`](https://easystats.github.io/bayestestR/reference/estimate_density.md)`(``prior``, extend ``=`` ``TRUE``)`\
+`  ``)`` ``+`\
+`  ``# BF = 1 SI in blue`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``si_1``$``CI_low``, color ``=`` ``"royalblue"``, linewidth ``=`` ``1``)`` ``+`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``si_1``$``CI_high``, color ``=`` ``"royalblue"``, linewidth ``=`` ``1``)`` ``+`\
+`  ``# BF = 3 SI in red`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``si_3``$``CI_low``, color ``=`` ``"red"``, linewidth ``=`` ``1``)`` ``+`\
+`  `[`geom_vline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``xintercept ``=`` ``si_3``$``CI_high``, color ``=`` ``"red"``, linewidth ``=`` ``1``)`
 
 ![](credible_interval_files/figure-html/unnamed-chunk-4-1.png)
 

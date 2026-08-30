@@ -130,47 +130,43 @@ iteratively draw smaller samples from this parent distribution, and we
 will compute the *pd* with different methods. The closer this estimate
 is from the reference one, the better.
 
-``` r
+\
+`data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``)`\
+`for`` ``(``i`` ``in`` ``1``:``25``)`` ``{`\
+`  ``the_mean`` ``<-`` `[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``1``, ``0``, ``4``)`\
+`  ``the_sd`` ``<-`` `[`abs`](https://rdrr.io/r/base/MathFun.html)`(`[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``1``, ``0.5``, ``4``)``)`\
+`  ``parent_distribution`` ``<-`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100000``, ``the_mean``, ``the_sd``)`\
+`  ``true_pd`` ``<-`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(`[`pd`](https://easystats.github.io/bayestestR/reference/p_direction.md)`(``parent_distribution``)``)`\
+\
+`  ``for`` ``(``j`` ``in`` ``1``:``25``)`` ``{`\
+`    ``sample_size`` ``<-`` `[`round`](https://rdrr.io/r/base/Round.html)`(`[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``1``, ``25``, ``5000``)``)`\
+`    ``subsample`` ``<-`` `[`sample`](https://rdrr.io/r/base/sample.html)`(``parent_distribution``, ``sample_size``)`\
+`    ``data`` ``<-`` `[`rbind`](https://rdrr.io/r/base/cbind.html)`(`\
+`      ``data``,`\
+`      `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`\
+`        sample_size ``=`` ``sample_size``,`\
+`        true ``=`` ``true_pd``,`\
+`        direct ``=`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(`[`pd`](https://easystats.github.io/bayestestR/reference/p_direction.md)`(``subsample``)``)`` ``-`` ``true_pd``,`\
+`        kernel ``=`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(`[`pd`](https://easystats.github.io/bayestestR/reference/p_direction.md)`(``subsample``, method ``=`` ``"kernel"``)``)`` ``-`` ``true_pd``,`\
+`        logspline ``=`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(`[`pd`](https://easystats.github.io/bayestestR/reference/p_direction.md)`(``subsample``, method ``=`` ``"logspline"``)``)`` ``-`` ``true_pd``,`\
+`        KernSmooth ``=`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(`[`pd`](https://easystats.github.io/bayestestR/reference/p_direction.md)`(``subsample``, method ``=`` ``"KernSmooth"``)``)`` ``-`` ``true_pd`\
+`      ``)`\
+`    ``)`\
+`  ``}`\
+`}`\
+`data`` ``<-`` `[`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(`[`sapply`](https://rdrr.io/r/base/lapply.html)`(``data``, ``as.numeric``)``)`
 
-data <- data.frame()
-for (i in 1:25) {
-  the_mean <- runif(1, 0, 4)
-  the_sd <- abs(runif(1, 0.5, 4))
-  parent_distribution <- rnorm(100000, the_mean, the_sd)
-  true_pd <- as.numeric(pd(parent_distribution))
-
-  for (j in 1:25) {
-    sample_size <- round(runif(1, 25, 5000))
-    subsample <- sample(parent_distribution, sample_size)
-    data <- rbind(
-      data,
-      data.frame(
-        sample_size = sample_size,
-        true = true_pd,
-        direct = as.numeric(pd(subsample)) - true_pd,
-        kernel = as.numeric(pd(subsample, method = "kernel")) - true_pd,
-        logspline = as.numeric(pd(subsample, method = "logspline")) - true_pd,
-        KernSmooth = as.numeric(pd(subsample, method = "KernSmooth")) - true_pd
-      )
-    )
-  }
-}
-data <- as.data.frame(sapply(data, as.numeric))
-```
-
-``` r
-
-library(datawizard) # for reshape_longer
-
-data <- reshape_longer(data, select = 3:6, names_to = "Method", values_to = "Distance")
-
-ggplot(data, aes(x = sample_size, y = Distance, color = Method, fill = Method)) +
-  geom_point(alpha = 0.3, stroke = 0, shape = 16) +
-  geom_smooth(alpha = 0.2) +
-  geom_hline(yintercept = 0) +
-  theme_classic() +
-  xlab("\nDistribution Size")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`datawizard`](https://easystats.github.io/datawizard/)`)`` ``# for reshape_longer`\
+\
+`data`` ``<-`` `[`reshape_longer`](https://easystats.github.io/datawizard/reference/data_to_long.html)`(``data``, select ``=`` ``3``:``6``, names_to ``=`` ``"Method"``, values_to ``=`` ``"Distance"``)`\
+\
+[`ggplot`](https://ggplot2.tidyverse.org/reference/ggplot.html)`(``data``, `[`aes`](https://ggplot2.tidyverse.org/reference/aes.html)`(``x ``=`` ``sample_size``, y ``=`` ``Distance``, color ``=`` ``Method``, fill ``=`` ``Method``)``)`` ``+`\
+`  `[`geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html)`(``alpha ``=`` ``0.3``, stroke ``=`` ``0``, shape ``=`` ``16``)`` ``+`\
+`  `[`geom_smooth`](https://ggplot2.tidyverse.org/reference/geom_smooth.html)`(``alpha ``=`` ``0.2``)`` ``+`\
+`  `[`geom_hline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)`(``yintercept ``=`` ``0``)`` ``+`\
+`  `[`theme_classic`](https://ggplot2.tidyverse.org/reference/ggtheme.html)`(``)`` ``+`\
+`  `[`xlab`](https://ggplot2.tidyverse.org/reference/labs.html)`(``"\nDistribution Size"``)`
 
 ![](probability_of_direction_files/figure-html/unnamed-chunk-5-1.png)
 

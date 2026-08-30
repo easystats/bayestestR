@@ -172,6 +172,18 @@ estimation (see
 [here](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 for a discussion about the differences between these two values).
 
+## Draws-only approximation
+
+Classical bootstrap BCa intervals use the original estimate (`t0`) for
+the bias correction and empirical influence or jackknife values for the
+acceleration. These quantities are not available when `x` contains only
+draws. In that case, `bci()` uses the mean of the draws as the reference
+estimate and one sixth of their standardized third moment as the
+acceleration. The resulting interval is therefore an approximation and
+can differ from
+[`boot::boot.ci()`](https://rdrr.io/pkg/boot/man/boot.ci.html), which
+has access to `t0` and the original data.
+
 ## Model components
 
 Possible values for the `component` argument depend on the model class.
@@ -223,11 +235,11 @@ Other ci:
 ``` r
 posterior <- rnorm(1000)
 bci(posterior)
-#> 95% ETI: [-1.78, 2.11]
+#> 95% BCa: [-1.74, 2.28]
 bci(posterior, ci = c(0.80, 0.89, 0.95))
-#> Equal-Tailed Interval
+#> Bias-Corrected and Accelerated Interval
 #> 
-#> 80% ETI       |       89% ETI |       95% ETI
+#> 80% BCa       |       89% BCa |       95% BCa
 #> ---------------------------------------------
-#> [-1.17, 1.34] | [-1.52, 1.70] | [-1.78, 2.11]
+#> [-1.16, 1.39] | [-1.41, 1.77] | [-1.74, 2.28]
 ```

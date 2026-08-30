@@ -172,9 +172,9 @@ model <- suppressWarnings(rstanarm::stan_glm(
 ))
 effective_sample(model)
 #>     Parameter ESS_bulk ESS_tail
-#> 1 (Intercept)      162      131
-#> 2          wt      217      108
-#> 3        gear      177      108
+#> 1 (Intercept)      195      131
+#> 2          wt      201      124
+#> 3        gear      221      129
 
 model <- suppressWarnings(brms::brm(
   mpg ~ wt,
@@ -187,7 +187,7 @@ model <- suppressWarnings(brms::brm(
 #> Start sampling
 effective_sample(model)
 #>     Parameter ESS_bulk ESS_tail
-#> 1 b_Intercept       56       94
-#> 2        b_wt       67       86
+#> 1 b_Intercept      120      129
+#> 2        b_wt      112       98
 # }
 ```
