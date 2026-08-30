@@ -135,6 +135,17 @@ are two reasonable ranges to characterize the uncertainty related to the
 estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here}
 for a discussion about the differences between these two values).
 }
+\section{Draws-only approximation}{
+
+Classical bootstrap BCa intervals use the original estimate (\code{t0}) for the
+bias correction and empirical influence or jackknife values for the
+acceleration. These quantities are not available when \code{x} contains only
+draws. In that case, \code{bci()} uses the mean of the draws as the reference
+estimate and one sixth of their standardized third moment as the
+acceleration. The resulting interval is therefore an approximation and can
+differ from \code{boot::boot.ci()}, which has access to \code{t0} and the original data.
+}
+
 \section{Model components}{
 
 

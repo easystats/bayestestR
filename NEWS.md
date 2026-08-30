@@ -1,4 +1,4 @@
-# bayestestR 0.18.1.x
+# bayestestR (devel)
 
 ## Breaking Changes
 
@@ -7,6 +7,11 @@
 ## Changes
 
 * `p_to_bf()` documentation improvements as well as better implementation for models (and mixed models).
+
+## Bug fixes
+
+* Fixed the acceleration estimate in `bci()`, so skewed intervals are adjusted
+  in the correct direction (#572).
 
 # bayestestR 0.18.1
 

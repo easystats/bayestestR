@@ -9,6 +9,15 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
+#' @section Draws-only approximation:
+#' Classical bootstrap BCa intervals use the original estimate (`t0`) for the
+#' bias correction and empirical influence or jackknife values for the
+#' acceleration. These quantities are not available when `x` contains only
+#' draws. In that case, `bci()` uses the mean of the draws as the reference
+#' estimate and one sixth of their standardized third moment as the
+#' acceleration. The resulting interval is therefore an approximation and can
+#' differ from `boot::boot.ci()`, which has access to `t0` and the original data.
+#'
 #' @inheritSection hdi Model components
 #'
 #' @references
@@ -35,7 +44,15 @@ bci.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .bci(x = x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("bayestestR_eti", "see_eti", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c(
+    "bayestestR_bci",
+    "see_bci",
+    "bayestestR_eti",
+    "see_eti",
+    "bayestestR_ci",
+    "see_ci",
+    class(out)
+  ))
   attr(out, "data") <- x
   out
 }
@@ -219,7 +236,7 @@ bci.stanreg <- function(x,
     inherits(x, "stanmvreg")
   )
 
-  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
+  class(out) <- unique(c("bayestestR_bci", "see_bci", "bayestestR_eti", "see_eti", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -260,7 +277,7 @@ bci.brmsfit <- function(x,
     .get_cleaned_parameters(x, ...)
   )
 
-  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
+  class(out) <- unique(c("bayestestR_bci", "see_bci", "bayestestR_eti", "see_eti", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -294,6 +311,7 @@ bci.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 
 
 .bci <- function(x, ci, verbose = TRUE) {
+  x <- x[!is.na(x)]
   check_ci <- .check_ci_argument(x, ci, verbose)
 
   if (!is.null(check_ci)) {
@@ -306,10 +324,24 @@ bci.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   z.inv <- length(x[x < mean(x, na.rm = TRUE)]) / sims
 
   z <- stats::qnorm(z.inv)
-  U <- (sims - 1) * (mean(x, na.rm = TRUE) - x)
-  top <- sum(U^3)
-  under <- 6 * (sum(U^2))^1.5
-  a <- top / under
+
+  # no draw below the mean: the draws are constant, the interval is a point
+  if (!is.finite(z)) {
+    return(data.frame(
+      CI = ci,
+      CI_low = min(x, na.rm = TRUE),
+      CI_high = max(x, na.rm = TRUE)
+    ))
+  }
+
+  # The draws estimate the distribution of the statistic directly, so the
+  # acceleration is one sixth of their standardized third moment: for a smooth
+  # statistic this converges to the jackknife estimator of DiCiccio & Efron
+  # (1996, eq. 6.6), and unlike the influence formula it does not depend on
+  # the number of draws.
+  deviation <- x - mean(x, na.rm = TRUE)
+  a <- mean(deviation^3, na.rm = TRUE) / (6 * mean(deviation^2, na.rm = TRUE)^1.5)
+  if (!is.finite(a)) a <- 0
 
   lower.inv <- stats::pnorm(z + (z + stats::qnorm(low)) / (1 - a * (z + stats::qnorm(low))))
   lower <- stats::quantile(x, lower.inv, names = FALSE, na.rm = TRUE)
