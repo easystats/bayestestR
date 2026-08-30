@@ -10,11 +10,8 @@
 
 ## Bug fixes
 
-* `bci()` now estimates the acceleration parameter as one sixth of the
-  standardized third moment of the draws. The previous estimate applied the
-  jackknife influence formula to the draws themselves, which flipped the sign
-  of the acceleration and shrank it toward zero as the number of draws grew,
-  so that intervals were adjusted in the wrong direction (#572).
+* Fixed the acceleration estimate in `bci()`, so skewed intervals are adjusted
+  in the correct direction (#572).
 
 # bayestestR 0.18.1
 
