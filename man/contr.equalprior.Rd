@@ -20,9 +20,8 @@ contr.equalprior_deviations(n, contrasts = TRUE, sparse = FALSE)
 \item{contrasts}{a logical indicating whether contrasts should be
     computed.}
 
-\item{sparse}{logical indicating if the result should be sparse
-    (of class \code{\linkS4class[Matrix]{dgCMatrix}}), using
-    package \href{https://CRAN.R-project.org/package=Matrix}{\pkg{Matrix}}.}
+\item{sparse}{Logical, indicating if the result should be sparse (of class
+\code{Matrix::dgCMatrix}), using package \strong{Matrix}.}
 }
 \value{
 A \code{matrix} with n rows and k columns, with k=n-1 if contrasts is

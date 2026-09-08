@@ -741,6 +741,8 @@ export(simulate_ttest)
 export(spi)
 export(unupdate)
 export(weighted_posteriors)
-importFrom(insight,display)
-importFrom(insight,print_html)
-importFrom(insight,print_md)
+importFrom(insight,
+  display,
+  print_html,
+  print_md
+)
