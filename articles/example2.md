@@ -180,7 +180,6 @@ It is an intuitive way of interpreting the strength of evidence provided
 by BFs as an amount of surprise.
 
 ![Wagenmakers' pizza poking analogy. From the great
-\<www.bayesianspectacles.org\>
 blog.](../reference/figures/LetsPokeAPizza.jpg)
 
 Wagenmakers’ pizza poking analogy. From the great
