@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,25 @@
       <small>Source: <a href="https://github.com/easystats/bayestestR/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.19.0" id="bayestestr-0190">bayestestR 0.19.0<a class="anchor" aria-label="anchor" href="#bayestestr-0190"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-0-19-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-19-0"></a></h3>
+<ul><li>
+<code><a href="../reference/p_to_bf.html">p_to_bf()</a></code> arguments <code>n_obs</code> and <code>log</code> have changed positions in the function call.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-0-19-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-19-0"></a></h3>
+<ul><li>
+<code><a href="../reference/p_to_bf.html">p_to_bf()</a></code> documentation improvements as well as better implementation for models (and mixed models).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-19-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-19-0"></a></h3>
+<ul><li><p>Fixed the acceleration estimate in <code><a href="../reference/bci.html">bci()</a></code>, so skewed intervals are adjusted in the correct direction (<a href="https://github.com/easystats/bayestestR/issues/572" class="external-link">#572</a>).</p></li>
+<li><p>Fixed issue in collinearity-checks, where thresholds for collinearity were not properly considered.</p></li>
+<li><p>Fixed CRAN test failures and warnings.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.18.1" id="bayestestr-0181">bayestestR 0.18.1<a class="anchor" aria-label="anchor" href="#bayestestr-0181"></a></h2><p class="text-muted">CRAN release: 2026-05-24</p>
 <div class="section level3">

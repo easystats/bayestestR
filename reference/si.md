@@ -271,8 +271,8 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 3.3e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.33 seconds.
+#> Chain 1: Gradient evaluation took 3.1e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.31 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -289,15 +289,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.133 seconds (Warm-up)
-#> Chain 1:                0.137 seconds (Sampling)
-#> Chain 1:                0.27 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.191 seconds (Warm-up)
+#> Chain 1:                0.196 seconds (Sampling)
+#> Chain 1:                0.387 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 2.3e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
+#> Chain 2: Gradient evaluation took 1.8e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -314,15 +314,15 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.135 seconds (Warm-up)
-#> Chain 2:                0.12 seconds (Sampling)
-#> Chain 2:                0.255 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.195 seconds (Warm-up)
+#> Chain 2:                0.173 seconds (Sampling)
+#> Chain 2:                0.368 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 1.9e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
+#> Chain 3: Gradient evaluation took 1.8e-05 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -339,9 +339,9 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.118 seconds (Warm-up)
-#> Chain 3:                0.174 seconds (Sampling)
-#> Chain 3:                0.292 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.169 seconds (Warm-up)
+#> Chain 3:                0.252 seconds (Sampling)
+#> Chain 3:                0.421 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -364,9 +364,9 @@ stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.117 seconds (Warm-up)
-#> Chain 4:                0.138 seconds (Sampling)
-#> Chain 4:                0.255 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.171 seconds (Warm-up)
+#> Chain 4:                0.184 seconds (Sampling)
+#> Chain 4:                0.355 seconds (Total)
 #> Chain 4: 
 si(stan_model, verbose = FALSE)
 #> Support Interval

@@ -1,5 +1,31 @@
 # Changelog
 
+## bayestestR 0.19.0
+
+### Breaking Changes
+
+- [`p_to_bf()`](https://easystats.github.io/bayestestR/reference/p_to_bf.md)
+  arguments `n_obs` and `log` have changed positions in the function
+  call.
+
+### Changes
+
+- [`p_to_bf()`](https://easystats.github.io/bayestestR/reference/p_to_bf.md)
+  documentation improvements as well as better implementation for models
+  (and mixed models).
+
+### Bug fixes
+
+- Fixed the acceleration estimate in
+  [`bci()`](https://easystats.github.io/bayestestR/reference/bci.md), so
+  skewed intervals are adjusted in the correct direction
+  ([\#572](https://github.com/easystats/bayestestR/issues/572)).
+
+- Fixed issue in collinearity-checks, where thresholds for collinearity
+  were not properly considered.
+
+- Fixed CRAN test failures and warnings.
+
 ## bayestestR 0.18.1
 
 CRAN release: 2026-05-24
