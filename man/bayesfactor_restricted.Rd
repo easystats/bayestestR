@@ -7,8 +7,8 @@
 \alias{bayesfactor_restricted.brmsfit}
 \alias{bayesfactor_restricted.blavaan}
 \alias{bayesfactor_restricted.emmGrid}
+\alias{bayesfactor_restricted.matrix}
 \alias{bayesfactor_restricted.data.frame}
-\alias{as.logical.bayesfactor_restricted}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
 bayesfactor_restricted(posterior, ...)
@@ -20,8 +20,8 @@ bf_restricted(posterior, ...)
   hypothesis,
   prior = NULL,
   verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   ...
 )
 
@@ -30,8 +30,8 @@ bf_restricted(posterior, ...)
   hypothesis,
   prior = NULL,
   verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   ...
 )
 
@@ -51,6 +51,14 @@ bf_restricted(posterior, ...)
   ...
 )
 
+\method{bayesfactor_restricted}{matrix}(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  ...
+)
+
 \method{bayesfactor_restricted}{data.frame}(
   posterior,
   hypothesis,
@@ -58,8 +66,6 @@ bf_restricted(posterior, ...)
   rvar_col = NULL,
   ...
 )
-
-\method{as.logical}{bayesfactor_restricted}(x, which = c("posterior", "prior"), ...)
 }
 \arguments{
 \item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing
@@ -73,19 +79,43 @@ a posterior distribution(s) from (see Details).}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
 
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
+
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section \emph{Model Components}. May be abbreviated.
+Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to \emph{all} model classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
 
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
-
-\item{x}{An object of class \code{bayesfactor_restricted}}
-
-\item{which}{Should the logical matrix be of the posterior or prior distribution(s)?}
 }
 \value{
 A data frame containing the (log) Bayes factor representing evidence
@@ -97,38 +127,39 @@ hypothesized restriction.)
 \description{
 This method computes Bayes factors for comparing a model with an order restrictions on its parameters
 with the fully unrestricted model. \emph{Note that this method should only be used for confirmatory analyses}.
-\cr \cr
+\cr\cr
 The \verb{bf_*} function is an alias of the main function.
 \cr \cr
-\strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
-see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+\strong{For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
-This method is used to compute Bayes factors for order-restricted models vs un-restricted
-models by setting an order restriction on the prior and posterior distributions
-(\cite{Morey & Wagenmakers, 2013}).
+This method is used to compute Bayes factors for order-restricted
+models vs un-restricted models by setting an order restriction on the prior
+and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
 \cr\cr
 (Though it is possible to use \code{bayesfactor_restricted()} to test interval restrictions,
 it is more suitable for testing order restrictions; see examples).
-}
-\section{Setting the correct \code{prior}}{
+\subsection{Additional methods}{
 
-For the computation of Bayes factors, the model priors must be proper priors
-(at the very least they should be \emph{not flat}, and it is preferable that
-they be \emph{informative}); As the priors for the alternative get wider, the
-likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this
-is called \emph{the Jeffreys-Lindley-Bartlett paradox}). Thus, you should
-only ever try (or want) to compute a Bayes factor when you have an informed
-prior.
-\cr\cr
-(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
-See example below.)
-\cr\cr
+The resulting output is supported by the following methods:
+\itemize{
+\item \code{as.matrix()}: Extract a full matrix of (log-)Bayes factors between all
+models (using the transitivity of Bayes factors).
+\item \code{as.logical()}: Extract boolean vectors indicating which (prior/posterior)
+samples are included in the hypothesized restriction.
+\item \code{as.numeric()}: Extract the (possibly log-)Bayes factor values.
+}
+
+See examples and \link{bayesfactor_methods}.
+}
+}
+\section{Obtaining prior samples}{
+
+
 It is important to provide the correct \code{prior} for meaningful results,
 to match the \code{posterior}-type input:
 \itemize{
-\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-estimate.
+\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-distribution
 \item \strong{A data frame} - \code{prior} should also be a \emph{data frame}, representing the prior-estimates, in matching column order.
 \itemize{
 \item If \code{rvar_col} is specified, \code{prior} should be \emph{the name of an \code{rvar} column} that represents the prior-estimates.
@@ -150,13 +181,29 @@ any transformations -- \code{"log"}, \code{"response"}, etc. -- or any \code{reg
 }
 }
 
+\section{Transitivity of Bayes factors}{
+
+For multiple inputs (models or hypotheses), the function will return multiple
+Bayes factors between each model and \emph{the same} reference model (the
+\code{denominator} or un-restricted model). However, we can take advantage of the
+transitivity of Bayes factors - where if we have two Bayes factors for Model
+\emph{A} and model \emph{B} against the \emph{same reference model C}, we can obtain a Bayes
+factor for comparing model \emph{A} to model \emph{B} by dividing them:
+\cr\cr
+\deqn{BF_{AB} = \frac{BF_{AC}}{BF_{BC}} = \frac{\frac{ML_{A}}{ML_{C}}}{\frac{ML_{B}}{ML_{C}}} = \frac{ML_{A}}{ML_{B}}}
+\cr\cr
+(Where \emph{ML} is the \emph{marginal likelihood}.)
+\cr\cr
+A full matrix comparing all models can be obtained with \code{as.matrix()}.
+}
+
 \section{Interpreting Bayes Factors}{
 
 A Bayes factor greater than 1 can be interpreted as evidence against the
 null, at which one convention is that a Bayes factor greater than 3 can be
 considered as "substantial" evidence against the null (and vice versa, a
 Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
-null-model) (\cite{Wetzels et al. 2011}).
+null-model). See also \code{effectsize::interpret_bf()}.
 }
 
 \examples{
@@ -183,10 +230,13 @@ hyps <- c(
 
 (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
 
+# See the matrix of BFs
+as.matrix(b)
+
 bool <- as.logical(b, which = "posterior")
 head(bool)
 
-\dontshow{if (require("see") && require("patchwork")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("see") && require("patchwork")) withAutoprint(\{ # examplesIf}
 
 see::plots(
   plot(estimate_density(posterior)),
@@ -197,7 +247,7 @@ see::plots(
   guides = "collect"
 )
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
 # rstanarm models
 # ---------------
@@ -215,7 +265,7 @@ hyps <- c(
 bayesfactor_restricted(fit_stan, hypothesis = hyps)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("rstanarm") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("emmeans")) withAutoprint(\{ # examplesIf}
 \donttest{
 # emmGrid objects
 # ---------------
@@ -247,3 +297,10 @@ Psychological methods, 16(4), 406.
 Retrieved from https://richarddmorey.org/category/order-restrictions/.
 }
 }
+\seealso{
+Other Bayes factors:
+\code{\link[=bayesfactor_inclusion]{bayesfactor_inclusion()}},
+\code{\link[=bayesfactor_models]{bayesfactor_models()}},
+\code{\link[=bayesfactor_parameters]{bayesfactor_parameters()}}
+}
+\concept{Bayes factors}

@@ -9,8 +9,6 @@
 \alias{bf_rope}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
-\alias{bayesfactor_parameters.brmsfit}
-\alias{bayesfactor_parameters.blavaan}
 \alias{bayesfactor_parameters.data.frame}
 \title{Bayes Factors (BF) for a Single Parameter}
 \usage{
@@ -82,32 +80,9 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "location", "smooth_terms", "sigma", "zi",
-    "zero_inflated", "all"),
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
-  ...,
-  verbose = TRUE
-)
-
-\method{bayesfactor_parameters}{brmsfit}(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "location", "smooth_terms", "sigma", "zi",
-    "zero_inflated", "all"),
-  parameters = NULL,
-  ...,
-  verbose = TRUE
-)
-
-\method{bayesfactor_parameters}{blavaan}(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
   ...,
   verbose = TRUE
 )
@@ -141,12 +116,40 @@ arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
 
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
+
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section \emph{Model Components}. May be abbreviated.
+Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to \emph{all} model classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
 
 \item{parameters}{Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
@@ -166,7 +169,7 @@ factors; see examples).
 This method computes Bayes factors against the null (either a point or an
 interval), based on prior and posterior samples of a single parameter. This
 Bayes factor indicates the degree by which the mass of the posterior
-distribution has shifted further away from or closer to the null value(s)
+distribution has shifted away from or closer to the null value(s)
 (relative to the prior distribution), thus indicating if the null value has
 become less or more likely given the observed data.
 \cr \cr
@@ -178,24 +181,21 @@ a Bayes factor comparing the marginal likelihoods of the model against a
 model in which the tested parameter has been restricted to the point null
 (Wagenmakers et al., 2010; Heck, 2019).
 \cr \cr
-Note that the \code{logspline} package is used for estimating densities and
-probabilities, and must be installed for the function to work.
+\code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers around
+\code{bayesfactor_parameters()} with different defaults for the null to be tested
+against (a point and a range, respectively; see details). The \verb{bf_*}
+functions are aliases of the main functions.
 \cr \cr
-\code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers
-around \code{bayesfactor_parameters} with different defaults for the null to
-be tested against (a point and a range, respectively). Aliases of the main
-functions are prefixed with \verb{bf_*}, like \code{bf_parameters()} or
-\code{bf_pointnull()}.
-\cr \cr
-\strong{For more info, in particular on specifying correct priors for factors
-with more than 2 levels, see
-\href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+\strong{For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
 This method is used to compute Bayes factors based on prior and posterior
 distributions.
+\cr \cr
+Note that the \code{logspline} package is used for estimating densities and
+probabilities, and must be installed for the function to work.
+\subsection{One-sided & Dividing Tests (setting an order restriction):}{
 
-\subsection{One-sided & Dividing Tests (setting an order restriction)}{
 One sided tests (controlled by \code{direction}) are conducted by restricting
 the prior and posterior of the non-null values (the "alternative") to one
 side of the null only (\cite{Morey & Wagenmakers, 2014}). For example, if we
@@ -211,6 +211,16 @@ opposing one-sided hypotheses (\cite{Morey & Wagenmakers, 2014}). For
 example, for a Bayes factor comparing the "null" of \verb{<0} to the alternative
 \verb{>0}, we would set \code{bayesfactor_parameters(null = c(-Inf, 0))}.
 }
+
+\subsection{Additional methods}{
+
+The resulting output is supported by the following methods:
+\itemize{
+\item \code{as.numeric()}: Extract the (possibly log-)Bayes factor values.
+}
+
+See \link{bayesfactor_methods}.
+}
 }
 \note{
 There is also a
@@ -218,24 +228,13 @@ There is also a
 implemented in the
 \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
-\section{Setting the correct \code{prior}}{
+\section{Obtaining prior samples}{
 
-For the computation of Bayes factors, the model priors must be proper priors
-(at the very least they should be \emph{not flat}, and it is preferable that
-they be \emph{informative}); As the priors for the alternative get wider, the
-likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this
-is called \emph{the Jeffreys-Lindley-Bartlett paradox}). Thus, you should
-only ever try (or want) to compute a Bayes factor when you have an informed
-prior.
-\cr\cr
-(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
-See example below.)
-\cr\cr
+
 It is important to provide the correct \code{prior} for meaningful results,
 to match the \code{posterior}-type input:
 \itemize{
-\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-estimate.
+\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-distribution
 \item \strong{A data frame} - \code{prior} should also be a \emph{data frame}, representing the prior-estimates, in matching column order.
 \itemize{
 \item If \code{rvar_col} is specified, \code{prior} should be \emph{the name of an \code{rvar} column} that represents the prior-estimates.
@@ -257,17 +256,70 @@ any transformations -- \code{"log"}, \code{"response"}, etc. -- or any \code{reg
 }
 }
 
+\section{Prior and posterior considerations}{
+
+In order to correctly and precisely estimate Bayes factors, a rule of thumb
+are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
+\strong{P}osteriors.
+\cr\cr
+For the computation of Bayes factors, the model priors must be proper priors
+(at the very least they should be \emph{not flat}, and it is preferable that they
+be \emph{informative}) (Note that by default, \code{brms::brm()} uses flat priors for
+fixed-effects); Wide priors result in smaller marginal likelihoods, and thus
+models with wider priors are trivially less likely than models with narrower
+priors - where, at the extreme, that a model with completely flat priors is
+infinitely less favorable than a point null model (this is called \emph{the
+Jeffreys-Lindley-Bartlett paradox}). Thus, you should only ever try (or want)
+to compute a Bayes factor when you have an informed prior.
+\cr\cr
+Additionally, for models using MCMC estimation the number of posterior
+samples needed for testing is substantially larger than for estimation (the
+default of 4000 samples may not be enough in many cases). A conservative rule
+of thumb is to obtain 10 times more samples than would be required for
+estimation (\emph{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000
+samples are detected, a warning is issued.
+}
+
 \section{Interpreting Bayes Factors}{
 
 A Bayes factor greater than 1 can be interpreted as evidence against the
 null, at which one convention is that a Bayes factor greater than 3 can be
 considered as "substantial" evidence against the null (and vice versa, a
 Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
-null-model) (\cite{Wetzels et al. 2011}).
+null-model). See also \code{effectsize::interpret_bf()}.
+}
+
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
 }
 
 \examples{
-\dontshow{if (require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("logspline")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = .5, sd = .3)
@@ -275,7 +327,7 @@ posterior <- distribution_normal(1000, mean = .5, sd = .3)
 
 as.numeric(BF_pars)
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("rstanarm") && require("emmeans") && require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("emmeans") && require("logspline")) withAutoprint(\{ # examplesIf}
 \donttest{
 # rstanarm models
 # ---------------
@@ -298,7 +350,7 @@ bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
 # bayesfactor_parameters(group_diff, prior = group_diff_prior, verbose = FALSE)
 }
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("brms") && require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("brms") && require("logspline")) withAutoprint(\{ # examplesIf}
 # brms models
 # -----------
 \dontrun{
@@ -338,6 +390,13 @@ An Empirical Comparison Using 855 t Tests. Perspectives on Psychological
 Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 }
 }
+\seealso{
+Other Bayes factors:
+\code{\link[=bayesfactor_inclusion]{bayesfactor_inclusion()}},
+\code{\link[=bayesfactor_models]{bayesfactor_models()}},
+\code{\link[=bayesfactor_restricted]{bayesfactor_restricted()}}
+}
 \author{
 Mattan S. Ben-Shachar
 }
+\concept{Bayes factors}

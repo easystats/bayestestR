@@ -6,9 +6,18 @@ test_that("bayesfactor_models BIC", {
     mo1 <- lme4::lmer(Sepal.Length ~ (1 | Species), data = iris)
     mo2 <- lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
     mo3 <- lme4::lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-    mo4 <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
-    mo5 <- lme4::lmer(Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species), data = iris)
-    mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris[-1, ])
+    mo4 <- lme4::lmer(
+      Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species),
+      data = iris
+    )
+    mo5 <- lme4::lmer(
+      Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species),
+      data = iris
+    )
+    mo4_e <- lme4::lmer(
+      Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species),
+      data = iris[-1, ]
+    )
   }))
 
   # both uses of denominator
@@ -22,7 +31,8 @@ test_that("bayesfactor_models BIC", {
   expect_equal(
     BFM1,
     bayesfactor_models(list(mo2 = mo2, mo3 = mo3, mo4 = mo4, mo1 = mo1), denominator = 4),
-    tolerance = 1e-4, ignore_attr = TRUE
+    tolerance = 1e-4,
+    ignore_attr = TRUE
   )
 
   # only on same data!
@@ -32,7 +42,8 @@ test_that("bayesfactor_models BIC", {
   expect_equal(update(BFM2, subset = c(1, 2))$log_BF, c(1, 57.3, 54.52), tolerance = 0.1)
 
   # update reference
-  expect_equal(update(BFM2, reference = 1)$log_BF,
+  expect_equal(
+    update(BFM2, reference = 1)$log_BF,
     c(0, -2.8, -6.2, -57.4),
     tolerance = 0.1
   )
@@ -73,6 +84,24 @@ test_that("bayesfactor_models BIC (unsupported / diff nobs)", {
   suppressWarnings(expect_message(bayesfactor_models(fit1, fit2b), "Unable"))
 })
 
+test_that("bayesfactor_models | bayesfactor_matrix", {
+  data("mtcars")
+  lm1 <- lm(mpg ~ 1, data = mtcars)
+  lm2 <- lm(mpg ~ hp, data = mtcars)
+  lm3 <- lm(mpg ~ hp + drat, data = mtcars)
+  lm4 <- lm(mpg ~ hp * drat, data = mtcars)
+  BFM1 <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
+  BFM2 <- update(BFM1, reference = 2)
+
+  bfmat <- as.matrix(BFM1)
+  expect_identical(as.matrix(BFM2), bfmat)
+
+  expect_identical(unname(diag(bfmat)), rep(0, 4))
+  expect_identical(-t(bfmat)[upper.tri(bfmat)], bfmat[upper.tri(bfmat)])
+
+  expect_output(print(bfmat), regexp = "Denominator\\\\Numerator")
+})
+
 
 # bayesfactor_models STAN ---------------------------------------------
 
@@ -99,7 +128,6 @@ test_that("bayesfactor_models STAN", {
     diagnostic_file = file.path(tempdir(), "df1.csv")
   ))
 
-
   set.seed(333) # compare against bridgesampling
   bridge_BF <- bridgesampling::bayes_factor(
     bridgesampling::bridge_sampler(stan_bf_1, silent = TRUE),
@@ -121,6 +149,34 @@ test_that("bayesfactor_models BRMS", {
   # Checks for brms models
   skip_on_cran()
   # skip_on_ci()
+
+  skip(message = "Currently fails, due to bridgesampling?")
+  #   1. ├─base::suppressWarnings(...) at tests/testthat/test-bayesfactor_models.R:176:3
+  #   2. │ └─base::withCallingHandlers(...)
+  #   3. ├─base::suppressMessages(...)
+  #   4. │ └─base::withCallingHandlers(...)
+  #   5. ├─testthat::expect_message(...)
+  #   6. │ └─testthat:::expect_condition_matching_(...)
+  #   7. │   └─testthat:::quasi_capture(...)
+  #   8. │     ├─testthat (local) .capture(...)
+  #   9. │     │ └─base::withCallingHandlers(...)
+  #  10. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+  #  11. ├─bayestestR::bayesfactor_models(stan_brms_model_0, stan_brms_model_1) at tests/testthat/test-bayesfactor_models.R:179:9
+  #  12. └─bayestestR:::bayesfactor_models.brmsfit(stan_brms_model_0, stan_brms_model_1) at bayestestR/R/bayesfactor_models.R:164:3
+  #  13.   └─bayestestR:::.bayesfactor_models_stan(...) at bayestestR/R/bayesfactor_models.R:399:3
+  #  14.     └─bayestestR:::.bayesfactor_models_stan_REG(...) at bayestestR/R/bayesfactor_models.R:307:5
+  #  15.       └─base::lapply(mods, .get_marglik, verbose = verbose) at bayestestR/R/bayesfactor_models.R:343:3
+  #  16.         └─bayestestR (local) FUN(X[[i]], ...)
+  #  17.           ├─bridgesampling::bridge_sampler(mod, silent = TRUE) at bayestestR/R/bayesfactor_models.R:605:3
+  #  18.           └─brms:::bridge_sampler.brmsfit(mod, silent = TRUE)
+  #  19.             └─brms:::update_misc_env(samples, recompile = recompile)
+  #  20.               └─brms::add_rstan_model(x, overwrite = TRUE)
+  #  21.                 ├─base::suppressMessages(...)
+  #  22.                 │ └─base::withCallingHandlers(...)
+  #  23.                 └─rstan::stan(...)
+  #  24.                   └─rstan::stan_model(...)
+  #  25.                     └─rstan:::cxxfunctionplus(...)
+  #  26.                       └─base::sink(type = 'output')
 
   skip_if_not_or_load_if_installed("bridgesampling")
   skip_if_not_or_load_if_installed("brms")
@@ -191,7 +247,8 @@ test_that("bayesfactor_inclusion | BayesFactor", {
   expect_equal(
     bayesfactor_inclusion(BF_ToothGrowth),
     bayesfactor_inclusion(bayesfactor_models(BF_ToothGrowth)),
-    tolerance = 1e-4, ignore_attr = TRUE
+    tolerance = 1e-4,
+    ignore_attr = TRUE
   )
 })
 
@@ -210,6 +267,14 @@ test_that("bayesfactor_inclusion | LMM", {
   # plus match_models
   bfinc_matched <- bayesfactor_inclusion(BFM4, match_models = TRUE)
   expect_equal(bfinc_matched$p_prior, c(1, 0.2, 0.6, 0.2, 0.2), tolerance = 0.1)
-  expect_equal(bfinc_matched$p_posterior, c(1, 0.875, 0.125, 0.009, 0.002), tolerance = 0.1)
-  expect_equal(bfinc_matched$log_BF, c(NaN, 58.904, -3.045, -3.573, -1.493), tolerance = 0.1)
+  expect_equal(
+    bfinc_matched$p_posterior,
+    c(1, 0.875, 0.125, 0.009, 0.002),
+    tolerance = 0.1
+  )
+  expect_equal(
+    bfinc_matched$log_BF,
+    c(NaN, 58.904, -3.045, -3.573, -1.493),
+    tolerance = 0.1
+  )
 })

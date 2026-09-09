@@ -24,6 +24,8 @@ tests\^spelling
 \.lintr$
 ^CRAN-SUBMISSION$
 ^data-raw$
+^tests/testthat/_snaps/.
+^GEMINI\.md$
 
 ^man/figures/JASP.
 ^man/figures/b.
@@ -45,3 +47,5 @@ tests\^spelling
 ^vignettes/p.
 ^vignettes/r.
 ^vignettes/web_only
+
+air.toml

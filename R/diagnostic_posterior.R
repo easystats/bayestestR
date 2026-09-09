@@ -3,17 +3,38 @@
 #' Extract diagnostic metrics (Effective Sample Size (`ESS`), `Rhat` and Monte
 #' Carlo Standard Error `MCSE`).
 #'
-#' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object.
+#' @param posterior A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object; a
+#' list of data frames or matrices representing MCMC chains (rows as samples,
+#' columns as parameters); or a 3D array (dimensions: samples, chains,
+#' parameters)
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
-#'   with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
+#' with one or more of these options: `"ESS"`, `"ESS_bulk"`, `"Rhat"`, `"MCSE"`
+#' or `"all"`. `"ESS"` returns the **tail-ESS** (the minimum of the effective
+#' sample sizes for the 5% and 95% quantiles), which is the most relevant
+#' diagnostic for assessing the reliability of credible intervals and other
+#' tail-based quantities. `"ESS_bulk"` additionally returns the **bulk-ESS**
+#' (the effective sample size for the bulk of the posterior, useful for
+#' assessing the reliability of central tendency estimates such as the mean or
+#' median). `"all"` includes both tail and bulk `"ESS"`, `"Rhat"`, and `"MCSE"`.
+#' @param centrality The point-estimate (centrality index) for which to compute
+#' the MCSE. Can be `"median"` (default) or `"mean"`. To not break other
+#' functions like `describe_posterior()` or `diagnostic_posterior()`, all other
+#' values are silently converted to `"median"`.
+#'
+#' @inheritSection hdi Model components
 #'
 #' @details
 #'   **Effective Sample (ESS)** should be as large as possible, although for
 #'   most applications, an effective sample size greater than 1000 is sufficient
-#'   for stable estimates (_Bürkner, 2017_). The ESS corresponds to the number of
-#'   independent samples with the same estimation power as the N autocorrelated
-#'   samples. It is is a measure of "how much independent information there is
-#'   in autocorrelated chains" (_Kruschke 2015, p182-3_).
+#'   for stable estimates (_Bürkner, 2017_). The ESS returned by
+#'   `diagnostic_posterior()` is the **tail-ESS**: it corresponds to the
+#'   minimum of the effective sample sizes for the 5% and 95% quantiles, and
+#'   is a diagnostic for the sampling efficiency in the tails of the posterior
+#'   distribution. It is more relevant than the bulk-ESS for assessing
+#'   the reliability of credible intervals, probabilities of direction, and
+#'   other tail-based quantities. Note that the tail-ESS may differ from the
+#'   ESS reported by `brms` (`Bulk_ESS`) or other tools; use `"ESS_bulk"` to
+#'   also retrieve the bulk-ESS.
 #'
 #'   **Rhat** should be the closest to 1. It should not be larger than 1.1
 #'   (_Gelman and Rubin, 1992_) or 1.01 (_Vehtari et al., 2019_). The split
@@ -40,6 +61,15 @@
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' diagnostic_posterior(model)
 #' }
+#' @examplesIf require("rstan")
+#' set.seed(101)
+#' mkdata <- function(nrow = 1000, ncol = 2, parnm = LETTERS[1:ncol]) {
+#'   x <- as.data.frame(replicate(ncol, rnorm(nrow)))
+#'   names(x) <- parnm
+#'   x
+#' }
+#' dd <- replicate(5, mkdata(), simplify = FALSE)
+#' diagnostic_posterior(dd)
 #' @references
 #' - Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation
 #'   using multiple sequences. Statistical science, 7(4), 457-472.
@@ -56,18 +86,77 @@ diagnostic_posterior <- function(posterior, ...) {
 
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.default <- function(posterior, diagnostic = c("ESS", "Rhat"), ...) {
-  insight::format_error("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.")
+diagnostic_posterior.default <- function(posterior, diagnostic = "all", ...) {
+  ## check input, coerce to array
+  if (is.list(posterior)) {
+    for (i in seq_along(posterior)) {
+      p <- posterior[[i]]
+      if (
+        !((inherits(p, "data.frame") || inherits(p, "matrix")) &&
+          (length(dim(p)) == 2) &&
+          (ncol(p) == ncol(posterior[[1]])))
+      ) {
+        insight::format_error(
+          "'posterior' must be a 3D array or a list of data frames with equal numbers of columns."
+        )
+      }
+    }
+    insight::check_if_installed("posterior")
+    posterior <- posterior::as_draws_array(posterior)
+    ## draws_array() class messes things up downstream ...
+    class(posterior) <- "array"
+  }
+  if (!(inherits(posterior, "array") && length(dim(posterior)) == 3)) {
+    insight::format_error("Expecting a 3D array for 'posterior'.")
+  }
+
+  ret <- data.frame(Parameter = colnames(posterior[[1]]))
+  if (is.null(diagnostic)) {
+    return(ret)
+  }
+
+  .diag_opts <- c("Rhat", "ESS", "ESS_bulk", "MCSE")
+  if (diagnostic == "all") {
+    diagnostic <- c("Rhat", "ESS", "MCSE")
+  }
+
+  ## need ESS for MCSE, so compute these in any case
+  insight::check_if_installed("rstan")
+  mon <- rstan::monitor(posterior, print = FALSE, probs = 0.5)
+  mon_df <- as.data.frame(mon)
+  # Use Tail_ESS if available (rstan >= 2.21), otherwise fall back to n_eff
+  ess_col <- if ("Tail_ESS" %in% names(mon_df)) {
+    round(mon_df[["Tail_ESS"]])
+  } else {
+    mon_df[["n_eff"]]
+  }
+  ret <- data.frame(
+    Parameter = rownames(mon),
+    ESS = ess_col,
+    Rhat = mon_df[["Rhat"]],
+    MCSE = mon_df[["MCSE_Q50"]]
+  )
+  if ("ESS_bulk" %in% diagnostic && "Bulk_ESS" %in% names(mon_df)) {
+    ret$ESS_bulk <- round(mon_df[["Bulk_ESS"]])
+  }
+  ret[c("Parameter", intersect(diagnostic, names(ret)))]
 }
 
 #' @inheritParams insight::get_parameters.BFBayesFactor
 #' @inheritParams insight::get_parameters
+#'
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
+diagnostic_posterior.stanreg <- function(
+  posterior,
+  diagnostic = "all",
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  centrality = "median",
+  ...
+) {
   # Find parameters
-  effects <- match.arg(effects)
-  component <- match.arg(component)
   params <- insight::find_parameters(
     posterior,
     effects = effects,
@@ -81,23 +170,49 @@ diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects 
     return(data.frame(Parameter = params))
   }
 
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "ESS_bulk", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
+
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
+    diagnostic <- c("ESS_tail", "ESS_bulk", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- diagnostic
-    if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+    if ("Rhat" %in% diagnostic) {
+      diagnostic <- c(diagnostic, "khat")
+    }
+  }
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if ("ESS" %in% diagnostic) {
+    diagnostic[diagnostic == "ESS"] <- "ESS_tail"
   }
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posterior$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
-  if ("n_eff" %in% names(diagnostic_df)) {
-    diagnostic_df$ESS <- diagnostic_df$n_eff
-  }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "all")
+  MCSE <- mcse(posterior, effects = "full", centrality = centrality)
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
+
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if (any(c("ESS_tail", "ESS_bulk") %in% diagnostic)) {
+    ess_data <- effective_sample(
+      posterior,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    )
+    if ("ESS_tail" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+      # fmt: skip
+      diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
+    }
+    if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
+      # fmt: skip
+      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS_bulk, ess_data$Parameter)[diagnostic_df$Parameter]
+    }
+  }
 
   # Select columns
   available_columns <- intersect(colnames(diagnostic_df), c("Parameter", diagnostic))
@@ -115,13 +230,15 @@ diagnostic_posterior.stanreg <- function(posterior, diagnostic = "all", effects 
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.stanmvreg <- function(posterior,
-                                           diagnostic = "all",
-                                           effects = c("fixed", "random", "all"),
-                                           parameters = NULL,
-                                           ...) {
+diagnostic_posterior.stanmvreg <- function(
+  posterior,
+  diagnostic = "all",
+  effects = "fixed",
+  parameters = NULL,
+  centrality = "median",
+  ...
+) {
   # Find parameters
-  effects <- match.arg(effects)
   all_params <- insight::find_parameters(
     posterior,
     effects = effects,
@@ -129,33 +246,59 @@ diagnostic_posterior.stanmvreg <- function(posterior,
     flatten = FALSE
   )
 
-  params <- unlist(lapply(names(all_params), function(i) {
-    all_params[[i]]$sigma <- NULL
-    unlist(all_params[[i]], use.names = FALSE)
-  }), use.names = FALSE)
+  params <- unlist(
+    lapply(names(all_params), function(i) {
+      all_params[[i]]$sigma <- NULL
+      unlist(all_params[[i]], use.names = FALSE)
+    }),
+    use.names = FALSE
+  )
 
   # If no diagnostic
   if (is.null(diagnostic)) {
     return(data.frame(Parameter = params))
   }
 
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "ESS_bulk", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
+
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
+    diagnostic <- c("ESS_tail", "ESS_bulk", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- diagnostic
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+  }
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if ("ESS" %in% diagnostic) {
+    diagnostic[diagnostic == "ESS"] <- "ESS_tail"
   }
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posterior$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
-  if ("n_eff" %in% names(diagnostic_df)) {
-    diagnostic_df$ESS <- diagnostic_df$n_eff
-  }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = effects)
+  MCSE <- mcse(posterior, effects = effects, centrality = centrality)
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
+
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if (any(c("ESS_tail", "ESS_bulk") %in% diagnostic)) {
+    ess_data <- effective_sample(
+      posterior,
+      effects = effects,
+      parameters = parameters
+    )
+    if ("ESS_tail" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+      # fmt: skip
+      diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
+    }
+    if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
+      # fmt: skip
+      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS_bulk, ess_data$Parameter)[diagnostic_df$Parameter]
+    }
+  }
 
   # Select columns
   available_columns <- intersect(colnames(diagnostic_df), c("Parameter", diagnostic))
@@ -167,28 +310,38 @@ diagnostic_posterior.stanmvreg <- function(posterior,
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   diagnostic_df$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", diagnostic_df$Parameter)
-  for (i in unique(diagnostic_df$Response)) {
-    diagnostic_df$Parameter <- gsub(sprintf("%s|", i), "", diagnostic_df$Parameter, fixed = TRUE)
-  }
 
   # Select rows
-  diagnostic_df[diagnostic_df$Parameter %in% params, ]
+  diagnostic_df <- diagnostic_df[diagnostic_df$Parameter %in% params, ]
+
+  # clean parameters
+  for (i in unique(diagnostic_df$Response)) {
+    diagnostic_df$Parameter <- gsub(
+      sprintf("%s|", i),
+      "",
+      diagnostic_df$Parameter,
+      fixed = TRUE
+    )
+  }
+
+  diagnostic_df
 }
 
 
 #' @inheritParams insight::get_parameters
-#' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.brmsfit <- function(posterior,
-                                         diagnostic = "all",
-                                         effects = c("fixed", "random", "all"),
-                                         component = c("conditional", "zi", "zero_inflated", "all"),
-                                         parameters = NULL,
-                                         ...) {
+diagnostic_posterior.brmsfit <- function(
+  posterior,
+  diagnostic = "all",
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  centrality = "median",
+  ...
+) {
   # Find parameters
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  params <- insight::find_parameters(posterior,
+  params <- insight::find_parameters(
+    posterior,
     effects = effects,
     component = component,
     parameters = parameters,
@@ -201,30 +354,72 @@ diagnostic_posterior.brmsfit <- function(posterior,
   }
 
   # Get diagnostic
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "ESS_bulk", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
+
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE", "khat") # Add MCSE
-  } else if ("Rhat" %in% diagnostic) {
-    diagnostic <- c(diagnostic, "khat")
+    diagnostic <- c("ESS_tail", "ESS_bulk", "Rhat", "MCSE")
+  }
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if ("ESS" %in% diagnostic) {
+    diagnostic[diagnostic == "ESS"] <- "ESS_tail"
   }
 
-  insight::check_if_installed("rstan")
+  # Initialize diagnostic dataframe
+  diagnostic_df <- data.frame(Parameter = params, stringsAsFactors = FALSE)
 
-  # Get indices and rename
-  diagnostic_df <- as.data.frame(rstan::summary(posterior$fit)$summary)
-  diagnostic_df$Parameter <- row.names(diagnostic_df)
-  diagnostic_df$ESS <- diagnostic_df$n_eff
-  # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posterior, effects = "all", component = "all")
-  diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
+  # Use posterior::summarise_draws() as single source for Rhat and ESS
+  if (any(c("ESS_tail", "ESS_bulk", "Rhat") %in% diagnostic)) {
+    insight::check_if_installed("posterior")
+    idx <- as.data.frame(posterior::summarise_draws(posterior))
+    idx <- idx[idx$variable %in% params, ]
 
-  # Select columns
-  available_columns <- intersect(colnames(diagnostic_df), c("Parameter", diagnostic))
-  diagnostic_df <- diagnostic_df[available_columns]
-  names(diagnostic_df)[available_columns == "khat"] <- "Khat"
+    if ("Rhat" %in% diagnostic) {
+      rhat_df <- data.frame(
+        Parameter = idx$variable,
+        Rhat = idx$rhat,
+        stringsAsFactors = FALSE
+      )
+      diagnostic_df <- merge(diagnostic_df, rhat_df, by = "Parameter", all.x = TRUE)
+    }
+
+    if ("ESS_tail" %in% diagnostic) {
+      ess_df <- data.frame(
+        Parameter = idx$variable,
+        ESS_tail = round(idx$ess_tail),
+        stringsAsFactors = FALSE
+      )
+      diagnostic_df <- merge(diagnostic_df, ess_df, by = "Parameter", all.x = TRUE)
+    }
+
+    if ("ESS_bulk" %in% diagnostic) {
+      ess_bulk_df <- data.frame(
+        Parameter = idx$variable,
+        ESS_bulk = round(idx$ess_bulk),
+        stringsAsFactors = FALSE
+      )
+      diagnostic_df <- merge(diagnostic_df, ess_bulk_df, by = "Parameter", all.x = TRUE)
+    }
+  }
+
+  # MCSE
+  if ("MCSE" %in% diagnostic) {
+    MCSE <- mcse(
+      posterior,
+      effects = effects,
+      component = component,
+      parameters = parameters,
+      centrality = centrality
+    )
+    diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all.x = TRUE)
+  }
+
   row.names(diagnostic_df) <- NULL
 
-  # Remove columns with all Nans
+  # Remove columns with all NAs
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   # Select rows
@@ -234,10 +429,21 @@ diagnostic_posterior.brmsfit <- function(posterior,
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+diagnostic_posterior.stanfit <- function(
+  posterior,
+  diagnostic = "all",
+  effects = "fixed",
+  parameters = NULL,
+  centrality = "median",
+  ...
+) {
   # Find parameters
-  effects <- match.arg(effects)
-  params <- insight::find_parameters(posterior, effects = effects, parameters = parameters, flatten = TRUE)
+  params <- insight::find_parameters(
+    posterior,
+    effects = effects,
+    parameters = parameters,
+    flatten = TRUE
+  )
 
   # If no diagnostic
   if (is.null(diagnostic)) {
@@ -245,29 +451,42 @@ diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects 
   }
 
   # Get diagnostic
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "ESS_bulk", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE")
+    diagnostic <- c("ESS_tail", "ESS_bulk", "Rhat", "MCSE")
+  }
+  # ESS: use tail ESS by default, with optional bulk ESS
+  if ("ESS" %in% diagnostic) {
+    diagnostic[diagnostic == "ESS"] <- "ESS_tail"
   }
 
   insight::check_if_installed("rstan")
 
-  all_params <- insight::find_parameters(posterior,
-    effects = effects,
-    flatten = TRUE
-  )
+  all_params <- insight::find_parameters(posterior, effects = effects, flatten = TRUE)
 
   diagnostic_df <- data.frame(
     Parameter = all_params,
     stringsAsFactors = FALSE
   )
 
-  if ("ESS" %in% diagnostic) {
-    diagnostic_df$ESS <- effective_sample(posterior, effects = effects)$ESS
+  if (any(c("ESS_tail", "ESS_bulk") %in% diagnostic)) {
+    ess_data <- effective_sample(posterior, effects = effects, parameters = parameters)
+    if ("ESS_tail" %in% diagnostic && "ESS_tail" %in% names(ess_data)) {
+      # fmt: skip
+      diagnostic_df$ESS_tail <- stats::setNames(ess_data$ESS_tail, ess_data$Parameter)[diagnostic_df$Parameter]
+    }
+    if ("ESS_bulk" %in% diagnostic && "ESS_bulk" %in% names(ess_data)) {
+      # fmt: skip
+      diagnostic_df$ESS_bulk <- stats::setNames(ess_data$ESS_bulk, ess_data$Parameter)[diagnostic_df$Parameter]
+    }
   }
 
   if ("MCSE" %in% diagnostic) {
-    diagnostic_df$MCSE <- mcse(posterior, effects = effects)$MCSE
+    diagnostic_df$MCSE <- mcse(posterior, effects = effects, centrality = centrality)$MCSE
   }
 
   if ("Rhat" %in% diagnostic) {
@@ -284,6 +503,46 @@ diagnostic_posterior.stanfit <- function(posterior, diagnostic = "all", effects 
 
 
 #' @export
+diagnostic_posterior.CmdStanFit <- function(
+  posterior,
+  diagnostic = "all",
+  parameters = NULL,
+  ...
+) {
+  if ("all" %in% diagnostic) {
+    diagnostic <- c("ESS", "Rhat", "MCSE")
+  }
+
+  insight::check_if_installed("posterior")
+  insight::check_if_installed("cmdstanr")
+
+  pars <- insight::find_parameters(posterior, flatten = TRUE)
+  if (!is.null(parameters)) {
+    pars <- pars[!grepl(parameters, pars)]
+  }
+
+  draws <- posterior$draws(format = "draws_df", variables = pars)
+
+  out <- posterior::summarize_draws(
+    draws,
+    posterior::default_convergence_measures(),
+    MCSE = posterior::mcse_mean
+  )
+  out <- datawizard::data_rename(
+    as.data.frame(out),
+    c(
+      Parameter = "variable",
+      ESS = "ess_bulk",
+      ESS_tail = "ess_tail",
+      Rhat = "rhat"
+    )
+  )
+
+  out[, c("Parameter", diagnostic), drop = FALSE]
+}
+
+
+#' @export
 diagnostic_posterior.blavaan <- function(posterior, diagnostic = "all", ...) {
   # Find parameters
   params <- suppressWarnings(insight::find_parameters(posterior, flatten = TRUE))
@@ -295,7 +554,11 @@ diagnostic_posterior.blavaan <- function(posterior, diagnostic = "all", ...) {
     return(out)
   }
 
-  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  diagnostic <- match.arg(
+    diagnostic,
+    c("ESS", "Rhat", "MCSE", "all"),
+    several.ok = TRUE
+  )
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
   } else {
@@ -319,7 +582,6 @@ diagnostic_posterior.blavaan <- function(posterior, diagnostic = "all", ...) {
     ESS <- effective_sample(posterior)
     out <- merge(out, ESS, by = "Parameter", all = TRUE)
   }
-
 
   if ("MCSE" %in% diagnostic) {
     MCSE <- mcse(posterior)

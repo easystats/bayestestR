@@ -1,6 +1,7 @@
 skip_on_cran()
+skip_if_not_installed("curl")
 skip_if_offline()
-skip_if_not_or_load_if_installed("httr2")
+skip_if_not_installed("httr2")
 
 test_that("rstanarm to freq", {
   skip_if_not_or_load_if_installed("rstanarm")

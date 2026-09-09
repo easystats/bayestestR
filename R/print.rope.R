@@ -28,7 +28,9 @@ print.rope <- function(x, digits = 2, ...) {
 
   # These are the base columns we want to print
   cols <- c(
-    attr(x, "idvars"), "Parameter", "ROPE_Percentage", "Effects", "Component",
+    attr(x, "idvars"), "Parameter",
+    "ROPE_Percentage", "Superiority_Percentage", "Inferiority_Percentage",
+    "Effects", "Component",
     if (is_multivariate) c("ROPE_low", "ROPE_high")
   )
 
@@ -49,8 +51,11 @@ print.rope <- function(x, digits = 2, ...) {
   x <- subset(x, select = intersect(cols, colnames(x)))
 
   # This is just cosmetics, to have nicer column names and values
-  x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage * 100)
-  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
+  iv <- intersect(colnames(x), c("ROPE_Percentage", "Superiority_Percentage", "Inferiority_Percentage"))
+  x[iv] <- lapply(x[iv], function(v) sprintf("%.*f %%", digits, v * 100))
+  colnames(x)[colnames(x) == "ROPE_Percentage"] <- "Inside ROPE"
+  colnames(x)[colnames(x) == "Superiority_Percentage"] <- "Above ROPE"
+  colnames(x)[colnames(x) == "Inferiority_Percentage"] <- "Below ROPE"
 
   # Add ROPE width for multivariate models
   if (isTRUE(is_multivariate)) {

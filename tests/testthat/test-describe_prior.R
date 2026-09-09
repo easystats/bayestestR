@@ -1,8 +1,9 @@
 test_that("describe_prior", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("BayesFactor")
   skip_on_os("linux")
 

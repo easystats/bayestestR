@@ -80,13 +80,13 @@
   random <- random.data <- NULL
 
   if (effects %in% c("fixed", "all")) {
-    fixed.data <- insight::get_parameters(x, effects = "fixed", parameters = parameters)
+    fixed.data <- insight::get_parameters(x, effects = "fixed", parameters = parameters, verbose = verbose)
     fixed <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
     fixed$Group <- "fixed"
   }
 
   if (effects %in% c("random", "all")) {
-    random.data <- insight::get_parameters(x, effects = "random", parameters = parameters)
+    random.data <- insight::get_parameters(x, effects = "random", parameters = parameters, verbose = verbose)
     random <- .compute_interval_dataframe(random.data, ci, verbose, fun)
     random$Group <- "random"
   }
@@ -103,7 +103,7 @@
 
 #' @keywords internal
 .compute_interval_sim <- function(x, ci, parameters, verbose, fun) {
-  fixed.data <- insight::get_parameters(x, parameters = parameters)
+  fixed.data <- insight::get_parameters(x, parameters = parameters, verbose = verbose)
   d <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
   list(result = d, data = fixed.data)
 }

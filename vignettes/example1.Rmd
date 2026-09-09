@@ -1,6 +1,6 @@
 ---
 title: "1. Initiation to Bayesian models"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{1. Initiation to Bayesian models}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 csl: apa.csl
@@ -37,9 +37,11 @@ options(digits = 2)
 
 set.seed(333)
 
-if (!requireNamespace("rstanarm", quietly = TRUE) ||
-  !requireNamespace("datawizard", quietly = TRUE) ||
-  !requireNamespace("ggplot2", quietly = TRUE)) {
+if (
+  !requireNamespace("rstanarm", quietly = TRUE) ||
+    !requireNamespace("datawizard", quietly = TRUE) ||
+    !requireNamespace("ggplot2", quietly = TRUE)
+) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -65,7 +67,7 @@ library(insight)
 
 ## Simple linear (regression) model
 
-We will begin by conducting a simple linear regression to test the relationship between `Petal.Length` (our predictor, or *independent*, variable) and `Sepal.Length` (our response, or *dependent*, variable) from the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset which is included by default in R. 
+We will begin by conducting a simple linear regression to test the relationship between `Petal.Length` (our predictor, or *independent*, variable) and `Sepal.Length` (our response, or *dependent*, variable) from the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset which is included by default in R.
 
 
 ### Fitting the model
@@ -115,7 +117,7 @@ set.seed(333)
 model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris)
 ```
 
-You can see the sampling algorithm being run. 
+You can see the sampling algorithm being run.
 
 ### Extracting the posterior
 
@@ -171,13 +173,26 @@ draws equals **`4 chains * (2000 iterations - 1000 warm-up) = 4000`**.
 We can change that, for instance:
 
 ```{r , eval=FALSE}
-model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris, chains = 2, iter = 1000, warmup = 250)
+model <- stan_glm(
+  Sepal.Length ~ Petal.Length,
+  data = iris,
+  chains = 2,
+  iter = 1000,
+  warmup = 250
+)
 
 nrow(get_parameters(model)) # Size (number of rows)
 ```
- 
+
 ```{r echo=FALSE, , comment=NA, echo=FALSE}
-model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris, chains = 2, iter = 1000, warmup = 250, refresh = 0)
+model <- stan_glm(
+  Sepal.Length ~ Petal.Length,
+  data = iris,
+  chains = 2,
+  iter = 1000,
+  warmup = 250,
+  refresh = 0
+)
 nrow(get_parameters(model)) # Size (number of rows)
 ```
 
@@ -229,7 +244,7 @@ importance of this effect.
 **What single value can best represent my posterior distribution?**
 
 Centrality indices, such as the *mean*, the *median*, or the *mode* are usually
-used as point-estimates. But what's the difference between them? 
+used as point-estimates. But what's the difference between them?
 
 Let's answer this by first inspecting the **mean**:
 
@@ -253,7 +268,7 @@ distribution? In the Bayesian framework, this value is called the **Maximum A Po
 map_estimate(posteriors$Petal.Length)
 ```
 
-**They are all very close!** 
+**They are all very close!**
 
 Let's visualize these values on the posterior distribution:
 
@@ -265,7 +280,11 @@ ggplot(posteriors, aes(x = Petal.Length)) +
   # The median in red
   geom_vline(xintercept = median(posteriors$Petal.Length), color = "red", linewidth = 1) +
   # The MAP in purple
-  geom_vline(xintercept = as.numeric(map_estimate(posteriors$Petal.Length)), color = "purple", linewidth = 1)
+  geom_vline(
+    xintercept = as.numeric(map_estimate(posteriors$Petal.Length)),
+    color = "purple",
+    linewidth = 1
+  )
 ```
 
 Well, all these values give very similar results. Thus, **we will choose the median**, as this value has a direct meaning from a probabilistic perspective: **there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower** (as it divides the distribution in two equal parts).
@@ -290,9 +309,7 @@ Interval
 (HDI)](https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis).
 It will give us the range containing the 89\% most probable effect values.
 **Note that we will use 89\% CIs instead of 95\%** CIs (as in the frequentist
-framework), as the 89\% level gives more [stable results](https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89)
-[@kruschke2014doing] and reminds us about the arbitrariness of such conventions
-[@mcelreath2018statistical].
+framework) - see discussion on choice of credibility level [here](https://easystats.github.io/bayestestR/articles/credible_interval.html).
 
 ```{r }
 hdi(posteriors$Petal.Length, ci = 0.89)
@@ -340,10 +357,7 @@ model <- stan_glm(weight ~ feed, data = data)
 ```
 
 ```{r echo=FALSE, , comment=NA, results='hide'}
-model <- stan_glm(weight ~ feed,
-  data = data,
-  chains = 10, iter = 5000, warmup = 1000
-)
+model <- stan_glm(weight ~ feed, data = data, chains = 10, iter = 5000, warmup = 1000)
 ```
 
 ### Posterior description
@@ -359,7 +373,7 @@ ggplot(posteriors, aes(x = feedsunflower)) +
 This represents the **posterior distribution of the difference** between
 `meatmeal` and `sunflowers`. It seems that the difference is **positive**
 (since the values are concentrated on the right side of 0). Eating sunflowers
-makes you more fat (*at least, if you're a chicken*). But, **by how much?** 
+makes you more fat (*at least, if you're a chicken*). But, **by how much?**
 
 Let us compute the **median** and the **CI**:
 
@@ -374,7 +388,7 @@ It makes you fat by around 51 grams (the median). However, the uncertainty is qu
 
 ### ROPE Percentage
 
-Testing whether this distribution is different from 0 doesn't make sense, as 0 is a single value (*and the probability that any distribution is different from a single value is infinite*). 
+Testing whether this distribution is different from 0 doesn't make sense, as 0 is a single value (*and the probability that any distribution is different from a single value is infinite*).
 
 However, one way to assess **significance** could be to define an area *around* 0,
 which will consider as *practically equivalent* to zero (*i.e.*, absence of, or
@@ -462,7 +476,7 @@ twosided_p
 ```
 
 If we ran our model in the frequentist framework, we should approximately
-observe an effect with a *p*-value of `r round(twosided_p, digits=3)`. 
+observe an effect with a *p*-value of `r round(twosided_p, digits=3)`.
 **Is that true?**
 
 #### Comparison to frequentist
@@ -472,7 +486,7 @@ observe an effect with a *p*-value of `r round(twosided_p, digits=3)`.
 summary(lm(weight ~ feed, data = data))
 ```
 
-The frequentist model tells us that the difference is **positive and significant** 
+The frequentist model tells us that the difference is **positive and significant**
 ($\beta = 52, p = 0.04$).
 
 **Although we arrived to a similar conclusion, the Bayesian framework allowed us to develop a more profound and intuitive understanding of our effect, and of the uncertainty of its estimation.**

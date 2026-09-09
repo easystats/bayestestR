@@ -1,12 +1,12 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.15.1.2
+Version: 0.18.1.3
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
              role = c("aut", "cre"),
-             email = "dom.makowski@gmail.com",
+             email = "officialeasystats@gmail.com",
              comment = c(ORCID = "0000-0001-5375-9967")),
       person(given = "Daniel",
              family = "Lüdecke",
@@ -55,8 +55,13 @@ Authors@R:
              family = "Crawley",
              role = "ctb",
              email = "sam@crawley.nz",
-             comment = c(ORCID = "0000-0002-7847-0411")))
-Maintainer: Dominique Makowski <dom.makowski@gmail.com>
+             comment = c(ORCID = "0000-0002-7847-0411")),
+      person(given = "Miura",
+             family = "Meng",
+             role = "ctb",
+             email = "haomeng797@gmail.com",
+             comment = c(ORCID = "0009-0004-1522-1997")))
+Maintainer: Dominique Makowski <officialeasystats@gmail.com>
 Description: Provides utilities to describe posterior
     distributions and Bayesian models. It includes point-estimates such as
     Maximum A Posteriori (MAP), measures of dispersion (Highest Density
@@ -66,8 +71,8 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.6)
 Imports:
-    insight (>= 1.0.0),
-    datawizard (>= 1.0.0),
+    insight (>= 1.5.3),
+    datawizard (>= 1.3.1),
     graphics,
     methods,
     stats,
@@ -79,7 +84,8 @@ Suggests:
     betareg,
     BH,
     blavaan,
-    bridgesampling,
+    boot,
+    bridgesampling (>= 1.2-1),
     brms,
     collapse,
     curl,
@@ -95,8 +101,9 @@ Suggests:
     knitr,
     lavaan,
     lme4,
+    lmerTest,
     logspline (>= 2.1.21),
-    marginaleffects (>= 0.24.0),
+    marginaleffects (>= 0.29.0),
     MASS,
     mclust,
     mediation,
@@ -105,14 +112,15 @@ Suggests:
     parameters,
     patchwork,
     performance,
-    quadprog,
     posterior,
+    quadprog,
     RcppEigen,
     rmarkdown,
     rstan,
     rstanarm,
     see (>= 0.8.5),
     testthat,
+    tinytable,
     tweedie,
     withr
 License: GPL-3
@@ -122,10 +130,10 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
+Config/roxygen2/version: 8.1.0

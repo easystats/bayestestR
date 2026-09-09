@@ -3,6 +3,9 @@
 #' Compute the proportion of the whole posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running `rope(..., ci = 1)`.
 #'
 #' @inheritParams rope
+#' @param ... Other arguments passed to [rope()].
+#'
+#' @inheritSection hdi Model components
 #'
 #' @examples
 #' library(bayestestR)
@@ -72,7 +75,7 @@ p_rope.rvar <- p_rope.draws
 
 #' @export
 p_rope.emmGrid <- function(x, range = "default", verbose = TRUE, ...) {
-  xdf <- insight::get_parameters(x)
+  xdf <- insight::get_parameters(x, verbose = verbose)
   out <- p_rope(xdf, range = range, verbose = verbose)
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -104,20 +107,11 @@ p_rope.BFBayesFactor <- p_rope.numeric
 p_rope.MCMCglmm <- p_rope.numeric
 
 
-#' @rdname p_rope
 #' @export
 p_rope.stanreg <- function(x,
                            range = "default",
-                           effects = c("fixed", "random", "all"),
-                           component = c(
-                             "location",
-                             "all",
-                             "conditional",
-                             "smooth_terms",
-                             "sigma",
-                             "distributional",
-                             "auxiliary"
-                           ),
+                           effects = "fixed",
+                           component = "location",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
@@ -131,13 +125,16 @@ p_rope.stanreg <- function(x,
     verbose = verbose,
     ...
   ))
-  out <- .add_clean_parameters_attribute(out, x)
+  out <- .add_clean_parameters_attribute(out, x, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
 #' @export
 p_rope.stanfit <- p_rope.stanreg
+
+#' @export
+p_rope.CmdStanFit <- p_rope.stanreg
 
 #' @export
 p_rope.blavaan <- p_rope.stanreg
@@ -147,8 +144,8 @@ p_rope.blavaan <- p_rope.stanreg
 #' @export
 p_rope.brmsfit <- function(x,
                            range = "default",
-                           effects = c("fixed", "random", "all"),
-                           component = c("conditional", "zi", "zero_inflated", "all"),
+                           effects = "fixed",
+                           component = "conditional",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
@@ -162,7 +159,7 @@ p_rope.brmsfit <- function(x,
     verbose = verbose,
     ...
   ))
-  out <- .add_clean_parameters_attribute(out, x)
+  out <- .add_clean_parameters_attribute(out, x, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -182,11 +179,10 @@ p_rope.sim <- function(x, range = "default", parameters = NULL, verbose = TRUE, 
 #' @export
 p_rope.bamlss <- function(x,
                           range = "default",
-                          component = c("all", "conditional", "location"),
+                          component = "all",
                           parameters = NULL,
                           verbose = TRUE,
                           ...) {
-  component <- match.arg(component)
   out <- .p_rope(rope(
     x,
     range = range,
@@ -204,7 +200,14 @@ p_rope.bamlss <- function(x,
 
 #' @export
 p_rope.mcmc <- function(x, range = "default", parameters = NULL, verbose = TRUE, ...) {
-  out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, verbose = verbose, ...))
+  out <- .p_rope(rope(
+    x,
+    range = range,
+    ci = 1,
+    parameters = parameters,
+    verbose = verbose,
+    ...
+  ))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -227,9 +230,17 @@ p_rope.mcmc.list <- p_rope.mcmc
 
 #' @keywords internal
 .p_rope <- function(rope_rez) {
-  cols <- c("Parameter", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Effects", "Component")
+  cols <- c(
+    "Parameter", "ROPE_low", "ROPE_high", "ROPE_Percentage",
+    "Superiority_Percentage", "Inferiority_Percentage", "Effects", "Component"
+  )
   out <- as.data.frame(rope_rez)[cols[cols %in% names(rope_rez)]]
+
   names(out)[names(out) == "ROPE_Percentage"] <- "p_ROPE"
+  if (all(c("Superiority_Percentage", "Inferiority_Percentage") %in% names(out))) {
+    names(out)[names(out) == "Superiority_Percentage"] <- "p_Superiority"
+    names(out)[names(out) == "Inferiority_Percentage"] <- "p_Inferiority"
+  }
 
   class(out) <- c("p_rope", "see_p_rope", "data.frame")
   out

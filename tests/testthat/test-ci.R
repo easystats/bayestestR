@@ -1,4 +1,4 @@
-test_that("ci", {
+test_that("ci-output", {
   skip_on_os(c("mac", "linux"))
   skip_if_not_or_load_if_installed("quadprog")
   set.seed(123)
@@ -7,15 +7,28 @@ test_that("ci", {
   out <- capture.output(print(ci(x, method = "SPI")))
   expect_identical(out, "95% SPI: [-1.16, 6.76]")
   out <- capture.output(print(ci(x, method = "BCI")))
+  expect_identical(out, "95% BCa: [-0.79, 7.19]")
+  out <- capture.output(print(ci(x)))
   expect_identical(out, "95% ETI: [-0.88, 7.08]")
 })
 
 
-test_that("ci", {
-  expect_equal(ci(distribution_normal(1000), ci = 0.90)$CI_low[1], -1.6361, tolerance = 0.02)
-  expect_equal(nrow(ci(distribution_normal(1000), ci = c(0.80, 0.90, 0.95))), 3, tolerance = 0.01)
+test_that("ci-distributions", {
+  expect_equal(
+    ci(distribution_normal(1000), ci = 0.90)$CI_low[1],
+    -1.6361,
+    tolerance = 0.02
+  )
+  expect_equal(
+    nrow(ci(distribution_normal(1000), ci = c(0.80, 0.90, 0.95))),
+    3,
+    tolerance = 0.01
+  )
   expect_equal(ci(distribution_normal(1000), ci = 1)$CI_low[1], -3.29, tolerance = 0.02)
-  expect_length(capture.output(print(ci(distribution_normal(1000), ci = c(0.80, 0.90)))), 5)
+  expect_length(
+    capture.output(print(ci(distribution_normal(1000), ci = c(0.80, 0.90)))),
+    5
+  )
 
   expect_equal(ci(c(2, 3, NA))$CI_low, 2.02, tolerance = 1e-2)
   expect_warning(ci(c(2, 3)))
@@ -29,10 +42,11 @@ test_that("ci", {
 })
 
 
-test_that("ci", {
+test_that("ci-models", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
 
   m <- insight::download_model("stanreg_merMod_5")
@@ -47,9 +61,10 @@ test_that("ci", {
 
 
 test_that("rope", {
+  skip_if_not_installed("curl")
   skip_if_offline()
+  skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("httr2")
   skip_if_not_or_load_if_installed("brms")
 
   m <- insight::download_model("brms_zi_3")

@@ -18,6 +18,8 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
+#' @inheritSection hdi Model components
+#'
 #' @return A data frame with following columns:
 #'
 #' - `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a
@@ -47,19 +49,20 @@
 #' ci(df, method = "ETI", ci = c(0.80, 0.89, 0.95))
 #' ci(df, method = "HDI", ci = c(0.80, 0.89, 0.95))
 #'
-#' model <- suppressWarnings(
-#'   stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
-#' )
-#' ci(model, method = "ETI", ci = c(0.80, 0.89))
-#' ci(model, method = "HDI", ci = c(0.80, 0.89))
+#' model <- suppressWarnings(rstanarm::stan_glm(
+#'   mpg ~ wt,
+#'   data = mtcars, chains = 2, iter = 200, refresh = 0
+#' ))
+#' ci(model, method = "ETI", ci = c(0.80, 0.89, 0.95))
+#' ci(model, method = "HDI", ci = c(0.80, 0.89, 0.95))
 #'
 #' @examplesIf require("BayesFactor", quietly = TRUE)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' ci(bf, method = "ETI")
 #' ci(bf, method = "HDI")
 #'
 #' @examplesIf require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)
-#' model <- emtrends(model, ~1, "wt", data = mtcars)
+#' model <- emmeans::emtrends(model, ~1, "wt", data = mtcars)
 #' ci(model, method = "ETI")
 #' ci(model, method = "HDI")
 #' @export
@@ -69,15 +72,17 @@ ci <- function(x, ...) {
 
 
 #' @keywords internal
-.ci_bayesian <- function(x,
-                         ci = 0.95,
-                         method = "ETI",
-                         effects = c("fixed", "random", "all"),
-                         component = c("conditional", "zi", "zero_inflated", "all"),
-                         parameters = NULL,
-                         verbose = TRUE,
-                         BF = 1,
-                         ...) {
+.ci_bayesian <- function(
+  x,
+  ci = 0.95,
+  method = "ETI",
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE,
+  BF = 1,
+  ...
+) {
   if (tolower(method) %in% c("eti", "equal", "ci", "quantile")) {
     return(
       eti(
@@ -159,7 +164,15 @@ ci.numeric <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...
 #' @rdname ci
 #' @inheritParams p_direction
 #' @export
-ci.data.frame <- function(x, ci = 0.95, method = "ETI", BF = 1, rvar_col = NULL, verbose = TRUE, ...) {
+ci.data.frame <- function(
+  x,
+  ci = 0.95,
+  method = "ETI",
+  BF = 1,
+  rvar_col = NULL,
+  verbose = TRUE,
+  ...
+) {
   x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
   if (length(x_rvar) > 0L) {
     cl <- match.call()
@@ -180,7 +193,14 @@ ci.data.frame <- function(x, ci = 0.95, method = "ETI", BF = 1, rvar_col = NULL,
 
 #' @export
 ci.draws <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...) {
-  .ci_bayesian(.posterior_draws_to_df(x), ci = ci, method = method, verbose = verbose, BF = BF, ...)
+  .ci_bayesian(
+    .posterior_draws_to_df(x),
+    ci = ci,
+    method = method,
+    verbose = verbose,
+    BF = BF,
+    ...
+  )
 }
 
 #' @export
@@ -191,30 +211,38 @@ ci.rvar <- ci.draws
 ci.emmGrid <- function(x, ci = NULL, ...) {
   if (!.is_baysian_grid(x)) {
     insight::check_if_installed("parameters")
-    if (is.null(ci)) ci <- 0.95
+    if (is.null(ci)) {
+      ci <- 0.95
+    }
     return(parameters::ci(model = x, ci = ci, ...))
   }
 
-  if (is.null(ci)) ci <- 0.95
+  if (is.null(ci)) {
+    ci <- 0.95
+  }
   xdf <- insight::get_parameters(x)
   out <- ci(xdf, ci = ci, ...)
   out <- .append_datagrid(out, x, long = length(ci) > 1L)
   out
 }
 
-
 #' @export
 ci.emm_list <- ci.emmGrid
+
 
 #' @export
 ci.slopes <- function(x, ci = NULL, ...) {
   if (!.is_baysian_grid(x)) {
     insight::check_if_installed("parameters")
-    if (is.null(ci)) ci <- 0.95
+    if (is.null(ci)) {
+      ci <- 0.95
+    }
     return(parameters::ci(model = x, ci = ci, ...))
   }
 
-  if (is.null(ci)) ci <- 0.95
+  if (is.null(ci)) {
+    ci <- 0.95
+  }
   xrvar <- .get_marginaleffects_draws(x)
   out <- ci(xrvar, ci = ci, ...)
   out <- .append_datagrid(out, x, long = length(ci) > 1L)
@@ -228,15 +256,16 @@ ci.comparisons <- ci.slopes
 ci.predictions <- ci.slopes
 
 
-#' @rdname ci
 #' @export
-ci.sim.merMod <- function(x,
-                          ci = 0.95,
-                          method = "ETI",
-                          effects = c("fixed", "random", "all"),
-                          parameters = NULL,
-                          verbose = TRUE,
-                          ...) {
+ci.sim.merMod <- function(
+  x,
+  ci = 0.95,
+  method = "ETI",
+  effects = "fixed",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   .ci_bayesian(
     x,
     ci = ci,
@@ -249,14 +278,8 @@ ci.sim.merMod <- function(x,
 }
 
 
-#' @rdname ci
 #' @export
-ci.sim <- function(x,
-                   ci = 0.95,
-                   method = "ETI",
-                   parameters = NULL,
-                   verbose = TRUE,
-                   ...) {
+ci.sim <- function(x, ci = 0.95, method = "ETI", parameters = NULL, verbose = TRUE, ...) {
   .ci_bayesian(
     x,
     ci = ci,
@@ -268,25 +291,18 @@ ci.sim <- function(x,
 }
 
 
-#' @rdname ci
 #' @export
-ci.stanreg <- function(x,
-                       ci = 0.95,
-                       method = "ETI",
-                       effects = c("fixed", "random", "all"),
-                       component = c(
-                         "location",
-                         "all",
-                         "conditional",
-                         "smooth_terms",
-                         "sigma",
-                         "distributional",
-                         "auxiliary"
-                       ),
-                       parameters = NULL,
-                       verbose = TRUE,
-                       BF = 1,
-                       ...) {
+ci.stanreg <- function(
+  x,
+  ci = 0.95,
+  method = "ETI",
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  verbose = TRUE,
+  BF = 1,
+  ...
+) {
   .ci_bayesian(
     x,
     ci = ci,
@@ -303,15 +319,17 @@ ci.stanreg <- function(x,
 
 #' @rdname ci
 #' @export
-ci.brmsfit <- function(x,
-                       ci = 0.95,
-                       method = "ETI",
-                       effects = c("fixed", "random", "all"),
-                       component = c("conditional", "zi", "zero_inflated", "all"),
-                       parameters = NULL,
-                       verbose = TRUE,
-                       BF = 1,
-                       ...) {
+ci.brmsfit <- function(
+  x,
+  ci = 0.95,
+  method = "ETI",
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE,
+  BF = 1,
+  ...
+) {
   .ci_bayesian(
     x,
     ci = ci,
@@ -329,14 +347,15 @@ ci.brmsfit <- function(x,
 ci.stanfit <- ci.stanreg
 
 #' @export
+ci.CmdStanFit <- ci.stanreg
+
+#' @export
 ci.blavaan <- ci.stanreg
 
-#' @rdname ci
 #' @export
 ci.BFBayesFactor <- ci.numeric
 
 
-#' @rdname ci
 #' @export
 ci.MCMCglmm <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
@@ -351,15 +370,16 @@ ci.MCMCglmm <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, ...) {
 
 
 #' @export
-ci.bamlss <- function(x,
-                      ci = 0.95,
-                      method = "ETI",
-                      component = c("all", "conditional", "location"),
-                      verbose = TRUE,
-                      ...) {
-  component <- match.arg(component)
+ci.bamlss <- function(
+  x,
+  ci = 0.95,
+  method = "ETI",
+  component = "all",
+  verbose = TRUE,
+  ...
+) {
   ci(
-    insight::get_parameters(x, component = component),
+    insight::get_parameters(x, component = component, verbose = verbose),
     ci = ci,
     method = method,
     verbose = verbose,

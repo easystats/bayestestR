@@ -9,6 +9,17 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
+#' @section Draws-only approximation:
+#' Classical bootstrap BCa intervals use the original estimate (`t0`) for the
+#' bias correction and empirical influence or jackknife values for the
+#' acceleration. These quantities are not available when `x` contains only
+#' draws. In that case, `bci()` uses the mean of the draws as the reference
+#' estimate and one sixth of their standardized third moment as the
+#' acceleration. The resulting interval is therefore an approximation and can
+#' differ from `boot::boot.ci()`, which has access to `t0` and the original data.
+#'
+#' @inheritSection hdi Model components
+#'
 #' @references
 #' DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals.
 #' Statistical Science. 11(3): 189–212. 10.1214/ss/1032280214
@@ -33,7 +44,15 @@ bci.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .bci(x = x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("bayestestR_eti", "see_eti", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c(
+    "bayestestR_bci",
+    "see_bci",
+    "bayestestR_eti",
+    "see_eti",
+    "bayestestR_ci",
+    "see_ci",
+    class(out)
+  ))
   attr(out, "data") <- x
   out
 }
@@ -75,7 +94,6 @@ bci.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
 bci.rvar <- bci.draws
 
 
-#' @rdname bci
 #' @export
 bci.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
@@ -98,11 +116,10 @@ bci.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 bci.bamlss <- function(x,
                        ci = 0.95,
-                       component = c("all", "conditional", "location"),
+                       component = "all",
                        verbose = TRUE,
                        ...) {
-  component <- match.arg(component)
-  d <- insight::get_parameters(x, component = component)
+  d <- insight::get_parameters(x, component = component, verbose = verbose)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "bci")
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -111,7 +128,7 @@ bci.bamlss <- function(x,
 
 #' @export
 bci.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  d <- insight::get_parameters(x)
+  d <- insight::get_parameters(x, verbose = verbose)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "bci")
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -131,15 +148,13 @@ bci.mcmc.list <- bci.bcplm
 bci.BGGM <- bci.bcplm
 
 
-#' @rdname bci
 #' @export
 bci.sim.merMod <- function(x,
                            ci = 0.95,
-                           effects = c("fixed", "random", "all"),
+                           effects = "fixed",
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
-  effects <- match.arg(effects)
   dat <- .compute_interval_simMerMod(
     x = x,
     ci = ci,
@@ -154,7 +169,6 @@ bci.sim.merMod <- function(x,
 }
 
 
-#' @rdname bci
 #' @export
 bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
   dat <- .compute_interval_sim(
@@ -170,10 +184,9 @@ bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 }
 
 
-#' @rdname bci
 #' @export
 bci.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xdf <- insight::get_parameters(x)
+  xdf <- insight::get_parameters(x, verbose = verbose)
   dat <- bci(xdf, ci = ci, verbose = verbose, ...)
   dat <- .append_datagrid(dat, x, long = length(ci) > 1L)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -183,7 +196,6 @@ bci.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 bci.emm_list <- bci.emmGrid
 
-#' @rdname bci
 #' @export
 bci.slopes <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xrvar <- .get_marginaleffects_draws(x)
@@ -199,35 +211,32 @@ bci.comparisons <- bci.slopes
 #' @export
 bci.predictions <- bci.slopes
 
-#' @rdname bci
 #' @export
 bci.stanreg <- function(x,
                         ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                        effects = "fixed",
+                        component = "location",
                         parameters = NULL,
                         verbose = TRUE,
                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
   out <- .prepare_output(
     bci(
       insight::get_parameters(
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        verbose = verbose
       ),
       ci = ci,
       verbose = verbose,
       ...
     ),
-    insight::clean_parameters(x),
+    .get_cleaned_parameters(x, ...),
     inherits(x, "stanmvreg")
   )
 
-  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
+  class(out) <- unique(c("bayestestR_bci", "see_bci", "bayestestR_eti", "see_eti", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -237,39 +246,43 @@ bci.stanreg <- function(x,
 bci.stanfit <- bci.stanreg
 
 #' @export
+bci.CmdStanFit <- bci.stanreg
+
+#' @export
 bci.blavaan <- bci.stanreg
 
 
 #' @rdname bci
 #' @export
-bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
-                        component = c("conditional", "zi", "zero_inflated", "all"),
-                        parameters = NULL, verbose = TRUE, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+bci.brmsfit <- function(x,
+                        ci = 0.95,
+                        effects = "fixed",
+                        component = "conditional",
+                        parameters = NULL,
+                        verbose = TRUE,
+                        ...) {
   out <- .prepare_output(
     bci(
       insight::get_parameters(
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        verbose = verbose
       ),
       ci = ci,
       verbose = verbose,
       ...
     ),
-    insight::clean_parameters(x)
+    .get_cleaned_parameters(x, ...)
   )
 
-  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
+  class(out) <- unique(c("bayestestR_bci", "see_bci", "bayestestR_eti", "see_eti", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
 
-#' @rdname bci
 #' @export
 bci.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- bci(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
@@ -298,6 +311,7 @@ bci.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 
 
 .bci <- function(x, ci, verbose = TRUE) {
+  x <- x[!is.na(x)]
   check_ci <- .check_ci_argument(x, ci, verbose)
 
   if (!is.null(check_ci)) {
@@ -310,10 +324,24 @@ bci.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   z.inv <- length(x[x < mean(x, na.rm = TRUE)]) / sims
 
   z <- stats::qnorm(z.inv)
-  U <- (sims - 1) * (mean(x, na.rm = TRUE) - x)
-  top <- sum(U^3)
-  under <- 6 * (sum(U^2))^1.5
-  a <- top / under
+
+  # no draw below the mean: the draws are constant, the interval is a point
+  if (!is.finite(z)) {
+    return(data.frame(
+      CI = ci,
+      CI_low = min(x, na.rm = TRUE),
+      CI_high = max(x, na.rm = TRUE)
+    ))
+  }
+
+  # The draws estimate the distribution of the statistic directly, so the
+  # acceleration is one sixth of their standardized third moment: for a smooth
+  # statistic this converges to the jackknife estimator of DiCiccio & Efron
+  # (1996, eq. 6.6), and unlike the influence formula it does not depend on
+  # the number of draws.
+  deviation <- x - mean(x, na.rm = TRUE)
+  a <- mean(deviation^3, na.rm = TRUE) / (6 * mean(deviation^2, na.rm = TRUE)^1.5)
+  if (!is.finite(a)) a <- 0
 
   lower.inv <- stats::pnorm(z + (z + stats::qnorm(low)) / (1 - a * (z + stats::qnorm(low))))
   lower <- stats::quantile(x, lower.inv, names = FALSE, na.rm = TRUE)

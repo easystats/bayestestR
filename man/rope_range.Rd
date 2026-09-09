@@ -47,7 +47,7 @@ but it is strongly advised to specify it manually.
 }
 }
 \examples{
-\dontshow{if (require("rstanarm") && require("brms") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("brms") && require("BayesFactor")) withAutoprint(\{ # examplesIf}
 \donttest{
 model <- suppressWarnings(rstanarm::stan_glm(
   mpg ~ wt + gear,

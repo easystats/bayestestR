@@ -7,9 +7,14 @@
 diagnostic_draws(posterior, ...)
 }
 \arguments{
-\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
+\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object; a
+list of data frames or matrices representing MCMC chains (rows as samples,
+columns as parameters); or a 3D array (dimensions: samples, chains,
+parameters)}
 
-\item{...}{Currently not used.}
+\item{...}{Currently only used for models of class \code{brmsfit}, where a \code{variable}
+argument can be used, which is directly passed to the \code{as.data.frame()}
+method (i.e., \code{as.data.frame(x, variable = variable)}).}
 }
 \description{
 Returns the accumulated log-posterior, the average Metropolis acceptance rate, divergent transitions, treedepth rather than terminated its evolution normally.

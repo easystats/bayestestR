@@ -2,38 +2,93 @@
 % Please edit documentation in R/check_prior.R
 \name{check_prior}
 \alias{check_prior}
+\alias{check_prior.brmsfit}
 \title{Check if Prior is Informative}
 \usage{
 check_prior(model, method = "gelman", simulate_priors = TRUE, ...)
+
+\method{check_prior}{brmsfit}(
+  model,
+  method = "gelman",
+  simulate_priors = TRUE,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
 
-\item{method}{Can be \code{"gelman"} or \code{"lakeland"}. For the
-\code{"gelman"} method, if the SD of the posterior is more than 0.1 times
-the SD of the prior, then the prior is considered as informative. For the
-\code{"lakeland"} method, the prior is considered as informative if the
-posterior falls within the \verb{95\%} HDI of the prior.}
+\item{method}{Can be \code{"gelman"} or \code{"lakeland"}. For the \code{"gelman"} method,
+if the SD of the posterior is more than 0.1 times the SD of the prior, then
+the prior is considered as informative. For the \code{"lakeland"} method, the
+prior is considered as informative if the posterior falls within the \verb{95\%}
+HDI of the prior.}
 
 \item{simulate_priors}{Should prior distributions be simulated using
-\code{\link[=simulate_prior]{simulate_prior()}} (default; faster) or sampled via
-\code{\link[=unupdate]{unupdate()}} (slower, more accurate).}
+\code{\link[=simulate_prior]{simulate_prior()}} (default; faster) or sampled via \code{\link[=unupdate]{unupdate()}} (slower,
+more accurate).}
 
 \item{...}{Currently not used.}
+
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
+
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
+
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section \emph{Model Components}. May be abbreviated.
+Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to \emph{all} model classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
+
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
+
+\item{verbose}{Toggle off warnings.}
 }
 \value{
-A data frame with two columns: The parameter names and the quality
-of the prior (which might be \code{"informative"}, \code{"uninformative"})
-or \code{"not determinable"} if the prior distribution could not be
-determined).
+A data frame with two columns: The parameter names and the quality of
+the prior (which might be \code{"informative"}, \code{"uninformative"}) or
+\code{"not determinable"} if the prior distribution could not be determined).
 }
 \description{
 Performs a simple test to check whether the prior is informative to the
 posterior. This idea, and the accompanying heuristics, were discussed in
-\emph{Gelman et al. 2017}.
+\emph{Gelman et al. 2017}. For a visual check of the prior predictive
+distribution, see \code{\link[performance:check_priors]{performance::check_priors()}}.
 }
 \examples{
-\dontshow{if (require("rstanarm") && require("see")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("see")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(bayestestR)
 model <- rstanarm::stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
@@ -58,4 +113,7 @@ plot(si(model, verbose = FALSE))
 Gelman, A., Simpson, D., and Betancourt, M. (2017). The Prior Can Often Only
 Be Understood in the Context of the Likelihood. Entropy, 19(10), 555.
 \doi{10.3390/e19100555}
+}
+\seealso{
+\code{\link[performance:check_priors]{performance::check_priors()}}
 }

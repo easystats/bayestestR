@@ -1,9 +1,133 @@
+# bayestestR (devel)
+
+## Breaking Changes
+
+* `p_to_bf()` arguments `n_obs` and `log` have changed positions in the function call.
+
+## Changes
+
+* `p_to_bf()` documentation improvements as well as better implementation for models (and mixed models).
+
+## Bug fixes
+
+* Fixed the acceleration estimate in `bci()`, so skewed intervals are adjusted
+  in the correct direction (#572).
+
+# bayestestR 0.18.1
+
+## Changes
+
+* `mcse()` gains a `centrality` argument to return the appropriate MCSE.
+
+## Bug fixes
+
+* Fixed failing CRAN checks.
+
+# bayestestR 0.18.0
+
+## New functionality
+
+* Improved Bayes factor methods:
+
+  * New docs at `?bayesfactor_methods`
+
+  * `as.matrix()` for `bayesfactor_restricted()`, to obtain a matrix of Bayes factors between all restricted models.
+
+* Added support for `CmdStanFit` models from `{cmdstanr}` and expanded support for `stanfit` models from `rstan`.
+
+
+## Changes
+
+* `as.matrix(<bf>)` now returns class `bayesfactor_matrix` and has a simpler
+  printing.
+
+* `diagnostic_posterior()` works with 'raw' MCMC samples (i.e., lists of data
+  frames or matrices representing samples of parameters from chains, or 3D arrays)
+  as well as objects from rstanarm/brms/lavaan models.
+
+* `diagnostic_posterior()` now reports the **tail-ESS** (the minimum of the
+  effective sample sizes for the 5% and 95% quantiles) in the `ESS` column,
+  instead of the basic `n_eff` from older Stan versions. The tail-ESS is more
+  relevant for assessing the reliability of credible intervals and other
+  tail-based quantities. To also obtain the bulk-ESS (useful for central
+  tendency estimates), pass `"ESS_bulk"` to the `diagnostic` argument.
+
+* `effective_sample()` for `stanfit` objects now also returns the tail-ESS
+  (`ESS_tail`), consistent with `brmsfit` and `stanreg` objects.
+
+# bayestestR 0.17.0
+
+## Changes
+
+* `rope()` (and by extension `p_rope()`) gain a new `complement` argument such
+  that `rope(x, complement = TRUE)` returns the ROPE posterior probability
+  together with the posterior probabilities above/below the ROPE (the
+  _complementary_ probabilities).
+
+* Added `display()` methods for *bayestestR* objects. The `display()` methods
+  also get a new `format` option, `format = "tt"`, to produce tables with the
+  `tinytable` package.
+
+* The long deprecated `rnorm_perfect()` function has been removed. Use
+  `distribution_normal()` instead.
+
+* Prepare for upcoming changes in *marginaleffects* (0.29.0).
+
+# bayestestR 0.16.1
+
+## Changes
+
+* Improved efficiency for `describe_posterior()`.
+
+* Minor improvements for models with multinomial response variables.
+
+* Minor improvements for mixture models from package *brms*.
+
+# bayestestR 0.16.0
+
+## Changes
+
+* Revised code-base to address changes in latest *insight* update. Dealing with
+  larger models (many parameters, many posterior samples) from packages *brms*
+  and *rstanarm* is more efficient now. Furthermore, the options for the
+  `effects` argument have a new behavior. `"all"` only returns fixed effects
+  and random effects variance components, but no longer the group level
+  estimates. Use `effects = "full"` to return all parameters. This change is
+  mainly to be more flexible and gain more efficiency for models with many
+  parameters and / or many posterior draws.
+
+# bayestestR 0.15.3
+
+## Changes
+
+* `effective_sample()`, and functions that call `effective_sample()` (like
+  `describe_posterior()` with the respective `test` option) now also return
+  the tail ESS.
+
+## Bug fixes
+
+* `describe_posterior()` now returns a columns with response levels for
+  *marginaleffects* objects applied to categorical or multinomial Stan models.
+
+* `describe_posterior()` now returns a columns with response variables for
+  *marginaleffects* objects applied to multivariate response Stan models.
+
+* Fixed issue in `map_estimate()` and `point_estimate(centrality = "MAP")` for
+  vectors with only one unique value.
+
 # bayestestR 0.15.2
 
 ## Changes
 
 * `describe_posterior()` no longer re-samples a model when computing
   indices.
+
+* `describe_posterior()` calls tests only when needed. Before, there was a
+  minimal overhead by calling tests that were not requested.
+
+## Bug fixes
+
+* Fixed failing test for Mac OS.
 
 # bayestestR 0.15.1
 
@@ -348,7 +472,7 @@
 
 ## Bug fixes
 
-- Link transformation are now taken into account for `emmeans` objets. E.g., in
+- Link transformation are now taken into account for `emmeans` objects. E.g., in
   `describe_posterior()`.
 
 - Fix `diagnostic_posterior()` when algorithm is not "sampling".
@@ -366,7 +490,7 @@
 
 - `p_significance()` now also works on `parameters::simulate_model()`.
 
-- `rope_range()` supports more (frequentis) models.
+- `rope_range()` supports more (frequentist) models.
 
 ## Bug fixes
 

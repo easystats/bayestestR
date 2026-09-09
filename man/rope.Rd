@@ -6,17 +6,26 @@
 \alias{rope.data.frame}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
-\title{Region of Practical Equivalence (ROPE)}
+\title{Region of Practical Equivalence (ROPE) Analysis}
 \usage{
 rope(x, ...)
 
-\method{rope}{numeric}(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...)
+\method{rope}{numeric}(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 \method{rope}{data.frame}(
   x,
   range = "default",
   ci = 0.95,
   ci_method = "ETI",
+  complement = FALSE,
   rvar_col = NULL,
   verbose = TRUE,
   ...
@@ -27,9 +36,9 @@ rope(x, ...)
   range = "default",
   ci = 0.95,
   ci_method = "ETI",
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
+  complement = FALSE,
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -40,8 +49,9 @@ rope(x, ...)
   range = "default",
   ci = 0.95,
   ci_method = "ETI",
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  complement = FALSE,
+  effects = "fixed",
+  component = "conditional",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -77,17 +87,49 @@ proportion of HDI, to use for the percentage in ROPE.}
 \item{ci_method}{The type of interval to use to quantify the percentage in
 ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link[=ci]{ci()}}.}
 
+\item{complement}{Should the probabilities above/below the ROPE (the
+\emph{complementary} probabilities) be returned as well? See
+\code{\link[=equivalence_test]{equivalence_test()}} as well.}
+
 \item{verbose}{Toggle off warnings.}
 
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
 
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
+
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section \emph{Model Components}. May be abbreviated.
+Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to \emph{all} model classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
 
 \item{parameters}{Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
@@ -96,7 +138,7 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \description{
-Compute the proportion of the HDI (default to the \verb{89\%} HDI) of a posterior
+Compute the proportion of the CI (default to the 95\% ETI) of a posterior
 distribution that lies within a region of practical equivalence.
 }
 \note{
@@ -104,48 +146,48 @@ There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{
 }
 \section{ROPE}{
 
-Statistically, the probability of a posterior distribution of being
-different from 0 does not make much sense (the probability of a single value
-null hypothesis in a continuous distribution is 0). Therefore, the idea
+
+Statistically, the probability of a posterior distribution of being different
+from 0 does not make much sense (the probability of a single value null
+hypothesis in a continuous distribution is 0). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are \emph{equivalent to the null} value for practical
 purposes (\emph{Kruschke 2010, 2011, 2014}).
 
-Kruschke (2018) suggests that such null value could be set, by default,
-to the -0.1 to 0.1 range of a standardized parameter (negligible effect
-size according to Cohen, 1988). This could be generalized: For instance,
-for linear models, the ROPE could be set as \verb{0 +/- .1 * sd(y)}.
-This ROPE range can be automatically computed for models using the
-\code{\link[=rope_range]{rope_range()}} function.
+Kruschke (2018) suggests that such null value could be set, by default, to
+the -0.1 to 0.1 range of a standardized parameter (negligible effect size
+according to Cohen, 1988). This could be generalized: For instance, for
+linear models, the ROPE could be set as \verb{0 +/- .1 * sd(y)}. This ROPE range
+can be automatically computed for models using the \code{\link[=rope_range]{rope_range()}} function.
 
-Kruschke (2010, 2011, 2014) suggests using the proportion of  the \verb{95\%}
-(or \verb{89\%}, considered more stable) \link[=hdi]{HDI} that falls within the
-ROPE as an index for "null-hypothesis" testing (as understood under the
-Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
+Kruschke (2010, 2011, 2014) suggests using the proportion of \link[=hdi]{HDI} that
+falls within the ROPE as an index for "null-hypothesis" testing (as
+understood under the Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
 }
 
 \section{Sensitivity to parameter's scale}{
 
-It is important to consider the unit (i.e., the scale) of the predictors
-when using an index based on the ROPE, as the correct interpretation of the
-ROPE as representing a region of practical equivalence to zero is dependent
-on the scale of the predictors. Indeed, the percentage in ROPE depend on
-the unit of its parameter. In other words, as the ROPE represents a fixed
-portion of the response's scale, its proximity with a coefficient depends
-on the scale of the coefficient itself.
+
+It is important to consider the unit (i.e., the scale) of the predictors when
+using an index based on the ROPE, as the correct interpretation of the ROPE
+as representing a region of practical equivalence to zero is dependent on the
+scale of the predictors. Indeed, the percentage in ROPE depend on the unit of
+its parameter. In other words, as the ROPE represents a fixed portion of the
+response's scale, its proximity with a coefficient depends on the scale of
+the coefficient itself.
 }
 
 \section{Multicollinearity - Non-independent covariates}{
 
+
 When parameters show strong correlations, i.e. when covariates are not
-independent, the joint parameter distributions may shift towards or
-away from the ROPE. Collinearity invalidates ROPE and hypothesis
-testing based on univariate marginals, as the probabilities are conditional
-on independence. Most problematic are parameters that only have partial
-overlap with the ROPE region. In case of collinearity, the (joint) distributions
-of these parameters may either get an increased or decreased ROPE, which
-means that inferences based on \code{rope()} are inappropriate
-(\emph{Kruschke 2014, 340f}).
+independent, the joint parameter distributions may shift towards or away from
+the ROPE. Collinearity invalidates ROPE and hypothesis testing based on
+univariate marginals, as the probabilities are conditional on independence.
+Most problematic are parameters that only have partial overlap with the ROPE
+region. In case of collinearity, the (joint) distributions of these
+parameters may either get an increased or decreased ROPE, which means that
+inferences based on \code{rope()} are inappropriate (\emph{Kruschke 2014, 340f}).
 
 \code{rope()} performs a simple check for pairwise correlations between
 parameters, but as there can be collinearity between more than two variables,
@@ -164,8 +206,37 @@ the scale (the unit) of the predictors. Not sensitive to highly significant
 effects.
 }
 
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
+}
+
 \examples{
-\dontshow{if (require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (all(insight::check_if_installed(c("rstanarm", "emmeans", "brms", "BayesFactor"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
@@ -173,9 +244,8 @@ rope(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 rope(x = rnorm(1000, 1, 1), ci = c(0.90, 0.95))
 \donttest{
-library(rstanarm)
 model <- suppressWarnings(
-  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 )
 rope(model)
 rope(model, ci = c(0.90, 0.95))
@@ -186,17 +256,14 @@ rope(model, range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 # named ROPE ranges
 rope(model, range = list(gear = c(-3, 2), wt = c(-0.2, 0.2)))
 
-library(emmeans)
-rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
+rope(emmeans::emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 
-library(brms)
-model <- brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 rope(model)
 rope(model, ci = c(0.90, 0.95))
 
-library(brms)
-model <- brm(
-  bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
+model <- brms::brm(
+  brms::bf(brms::mvbind(mpg, disp) ~ wt + cyl) + brms::set_rescor(rescor = TRUE),
   data = mtcars,
   refresh = 0
 )
@@ -214,8 +281,7 @@ rope(
   )
 )
 
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
+bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 rope(bf)
 rope(bf, ci = c(0.90, 0.95))
 }

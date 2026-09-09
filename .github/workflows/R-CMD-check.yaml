@@ -5,8 +5,6 @@
 # check-standard.yaml is likely a better choice.
 # usethis::use_github_action("check-standard") will install it.
 on:
-  push:
-    branches: [main, master]
   pull_request:
     branches: [main, master]
 

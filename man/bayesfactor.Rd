@@ -10,7 +10,7 @@ bayesfactor(
   direction = "two-sided",
   null = 0,
   hypothesis = NULL,
-  effects = c("fixed", "random", "all"),
+  effects = "fixed",
   verbose = TRUE,
   denominator = 1,
   match_models = FALSE,
@@ -32,8 +32,23 @@ tailed) or \code{1}, \code{"right"} (right tailed).}
 
 \item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
+
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -51,7 +66,7 @@ Some type of Bayes factor, depending on the input. See
 \code{\link[=bayesfactor_parameters]{bayesfactor_parameters()}}, \code{\link[=bayesfactor_models]{bayesfactor_models()}} or \code{\link[=bayesfactor_inclusion]{bayesfactor_inclusion()}}.
 }
 \description{
-This function compte the Bayes factors (BFs) that are appropriate to the
+This function computes the Bayes factors (BFs) that are appropriate to the
 input. For vectors or single models, it will compute \code{\link[=bayesfactor_parameters]{BFs for single parameters}}, or is \code{hypothesis} is specified,
 \code{\link[=bayesfactor_restricted]{BFs for restricted models}}. For multiple models,
 it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models}} and if a model comparison is passed, it will
@@ -63,7 +78,7 @@ For a complete overview of these functions, read the \href{https://easystats.git
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
-\dontshow{if (require("rstanarm") && require("logspline")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("logspline")) withAutoprint(\{ # examplesIf}
 \dontrun{
 library(bayestestR)
 

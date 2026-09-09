@@ -4,43 +4,59 @@
 \alias{diagnostic_posterior}
 \alias{diagnostic_posterior.default}
 \alias{diagnostic_posterior.stanreg}
-\alias{diagnostic_posterior.brmsfit}
 \title{Posteriors Sampling Diagnostic}
 \usage{
 diagnostic_posterior(posterior, ...)
 
-\method{diagnostic_posterior}{default}(posterior, diagnostic = c("ESS", "Rhat"), ...)
+\method{diagnostic_posterior}{default}(posterior, diagnostic = "all", ...)
 
 \method{diagnostic_posterior}{stanreg}(
   posterior,
   diagnostic = "all",
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
-  ...
-)
-
-\method{diagnostic_posterior}{brmsfit}(
-  posterior,
-  diagnostic = "all",
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL,
+  centrality = "median",
   ...
 )
 }
 \arguments{
-\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
+\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object; a
+list of data frames or matrices representing MCMC chains (rows as samples,
+columns as parameters); or a 3D array (dimensions: samples, chains,
+parameters)}
 
-\item{...}{Currently not used.}
+\item{...}{Currently only used for models of class \code{brmsfit}, where a \code{variable}
+argument can be used, which is directly passed to the \code{as.data.frame()}
+method (i.e., \code{as.data.frame(x, variable = variable)}).}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
-with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
+with one or more of these options: \code{"ESS"}, \code{"ESS_bulk"}, \code{"Rhat"}, \code{"MCSE"}
+or \code{"all"}. \code{"ESS"} returns the \strong{tail-ESS} (the minimum of the effective
+sample sizes for the 5\% and 95\% quantiles), which is the most relevant
+diagnostic for assessing the reliability of credible intervals and other
+tail-based quantities. \code{"ESS_bulk"} additionally returns the \strong{bulk-ESS}
+(the effective sample size for the bulk of the posterior, useful for
+assessing the reliability of central tendency estimates such as the mean or
+median). \code{"all"} includes both tail and bulk \code{"ESS"}, \code{"Rhat"}, and \code{"MCSE"}.}
 
 \item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
 (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
-be abbreviated.}
+be abbreviated.
+
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
 
 \item{component}{Which type of parameters to return, such as parameters for
 the conditional model, the zero-inflated part of the model, the dispersion
@@ -65,6 +81,11 @@ parameters) are returned.
 
 \item{parameters}{Regular expression pattern that describes the parameters that
 should be returned.}
+
+\item{centrality}{The point-estimate (centrality index) for which to compute
+the MCSE. Can be \code{"median"} (default) or \code{"mean"}. To not break other
+functions like \code{describe_posterior()} or \code{diagnostic_posterior()}, all other
+values are silently converted to \code{"median"}.}
 }
 \description{
 Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte
@@ -73,10 +94,15 @@ Carlo Standard Error \code{MCSE}).
 \details{
 \strong{Effective Sample (ESS)} should be as large as possible, although for
 most applications, an effective sample size greater than 1000 is sufficient
-for stable estimates (\emph{Bürkner, 2017}). The ESS corresponds to the number of
-independent samples with the same estimation power as the N autocorrelated
-samples. It is is a measure of "how much independent information there is
-in autocorrelated chains" (\emph{Kruschke 2015, p182-3}).
+for stable estimates (\emph{Bürkner, 2017}). The ESS returned by
+\code{diagnostic_posterior()} is the \strong{tail-ESS}: it corresponds to the
+minimum of the effective sample sizes for the 5\% and 95\% quantiles, and
+is a diagnostic for the sampling efficiency in the tails of the posterior
+distribution. It is more relevant than the bulk-ESS for assessing
+the reliability of credible intervals, probabilities of direction, and
+other tail-based quantities. Note that the tail-ESS may differ from the
+ESS reported by \code{brms} (\code{Bulk_ESS}) or other tools; use \code{"ESS_bulk"} to
+also retrieve the bulk-ESS.
 
 \strong{Rhat} should be the closest to 1. It should not be larger than 1.1
 (\emph{Gelman and Rubin, 1992}) or 1.01 (\emph{Vehtari et al., 2019}). The split
@@ -88,8 +114,37 @@ effective sample size (the formula for \code{mcse()} is from Kruschke 2015, p.
 187). The MCSE "provides a quantitative suggestion of how big the estimation
 noise is".
 }
+\section{Model components}{
+
+
+Possible values for the \code{component} argument depend on the model class.
+Following are valid options:
+\itemize{
+\item \code{"all"}: returns all model components, applies to all models, but will only
+have an effect for models with more than just the conditional model
+component.
+\item \code{"conditional"}: only returns the conditional component, i.e. "fixed
+effects" terms from the model. Will only have an effect for models with
+more than just the conditional model component.
+\item \code{"smooth_terms"}: returns smooth terms, only applies to GAMs (or similar
+models that may contain smooth terms).
+\item \code{"zero_inflated"} (or \code{"zi"}): returns the zero-inflation component.
+\item \code{"location"}: returns location parameters such as \code{conditional},
+\code{zero_inflated}, or \code{smooth_terms} (everything that are fixed or random
+effects - depending on the \code{effects} argument - but no auxiliary
+parameters).
+\item \code{"distributional"} (or \code{"auxiliary"}): components like \code{sigma},
+\code{dispersion}, \code{beta} or \code{precision} (and other auxiliary parameters) are
+returned.
+}
+
+For models of class \code{brmsfit} (package \strong{brms}), even more options are
+possible for the \code{component} argument, which are not all documented in detail
+here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
+}
+
 \examples{
-\dontshow{if (require("rstanarm") && require("brms")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm") && require("brms")) withAutoprint(\{ # examplesIf}
 \donttest{
 # rstanarm models
 # -----------------------------------------------
@@ -103,6 +158,16 @@ diagnostic_posterior(model)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 diagnostic_posterior(model)
 }
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("rstan")) withAutoprint(\{ # examplesIf}
+set.seed(101)
+mkdata <- function(nrow = 1000, ncol = 2, parnm = LETTERS[1:ncol]) {
+  x <- as.data.frame(replicate(ncol, rnorm(nrow)))
+  names(x) <- parnm
+  x
+}
+dd <- replicate(5, mkdata(), simplify = FALSE)
+diagnostic_posterior(dd)
 \dontshow{\}) # examplesIf}
 }
 \references{

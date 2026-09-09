@@ -14,7 +14,7 @@
 #'   `"rope"`, `"p_map"`, `"p_significance"` (or `"ps"`), `"p_rope"`,
 #'   `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`) or
 #'   `"all"` to compute all tests. For each "test", the corresponding
-#'   \pkg{bayestestR} function is called (e.g. [`rope()`] or [`p_direction()`])
+#'   **bayestestR** function is called (e.g. [`rope()`] or [`p_direction()`])
 #'   and its results included in the summary output.
 #' @param rope_range ROPE's lower and higher bounds. Should be a vector of two
 #'   values (e.g., `c(-0.1, 0.1)`), `"default"` or a list of numeric vectors of
@@ -36,6 +36,8 @@
 #' @inheritParams si
 #' @inheritParams hdi
 #'
+#' @inheritSection hdi Model components
+#'
 #' @details
 #' One or more components of point estimates (like posterior mean or median),
 #' intervals and tests can be omitted from the summary output by setting the
@@ -49,61 +51,60 @@
 #' - [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
 #' - [Bayes factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 #'
-#' @examples
+#' @examplesIf all(insight::check_if_installed(c("logspline", "rstanarm", "emmeans", "BayesFactor"), quietly = TRUE))
 #' library(bayestestR)
 #'
-#' if (require("logspline")) {
-#'   x <- rnorm(1000)
-#'   describe_posterior(x, verbose = FALSE)
-#'   describe_posterior(x,
-#'     centrality = "all",
-#'     dispersion = TRUE,
-#'     test = "all",
-#'     verbose = FALSE
-#'   )
-#'   describe_posterior(x, ci = c(0.80, 0.90), verbose = FALSE)
+#' x <- rnorm(1000)
+#' describe_posterior(x, verbose = FALSE)
+#' describe_posterior(x,
+#'   centrality = "all",
+#'   dispersion = TRUE,
+#'   test = "all",
+#'   verbose = FALSE
+#' )
+#' describe_posterior(x, ci = c(0.80, 0.90), verbose = FALSE)
 #'
-#'   df <- data.frame(replicate(4, rnorm(100)))
-#'   describe_posterior(df, verbose = FALSE)
-#'   describe_posterior(
-#'     df,
-#'     centrality = "all",
-#'     dispersion = TRUE,
-#'     test = "all",
-#'     verbose = FALSE
-#'   )
-#'   describe_posterior(df, ci = c(0.80, 0.90), verbose = FALSE)
+#' df <- data.frame(replicate(4, rnorm(100)))
+#' describe_posterior(df, verbose = FALSE)
+#' describe_posterior(
+#'   df,
+#'   centrality = "all",
+#'   dispersion = TRUE,
+#'   test = "all",
+#'   verbose = FALSE
+#' )
+#' describe_posterior(df, ci = c(0.80, 0.90), verbose = FALSE)
 #'
-#'   df <- data.frame(replicate(4, rnorm(20)))
-#'   head(reshape_iterations(
-#'     describe_posterior(df, keep_iterations = TRUE, verbose = FALSE)
-#'   ))
-#' }
+#' df <- data.frame(replicate(4, rnorm(20)))
+#' head(reshape_iterations(
+#'   describe_posterior(df, keep_iterations = TRUE, verbose = FALSE)
+#' ))
+#'
 #' \donttest{
 #' # rstanarm models
 #' # -----------------------------------------------
-#' if (require("rstanarm") && require("emmeans")) {
-#'   model <- suppressWarnings(
-#'     stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' model <- suppressWarnings(
+#'   rstanarm::stan_glm(
+#'     mpg ~ wt + gear,
+#'     data = mtcars, chains = 2, iter = 200,
+#'     refresh = 0
 #'   )
-#'   describe_posterior(model)
-#'   describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
-#'   describe_posterior(model, ci = c(0.80, 0.90))
-#'   describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
+#' )
+#' describe_posterior(model)
+#' describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
+#' describe_posterior(model, ci = c(0.80, 0.90))
+#' describe_posterior(model, rope_range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #'
-#'   # emmeans estimates
-#'   # -----------------------------------------------
-#'   describe_posterior(emtrends(model, ~1, "wt"))
-#' }
+#' # emmeans estimates
+#' # -----------------------------------------------
+#' describe_posterior(emmeans::emtrends(model, ~1, "wt"))
 #'
 #' # BayesFactor objects
 #' # -----------------------------------------------
-#' if (require("BayesFactor")) {
-#'   bf <- ttestBF(x = rnorm(100, 1, 1))
-#'   describe_posterior(bf)
-#'   describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
-#'   describe_posterior(bf, ci = c(0.80, 0.90))
-#' }
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
+#' describe_posterior(bf)
+#' describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
+#' describe_posterior(bf, ci = c(0.80, 0.90))
 #' }
 #' @export
 describe_posterior <- function(posterior, ...) {
@@ -114,25 +115,31 @@ describe_posterior <- function(posterior, ...) {
 #' @export
 describe_posterior.default <- function(posterior, ...) {
   insight::format_error(
-    paste0("`describe_posterior()` is not yet implemented for objects of class `", class(posterior)[1], "`.")
+    paste0(
+      "`describe_posterior()` is not yet implemented for objects of class `",
+      class(posterior)[1],
+      "`."
+    )
   )
 }
 
 
 #' @keywords internal
-.describe_posterior <- function(x,
-                                centrality = "median",
-                                dispersion = FALSE,
-                                ci = 0.95,
-                                ci_method = "eti",
-                                test = c("p_direction", "rope"),
-                                rope_range = "default",
-                                rope_ci = 0.95,
-                                keep_iterations = FALSE,
-                                bf_prior = NULL,
-                                BF = 1,
-                                verbose = TRUE,
-                                ...) {
+.describe_posterior <- function(
+  x,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  ...
+) {
   if (is.null(x)) {
     if (verbose) {
       insight::format_warning("Could not extract posterior samples.")
@@ -147,7 +154,7 @@ describe_posterior.default <- function(posterior, ...) {
 
   if (!is.data.frame(x) && !is.numeric(x)) {
     is_stanmvreg <- inherits(x, "stanmvreg")
-    cleaned_parameters <- insight::clean_parameters(x)
+    cleaned_parameters <- .get_cleaned_parameters(x)
     # rename to use `x` in bayes factor later
     x_df <- insight::get_parameters(x, ...)
   } else {
@@ -156,7 +163,11 @@ describe_posterior.default <- function(posterior, ...) {
   }
 
   # Arguments fixes
-  if (!is.null(centrality) && length(centrality) == 1 && (centrality == "none" || isFALSE(centrality))) {
+  if (
+    !is.null(centrality) &&
+      length(centrality) == 1 &&
+      (centrality == "none" || isFALSE(centrality))
+  ) {
     centrality <- NULL
   }
   if (!is.null(ci) && length(ci) == 1 && (is.na(ci) || isFALSE(ci))) {
@@ -166,14 +177,19 @@ describe_posterior.default <- function(posterior, ...) {
     test <- NULL
   }
 
-
   # Point-estimates
 
   if (is.null(centrality)) {
     estimates <- data.frame(Parameter = NA)
   } else {
     estimates <- .prepare_output(
-      point_estimate(x_df, centrality = centrality, dispersion = dispersion, ...),
+      point_estimate(
+        x_df,
+        centrality = centrality,
+        dispersion = dispersion,
+        cleaned_parameters = cleaned_parameters,
+        ...
+      ),
       cleaned_parameters,
       is_stanmvreg
     )
@@ -185,18 +201,35 @@ describe_posterior.default <- function(posterior, ...) {
     }
   }
 
-
   # Uncertainty
 
   if (is.null(ci)) {
     uncertainty <- data.frame(Parameter = NA)
   } else {
-    ci_method <- match.arg(tolower(ci_method), c("hdi", "spi", "quantile", "ci", "eti", "si", "bci", "bcai"))
+    ci_method <- insight::validate_argument(
+      tolower(ci_method),
+      c("hdi", "spi", "quantile", "ci", "eti", "si", "bci", "bcai")
+    )
     # not sure why "si" requires the model object
     if (ci_method == "si") {
-      uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, verbose = verbose, ...)
+      uncertainty <- ci(
+        x,
+        BF = BF,
+        method = ci_method,
+        prior = bf_prior,
+        verbose = verbose,
+        cleaned_parameters = cleaned_parameters,
+        ...
+      )
     } else {
-      uncertainty <- ci(x_df, ci = ci, method = ci_method, verbose = verbose, ...)
+      uncertainty <- ci(
+        x_df,
+        ci = ci,
+        method = ci_method,
+        verbose = verbose,
+        cleaned_parameters = cleaned_parameters,
+        ...
+      )
     }
     uncertainty <- .prepare_output(
       uncertainty,
@@ -211,7 +244,6 @@ describe_posterior.default <- function(posterior, ...) {
       )
     }
   }
-
 
   # Effect Existence
 
@@ -264,7 +296,7 @@ describe_posterior.default <- function(posterior, ...) {
     }
 
     ## TODO no BF for arm::sim
-    if (inherits(x, c("sim", "sim.merMod", "mcmc", "stanfit"))) {
+    if (inherits(x, c("sim", "sim.merMod", "mcmc"))) {
       test <- setdiff(test, "bf")
     }
 
@@ -284,7 +316,7 @@ describe_posterior.default <- function(posterior, ...) {
 
     if (any(c("p_map", "p_pointnull") %in% test)) {
       test_pmap <- .prepare_output(
-        p_map(x_df, ...),
+        p_map(x_df, cleaned_parameters = cleaned_parameters, ...),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -299,12 +331,11 @@ describe_posterior.default <- function(posterior, ...) {
       test_pmap <- data.frame(Parameter = NA)
     }
 
-
     # Probability of direction
 
     if (any(c("pd", "p_direction", "pdir", "mpe") %in% test)) {
       test_pd <- .prepare_output(
-        p_direction(x_df, ...),
+        p_direction(x_df, cleaned_parameters = cleaned_parameters, ...),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -323,7 +354,13 @@ describe_posterior.default <- function(posterior, ...) {
 
     if ("p_rope" %in% test) {
       test_prope <- .prepare_output(
-        p_rope(x_df, range = rope_range, verbose = verbose, ...),
+        p_rope(
+          x_df,
+          range = rope_range,
+          verbose = verbose,
+          cleaned_parameters = cleaned_parameters,
+          ...
+        ),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -341,7 +378,12 @@ describe_posterior.default <- function(posterior, ...) {
 
     if (any(c("ps", "p_sig", "p_significance") %in% test)) {
       test_psig <- .prepare_output(
-        p_significance(x_df, threshold = rope_range, ...),
+        p_significance(
+          x_df,
+          threshold = rope_range,
+          cleaned_parameters = cleaned_parameters,
+          ...
+        ),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -356,12 +398,17 @@ describe_posterior.default <- function(posterior, ...) {
       test_psig <- data.frame(Parameter = NA)
     }
 
-
     # ROPE
 
     if ("rope" %in% test) {
       test_rope <- .prepare_output(
-        rope(x_df, range = rope_range, ci = rope_ci, ...),
+        rope(
+          x_df,
+          range = rope_range,
+          ci = rope_ci,
+          cleaned_parameters = cleaned_parameters,
+          ...
+        ),
         cleaned_parameters,
         is_stanmvreg
       )
@@ -375,7 +422,6 @@ describe_posterior.default <- function(posterior, ...) {
     } else {
       test_rope <- data.frame(Parameter = NA)
     }
-
 
     # Equivalence test
 
@@ -411,7 +457,6 @@ describe_posterior.default <- function(posterior, ...) {
       test_rope <- test_rope[!names(test_rope) %in% c("HDI_low", "HDI_high")]
     }
 
-
     # Bayes Factors
 
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
@@ -434,7 +479,6 @@ describe_posterior.default <- function(posterior, ...) {
     }
   }
 
-
   # for data frames or numeric, and even for some models, we don't
   # have the "Effects" or "Component" column for all data frames.
   # To make "merge()" work, we add those columns to all data frames,
@@ -448,7 +492,6 @@ describe_posterior.default <- function(posterior, ...) {
   test_psig <- .add_effects_component_column(test_psig)
   test_rope <- .add_effects_component_column(test_rope)
   test_bf <- .add_effects_component_column(test_bf)
-
 
   # at least one "valid" data frame needs a row id, to restore
   # row-order after merging
@@ -465,12 +508,12 @@ describe_posterior.default <- function(posterior, ...) {
     test_psig$.rowid <- seq_len(nrow(test_psig))
   } else if (!all(is.na(test_rope$Parameter))) {
     test_rope$.rowid <- seq_len(nrow(test_rope))
-  } else if (!all(is.na(test_bf$Parameter))) { # nolint
+  } else if (!all(is.na(test_bf$Parameter))) {
+    # nolint
     test_bf$.rowid <- seq_len(nrow(test_bf))
   } else {
     estimates$.rowid <- seq_len(nrow(estimates))
   }
-
 
   # remove duplicated columns
   if (all(c("rope", "p_rope") %in% test)) {
@@ -495,12 +538,22 @@ describe_posterior.default <- function(posterior, ...) {
   # column consist only of missing values, we remove those columns as well
 
   remove_columns <- ".rowid"
-  if (insight::n_unique(out$Effects, remove_na = TRUE) < 2) remove_columns <- c(remove_columns, "Effects")
-  if (insight::n_unique(out$Component, remove_na = TRUE) < 2) remove_columns <- c(remove_columns, "Component")
-  if (insight::n_unique(out$Response, remove_na = TRUE) < 2) remove_columns <- c(remove_columns, "Response")
+  if (insight::n_unique(out$Effects, remove_na = TRUE) < 2) {
+    remove_columns <- c(remove_columns, "Effects")
+  }
+  if (insight::n_unique(out$Component, remove_na = TRUE) < 2) {
+    remove_columns <- c(remove_columns, "Component")
+  }
+  if (insight::n_unique(out$Response, remove_na = TRUE) < 2) {
+    remove_columns <- c(remove_columns, "Response")
+  }
 
   # Restore columns order
-  out <- datawizard::data_remove(out[order(out$.rowid), ], remove_columns, verbose = FALSE)
+  out <- datawizard::data_remove(
+    out[order(out$.rowid), ],
+    remove_columns,
+    verbose = FALSE
+  )
 
   # Add iterations
   if (keep_iterations) {
@@ -514,6 +567,7 @@ describe_posterior.default <- function(posterior, ...) {
   }
 
   # Prepare output
+  attr(out, "cleaned_parameters") <- cleaned_parameters
   attr(out, "ci_method") <- ci_method
   out
 }
@@ -521,31 +575,38 @@ describe_posterior.default <- function(posterior, ...) {
 
 #' @keywords internal
 .add_effects_component_column <- function(x) {
-  if (!"Effects" %in% names(x)) x <- cbind(x, data.frame(Effects = NA))
-  if (!"Component" %in% names(x)) x <- cbind(x, data.frame(Component = NA))
-  if (!"Response" %in% names(x)) x <- cbind(x, data.frame(Response = NA))
+  if (!"Effects" %in% names(x)) {
+    x <- cbind(x, data.frame(Effects = NA))
+  }
+  if (!"Component" %in% names(x)) {
+    x <- cbind(x, data.frame(Component = NA))
+  }
+  if (!"Response" %in% names(x)) {
+    x <- cbind(x, data.frame(Response = NA))
+  }
   x
 }
 
 
 # Models based on simple data frame of posterior ---------------------
 
-
 #' @rdname describe_posterior
 #' @export
-describe_posterior.numeric <- function(posterior,
-                                       centrality = "median",
-                                       dispersion = FALSE,
-                                       ci = 0.95,
-                                       ci_method = "eti",
-                                       test = c("p_direction", "rope"),
-                                       rope_range = "default",
-                                       rope_ci = 0.95,
-                                       keep_iterations = FALSE,
-                                       bf_prior = NULL,
-                                       BF = 1,
-                                       verbose = TRUE,
-                                       ...) {
+describe_posterior.numeric <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  ...
+) {
   out <- .describe_posterior(
     posterior,
     centrality = centrality,
@@ -574,20 +635,22 @@ describe_posterior.double <- describe_posterior.numeric
 #' @export
 #' @rdname describe_posterior
 #' @inheritParams p_direction
-describe_posterior.data.frame <- function(posterior,
-                                          centrality = "median",
-                                          dispersion = FALSE,
-                                          ci = 0.95,
-                                          ci_method = "eti",
-                                          test = c("p_direction", "rope"),
-                                          rope_range = "default",
-                                          rope_ci = 0.95,
-                                          keep_iterations = FALSE,
-                                          bf_prior = NULL,
-                                          BF = 1,
-                                          rvar_col = NULL,
-                                          verbose = TRUE,
-                                          ...) {
+describe_posterior.data.frame <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  BF = 1,
+  rvar_col = NULL,
+  verbose = TRUE,
+  ...
+) {
   x_rvar <- .possibly_extract_rvar_col(posterior, rvar_col)
   if (length(x_rvar) > 0L) {
     cl <- match.call()
@@ -605,7 +668,6 @@ describe_posterior.data.frame <- function(posterior,
 
     return(.append_datagrid(out, posterior))
   }
-
 
   out <- .describe_posterior(
     posterior,
@@ -637,18 +699,20 @@ describe_posterior.sim <- describe_posterior.numeric
 
 
 #' @export
-describe_posterior.bayesQR <- function(posterior,
-                                       centrality = "median",
-                                       dispersion = FALSE,
-                                       ci = 0.95,
-                                       ci_method = "eti",
-                                       test = c("p_direction", "rope"),
-                                       rope_range = "default",
-                                       rope_ci = 0.95,
-                                       keep_iterations = FALSE,
-                                       parameters = NULL,
-                                       verbose = TRUE,
-                                       ...) {
+describe_posterior.bayesQR <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .describe_posterior(
     insight::get_parameters(posterior),
     centrality = centrality,
@@ -689,19 +753,21 @@ describe_posterior.BGGM <- describe_posterior.bayesQR
 
 
 #' @export
-describe_posterior.draws <- function(posterior,
-                                     centrality = "median",
-                                     dispersion = FALSE,
-                                     ci = 0.95,
-                                     ci_method = "eti",
-                                     test = c("p_direction", "rope"),
-                                     rope_range = "default",
-                                     rope_ci = 0.95,
-                                     keep_iterations = FALSE,
-                                     bf_prior = NULL,
-                                     BF = 1,
-                                     verbose = TRUE,
-                                     ...) {
+describe_posterior.draws <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  ...
+) {
   out <- .describe_posterior(
     .posterior_draws_to_df(posterior),
     centrality = centrality,
@@ -728,26 +794,31 @@ describe_posterior.rvar <- describe_posterior.draws
 
 # easystats methods ------------------------
 
-
 #' @export
-describe_posterior.effectsize_std_params <- function(posterior,
-                                                     centrality = "median",
-                                                     dispersion = FALSE,
-                                                     ci = 0.95,
-                                                     ci_method = "eti",
-                                                     test = c("p_direction", "rope"),
-                                                     rope_range = "default",
-                                                     rope_ci = 0.95,
-                                                     keep_iterations = FALSE,
-                                                     bf_prior = NULL,
-                                                     BF = 1,
-                                                     verbose = TRUE,
-                                                     ...) {
+describe_posterior.effectsize_std_params <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  ...
+) {
   class(posterior) <- "data.frame"
 
-  no_unique <- vapply(posterior, function(col) {
-    length(unique(col)) == 1
-  }, FUN.VALUE = TRUE)
+  no_unique <- vapply(
+    posterior,
+    function(col) {
+      length(unique(col)) == 1
+    },
+    FUN.VALUE = TRUE
+  )
 
   if (any(no_unique)) {
     no_unique <- which(no_unique)
@@ -797,14 +868,16 @@ describe_posterior.effectsize_std_params <- function(posterior,
 
 
 #' @export
-describe_posterior.get_predicted <- function(posterior,
-                                             centrality = "median",
-                                             dispersion = FALSE,
-                                             ci = 0.95,
-                                             ci_method = "eti",
-                                             test = NULL,
-                                             verbose = TRUE,
-                                             ...) {
+describe_posterior.get_predicted <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = NULL,
+  verbose = TRUE,
+  ...
+) {
   if ("iterations" %in% names(attributes(posterior))) {
     describe_posterior(
       as.data.frame(t(attributes(posterior)$iterations)),
@@ -824,23 +897,26 @@ describe_posterior.get_predicted <- function(posterior,
 
 # emmeans ---------------------------
 
-
 #' @export
-describe_posterior.emmGrid <- function(posterior,
-                                       centrality = "median",
-                                       dispersion = FALSE,
-                                       ci = 0.95,
-                                       ci_method = "eti",
-                                       test = c("p_direction", "rope"),
-                                       rope_range = "default",
-                                       rope_ci = 0.95,
-                                       keep_iterations = FALSE,
-                                       bf_prior = NULL,
-                                       BF = 1,
-                                       verbose = TRUE,
-                                       ...) {
-  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-    "si" %in% tolower(ci_method)) {
+describe_posterior.emmGrid <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  ...
+) {
+  if (
+    any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
+      "si" %in% tolower(ci_method)
+  ) {
     samps <- .clean_priors_and_posteriors(posterior, bf_prior, verbose = verbose)
     bf_prior <- samps$prior
     posterior_samples <- samps$posterior
@@ -877,21 +953,25 @@ describe_posterior.emmGrid <- function(posterior,
 describe_posterior.emm_list <- describe_posterior.emmGrid
 
 #' @export
-describe_posterior.slopes <- function(posterior,
-                                      centrality = "median",
-                                      dispersion = FALSE,
-                                      ci = 0.95,
-                                      ci_method = "eti",
-                                      test = c("p_direction", "rope"),
-                                      rope_range = "default",
-                                      rope_ci = 0.95,
-                                      keep_iterations = FALSE,
-                                      bf_prior = NULL,
-                                      BF = 1,
-                                      verbose = TRUE,
-                                      ...) {
-  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-    "si" %in% tolower(ci_method)) {
+describe_posterior.slopes <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  ...
+) {
+  if (
+    any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
+      "si" %in% tolower(ci_method)
+  ) {
     samps <- .clean_priors_and_posteriors(posterior, bf_prior, verbose = verbose)
     bf_prior <- samps$prior
     posterior_samples <- samps$posterior
@@ -932,40 +1012,37 @@ describe_posterior.predictions <- describe_posterior.slopes
 
 # Stan ------------------------------
 
-
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanreg <- function(posterior,
-                                       centrality = "median",
-                                       dispersion = FALSE,
-                                       ci = 0.95,
-                                       ci_method = "eti",
-                                       test = c("p_direction", "rope"),
-                                       rope_range = "default",
-                                       rope_ci = 0.95,
-                                       keep_iterations = FALSE,
-                                       bf_prior = NULL,
-                                       diagnostic = c("ESS", "Rhat"),
-                                       priors = FALSE,
-                                       effects = c("fixed", "random", "all"),
-                                       component = c(
-                                         "location", "all", "conditional",
-                                         "smooth_terms", "sigma", "distributional",
-                                         "auxiliary"
-                                       ),
-                                       parameters = NULL,
-                                       BF = 1,
-                                       verbose = TRUE,
-                                       ...) {
-  if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-    "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
+describe_posterior.stanreg <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"),
+  priors = FALSE,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  BF = 1,
+  verbose = TRUE,
+  ...
+) {
+  if (
+    (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
+      "si" %in% tolower(ci_method)) &&
+      is.null(bf_prior)
+  ) {
     bf_prior <- suppressMessages(unupdate(posterior))
   }
-
-  effects <- match.arg(effects)
-  component <- match.arg(component)
 
   out <- .describe_posterior(
     posterior,
@@ -986,12 +1063,16 @@ describe_posterior.stanreg <- function(posterior,
     ...
   )
 
+  # intermediate step: save cleaned parameters
+  cp <- attributes(out)$cleaned_parameters
+
   diagnostic <- diagnostic_posterior(
     posterior,
     diagnostic,
     effects = effects,
     component = component,
     parameters = parameters,
+    centrality = centrality,
     ...
   )
   out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
@@ -1001,7 +1082,7 @@ describe_posterior.stanreg <- function(posterior,
     out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
 
-  out <- .add_clean_parameters_attribute(out, posterior)
+  out <- .add_clean_parameters_attribute(out, posterior, cleaned_parameters = cp)
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
@@ -1012,30 +1093,25 @@ describe_posterior.stanreg <- function(posterior,
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
 #' @export
-describe_posterior.stanmvreg <- function(posterior,
-                                         centrality = "median",
-                                         dispersion = FALSE,
-                                         ci = 0.95,
-                                         ci_method = "eti",
-                                         test = "p_direction",
-                                         rope_range = "default",
-                                         rope_ci = 0.95,
-                                         keep_iterations = FALSE,
-                                         bf_prior = NULL,
-                                         diagnostic = c("ESS", "Rhat"),
-                                         priors = FALSE,
-                                         effects = c("fixed", "random", "all"),
-                                         component = c(
-                                           "location", "all", "conditional",
-                                           "smooth_terms", "sigma", "distributional",
-                                           "auxiliary"
-                                         ),
-                                         parameters = NULL,
-                                         verbose = TRUE,
-                                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+describe_posterior.stanmvreg <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = "p_direction",
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"),
+  priors = FALSE,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .describe_posterior(
     posterior,
     centrality = centrality,
@@ -1052,6 +1128,9 @@ describe_posterior.stanmvreg <- function(posterior,
     verbose = verbose,
     ...
   )
+
+  # intermediate step: save cleaned parameters
+  cp <- attributes(out)$cleaned_parameters
 
   if (is.null(out$Response)) {
     out$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", out$Parameter)
@@ -1062,17 +1141,22 @@ describe_posterior.stanmvreg <- function(posterior,
     diagnostic,
     effects = effects,
     parameters = parameters,
+    centrality = centrality,
     ...
   )
   out <- .merge_and_sort(out, diagnostic, by = c("Parameter", "Response"), all = TRUE)
 
   if (isTRUE(priors)) {
     priors_data <- describe_prior(posterior, parameters = NULL, ...)
-    priors_data$Parameter <- gsub("^(.*)\\|(.*)", replacement = "\\2", priors_data$Parameter)
+    priors_data$Parameter <- gsub(
+      "^(.*)\\|(.*)",
+      replacement = "\\2",
+      priors_data$Parameter
+    )
     out <- .merge_and_sort(out, priors_data, by = c("Parameter", "Response"), all = TRUE)
   }
 
-  out <- .add_clean_parameters_attribute(out, posterior)
+  out <- .add_clean_parameters_attribute(out, posterior, cleaned_parameters = cp)
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
@@ -1083,22 +1167,23 @@ describe_posterior.stanmvreg <- function(posterior,
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
 #' @export
-describe_posterior.stanfit <- function(posterior,
-                                       centrality = "median",
-                                       dispersion = FALSE,
-                                       ci = 0.95,
-                                       ci_method = "eti",
-                                       test = c("p_direction", "rope"),
-                                       rope_range = "default",
-                                       rope_ci = 0.95,
-                                       keep_iterations = FALSE,
-                                       diagnostic = c("ESS", "Rhat"),
-                                       effects = c("fixed", "random", "all"),
-                                       parameters = NULL,
-                                       priors = FALSE,
-                                       verbose = TRUE,
-                                       ...) {
-  effects <- match.arg(effects)
+describe_posterior.stanfit <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  diagnostic = c("ESS", "Rhat"),
+  effects = "fixed",
+  parameters = NULL,
+  priors = FALSE,
+  verbose = TRUE,
+  ...
+) {
   out <- .describe_posterior(
     posterior,
     centrality = centrality,
@@ -1120,6 +1205,7 @@ describe_posterior.stanfit <- function(posterior,
     diagnostic,
     effects = effects,
     parameters = parameters,
+    centrality = centrality,
     ...
   )
   out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
@@ -1135,36 +1221,32 @@ describe_posterior.stanfit <- function(posterior,
 }
 
 
-#' @inheritParams describe_posterior.stanreg
-#' @rdname describe_posterior
 #' @export
-describe_posterior.brmsfit <- function(posterior,
-                                       centrality = "median",
-                                       dispersion = FALSE,
-                                       ci = 0.95,
-                                       ci_method = "eti",
-                                       test = c("p_direction", "rope"),
-                                       rope_range = "default",
-                                       rope_ci = 0.95,
-                                       keep_iterations = FALSE,
-                                       bf_prior = NULL,
-                                       diagnostic = c("ESS", "Rhat"),
-                                       effects = c("fixed", "random", "all"),
-                                       component = c(
-                                         "conditional", "zi", "zero_inflated",
-                                         "all", "location", "distributional",
-                                         "auxiliary"
-                                       ),
-                                       parameters = NULL,
-                                       BF = 1,
-                                       priors = FALSE,
-                                       verbose = TRUE,
-                                       ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
-  if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-    "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
+describe_posterior.brmsfit <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"),
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  BF = 1,
+  priors = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  if (
+    (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
+      "si" %in% tolower(ci_method)) &&
+      is.null(bf_prior)
+  ) {
     bf_prior <- suppressMessages(unupdate(posterior))
   }
 
@@ -1187,6 +1269,9 @@ describe_posterior.brmsfit <- function(posterior,
     ...
   )
 
+  # intermediate step: save cleaned parameters
+  cp <- attributes(out)$cleaned_parameters
+
   if (!is.null(diagnostic)) {
     diagnostic <- diagnostic_posterior(
       posterior,
@@ -1194,6 +1279,7 @@ describe_posterior.brmsfit <- function(posterior,
       effects = effects,
       component = component,
       parameters = parameters,
+      centrality = centrality,
       ...
     )
     out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
@@ -1204,7 +1290,7 @@ describe_posterior.brmsfit <- function(posterior,
     out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
 
-  out <- .add_clean_parameters_attribute(out, posterior)
+  out <- .add_clean_parameters_attribute(out, posterior, cleaned_parameters = cp)
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
@@ -1215,25 +1301,29 @@ describe_posterior.brmsfit <- function(posterior,
 #' @export
 describe_posterior.blavaan <- describe_posterior.stanfit
 
+#' @export
+describe_posterior.CmdStanFit <- describe_posterior.stanfit
+
 
 # other models --------------------------------
 
-
 #' @inheritParams describe_posterior.stanreg
 #' @export
-describe_posterior.MCMCglmm <- function(posterior,
-                                        centrality = "median",
-                                        dispersion = FALSE,
-                                        ci = 0.95,
-                                        ci_method = "eti",
-                                        test = c("p_direction", "rope"),
-                                        rope_range = "default",
-                                        rope_ci = 0.95,
-                                        keep_iterations = FALSE,
-                                        diagnostic = "ESS",
-                                        parameters = NULL,
-                                        verbose = TRUE,
-                                        ...) {
+describe_posterior.MCMCglmm <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  diagnostic = "ESS",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .describe_posterior(
     posterior,
     centrality = centrality,
@@ -1251,7 +1341,12 @@ describe_posterior.MCMCglmm <- function(posterior,
   )
 
   if (!is.null(diagnostic) && diagnostic == "ESS") {
-    diagnostic <- effective_sample(posterior, effects = "fixed", parameters = parameters, ...)
+    diagnostic <- effective_sample(
+      posterior,
+      effects = "fixed",
+      parameters = parameters,
+      ...
+    )
     out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
   }
 
@@ -1260,19 +1355,21 @@ describe_posterior.MCMCglmm <- function(posterior,
 
 
 #' @export
-describe_posterior.bcplm <- function(posterior,
-                                     centrality = "median",
-                                     dispersion = FALSE,
-                                     ci = 0.95,
-                                     ci_method = "eti",
-                                     test = c("p_direction", "rope"),
-                                     rope_range = "default",
-                                     rope_ci = 0.95,
-                                     keep_iterations = FALSE,
-                                     priors = TRUE,
-                                     parameters = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+describe_posterior.bcplm <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  priors = TRUE,
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .describe_posterior(
     insight::get_parameters(posterior),
     centrality = centrality,
@@ -1301,20 +1398,21 @@ describe_posterior.bcplm <- function(posterior,
 
 
 #' @export
-describe_posterior.bamlss <- function(posterior,
-                                      centrality = "median",
-                                      dispersion = FALSE,
-                                      ci = 0.95,
-                                      ci_method = "eti",
-                                      test = c("p_direction", "rope"),
-                                      rope_range = "default",
-                                      rope_ci = 0.95,
-                                      keep_iterations = FALSE,
-                                      component = c("all", "conditional", "location"),
-                                      parameters = NULL,
-                                      verbose = TRUE,
-                                      ...) {
-  component <- match.arg(component)
+describe_posterior.bamlss <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  component = "all",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   out <- .describe_posterior(
     posterior,
     centrality = centrality,
@@ -1340,20 +1438,21 @@ describe_posterior.bamlss <- function(posterior,
 
 # BayesFactor --------------------
 
-
 #' @export
-describe_posterior.BFBayesFactor <- function(posterior,
-                                             centrality = "median",
-                                             dispersion = FALSE,
-                                             ci = 0.95,
-                                             ci_method = "eti",
-                                             test = c("p_direction", "rope", "bf"),
-                                             rope_range = "default",
-                                             rope_ci = 0.95,
-                                             keep_iterations = FALSE,
-                                             priors = TRUE,
-                                             verbose = TRUE,
-                                             ...) {
+describe_posterior.BFBayesFactor <- function(
+  posterior,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.95,
+  ci_method = "eti",
+  test = c("p_direction", "rope", "bf"),
+  rope_range = "default",
+  rope_ci = 0.95,
+  keep_iterations = FALSE,
+  priors = TRUE,
+  verbose = TRUE,
+  ...
+) {
   # Match test args  to catch BFs
   if (!is.null(test)) {
     test <- .check_test_values(test)
@@ -1365,7 +1464,9 @@ describe_posterior.BFBayesFactor <- function(posterior,
   # Remove BF from list
   if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
     test <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
-    if (length(test) == 0L) test <- NULL
+    if (length(test) == 0L) {
+      test <- NULL
+    }
     compute_bf <- TRUE
   } else {
     compute_bf <- FALSE
@@ -1408,11 +1509,15 @@ describe_posterior.BFBayesFactor <- function(posterior,
     )
   }
 
-
   # Add priors
   if (priors) {
     priors_data <- describe_prior(posterior, ...)
-    out <- .merge_and_sort(out, priors_data, by = intersect(names(out), names(priors_data)), all = TRUE)
+    out <- .merge_and_sort(
+      out,
+      priors_data,
+      by = intersect(names(out), names(priors_data)),
+      all = TRUE
+    )
   }
 
   attr(out, "ci_method") <- ci_method
@@ -1424,14 +1529,31 @@ describe_posterior.BFBayesFactor <- function(posterior,
 
 # Helpers -----------------------------------------------------------------
 
-
 #' @keywords internal
 .check_test_values <- function(test) {
-  match.arg(tolower(test), c(
-    "pd", "p_direction", "pdir", "mpe", "ps", "psig", "p_significance",
-    "p_rope", "rope", "equivalence", "equivalence_test", "equitest",
-    "bf", "bayesfactor", "bayes_factor", "p_map", "all"
-  ), several.ok = TRUE)
+  match.arg(
+    tolower(test),
+    c(
+      "pd",
+      "p_direction",
+      "pdir",
+      "mpe",
+      "ps",
+      "psig",
+      "p_significance",
+      "p_rope",
+      "rope",
+      "equivalence",
+      "equivalence_test",
+      "equitest",
+      "bf",
+      "bayesfactor",
+      "bayes_factor",
+      "p_map",
+      "all"
+    ),
+    several.ok = TRUE
+  )
 }
 
 #' @keywords internal
@@ -1443,9 +1565,13 @@ describe_posterior.BFBayesFactor <- function(posterior,
   need_rope <- c(
     "all",
     "p_rope",
-    "ps", "p_sig", "p_significance",
+    "ps",
+    "p_sig",
+    "p_significance",
     "rope",
-    "equivalence", "equivalence_test", "equitest"
+    "equivalence",
+    "equivalence_test",
+    "equitest"
   )
 
   return(is.character(test) && length(test) > 0L && any(need_rope %in% tolower(test)))

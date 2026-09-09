@@ -49,17 +49,31 @@ spi <- function(x, ...) {
 
 #' @export
 spi.default <- function(x, ...) {
-  insight::format_error(paste0("'spi()' is not yet implemented for objects of class '", class(x)[1], "'."))
+  insight::format_error(paste0(
+    "'spi()' is not yet implemented for objects of class '",
+    class(x)[1],
+    "'."
+  ))
 }
 
 
 #' @rdname spi
 #' @export
 spi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  out <- do.call(rbind, lapply(ci, function(i) {
-    .spi(x = x, ci = i, verbose = verbose)
-  }))
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_ci", "see_ci", "bayestestR_spi", class(out)))
+  out <- do.call(
+    rbind,
+    lapply(ci, function(i) {
+      .spi(x = x, ci = i, verbose = verbose)
+    })
+  )
+  class(out) <- unique(c(
+    "bayestestR_hdi",
+    "see_hdi",
+    "bayestestR_ci",
+    "see_ci",
+    "bayestestR_spi",
+    class(out)
+  ))
   attr(out, "data") <- x
   out
 }
@@ -91,7 +105,12 @@ spi.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
 
 #' @export
 spi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  dat <- .compute_interval_dataframe(x = .posterior_draws_to_df(x), ci = ci, verbose = verbose, fun = "spi")
+  dat <- .compute_interval_dataframe(
+    x = .posterior_draws_to_df(x),
+    ci = ci,
+    verbose = verbose,
+    fun = "spi"
+  )
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
@@ -107,12 +126,7 @@ spi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
 
 
 #' @export
-spi.bamlss <- function(x,
-                       ci = 0.95,
-                       component = c("all", "conditional", "location"),
-                       verbose = TRUE,
-                       ...) {
-  component <- match.arg(component)
+spi.bamlss <- function(x, ci = 0.95, component = "all", verbose = TRUE, ...) {
   hdi(x, ci = ci, component = component, verbose = verbose, ci_method = "spi")
 }
 
@@ -138,14 +152,23 @@ spi.mcmc.list <- spi.mcmc
 spi.BGGM <- spi.mcmc
 
 #' @export
-spi.sim.merMod <- function(x,
-                           ci = 0.95,
-                           effects = c("fixed", "random", "all"),
-                           parameters = NULL,
-                           verbose = TRUE,
-                           ...) {
-  effects <- match.arg(effects)
-  hdi(x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, ci_method = "spi", ...)
+spi.sim.merMod <- function(
+  x,
+  ci = 0.95,
+  effects = "fixed",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
+  hdi(
+    x,
+    ci = ci,
+    effects = effects,
+    parameters = parameters,
+    verbose = verbose,
+    ci_method = "spi",
+    ...
+  )
 }
 
 #' @export
@@ -155,7 +178,7 @@ spi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 
 #' @export
 spi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  xdf <- insight::get_parameters(x)
+  xdf <- insight::get_parameters(x, verbose = verbose)
   out <- spi(xdf, ci = ci, verbose = verbose, ...)
   out <- .append_datagrid(out, x, long = length(ci) > 1L)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -180,18 +203,18 @@ spi.comparisons <- spi.slopes
 #' @export
 spi.predictions <- spi.slopes
 
-#' @rdname spi
+
 #' @export
-spi.stanreg <- function(x,
-                        ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
-                        parameters = NULL,
-                        verbose = TRUE,
-                        ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  cleaned_parameters <- insight::clean_parameters(x)
+spi.stanreg <- function(
+  x,
+  ci = 0.95,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     spi(
@@ -199,7 +222,8 @@ spi.stanreg <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        verbose = verbose
       ),
       ci = ci,
       verbose = verbose,
@@ -219,20 +243,23 @@ spi.stanreg <- function(x,
 spi.stanfit <- spi.stanreg
 
 #' @export
+spi.CmdStanFit <- spi.stanreg
+
+#' @export
 spi.blavaan <- spi.stanreg
 
 
 #' @rdname spi
 #' @export
-spi.brmsfit <- function(x,
-                        ci = 0.95,
-                        effects = c("fixed", "random", "all"),
-                        component = c("conditional", "zi", "zero_inflated", "all"),
-                        parameters = NULL,
-                        verbose = TRUE,
-                        ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+spi.brmsfit <- function(
+  x,
+  ci = 0.95,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
@@ -241,7 +268,8 @@ spi.brmsfit <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        ...
       ),
       ci = ci,
       verbose = verbose,
@@ -270,7 +298,12 @@ spi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
 spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...) {
   if (isTRUE(use_iterations)) {
     if ("iterations" %in% names(attributes(x))) {
-      out <- spi(as.data.frame(t(attributes(x)$iterations)), ci = ci, verbose = verbose, ...)
+      out <- spi(
+        as.data.frame(t(attributes(x)$iterations)),
+        ci = ci,
+        verbose = verbose,
+        ...
+      )
     } else {
       insight::format_error("No iterations present in the output.")
     }
@@ -316,7 +349,6 @@ spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
   k <- which(x == l)[1]
   ui <- which(x == u)[1]
 
-
   # lower bound
   if (!anyNA(k) && all(k == 1)) {
     x.l <- l
@@ -325,7 +357,14 @@ spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
     frac <- 1
     while (is.null(x.l)) {
       frac <- frac - 0.1
-      x.l <- .safe(.spi_lower(bw = frac * bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x))
+      x.l <- .safe(.spi_lower(
+        bw = frac * bw,
+        n.sims = n.sims,
+        k = k,
+        l = l,
+        dens = dens,
+        x = x
+      ))
       if (frac <= 0.1) {
         insight::format_alert("Could not find a solution for the SPI lower bound.")
         x.l <- NA
@@ -341,7 +380,14 @@ spi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
     frac <- 1
     while (is.null(x.u)) {
       frac <- frac - 0.1
-      x.u <- .safe(.spi_upper(bw = frac * bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x))
+      x.u <- .safe(.spi_upper(
+        bw = frac * bw,
+        n.sims = n.sims,
+        ui = ui,
+        u = u,
+        dens = dens,
+        x = x
+      ))
       if (frac <= 0.1) {
         insight::format_alert("Could not find a solution for the SPI upper bound.")
         x.u <- NA

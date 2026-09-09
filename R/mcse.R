@@ -2,8 +2,14 @@
 #'
 #' This function returns the Monte Carlo Standard Error (MCSE).
 #'
+#' @param centrality The point-estimate (centrality index) for which to compute
+#' the MCSE. Can be `"median"` (default) or `"mean"`. To not break other
+#' functions like `describe_posterior()` or `diagnostic_posterior()`, all other
+#' values are silently converted to `"median"`.
+#' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams effective_sample
 #'
+#' @inheritSection hdi Model components
 #'
 #' @details **Monte Carlo Standard Error (MCSE)** is another measure of
 #' accuracy of the chains. It is defined as standard deviation of the chains
@@ -29,14 +35,22 @@ mcse <- function(model, ...) {
 
 
 #' @export
-mcse.brmsfit <- function(model,
-                         effects = c("fixed", "random", "all"),
-                         component = c("conditional", "zi", "zero_inflated", "all"),
-                         parameters = NULL,
-                         ...) {
+mcse.brmsfit <- function(
+  model,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  centrality = "median",
+  ...
+) {
+  insight::check_if_installed("posterior")
+
   # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
+  if (
+    is.null(centrality) || length(centrality) > 1 || !centrality %in% c("median", "mean")
+  ) {
+    centrality <- "median"
+  }
 
   params <- insight::get_parameters(
     model,
@@ -45,43 +59,32 @@ mcse.brmsfit <- function(model,
     parameters = parameters
   )
 
-  ess <- effective_sample(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
+  mcse <- switch(
+    centrality,
+    median = vapply(params, posterior::mcse_median, numeric(1)),
+    mean = vapply(params, posterior::mcse_mean, numeric(1))
   )
 
-  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
+  data.frame(
+    Parameter = colnames(params),
+    MCSE = mcse,
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
 }
 
 
 #' @rdname mcse
 #' @export
-mcse.stanreg <- function(model,
-                         effects = c("fixed", "random", "all"),
-                         component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
-                         parameters = NULL,
-                         ...) {
-  # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
-  params <- insight::get_parameters(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
-  )
-
-  ess <- effective_sample(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
-  )
-
-  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
+mcse.stanreg <- function(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  centrality = "median",
+  ...
+) {
+  mcse.brmsfit(model, effects, component, parameters, centrality, ...)
 }
 
 
@@ -90,7 +93,29 @@ mcse.stanfit <- mcse.stanreg
 
 
 #' @export
-mcse.blavaan <- mcse.stanreg
+mcse.blavaan <- function(
+  model,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  ...
+) {
+  params <- insight::get_parameters(
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+
+  ess <- effective_sample(
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+
+  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
+}
 
 
 #' @keywords internal
@@ -114,4 +139,9 @@ mcse.blavaan <- mcse.stanreg
     stringsAsFactors = FALSE,
     row.names = NULL
   )
+}
+
+#' @export
+mcse.CmdStanFit <- function(model, ...) {
+  diagnostic_posterior(model, diagnostic = "MCSE")
 }

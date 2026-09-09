@@ -20,6 +20,9 @@
 #' @param rvar_col Name of an `rvar`-type column. If `NULL`, each column in the
 #' data frame is assumed to represent draws from a posterior distribution.
 #' @inheritParams hdi
+#' @inheritParams insight::get_parameters.BFBayesFactor
+#'
+#' @inheritSection hdi Model components
 #'
 #' @section What is the *pd*?:
 #'
@@ -323,7 +326,6 @@ p_direction.distribution <- function(x,
 }
 
 
-#' @rdname p_direction
 #' @export
 p_direction.MCMCglmm <- function(x,
                                  method = "direct",
@@ -364,13 +366,27 @@ p_direction.mcmc <- function(x,
 
 #' @export
 p_direction.BGGM <- function(x, method = "direct", null = 0, as_p = FALSE, remove_na = TRUE, ...) {
-  p_direction(as.data.frame(x), method = method, null = null, as_p = as_p, remove_na = remove_na, ...)
+  p_direction(
+    as.data.frame(x),
+    method = method,
+    null = null,
+    as_p = as_p,
+    remove_na = remove_na,
+    ...
+  )
 }
 
 
 #' @export
 p_direction.bcplm <- function(x, method = "direct", null = 0, as_p = FALSE, remove_na = TRUE, ...) {
-  p_direction(insight::get_parameters(x), method = method, null = null, as_p = as_p, remove_na = remove_na, ...)
+  p_direction(
+    insight::get_parameters(x),
+    method = method,
+    null = null,
+    as_p = as_p,
+    remove_na = remove_na,
+    ...
+  )
 }
 
 #' @export
@@ -389,9 +405,8 @@ p_direction.bamlss <- function(x,
                                null = 0,
                                as_p = FALSE,
                                remove_na = TRUE,
-                               component = c("all", "conditional", "location"),
+                               component = "all",
                                ...) {
-  component <- match.arg(component)
   out <- p_direction(
     insight::get_parameters(x, component = component),
     method = method,
@@ -405,11 +420,22 @@ p_direction.bamlss <- function(x,
 }
 
 
-#' @rdname p_direction
 #' @export
-p_direction.emmGrid <- function(x, method = "direct", null = 0, as_p = FALSE, remove_na = TRUE, ...) {
+p_direction.emmGrid <- function(x,
+                                method = "direct",
+                                null = 0,
+                                as_p = FALSE,
+                                remove_na = TRUE,
+                                ...) {
   xdf <- insight::get_parameters(x)
-  out <- p_direction(xdf, method = method, null = null, as_p = as_p, remove_na = remove_na, ...)
+  out <- p_direction(
+    xdf,
+    method = method,
+    null = null,
+    as_p = as_p,
+    remove_na = remove_na,
+    ...
+  )
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -419,11 +445,23 @@ p_direction.emmGrid <- function(x, method = "direct", null = 0, as_p = FALSE, re
 #' @export
 p_direction.emm_list <- p_direction.emmGrid
 
-#' @rdname p_direction
+
 #' @export
-p_direction.slopes <- function(x, method = "direct", null = 0, as_p = FALSE, remove_na = TRUE, ...) {
+p_direction.slopes <- function(x,
+                               method = "direct",
+                               null = 0,
+                               as_p = FALSE,
+                               remove_na = TRUE,
+                               ...) {
   xrvar <- .get_marginaleffects_draws(x)
-  out <- p_direction(xrvar, method = method, null = null, as_p = as_p, remove_na = remove_na, ...)
+  out <- p_direction(
+    xrvar,
+    method = method,
+    null = null,
+    as_p = as_p,
+    remove_na = remove_na,
+    ...
+  )
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -464,15 +502,13 @@ p_direction.predictions <- p_direction.slopes
 
 #' @export
 p_direction.sim.merMod <- function(x,
-                                   effects = c("fixed", "random", "all"),
+                                   effects = "fixed",
                                    parameters = NULL,
                                    method = "direct",
                                    null = 0,
                                    as_p = FALSE,
                                    remove_na = TRUE,
                                    ...) {
-  effects <- match.arg(effects)
-
   out <- .p_direction_models(
     x = x,
     effects = effects,
@@ -484,7 +520,11 @@ p_direction.sim.merMod <- function(x,
     remove_na = remove_na,
     ...
   )
-  attr(out, "data") <- insight::get_parameters(x, effects = effects, parameters = parameters)
+  attr(out, "data") <- insight::get_parameters(
+    x,
+    effects = effects,
+    parameters = parameters
+  )
   out
 }
 
@@ -513,20 +553,17 @@ p_direction.sim <- function(x,
 }
 
 
-#' @rdname p_direction
 #' @export
 p_direction.stanreg <- function(x,
-                                effects = c("fixed", "random", "all"),
-                                component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                effects = "fixed",
+                                component = "location",
                                 parameters = NULL,
                                 method = "direct",
                                 null = 0,
                                 as_p = FALSE,
                                 remove_na = TRUE,
                                 ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     p_direction(
@@ -557,23 +594,24 @@ p_direction.stanreg <- function(x,
 p_direction.stanfit <- p_direction.stanreg
 
 #' @export
+p_direction.CmdStanFit <- p_direction.stanreg
+
+#' @export
 p_direction.blavaan <- p_direction.stanreg
 
 
 #' @rdname p_direction
 #' @export
 p_direction.brmsfit <- function(x,
-                                effects = c("fixed", "random", "all"),
-                                component = c("conditional", "zi", "zero_inflated", "all"),
+                                effects = "fixed",
+                                component = "conditional",
                                 parameters = NULL,
                                 method = "direct",
                                 null = 0,
                                 as_p = FALSE,
                                 remove_na = TRUE,
                                 ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  cleaned_parameters <- insight::clean_parameters(x)
+  cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
     p_direction(
@@ -581,7 +619,8 @@ p_direction.brmsfit <- function(x,
         x,
         effects = effects,
         component = component,
-        parameters = parameters
+        parameters = parameters,
+        ...
       ),
       method = method,
       null = null,
@@ -600,7 +639,6 @@ p_direction.brmsfit <- function(x,
 }
 
 
-#' @rdname p_direction
 #' @export
 p_direction.BFBayesFactor <- function(x,
                                       method = "direct",

@@ -20,9 +20,8 @@ contr.equalprior_deviations(n, contrasts = TRUE, sparse = FALSE)
 \item{contrasts}{a logical indicating whether contrasts should be
     computed.}
 
-\item{sparse}{logical indicating if the result should be sparse
-    (of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}), using
-    package \href{https://CRAN.R-project.org/package=Matrix}{\pkg{Matrix}}.}
+\item{sparse}{Logical, indicating if the result should be sparse (of class
+\code{Matrix::dgCMatrix}), using package \strong{Matrix}.}
 }
 \value{
 A \code{matrix} with n rows and k columns, with k=n-1 if contrasts is
@@ -37,11 +36,11 @@ following the description in Rouder, Morey, Speckman, & Province (2012, p.
 363).
 }
 \details{
-When using \code{\link[stats:contrast]{stats::contr.treatment}}, each dummy variable is the difference
+When using \code{\link[stats:contr.treatment]{stats::contr.treatment}}, each dummy variable is the difference
 between each level and the reference level. While this is useful if setting
 different priors for each coefficient, it should not be used if one is trying
 to set a general prior for differences between means, as it (as well as
-\code{\link[stats:contrast]{stats::contr.sum}} and others) results in unequal marginal priors on the
+\code{\link[stats:contr.sum]{stats::contr.sum}} and others) results in unequal marginal priors on the
 means the the difference between them.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{library(brms)

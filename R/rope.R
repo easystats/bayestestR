@@ -1,6 +1,6 @@
-#' Region of Practical Equivalence (ROPE)
+#' Region of Practical Equivalence (ROPE) Analysis
 #'
-#' Compute the proportion of the HDI (default to the `89%` HDI) of a posterior
+#' Compute the proportion of the CI (default to the 95% ETI) of a posterior
 #' distribution that lies within a region of practical equivalence.
 #'
 #' @param x Vector representing a posterior distribution. Can also be a
@@ -25,48 +25,53 @@
 #' proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in
 #' ROPE. Can be 'HDI' (default) or 'ETI'. See [`ci()`].
+#' @param complement Should the probabilities above/below the ROPE (the
+#' _complementary_ probabilities) be returned as well? See
+#' [equivalence_test()] as well.
 #'
 #' @inheritParams hdi
 #'
+#' @inheritSection hdi Model components
+#'
 #' @section ROPE:
-#' Statistically, the probability of a posterior distribution of being
-#' different from 0 does not make much sense (the probability of a single value
-#' null hypothesis in a continuous distribution is 0). Therefore, the idea
+#'
+#' Statistically, the probability of a posterior distribution of being different
+#' from 0 does not make much sense (the probability of a single value null
+#' hypothesis in a continuous distribution is 0). Therefore, the idea
 #' underlining ROPE is to let the user define an area around the null value
 #' enclosing values that are *equivalent to the null* value for practical
 #' purposes (_Kruschke 2010, 2011, 2014_).
 #'
-#' Kruschke (2018) suggests that such null value could be set, by default,
-#' to the -0.1 to 0.1 range of a standardized parameter (negligible effect
-#' size according to Cohen, 1988). This could be generalized: For instance,
-#' for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`.
-#' This ROPE range can be automatically computed for models using the
-#' [`rope_range()`] function.
+#' Kruschke (2018) suggests that such null value could be set, by default, to
+#' the -0.1 to 0.1 range of a standardized parameter (negligible effect size
+#' according to Cohen, 1988). This could be generalized: For instance, for
+#' linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE range
+#' can be automatically computed for models using the [`rope_range()`] function.
 #'
-#' Kruschke (2010, 2011, 2014) suggests using the proportion of  the `95%`
-#' (or `89%`, considered more stable) [HDI][hdi] that falls within the
-#' ROPE as an index for "null-hypothesis" testing (as understood under the
-#' Bayesian framework, see [`equivalence_test()`]).
+#' Kruschke (2010, 2011, 2014) suggests using the proportion of [HDI][hdi] that
+#' falls within the ROPE as an index for "null-hypothesis" testing (as
+#' understood under the Bayesian framework, see [`equivalence_test()`]).
 #'
 #' @section Sensitivity to parameter's scale:
-#' It is important to consider the unit (i.e., the scale) of the predictors
-#' when using an index based on the ROPE, as the correct interpretation of the
-#' ROPE as representing a region of practical equivalence to zero is dependent
-#' on the scale of the predictors. Indeed, the percentage in ROPE depend on
-#' the unit of its parameter. In other words, as the ROPE represents a fixed
-#' portion of the response's scale, its proximity with a coefficient depends
-#' on the scale of the coefficient itself.
+#'
+#' It is important to consider the unit (i.e., the scale) of the predictors when
+#' using an index based on the ROPE, as the correct interpretation of the ROPE
+#' as representing a region of practical equivalence to zero is dependent on the
+#' scale of the predictors. Indeed, the percentage in ROPE depend on the unit of
+#' its parameter. In other words, as the ROPE represents a fixed portion of the
+#' response's scale, its proximity with a coefficient depends on the scale of
+#' the coefficient itself.
 #'
 #' @section Multicollinearity - Non-independent covariates:
+#'
 #' When parameters show strong correlations, i.e. when covariates are not
-#' independent, the joint parameter distributions may shift towards or
-#' away from the ROPE. Collinearity invalidates ROPE and hypothesis
-#' testing based on univariate marginals, as the probabilities are conditional
-#' on independence. Most problematic are parameters that only have partial
-#' overlap with the ROPE region. In case of collinearity, the (joint) distributions
-#' of these parameters may either get an increased or decreased ROPE, which
-#' means that inferences based on `rope()` are inappropriate
-#' (_Kruschke 2014, 340f_).
+#' independent, the joint parameter distributions may shift towards or away from
+#' the ROPE. Collinearity invalidates ROPE and hypothesis testing based on
+#' univariate marginals, as the probabilities are conditional on independence.
+#' Most problematic are parameters that only have partial overlap with the ROPE
+#' region. In case of collinearity, the (joint) distributions of these
+#' parameters may either get an increased or decreased ROPE, which means that
+#' inferences based on `rope()` are inappropriate (_Kruschke 2014, 340f_).
 #'
 #' `rope()` performs a simple check for pairwise correlations between
 #' parameters, but as there can be collinearity between more than two variables,
@@ -103,7 +108,7 @@
 #'   methods for model selection. Statistics and Computing, 27(3), 711–735.
 #'   \doi{10.1007/s11222-016-9649-y}
 #'
-#' @examplesIf require("rstanarm") && require("emmeans") && require("brms") && require("BayesFactor")
+#' @examplesIf all(insight::check_if_installed(c("rstanarm", "emmeans", "brms", "BayesFactor"), quietly = TRUE))
 #' library(bayestestR)
 #'
 #' rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
@@ -111,9 +116,8 @@
 #' rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #' rope(x = rnorm(1000, 1, 1), ci = c(0.90, 0.95))
 #' \donttest{
-#' library(rstanarm)
 #' model <- suppressWarnings(
-#'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#'   rstanarm::stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' )
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
@@ -124,17 +128,14 @@
 #' # named ROPE ranges
 #' rope(model, range = list(gear = c(-3, 2), wt = c(-0.2, 0.2)))
 #'
-#' library(emmeans)
-#' rope(emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
+#' rope(emmeans::emtrends(model, ~1, "wt"), ci = c(0.90, 0.95))
 #'
-#' library(brms)
-#' model <- brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
 #'
-#' library(brms)
-#' model <- brm(
-#'   bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
+#' model <- brms::brm(
+#'   brms::bf(brms::mvbind(mpg, disp) ~ wt + cyl) + brms::set_rescor(rescor = TRUE),
 #'   data = mtcars,
 #'   refresh = 0
 #' )
@@ -152,8 +153,7 @@
 #'   )
 #' )
 #'
-#' library(BayesFactor)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' rope(bf)
 #' rope(bf, ci = c(0.90, 0.95))
 #' }
@@ -178,15 +178,32 @@ rope.default <- function(x, ...) {
 
 #' @rdname rope
 #' @export
-rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
+rope.numeric <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    insight::format_error(
+      "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
+    )
   }
 
   rope_values <- lapply(ci, function(i) {
-    .rope(x, range = range, ci = i, ci_method = ci_method, verbose = verbose)
+    .rope(
+      x,
+      range = range,
+      ci = i,
+      ci_method = ci_method,
+      complement = complement,
+      verbose = verbose
+    )
   })
 
   # "do.call(rbind)" does not bind attribute values together
@@ -194,11 +211,18 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
 
   out <- do.call(rbind, rope_values)
   if (nrow(out) > 1) {
-    out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
+    iv <- intersect(
+      colnames(out),
+      c("ROPE_Percentage", "Superiority_Percentage", "Inferiority_Percentage")
+    )
+    out[iv] <- lapply(out[iv], as.numeric)
   }
 
   # Attributes
-  hdi_area <- cbind(CI = ci, data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area"))))
+  hdi_area <- cbind(
+    CI = ci,
+    data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area")))
+  )
   names(hdi_area) <- c("CI", "CI_low", "CI_high")
 
   attr(out, "HDI_area") <- hdi_area
@@ -211,13 +235,16 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
 
 
 #' @export
-rope.get_predicted <- function(x,
-                               range = "default",
-                               ci = 0.95,
-                               ci_method = "ETI",
-                               use_iterations = FALSE,
-                               verbose = TRUE,
-                               ...) {
+rope.get_predicted <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  use_iterations = FALSE,
+  verbose = TRUE,
+  ...
+) {
   if (isTRUE(use_iterations)) {
     if ("iterations" %in% names(attributes(x))) {
       out <- rope(
@@ -225,6 +252,7 @@ rope.get_predicted <- function(x,
         range = range,
         ci = ci,
         ci_method = ci_method,
+        complement = complement,
         verbose = verbose,
         ...
       )
@@ -233,7 +261,15 @@ rope.get_predicted <- function(x,
     }
     attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   } else {
-    out <- rope(as.numeric(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+    out <- rope(
+      as.numeric(x),
+      range = range,
+      ci = ci,
+      ci_method = ci_method,
+      complement = complement,
+      verbose = verbose,
+      ...
+    )
   }
   out
 }
@@ -242,7 +278,16 @@ rope.get_predicted <- function(x,
 #' @export
 #' @rdname rope
 #' @inheritParams p_direction
-rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", rvar_col = NULL, verbose = TRUE, ...) {
+rope.data.frame <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  rvar_col = NULL,
+  verbose = TRUE,
+  ...
+) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
   x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
@@ -258,7 +303,7 @@ rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", 
     return(.append_datagrid(out, x))
   }
 
-  out <- .prepare_rope_df(x, range, ci, ci_method, verbose)
+  out <- .prepare_rope_df(x, range, ci, ci_method, complement, verbose)
   HDI_area_attributes <- insight::compact_list(out$HDI_area)
   dat <- data.frame(
     Parameter = rep(names(HDI_area_attributes), each = length(ci)),
@@ -276,8 +321,24 @@ rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", 
 
 
 #' @export
-rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
-  rope(.posterior_draws_to_df(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+rope.draws <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  rope(
+    .posterior_draws_to_df(x),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
 }
 
 #' @export
@@ -285,9 +346,25 @@ rope.rvar <- rope.draws
 
 
 #' @export
-rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
-  xdf <- insight::get_parameters(x)
-  dat <- rope(xdf, range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+rope.emmGrid <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  xdf <- insight::get_parameters(x, verbose = verbose)
+  dat <- rope(
+    xdf,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   dat <- .append_datagrid(dat, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -296,10 +373,27 @@ rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
 #' @export
 rope.emm_list <- rope.emmGrid
 
+
 #' @export
-rope.slopes <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
+rope.slopes <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
   xrvar <- .get_marginaleffects_draws(x)
-  dat <- rope(xrvar, range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  dat <- rope(
+    xrvar,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   dat <- .append_datagrid(dat, x)
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -313,11 +407,27 @@ rope.predictions <- rope.slopes
 
 
 #' @export
-rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
+rope.BFBayesFactor <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   }
-  out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  out <- rope(
+    insight::get_parameters(x, verbose = verbose),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -327,13 +437,22 @@ rope.bamlss <- rope.BFBayesFactor
 
 
 #' @export
-rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
+rope.MCMCglmm <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
   nF <- x$Fixed$nfl
   out <- rope(
     as.data.frame(x$Sol[, 1:nF, drop = FALSE]),
     range = range,
     ci = ci,
     ci_method = ci_method,
+    complement = complement,
     verbose = verbose,
     ...
   )
@@ -343,8 +462,24 @@ rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ve
 
 
 #' @export
-rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
-  out <- rope(as.data.frame(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+rope.mcmc <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  out <- rope(
+    as.data.frame(x),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   attr(out, "object_name") <- NULL
   attr(out, "data") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -352,8 +487,24 @@ rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbos
 
 
 #' @export
-rope.bcplm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
-  out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+rope.bcplm <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  out <- rope(
+    insight::get_parameters(x, verbose = verbose),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    complement = complement,
+    verbose = verbose,
+    ...
+  )
   attr(out, "object_name") <- NULL
   attr(out, "data") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -372,58 +523,54 @@ rope.BGGM <- rope.bcplm
 rope.mcmc.list <- rope.bcplm
 
 
-#' @keywords internal
-.rope <- function(x, range = c(-0.1, 0.1), ci = 0.95, ci_method = "ETI", verbose = TRUE) {
-  ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)
-
-  if (anyNA(ci_bounds)) {
-    rope_percentage <- NA
-  } else {
-    HDI_area <- x[x >= ci_bounds$CI_low & x <= ci_bounds$CI_high]
-    area_within <- HDI_area[HDI_area >= min(range) & HDI_area <= max(range)]
-    rope_percentage <- length(area_within) / length(HDI_area)
-  }
-
-
-  rope <- data.frame(
-    CI = ci,
-    ROPE_low = range[1],
-    ROPE_high = range[2],
-    ROPE_Percentage = rope_percentage
-  )
-
-  attr(rope, "HDI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
-  attr(rope, "CI_bounds") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
-  class(rope) <- unique(c("rope", "see_rope", class(rope)))
-  rope
-}
-
-
 #' @rdname rope
 #' @export
-rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+rope.stanreg <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  effects = "fixed",
+  component = "location",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
-    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    insight::format_error(
+      "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
+    )
   }
 
   # check for possible collinearity that might bias ROPE
-  if (verbose && !inherits(x, "blavaan")) .check_multicollinearity(x, "rope")
+  if (verbose && !inherits(x, "blavaan")) {
+    .check_multicollinearity(x, "rope")
+  }
 
   rope_data <- rope(
-    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+    insight::get_parameters(
+      x,
+      effects = effects,
+      component = component,
+      parameters = parameters,
+      verbose = verbose
+    ),
     range = range,
     ci = ci,
     ci_method = ci_method,
+    complement = complement,
     verbose = verbose,
     ...
   )
 
-  out <- .prepare_output(rope_data, insight::clean_parameters(x), inherits(x, "stanmvreg"))
+  out <- .prepare_output(
+    rope_data,
+    .get_cleaned_parameters(x, ...),
+    inherits(x, "stanmvreg")
+  )
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
@@ -436,23 +583,26 @@ rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", eff
 rope.stanfit <- rope.stanreg
 
 #' @export
+rope.CmdStanFit <- rope.stanreg
+
+#' @export
 rope.blavaan <- rope.stanreg
 
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(x,
-                         range = "default",
-                         ci = 0.95,
-                         ci_method = "ETI",
-                         effects = c("fixed", "random", "all"),
-                         component = c("conditional", "zi", "zero_inflated", "all"),
-                         parameters = NULL,
-                         verbose = TRUE,
-                         ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+rope.brmsfit <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   # check range argument
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
@@ -475,7 +625,9 @@ rope.brmsfit <- function(x,
   }
 
   # check for possible collinearity that might bias ROPE and print a warning
-  if (verbose) .check_multicollinearity(x, "rope")
+  if (verbose) {
+    .check_multicollinearity(x, "rope")
+  }
 
   # calc rope
   if (insight::is_multivariate(x)) {
@@ -487,10 +639,18 @@ rope.brmsfit <- function(x,
       dv,
       function(dv_item) {
         ret <- rope(
-          insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+          insight::get_parameters(
+            x,
+            effects = effects,
+            component = component,
+            parameters = parameters,
+            verbose = verbose,
+            ...
+          ),
           range = range[[dv_item]],
           ci = ci,
           ci_method = ci_method,
+          complement = complement,
           verbose = verbose,
           ...
         )
@@ -505,18 +665,29 @@ rope.brmsfit <- function(x,
     )
     rope_data <- do.call(rbind, rope_data)
 
-    out <- .prepare_output(rope_data, insight::clean_parameters(x), is_brms_mv = TRUE)
+    out <- .prepare_output(
+      rope_data,
+      .get_cleaned_parameters(x, ...),
+      is_brms_mv = TRUE
+    )
   } else {
     rope_data <- rope(
-      insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+      insight::get_parameters(
+        x,
+        effects = effects,
+        component = component,
+        parameters = parameters,
+        verbose = verbose
+      ),
       range = range,
       ci = ci,
       ci_method = ci_method,
+      complement = complement,
       verbose = verbose,
       ...
     )
 
-    out <- .prepare_output(rope_data, insight::clean_parameters(x))
+    out <- .prepare_output(rope_data, .get_cleaned_parameters(x, ...))
   }
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
@@ -528,26 +699,34 @@ rope.brmsfit <- function(x,
 
 
 #' @export
-rope.sim.merMod <- function(x,
-                            range = "default",
-                            ci = 0.95,
-                            ci_method = "ETI",
-                            effects = c("fixed", "random", "all"),
-                            parameters = NULL,
-                            verbose = TRUE,
-                            ...) {
-  effects <- match.arg(effects)
-
+rope.sim.merMod <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  effects = "fixed",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
-    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    insight::format_error(
+      "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
+    )
   }
 
   rope_list <- lapply(c("fixed", "random"), function(.x) {
-    parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
+    parms <- insight::get_parameters(
+      x,
+      effects = .x,
+      parameters = parameters,
+      verbose = verbose
+    )
 
-    getropedata <- .prepare_rope_df(parms, range, ci, ci_method, verbose)
+    getropedata <- .prepare_rope_df(parms, range, ci, ci_method, complement, verbose)
     tmp <- getropedata$tmp
     HDI_area <- getropedata$HDI_area
 
@@ -569,9 +748,13 @@ rope.sim.merMod <- function(x,
     tmp
   })
 
-  dat <- do.call(rbind, args = c(insight::compact_list(rope_list), make.row.names = FALSE))
+  dat <- do.call(
+    rbind,
+    args = c(insight::compact_list(rope_list), make.row.names = FALSE)
+  )
 
-  dat <- switch(effects,
+  dat <- switch(
+    effects,
     fixed = .select_rows(dat, "Group", "fixed"),
     random = .select_rows(dat, "Group", "random"),
     dat
@@ -597,15 +780,26 @@ rope.sim.merMod <- function(x,
 
 
 #' @export
-rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", parameters = NULL, verbose = TRUE, ...) {
+rope.sim <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!is.list(range) && (!all(is.numeric(range)) || length(range) != 2)) {
-    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    insight::format_error(
+      "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
+    )
   }
 
-  parms <- insight::get_parameters(x, parameters = parameters)
-  getropedata <- .prepare_rope_df(parms, range, ci, ci_method, verbose)
+  parms <- insight::get_parameters(x, parameters = parameters, verbose = verbose)
+  getropedata <- .prepare_rope_df(parms, range, ci, ci_method, complement, verbose)
 
   dat <- getropedata$tmp
   HDI_area <- getropedata$HDI_area
@@ -631,8 +825,49 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
 }
 
 
+# helper -------------------------------------------------------------------
+
 #' @keywords internal
-.prepare_rope_df <- function(parms, range, ci, ci_method, verbose) {
+.rope <- function(
+  x,
+  range = c(-0.1, 0.1),
+  ci = 0.95,
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE
+) {
+  ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)
+
+  if (anyNA(ci_bounds)) {
+    inferiority_percentage <- superiority_percentage <- rope_percentage <- NA
+  } else {
+    HDI_area <- x[x >= ci_bounds$CI_low & x <= ci_bounds$CI_high]
+    rope_percentage <- mean(HDI_area >= min(range) & HDI_area <= max(range))
+    superiority_percentage <- mean(HDI_area > max(range))
+    inferiority_percentage <- mean(HDI_area < min(range))
+  }
+
+  rope <- data.frame(
+    CI = ci,
+    ROPE_low = range[1],
+    ROPE_high = range[2],
+    ROPE_Percentage = rope_percentage
+  )
+
+  if (isTRUE(complement)) {
+    rope[["Superiority_Percentage"]] <- superiority_percentage
+    rope[["Inferiority_Percentage"]] <- inferiority_percentage
+  }
+
+  attr(rope, "HDI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
+  attr(rope, "CI_bounds") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
+  class(rope) <- unique(c("rope", "see_rope", class(rope)))
+  rope
+}
+
+
+#' @keywords internal
+.prepare_rope_df <- function(parms, range, ci, ci_method, complement, verbose) {
   if (is.list(range)) {
     # check if list of values contains only valid values
     range <- .check_list_range(range, parms)
@@ -644,6 +879,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
           range = r,
           ci = ci,
           ci_method = ci_method,
+          complement = complement,
           verbose = verbose
         )
       },
@@ -658,6 +894,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
       range = range,
       ci = ci,
       ci_method = ci_method,
+      complement = complement,
       verbose = verbose,
       simplify = FALSE
     )

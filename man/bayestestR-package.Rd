@@ -33,10 +33,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Dominique Makowski \email{dom.makowski@gmail.com} (\href{https://orcid.org/0000-0001-5375-9967}{ORCID})
+\strong{Maintainer}: Dominique Makowski \email{officialeasystats@gmail.com} (\href{https://orcid.org/0000-0001-5375-9967}{ORCID})
 
 Authors:
 \itemize{
+  \item Dominique Makowski \email{officialeasystats@gmail.com} (\href{https://orcid.org/0000-0001-5375-9967}{ORCID})
   \item Daniel Lüdecke \email{d.luedecke@uke.de} (\href{https://orcid.org/0000-0002-8895-3206}{ORCID})
   \item Mattan S. Ben-Shachar \email{matanshm@post.bgu.ac.il} (\href{https://orcid.org/0000-0002-4287-4801}{ORCID})
   \item Indrajeet Patil \email{patilindrajeet.science@gmail.com} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID})
@@ -51,6 +52,7 @@ Other contributors:
   \item Henrik Singmann \email{singmann@gmail.com} (\href{https://orcid.org/0000-0002-4842-3657}{ORCID}) [contributor]
   \item Quentin F. Gronau (\href{https://orcid.org/0000-0001-5510-6943}{ORCID}) [contributor]
   \item Sam Crawley \email{sam@crawley.nz} (\href{https://orcid.org/0000-0002-7847-0411}{ORCID}) [contributor]
+  \item Miura Meng \email{haomeng797@gmail.com} (\href{https://orcid.org/0009-0004-1522-1997}{ORCID}) [contributor]
 }
 
 }

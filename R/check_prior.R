@@ -2,23 +2,25 @@
 #'
 #' Performs a simple test to check whether the prior is informative to the
 #' posterior. This idea, and the accompanying heuristics, were discussed in
-#' _Gelman et al. 2017_.
+#' _Gelman et al. 2017_. For a visual check of the prior predictive
+#' distribution, see [`performance::check_priors()`].
 #'
-#' @param method Can be `"gelman"` or `"lakeland"`. For the
-#'   `"gelman"` method, if the SD of the posterior is more than 0.1 times
-#'   the SD of the prior, then the prior is considered as informative. For the
-#'   `"lakeland"` method, the prior is considered as informative if the
-#'   posterior falls within the `95%` HDI of the prior.
+#' @param method Can be `"gelman"` or `"lakeland"`. For the `"gelman"` method,
+#' if the SD of the posterior is more than 0.1 times the SD of the prior, then
+#' the prior is considered as informative. For the `"lakeland"` method, the
+#' prior is considered as informative if the posterior falls within the `95%`
+#' HDI of the prior.
 #' @param simulate_priors Should prior distributions be simulated using
-#'   [simulate_prior()] (default; faster) or sampled via
-#'   [unupdate()] (slower, more accurate).
+#' [simulate_prior()] (default; faster) or sampled via [unupdate()] (slower,
+#' more accurate).
 #' @inheritParams effective_sample
 #' @inheritParams hdi
 #'
-#' @return A data frame with two columns: The parameter names and the quality
-#'   of the prior (which might be `"informative"`, `"uninformative"`)
-#'   or `"not determinable"` if the prior distribution could not be
-#'   determined).
+#' @seealso [`performance::check_priors()`]
+#'
+#' @return A data frame with two columns: The parameter names and the quality of
+#' the prior (which might be `"informative"`, `"uninformative"`) or
+#' `"not determinable"` if the prior distribution could not be determined).
 #'
 #' @examplesIf require("rstanarm") && require("see")
 #' \donttest{
@@ -50,19 +52,18 @@ check_prior <- function(model, method = "gelman", simulate_priors = TRUE, ...) {
 }
 
 
+#' @rdname check_prior
 #' @export
-check_prior.brmsfit <- function(model,
-                                method = "gelman",
-                                simulate_priors = TRUE,
-                                effects = c("fixed", "random", "all"),
-                                component = c("conditional", "zi", "zero_inflated", "all"),
-                                parameters = NULL,
-                                verbose = TRUE,
-                                ...) {
-  # check arguments
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
+check_prior.brmsfit <- function(
+  model,
+  method = "gelman",
+  simulate_priors = TRUE,
+  effects = "fixed",
+  component = "conditional",
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+) {
   posteriors <- insight::get_parameters(
     model,
     effects = effects,
@@ -88,9 +89,12 @@ check_prior.brmsfit <- function(model,
     )
   }
 
-  .check_prior(priors, posteriors, method,
+  .check_prior(
+    priors,
+    posteriors,
+    method,
     verbose = verbose,
-    cleaned_parameters = insight::clean_parameters(model)
+    cleaned_parameters = .get_cleaned_parameters(model, ...)
   )
 }
 
@@ -102,11 +106,13 @@ check_prior.blavaan <- check_prior.brmsfit
 
 
 #' @keywords internal
-.check_prior <- function(priors,
-                         posteriors,
-                         method = "gelman",
-                         verbose = TRUE,
-                         cleaned_parameters = NULL) {
+.check_prior <- function(
+  priors,
+  posteriors,
+  method = "gelman",
+  verbose = TRUE,
+  cleaned_parameters = NULL
+) {
   # validation check for matching parameters. Some weird priors like
   # rstanarm's R2 prior might cause problems
 
@@ -129,12 +135,24 @@ check_prior.blavaan <- check_prior.brmsfit
     # prior columns and match them with the posteriors
 
     if (ncol(posteriors) > ncol(priors)) {
-      matched_columns <- stats::na.omit(match(cleaned_parameters$Cleaned_Parameter, colnames(priors)))
-      matched_column_names <- stats::na.omit(match(colnames(priors), cleaned_parameters$Cleaned_Parameter))
+      matched_columns <- stats::na.omit(match(
+        cleaned_parameters$Cleaned_Parameter,
+        colnames(priors)
+      ))
+      matched_column_names <- stats::na.omit(match(
+        colnames(priors),
+        cleaned_parameters$Cleaned_Parameter
+      ))
       priors <- priors[matched_columns]
     } else {
-      matched_columns <- stats::na.omit(match(colnames(priors), cleaned_parameters$Cleaned_Parameter))
-      matched_column_names <- stats::na.omit(match(cleaned_parameters$Cleaned_Parameter, colnames(priors)))
+      matched_columns <- stats::na.omit(match(
+        colnames(priors),
+        cleaned_parameters$Cleaned_Parameter
+      ))
+      matched_column_names <- stats::na.omit(match(
+        cleaned_parameters$Cleaned_Parameter,
+        colnames(priors)
+      ))
       priors <- priors[matched_columns]
     }
     colnames(priors) <- cleaned_parameters$Parameter[matched_column_names]
@@ -152,7 +170,6 @@ check_prior.blavaan <- check_prior.brmsfit
     }
   }
 
-
   # for priors whose distribution cannot be simulated, prior values are
   # all NA. Catch those, and warn user
   all_missing <- vapply(priors, function(i) all(is.na(i)), TRUE)
@@ -164,7 +181,9 @@ check_prior.blavaan <- check_prior.brmsfit
   .gelman <- function(prior, posterior) {
     if (all(is.na(prior))) {
       "not determinable"
-    } else if (stats::sd(posterior, na.rm = TRUE) > 0.1 * stats::sd(prior, na.rm = TRUE)) {
+    } else if (
+      stats::sd(posterior, na.rm = TRUE) > 0.1 * stats::sd(prior, na.rm = TRUE)
+    ) {
       "informative"
     } else {
       "uninformative"

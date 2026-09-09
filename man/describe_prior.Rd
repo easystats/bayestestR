@@ -7,26 +7,12 @@
 \usage{
 describe_prior(model, ...)
 
-\method{describe_prior}{brmsfit}(
-  model,
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all", "location",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  ...
-)
+\method{describe_prior}{brmsfit}(model, parameters = NULL, ...)
 }
 \arguments{
 \item{model}{A Bayesian model.}
 
 \item{...}{Currently not used.}
-
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
-
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
 
 \item{parameters}{Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are

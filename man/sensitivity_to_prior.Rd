@@ -20,7 +20,7 @@ important here (e.g., write 'Median' instead of 'median').}
 
 \item{magnitude}{This represent the magnitude by which to shift the
 antagonistic prior (to test the sensitivity). For instance, a magnitude of
-10 (default) means that the mode wil be updated with a prior located at 10
+10 (default) means that the mode will be updated with a prior located at 10
 standard deviations from its original location.}
 }
 \description{
@@ -30,7 +30,7 @@ antagonistic prior (a prior of same shape located on the opposite of the
 effect).
 }
 \examples{
-\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
 library(bayestestR)
 

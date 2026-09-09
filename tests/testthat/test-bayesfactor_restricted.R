@@ -28,6 +28,38 @@ test_that("bayesfactor_restricted df", {
   expect_error(bayesfactor_restricted(posterior, prior, hypothesis = "Y < 0"))
 })
 
+test_that("bayesfactor_restricted | bayesfactor_matrix", {
+  set.seed(444)
+  prior <- data.frame(
+    A = rnorm(500),
+    B = rnorm(500),
+    C = rnorm(500)
+  )
+
+  posterior <- data.frame(
+    A = rnorm(500, .4, 0.7),
+    B = rnorm(500, -.2, 0.4),
+    C = rnorm(500, 0, 0.5)
+  )
+
+  hyps <- c(
+    "A > B & B > C",
+    "A > B & A > C",
+    "C > A"
+  )
+
+
+  b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior)
+  bfmat <- as.matrix(b)
+
+  expect_identical(unname(bfmat[1, -1]), b$log_BF)
+
+  expect_identical(unname(diag(bfmat)), rep(0, 4))
+  expect_identical(-t(bfmat)[upper.tri(bfmat)], bfmat[upper.tri(bfmat)])
+
+  expect_output(print(bfmat), regexp = "Denominator\\\\Numerator")
+  expect_output(print(bfmat), regexp = "Restricted")
+})
 
 # bayesfactor_restricted RSTANARM -----------------------------------------
 

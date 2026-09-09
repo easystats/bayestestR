@@ -4,9 +4,6 @@
 \alias{si}
 \alias{si.numeric}
 \alias{si.stanreg}
-\alias{si.brmsfit}
-\alias{si.blavaan}
-\alias{si.emmGrid}
 \alias{si.get_predicted}
 \alias{si.data.frame}
 \title{Compute Support Intervals}
@@ -20,38 +17,11 @@ si(posterior, ...)
   prior = NULL,
   BF = 1,
   verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
+  effects = "fixed",
+  component = "location",
   parameters = NULL,
   ...
 )
-
-\method{si}{brmsfit}(
-  posterior,
-  prior = NULL,
-  BF = 1,
-  verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
-  parameters = NULL,
-  ...
-)
-
-\method{si}{blavaan}(
-  posterior,
-  prior = NULL,
-  BF = 1,
-  verbose = TRUE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
-    "distributional"),
-  parameters = NULL,
-  ...
-)
-
-\method{si}{emmGrid}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
 \method{si}{get_predicted}(
   posterior,
@@ -78,12 +48,40 @@ arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
+(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
+be abbreviated.
 
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
+For models of from packages \strong{brms} or \strong{rstanarm} there are additional
+options:
+\itemize{
+\item \code{"fixed"} returns fixed effects.
+\item \code{"random_variance"} return random effects parameters (variance and
+correlation components, e.g. those parameters that start with \code{sd_} or
+\code{cor_}).
+\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
+parameters that start with \code{r_}.
+\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
+\item \code{"all"} returns fixed effects and random effects variances.
+\item \code{"full"} returns all parameters.
+}}
+
+\item{component}{Which type of parameters to return, such as parameters for
+the conditional model, the zero-inflated part of the model, the dispersion
+term, etc. See details in section \emph{Model Components}. May be abbreviated.
+Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
+component - names may differ, depending on the modeling package. There are
+three convenient shortcuts (not applicable to \emph{all} model classes):
+\itemize{
+\item \code{component = "all"} returns all possible parameters.
+\item If \code{component = "location"}, location parameters such as \code{conditional},
+\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
+that are fixed or random effects - depending on the \code{effects} argument -
+but no auxiliary parameters).
+\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
+\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
+parameters) are returned.
+}}
 
 \item{parameters}{Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
@@ -111,15 +109,11 @@ than average, by some degree \emph{k}; these are values of the parameter that ar
 updating factor greater or equal than \emph{k}. From the perspective of the Savage-Dickey Bayes factor, testing
 against a point null hypothesis for any value within the support interval will yield a Bayes factor smaller
 than \emph{1/k}.
+\cr\cr
+\strong{For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
-\strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
-see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
-
 This method is used to compute support intervals based on prior and posterior distributions.
-For the computation of support intervals, the model priors must be proper priors (at the very least
-they should be \emph{not flat}, and it is preferable that they be \emph{informative} - note
-that by default, \code{brms::brm()} uses flat priors for fixed-effects; see example below).
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
@@ -139,24 +133,37 @@ will be larger than 3.
 }
 }
 
-\section{Setting the correct \code{prior}}{
+\section{Prior and posterior considerations}{
 
+In order to correctly and precisely estimate Bayes factors, a rule of thumb
+are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
+\strong{P}osteriors.
+\cr\cr
 For the computation of Bayes factors, the model priors must be proper priors
-(at the very least they should be \emph{not flat}, and it is preferable that
-they be \emph{informative}); As the priors for the alternative get wider, the
-likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this
-is called \emph{the Jeffreys-Lindley-Bartlett paradox}). Thus, you should
-only ever try (or want) to compute a Bayes factor when you have an informed
-prior.
+(at the very least they should be \emph{not flat}, and it is preferable that they
+be \emph{informative}) (Note that by default, \code{brms::brm()} uses flat priors for
+fixed-effects); Wide priors result in smaller marginal likelihoods, and thus
+models with wider priors are trivially less likely than models with narrower
+priors - where, at the extreme, that a model with completely flat priors is
+infinitely less favorable than a point null model (this is called \emph{the
+Jeffreys-Lindley-Bartlett paradox}). Thus, you should only ever try (or want)
+to compute a Bayes factor when you have an informed prior.
 \cr\cr
-(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
-See example below.)
-\cr\cr
+Additionally, for models using MCMC estimation the number of posterior
+samples needed for testing is substantially larger than for estimation (the
+default of 4000 samples may not be enough in many cases). A conservative rule
+of thumb is to obtain 10 times more samples than would be required for
+estimation (\emph{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000
+samples are detected, a warning is issued.
+}
+
+\section{Obtaining prior samples}{
+
+
 It is important to provide the correct \code{prior} for meaningful results,
 to match the \code{posterior}-type input:
 \itemize{
-\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-estimate.
+\item \strong{A numeric vector} - \code{prior} should also be a \emph{numeric vector}, representing the prior-distribution
 \item \strong{A data frame} - \code{prior} should also be a \emph{data frame}, representing the prior-estimates, in matching column order.
 \itemize{
 \item If \code{rvar_col} is specified, \code{prior} should be \emph{the name of an \code{rvar} column} that represents the prior-estimates.
@@ -179,7 +186,7 @@ any transformations -- \code{"log"}, \code{"response"}, etc. -- or any \code{reg
 }
 
 \examples{
-\dontshow{if (require("logspline") && require("rstanarm") && require("brms") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require("logspline") && require("rstanarm") && require("brms") && require("emmeans")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 prior <- distribution_normal(1000, mean = 0, sd = 1)
@@ -223,11 +230,11 @@ Wagenmakers, E., Gronau, Q. F., Dablander, F., & Etz, A. (2018, November 22).
 The Support Interval. \doi{10.31234/osf.io/zwnxb}
 }
 \seealso{
-Other ci: 
-\code{\link{bci}()},
-\code{\link{ci}()},
-\code{\link{eti}()},
-\code{\link{hdi}()},
-\code{\link{spi}()}
+Other ci:
+\code{\link[=bci]{bci()}},
+\code{\link[=ci]{ci()}},
+\code{\link[=eti]{eti()}},
+\code{\link[=hdi]{hdi()}},
+\code{\link[=spi]{spi()}}
 }
 \concept{ci}

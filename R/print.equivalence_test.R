@@ -3,15 +3,15 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   orig_x <- x
   insight::print_color("# Test for Practical Equivalence\n\n", "blue")
   # print ROPE limits, if we just have one set of ROPE values
-  if (insight::n_unique(x$ROPE_low) == 1) {
+  if (insight::has_single_value(x$ROPE_low, remove_na = TRUE)) {
     cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, x$ROPE_low[1], digits, x$ROPE_high[1]))
   }
 
   # fix "sd" pattern
   model <- .retrieve_model(x)
   if (!is.null(model) && !is.data.frame(model)) {
-    cp <- insight::clean_parameters(model)
-    if (!is.null(cp$Group) && any(startsWith(cp$Group, "SD/Cor"))) {
+    cp <- .get_cleaned_parameters(model)
+    if (!is.null(cp) && !is.null(cp$Group) && any(startsWith(cp$Group, "SD/Cor"))) {
       cp <- cp[startsWith(cp$Group, "SD/Cor"), ]
       matches <- match(cp$Parameter, x$Parameter)
       if (length(matches)) {
