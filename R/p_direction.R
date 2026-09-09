@@ -287,11 +287,7 @@ p_direction.draws <- function(x,
 p_direction.rvar <- p_direction.draws
 
 #' @export
-p_direction.distribution <- function(x,
-                                     null = 0,
-                                     as_p = FALSE,
-                                     remove_na = TRUE,
-                                     ...) {
+p_direction.distribution <- function(x, null = 0, as_p = FALSE, remove_na = TRUE, ...) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
   x <- .clean_distributional(x)
   pd <- numeric(length = length(x))
