@@ -18,7 +18,7 @@
 #'   and (where available) tail ESS (`ESS_tail`).
 #'
 #' @details
-#'   - **Effective Sample (ESS)** should be as large as possible, altough
+#'   - **Effective Sample (ESS)** should be as large as possible, although
 #'   for most applications, an effective sample size greater than 1,000 is
 #'   sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the
 #'   number of independent samples with the same estimation power as the N

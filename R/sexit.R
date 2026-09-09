@@ -99,7 +99,7 @@
 #'
 #'   - The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.
 #'   - The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).
-#'   - The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).
+#'   - The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centered around 0).
 #' }
 #'
 #' @return A dataframe and text as attribute.
@@ -149,7 +149,11 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
   centrality_text <- paste0("Median = ", insight::format_value(centrality$Median))
   direction <- ifelse(centrality$Median < 0, "negative", "positive")
   uncertainty <- ci(x, ci = ci, method = "ETI", ...)[c("CI", "CI_low", "CI_high")]
-  uncertainty_text <- insight::format_ci(uncertainty$CI_low, uncertainty$CI_high, uncertainty$CI)
+  uncertainty_text <- insight::format_ci(
+    uncertainty$CI_low,
+    uncertainty$CI_high,
+    uncertainty$CI
+  )
 
   # Indices
   existence_rez <- as.numeric(p_direction(x, ...))
@@ -159,13 +163,18 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
   sig_rez <- as.numeric(p_significance(x, threshold = significant, ...))
   sig_value <- insight::format_value(sig_rez, as_percent = TRUE)
   sig_threshold <- ifelse(direction == "negative", -1 * significant, significant)
-  sig_threshold <- paste0(ifelse(direction == "negative", "< ", "> "), insight::format_value(sig_threshold))
-
+  sig_threshold <- paste0(
+    ifelse(direction == "negative", "< ", "> "),
+    insight::format_value(sig_threshold)
+  )
 
   large_rez <- as.numeric(p_significance(x, threshold = large, ...))
   large_value <- insight::format_value(large_rez, as_percent = TRUE)
   large_threshold <- ifelse(direction == "negative", -1 * large, large)
-  large_threshold <- paste0(ifelse(direction == "negative", "< ", "> "), insight::format_value(large_threshold))
+  large_threshold <- paste0(
+    ifelse(direction == "negative", "< ", "> "),
+    insight::format_value(large_threshold)
+  )
 
   if ("Parameter" %in% names(centrality)) {
     parameters <- centrality$Parameter
@@ -228,7 +237,10 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
   )
 
   # Prepare output
-  attr(out, "sexit_info") <- "Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large."
+  attr(
+    out,
+    "sexit_info"
+  ) <- "Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large."
   attr(out, "sexit_ci_method") <- "ETI"
   attr(out, "sexit_significance") <- significant
   attr(out, "sexit_large") <- large
@@ -242,7 +254,9 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
     paste0("Significance (> |", insight::format_value(significant), "|)"),
     paste0("Large (> |", insight::format_value(large), "|)")
   )
-  if ("Parameter" %in% names(out)) pretty_cols <- c("Parameter", pretty_cols)
+  if ("Parameter" %in% names(out)) {
+    pretty_cols <- c("Parameter", pretty_cols)
+  }
   attr(out, "pretty_cols") <- pretty_cols
   attr(out, "data") <- x
 
@@ -255,9 +269,12 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
 #' @keywords internal
 .sexit_preprocess <- function(x, significant = "default", large = "default", ...) {
   thresholds <- sexit_thresholds(x)
-  if (significant == "default") significant <- thresholds[1]
-  if (large == "default") large <- thresholds[2]
-
+  if (significant == "default") {
+    significant <- thresholds[1]
+  }
+  if (large == "default") {
+    large <- thresholds[2]
+  }
 
   suppressWarnings({
     resp <- .safe(insight::get_response(x, type = "mf"))
@@ -300,16 +317,28 @@ print.sexit <- function(x, summary = FALSE, digits = 2, ...) {
 
   # Long
   if (isFALSE(summary)) {
-    insight::print_color(paste0("# ", attributes(x)$sexit_info, " ", attributes(x)$sexit_thresholds, "\n\n"), "blue")
+    insight::print_color(
+      paste0("# ", attributes(x)$sexit_info, " ", attributes(x)$sexit_thresholds, "\n\n"),
+      "blue"
+    )
 
     text <- attributes(x)$sexit_textlong
-    if (length(text) > 1) text <- paste0(paste0("- ", text), collapse = "\n")
+    if (length(text) > 1) {
+      text <- paste0(paste0("- ", text), collapse = "\n")
+    }
     insight::print_color(text, "yellow")
     cat("\n\n")
 
-    df <- data.frame(Median = x$Median, CI = insight::format_ci(x$CI_low, x$CI_high, NULL))
+    df <- data.frame(
+      Median = x$Median,
+      CI = insight::format_ci(x$CI_low, x$CI_high, NULL)
+    )
     if ("Parameter" %in% names(x)) {
-      df <- cbind(data.frame(Parameter = x$Parameter), df, x[c("Direction", "Significance", "Large")])
+      df <- cbind(
+        data.frame(Parameter = x$Parameter),
+        df,
+        x[c("Direction", "Significance", "Large")]
+      )
     } else {
       df <- cbind(df, x[c("Direction", "Significance", "Large")])
     }
@@ -321,7 +350,9 @@ print.sexit <- function(x, summary = FALSE, digits = 2, ...) {
     insight::print_color(paste0("# ", attributes(x)$sexit_thresholds, "\n\n"), "blue")
 
     text <- attributes(x)$sexit_textshort
-    if (length(text) > 1) text <- paste0(paste0("- ", text), collapse = "\n")
+    if (length(text) > 1) {
+      text <- paste0(paste0("- ", text), collapse = "\n")
+    }
     cat(text)
   }
 

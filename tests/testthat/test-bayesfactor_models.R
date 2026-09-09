@@ -150,6 +150,34 @@ test_that("bayesfactor_models BRMS", {
   skip_on_cran()
   # skip_on_ci()
 
+  skip(message = "Currently fails, due to bridgesampling?")
+  #   1. ├─base::suppressWarnings(...) at tests/testthat/test-bayesfactor_models.R:176:3
+  #   2. │ └─base::withCallingHandlers(...)
+  #   3. ├─base::suppressMessages(...)
+  #   4. │ └─base::withCallingHandlers(...)
+  #   5. ├─testthat::expect_message(...)
+  #   6. │ └─testthat:::expect_condition_matching_(...)
+  #   7. │   └─testthat:::quasi_capture(...)
+  #   8. │     ├─testthat (local) .capture(...)
+  #   9. │     │ └─base::withCallingHandlers(...)
+  #  10. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+  #  11. ├─bayestestR::bayesfactor_models(stan_brms_model_0, stan_brms_model_1) at tests/testthat/test-bayesfactor_models.R:179:9
+  #  12. └─bayestestR:::bayesfactor_models.brmsfit(stan_brms_model_0, stan_brms_model_1) at bayestestR/R/bayesfactor_models.R:164:3
+  #  13.   └─bayestestR:::.bayesfactor_models_stan(...) at bayestestR/R/bayesfactor_models.R:399:3
+  #  14.     └─bayestestR:::.bayesfactor_models_stan_REG(...) at bayestestR/R/bayesfactor_models.R:307:5
+  #  15.       └─base::lapply(mods, .get_marglik, verbose = verbose) at bayestestR/R/bayesfactor_models.R:343:3
+  #  16.         └─bayestestR (local) FUN(X[[i]], ...)
+  #  17.           ├─bridgesampling::bridge_sampler(mod, silent = TRUE) at bayestestR/R/bayesfactor_models.R:605:3
+  #  18.           └─brms:::bridge_sampler.brmsfit(mod, silent = TRUE)
+  #  19.             └─brms:::update_misc_env(samples, recompile = recompile)
+  #  20.               └─brms::add_rstan_model(x, overwrite = TRUE)
+  #  21.                 ├─base::suppressMessages(...)
+  #  22.                 │ └─base::withCallingHandlers(...)
+  #  23.                 └─rstan::stan(...)
+  #  24.                   └─rstan::stan_model(...)
+  #  25.                     └─rstan:::cxxfunctionplus(...)
+  #  26.                       └─base::sink(type = 'output')
+
   skip_if_not_or_load_if_installed("bridgesampling")
   skip_if_not_or_load_if_installed("brms")
 

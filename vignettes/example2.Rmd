@@ -221,7 +221,7 @@ ggplot(data, aes(x = Species, y = Sepal.Width, fill = Species)) +
   theme_modern()
 ```
 
-It *seems* (visually) that *virgnica* flowers have, on average, a slightly higer
+It *seems* (visually) that *virgnica* flowers have, on average, a slightly higher
 width of sepals. Let's assess this difference statistically by using the
 `ttestBF()` function in the `BayesFactor` package.
 

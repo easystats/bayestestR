@@ -7,6 +7,8 @@
 #' following the description in Rouder, Morey, Speckman, & Province (2012, p.
 #' 363).
 #'
+#' @param sparse Logical, indicating if the result should be sparse (of class
+#' `Matrix::dgCMatrix`), using package **Matrix**.
 #' @inheritParams stats::contr.treatment
 #'
 #' @details
@@ -153,8 +155,10 @@
 #' Q3 %*% t(Q3) ## 2/3 on diagonal and -1/3 on off-diagonal elements
 #' @export
 contr.equalprior <- function(n, contrasts = TRUE, sparse = FALSE) {
-  contr <- stats::contr.treatment(n,
-    contrasts = FALSE, base = 1,
+  contr <- stats::contr.treatment(
+    n,
+    contrasts = FALSE,
+    base = 1,
     sparse = sparse & !contrasts
   )
 

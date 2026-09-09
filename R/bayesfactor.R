@@ -1,6 +1,6 @@
 #' Bayes Factors (BF)
 #'
-#' This function compte the Bayes factors (BFs) that are appropriate to the
+#' This function computes the Bayes factors (BFs) that are appropriate to the
 #' input. For vectors or single models, it will compute [`BFs for single
 #' parameters`][bayesfactor_parameters], or is `hypothesis` is specified,
 #' [`BFs for restricted models`][bayesfactor_restricted]. For multiple models,
@@ -48,16 +48,18 @@
 #' bayesfactor(comparison)
 #' }
 #' @export
-bayesfactor <- function(...,
-                        prior = NULL,
-                        direction = "two-sided",
-                        null = 0,
-                        hypothesis = NULL,
-                        effects = "fixed",
-                        verbose = TRUE,
-                        denominator = 1,
-                        match_models = FALSE,
-                        prior_odds = NULL) {
+bayesfactor <- function(
+  ...,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = NULL,
+  effects = "fixed",
+  verbose = TRUE,
+  denominator = 1,
+  match_models = FALSE,
+  prior_odds = NULL
+) {
   mods <- list(...)
 
   if (length(mods) > 1) {
@@ -80,10 +82,6 @@ bayesfactor <- function(...,
       verbose = verbose
     )
   } else {
-    bayesfactor_restricted(...,
-      prior = prior,
-      verbose = verbose,
-      effects = effects
-    )
+    bayesfactor_restricted(..., prior = prior, verbose = verbose, effects = effects)
   }
 }

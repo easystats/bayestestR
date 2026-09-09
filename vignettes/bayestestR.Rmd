@@ -103,7 +103,7 @@ or [other indices](https://easystats.github.io/bayestestR/articles/guidelines.ht
 knitr::include_graphics("../man/figures/bayesianMaster.jpg")
 ```
 
-*Note: Altough the very purpose of this package is to advocate for the use of Bayesian statistics, please note that there are serious arguments supporting frequentist indices (see for instance [this thread](https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16)). As always, the world is not black and white (p \< .001).*
+*Note: Although the very purpose of this package is to advocate for the use of Bayesian statistics, please note that there are serious arguments supporting frequentist indices (see for instance [this thread](https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16)). As always, the world is not black and white (p \< .001).*
 
 **So... how does it work?**
 

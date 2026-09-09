@@ -1,3 +1,18 @@
+# bayestestR (devel)
+
+## Breaking Changes
+
+* `p_to_bf()` arguments `n_obs` and `log` have changed positions in the function call.
+
+## Changes
+
+* `p_to_bf()` documentation improvements as well as better implementation for models (and mixed models).
+
+## Bug fixes
+
+* Fixed the acceleration estimate in `bci()`, so skewed intervals are adjusted
+  in the correct direction (#572).
+
 # bayestestR 0.18.1
 
 ## Changes
@@ -457,7 +472,7 @@
 
 ## Bug fixes
 
-- Link transformation are now taken into account for `emmeans` objets. E.g., in
+- Link transformation are now taken into account for `emmeans` objects. E.g., in
   `describe_posterior()`.
 
 - Fix `diagnostic_posterior()` when algorithm is not "sampling".
@@ -475,7 +490,7 @@
 
 - `p_significance()` now also works on `parameters::simulate_model()`.
 
-- `rope_range()` supports more (frequentis) models.
+- `rope_range()` supports more (frequentist) models.
 
 ## Bug fixes
 

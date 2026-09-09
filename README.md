@@ -153,7 +153,7 @@ describe_posterior(
   verbose = FALSE
 )
 ## Summary of Posterior Distribution
-## 
+##
 ## Parameter |    Median |        95% CI |     pd |   ps
 ## -----------------------------------------------------
 ## Posterior | -5.70e-03 | [-2.00, 1.99] | 50.23% | 0.47
@@ -187,29 +187,29 @@ describe_posterior(
 ```
 
     ## Summary of Posterior Distribution
-    ## 
+    ##
     ## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat | ESS
     ## -----------------------------------------------------------------------------------
     ## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.81,  2.51] | 90.00% | 0.88 | 1.011 | 110
     ## child       |  -1.16 | -1.16 | -1.16 | [-1.36, -0.94] |   100% | 1.00 | 0.996 | 278
     ## camper      |   0.73 |  0.72 |  0.73 | [ 0.54,  0.91] |   100% | 1.00 | 0.996 | 271
-    ## 
+    ##
     ## # Fixed effects (zero-inflated)
-    ## 
+    ##
     ## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat | ESS
     ## -----------------------------------------------------------------------------------
     ## (Intercept) |  -0.48 | -0.51 | -0.22 | [-2.03,  0.89] | 78.00% | 0.73 | 0.997 | 138
     ## child       |   1.85 |  1.86 |  1.81 | [ 1.19,  2.54] |   100% | 1.00 | 0.996 | 303
     ## camper      |  -0.88 | -0.86 | -0.99 | [-1.61, -0.07] | 98.40% | 0.96 | 0.996 | 292
-    ## 
+    ##
     ## # Random effects (conditional) (SD/Cor: persons)
-    ## 
+    ##
     ## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat | ESS
     ## -------------------------------------------------------------------------------
     ## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.71,  3.58] | 100% | 1.00 | 1.010 | 126
-    ## 
+    ##
     ## # Random effects (zero-inflated) (SD/Cor: persons)
-    ## 
+    ##
     ## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat | ESS
     ## -------------------------------------------------------------------------------
     ## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.63,  3.41] | 100% | 1.00 | 0.996 | 129
@@ -227,7 +227,7 @@ posterior <- distribution_gamma(10000, 1.5) # Generate a skewed distribution
 centrality <- point_estimate(posterior) # Get indices of centrality
 centrality
 ## Point Estimate
-## 
+##
 ## Median | Mean |  MAP
 ## --------------------
 ## 1.18   | 1.50 | 0.51
@@ -303,7 +303,7 @@ guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 posterior <- distribution_normal(10000, 0.4, 0.2)
 p_direction(posterior)
 ## Probability of Direction
-## 
+##
 ## Parameter |     pd
 ## ------------------
 ## Posterior | 97.72%
@@ -342,7 +342,7 @@ Bayesian framework, see
 posterior <- distribution_normal(10000, 0.4, 0.2)
 rope(posterior, range = c(-0.1, 0.1))
 ## # Proportion of samples inside the ROPE [-0.10, 0.10]:
-## 
+##
 ## Inside ROPE
 ## -----------
 ## 4.40 %
@@ -374,11 +374,11 @@ posterior <- distribution_normal(10000, mean = 1, sd = 0.7)
 
 bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0, verbose = FALSE)
 ## Bayes Factor (Savage-Dickey density ratio)
-## 
-## BF  
+##
+## BF
 ## ----
 ## 1.94
-## 
+##
 ## * Evidence Against The Null: 0
 ```
 
@@ -396,7 +396,7 @@ vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 
 ## Utilities
 
-### Find ROPE’s appropriate range
+### Find ROPE's appropriate range
 
 [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.html):
 This function attempts at automatically finding suitable “default”

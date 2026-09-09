@@ -439,7 +439,7 @@ bayesfactor_restricted(mod_H2, hypothesis = "mom_hsyes > 0")
 ```
 
 
-In other words, the data fits the restricted model (where the difference must be small _and positive_) twice as much as it fits the un-restircted model (where the difference must be small).
+In other words, the data fits the restricted model (where the difference must be small _and positive_) twice as much as it fits the un-restricted model (where the difference must be small).
 
 We can compare multiple restricted hypotheses. For example: that the difference isn't just positive, it's larger than 4.
 
@@ -542,7 +542,7 @@ bayesfactor_restricted(
 )
 ```
 
-We can see that a-priori, this specific ordering of the 3 means has a proability of $\frac{1}{6}$ (1 of 6 possible orderings of 3 values), but after observing the data, this ordering is about ~4 times more likely than any other ordering.
+We can see that a-priori, this specific ordering of the 3 means has a probability of $\frac{1}{6}$ (1 of 6 possible orderings of 3 values), but after observing the data, this ordering is about ~4 times more likely than any other ordering.
 
 The transitive properties of Bayes factors can also be used to compute a Bayes factor for **dividing** hypotheses -
 that is for two *complementary* opposing one-sided hypotheses [@morey2014simple].
@@ -593,7 +593,7 @@ and in fact two similar posterior models can have very different BFs if their pr
 
 For testing a point null hypothesis (e.g., $\mathcal{H}_0: \theta = 0$) against some alternative non-null hypothesis (e.g., $\mathcal{H}_1: \theta \sim Normal(0, 5^2)$), a nice "short cut" can be used to obtain a Bayes factor - via the Savage-Dickey density ratio [@wagenmakers2010bayesian].
 
-If we zoomed-in on the null value $\theta_0$ - what does it mean for the null's credability to have become _lower_ in the posterior distribution?
+If we zoomed-in on the null value $\theta_0$ - what does it mean for the null's credibility to have become _lower_ in the posterior distribution?
 Well, since the null is less credible, that necessarily means that the alternative is _more_ credible by the same amount!
 
 Note that for a point null on a continuous parameter, the _probability_ of the null is always 0, and the probability of all other values is 1. However, the _density_ of the null can be non-zero, and it is this density that quantifies the credibility of the null hypothesis. This means that the prior _odds_ of the null vs the alternative are:
@@ -676,7 +676,7 @@ and therefore the alternative (that the difference is outside of the [-5, 5] ran
 ### Directional hypotheses
 
 We can also compute Bayes factors for directional hypotheses ("one sided"),
-if we have a prior hypotheses about the direction of the effect. This is similiar to the _dividing_ Bayes factor discussed above, but we are still comparing the (directional) alternative to the null (not between two directional hypotheses).
+if we have a prior hypotheses about the direction of the effect. This is similar to the _dividing_ Bayes factor discussed above, but we are still comparing the (directional) alternative to the null (not between two directional hypotheses).
 This too can be done by setting an *order restriction* on the prior and posterior distributions [@morey2014simple].
 For example, if we have a prior hypothesis that *the difference in IQ between the two groups is positive*,
 the alternative will be restricted to the region to the right of the null (point or interval):
@@ -758,7 +758,7 @@ can lead to different implied priors.
 
 @rouder2017bayesian discuss how one might wish to set some global multidimensional prior (the _g_-prior)
 on the factor's levels that is not sensitive to the order of level or the choice of reference group.
-These are implamneted in `contr.equalprior()` and its siblings.
+These are implemented in `contr.equalprior()` and its siblings.
 
 Below we demonstrate how the choice of contrast coding can lead to different implied priors regarding the possible _ordering_ and _differences_ between the factor's levels.
 
@@ -910,7 +910,7 @@ bayesfactor_restricted(
 )
 ```
 
-We can see that while all models have the very similiar posterior distributions,
+We can see that while all models have the very similar posterior distributions,
 the implied prior orders are different, with only the `contr.equalprior()` coding giving us a prior that does not favor any particular ordering of the groups (and gives 1/6 prior probability to each of the 6 possible orderings of 3 groups).
 
 While `contr.equalprior()` gives the original formulation given by @rouder2017bayesian,

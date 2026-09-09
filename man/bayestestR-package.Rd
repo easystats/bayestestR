@@ -52,6 +52,7 @@ Other contributors:
   \item Henrik Singmann \email{singmann@gmail.com} (\href{https://orcid.org/0000-0002-4842-3657}{ORCID}) [contributor]
   \item Quentin F. Gronau (\href{https://orcid.org/0000-0001-5510-6943}{ORCID}) [contributor]
   \item Sam Crawley \email{sam@crawley.nz} (\href{https://orcid.org/0000-0002-7847-0411}{ORCID}) [contributor]
+  \item Miura Meng \email{haomeng797@gmail.com} (\href{https://orcid.org/0009-0004-1522-1997}{ORCID}) [contributor]
 }
 
 }
