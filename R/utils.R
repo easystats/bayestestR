@@ -250,9 +250,19 @@
 }
 
 #' @keywords internal
-.is_discrete_dist <- function (d) {
-  inherits(d, c("dist_bernoulli", "dist_binomial", "dist_categorical",
-                "dist_geometric", "dist_logarithmic", "dist_multinomial",
-                "dist_negative_binomial", "dist_poisson",
-                "dist_poisson_inverse_gaussian"))
+.is_discrete_dist <- function(d) {
+  inherits(
+    d,
+    c(
+      "dist_bernoulli",
+      "dist_binomial",
+      "dist_categorical",
+      "dist_geometric",
+      "dist_logarithmic",
+      "dist_multinomial",
+      "dist_negative_binomial",
+      "dist_poisson",
+      "dist_poisson_inverse_gaussian"
+    )
+  )
 }
