@@ -13,6 +13,9 @@
 * Fixed the acceleration estimate in `bci()`, so skewed intervals are adjusted
   in the correct direction (#572).
 
+* Fixed issue in collinearity-checks, where thresholds for collinearity were
+  not properly considered.
+
 * Fixed CRAN test failures and warnings.
 
 # bayestestR 0.18.1
