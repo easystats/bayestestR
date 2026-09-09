@@ -1,4 +1,4 @@
-# bayestestR (devel)
+# bayestestR 0.19.0
 
 ## Breaking Changes
 
@@ -12,6 +12,8 @@
 
 * Fixed the acceleration estimate in `bci()`, so skewed intervals are adjusted
   in the correct direction (#572).
+
+* Fixed CRAN test failures and warnings.
 
 # bayestestR 0.18.1
 
