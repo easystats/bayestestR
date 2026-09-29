@@ -1,5 +1,12 @@
 # bayestestR 0.19.0
 
+## Bug fixes
+
+* Fixed issue with printing wrong column order of multiple CI columns in
+  `describe_posterior()`.
+
+# bayestestR 0.19.0
+
 ## Breaking Changes
 
 * `p_to_bf()` arguments `n_obs` and `log` have changed positions in the function call.

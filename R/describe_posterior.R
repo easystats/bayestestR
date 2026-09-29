@@ -533,6 +533,14 @@ describe_posterior.default <- function(posterior, ...) {
   out <- merge(out, test_bf, by = merge_by, all = TRUE)
   out <- out[!is.na(out$Parameter), ]
 
+  # CI order can be mashed up, so fix it here
+  if ("CI" %in% colnames(out)) {
+    ci_order <- order(out$.rowid, out$CI)
+    if (!identical(ci_order, seq_len(nrow(out)))) {
+      out <- out[ci_order, ]
+    }
+  }
+
   # check which columns can be removed at the end. In any case, we don't
   # need .rowid in the returned data frame, and when the Effects or Component
   # column consist only of missing values, we remove those columns as well
