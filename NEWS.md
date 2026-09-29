@@ -1,4 +1,4 @@
-# bayestestR 0.19.0
+# bayestestR (devel)
 
 ## Bug fixes
 

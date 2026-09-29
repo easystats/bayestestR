@@ -918,9 +918,9 @@ test_that("describe_posterior - correct CI column order for emmeans and pd-test"
 
   emm <- emmeans::emmeans(fit, ~cyl)
 
-  out <- describe_posterior(emm, ci = c(0.5, .08, 0.95), test = "p_map")
-  expect_equal(out$CI, c(0.08, 0.5, 0.95, 0.08, 0.5, 0.95, 0.08, 0.5, 0.95))
+  out <- describe_posterior(emm, ci = c(0.5, 0.8, 0.95), test = "p_map")
+  expect_equal(out$CI, c(0.5, 0.8, 0.95, 0.5, 0.8, 0.95, 0.5, 0.8, 0.95))
 
   out <- describe_posterior(emm, ci = c(0.5, 0.8, 0.95), test = "pd")
-  expect_equal(out$CI, c(0.08, 0.5, 0.95, 0.08, 0.5, 0.95, 0.08, 0.5, 0.95))
+  expect_equal(out$CI, c(0.5, 0.8, 0.95, 0.5, 0.8, 0.95, 0.5, 0.8, 0.95))
 })
