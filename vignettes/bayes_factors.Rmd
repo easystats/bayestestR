@@ -310,7 +310,7 @@ ggplot(kidiq, aes(mom_hs, kid_score, fill = mom_hs, color = mom_hs)) +
 
 And indeed both models 1 and 2's posteriors reflect this difference:
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE}
 plots(
   plot(hdi(mod_H1)) +
     labs(y = NULL, title = "Model 1") +
