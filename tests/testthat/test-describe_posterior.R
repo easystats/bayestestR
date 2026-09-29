@@ -875,7 +875,7 @@ test_that("describe_posterior: response column for marginaleffects", {
 
   m <- insight::download_model("brms_categorical_1_num")
   skip_if(is.null(m))
-  out2 <- marginaleffects::avg_predictions(m, variables = "mpg")
+  out2 <- suppressWarnings(marginaleffects::avg_predictions(m, variables = "mpg"))
   post <- describe_posterior(out2)
   expect_named(
     post,
