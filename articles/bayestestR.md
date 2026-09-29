@@ -191,7 +191,7 @@ obvious that people use it instead of the Bayesian framework… right?
 | (Intercept) | 4.30 | \[4.15, 4.46\] | 100% | \[-0.08, 0.08\] | 0% | 1.000 | 2562 |
 | Petal.Length | 0.41 | \[0.37, 0.45\] | 100% | \[-0.08, 0.08\] | 0% | 1.000 | 2584 |
 
-Summary of Posterior Distribution {.table style="width:100%;"}
+Summary of Posterior Distribution {.table style="width:99%;"}
 
 **That’s it!**
 

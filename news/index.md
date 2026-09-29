@@ -2,6 +2,8 @@
 
 ## bayestestR 0.19.0
 
+CRAN release: 2026-09-09
+
 ### Breaking Changes
 
 - [`p_to_bf()`](https://easystats.github.io/bayestestR/reference/p_to_bf.md)
