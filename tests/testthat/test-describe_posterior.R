@@ -875,7 +875,7 @@ test_that("describe_posterior: response column for marginaleffects", {
 
   m <- insight::download_model("brms_categorical_1_num")
   skip_if(is.null(m))
-  out2 <- marginaleffects::avg_predictions(m, variables = "mpg")
+  out2 <- suppressWarnings(marginaleffects::avg_predictions(m, variables = "mpg"))
   post <- describe_posterior(out2)
   expect_named(
     post,
@@ -897,4 +897,30 @@ test_that("describe_posterior: response column for marginaleffects", {
     post$group,
     c("3", "3", "3", "3", "3", "4", "4", "4", "4", "4", "5", "5", "5", "5", "5")
   )
+})
+
+
+test_that("describe_posterior - correct CI column order for emmeans and pd-test", {
+  skip_on_cran()
+  skip_if(getRversion() < "4.2")
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_or_load_if_installed("rstanarm")
+  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("emmeans")
+  skip_on_os("linux")
+
+  set.seed(333)
+
+  fit <- insight::download_model("brms_5")
+  skip_if(is.null(fit))
+
+  emm <- emmeans::emmeans(fit, ~cyl)
+
+  out <- describe_posterior(emm, ci = c(0.5, 0.8, 0.95), test = "p_map")
+  expect_equal(out$CI, c(0.5, 0.8, 0.95, 0.5, 0.8, 0.95, 0.5, 0.8, 0.95))
+
+  out <- describe_posterior(emm, ci = c(0.5, 0.8, 0.95), test = "pd")
+  expect_equal(out$CI, c(0.5, 0.8, 0.95, 0.5, 0.8, 0.95, 0.5, 0.8, 0.95))
 })

@@ -43,6 +43,7 @@ pkgs <- c(
   "effectsize",
   "bayestestR",
   "ggplot2",
+  "BayesFactor",
   "see",
   "rstanarm",
   "bridgesampling",
