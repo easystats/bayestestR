@@ -15,6 +15,7 @@ equivalence_test(x, ...)
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   rvar_col = NULL,
   verbose = TRUE,
   ...
@@ -24,6 +25,7 @@ equivalence_test(x, ...)
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   effects = "fixed",
   component = "conditional",
   parameters = NULL,
@@ -57,6 +59,9 @@ range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
+
+\item{ci_method}{The type of interval to use to quantify the percentage in
+ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link[=ci]{ci()}}.}
 
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}

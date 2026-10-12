@@ -122,10 +122,11 @@ equivalence_test.numeric <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   verbose = TRUE,
   ...
 ) {
-  rope_data <- rope(x, range = range, ci = ci, verbose = verbose)
+  rope_data <- rope(x, range = range, ci = ci, ci_method = ci_method, verbose = verbose)
   out <- as.data.frame(rope_data)
 
   if (all(ci < 1)) {
@@ -162,6 +163,7 @@ equivalence_test.data.frame <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   rvar_col = NULL,
   verbose = TRUE,
   ...
@@ -192,6 +194,7 @@ equivalence_test.data.frame <- function(
           p,
           range = r,
           ci = ci,
+          ci_method = ci_method,
           verbose = verbose
         )
       },
@@ -205,6 +208,7 @@ equivalence_test.data.frame <- function(
       equivalence_test,
       range = range,
       ci = ci,
+      ci_method = ci_method,
       verbose = verbose
     ))
   }
@@ -225,11 +229,19 @@ equivalence_test.data.frame <- function(
 
 
 #' @export
-equivalence_test.draws <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
+equivalence_test.draws <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  verbose = TRUE,
+  ...
+) {
   equivalence_test(
     .posterior_draws_to_df(x),
     range = range,
     ci = ci,
+    ci_method = ci_method,
     verbose = verbose,
     ...
   )
@@ -244,11 +256,19 @@ equivalence_test.emmGrid <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   verbose = TRUE,
   ...
 ) {
   xdf <- insight::get_parameters(x, verbose = verbose)
-  out <- equivalence_test(xdf, range = range, ci = ci, verbose = verbose, ...)
+  out <- equivalence_test(
+    xdf,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -263,11 +283,19 @@ equivalence_test.slopes <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   verbose = TRUE,
   ...
 ) {
   xrvar <- .get_marginaleffects_draws(x)
-  out <- equivalence_test(xrvar, range = range, ci = ci, verbose = verbose, ...)
+  out <- equivalence_test(
+    xrvar,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -285,6 +313,7 @@ equivalence_test.BFBayesFactor <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   verbose = TRUE,
   ...
 ) {
@@ -292,6 +321,7 @@ equivalence_test.BFBayesFactor <- function(
     insight::get_parameters(x),
     range = range,
     ci = ci,
+    ci_method = ci_method,
     verbose = verbose,
     ...
   )
@@ -305,6 +335,7 @@ equivalence_test.BFBayesFactor <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   effects = "fixed",
   component = "conditional",
   parameters = NULL,
@@ -329,7 +360,13 @@ equivalence_test.BFBayesFactor <- function(
     verbose = verbose
   )
 
-  equivalence_test(params, range = range, ci = ci, verbose = verbose)
+  equivalence_test(
+    params,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    verbose = verbose
+  )
 }
 
 
@@ -338,6 +375,7 @@ equivalence_test.stanreg <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   effects = "fixed",
   component = "location",
   parameters = NULL,
@@ -348,6 +386,7 @@ equivalence_test.stanreg <- function(
     x,
     range,
     ci,
+    ci_method,
     effects,
     component,
     parameters,
@@ -382,6 +421,7 @@ equivalence_test.brmsfit <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   effects = "fixed",
   component = "conditional",
   parameters = NULL,
@@ -392,6 +432,7 @@ equivalence_test.brmsfit <- function(
     x,
     range,
     ci,
+    ci_method,
     effects,
     component,
     parameters,
@@ -415,6 +456,7 @@ equivalence_test.sim.merMod <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -423,6 +465,7 @@ equivalence_test.sim.merMod <- function(
     x,
     range,
     ci,
+    ci_method,
     effects = "fixed",
     component = "conditional",
     parameters,
@@ -442,6 +485,7 @@ equivalence_test.mcmc <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -450,6 +494,7 @@ equivalence_test.mcmc <- function(
     as.data.frame(x),
     range,
     ci,
+    ci_method,
     effects = "fixed",
     component = "conditional",
     parameters,
@@ -466,6 +511,7 @@ equivalence_test.bcplm <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -474,6 +520,7 @@ equivalence_test.bcplm <- function(
     insight::get_parameters(x),
     range,
     ci,
+    ci_method,
     effects = "fixed",
     component = "conditional",
     parameters,
@@ -499,6 +546,7 @@ equivalence_test.bamlss <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   component = "all",
   parameters = NULL,
   verbose = TRUE,
@@ -508,6 +556,7 @@ equivalence_test.bamlss <- function(
     insight::get_parameters(x, component = component),
     range,
     ci,
+    ci_method,
     effects = "fixed",
     component = "conditional",
     parameters,
