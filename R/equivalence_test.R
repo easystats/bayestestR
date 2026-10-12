@@ -11,7 +11,7 @@
 #' *"HDI+ROPE decision rule"* (\cite{Kruschke, 2014, 2018}) to check whether
 #' parameter values should be accepted or rejected against an explicitly
 #' formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the
-#' percentage of the 95% [HDI][hdi] that is the null region (the ROPE). If
+#' percentage of the 95% [HDI][ci] that is the null region (the ROPE). If
 #' this percentage is sufficiently low, the null hypothesis is rejected. If this
 #' percentage is sufficiently high, the null hypothesis is accepted.
 #'
@@ -19,7 +19,7 @@
 #'
 #' @inheritSection hdi Model components
 #'
-#' @details Using the [ROPE][rope] and the [HDI][hdi], \cite{Kruschke (2018)}
+#' @details Using the [ROPE][rope] and the [HDI][ci], \cite{Kruschke (2018)}
 #'   suggests using the percentage of the 95%
 #'   HDI that falls within the ROPE as a decision rule. If the HDI
 #'   is completely outside the ROPE, the "null hypothesis" for this parameter is
@@ -62,11 +62,11 @@
 #' @return A data frame with following columns:
 #'
 #'  - `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
-#'  - `CI` The probability of the HDI.
+#'  - `CI` The probability of the CI.
 #'  - `ROPE_low`, `ROPE_high` The limits of the ROPE. These values are identical for all parameters.
-#'  - `ROPE_Percentage` The proportion of the HDI that lies inside the ROPE.
+#'  - `ROPE_Percentage` The proportion of the CI that lies inside the ROPE.
 #'  - `ROPE_Equivalence` The "test result", as character. Either "rejected", "accepted" or "undecided".
-#'  - `HDI_low` , `HDI_high` The lower and upper HDI limits for the parameters.
+#'  - `CI_low` , `CI_high` The lower and upper CI limits for the parameters.
 #'
 #' @note There is a `print()`-method with a `digits`-argument to control
 #'   the amount of digits in the output, and there is a
@@ -144,12 +144,12 @@ equivalence_test.numeric <- function(
     )
   }
 
-  out$HDI_low <- attr(rope_data, "HDI_area", exact = TRUE)$CI_low
-  out$HDI_high <- attr(rope_data, "HDI_area", exact = TRUE)$CI_high
+  out$CI_low <- attr(rope_data, "CI_area", exact = TRUE)$CI_low
+  out$CI_high <- attr(rope_data, "CI_area", exact = TRUE)$CI_high
 
-  # remove attribute
-  attr(out, "HDI_area") <- NULL
+  attr(out, "CI_area") <- NULL # remove attribute
   attr(out, "data") <- x
+  attr(out, "ci_method") <- ci_method
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   out

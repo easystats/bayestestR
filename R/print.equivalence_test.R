@@ -27,12 +27,18 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   }
 
   x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage * 100)
-  x$HDI <- insight::format_ci(x$HDI_low, x$HDI_high, ci = NULL, digits = digits)
+  x$CI_tmp <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits)
 
   ci <- unique(x$CI)
   keep.columns <- c(
-    attr(x, "idvars"), "Parameter", "Effects", "Component",
-    "ROPE_Equivalence", "ROPE_Percentage", "CI", "HDI"
+    attr(x, "idvars"),
+    "Parameter",
+    "Effects",
+    "Component",
+    "ROPE_Equivalence",
+    "ROPE_Percentage",
+    "CI",
+    "CI_tmp"
   )
 
   # keep ROPE columns for multiple ROPE values
@@ -53,9 +59,10 @@ print.equivalence_test <- function(x, digits = 2, ...) {
 
 
 .print_equivalence_component <- function(x, ci, digits) {
+  ci_method <- attr(x, "ci_method")
   for (i in ci) {
     xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
-    colnames(xsub)[colnames(xsub) == "HDI"] <- sprintf("%i%% HDI", 100 * i)
+    colnames(xsub)[colnames(xsub) == "CI_tmp"] <- sprintf("%i%% %s", 100 * i, ci_method)
     .print_data_frame(xsub, digits = digits)
     cat("\n")
   }

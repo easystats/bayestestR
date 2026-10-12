@@ -454,7 +454,7 @@ describe_posterior.default <- function(posterior, ...) {
       names(test_equi)[names(test_equi) == "CI"] <- "ROPE_CI"
 
       test_rope <- merge(test_rope, test_equi, all = TRUE)
-      test_rope <- test_rope[!names(test_rope) %in% c("HDI_low", "HDI_high")]
+      test_rope <- test_rope[!names(test_rope) %in% c("CI_low", "CI_high")]
     }
 
     # Bayes Factors
