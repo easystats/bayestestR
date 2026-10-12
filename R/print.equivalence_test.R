@@ -1,6 +1,7 @@
 #' @export
 print.equivalence_test <- function(x, digits = 2, ...) {
   orig_x <- x
+  ci_method <- attr(x, "ci_method")
   insight::print_color("# Test for Practical Equivalence\n\n", "blue")
   # print ROPE limits, if we just have one set of ROPE values
   if (insight::has_single_value(x$ROPE_low, remove_na = TRUE)) {
@@ -52,14 +53,13 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   colnames(x)[which(colnames(x) == "ROPE_Equivalence")] <- "H0"
   colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
 
-  .print_equivalence_component(x, ci, digits)
+  .print_equivalence_component(x, ci, digits, ci_method)
 
   invisible(orig_x)
 }
 
 
-.print_equivalence_component <- function(x, ci, digits) {
-  ci_method <- attr(x, "ci_method")
+.print_equivalence_component <- function(x, ci, digits, ci_method) {
   for (i in ci) {
     xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
     colnames(xsub)[colnames(xsub) == "CI_tmp"] <- sprintf("%i%% %s", 100 * i, ci_method)
