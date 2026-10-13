@@ -8,9 +8,9 @@
 #' @param REML For mixed effects, should models be estimated using
 #'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
 #'   likelihood (`FALSE`)?
-#' @param resp For multivariate *brms* models, the name of the response to
-#'   convert, as returned by `names(insight::find_formula(model))`. Only this
-#'   response is refitted. Ignored for other models.
+#' @param resp For multivariate *brms* models, the name of the one response to
+#'   convert, as returned by `names(insight::find_formula(model))`. Other models
+#'   ignore `resp`.
 #' @examplesIf require("rstanarm")
 #' \donttest{
 #' # Rstanarm ----------------------
