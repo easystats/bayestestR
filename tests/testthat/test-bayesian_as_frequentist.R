@@ -129,15 +129,18 @@ test_that("brms multivariate to freq, invalid resp", {
 
   expect_error(
     convert_bayesian_as_frequentist(m),
-    "resp[\\s\\S]*cyl,\\s+gear,\\s+carb"
+    "(?s)resp.*cyl,\\s+gear,\\s+carb",
+    perl = TRUE
   )
   expect_error(
     convert_bayesian_as_frequentist(m, resp = "mpg"),
-    "resp[\\s\\S]*cyl,\\s+gear,\\s+carb"
+    "(?s)resp.*cyl,\\s+gear,\\s+carb",
+    perl = TRUE
   )
   expect_error(
     convert_bayesian_as_frequentist(m, resp = c("cyl", "gear")),
-    "resp[\\s\\S]*cyl,\\s+gear,\\s+carb"
+    "(?s)resp.*cyl,\\s+gear,\\s+carb",
+    perl = TRUE
   )
 })
 

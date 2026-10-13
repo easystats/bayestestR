@@ -38,14 +38,37 @@
 #' }
 #'
 #' @export
-convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
+convert_bayesian_as_frequentist <- function(
+  model,
+  data = NULL,
+  REML = TRUE,
+  resp = NULL
+) {
   if (is.null(data)) {
     data <- insight::get_data(model)
   }
 
-  info <- insight::model_info(model, verbose = FALSE)
-  model_formula <- insight::find_formula(model)
-  model_family <- insight::get_family(model)
+  if (inherits(model, "brmsfit") && insight::is_multivariate(model)) {
+    # multivariate brms models: convert only the response named in `resp`
+    responses <- names(insight::find_formula(model))
+    if (is.null(resp) || length(resp) != 1 || !resp %in% responses) {
+      insight::format_error(
+        "For multivariate models, `resp` must name one response of the model.",
+        paste0("Possible responses are: ", toString(responses), ".")
+      )
+    }
+    info <- insight::model_info(
+      model,
+      response = which(responses == resp),
+      verbose = FALSE
+    )
+    model_formula <- insight::find_formula(model)[[resp]]
+    model_family <- insight::get_family(model)[[resp]]
+  } else {
+    info <- insight::model_info(model, verbose = FALSE)
+    model_formula <- insight::find_formula(model)
+    model_family <- insight::get_family(model)
+  }
 
   # fix exception: The 0 + Intercept syntax in brms can be used to facilitate
   # prior specification for the intercept, but but it leads to issues where it
