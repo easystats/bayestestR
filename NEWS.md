@@ -1,5 +1,10 @@
 # bayestestR (devel)
 
+## Changes
+
+* `sensitivity_to_prior()` now supports models from package *brms*. All slopes
+  need a normal, student_t, or cauchy prior.
+
 ## Bug fixes
 
 * Fixed issue with printing wrong column order of multiple CI columns in

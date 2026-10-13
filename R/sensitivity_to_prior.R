@@ -190,12 +190,12 @@ sensitivity_to_prior.default <- function(model, ...) {
     return(priors)
   }
   prior_info <- as.data.frame(brms::prior_summary(model))
-  prior_info <- prior_info[prior_info$class == "b" & prior_info$dpar == "" & prior_info$nlpar == "", ]
+  prior_info <- prior_info[prior_info$class == "b" & !nzchar(prior_info$dpar) & !nzchar(prior_info$nlpar), ]
   for (i in which(is_cauchy)) {
     prior_string <- prior_info$prior[prior_info$coef == sub("^b_", "", priors$Parameter[i])]
     # a slope without its own prior uses the class-level prior
     if (!length(prior_string) || !nzchar(prior_string[1])) {
-      prior_string <- prior_info$prior[prior_info$coef == ""]
+      prior_string <- prior_info$prior[!nzchar(prior_info$coef)]
     }
     values <- regmatches(prior_string[1], regexec("^cauchy\\((.*),(.*)\\)$", prior_string[1]))[[1]]
     if (length(values) == 3) {
