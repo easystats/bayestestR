@@ -127,19 +127,18 @@ test_that("brms multivariate to freq, invalid resp", {
   m <- insight::download_model("brms_mv_1")
   skip_if(is.null(m))
 
-  expect_error(
-    convert_bayesian_as_frequentist(m),
-    "(?s)resp.*cyl,\\s+gear,\\s+carb",
-    perl = TRUE
-  )
-  expect_error(
-    convert_bayesian_as_frequentist(m, resp = "mpg"),
-    "(?s)resp.*cyl,\\s+gear,\\s+carb",
-    perl = TRUE
-  )
+  msg <- "(?s)`resp`\\s+must\\s+name\\s+one\\s+response.*cyl,\\s+gear,\\s+carb"
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+  expect_error(convert_bayesian_as_frequentist(m, resp = "mpg"), msg, perl = TRUE)
   expect_error(
     convert_bayesian_as_frequentist(m, resp = c("cyl", "gear")),
-    "(?s)resp.*cyl,\\s+gear,\\s+carb",
+    msg,
+    perl = TRUE
+  )
+  # a factor would select a response by its integer code, not by its label
+  expect_error(
+    convert_bayesian_as_frequentist(m, resp = factor("gear")),
+    msg,
     perl = TRUE
   )
 })
