@@ -104,8 +104,10 @@ sensitivity_to_prior.brmsfit <- function(model, index = "Median", magnitude = 10
     insight::format_error("`sensitivity_to_prior()` requires a model with at least one slope.")
   }
 
-  # Only regular coefficients of class "b" get a new prior, because brms
-  # silently ignores priors for other parameters when the model is updated
+  # Only parameters named "b_<coef>" with a class "b" prior in the main formula
+  # get a new prior. For other parameters (e.g. monotonic "bsp_" or non-linear
+  # "b_<nlpar>_" terms) the coef would match no prior, and update() drops such
+  # priors without a warning.
   slope_info <- .brms_slope_info(model)
   coefs <- sub("^b_", "", priors$Parameter)
   not_slope <- !startsWith(priors$Parameter, "b_") | !coefs %in% slope_info$coef[nzchar(slope_info$coef)]
