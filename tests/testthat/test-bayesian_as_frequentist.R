@@ -93,3 +93,62 @@ test_that("brms Interaction terms to freq", {
 
   expect_equal(coef(m1), coef(m2), tolerance = 1e-2)
 })
+
+
+test_that("brms multivariate to freq, one response", {
+  skip_if_not_or_load_if_installed("brms")
+
+  m <- insight::download_model("brms_mv_1")
+  skip_if(is.null(m))
+  d <- insight::get_data(m)
+
+  m1 <- lm(gear ~ wt + hp, data = d)
+  m2 <- convert_bayesian_as_frequentist(m, resp = "gear")
+  expect_s3_class(m2, "lm")
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+
+  m1 <- lm(cyl ~ wt + hp, data = d)
+  m2 <- bayesian_as_frequentist(m, resp = "cyl")
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+
+  # brms removes the dot from response names, "Sepal.Length" is "SepalLength"
+  m <- insight::download_model("brms_mv_4")
+  skip_if(is.null(m))
+  d <- insight::get_data(m)
+  m1 <- lm(Sepal.Length ~ Petal.Length + Sepal.Width + Species, data = d)
+  m2 <- convert_bayesian_as_frequentist(m, resp = "SepalLength")
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+})
+
+
+test_that("brms multivariate to freq, invalid resp", {
+  skip_if_not_or_load_if_installed("brms")
+
+  m <- insight::download_model("brms_mv_1")
+  skip_if(is.null(m))
+
+  expect_error(
+    convert_bayesian_as_frequentist(m),
+    "resp[\\s\\S]*cyl,\\s+gear,\\s+carb"
+  )
+  expect_error(
+    convert_bayesian_as_frequentist(m, resp = "mpg"),
+    "resp[\\s\\S]*cyl,\\s+gear,\\s+carb"
+  )
+  expect_error(
+    convert_bayesian_as_frequentist(m, resp = c("cyl", "gear")),
+    "resp[\\s\\S]*cyl,\\s+gear,\\s+carb"
+  )
+})
+
+
+test_that("brms univariate to freq, resp is ignored", {
+  skip_if_not_or_load_if_installed("brms")
+
+  m <- insight::download_model("brms_1")
+  skip_if(is.null(m))
+
+  m1 <- convert_bayesian_as_frequentist(m)
+  m2 <- convert_bayesian_as_frequentist(m, resp = "x")
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+})
