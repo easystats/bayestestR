@@ -24,7 +24,7 @@ important here (e.g., write 'Median' instead of 'median').}
 \item{magnitude}{This represent the magnitude by which to shift the
 antagonistic prior (to test the sensitivity). For instance, a magnitude of
 10 (default) means that the mode will be updated with a prior located at 10
-standard deviations from its original location.}
+standard deviations from zero, on the opposite side of the effect.}
 }
 \value{
 A data frame with a \code{Parameter} column and one \verb{Sensitivity_*}
@@ -38,7 +38,8 @@ effect).
 }
 \details{
 For \code{brmsfit} models, all slopes must have a normal, student_t, or cauchy
-prior, because only these priors can be moved to an antagonistic location.
+prior, because only these priors are supported for moving to an antagonistic
+location.
 The default flat priors of \strong{brms} are not supported, so set the priors
 with \code{brms::set_prior()} when fitting the model. Multivariate models are not
 supported.

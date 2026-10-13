@@ -12,12 +12,13 @@
 #' @param magnitude This represent the magnitude by which to shift the
 #'   antagonistic prior (to test the sensitivity). For instance, a magnitude of
 #'   10 (default) means that the mode will be updated with a prior located at 10
-#'   standard deviations from its original location.
+#'   standard deviations from zero, on the opposite side of the effect.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
 #' For `brmsfit` models, all slopes must have a normal, student_t, or cauchy
-#' prior, because only these priors can be moved to an antagonistic location.
+#' prior, because only these priors are supported for moving to an antagonistic
+#' location.
 #' The default flat priors of **brms** are not supported, so set the priors
 #' with `brms::set_prior()` when fitting the model. Multivariate models are not
 #' supported.
