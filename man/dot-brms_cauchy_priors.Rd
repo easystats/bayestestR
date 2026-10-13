@@ -4,7 +4,7 @@
 \alias{.brms_cauchy_priors}
 \title{Add location and scale of cauchy slope priors, which insight does not parse}
 \usage{
-.brms_cauchy_priors(model, priors)
+.brms_cauchy_priors(prior_info, priors)
 }
 \description{
 Add location and scale of cauchy slope priors, which insight does not parse

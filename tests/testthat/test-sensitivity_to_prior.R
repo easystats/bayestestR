@@ -60,12 +60,23 @@ test_that("sensitivity_to_prior brms, per-coefficient priors", {
   expected <- abs(median_refit - median_original) / abs(median_original)
   expect_equal(out$Sensitivity_Median, unname(expected), tolerance = 1e-8)
 
+  # the refit really uses the shifted priors
+  used <- as.data.frame(brms::prior_summary(refit))
+  used <- used[used$class == "b" & used$coef %in% c("am", "qsec", "wt"), ]
+  used <- used[order(used$coef), ]
+  expect_identical(used$prior, c("student_t(3, -5, 1)", "cauchy(-2.5, 0.5)", "normal(10, 2)"))
+  # ... and a refit that ignored them is caught
+  expect_error(
+    .brms_check_refit_priors(model, captured),
+    "did not use the shifted priors for these slopes: am, qsec, wt"
+  )
+
   # other indices, reusing the refit above
   local_mocked_bindings(.refit_brms = function(model, prior) refit)
-  out <- sensitivity_to_prior(model)
+  out <- sensitivity_to_prior(model, magnitude = 5)
   expect_identical(out$Parameter, slopes)
   expect_named(out, c("Parameter", "Sensitivity_Median"))
-  out <- sensitivity_to_prior(model, index = "MAP")
+  out <- sensitivity_to_prior(model, index = "MAP", magnitude = 5)
   expect_identical(out$Parameter, slopes)
   expect_named(out, c("Parameter", "Sensitivity_Median", "Sensitivity_MAP"))
 })
@@ -86,10 +97,13 @@ test_that("sensitivity_to_prior brms, class-level prior", {
   )))
 
   captured <- NULL
-  local_mocked_bindings(.refit_brms = function(model, prior) {
-    captured <<- prior
-    model
-  })
+  local_mocked_bindings(
+    .refit_brms = function(model, prior) {
+      captured <<- prior
+      model
+    },
+    .brms_check_refit_priors = function(model, new_priors) invisible(NULL)
+  )
 
   out <- sensitivity_to_prior(model, index = c("Median", "MAP"))
   expect_identical(out$Parameter, c("b_wt", "b_cyl"))
@@ -127,6 +141,95 @@ test_that("sensitivity_to_prior brms, unsupported priors", {
   })
   expect_error(sensitivity_to_prior(model), "b_wt.*b_am")
   expect_false(refitted)
+})
+
+
+test_that("sensitivity_to_prior brms, thresholds of ordinal models are not shifted", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("brms")
+
+  d <- mtcars
+  d$y3 <- cut(d$mpg, 3, labels = FALSE)
+  set.seed(123)
+  model <- suppressWarnings(suppressMessages(brms::brm(
+    y3 ~ wt,
+    data = d,
+    family = brms::cumulative(),
+    prior = brms::set_prior("normal(0, 2)", class = "b"),
+    chains = 1,
+    iter = 500,
+    refresh = 0
+  )))
+
+  captured <- NULL
+  local_mocked_bindings(
+    .refit_brms = function(model, prior) {
+      captured <<- prior
+      model
+    },
+    .brms_check_refit_priors = function(model, new_priors) invisible(NULL)
+  )
+  out <- sensitivity_to_prior(model)
+  expect_identical(out$Parameter, "b_wt")
+  expect_identical(as.data.frame(captured)$coef, "wt")
+})
+
+
+test_that("sensitivity_to_prior brms, parameters that are not regular slopes", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("brms")
+
+  # unfitted models; get_priors() is mocked because it needs posterior draws
+  prior_rows <- function(parameters) {
+    data.frame(
+      Parameter = parameters,
+      Distribution = "normal",
+      Location = 0,
+      Scale = 1,
+      df = NA_real_,
+      stringsAsFactors = FALSE
+    )
+  }
+  d <- mtcars
+  d$g <- as.integer(d$gear)
+
+  # no slopes
+  model <- suppressWarnings(suppressMessages(brms::brm(mpg ~ 1, data = d, empty = TRUE)))
+  local_mocked_bindings(get_priors = function(...) prior_rows("b_Intercept"), .package = "insight")
+  expect_error(sensitivity_to_prior(model), "at least one slope")
+
+  # a monotonic effect
+  model <- suppressWarnings(suppressMessages(brms::brm(
+    mpg ~ wt + mo(g),
+    data = d,
+    prior = brms::set_prior("normal(0, 1)", class = "b"),
+    empty = TRUE
+  )))
+  local_mocked_bindings(
+    get_priors = function(...) prior_rows(c("b_Intercept", "b_wt", "bsp_mog")),
+    .package = "insight"
+  )
+  expect_error(sensitivity_to_prior(model), "not supported: bsp_mog")
+
+  # a non-linear parameter
+  model <- suppressWarnings(suppressMessages(brms::brm(
+    brms::bf(mpg ~ a * wt, a ~ 1, nl = TRUE),
+    data = d,
+    prior = brms::set_prior("normal(0, 1)", nlpar = "a"),
+    empty = TRUE
+  )))
+  local_mocked_bindings(get_priors = function(...) prior_rows("b_a_Intercept"), .package = "insight")
+  expect_error(sensitivity_to_prior(model), "not supported: b_a_Intercept")
+
+  # a bounded class-level prior
+  model <- suppressWarnings(suppressMessages(brms::brm(
+    mpg ~ wt + am,
+    data = d,
+    prior = brms::set_prior("normal(0, 1)", class = "b", lb = 0),
+    empty = TRUE
+  )))
+  local_mocked_bindings(get_priors = function(...) prior_rows(c("b_Intercept", "b_wt", "b_am")), .package = "insight")
+  expect_error(sensitivity_to_prior(model), "bounded priors: b_wt, b_am")
 })
 
 

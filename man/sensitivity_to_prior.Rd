@@ -66,6 +66,8 @@ model <- brms::brm(
   mpg ~ wt + cyl,
   data = mtcars,
   prior = brms::set_prior("normal(0, 5)", class = "b"),
+  chains = 2,
+  iter = 1000,
   refresh = 0
 )
 sensitivity_to_prior(model)
