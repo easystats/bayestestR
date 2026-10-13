@@ -15,6 +15,16 @@
 #'   standard deviations from its original location.
 #' @param ... Arguments passed to or from other methods.
 #'
+#' @details
+#' For `brmsfit` models, all slopes must have a normal, student_t, or cauchy
+#' prior, because only these priors can be moved to an antagonistic location.
+#' The default flat priors of **brms** are not supported, so set the priors
+#' with `brms::set_prior()` when fitting the model. Multivariate models are not
+#' supported.
+#'
+#' @return A data frame with a `Parameter` column and one `Sensitivity_*`
+#'   column for `Median` and for each other index.
+#'
 #' @examplesIf require("rstanarm")
 #' \donttest{
 #' library(bayestestR)
@@ -26,6 +36,18 @@
 #'
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' sensitivity_to_prior(model, index = c("Median", "MAP"))
+#' }
+#' @examplesIf require("brms")
+#' \donttest{
+#' # brms models
+#' # -----------------------------------------------
+#' model <- brms::brm(
+#'   mpg ~ wt + cyl,
+#'   data = mtcars,
+#'   prior = brms::set_prior("normal(0, 5)", class = "b"),
+#'   refresh = 0
+#' )
+#' sensitivity_to_prior(model)
 #' }
 #' @seealso DescTools
 #' @export
