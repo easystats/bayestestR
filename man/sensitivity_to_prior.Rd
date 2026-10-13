@@ -3,11 +3,14 @@
 \name{sensitivity_to_prior}
 \alias{sensitivity_to_prior}
 \alias{sensitivity_to_prior.stanreg}
+\alias{sensitivity_to_prior.brmsfit}
 \title{Sensitivity to Prior}
 \usage{
 sensitivity_to_prior(model, ...)
 
 \method{sensitivity_to_prior}{stanreg}(model, index = "Median", magnitude = 10, ...)
+
+\method{sensitivity_to_prior}{brmsfit}(model, index = "Median", magnitude = 10, ...)
 }
 \arguments{
 \item{model}{A Bayesian model (\code{stanreg} or \code{brmsfit}).}
