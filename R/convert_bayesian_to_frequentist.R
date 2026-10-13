@@ -56,7 +56,7 @@ convert_bayesian_as_frequentist <- function(
     responses <- names(insight::find_formula(model))
     if (is.null(resp) || length(resp) != 1 || !resp %in% responses) {
       insight::format_error(
-        "For multivariate models, `resp` must name one response of the model.",
+        "For multivariate brms models, `resp` must name one response of the model.",
         paste0("Possible responses are: ", toString(responses), ".")
       )
     }
