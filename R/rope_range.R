@@ -136,13 +136,19 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
   model_frame <- .safe(stats::model.frame(x))
 
   if (insight::is_multivariate(x)) {
-    out <- lapply(model_terms, function(i) {
-      .response_term_values(x, i$response[1], model_frame)
-    })
-    if (any(vapply(out, is.null, logical(1)))) {
+    if (!all(vapply(model_terms, is.list, logical(1)))) {
       return(response)
     }
-    out
+    # one response per model formula, so that the responses match the model
+    # information, also when there are addition terms like `resp_weights()`
+    lapply(model_terms, function(i) {
+      out <- .response_term_values(x, i$response[1], model_frame)
+      # else, e.g. for ordinal responses, use the response as it is
+      if (is.null(out) && is.data.frame(response)) {
+        out <- response[[insight::clean_names(i$response[1])]]
+      }
+      out
+    })
   } else {
     out <- .response_term_values(x, model_terms$response[1], model_frame)
     if (is.null(out)) response else out

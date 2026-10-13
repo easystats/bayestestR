@@ -10,6 +10,9 @@
   response. For linear models, the default ROPE is then on the same scale as the
   model parameters.
 
+* For multivariate *brms* models with `resp_weights()` and ordinal responses,
+  `rope_range()` now returns one ROPE per response, without a warning.
+
 # bayestestR 0.19.0
 
 ## Breaking Changes

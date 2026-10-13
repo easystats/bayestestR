@@ -102,3 +102,36 @@ test_that("rope_range (multivariate)", {
     tolerance = 0.01
   )
 })
+
+test_that("rope_range (multivariate, ordinal with weights)", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("brms")
+
+  set.seed(123)
+  d <- data.frame(
+    y_1 = factor(sample(1:3, 60, TRUE), ordered = TRUE),
+    y_2 = factor(sample(1:3, 60, TRUE), ordered = TRUE),
+    n = sample(1:3, 60, TRUE)
+  )
+  model <- suppressWarnings(
+    brms::brm(
+      brms::bf(mvbind(y_1, y_2) | resp_weights(n) ~ 1, family = brms::cumulative()) +
+        brms::set_rescor(FALSE),
+      data = d,
+      iter = 300,
+      chains = 1,
+      refresh = 0
+    )
+  )
+
+  # one ROPE per response, the weights are not a response
+  expect_no_warning(out <- rope_range(model))
+  expect_equal(
+    out,
+    list(
+      y1 = c(-0.1 * pi / sqrt(3), 0.1 * pi / sqrt(3)),
+      y2 = c(-0.1 * pi / sqrt(3), 0.1 * pi / sqrt(3))
+    ),
+    tolerance = 1e-3
+  )
+})
