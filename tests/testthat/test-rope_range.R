@@ -33,6 +33,18 @@ test_that("rope_range gaussian, transformed response", {
   )
 })
 
+test_that("rope_range gaussian, user-defined response function without model frame", {
+  data(mtcars)
+  times_ten <- function(y) y * 10
+  mod <- lm(times_ten(mpg) ~ gear + hp, data = mtcars)
+  # the fallback without a model frame finds the function in the formula's environment
+  expect_equal(
+    bayestestR:::.response_term_values(mod, "times_ten(mpg)", model_frame = NULL),
+    mtcars$mpg * 10,
+    ignore_attr = TRUE
+  )
+})
+
 test_that("rope_range log gaussian", {
   data(iris)
   mod <- lm(log(Sepal.Length) ~ Species, data = iris)

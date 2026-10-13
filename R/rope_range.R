@@ -140,7 +140,7 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
       return(response)
     }
     # one response per model formula, so that the responses match the model
-    # information, also when there are addition terms like `resp_weights()`
+    # information, also when there are brms addition terms like `resp_weights()`
     lapply(model_terms, function(i) {
       out <- .response_term_values(x, i$response[1], model_frame)
       # else, e.g. for ordinal responses, use the response as it is
@@ -166,7 +166,17 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
     if (is.null(model_data)) {
       return(NULL)
     }
-    out <- .safe(eval(str2lang(response_term), envir = model_data, enclos = baseenv()))
+    # look up functions in the formula's environment, so that user-defined
+    # functions like `f(y)` are found
+    model_formula <- .safe(insight::find_formula(x, verbose = FALSE))
+    if (insight::is_multivariate(x)) {
+      model_formula <- model_formula[[1]]
+    }
+    formula_env <- .safe(environment(model_formula$conditional))
+    if (!is.environment(formula_env)) {
+      formula_env <- baseenv()
+    }
+    out <- .safe(eval(str2lang(response_term), envir = model_data, enclos = formula_env))
   }
   # only use single numeric responses, e.g. not `cbind()` for binomial models
   if (is.numeric(out) && NCOL(out) == 1) {
