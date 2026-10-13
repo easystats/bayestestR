@@ -5,6 +5,11 @@
 * Fixed issue with printing wrong column order of multiple CI columns in
   `describe_posterior()`.
 
+* If the model formula transforms the response, for example with `scale(y)` or
+  `sqrt(y)`, `rope_range()` now uses the standard deviation of the transformed
+  response. For linear models, the default ROPE is then on the same scale as the
+  model parameters.
+
 # bayestestR 0.19.0
 
 ## Breaking Changes

@@ -13,6 +13,26 @@ test_that("rope_range gaussian", {
   )
 })
 
+test_that("rope_range gaussian, transformed response", {
+  data(mtcars)
+  mod <- lm(scale(mpg) ~ gear + hp, data = mtcars)
+  expect_equal(rope_range(mod), c(-0.1, 0.1), tolerance = 1e-3)
+
+  mod <- lm(sqrt(mpg) ~ gear + hp, data = mtcars)
+  expect_equal(
+    rope_range(mod),
+    c(-0.1 * sd(sqrt(mtcars$mpg)), 0.1 * sd(sqrt(mtcars$mpg))),
+    tolerance = 1e-3
+  )
+
+  mod <- lm(I(mpg * 10) ~ gear + hp, data = mtcars)
+  expect_equal(
+    rope_range(mod),
+    c(-0.1 * sd(mtcars$mpg * 10), 0.1 * sd(mtcars$mpg * 10)),
+    tolerance = 1e-3
+  )
+})
+
 test_that("rope_range log gaussian", {
   data(iris)
   mod <- lm(log(Sepal.Length) ~ Species, data = iris)
