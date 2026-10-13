@@ -96,16 +96,25 @@ test_that("sensitivity_to_prior brms, class-level prior", {
     refresh = 0
   )))
 
+  # a real refit, recording the prior handed to it
+  refit_brms <- .refit_brms
   captured <- NULL
-  local_mocked_bindings(
-    .refit_brms = function(model, prior) {
-      captured <<- prior
-      model
-    },
-    .brms_check_refit_priors = function(model, new_priors) invisible(NULL)
-  )
+  local_mocked_bindings(.refit_brms = function(model, prior) {
+    captured <<- prior
+    refit_brms(model, prior)
+  })
 
-  out <- sensitivity_to_prior(model, index = c("Median", "MAP"))
+  # brms warns that the unused class-level prior "will not be used in the
+  # model"; that warning is silenced, other warnings are recorded here
+  warnings_seen <- character()
+  out <- withCallingHandlers(
+    sensitivity_to_prior(model, index = c("Median", "MAP")),
+    warning = function(w) {
+      warnings_seen <<- c(warnings_seen, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    }
+  )
+  expect_false(any(grepl("will not be used", warnings_seen, fixed = TRUE)))
   expect_identical(out$Parameter, c("b_wt", "b_cyl"))
   expect_named(out, c("Parameter", "Sensitivity_Median", "Sensitivity_MAP"))
 
@@ -139,7 +148,7 @@ test_that("sensitivity_to_prior brms, unsupported priors", {
     refitted <<- TRUE
     model
   })
-  expect_error(sensitivity_to_prior(model), "b_wt.*b_am")
+  expect_error(sensitivity_to_prior(model), "flat or other priors: b_wt, b_am")
   expect_false(refitted)
 })
 
@@ -230,6 +239,17 @@ test_that("sensitivity_to_prior brms, parameters that are not regular slopes", {
   )))
   local_mocked_bindings(get_priors = function(...) prior_rows(c("b_Intercept", "b_wt", "b_am")), .package = "insight")
   expect_error(sensitivity_to_prior(model), "bounded priors: b_wt, b_am")
+
+  # a slope that insight does not report, such as a predictor named "sigma_x"
+  d$sigma_x <- d$qsec
+  model <- suppressWarnings(suppressMessages(brms::brm(
+    mpg ~ wt + sigma_x,
+    data = d,
+    prior = brms::set_prior("normal(0, 1)", class = "b"),
+    empty = TRUE
+  )))
+  local_mocked_bindings(get_priors = function(...) prior_rows(c("b_Intercept", "b_wt")), .package = "insight")
+  expect_error(sensitivity_to_prior(model), "Could not find the priors of these slopes: sigma_x")
 })
 
 

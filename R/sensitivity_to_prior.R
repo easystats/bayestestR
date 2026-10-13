@@ -21,9 +21,10 @@
 #' location.
 #' The default flat priors of **brms** are not supported, so set the priors
 #' with `brms::set_prior()` when fitting the model. Multivariate models are not
-#' supported. Only regular slopes get a new prior, so non-linear parameters,
-#' monotonic effects, and bounded slope priors give an error. Intercepts,
-#' including the thresholds of ordinal models, are not changed.
+#' supported. Only regular slopes of the main formula get a new prior. Other
+#' parameters, such as non-linear parameters or monotonic effects, give an
+#' error, and so do bounded slope priors. Intercepts, including the thresholds
+#' of ordinal models, are not changed.
 #'
 #' @return A data frame with a `Parameter` column and one `Sensitivity_*`
 #'   column for `Median` and for each other index.
@@ -98,7 +99,7 @@ sensitivity_to_prior.brmsfit <- function(model, index = "Median", magnitude = 10
 
   # Priors of the slopes (intercepts and thresholds of ordinal models are not shifted)
   priors <- insight::get_priors(model, effects = "fixed", component = "conditional")
-  priors <- priors[!grepl("^b_Intercept(\\[\\d+\\])?$", priors$Parameter), ]
+  priors <- priors[!grepl("^b_Intercept(\\[.+\\])?$", priors$Parameter), ]
   priors <- priors[!duplicated(priors$Parameter), ]
   if (!nrow(priors)) {
     insight::format_error("`sensitivity_to_prior()` requires a model with at least one slope.")
@@ -119,6 +120,16 @@ sensitivity_to_prior.brmsfit <- function(model, index = "Median", magnitude = 10
         toString(priors$Parameter[not_slope]),
         "."
       )
+    )
+  }
+
+  # Slopes that insight does not report (e.g. a predictor named "sigma_x") would
+  # keep their old prior and be missing from the output
+  all_slopes <- slope_info$coef[nzchar(slope_info$coef) & slope_info$coef != "Intercept"]
+  unmatched <- setdiff(all_slopes, coefs)
+  if (length(unmatched)) {
+    insight::format_error(
+      paste0("Could not find the priors of these slopes: ", toString(unmatched), ".")
     )
   }
 
