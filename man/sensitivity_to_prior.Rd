@@ -42,7 +42,9 @@ prior, because only these priors are supported for moving to an antagonistic
 location.
 The default flat priors of \strong{brms} are not supported, so set the priors
 with \code{brms::set_prior()} when fitting the model. Multivariate models are not
-supported.
+supported. Only regular slopes get a new prior, so non-linear parameters,
+monotonic effects, and bounded slope priors give an error. Intercepts,
+including the thresholds of ordinal models, are not changed.
 }
 \examples{
 \dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}

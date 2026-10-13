@@ -21,7 +21,9 @@
 #' location.
 #' The default flat priors of **brms** are not supported, so set the priors
 #' with `brms::set_prior()` when fitting the model. Multivariate models are not
-#' supported.
+#' supported. Only regular slopes get a new prior, so non-linear parameters,
+#' monotonic effects, and bounded slope priors give an error. Intercepts,
+#' including the thresholds of ordinal models, are not changed.
 #'
 #' @return A data frame with a `Parameter` column and one `Sensitivity_*`
 #'   column for `Median` and for each other index.
