@@ -60,6 +60,9 @@ print.equivalence_test <- function(x, digits = 2, ...) {
 
 
 .print_equivalence_component <- function(x, ci, digits, ci_method) {
+  if (is.null(ci_method)) {
+    ci_method <- "CI"
+  }
   for (i in ci) {
     xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
     colnames(xsub)[colnames(xsub) == "CI_tmp"] <- sprintf("%i%% %s", 100 * i, ci_method)

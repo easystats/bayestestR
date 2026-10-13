@@ -85,7 +85,7 @@
 #' test <- equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 #' print(test, digits = 4)
 #' \donttest{
-#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 #' equivalence_test(model)
 #' # multiple ROPE ranges - asymmetric, symmetric, default
 #' equivalence_test(model, range = list(c(10, 40), c(-5, -4), "default"))
@@ -222,6 +222,7 @@ equivalence_test.data.frame <- function(
   row.names(out) <- NULL
 
   attr(out, "object_name") <- obj_name
+  attr(out, "ci_method") <- ci_method
   class(out) <- unique(c("equivalence_test", "see_equivalence_test_df", class(out)))
 
   out
@@ -271,6 +272,7 @@ equivalence_test.emmGrid <- function(
   )
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "ci_method") <- ci_method
   out
 }
 
@@ -298,6 +300,7 @@ equivalence_test.slopes <- function(
   )
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "ci_method") <- ci_method
   out
 }
 
@@ -401,6 +404,7 @@ equivalence_test.stanreg <- function(
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "ci_method") <- ci_method
   out
 }
 
@@ -447,6 +451,7 @@ equivalence_test.brmsfit <- function(
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "ci_method") <- ci_method
   out
 }
 

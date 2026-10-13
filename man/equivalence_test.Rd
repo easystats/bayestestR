@@ -220,7 +220,7 @@ equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 test <- equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 print(test, digits = 4)
 \donttest{
-model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 equivalence_test(model)
 # multiple ROPE ranges - asymmetric, symmetric, default
 equivalence_test(model, range = list(c(10, 40), c(-5, -4), "default"))
