@@ -1,5 +1,9 @@
 # bayestestR (devel)
 
+## Changes
+
+* `p_rope()` now actually is just a wrapper for `rope(ci = 1)`.
+
 ## Bug fixes
 
 * Fixed issue with printing wrong column order of multiple CI columns in
