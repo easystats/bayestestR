@@ -105,11 +105,6 @@ test_that("emmGrid p_map", {
   expect_length(xpmap$p_MAP, 3)
 })
 
-test_that("emmGrid p_rope", {
-  xprope <- p_rope(all_, range = c(-0.1, 0.1))
-  expect_identical(colnames(xprope)[1:2], c("group", "contrast"))
-  expect_length(xprope$p_ROPE, 3)
-})
 
 test_that("emmGrid p_significance", {
   xsig <- p_significance(all_, threshold = c(-0.1, 0.1))

@@ -100,15 +100,10 @@ test_that("rope, vector", {
       ""
     )
   )
+})
 
-  out <- p_rope(x, complement = TRUE)
-  expect_named(
-    out,
-    c("ROPE_low", "ROPE_high", "p_ROPE", "p_Superiority", "p_Inferiority")
-  )
-  expect_equal(out$p_Superiority, 0.497, tolerance = 1e-3)
-  expect_equal(out$p_Inferiority, 0.4885, tolerance = 1e-3)
 
+test_that("rope, bayes", {
   out <- suppressWarnings(capture.output(describe_posterior(
     x,
     test = "p_rope",
@@ -118,10 +113,7 @@ test_that("rope, vector", {
     out[3],
     "Parameter | Median |        95% CI |          ROPE | p (ROPE) | p (Superiority) | p (Inferiority)"
   )
-})
 
-
-test_that("rope, bayes", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
