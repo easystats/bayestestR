@@ -23,6 +23,7 @@ test_that("describe_posterior-1", {
     verbose = FALSE
   ))
 
+  debugonce(bayestestR:::.describe_posterior)
   rez <- as.data.frame(suppressWarnings(describe_posterior(
     x,
     centrality = "all",
@@ -377,6 +378,7 @@ test_that("describe_posterior-4", {
 test_that("describe_posterior w/ BF+SI", {
   skip_on_cran()
   skip_if_not_installed("curl")
+  skip_if_not_installed("logspline")
   skip_if_offline()
   skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")
