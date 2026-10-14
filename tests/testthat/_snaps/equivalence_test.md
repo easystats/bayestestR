@@ -7,7 +7,7 @@
       
         ROPE: [-0.18 0.18]
       
-      Parameter   |       H0 | inside ROPE |        95% HDI
+      Parameter   |       H0 | inside ROPE |        95% ETI
       -----------------------------------------------------
       (Intercept) | Rejected |      0.00 % | [-2.68, -0.50]
       size        | Accepted |    100.00 % |  [-0.04, 0.07]
@@ -24,7 +24,7 @@
     Output
       # Test for Practical Equivalence
       
-      Parameter   |        H0 | inside ROPE |        95% HDI |          ROPE
+      Parameter   |        H0 | inside ROPE |        95% ETI |          ROPE
       ----------------------------------------------------------------------
       (Intercept) | Undecided |     15.82 % | [-2.68, -0.50] | [-1.00, 1.00]
       size        |  Accepted |    100.00 % |  [-0.04, 0.07] | [-0.10, 0.10]
@@ -43,7 +43,7 @@
       
         ROPE: [-0.10 0.10]
       
-      Parameter   |       H0 | inside ROPE |        95% HDI
+      Parameter   |       H0 | inside ROPE |        95% ETI
       -----------------------------------------------------
       (Intercept) | Rejected |      0.00 % | [-2.68, -0.50]
       size        | Accepted |    100.00 % |  [-0.04, 0.07]
@@ -60,7 +60,7 @@
     Output
       # Test for Practical Equivalence
       
-      Parameter   |        H0 | inside ROPE |        95% HDI |          ROPE
+      Parameter   |        H0 | inside ROPE |        95% ETI |          ROPE
       ----------------------------------------------------------------------
       (Intercept) | Undecided |     15.82 % | [-2.68, -0.50] | [-1.00, 1.00]
       size        |  Accepted |    100.00 % |  [-0.04, 0.07] | [-0.10, 0.10]
