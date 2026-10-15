@@ -4,3 +4,17 @@ skip_if_not_or_load_if_installed <- function(package, minimum_version = NULL) {
     require(package, warn.conflicts = FALSE, character.only = TRUE, quietly = TRUE)
   )))
 }
+
+skip_if_fit_failed <- function(expr) {
+  suppressWarnings(
+    tryCatch(
+      expr,
+      error = function(e) {
+        testthat::skip(sprintf(
+          "Fitting model failed: %s",
+          conditionMessage(e)
+        ))
+      }
+    )
+  )
+}

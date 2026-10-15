@@ -44,14 +44,40 @@ withr::with_environment(
       as.data.frame(res[1:3]),
       data.frame(
         term = c(
-          "am", "am", "am", "am", "cyl", "cyl", "cyl", "cyl", "cyl", "cyl",
-          "cyl", "cyl", "hp", "hp", "hp", "hp"
+          "am",
+          "am",
+          "am",
+          "am",
+          "cyl",
+          "cyl",
+          "cyl",
+          "cyl",
+          "cyl",
+          "cyl",
+          "cyl",
+          "cyl",
+          "hp",
+          "hp",
+          "hp",
+          "hp"
         ),
         contrast = c(
-          "1 - 0", "1 - 0", "1 - 0", "1 - 0",
-          "6 - 4", "6 - 4", "8 - 4", "8 - 4",
-          "6 - 4", "6 - 4", "8 - 4", "8 - 4",
-          "dY/dX", "dY/dX", "dY/dX", "dY/dX"
+          "1 - 0",
+          "1 - 0",
+          "1 - 0",
+          "1 - 0",
+          "6 - 4",
+          "6 - 4",
+          "8 - 4",
+          "8 - 4",
+          "6 - 4",
+          "6 - 4",
+          "8 - 4",
+          "8 - 4",
+          "dY/dX",
+          "dY/dX",
+          "dY/dX",
+          "dY/dX"
         ),
         am = c(0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1),
         stringsAsFactors = FALSE
@@ -129,6 +155,7 @@ test_that("marginaleffects bayesfactors", {
   skip_if_not_installed("httr2")
   skip_if_not_installed("brms")
   skip_if_not_installed("modelbased")
+  skip_if_not_installed("logspline")
 
   m <- insight::download_model("brms_mv_1")
   skip_if(is.null(m))
@@ -137,8 +164,17 @@ test_that("marginaleffects bayesfactors", {
   expect_named(
     out,
     c(
-      "wt", "group", "Median", "CI", "CI_low", "CI_high", "pd",
-      "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
+      "wt",
+      "group",
+      "Median",
+      "CI",
+      "CI_low",
+      "CI_high",
+      "pd",
+      "ROPE_CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage"
     )
   )
   expect_identical(dim(out), c(30L, 11L))

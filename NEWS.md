@@ -2,6 +2,8 @@
 
 ## Changes
 
+* `p_rope()` now actually is just a wrapper for `rope(ci = 1)`.
+
 * `equivalence_test()` methods gain a `ci_method` argument passed to `rope()` to
   select the type of credible interval used in the ROPE calculation (#777).
 

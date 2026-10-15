@@ -32,10 +32,15 @@ test_that("si.numeric", {
 test_that("si.rstanarm", {
   skip_on_cran()
   skip_if_not_installed("rstanarm")
+  skip_if_not_installed("logspline")
 
   data(sleep)
   contrasts(sleep$group) <- contr.equalprior_pairs # See vignette
-  stan_model <- suppressWarnings(rstanarm::stan_glmer(extra ~ group + (1 | ID), data = sleep, refresh = 0))
+  stan_model <- suppressWarnings(rstanarm::stan_glmer(
+    extra ~ group + (1 | ID),
+    data = sleep,
+    refresh = 0
+  ))
 
   set.seed(333)
   stan_model_p <- update(stan_model, prior_PD = TRUE)
