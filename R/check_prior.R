@@ -94,7 +94,9 @@ check_prior.brmsfit <- function(
     posteriors,
     method,
     verbose = verbose,
-    cleaned_parameters = .get_cleaned_parameters(model, ...)
+    cleaned_parameters = .get_cleaned_parameters(model, ...),
+    # simulate_prior() already warns about priors it cannot simulate
+    warn_missing = !isTRUE(simulate_priors)
   )
 }
 
@@ -111,7 +113,8 @@ check_prior.blavaan <- check_prior.brmsfit
   posteriors,
   method = "gelman",
   verbose = TRUE,
-  cleaned_parameters = NULL
+  cleaned_parameters = NULL,
+  warn_missing = TRUE
 ) {
   # validation check for matching parameters. Some weird priors like
   # rstanarm's R2 prior might cause problems
@@ -174,7 +177,7 @@ check_prior.blavaan <- check_prior.brmsfit
   # all NA. Catch those, and warn user
   all_missing <- vapply(priors, function(i) all(is.na(i)), TRUE)
 
-  if (any(all_missing) && verbose) {
+  if (any(all_missing) && verbose && warn_missing) {
     insight::format_warning("Some priors could not be simulated.")
   }
 

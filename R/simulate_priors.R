@@ -115,7 +115,7 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
     # unsupported distributions fail, and missing parameters (such as
     # the bounds of flat priors) give only NA values
     if (all(is.na(sim))) {
-      failed[param] <- prior$Distribution
+      failed[param] <- ifelse(is.na(prior$Distribution), "unknown", prior$Distribution)
     }
 
     simulated[param] <- sim
@@ -125,12 +125,12 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
     distributions <- vapply(
       unique(failed),
       function(d) {
-        paste0("a ", d, " distribution (", toString(names(failed)[failed == d]), ")")
+        paste0(d, " (", toString(names(failed)[failed == d]), ")")
       },
       character(1)
     )
     insight::format_warning(paste0(
-      "Can't simulate priors from ",
+      "Can't simulate priors from these distributions: ",
       toString(distributions),
       "."
     ))
