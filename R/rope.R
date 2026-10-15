@@ -24,7 +24,7 @@
 #' @param ci The Credible Interval (CI) probability, corresponding to the
 #' proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in
-#' ROPE. Can be 'HDI' (default) or 'ETI'. See [`ci()`].
+#' ROPE. Can be 'HDI' or 'ETI' (default). See [`ci()`].
 #' @param complement Should the probabilities above/below the ROPE (the
 #' _complementary_ probabilities) be returned as well? See
 #' [equivalence_test()] as well.

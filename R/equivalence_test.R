@@ -11,7 +11,7 @@
 #' *"HDI+ROPE decision rule"* (\cite{Kruschke, 2014, 2018}) to check whether
 #' parameter values should be accepted or rejected against an explicitly
 #' formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the
-#' percentage of the 95% [HDI][ci] that is the null region (the ROPE). If
+#' percentage of the 95% [CI][ci] that is the null region (the ROPE). If
 #' this percentage is sufficiently low, the null hypothesis is rejected. If this
 #' percentage is sufficiently high, the null hypothesis is accepted.
 #'
@@ -19,18 +19,21 @@
 #'
 #' @inheritSection hdi Model components
 #'
-#' @details Using the [ROPE][rope] and the [HDI][ci], \cite{Kruschke (2018)}
+#' @details Using the [ROPE][rope] and the [CI][ci], \cite{Kruschke (2018)}
 #'   suggests using the percentage of the 95%
-#'   HDI that falls within the ROPE as a decision rule. If the HDI
+#'   CI that falls within the ROPE as a decision rule. If the CI
 #'   is completely outside the ROPE, the "null hypothesis" for this parameter is
-#'   "rejected". If the ROPE completely covers the HDI, i.e., all most credible
+#'   "rejected". If the ROPE completely covers the CI, i.e., all most credible
 #'   values of a parameter are inside the region of practical equivalence, the
 #'   null hypothesis is accepted. Else, it is undecided whether to accept or
 #'   reject the null hypothesis. If the full ROPE is used (i.e., 100% of the
-#'   HDI), then the null hypothesis is rejected or accepted if the percentage
+#'   CI), then the null hypothesis is rejected or accepted if the percentage
 #'   of the posterior within the ROPE is smaller than to 2.5% or greater than
 #'   97.5%. Desirable results are low proportions inside the ROPE  (the closer
 #'   to zero the better).
+#'
+#'   While Kruschke suggested using the 95% _HDI_, any CI can be used. Here we
+#'   default to the 95% _ETI_ (can be changed by setting the `ci_method` argument).
 #'
 #'   Some attention is required for finding suitable values for the ROPE limits
 #'   (argument `range`). See 'Details' in [`rope_range()`] for further

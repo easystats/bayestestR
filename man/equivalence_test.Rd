@@ -61,7 +61,7 @@ range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian
 proportion of HDI, to use for the percentage in ROPE.}
 
 \item{ci_method}{The type of interval to use to quantify the percentage in
-ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link[=ci]{ci()}}.}
+ROPE. Can be 'HDI' or 'ETI' (default). See \code{\link[=ci]{ci()}}.}
 
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
@@ -134,22 +134,25 @@ For Bayesian models, the \strong{Test for Practical Equivalence} is based on the
 \emph{"HDI+ROPE decision rule"} (\cite{Kruschke, 2014, 2018}) to check whether
 parameter values should be accepted or rejected against an explicitly
 formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the
-percentage of the 95\% \link[=ci]{HDI} that is the null region (the ROPE). If
+percentage of the 95\% \link[=ci]{CI} that is the null region (the ROPE). If
 this percentage is sufficiently low, the null hypothesis is rejected. If this
 percentage is sufficiently high, the null hypothesis is accepted.
 
-Using the \link[=rope]{ROPE} and the \link[=ci]{HDI}, \cite{Kruschke (2018)}
+Using the \link[=rope]{ROPE} and the \link[=ci]{CI}, \cite{Kruschke (2018)}
 suggests using the percentage of the 95\%
-HDI that falls within the ROPE as a decision rule. If the HDI
+CI that falls within the ROPE as a decision rule. If the CI
 is completely outside the ROPE, the "null hypothesis" for this parameter is
-"rejected". If the ROPE completely covers the HDI, i.e., all most credible
+"rejected". If the ROPE completely covers the CI, i.e., all most credible
 values of a parameter are inside the region of practical equivalence, the
 null hypothesis is accepted. Else, it is undecided whether to accept or
 reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the
-HDI), then the null hypothesis is rejected or accepted if the percentage
+CI), then the null hypothesis is rejected or accepted if the percentage
 of the posterior within the ROPE is smaller than to 2.5\% or greater than
 97.5\%. Desirable results are low proportions inside the ROPE  (the closer
 to zero the better).
+
+While Kruschke suggested using the 95\% \emph{HDI}, any CI can be used. Here we
+default to the 95\% \emph{ETI} (can be changed by setting the \code{ci_method} argument).
 
 Some attention is required for finding suitable values for the ROPE limits
 (argument \code{range}). See 'Details' in \code{\link[=rope_range]{rope_range()}} for further
