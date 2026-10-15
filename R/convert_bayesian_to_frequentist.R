@@ -254,7 +254,7 @@ convert_bayesian_as_frequentist <- function(
 }
 
 .bf_mixed_formula <- function(model) {
-  # same model as insight::find_formula() and insight::get_data()
+  # same model that insight::find_formula() uses (the last numerator)
   bf_model <- utils::tail(model@numerator, 1)[[1]]
   if (!inherits(bf_model, "BFlinearModel")) {
     return(NULL)
@@ -273,7 +273,8 @@ convert_bayesian_as_frequentist <- function(
     if (!any(term_types == "random")) {
       fixed_terms <- c(fixed_terms, term)
     } else if (any(term_types == "continuous")) {
-      # random slopes, uncorrelated with the random intercepts
+      # random slopes without an intercept; a random intercept is its own
+      # term, so the two are uncorrelated
       random_terms <- c(random_terms, sprintf(
         "(0 + %s | %s)",
         paste(term_vars[term_types == "continuous"], collapse = ":"),
