@@ -2,6 +2,9 @@
 
 ## Changes
 
+* `sensitivity_to_prior()` now supports models from package *brms*. All slopes
+  need a normal, student_t, or cauchy prior.
+
 * `p_rope()` now actually is just a wrapper for `rope(ci = 1)`.
 
 * `equivalence_test()` methods gain a `ci_method` argument passed to `rope()` to

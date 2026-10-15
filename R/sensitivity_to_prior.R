@@ -12,8 +12,22 @@
 #' @param magnitude This represent the magnitude by which to shift the
 #'   antagonistic prior (to test the sensitivity). For instance, a magnitude of
 #'   10 (default) means that the mode will be updated with a prior located at 10
-#'   standard deviations from its original location.
+#'   standard deviations from zero, on the opposite side of the effect.
 #' @param ... Arguments passed to or from other methods.
+#'
+#' @details
+#' For `brmsfit` models, all slopes must have a normal, student_t, or cauchy
+#' prior, because only these priors are supported for moving to an antagonistic
+#' location.
+#' The default flat priors of **brms** are not supported, so set the priors
+#' with `brms::set_prior()` when fitting the model. Multivariate models are not
+#' supported. Only regular slopes of the main formula get a new prior. Other
+#' parameters, such as non-linear parameters or monotonic effects, give an
+#' error, and so do bounded slope priors. Intercepts, including the thresholds
+#' of ordinal models, are not changed.
+#'
+#' @return A data frame with a `Parameter` column and one `Sensitivity_*`
+#'   column for `Median` and for each other index.
 #'
 #' @examplesIf require("rstanarm")
 #' \donttest{
@@ -26,6 +40,20 @@
 #'
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' sensitivity_to_prior(model, index = c("Median", "MAP"))
+#' }
+#' @examplesIf require("brms")
+#' \donttest{
+#' # brms models
+#' # -----------------------------------------------
+#' model <- brms::brm(
+#'   mpg ~ wt + cyl,
+#'   data = mtcars,
+#'   prior = brms::set_prior("normal(0, 5)", class = "b"),
+#'   chains = 2,
+#'   iter = 1000,
+#'   refresh = 0
+#' )
+#' sensitivity_to_prior(model)
 #' }
 #' @seealso DescTools
 #' @export
@@ -47,6 +75,125 @@ sensitivity_to_prior.stanreg <- function(model, index = "Median", magnitude = 10
 
   # New model
   params_updated <- .extract_parameters(model_updated, index = index, ...)
+
+  # Compute index
+  sensitivity <- abs(as.matrix(params_updated[-1]) - as.matrix(params[-1])) / abs(as.matrix(params[-1]))
+
+  # Clean up
+  sensitivity <- as.data.frame(sensitivity)
+  names(sensitivity) <- paste0("Sensitivity_", names(params_updated)[-1])
+  sensitivity <- cbind(params_updated[1], sensitivity)
+  row.names(sensitivity) <- NULL
+  sensitivity
+}
+
+
+#' @rdname sensitivity_to_prior
+#' @export
+sensitivity_to_prior.brmsfit <- function(model, index = "Median", magnitude = 10, ...) {
+  insight::check_if_installed("brms")
+
+  if (insight::is_multivariate(model)) {
+    insight::format_error("Multivariate models are not supported yet.")
+  }
+
+  # Priors of the slopes (intercepts and thresholds of ordinal models are not shifted)
+  priors <- insight::get_priors(model, effects = "fixed", component = "conditional")
+  priors <- priors[!grepl("^b_Intercept(\\[.+\\])?$", priors$Parameter), ]
+  priors <- priors[!duplicated(priors$Parameter), ]
+  if (!nrow(priors)) {
+    insight::format_error("`sensitivity_to_prior()` requires a model with at least one slope.")
+  }
+
+  # Only parameters named "b_<coef>" with a class "b" prior in the main formula
+  # get a new prior. For other parameters (e.g. monotonic "bsp_" or non-linear
+  # "b_<nlpar>_" terms) the coef would match no prior, and update() drops such
+  # priors without a warning.
+  slope_info <- .brms_slope_info(model)
+  coefs <- sub("^b_", "", priors$Parameter)
+  not_slope <- !startsWith(priors$Parameter, "b_") | !coefs %in% slope_info$coef[nzchar(slope_info$coef)]
+  if (any(not_slope)) {
+    insight::format_error(
+      paste0(
+        "`sensitivity_to_prior()` supports only regular slopes for brms models. ",
+        "These parameters are not supported: ",
+        toString(priors$Parameter[not_slope]),
+        "."
+      )
+    )
+  }
+
+  # Slopes that insight does not report (e.g. a predictor named "sigma_x") would
+  # keep their old prior and be missing from the output
+  all_slopes <- slope_info$coef[nzchar(slope_info$coef) & slope_info$coef != "Intercept"]
+  unmatched <- setdiff(all_slopes, coefs)
+  if (length(unmatched)) {
+    insight::format_error(
+      paste0("Could not find the priors of these slopes: ", toString(unmatched), ".")
+    )
+  }
+
+  # A shifted prior could fall outside the bounds of a bounded prior
+  bounded <- vapply(coefs, function(coef) {
+    rows <- slope_info[slope_info$coef %in% c(coef, ""), ]
+    any(nzchar(c(rows$lb, rows$ub)), na.rm = TRUE)
+  }, logical(1))
+  if (any(bounded)) {
+    insight::format_error(
+      paste0(
+        "`sensitivity_to_prior()` does not support bounded priors (`lb` or `ub`) on slopes. ",
+        "These slopes have bounded priors: ",
+        toString(priors$Parameter[bounded]),
+        "."
+      )
+    )
+  }
+
+  priors <- .brms_cauchy_priors(slope_info, priors)
+
+  # Only location-scale priors can be moved to an antagonistic location
+  unsupported <- !priors$Distribution %in% c("normal", "student_t", "cauchy") |
+    is.na(priors$Location) | is.na(priors$Scale)
+  if (any(unsupported)) {
+    insight::format_error(
+      paste0(
+        "`sensitivity_to_prior()` requires normal, student_t, or cauchy priors on all slopes. ",
+        "These slopes have flat or other priors: ",
+        toString(priors$Parameter[unsupported]),
+        "."
+      ),
+      "Use `brms::set_prior()` to specify one of these priors and refit the model."
+    )
+  }
+
+  # Original
+  params <- .extract_parameters(model, index = index, ...)
+  missing_slopes <- setdiff(priors$Parameter, params$Parameter)
+  if (length(missing_slopes)) {
+    insight::format_error(paste0("Could not summarize the posterior of these slopes: ", toString(missing_slopes), "."))
+  }
+  params <- params[params$Parameter %in% priors$Parameter, ]
+  priors <- priors[match(params$Parameter, priors$Parameter), ]
+
+  # Priors
+  new_priors <- .prior_new_location(
+    prior = list(location = priors$Location, scale = priors$Scale),
+    sign = sign(params$Median),
+    magnitude = magnitude
+  )
+  new_priors <- .brms_priors(
+    distribution = priors$Distribution,
+    location = new_priors$location,
+    scale = new_priors$scale,
+    df = priors$df,
+    coef = sub("^b_", "", priors$Parameter)
+  )
+  model_updated <- .refit_brms(model, new_priors)
+  .brms_check_refit_priors(model_updated, new_priors)
+
+  # New model
+  params_updated <- .extract_parameters(model_updated, index = index, ...)
+  params_updated <- params_updated[match(params$Parameter, params_updated$Parameter), ]
 
   # Compute index
   sensitivity <- abs(as.matrix(params_updated[-1]) - as.matrix(params[-1])) / abs(as.matrix(params[-1]))
@@ -92,6 +239,87 @@ sensitivity_to_prior.default <- function(model, ...) {
 .prior_new_location <- function(prior, sign, magnitude = 10) {
   prior$location <- -1 * sign * magnitude * prior$scale
   prior
+}
+
+
+#' Priors of class "b" that belong to the main formula of a brms model
+#' @keywords internal
+.brms_slope_info <- function(model) {
+  prior_info <- as.data.frame(brms::prior_summary(model))
+  prior_info[prior_info$class == "b" & !nzchar(prior_info$dpar) & !nzchar(prior_info$nlpar), ]
+}
+
+
+#' Make sure that brms used the shifted priors when refitting
+#' @keywords internal
+.brms_check_refit_priors <- function(model, new_priors) {
+  new_priors <- as.data.frame(new_priors)
+  slope_info <- .brms_slope_info(model)
+  used <- slope_info$prior[match(new_priors$coef, slope_info$coef)]
+  not_used <- is.na(used) | used != new_priors$prior
+  if (any(not_used)) {
+    insight::format_error(
+      paste0(
+        "brms did not use the shifted priors for these slopes: ",
+        toString(new_priors$coef[not_used]),
+        "."
+      )
+    )
+  }
+  invisible(NULL)
+}
+
+
+#' Add location and scale of cauchy slope priors, which insight does not parse
+#' @keywords internal
+.brms_cauchy_priors <- function(prior_info, priors) {
+  is_cauchy <- priors$Distribution == "cauchy"
+  if (!any(is_cauchy)) {
+    return(priors)
+  }
+  for (i in which(is_cauchy)) {
+    prior_string <- prior_info$prior[prior_info$coef == sub("^b_", "", priors$Parameter[i])]
+    # a slope without its own prior uses the class-level prior
+    if (!length(prior_string) || !nzchar(prior_string[1])) {
+      prior_string <- prior_info$prior[!nzchar(prior_info$coef)]
+    }
+    values <- regmatches(prior_string[1], regexec("^cauchy\\((.*),(.*)\\)$", prior_string[1]))[[1]]
+    if (length(values) == 3) {
+      priors$Location[i] <- suppressWarnings(as.numeric(values[2]))
+      priors$Scale[i] <- suppressWarnings(as.numeric(values[3]))
+    }
+  }
+  priors
+}
+
+
+#' Build one brms prior per slope
+#' @keywords internal
+.brms_priors <- function(distribution, location, scale, df, coef) {
+  values <- function(x) sprintf("%.15g", x)
+  prior_strings <- ifelse(
+    distribution == "student_t",
+    sprintf("student_t(%s, %s, %s)", values(df), values(location), values(scale)),
+    sprintf("%s(%s, %s)", distribution, values(location), values(scale))
+  )
+  do.call(c, lapply(seq_along(coef), function(i) {
+    brms::set_prior(prior_strings[i], class = "b", coef = coef[i])
+  }))
+}
+
+
+#' Refit a brms model with new priors
+#' @keywords internal
+.refit_brms <- function(model, prior) {
+  withCallingHandlers(
+    suppressMessages(stats::update(model, prior = prior, refresh = 0)),
+    warning = function(w) {
+      # the original class-level prior is kept but no longer used
+      if (grepl("will not be used in the model", conditionMessage(w), fixed = TRUE)) {
+        invokeRestart("muffleWarning")
+      }
+    }
+  )
 }
 
 

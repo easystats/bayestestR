@@ -3,11 +3,14 @@
 \name{sensitivity_to_prior}
 \alias{sensitivity_to_prior}
 \alias{sensitivity_to_prior.stanreg}
+\alias{sensitivity_to_prior.brmsfit}
 \title{Sensitivity to Prior}
 \usage{
 sensitivity_to_prior(model, ...)
 
 \method{sensitivity_to_prior}{stanreg}(model, index = "Median", magnitude = 10, ...)
+
+\method{sensitivity_to_prior}{brmsfit}(model, index = "Median", magnitude = 10, ...)
 }
 \arguments{
 \item{model}{A Bayesian model (\code{stanreg} or \code{brmsfit}).}
@@ -21,13 +24,28 @@ important here (e.g., write 'Median' instead of 'median').}
 \item{magnitude}{This represent the magnitude by which to shift the
 antagonistic prior (to test the sensitivity). For instance, a magnitude of
 10 (default) means that the mode will be updated with a prior located at 10
-standard deviations from its original location.}
+standard deviations from zero, on the opposite side of the effect.}
+}
+\value{
+A data frame with a \code{Parameter} column and one \verb{Sensitivity_*}
+column for \code{Median} and for each other index.
 }
 \description{
 Computes the sensitivity to priors specification. This represents the
 proportion of change in some indices when the model is fitted with an
 antagonistic prior (a prior of same shape located on the opposite of the
 effect).
+}
+\details{
+For \code{brmsfit} models, all slopes must have a normal, student_t, or cauchy
+prior, because only these priors are supported for moving to an antagonistic
+location.
+The default flat priors of \strong{brms} are not supported, so set the priors
+with \code{brms::set_prior()} when fitting the model. Multivariate models are not
+supported. Only regular slopes of the main formula get a new prior. Other
+parameters, such as non-linear parameters or monotonic effects, give an
+error, and so do bounded slope priors. Intercepts, including the thresholds
+of ordinal models, are not changed.
 }
 \examples{
 \dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}
@@ -41,6 +59,21 @@ sensitivity_to_prior(model)
 
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 sensitivity_to_prior(model, index = c("Median", "MAP"))
+}
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("brms")) withAutoprint(\{ # examplesIf}
+\donttest{
+# brms models
+# -----------------------------------------------
+model <- brms::brm(
+  mpg ~ wt + cyl,
+  data = mtcars,
+  prior = brms::set_prior("normal(0, 5)", class = "b"),
+  chains = 2,
+  iter = 1000,
+  refresh = 0
+)
+sensitivity_to_prior(model)
 }
 \dontshow{\}) # examplesIf}
 }
