@@ -5,9 +5,9 @@
 \alias{bayesian_as_frequentist}
 \title{Convert (refit) a Bayesian model to frequentist}
 \usage{
-convert_bayesian_as_frequentist(model, data = NULL, REML = TRUE)
+convert_bayesian_as_frequentist(model, data = NULL, REML = TRUE, resp = NULL)
 
-bayesian_as_frequentist(model, data = NULL, REML = TRUE)
+bayesian_as_frequentist(model, data = NULL, REML = TRUE, resp = NULL)
 }
 \arguments{
 \item{model}{A Bayesian model.}
@@ -18,6 +18,10 @@ from the model.}
 \item{REML}{For mixed effects, should models be estimated using
 restricted maximum likelihood (REML) (\code{TRUE}, default) or maximum
 likelihood (\code{FALSE})?}
+
+\item{resp}{For multivariate \emph{brms} models, the name of the one response to
+convert, as returned by \code{names(insight::find_formula(model))}. Other models
+ignore \code{resp}.}
 }
 \description{
 Refit Bayesian model as frequentist. Can be useful for comparisons.

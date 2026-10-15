@@ -1,5 +1,10 @@
 # bayestestR (devel)
 
+## Changes
+
+* `bayesian_as_frequentist()` gains a `resp` argument to convert one response
+  of a multivariate *brms* model (easystats/performance#908).
+
 ## Bug fixes
 
 * Fixed issue with printing wrong column order of multiple CI columns in
