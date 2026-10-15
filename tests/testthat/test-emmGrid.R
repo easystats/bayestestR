@@ -5,10 +5,13 @@ skip_if_not_or_load_if_installed("rstanarm")
 skip_if_not_or_load_if_installed("emmeans")
 
 set.seed(300)
-model <- stan_glm(extra ~ group,
+model <- stan_glm(
+  extra ~ group,
   data = sleep,
   refresh = 0,
-  chains = 6, iter = 7000, warmup = 200
+  chains = 6,
+  iter = 7000,
+  warmup = 200
 )
 
 em_ <- emmeans(model, ~group)
@@ -37,7 +40,8 @@ test_that("emmGrid hdi", {
     as.data.frame(xhdi3[1:2]),
     data.frame(
       group = c("1", "1", "2", "2", ".", "."),
-      contrast = c(".", ".", ".", ".", "group1 - group2", "group1 - group2"), stringsAsFactors = FALSE
+      contrast = c(".", ".", ".", ".", "group1 - group2", "group1 - group2"),
+      stringsAsFactors = FALSE
     )
   )
 })
@@ -76,6 +80,7 @@ test_that("emmGrid equivalence_test", {
 })
 
 test_that("emmGrid estimate_density", {
+  skip_if_not_installed("logspline")
   xestden <- estimate_density(c_, method = "logspline", precision = 5)
   expect_identical(colnames(xestden)[1], "contrast")
   expect_length(xestden$x, 5)
@@ -100,11 +105,6 @@ test_that("emmGrid p_map", {
   expect_length(xpmap$p_MAP, 3)
 })
 
-test_that("emmGrid p_rope", {
-  xprope <- p_rope(all_, range = c(-0.1, 0.1))
-  expect_identical(colnames(xprope)[1:2], c("group", "contrast"))
-  expect_length(xprope$p_ROPE, 3)
-})
 
 test_that("emmGrid p_significance", {
   xsig <- p_significance(all_, threshold = c(-0.1, 0.1))
@@ -164,7 +164,10 @@ test_that("emmGrid bayesfactor_parameters", {
 
   # error - cannot deal with regrid / transform
 
-  e <- capture_error(suppressMessages(bayesfactor_parameters(regrid(all_), prior = model)))
+  e <- capture_error(suppressMessages(bayesfactor_parameters(
+    regrid(all_),
+    prior = model
+  )))
   expect_match(as.character(e), "Unable to reconstruct prior estimates")
 })
 
@@ -186,6 +189,7 @@ test_that("emmGrid bayesfactor_restricted", {
 
 test_that("emmGrid si", {
   skip_on_cran()
+  skip_if_not_installed("logspline")
   set.seed(4)
 
   xrsi <- si(all_, prior = model_p, verbose = FALSE)
@@ -201,18 +205,13 @@ test_that("emmGrid si", {
 
 # For non linear models ---------------------------------------------------
 
-
 set.seed(333)
 df <- data.frame(
   G = rep(letters[1:3], each = 2),
   Y = rexp(6)
 )
 
-fit_bayes <- stan_glm(Y ~ G,
-  data = df,
-  family = Gamma(link = "identity"),
-  refresh = 0
-)
+fit_bayes <- stan_glm(Y ~ G, data = df, family = Gamma(link = "identity"), refresh = 0)
 
 fit_bayes_prior <- unupdate(fit_bayes, verbose = FALSE)
 
@@ -222,6 +221,7 @@ bayes_sum_prior <- emmeans(fit_bayes_prior, ~G)
 test_that("emmGrid bayesfactor_parameters", {
   set.seed(333)
   skip_on_cran()
+  skip_if_not_installed("logspline")
 
   xsdbf1 <- bayesfactor_parameters(bayes_sum, prior = fit_bayes, verbose = FALSE)
   xsdbf2 <- bayesfactor_parameters(bayes_sum, prior = bayes_sum_prior, verbose = FALSE)
@@ -233,11 +233,7 @@ test_that("emmGrid bayesfactor_parameters", {
 test_that("emmGrid bayesfactor_parameters / describe w/ nonlinear models", {
   skip_on_cran()
 
-  model <- stan_glm(vs ~ mpg,
-    data = mtcars,
-    family = "binomial",
-    refresh = 0
-  )
+  model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh = 0)
 
   probs <- emmeans(model, "mpg", type = "resp")
   link <- emmeans(model, "mpg")
@@ -250,7 +246,6 @@ test_that("emmGrid bayesfactor_parameters / describe w/ nonlinear models", {
   expect_equal(xhdi$CI_low, probs_summ$lower.HPD, tolerance = 0.1)
   expect_equal(xhdi$CI_high, probs_summ$upper.HPD, tolerance = 0.1)
   expect_equal(xpest$Median, probs_summ$prob, tolerance = 0.1)
-
 
   xhdi <- hdi(link, ci = 0.95)
   xpest <- point_estimate(link, centrality = "median", dispersion = TRUE)

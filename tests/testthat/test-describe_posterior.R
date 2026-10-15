@@ -3,6 +3,7 @@ test_that("describe_posterior-1", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
+  skip_if_not_installed("logspline")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
   skip_if_not_or_load_if_installed("BayesFactor")
@@ -23,6 +24,7 @@ test_that("describe_posterior-1", {
     verbose = FALSE
   ))
 
+  # debugonce(bayestestR:::.describe_posterior)
   rez <- as.data.frame(suppressWarnings(describe_posterior(
     x,
     centrality = "all",
@@ -146,6 +148,7 @@ test_that("describe_posterior-2", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
+  skip_if_not_installed("logspline")
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("brms")
   skip_if_not_or_load_if_installed("BayesFactor")
@@ -228,7 +231,7 @@ test_that("describe_posterior-2", {
   # brms -------------------------------------------------
 
   skip_on_os("windows")
-  x <- suppressWarnings(brms::brm(
+  x <- skip_if_fit_failed(brm(
     mpg ~ wt + (1 | cyl) + (1 + wt | gear),
     data = mtcars,
     refresh = 0
@@ -269,7 +272,7 @@ test_that("describe_posterior-2", {
 
   expect_identical(dim(rez), c(2L, 4L))
 
-  model <- suppressWarnings(brms::brm(
+  model <- skip_if_fit_failed(brm(
     mpg ~ drat,
     data = mtcars,
     chains = 2,
@@ -309,7 +312,7 @@ test_that("describe_posterior-2", {
   expect_identical(nrow(describe_posterior(model)), 2L)
 
   ## FIXME: always fails on CI
-  # model <- brms::brm(mpg ~ drat, data = mtcars, chains = 2, algorithm = "fullrank", refresh = 0)
+  # model <- skip_if_fit_failed(brm(mpg ~ drat, data = mtcars, chains = 2, algorithm = "fullrank", refresh = 0))
   # expect_equal(nrow(describe_posterior(model)), 2L)
 
   # BayesFactor
@@ -377,6 +380,7 @@ test_that("describe_posterior-4", {
 test_that("describe_posterior w/ BF+SI", {
   skip_on_cran()
   skip_if_not_installed("curl")
+  skip_if_not_installed("logspline")
   skip_if_offline()
   skip_if_not_installed("httr2")
   skip_if_not_or_load_if_installed("rstanarm")

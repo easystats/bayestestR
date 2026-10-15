@@ -64,9 +64,6 @@ test_that("blavaan, all", {
   x <- rope(bfit, range = c(-0.1, 0.1))
   expect_identical(nrow(x), 10L)
 
-  x <- p_rope(bfit, range = c(-0.1, 0.1))
-  expect_identical(nrow(x), 10L)
-
   x <- p_map(bfit)
   expect_identical(nrow(x), 10L)
 

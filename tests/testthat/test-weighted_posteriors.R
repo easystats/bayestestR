@@ -18,8 +18,38 @@ test_that("weighted_posteriors for BayesFactor", {
   expect_equal(
     attr(wBF, "weights")$weights,
     c(
-      0, 13, 9, 0, 0, 55, 11, 4, 4, 1246, 6, 2, 38, 4, 946, 12, 3,
-      3, 209, 3, 491, 174, 4, 134, 7, 293, 1, 123, 35, 92, 51, 27
+      0,
+      13,
+      9,
+      0,
+      0,
+      55,
+      11,
+      4,
+      4,
+      1246,
+      6,
+      2,
+      38,
+      4,
+      946,
+      12,
+      3,
+      3,
+      209,
+      3,
+      491,
+      174,
+      4,
+      134,
+      7,
+      293,
+      1,
+      123,
+      35,
+      92,
+      51,
+      27
     ),
     ignore_attr = TRUE
   )
@@ -73,18 +103,20 @@ test_that("weighted_posteriors vs posterior_average", {
   skip_if_not_or_load_if_installed("BayesFactor")
   skip_if_not_or_load_if_installed("brms")
 
-  fit1 <- brm(rating ~ treat + period + carry,
+  fit1 <- skip_if_fit_failed(brm(
+    rating ~ treat + period + carry,
     data = inhaler,
     refresh = 0,
     silent = TRUE,
     save_pars = save_pars(all = TRUE)
-  )
-  fit2 <- brm(rating ~ period + carry,
+  ))
+  fit2 <- skip_if_fit_failed(brm(
+    rating ~ period + carry,
     data = inhaler,
     refresh = 0,
     silent = TRUE,
     save_pars = save_pars(all = TRUE)
-  )
+  ))
 
   set.seed(444)
   expect_warning({

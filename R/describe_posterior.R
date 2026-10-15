@@ -365,6 +365,16 @@ describe_posterior.default <- function(posterior, ...) {
         cleaned_parameters,
         is_stanmvreg
       )
+
+      test_prope$p_ROPE <- test_prope$ROPE_Percentage
+      test_prope$CI <- NULL
+      test_prope$ROPE_Percentage <- NULL
+      if ("Superiority_Percentage" %in% colnames(test_prope)) {
+        test_prope$p_Superiority <- test_prope$Superiority_Percentage
+        test_prope$p_Inferiority <- test_prope$Inferiority_Percentage
+        test_prope$Superiority_Percentage <- test_prope$Inferiority_Percentage <- NULL
+      }
+
       if (!"Parameter" %in% names(test_prope)) {
         test_prope <- cbind(
           data.frame(Parameter = "Posterior", stringsAsFactors = FALSE),

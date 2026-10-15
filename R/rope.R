@@ -1,7 +1,9 @@
 #' Region of Practical Equivalence (ROPE) Analysis
 #'
 #' Compute the proportion of the CI (default to the 95% ETI) of a posterior
-#' distribution that lies within a region of practical equivalence.
+#' distribution that lies within a region of practical equivalence. `p_rope()`
+#' is an alias for `rope(ci = 1)` convenient for computing the posterior
+#' probability of the ROPE.
 #'
 #' @param x Vector representing a posterior distribution. Can also be a
 #' `stanreg` or `brmsfit` model.
@@ -167,6 +169,22 @@ rope <- function(x, ...) {
 #' @export
 as.double.rope <- function(x, ...) {
   x$ROPE_Percentage
+}
+
+#' @export
+#' @rdname rope
+p_rope <- function(
+  x,
+  range = "default",
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+) {
+  cl <- match.call()
+  cl[[1]] <- quote(bayestestR::rope)
+  cl$ci <- 1
+  eval.parent(cl)
 }
 
 
