@@ -278,10 +278,17 @@ test_that("p_rope", {
   out <- p_rope(x, complement = TRUE)
   expect_named(
     out,
-    c("ROPE_low", "ROPE_high", "p_ROPE", "p_Superiority", "p_Inferiority")
+    c(
+      "CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "Superiority_Percentage",
+      "Inferiority_Percentage"
+    )
   )
-  expect_equal(out$p_Superiority, 0.497, tolerance = 1e-3)
-  expect_equal(out$p_Inferiority, 0.4885, tolerance = 1e-3)
+  expect_equal(out$Superiority_Percentage, 0.497, tolerance = 1e-3)
+  expect_equal(out$Inferiority_Percentage, 0.4885, tolerance = 1e-3)
 
   skip_if_not_installed("curl")
   skip_if_offline()
@@ -289,7 +296,10 @@ test_that("p_rope", {
   skip_if_not_or_load_if_installed("rstanarm")
   m <- insight::download_model("stanreg_merMod_5")
   expect_equal(
-    p_rope(as.data.frame(m)[2:4], range = list(c(0, 40), "default", c(-1, 0.8)))$p_ROPE,
+    p_rope(
+      as.data.frame(m)[2:4],
+      range = list(c(0, 40), "default", c(-1, 0.8))
+    )$ROPE_Percentage,
     c(0.598, 0.002, 0.396),
     tolerance = 1e-3
   )
