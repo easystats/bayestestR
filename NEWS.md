@@ -4,6 +4,12 @@
 
 * `p_rope()` now actually is just a wrapper for `rope(ci = 1)`.
 
+* `equivalence_test()` methods gain a `ci_method` argument passed to `rope()` to
+  select the type of credible interval used in the ROPE calculation (#777).
+
+* `bayesian_as_frequentist()` gains a `resp` argument to convert one response
+  of a multivariate *brms* model (easystats/performance#908).
+
 ## Bug fixes
 
 * Fixed issue with printing wrong column order of multiple CI columns in

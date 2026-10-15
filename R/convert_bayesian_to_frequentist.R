@@ -8,6 +8,9 @@
 #' @param REML For mixed effects, should models be estimated using
 #'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
 #'   likelihood (`FALSE`)?
+#' @param resp For multivariate *brms* models, the name of the one response to
+#'   convert, as returned by `names(insight::find_formula(model))`. Other models
+#'   ignore `resp`.
 #' @examplesIf require("rstanarm")
 #' \donttest{
 #' # Rstanarm ----------------------
@@ -38,14 +41,38 @@
 #' }
 #'
 #' @export
-convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
+convert_bayesian_as_frequentist <- function(
+  model,
+  data = NULL,
+  REML = TRUE,
+  resp = NULL
+) {
   if (is.null(data)) {
     data <- insight::get_data(model)
   }
 
-  info <- insight::model_info(model, verbose = FALSE)
-  model_formula <- insight::find_formula(model)
-  model_family <- insight::get_family(model)
+  if (inherits(model, "brmsfit") && insight::is_multivariate(model)) {
+    # multivariate brms models: convert only the response named in `resp`
+    model_formulas <- insight::find_formula(model)
+    responses <- names(model_formulas)
+    if (!is.character(resp) || length(resp) != 1 || !resp %in% responses) {
+      insight::format_error(
+        "For multivariate brms models, `resp` must name one response of the model.",
+        paste0("Possible responses are: ", toString(responses), ".")
+      )
+    }
+    info <- insight::model_info(
+      model,
+      response = which(responses == resp),
+      verbose = FALSE
+    )
+    model_formula <- model_formulas[[resp]]
+    model_family <- insight::get_family(model)[[resp]]
+  } else {
+    info <- insight::model_info(model, verbose = FALSE)
+    model_formula <- insight::find_formula(model)
+    model_family <- insight::get_family(model)
+  }
 
   # fix exception: The 0 + Intercept syntax in brms can be used to facilitate
   # prior specification for the intercept, but but it leads to issues where it
