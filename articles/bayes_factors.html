@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,24 +150,20 @@ probability of observing that datum were the hypothesis true (<span class="math 
 <em>likelihood</em>):<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;normalized by the marginal probability of observing the
 data, &lt;span class="math inline"&gt;P(\mathcal{D})&lt;/span&gt;, which we will
 soon see is often not needed.&lt;/p&gt;'><sup>1</sup></a></p>
-<p><span class="math display">
-P(\mathcal{H|D}) = \frac{P(\mathcal{D|H})\times
-P(\mathcal{H})}{P(\mathcal{D})}
-</span></p>
+<p><span class="math display">P(\mathcal{H|D}) =
+\frac{P(\mathcal{D|H})\times P(\mathcal{H})}{P(\mathcal{D})}</span></p>
 <p>Within this context, an hypothesis is formalized through the
 specification of an a-priori model: Priors on the parameters (<span class="math inline">\Theta</span>) that define the data generating
 process.</p>
 <p>If we have two hypothesis, we can find their posterior
 probability-odds as such:</p>
-<p><span class="math display">
-\underbrace{\frac{P(\mathcal{H}_1|\mathcal{D})}{P(\mathcal{H}_2|\mathcal{D})}}_{\text{Posterior
+<p><span class="math display">\underbrace{\frac{P(\mathcal{H}_1|\mathcal{D})}{P(\mathcal{H}_2|\mathcal{D})}}_{\text{Posterior
 Odds}} =
 \underbrace{\frac{P(\mathcal{D}|\mathcal{H}_1)}{P(\mathcal{D}|\mathcal{H}_2)}}_{\text{Likelihood
 Ratio}}
 \times
 \underbrace{\frac{P(\mathcal{H}_1)}{P(\mathcal{H}_2)}}_{\text{Prior
-Odds}}
-</span></p>
+Odds}}</span></p>
 <p>Where the <em>likelihood ratio</em> (the middle term) is the
 <strong><em>Bayes factor</em></strong> - it is the
 <strong><em>factor</em></strong> by which some <strong>prior
@@ -184,17 +180,14 @@ observed data under each of the two hypotheses</strong>: (In some
 contexts, these probabilities are also called <em>marginal
 likelihoods</em>.)</li>
 </ul>
-<p><span class="math display">
-BF_{12}=\frac{P(\mathcal{D}|\mathcal{H}_1)}{P(\mathcal{D}|\mathcal{H}_2)}
-</span></p>
+<p><span class="math display">BF_{12}=\frac{P(\mathcal{D}|\mathcal{H}_1)}{P(\mathcal{D}|\mathcal{H}_2)}</span></p>
 <ul>
 <li>As <strong>the degree of shift in prior beliefs</strong> about the
 relative credibility of two hypotheses (since they can be computed by
 dividing posterior odds by prior odds).</li>
 </ul>
-<p><span class="math display">
-BF_{12}=\frac{\text{Posterior Odds}_{12}}{\text{Prior Odds}_{12}}
-</span></p>
+<p><span class="math display">BF_{12}=\frac{\text{Posterior
+Odds}_{12}}{\text{Prior Odds}_{12}}</span></p>
 <p><a href="https://easystats.github.io/bayestestR/">bayestestR</a> provides functions for computing Bayes
 factors in two different contexts:</p>
 <ul>
@@ -480,10 +473,8 @@ Rouder, 2011)</span>.</p>
 <p>For example, we can impose an <em>additional</em> order restriction
 that the difference <em>must be positive</em>, which we can write like
 this (if we had to):</p>
-<p><span class="math display">
-\mathcal{H}_{2r}: \theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\ 0
-\end{bmatrix}
-</span></p>
+<p><span class="math display">\mathcal{H}_{2r}: \theta \sim Normal(0,
+5^2)\begin{bmatrix} \infty \\ 0 \end{bmatrix}</span></p>
 <p>By testing the probabilities of these restrictions on prior and
 posterior samples, we can see how the probabilities of the restricted
 distributions <em>change</em> after observing the data - <a href="#bf-definitions">this change is a Bayes factor</a>. These can be
@@ -525,8 +516,7 @@ un-restricted model and the “positive” model.</p>
 <p>Again, we can use the transitive properties of Bayes factors to find
 the BF comparing <span class="math inline">\mathcal{H}_{2r}</span> and
 <span class="math inline">\mathcal{H}_0</span>:</p>
-<p><span class="math display">
-\begin{align}
+<p><span class="math display">\begin{align}
 BF_{2r,0} &amp; = BF_{2,0} \times BF_{2r,2} \\
 &amp; =
 \frac{P(\mathcal{D}|\mathcal{H}_{2})}{P(\mathcal{D}|\mathcal{H}_0)}
@@ -534,8 +524,7 @@ BF_{2r,0} &amp; = BF_{2,0} \times BF_{2r,2} \\
 \frac{P(\mathcal{D}|\mathcal{H}_{2r})}{P(\mathcal{D}|\mathcal{H}_2)} \\
 &amp; =
 \frac{P(\mathcal{D}|\mathcal{H}_{2r})}{P(\mathcal{D}|\mathcal{H}_0)}
-\end{align}
-</span></p>
+\end{align}</span></p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BF_2.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bfs</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="va">BF_2r.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bf_rstr</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
@@ -619,8 +608,7 @@ is for two <em>complementary</em> opposing one-sided hypotheses <span class="cit
 <p>For example, we can compare <span class="math inline">\mathcal{H}_{+}: \theta &gt; 0</span> - <em>the
 difference is positive</em> to <span class="math inline">\mathcal{H}_{-}: \theta &lt; 0</span>: <em>the
 difference is negative</em>:</p>
-<p><span class="math display">
-\begin{align}
+<p><span class="math display">\begin{align}
 BF_{+,-} &amp; = BF_{+,0} \times BF_{0,-} \\
 &amp; =
 \frac{P(\mathcal{D}|\mathcal{H}_{+})}{P(\mathcal{D}|\mathcal{H}_0)}
@@ -628,8 +616,7 @@ BF_{+,-} &amp; = BF_{+,0} \times BF_{0,-} \\
 \frac{P(\mathcal{D}|\mathcal{H}_{0})}{P(\mathcal{D}|\mathcal{H}_-)} \\
 &amp; =
 \frac{P(\mathcal{D}|\mathcal{H}_{+})}{P(\mathcal{D}|\mathcal{H}_{-})}
-\end{align}
-</span></p>
+\end{align}</span></p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bf_div</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span></span>
 <span>  posterior <span class="op">=</span> <span class="va">disgust_means</span>,</span>
@@ -684,28 +671,23 @@ other values is 1. However, the <em>density</em> of the null can be
 non-zero, and it is this density that quantifies the credibility of the
 null hypothesis. This means that the prior <em>odds</em> of the null vs
 the alternative are:</p>
-<p><span class="math display">
-\text{Prior Odds} = \frac{P(\theta \neq \theta_0)}{P(\theta=\theta_0)} =
-\frac{1}{P(\theta=\theta_0)}
-</span></p>
+<p><span class="math display">\text{Prior Odds} = \frac{P(\theta \neq
+\theta_0)}{P(\theta=\theta_0)} = \frac{1}{P(\theta=\theta_0)}</span></p>
 <p>Likewise, the posterior odds of the null vs the alternative are:</p>
-<p><span class="math display">
-\text{Posterior Odds} = \frac{P(\theta \neq \theta_0 \mid
-\mathcal{D})}{P(\theta=\theta_0 \mid \mathcal{D})}
+<p><span class="math display">\text{Posterior Odds} = \frac{P(\theta
+\neq \theta_0 \mid \mathcal{D})}{P(\theta=\theta_0 \mid \mathcal{D})}
 = \frac{1}{P(\theta=\theta_0 \mid \mathcal{D})} \\
 </span></p>
 <p>Recall that a Bayes factor can be thought of as the degree of shift
 in the relative credibility of two hypotheses from the prior model to
 the posterior model:</p>
-<p><span class="math display">
-\begin{align}
+<p><span class="math display">\begin{align}
 BF_{10} &amp; = \frac{\text{Posterior Odds}_{10}}{\text{Prior
 Odds}_{10}}
 = \frac{\frac{1}{P(\theta=\theta_0 \mid
 \mathcal{D})}}{\frac{1}{P(\theta=\theta_0)}} = \\
 &amp; = \frac{P(\theta=\theta_0)}{P(\theta=\theta_0 \mid \mathcal{D})}
-\end{align}
-</span></p>
+\end{align}</span></p>
 <p>In other words, it is sufficient to compare the density of the null
 under the prior distribution (<span class="math inline">P(\theta=\theta_0)</span>) with the density of the
 null under posterior distribution (<span class="math inline">P(\theta=\theta_0 \mid \mathcal{D})</span>) to

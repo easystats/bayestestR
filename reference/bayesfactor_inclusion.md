@@ -53,8 +53,8 @@ non-log Bayes factors; see examples).
 Inclusion Bayes factors answer the question: Are the observed data more
 probable under models with a particular effect, than they are under
 models without that particular effect? In other words, on average - are
-models with effect \\X\\ more likely to have produced the observed data
-than models without effect \\X\\?
+models with effect \\(X\\) more likely to have produced the observed
+data than models without effect \\(X\\)?
 
 ### Match Models
 

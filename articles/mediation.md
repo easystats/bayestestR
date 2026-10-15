@@ -221,7 +221,7 @@ different packages or modeling approached.
 `         "`\
 `m4`` ``<-`` `[`sem`](https://rdrr.io/pkg/lavaan/man/sem.html)`(``model``, data ``=`` ``jobs``)`\
 [`summary`](https://rdrr.io/r/base/summary.html)`(``m4``)`\
-`#> lavaan 0.7-2 ended normally after 1 iteration`\
+`#> lavaan 0.7-3 ended normally after 1 iteration`\
 `#> `\
 `#>   Estimator                                         ML`\
 `#>   Optimization method                           NLMINB`\
@@ -231,6 +231,10 @@ different packages or modeling approached.
 `#> `\
 `#> Model Test User Model:`\
 `#>                                                       `\
+`#>   Test statistic                                 0.000`\
+`#>   Degrees of freedom                                 0`\
+`#>                                                       `\
+`#>   Browne's residual (NT model-based) test             `\
 `#>   Test statistic                                 0.000`\
 `#>   Degrees of freedom                                 0`\
 `#> `\

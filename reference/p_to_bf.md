@@ -23,7 +23,7 @@ p_to_bf(x, n_obs = NULL, log = FALSE, ...)
 
   A (frequentist) model object, or a (numeric) vector of p-values.
   p-values must come from a *two-tailed* *z*- or *t*-test or from an
-  *F*- or a \\\chi^2\\-test with a single degree of freedom. p-values
+  *F*- or a \\(\chi^2\\)-test with a single degree of freedom. p-values
   must not be corrected for multiple testing.
 
 - ...:

@@ -105,7 +105,7 @@ distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 
 - mu:
 
-  vector of mean \\\mu\\.
+  vector of mean \\(\mu\\).
 
 - phi:
 

@@ -395,8 +395,8 @@ For example, we can impose an *additional* order restriction that the
 difference *must be positive*, which we can write like this (if we had
 to):
 
-\mathcal{H}\_{2r}: \theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\ 0
-\end{bmatrix}
+\mathcal{H}\_{2r}: \theta \sim Normal(0, 5^2)\begin{bmatrix} \infty \\\\
+0 \end{bmatrix}
 
 By testing the probabilities of these restrictions on prior and
 posterior samples, we can see how the probabilities of the restricted
@@ -451,11 +451,11 @@ model and the “positive” model.
 Again, we can use the transitive properties of Bayes factors to find the
 BF comparing \mathcal{H}\_{2r} and \mathcal{H}\_0:
 
-\begin{align} BF\_{2r,0} & = BF\_{2,0} \times BF\_{2r,2} \\ & =
+\begin{align} BF\_{2r,0} & = BF\_{2,0} \times BF\_{2r,2} \\\\ & =
 \frac{P(\mathcal{D}\|\mathcal{H}\_{2})}{P(\mathcal{D}\|\mathcal{H}\_0)}
 \times
 \frac{P(\mathcal{D}\|\mathcal{H}\_{2r})}{P(\mathcal{D}\|\mathcal{H}\_2)}
-\\ & =
+\\\\ & =
 \frac{P(\mathcal{D}\|\mathcal{H}\_{2r})}{P(\mathcal{D}\|\mathcal{H}\_0)}
 \end{align}
 
@@ -566,11 +566,11 @@ For example, we can compare \mathcal{H}\_{+}: \theta \> 0 - *the
 difference is positive* to \mathcal{H}\_{-}: \theta \< 0: *the
 difference is negative*:
 
-\begin{align} BF\_{+,-} & = BF\_{+,0} \times BF\_{0,-} \\ & =
+\begin{align} BF\_{+,-} & = BF\_{+,0} \times BF\_{0,-} \\\\ & =
 \frac{P(\mathcal{D}\|\mathcal{H}\_{+})}{P(\mathcal{D}\|\mathcal{H}\_0)}
 \times
 \frac{P(\mathcal{D}\|\mathcal{H}\_{0})}{P(\mathcal{D}\|\mathcal{H}\_-)}
-\\ & =
+\\\\ & =
 \frac{P(\mathcal{D}\|\mathcal{H}\_{+})}{P(\mathcal{D}\|\mathcal{H}\_{-})}
 \end{align}
 
@@ -640,7 +640,7 @@ Likewise, the posterior odds of the null vs the alternative are:
 
 \text{Posterior Odds} = \frac{P(\theta \neq \theta_0 \mid
 \mathcal{D})}{P(\theta=\theta_0 \mid \mathcal{D})} =
-\frac{1}{P(\theta=\theta_0 \mid \mathcal{D})} \\
+\frac{1}{P(\theta=\theta_0 \mid \mathcal{D})} \\\\
 
 Recall that a Bayes factor can be thought of as the degree of shift in
 the relative credibility of two hypotheses from the prior model to the
@@ -648,7 +648,7 @@ posterior model:
 
 \begin{align} BF\_{10} & = \frac{\text{Posterior
 Odds}\_{10}}{\text{Prior Odds}\_{10}} = \frac{\frac{1}{P(\theta=\theta_0
-\mid \mathcal{D})}}{\frac{1}{P(\theta=\theta_0)}} = \\ & =
+\mid \mathcal{D})}}{\frac{1}{P(\theta=\theta_0)}} = \\\\ & =
 \frac{P(\theta=\theta_0)}{P(\theta=\theta_0 \mid \mathcal{D})}
 \end{align}
 

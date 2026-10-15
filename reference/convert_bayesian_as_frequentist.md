@@ -5,9 +5,9 @@ Refit Bayesian model as frequentist. Can be useful for comparisons.
 ## Usage
 
 ``` r
-convert_bayesian_as_frequentist(model, data = NULL, REML = TRUE)
+convert_bayesian_as_frequentist(model, data = NULL, REML = TRUE, resp = NULL)
 
-bayesian_as_frequentist(model, data = NULL, REML = TRUE)
+bayesian_as_frequentist(model, data = NULL, REML = TRUE, resp = NULL)
 ```
 
 ## Arguments
@@ -25,6 +25,12 @@ bayesian_as_frequentist(model, data = NULL, REML = TRUE)
 
   For mixed effects, should models be estimated using restricted maximum
   likelihood (REML) (`TRUE`, default) or maximum likelihood (`FALSE`)?
+
+- resp:
+
+  For multivariate *brms* models, the name of the one response to
+  convert, as returned by `names(insight::find_formula(model))`. Other
+  models ignore `resp`.
 
 ## Examples
 
