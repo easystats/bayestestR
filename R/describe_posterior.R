@@ -356,6 +356,7 @@ describe_posterior.default <- function(posterior, ...) {
       test_prope <- .prepare_output(
         p_rope(
           x_df,
+          ci_method = ci_method,
           range = rope_range,
           verbose = verbose,
           cleaned_parameters = cleaned_parameters,
@@ -405,6 +406,7 @@ describe_posterior.default <- function(posterior, ...) {
         rope(
           x_df,
           range = rope_range,
+          ci_method = ci_method,
           ci = rope_ci,
           cleaned_parameters = cleaned_parameters,
           ...
@@ -436,7 +438,8 @@ describe_posterior.default <- function(posterior, ...) {
             list(
               x = x_df,
               range = rope_range,
-              ci = rope_ci
+              ci = rope_ci,
+              ci_method = ci_method
             )
           )
         ),
