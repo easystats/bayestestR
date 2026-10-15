@@ -51,6 +51,16 @@ convert_bayesian_as_frequentist <- function(
     data <- insight::get_data(model)
   }
 
+  # BayesFactor mixed models: random terms are not in lme4 syntax, so we build
+  # the formula from the model's data types
+  if (inherits(model, "BFBayesFactor")) {
+    bf_formula <- .bf_mixed_formula(model)
+    if (!is.null(bf_formula)) {
+      insight::check_if_installed("lme4")
+      return(lme4::lmer(formula = bf_formula, data = data, REML = REML))
+    }
+  }
+
   if (inherits(model, "brmsfit") && insight::is_multivariate(model)) {
     # multivariate brms models: convert only the response named in `resp`
     model_formulas <- insight::find_formula(model)
@@ -235,6 +245,43 @@ convert_bayesian_as_frequentist <- function(
 
   fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
   stats::as.formula(paste(fixed_formula, random_formula, sep = " + "))
+}
+
+.bf_mixed_formula <- function(model) {
+  # same model as insight::find_formula() and insight::get_data()
+  bf_model <- utils::tail(model@numerator, 1)[[1]]
+  if (!inherits(bf_model, "BFlinearModel")) {
+    return(NULL)
+  }
+  data_types <- bf_model@dataTypes
+  if (!"random" %in% data_types) {
+    return(NULL)
+  }
+
+  f <- stats::as.formula(bf_model@identifier$formula)
+  fixed_terms <- NULL
+  random_terms <- NULL
+  for (term in attr(stats::terms(f), "term.labels")) {
+    term_vars <- strsplit(term, ":", fixed = TRUE)[[1]]
+    term_types <- data_types[term_vars]
+    if (!any(term_types == "random")) {
+      fixed_terms <- c(fixed_terms, term)
+    } else if (any(term_types == "continuous")) {
+      # random slopes, uncorrelated with the random intercepts
+      random_terms <- c(random_terms, sprintf(
+        "(0 + %s | %s)",
+        paste(term_vars[term_types == "continuous"], collapse = ":"),
+        paste(term_vars[term_types != "continuous"], collapse = ":")
+      ))
+    } else {
+      random_terms <- c(random_terms, sprintf("(1 | %s)", term))
+    }
+  }
+  if (is.null(fixed_terms)) {
+    fixed_terms <- "1"
+  }
+
+  stats::reformulate(c(fixed_terms, random_terms), response = f[[2]])
 }
 
 #' @rdname convert_bayesian_as_frequentist
