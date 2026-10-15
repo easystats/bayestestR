@@ -155,8 +155,8 @@ test_that("check_prior - brms (not linux or windows)", {
       chains = 2,
       silent = TRUE,
       refresh = 0
-    )
-  }))
+    ))
+  })
 
   expect_warning(expect_identical(
     check_prior(model2)$Prior_Quality,
