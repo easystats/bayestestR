@@ -218,7 +218,11 @@ test_that("rope (brms)", {
   skip_on_os(c("windows", "mac"))
 
   set.seed(123)
-  model <- suppressWarnings(brms::brm(mpg ~ wt + gear, data = mtcars, iter = 500))
+  model <- skip_if_fit_failed(brm(
+    mpg ~ wt + gear,
+    data = mtcars,
+    iter = 500
+  ))
   rope <- rope(model, verbose = FALSE)
 
   expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
@@ -254,7 +258,7 @@ test_that("rope (brms, multivariate)", {
   skip_if_not_or_load_if_installed("brms")
   skip_on_os(c("windows", "mac"))
 
-  model <- suppressWarnings(brm(
+  model <- skip_if_fit_failed(brm(
     bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE),
     data = mtcars,
     iter = 500,

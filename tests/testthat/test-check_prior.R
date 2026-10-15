@@ -42,26 +42,42 @@ test_that("check_prior - brms (linux)", {
   # need to use a custom example here
   set.seed(333)
   suppressMessages({
-    model2 <- brm(rating ~ period + carry + cs(treat),
-      data = inhaler, family = sratio("logit"),
+    model2 <- skip_if_fit_failed(brm(
+      rating ~ period + carry + cs(treat),
+      data = inhaler,
+      family = sratio("logit"),
       prior = set_prior("normal(0,5)"),
-      chains = 2, silent = TRUE, refresh = 0
-    )
+      chains = 2,
+      silent = TRUE,
+      refresh = 0
+    ))
   })
 
   expect_warning(expect_identical(
     check_prior(model2)$Prior_Quality,
     c(
-      "uninformative", "informative", "informative", "uninformative",
-      "uninformative", "not determinable", "not determinable", "not determinable"
+      "uninformative",
+      "informative",
+      "informative",
+      "uninformative",
+      "uninformative",
+      "not determinable",
+      "not determinable",
+      "not determinable"
     )
   ))
 
   expect_warning(expect_identical(
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
-      "informative", "informative", "informative", "informative",
-      "informative", "not determinable", "not determinable", "not determinable"
+      "informative",
+      "informative",
+      "informative",
+      "informative",
+      "informative",
+      "not determinable",
+      "not determinable",
+      "not determinable"
     )
   ))
 })
@@ -81,18 +97,28 @@ test_that("check_prior - brms (linux)", {
   # all `brms` examples in circus have uniform prior distribution, so
   # need to use a custom example here
   set.seed(333)
-  model2 <- brm(rating ~ period + carry + cs(treat),
-    data = inhaler, family = sratio("logit"),
+  model2 <- skip_if_fit_failed(brm(
+    rating ~ period + carry + cs(treat),
+    data = inhaler,
+    family = sratio("logit"),
     prior = set_prior("normal(0,5)"),
-    chains = 2, silent = TRUE, refresh = 0
-  )
+    chains = 2,
+    silent = TRUE,
+    refresh = 0
+  ))
 
   # TODO: check hard-coded values
   expect_warning(expect_identical(
     check_prior(model2)$Prior_Quality,
     c(
-      "uninformative", "informative", "informative", "uninformative",
-      "uninformative", "not determinable", "not determinable", "not determinable"
+      "uninformative",
+      "informative",
+      "informative",
+      "uninformative",
+      "uninformative",
+      "not determinable",
+      "not determinable",
+      "not determinable"
     )
   ))
 
@@ -121,26 +147,42 @@ test_that("check_prior - brms (not linux or windows)", {
   # need to use a custom example here
   set.seed(333)
   suppressMessages({
-    model2 <- brm(rating ~ period + carry + cs(treat),
-      data = inhaler, family = sratio("logit"),
+    model2 <- skip_if_fit_failed(brm(
+      rating ~ period + carry + cs(treat),
+      data = inhaler,
+      family = sratio("logit"),
       prior = set_prior("normal(0,5)"),
-      chains = 2, silent = TRUE, refresh = 0
+      chains = 2,
+      silent = TRUE,
+      refresh = 0
     )
-  })
+  }))
 
   expect_warning(expect_identical(
     check_prior(model2)$Prior_Quality,
     c(
-      "uninformative", "uninformative", "informative", "uninformative",
-      "uninformative", "not determinable", "not determinable", "not determinable"
+      "uninformative",
+      "uninformative",
+      "informative",
+      "uninformative",
+      "uninformative",
+      "not determinable",
+      "not determinable",
+      "not determinable"
     )
   ))
 
   expect_warning(expect_identical(
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
-      "informative", "informative", "informative", "informative",
-      "informative", "not determinable", "not determinable", "not determinable"
+      "informative",
+      "informative",
+      "informative",
+      "informative",
+      "informative",
+      "not determinable",
+      "not determinable",
+      "not determinable"
     )
   ))
 })

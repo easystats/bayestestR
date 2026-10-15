@@ -231,7 +231,7 @@ test_that("describe_posterior-2", {
   # brms -------------------------------------------------
 
   skip_on_os("windows")
-  x <- suppressWarnings(brms::brm(
+  x <- skip_if_fit_failed(brm(
     mpg ~ wt + (1 | cyl) + (1 + wt | gear),
     data = mtcars,
     refresh = 0
@@ -272,7 +272,7 @@ test_that("describe_posterior-2", {
 
   expect_identical(dim(rez), c(2L, 4L))
 
-  model <- suppressWarnings(brms::brm(
+  model <- skip_if_fit_failed(brm(
     mpg ~ drat,
     data = mtcars,
     chains = 2,
@@ -312,7 +312,7 @@ test_that("describe_posterior-2", {
   expect_identical(nrow(describe_posterior(model)), 2L)
 
   ## FIXME: always fails on CI
-  # model <- brms::brm(mpg ~ drat, data = mtcars, chains = 2, algorithm = "fullrank", refresh = 0)
+  # model <- skip_if_fit_failed(brm(mpg ~ drat, data = mtcars, chains = 2, algorithm = "fullrank", refresh = 0))
   # expect_equal(nrow(describe_posterior(model)), 2L)
 
   # BayesFactor

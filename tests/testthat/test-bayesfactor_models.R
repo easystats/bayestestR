@@ -182,7 +182,7 @@ test_that("bayesfactor_models BRMS", {
   skip_if_not_or_load_if_installed("brms")
 
   set.seed(333)
-  stan_brms_model_0 <- suppressWarnings(brms::brm(
+  stan_brms_model_0 <- skip_if_fit_failed(brm(
     Sepal.Length ~ 1,
     data = iris,
     iter = 500,
@@ -191,7 +191,7 @@ test_that("bayesfactor_models BRMS", {
     silent = 2
   ))
 
-  stan_brms_model_1 <- suppressWarnings(brms::brm(
+  stan_brms_model_1 <- skip_if_fit_failed(brm(
     Sepal.Length ~ Petal.Length,
     data = iris,
     iter = 500,

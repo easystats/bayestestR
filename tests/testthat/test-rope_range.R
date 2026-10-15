@@ -46,7 +46,11 @@ test_that("rope_range", {
   #  Error in `sink(type = "output")`: invalid connection
 
   skip_if_not_or_load_if_installed("brms")
-  model <- suppressWarnings(brms::brm(mpg ~ wt + gear, data = mtcars, iter = 300))
+  model <- skip_if_fit_failed(brm(
+    mpg ~ wt + gear,
+    data = mtcars,
+    iter = 300
+  ))
 
   expect_equal(
     rope_range(model),
@@ -65,13 +69,11 @@ test_that("rope_range (multivariate)", {
   #  Error in `sink(type = "output")`: invalid connection
 
   skip_if_not_or_load_if_installed("brms")
-  model <- suppressWarnings(
-    brms::brm(
-      brms::bf(mvbind(mpg, disp) ~ wt + gear) + brms::set_rescor(TRUE),
-      data = mtcars,
-      iter = 300
-    )
-  )
+  model <- skip_if_fit_failed(brm(
+    bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE),
+    data = mtcars,
+    iter = 300
+  ))
 
   expect_equal(
     rope_range(model),
