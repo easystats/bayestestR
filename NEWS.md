@@ -12,6 +12,9 @@
 
 ## Bug fixes
 
+* `equivalence_test()` no longer prints "HDI" columns when using other CI
+  methods (such as the default ETI).
+
 * Fixed issue with printing wrong column order of multiple CI columns in
   `describe_posterior()`.
 

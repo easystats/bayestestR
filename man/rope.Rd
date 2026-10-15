@@ -92,7 +92,7 @@ range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian
 \code{\link[=rope_range]{rope_range()}} is used. See 'Examples'.}
 
 \item{ci_method}{The type of interval to use to quantify the percentage in
-ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link[=ci]{ci()}}.}
+ROPE. Can be 'HDI' or 'ETI' (default). See \code{\link[=ci]{ci()}}.}
 
 \item{complement}{Should the probabilities above/below the ROPE (the
 \emph{complementary} probabilities) be returned as well? See
