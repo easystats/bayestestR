@@ -63,7 +63,17 @@ convert_bayesian_as_frequentist <- function(
     bf_formula <- .bf_mixed_formula(model)
     if (!is.null(bf_formula)) {
       insight::check_if_installed("lme4")
-      return(lme4::lmer(formula = bf_formula, data = data, REML = REML))
+      freq <- tryCatch(
+        lme4::lmer(formula = bf_formula, data = data, REML = REML),
+        error = function(e) e
+      )
+      if (inherits(freq, "error")) {
+        insight::format_error(
+          "Model could not be automatically converted to frequentist model.",
+          paste0("`lme4::lmer()` failed with: ", conditionMessage(freq))
+        )
+      }
+      return(freq)
     }
   }
 
@@ -268,7 +278,8 @@ convert_bayesian_as_frequentist <- function(
   fixed_terms <- NULL
   random_terms <- NULL
   for (term in attr(stats::terms(f), "term.labels")) {
-    term_vars <- strsplit(term, ":", fixed = TRUE)[[1]]
+    # term labels keep backticks for non-syntactic names, data types do not
+    term_vars <- all.vars(str2lang(term))
     term_types <- data_types[term_vars]
     if (!any(term_types == "random")) {
       fixed_terms <- c(fixed_terms, term)
@@ -277,8 +288,8 @@ convert_bayesian_as_frequentist <- function(
       # term, so the two are uncorrelated
       random_terms <- c(random_terms, sprintf(
         "(0 + %s | %s)",
-        paste(term_vars[term_types == "continuous"], collapse = ":"),
-        paste(term_vars[term_types != "continuous"], collapse = ":")
+        paste0("`", term_vars[term_types == "continuous"], "`", collapse = ":"),
+        paste0("`", term_vars[term_types != "continuous"], "`", collapse = ":")
       ))
     } else {
       random_terms <- c(random_terms, sprintf("(1 | %s)", term))
