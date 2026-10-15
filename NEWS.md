@@ -1,6 +1,17 @@
 # bayestestR (devel)
 
+## Changes
+
+* `equivalence_test()` methods gain a `ci_method` argument passed to `rope()` to
+  select the type of credible interval used in the ROPE calculation (#777).
+
+* `bayesian_as_frequentist()` gains a `resp` argument to convert one response
+  of a multivariate *brms* model (easystats/performance#908).
+
 ## Bug fixes
+
+* `equivalence_test()` no longer prints "HDI" columns when using other CI
+  methods (such as the default ETI).
 
 * Fixed issue with printing wrong column order of multiple CI columns in
   `describe_posterior()`.

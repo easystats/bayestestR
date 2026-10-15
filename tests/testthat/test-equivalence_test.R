@@ -71,3 +71,17 @@ test_that("equivalence test, df", {
     regex = "should be 'default'"
   )
 })
+
+
+test_that("equivalence test passes ci_method to rope", {
+  set.seed(2026)
+  dat <- data.frame(x = rgamma(4000, shape = 2, rate = 1) - 2)
+
+  out_eq <- equivalence_test(dat, ci_method = "HDI", verbose = FALSE)
+  out_rope <- rope(dat, ci_method = "HDI", verbose = FALSE)
+
+  ci_area <- attr(out_rope, "CI_area")$x
+  expect_identical(out_eq$ROPE_Percentage, out_rope$ROPE_Percentage)
+  expect_identical(out_eq$CI_low, ci_area$CI_low)
+  expect_identical(out_eq$CI_high, ci_area$CI_high)
+})

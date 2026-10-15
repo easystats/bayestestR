@@ -11,7 +11,7 @@
 #' *"HDI+ROPE decision rule"* (\cite{Kruschke, 2014, 2018}) to check whether
 #' parameter values should be accepted or rejected against an explicitly
 #' formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the
-#' percentage of the 95% [HDI][hdi] that is the null region (the ROPE). If
+#' percentage of the 95% [CI][ci] that is the null region (the ROPE). If
 #' this percentage is sufficiently low, the null hypothesis is rejected. If this
 #' percentage is sufficiently high, the null hypothesis is accepted.
 #'
@@ -19,18 +19,21 @@
 #'
 #' @inheritSection hdi Model components
 #'
-#' @details Using the [ROPE][rope] and the [HDI][hdi], \cite{Kruschke (2018)}
+#' @details Using the [ROPE][rope] and the [CI][ci], \cite{Kruschke (2018)}
 #'   suggests using the percentage of the 95%
-#'   HDI that falls within the ROPE as a decision rule. If the HDI
+#'   CI that falls within the ROPE as a decision rule. If the CI
 #'   is completely outside the ROPE, the "null hypothesis" for this parameter is
-#'   "rejected". If the ROPE completely covers the HDI, i.e., all most credible
+#'   "rejected". If the ROPE completely covers the CI, i.e., all most credible
 #'   values of a parameter are inside the region of practical equivalence, the
 #'   null hypothesis is accepted. Else, it is undecided whether to accept or
 #'   reject the null hypothesis. If the full ROPE is used (i.e., 100% of the
-#'   HDI), then the null hypothesis is rejected or accepted if the percentage
+#'   CI), then the null hypothesis is rejected or accepted if the percentage
 #'   of the posterior within the ROPE is smaller than to 2.5% or greater than
 #'   97.5%. Desirable results are low proportions inside the ROPE  (the closer
 #'   to zero the better).
+#'
+#'   While Kruschke suggested using the 95% _HDI_, any CI can be used. Here we
+#'   default to the 95% _ETI_ (can be changed by setting the `ci_method` argument).
 #'
 #'   Some attention is required for finding suitable values for the ROPE limits
 #'   (argument `range`). See 'Details' in [`rope_range()`] for further
@@ -62,11 +65,11 @@
 #' @return A data frame with following columns:
 #'
 #'  - `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
-#'  - `CI` The probability of the HDI.
+#'  - `CI` The probability of the CI.
 #'  - `ROPE_low`, `ROPE_high` The limits of the ROPE. These values are identical for all parameters.
-#'  - `ROPE_Percentage` The proportion of the HDI that lies inside the ROPE.
+#'  - `ROPE_Percentage` The proportion of the CI that lies inside the ROPE.
 #'  - `ROPE_Equivalence` The "test result", as character. Either "rejected", "accepted" or "undecided".
-#'  - `HDI_low` , `HDI_high` The lower and upper HDI limits for the parameters.
+#'  - `CI_low` , `CI_high` The lower and upper CI limits for the parameters.
 #'
 #' @note There is a `print()`-method with a `digits`-argument to control
 #'   the amount of digits in the output, and there is a
@@ -85,7 +88,7 @@
 #' test <- equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 #' print(test, digits = 4)
 #' \donttest{
-#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 #' equivalence_test(model)
 #' # multiple ROPE ranges - asymmetric, symmetric, default
 #' equivalence_test(model, range = list(c(10, 40), c(-5, -4), "default"))
@@ -122,10 +125,11 @@ equivalence_test.numeric <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   verbose = TRUE,
   ...
 ) {
-  rope_data <- rope(x, range = range, ci = ci, verbose = verbose)
+  rope_data <- rope(x, range = range, ci = ci, ci_method = ci_method, verbose = verbose)
   out <- as.data.frame(rope_data)
 
   if (all(ci < 1)) {
@@ -143,12 +147,12 @@ equivalence_test.numeric <- function(
     )
   }
 
-  out$HDI_low <- attr(rope_data, "HDI_area", exact = TRUE)$CI_low
-  out$HDI_high <- attr(rope_data, "HDI_area", exact = TRUE)$CI_high
+  out$CI_low <- attr(rope_data, "CI_area", exact = TRUE)$CI_low
+  out$CI_high <- attr(rope_data, "CI_area", exact = TRUE)$CI_high
 
-  # remove attribute
-  attr(out, "HDI_area") <- NULL
+  attr(out, "CI_area") <- NULL # remove attribute
   attr(out, "data") <- x
+  attr(out, "ci_method") <- ci_method
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   out
@@ -162,6 +166,7 @@ equivalence_test.data.frame <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   rvar_col = NULL,
   verbose = TRUE,
   ...
@@ -192,6 +197,7 @@ equivalence_test.data.frame <- function(
           p,
           range = r,
           ci = ci,
+          ci_method = ci_method,
           verbose = verbose
         )
       },
@@ -205,6 +211,7 @@ equivalence_test.data.frame <- function(
       equivalence_test,
       range = range,
       ci = ci,
+      ci_method = ci_method,
       verbose = verbose
     ))
   }
@@ -218,6 +225,7 @@ equivalence_test.data.frame <- function(
   row.names(out) <- NULL
 
   attr(out, "object_name") <- obj_name
+  attr(out, "ci_method") <- ci_method
   class(out) <- unique(c("equivalence_test", "see_equivalence_test_df", class(out)))
 
   out
@@ -225,11 +233,19 @@ equivalence_test.data.frame <- function(
 
 
 #' @export
-equivalence_test.draws <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
+equivalence_test.draws <- function(
+  x,
+  range = "default",
+  ci = 0.95,
+  ci_method = "ETI",
+  verbose = TRUE,
+  ...
+) {
   equivalence_test(
     .posterior_draws_to_df(x),
     range = range,
     ci = ci,
+    ci_method = ci_method,
     verbose = verbose,
     ...
   )
@@ -244,13 +260,22 @@ equivalence_test.emmGrid <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   verbose = TRUE,
   ...
 ) {
   xdf <- insight::get_parameters(x, verbose = verbose)
-  out <- equivalence_test(xdf, range = range, ci = ci, verbose = verbose, ...)
+  out <- equivalence_test(
+    xdf,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "ci_method") <- ci_method
   out
 }
 
@@ -263,13 +288,22 @@ equivalence_test.slopes <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   verbose = TRUE,
   ...
 ) {
   xrvar <- .get_marginaleffects_draws(x)
-  out <- equivalence_test(xrvar, range = range, ci = ci, verbose = verbose, ...)
+  out <- equivalence_test(
+    xrvar,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
   out <- .append_datagrid(out, x)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "ci_method") <- ci_method
   out
 }
 
@@ -285,6 +319,7 @@ equivalence_test.BFBayesFactor <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   verbose = TRUE,
   ...
 ) {
@@ -292,6 +327,7 @@ equivalence_test.BFBayesFactor <- function(
     insight::get_parameters(x),
     range = range,
     ci = ci,
+    ci_method = ci_method,
     verbose = verbose,
     ...
   )
@@ -305,6 +341,7 @@ equivalence_test.BFBayesFactor <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   effects = "fixed",
   component = "conditional",
   parameters = NULL,
@@ -329,7 +366,13 @@ equivalence_test.BFBayesFactor <- function(
     verbose = verbose
   )
 
-  equivalence_test(params, range = range, ci = ci, verbose = verbose)
+  equivalence_test(
+    params,
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    verbose = verbose
+  )
 }
 
 
@@ -338,6 +381,7 @@ equivalence_test.stanreg <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   effects = "fixed",
   component = "location",
   parameters = NULL,
@@ -348,6 +392,7 @@ equivalence_test.stanreg <- function(
     x,
     range,
     ci,
+    ci_method,
     effects,
     component,
     parameters,
@@ -362,6 +407,7 @@ equivalence_test.stanreg <- function(
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "ci_method") <- ci_method
   out
 }
 
@@ -382,6 +428,7 @@ equivalence_test.brmsfit <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   effects = "fixed",
   component = "conditional",
   parameters = NULL,
@@ -392,6 +439,7 @@ equivalence_test.brmsfit <- function(
     x,
     range,
     ci,
+    ci_method,
     effects,
     component,
     parameters,
@@ -406,6 +454,7 @@ equivalence_test.brmsfit <- function(
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  attr(out, "ci_method") <- ci_method
   out
 }
 
@@ -415,6 +464,7 @@ equivalence_test.sim.merMod <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -423,6 +473,7 @@ equivalence_test.sim.merMod <- function(
     x,
     range,
     ci,
+    ci_method,
     effects = "fixed",
     component = "conditional",
     parameters,
@@ -442,6 +493,7 @@ equivalence_test.mcmc <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -450,6 +502,7 @@ equivalence_test.mcmc <- function(
     as.data.frame(x),
     range,
     ci,
+    ci_method,
     effects = "fixed",
     component = "conditional",
     parameters,
@@ -466,6 +519,7 @@ equivalence_test.bcplm <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   parameters = NULL,
   verbose = TRUE,
   ...
@@ -474,6 +528,7 @@ equivalence_test.bcplm <- function(
     insight::get_parameters(x),
     range,
     ci,
+    ci_method,
     effects = "fixed",
     component = "conditional",
     parameters,
@@ -499,6 +554,7 @@ equivalence_test.bamlss <- function(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   component = "all",
   parameters = NULL,
   verbose = TRUE,
@@ -508,6 +564,7 @@ equivalence_test.bamlss <- function(
     insight::get_parameters(x, component = component),
     range,
     ci,
+    ci_method,
     effects = "fixed",
     component = "conditional",
     parameters,
