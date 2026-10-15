@@ -2,6 +2,12 @@
 #'
 #' Refit Bayesian model as frequentist. Can be useful for comparisons.
 #'
+#' @details
+#' Linear models from *BayesFactor* with random factors (see `whichRandom` in
+#' `BayesFactor::lmBF()`) are refit with `lme4::lmer()`. A random term with only
+#' factors, such as `cyl:gear`, becomes `(1 | cyl:gear)`. A random term with a
+#' continuous variable, such as `Days:Subject`, becomes `(0 + Days | Subject)`.
+#'
 #' @param model A Bayesian model.
 #' @param data Data used by the model. If `NULL`, will try to extract it
 #'   from the model.

@@ -15,6 +15,10 @@
 
 ## Bug fixes
 
+* `bayesian_as_frequentist()` now works for linear mixed models from
+  *BayesFactor* (with random factors set in `whichRandom`). They are refit with
+  `lme4::lmer()` (#505).
+
 * If suggested packages are not installed, the Bayes factor vignette now builds.
   Before, its inline code ran and failed with "object not found".
 
