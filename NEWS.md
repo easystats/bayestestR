@@ -32,6 +32,10 @@
 * For multivariate *brms* models with `resp_weights()` and ordinal responses,
   `rope_range()` now returns one ROPE per response, without a warning.
 
+* If `simulate_prior()` or `check_prior()` cannot simulate a prior, for example
+  a laplace or flat prior, it now gives a warning that names the parameters.
+  Before, it returned a column of `NA` with no warning.
+
 # bayestestR 0.19.0
 
 ## Breaking Changes
