@@ -81,7 +81,7 @@ rope_range.default <- function(x, verbose = TRUE, ...) {
     return(c(-0.1, 0.1))
   }
 
-  response <- insight::get_response(x, source = "mf")
+  response <- .response_on_model_scale(x, insight::get_response(x, source = "mf"))
   response_transform <- insight::find_transformation(x)
   information <- insight::model_info(x, verbose = FALSE)
 
@@ -122,6 +122,69 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
 
 # helper ------------------
+
+
+# get the response on the scale it enters the model, i.e. with functions in the
+# formula applied (like `scale(y)` or `sqrt(y)`), so that the SD of the response
+# matches the scale of the parameters, see
+# https://github.com/easystats/bayestestR/issues/710
+.response_on_model_scale <- function(x, response) {
+  model_terms <- .safe(insight::find_terms(x, verbose = FALSE))
+  if (is.null(model_terms)) {
+    return(response)
+  }
+  model_frame <- .safe(stats::model.frame(x))
+
+  if (insight::is_multivariate(x)) {
+    if (!all(vapply(model_terms, is.list, logical(1)))) {
+      return(response)
+    }
+    # one response per model formula, so that the responses match the model
+    # information, also when there are brms addition terms like `resp_weights()`
+    lapply(model_terms, function(i) {
+      out <- .response_term_values(x, i$response[1], model_frame)
+      # else, e.g. for ordinal responses, use the response as it is
+      if (is.null(out) && is.data.frame(response)) {
+        out <- response[[insight::clean_names(i$response[1])]]
+      }
+      out
+    })
+  } else {
+    out <- .response_term_values(x, model_terms$response[1], model_frame)
+    if (is.null(out)) response else out
+  }
+}
+
+
+.response_term_values <- function(x, response_term, model_frame) {
+  if (!is.null(model_frame) && response_term %in% colnames(model_frame)) {
+    # the model frame has a column for the response as used in the model
+    out <- model_frame[[response_term]]
+  } else {
+    # else, apply the functions from the formula to the original data
+    model_data <- .safe(insight::get_data(x, source = "environment", verbose = FALSE))
+    if (is.null(model_data)) {
+      return(NULL)
+    }
+    # look up functions in the formula's environment, so that user-defined
+    # functions like `f(y)` are found
+    model_formula <- .safe(insight::find_formula(x, verbose = FALSE))
+    if (insight::is_multivariate(x)) {
+      model_formula <- model_formula[[1]]
+    }
+    formula_env <- .safe(environment(model_formula$conditional))
+    if (!is.environment(formula_env)) {
+      formula_env <- baseenv()
+    }
+    out <- .safe(eval(str2lang(response_term), envir = model_data, enclos = formula_env))
+  }
+  # only use single numeric responses, e.g. not `cbind()` for binomial models
+  if (is.numeric(out) && NCOL(out) == 1) {
+    as.vector(out)
+  } else {
+    NULL
+  }
+}
 
 
 .rope_range <- function(x, information = NULL, response = NULL, response_transform = NULL, verbose = TRUE) {
