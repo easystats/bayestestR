@@ -52,9 +52,6 @@ format.describe_posterior <- function(
 format.point_estimate <- format.describe_posterior
 
 #' @export
-format.p_rope <- format.describe_posterior
-
-#' @export
 format.p_direction <- format.describe_posterior
 
 #' @export

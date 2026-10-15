@@ -100,15 +100,11 @@ test_that("rope, vector", {
       ""
     )
   )
+})
 
-  out <- p_rope(x, complement = TRUE)
-  expect_named(
-    out,
-    c("ROPE_low", "ROPE_high", "p_ROPE", "p_Superiority", "p_Inferiority")
-  )
-  expect_equal(out$p_Superiority, 0.497, tolerance = 1e-3)
-  expect_equal(out$p_Inferiority, 0.4885, tolerance = 1e-3)
 
+test_that("rope, bayes", {
+  x <- distribution_normal(1000, 1, 1)
   out <- suppressWarnings(capture.output(describe_posterior(
     x,
     test = "p_rope",
@@ -118,10 +114,7 @@ test_that("rope, vector", {
     out[3],
     "Parameter | Median |        95% CI |          ROPE | p (ROPE) | p (Superiority) | p (Inferiority)"
   )
-})
 
-
-test_that("rope, bayes", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr2")
@@ -226,7 +219,11 @@ test_that("rope (brms)", {
   skip_on_os(c("windows", "mac"))
 
   set.seed(123)
-  model <- suppressWarnings(brms::brm(mpg ~ wt + gear, data = mtcars, iter = 500))
+  model <- skip_if_fit_failed(brm(
+    mpg ~ wt + gear,
+    data = mtcars,
+    iter = 500
+  ))
   rope <- rope(model, verbose = FALSE)
 
   expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
@@ -262,7 +259,7 @@ test_that("rope (brms, multivariate)", {
   skip_if_not_or_load_if_installed("brms")
   skip_on_os(c("windows", "mac"))
 
-  model <- suppressWarnings(brm(
+  model <- skip_if_fit_failed(brm(
     bf(mvbind(mpg, disp) ~ wt + gear) + set_rescor(TRUE),
     data = mtcars,
     iter = 500,
@@ -277,5 +274,47 @@ test_that("rope (brms, multivariate)", {
     rope$ROPE_Percentage,
     c(0, 0, 0.493457, 0.072897, 0, 0.508411),
     tolerance = 0.1
+  )
+})
+
+test_that("p_rope", {
+  set.seed(1234)
+  x <- rnorm(4000, sd = 5)
+  out <- p_rope(x, complement = TRUE)
+  expect_named(
+    out,
+    c(
+      "CI",
+      "ROPE_low",
+      "ROPE_high",
+      "ROPE_Percentage",
+      "Superiority_Percentage",
+      "Inferiority_Percentage"
+    )
+  )
+  expect_equal(out$Superiority_Percentage, 0.497, tolerance = 1e-3)
+  expect_equal(out$Inferiority_Percentage, 0.4885, tolerance = 1e-3)
+
+  skip_if_not_installed("curl")
+  skip_if_offline()
+  skip_if_not_installed("httr2")
+  skip_if_not_or_load_if_installed("rstanarm")
+  m <- insight::download_model("stanreg_merMod_5")
+  expect_equal(
+    p_rope(
+      as.data.frame(m)[2:4],
+      range = list(c(0, 40), "default", c(-1, 0.8))
+    )$ROPE_Percentage,
+    c(0.598, 0.002, 0.396),
+    tolerance = 1e-3
+  )
+
+  expect_error(
+    p_rope(as.data.frame(m)[2:4], range = list(c(0, 40), c(-1, 0.8))),
+    regex = "Length of"
+  )
+  expect_error(
+    p_rope(as.data.frame(m)[2:4], range = list(c(0, 40), "a", c(-1, 0.8))),
+    regex = "should be 'default'"
   )
 })

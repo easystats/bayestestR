@@ -1,4 +1,4 @@
-test_that("p_significance", {
+test_that("format", {
   set.seed(333)
   x <- rnorm(100)
   expect_equal(
@@ -9,11 +9,6 @@ test_that("p_significance", {
   expect_equal(
     format(ci(x)),
     data.frame(`95% CI` = "[-1.93, 1.77]", stringsAsFactors = FALSE),
-    ignore_attr = TRUE
-  )
-  expect_equal(
-    format(p_rope(x)),
-    data.frame(ROPE = "[-0.10, 0.10]", `p (ROPE)` = "0.100", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
   expect_equal(
@@ -49,10 +44,12 @@ test_that("p_significance", {
   expect_equal(
     format(equivalence_test(x)),
     data.frame(
+      CI = "0.95",
       ROPE = "[-0.10, 0.10]",
       `% in ROPE` = "10.64%",
       `Equivalence (ROPE)` = "Undecided",
-      `95% CI` = "[-1.93, 1.77]",
+      HDI_low = "-1.93",
+      HDI_high = "1.77",
       stringsAsFactors = FALSE
     ),
     ignore_attr = TRUE

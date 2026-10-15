@@ -63,8 +63,6 @@ display.p_direction <- display.describe_posterior
 #' @export
 display.p_map <- display.describe_posterior
 
-#' @export
-display.p_rope <- display.describe_posterior
 
 #' @export
 display.p_significance <- display.describe_posterior

@@ -2,6 +2,7 @@
 % Please edit documentation in R/rope.R
 \name{rope}
 \alias{rope}
+\alias{p_rope}
 \alias{rope.numeric}
 \alias{rope.data.frame}
 \alias{rope.stanreg}
@@ -9,6 +10,15 @@
 \title{Region of Practical Equivalence (ROPE) Analysis}
 \usage{
 rope(x, ...)
+
+p_rope(
+  x,
+  range = "default",
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 \method{rope}{numeric}(
   x,
@@ -81,9 +91,6 @@ the name of the response variables. If \code{"default"} and input is a vector, t
 range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
 \code{\link[=rope_range]{rope_range()}} is used. See 'Examples'.}
 
-\item{ci}{The Credible Interval (CI) probability, corresponding to the
-proportion of HDI, to use for the percentage in ROPE.}
-
 \item{ci_method}{The type of interval to use to quantify the percentage in
 ROPE. Can be 'HDI' or 'ETI' (default). See \code{\link[=ci]{ci()}}.}
 
@@ -92,6 +99,9 @@ ROPE. Can be 'HDI' or 'ETI' (default). See \code{\link[=ci]{ci()}}.}
 \code{\link[=equivalence_test]{equivalence_test()}} as well.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{ci}{The Credible Interval (CI) probability, corresponding to the
+proportion of HDI, to use for the percentage in ROPE.}
 
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
@@ -139,7 +149,9 @@ for the output.}
 }
 \description{
 Compute the proportion of the CI (default to the 95\% ETI) of a posterior
-distribution that lies within a region of practical equivalence.
+distribution that lies within a region of practical equivalence. \code{p_rope()}
+is an alias for \code{rope(ci = 1)} convenient for computing the posterior
+probability of the ROPE.
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
