@@ -24,7 +24,7 @@
 #' @param ci The Credible Interval (CI) probability, corresponding to the
 #' proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in
-#' ROPE. Can be 'HDI' (default) or 'ETI'. See [`ci()`].
+#' ROPE. Can be 'HDI' or 'ETI' (default). See [`ci()`].
 #' @param complement Should the probabilities above/below the ROPE (the
 #' _complementary_ probabilities) be returned as well? See
 #' [equivalence_test()] as well.
@@ -219,13 +219,13 @@ rope.numeric <- function(
   }
 
   # Attributes
-  hdi_area <- cbind(
+  ci_area <- cbind(
     CI = ci,
-    data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area")))
+    data.frame(do.call(rbind, lapply(rope_values, attr, "CI_area")))
   )
-  names(hdi_area) <- c("CI", "CI_low", "CI_high")
+  names(ci_area) <- c("CI", "CI_low", "CI_high")
 
-  attr(out, "HDI_area") <- hdi_area
+  attr(out, "CI_area") <- ci_area
   attr(out, "data") <- x
 
   class(out) <- unique(c("rope", "see_rope", class(out)))
@@ -304,15 +304,15 @@ rope.data.frame <- function(
   }
 
   out <- .prepare_rope_df(x, range, ci, ci_method, complement, verbose)
-  HDI_area_attributes <- insight::compact_list(out$HDI_area)
+  CI_area_attributes <- insight::compact_list(out$CI_area)
   dat <- data.frame(
-    Parameter = rep(names(HDI_area_attributes), each = length(ci)),
+    Parameter = rep(names(CI_area_attributes), each = length(ci)),
     out$tmp,
     stringsAsFactors = FALSE
   )
   row.names(dat) <- NULL
 
-  attr(dat, "HDI_area") <- HDI_area_attributes
+  attr(dat, "CI_area") <- CI_area_attributes
   attr(dat, "object_name") <- obj_name
 
   class(dat) <- c("rope", "see_rope", "data.frame")
@@ -572,7 +572,7 @@ rope.stanreg <- function(
     inherits(x, "stanmvreg")
   )
 
-  attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
+  attr(out, "CI_area") <- attr(rope_data, "CI_area")
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   class(out) <- class(rope_data)
 
@@ -690,7 +690,7 @@ rope.brmsfit <- function(
     out <- .prepare_output(rope_data, .get_cleaned_parameters(x, ...))
   }
 
-  attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
+  attr(out, "CI_area") <- attr(rope_data, "CI_area")
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   class(out) <- class(rope_data)
 
@@ -728,7 +728,7 @@ rope.sim.merMod <- function(
 
     getropedata <- .prepare_rope_df(parms, range, ci, ci_method, complement, verbose)
     tmp <- getropedata$tmp
-    HDI_area <- getropedata$HDI_area
+    CI_area <- getropedata$CI_area
 
     if (insight::is_empty_object(tmp)) {
       tmp <- NULL
@@ -740,8 +740,8 @@ rope.sim.merMod <- function(
         parms = names(parms)
       )
 
-      if (!insight::is_empty_object(HDI_area)) {
-        attr(tmp, "HDI_area") <- HDI_area
+      if (!insight::is_empty_object(CI_area)) {
+        attr(tmp, "CI_area") <- CI_area
       }
     }
 
@@ -764,15 +764,15 @@ rope.sim.merMod <- function(
     dat <- datawizard::data_remove(dat, "Group", verbose = FALSE)
   }
 
-  HDI_area_attributes <- lapply(insight::compact_list(rope_list), attr, "HDI_area")
+  CI_area_attributes <- lapply(insight::compact_list(rope_list), attr, "CI_area")
 
   if (effects != "all") {
-    HDI_area_attributes <- HDI_area_attributes[[1]]
+    CI_area_attributes <- CI_area_attributes[[1]]
   } else {
-    names(HDI_area_attributes) <- c("fixed", "random")
+    names(CI_area_attributes) <- c("fixed", "random")
   }
 
-  attr(dat, "HDI_area") <- HDI_area_attributes
+  attr(dat, "CI_area") <- CI_area_attributes
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
 
   dat
@@ -802,7 +802,7 @@ rope.sim <- function(
   getropedata <- .prepare_rope_df(parms, range, ci, ci_method, complement, verbose)
 
   dat <- getropedata$tmp
-  HDI_area <- getropedata$HDI_area
+  CI_area <- getropedata$CI_area
 
   if (insight::is_empty_object(dat)) {
     dat <- NULL
@@ -814,8 +814,8 @@ rope.sim <- function(
       parms = names(parms)
     )
 
-    if (!insight::is_empty_object(HDI_area)) {
-      attr(dat, "HDI_area") <- HDI_area
+    if (!insight::is_empty_object(CI_area)) {
+      attr(dat, "CI_area") <- CI_area
     }
   }
 
@@ -841,10 +841,10 @@ rope.sim <- function(
   if (anyNA(ci_bounds)) {
     inferiority_percentage <- superiority_percentage <- rope_percentage <- NA
   } else {
-    HDI_area <- x[x >= ci_bounds$CI_low & x <= ci_bounds$CI_high]
-    rope_percentage <- mean(HDI_area >= min(range) & HDI_area <= max(range))
-    superiority_percentage <- mean(HDI_area > max(range))
-    inferiority_percentage <- mean(HDI_area < min(range))
+    CI_area <- x[x >= ci_bounds$CI_low & x <= ci_bounds$CI_high]
+    rope_percentage <- mean(CI_area >= min(range) & CI_area <= max(range))
+    superiority_percentage <- mean(CI_area > max(range))
+    inferiority_percentage <- mean(CI_area < min(range))
   }
 
   rope <- data.frame(
@@ -859,7 +859,7 @@ rope.sim <- function(
     rope[["Inferiority_Percentage"]] <- inferiority_percentage
   }
 
-  attr(rope, "HDI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
+  attr(rope, "CI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
   attr(rope, "CI_bounds") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
   class(rope) <- unique(c("rope", "see_rope", class(rope)))
   rope
@@ -900,16 +900,10 @@ rope.sim <- function(
     )
   }
 
-  HDI_area <- lapply(tmp, attr, which = "HDI_area")
-
-  # HDI_area <- lapply(HDI_area, function(.x) {
-  #   dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
-  #   colnames(dat) <- c("CI", "HDI_low", "HDI_high")
-  #   dat
-  # })
+  CI_area <- lapply(tmp, attr, which = "CI_area")
 
   list(
     tmp = do.call(rbind, tmp),
-    HDI_area = HDI_area
+    CI_area = CI_area
   )
 }
