@@ -78,7 +78,8 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
 #' @keywords internal
 .simulate_prior <- function(priors, n = 1000, verbose = TRUE) {
   simulated <- data.frame(.bamboozled = 1:n)
-  sim_error_msg <- FALSE
+  # distributions of the priors we could not simulate, named by parameter
+  failed <- character(0)
 
   # iterate over parameters
   for (param in priors$Parameter) {
@@ -100,7 +101,7 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
     }
 
     # Simulate prior
-    prior <- tryCatch(
+    sim <- tryCatch(
       {
         if (prior$Distribution %in% c("t", "student_t", "Student's t")) {
           distribution(prior$Distribution, n, prior$df, prior$Location)
@@ -108,17 +109,31 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
           distribution(prior$Distribution, n, prior$Location, scale)
         }
       },
-      error = function(e) {
-        sim_error_msg <- TRUE
-        NA
-      }
+      error = function(e) NA
     )
 
-    simulated[param] <- prior
+    # unsupported distributions fail, and missing parameters (such as
+    # the bounds of flat priors) give only NA values
+    if (all(is.na(sim))) {
+      failed[param] <- prior$Distribution
+    }
+
+    simulated[param] <- sim
   }
 
-  if (sim_error_msg && verbose) {
-    insight::format_warning(paste0("Can't simulate priors from a ", prior$Distribution, " distribution."))
+  if (length(failed) && verbose) {
+    distributions <- vapply(
+      unique(failed),
+      function(d) {
+        paste0("a ", d, " distribution (", toString(names(failed)[failed == d]), ")")
+      },
+      character(1)
+    )
+    insight::format_warning(paste0(
+      "Can't simulate priors from ",
+      toString(distributions),
+      "."
+    ))
   }
 
   simulated$.bamboozled <- NULL
