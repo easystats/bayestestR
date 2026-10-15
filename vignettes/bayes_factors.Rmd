@@ -272,7 +272,7 @@ print(bfs, show_names = TRUE)
 
 We can see that both models that allow for a difference between the groups
 are much more supported by the data -
-with $BF>`r insight::format_value(exp(bfs$log_BF[2]))`$ -
+with $BF>`r if (knitr::opts_chunk$get("eval")) insight::format_value(exp(bfs$log_BF[2]))`$ -
 compared to the null (intercept only).
 
 Note that **interpretation guides** for Bayes factors can be found in the `effectsize` package:
@@ -389,7 +389,7 @@ inclusion odds to the posterior inclusion odds is the **Inclusion Bayes factor**
 
 (`bayesfactor_inclusion()` is meant to provide Bayes Factors per predictor, similar to JASP's *Effects* option.)
 
-We can see that across the 3 models under consideration, models _with_ the `mom_hs` term fit the data `r insight::format_value(exp(bfinc$log_BF))` times more than the model _without_ that term.
+We can see that across the 3 models under consideration, models _with_ the `mom_hs` term fit the data `r if (knitr::opts_chunk$get("eval")) insight::format_value(exp(bfinc$log_BF))` times more than the model _without_ that term.
 
 ### Averaging posteriors {#weighted_posteriors}
 
@@ -481,7 +481,7 @@ BF_2r.2 <- as.numeric(bf_rstr)[2]
 ```
 
 So the data support the hypothesis that the difference is small but strictly positive
-`r insight::format_value(BF_2r.0)` times more than the hypothesis that the difference is exactly 0.
+`r if (knitr::opts_chunk$get("eval")) insight::format_value(BF_2r.0)` times more than the hypothesis that the difference is exactly 0.
 
 **Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].**
 
