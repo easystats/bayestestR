@@ -104,6 +104,7 @@ test_that("rope, vector", {
 
 
 test_that("rope, bayes", {
+  x <- distribution_normal(1000, 1, 1)
   out <- suppressWarnings(capture.output(describe_posterior(
     x,
     test = "p_rope",
