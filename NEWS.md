@@ -15,6 +15,9 @@
 
 ## Bug fixes
 
+* If suggested packages are not installed, the Bayes factor vignette now builds.
+  Before, its inline code ran and failed with "object not found".
+
 * `equivalence_test()` no longer prints "HDI" columns when using other CI
   methods (such as the default ETI).
 
