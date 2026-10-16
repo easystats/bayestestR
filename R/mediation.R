@@ -15,7 +15,10 @@
 #' @param response A named character vector, indicating the names of the response
 #'   variables to be used for the mediation analysis. Usually can be `NULL`,
 #'   in which case these variables are retrieved automatically. If not `NULL`,
-#'   names should match the names of the model formulas,
+#'   names must match the names of the model formulas. For *brms* models,
+#'   these are `names(insight::find_formula(model))`, one name per formula,
+#'   and the values are the left side of each formula without addition terms
+#'   such as `cens()`. For other models, they are
 #'   `names(insight::find_response(model, combine = TRUE))`. This can be
 #'   useful if, for instance, the mediator variable used as predictor has a different
 #'   name from the mediator variable used as response. This might occur when the
@@ -194,8 +197,9 @@ mediation.stanmvreg <- function(
 
   # model responses
   if (is.null(response)) {
-    response <- insight::find_response(model, combine = TRUE)
+    response <- .mediation_response(model)
   }
+  params <- insight::get_parameters(model)
   fix_mediator <- FALSE
 
   # find mediator, if not specified
@@ -219,6 +223,19 @@ mediation.stanmvreg <- function(
   mediator.model <- which(response == mediator)
   treatment.model <- which(response != mediator)
 
+  # brms names monotonic effects "bsp_<response>_mo<variable>". The product
+  # of coefficients is not defined for them, so stop before the mediator
+  # name is changed for factors
+  if (inherits(model, "brmsfit")) {
+    coef_mo <- sprintf("bsp_%s_mo%s", names(response)[treatment.model], mediator)
+    if (any(coef_mo %in% colnames(params))) {
+      insight::format_error(sprintf(
+        "The mediator `%s` enters the outcome model as a monotonic effect with `mo()`. `mediation()` multiplies coefficients and does not support mediators modeled with `mo()`.",
+        mediator
+      ))
+    }
+  }
+
   if (fix_mediator) {
     mediator <- .fix_factor_name(model, mediator)
   }
@@ -234,18 +251,30 @@ mediation.stanmvreg <- function(
 
   response <- names(response)
 
-  # Direct effect: coef(treatment) from model_y_treatment
   coef_treatment <- sprintf(pattern, response[treatment.model], treatment)
-  effect_direct <- insight::get_parameters(model)[[coef_treatment]]
+  coef_mediator <- sprintf(pattern, response[treatment.model], mediator)
+  coef_indirect <- sprintf(pattern, response[mediator.model], treatment)
+
+  coef_missing <- setdiff(
+    c(coef_treatment, coef_mediator, coef_indirect),
+    colnames(params)
+  )
+  if (length(coef_missing)) {
+    insight::format_error(sprintf(
+      "Could not find %s %s in the model. Please check the `treatment` and `mediator` arguments.",
+      if (length(coef_missing) > 1) "the coefficients" else "the coefficient",
+      toString(paste0("`", coef_missing, "`"))
+    ))
+  }
+
+  # Direct effect: coef(treatment) from model_y_treatment
+  effect_direct <- params[[coef_treatment]]
 
   # Mediator effect: coef(mediator) from model_y_treatment
-  coef_mediator <- sprintf(pattern, response[treatment.model], mediator)
-  effect_mediator <- insight::get_parameters(model)[[coef_mediator]]
+  effect_mediator <- params[[coef_mediator]]
 
   # Indirect effect: coef(treament) from model_m_mediator * coef(mediator) from model_y_treatment
-  coef_indirect <- sprintf(pattern, response[mediator.model], treatment)
-  tmp.indirect <- insight::get_parameters(model)[c(coef_indirect, coef_mediator)]
-  effect_indirect <- tmp.indirect[[coef_indirect]] * tmp.indirect[[coef_mediator]]
+  effect_indirect <- params[[coef_indirect]] * effect_mediator
 
   # Total effect
   effect_total <- effect_indirect + effect_direct
@@ -317,6 +346,28 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
 
 # helper ---------------------------------
+
+.mediation_response <- function(model) {
+  if (!inherits(model, "brmsfit")) {
+    return(insight::find_response(model, combine = TRUE))
+  }
+  # one response per model formula. find_response() also returns the
+  # variables of addition terms, like "cens" in "y | cens(cens)". We keep
+  # transformations, like "log(m)", so that a transformed mediator is not
+  # matched with the untransformed predictor
+  vapply(
+    insight::find_formula(model, verbose = FALSE),
+    function(f) {
+      lhs <- f$conditional[[2]]
+      if (is.call(lhs) && identical(lhs[[1]], as.name("|"))) {
+        lhs <- lhs[[2]]
+      }
+      insight::safe_deparse(lhs)
+    },
+    character(1)
+  )
+}
+
 
 .fix_factor_name <- function(model, variable) {
   # check for categorical. if user has not specified a treatment variable
