@@ -416,7 +416,7 @@ test_that("mediation, model structures with several mediators", {
   expect_identical(out$paths, list("m_a", "m_b", c("m_a", "m_b")))
   out <- .paths(serial, serial_response, mediator = c("m_b", "m_a"))
   expect_identical(out$paths, list("m_b", "m_a", c("m_a", "m_b")))
-  # a mediator that only the treatment reaches through another mediator
+  # a mediator that the treatment reaches only through another mediator
   out <- .paths(list(c("x", "m_b"), "x", "m_a"), serial_response)
   expect_identical(out$mediator, c("m_a", "m_b"))
   expect_identical(out$paths, list(c("m_a", "m_b")))

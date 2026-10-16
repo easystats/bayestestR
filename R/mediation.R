@@ -62,7 +62,8 @@
 #'  (ACME). See also _Tingley et al. 2014_ and _Imai et al. 2010_.
 #'
 #'  For *brms* models, there can be more than one mediator, in parallel or in
-#'  series (where one mediator is a predictor of another). The outcome is the
+#'  series (where one mediator is a predictor of another). Each mediator must
+#'  also be a predictor in the outcome model. The outcome is the
 #'  one response that no other model formula uses as a predictor. If `mediator`
 #'  is missing, the mediators are the other responses on a path from the
 #'  treatment to the outcome. They are in the order of the model formulas. If
@@ -84,8 +85,9 @@
 #'    the total effect.
 #'
 #'  If `mediator` names only some of the mediators, `mediation()` uses only the
-#'  paths through these mediators. The total effect is then the direct effect
-#'  plus the indirect effects of these paths.
+#'  paths whose mediators are all among these. A path through any other
+#'  mediator is left out. The total effect is then the direct effect plus the
+#'  indirect effects of the paths that are used.
 #'
 #' @note There is an `as.data.frame()` method that returns the posterior
 #'   samples of the effects, which can be used for further processing in the
@@ -244,7 +246,8 @@ mediation.stanmvreg <- function(
     info <- .mediation_paths_default(model, treatment, mediator, response)
   }
 
-  # every path needs the coefficient of each of its links
+  # the direct effect, each mediator effect, and each link of each path need
+  # a coefficient
   coef_missing <- setdiff(
     unique(c(
       sprintf(pattern, info$outcome, info$treatment),
@@ -479,7 +482,8 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   }
 
   # a variable is in a model formula if it is a predictor there, or if the
-  # formula has a coefficient with its name (e.g. "xb" for a factor "x")
+  # formula has a coefficient named after it (e.g. `treatment = "xb"` for
+  # level "b" of a factor "x")
   .in_formula <- function(variable, i) {
     variable %in% predictors[[i]] ||
       sprintf("b_%s_%s", equation[i], variable) %in% colnames(params)
@@ -536,9 +540,10 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   }
   mediator_models <- match(mediator, response)
 
-  # brms names monotonic effects "bsp_<response>_mo<variable>". The product
-  # of coefficients is not defined for them, so stop before the mediator
-  # name is changed for factors
+  # brms names monotonic effects "bsp_<formula>_mo<variable>", where
+  # <formula> is the formula name (e.g. "mb" for the response "m_b"). The
+  # product of coefficients is not defined for them, so stop before the
+  # mediator name is changed for factors
   for (m in mediator) {
     coef_mo <- sprintf("bsp_%s_mo%s", equation, m) %in% colnames(params)
     if (any(coef_mo)) {

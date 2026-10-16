@@ -96,7 +96,8 @@ the indirect effect is also called \emph{average causal mediation effects}
 (ACME). See also \emph{Tingley et al. 2014} and \emph{Imai et al. 2010}.
 
 For \emph{brms} models, there can be more than one mediator, in parallel or in
-series (where one mediator is a predictor of another). The outcome is the
+series (where one mediator is a predictor of another). Each mediator must
+also be a predictor in the outcome model. The outcome is the
 one response that no other model formula uses as a predictor. If \code{mediator}
 is missing, the mediators are the other responses on a path from the
 treatment to the outcome. They are in the order of the model formulas. If
@@ -119,8 +120,9 @@ the total effect.
 }
 
 If \code{mediator} names only some of the mediators, \code{mediation()} uses only the
-paths through these mediators. The total effect is then the direct effect
-plus the indirect effects of these paths.
+paths whose mediators are all among these. A path through any other
+mediator is left out. The total effect is then the direct effect plus the
+indirect effects of the paths that are used.
 }
 \note{
 There is an \code{as.data.frame()} method that returns the posterior
