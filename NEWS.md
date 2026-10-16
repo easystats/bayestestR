@@ -1,4 +1,4 @@
-# bayestestR (devel)
+# bayestestR 0.20.0
 
 ## Changes
 
