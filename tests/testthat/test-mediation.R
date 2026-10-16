@@ -207,6 +207,30 @@ test_that("mediation, parallel mediators", {
     vapply(draws, stats::quantile, numeric(1), probs = 0.975, names = FALSE),
     tolerance = 1e-8
   )
+
+  # the detection rules on model structures where other rules would give
+  # other answers (predictors given by hand)
+  .paths <- function(predictors, response) {
+    .mediation_paths_brms(m, NULL, NULL, response, data.frame(), predictors)
+  }
+  # the outcome is the response that no other formula uses, not the first
+  # formula
+  out <- .paths(
+    list("x", c("x", "m_a", "m_b"), "x"),
+    c(ma = "m_a", y = "y", mb = "m_b")
+  )
+  expect_identical(out$outcome, "y")
+  # mediators come in the order of the model formulas, not in alphabetical
+  # order or in the order of the outcome's predictors
+  out <- .paths(
+    list(c("x", "m_a", "m_b"), "x", "x"),
+    c(y = "y", mb = "m_b", ma = "m_a")
+  )
+  expect_identical(out$mediator, c("m_b", "m_a"))
+  # the treatment is the first suitable predictor of the outcome: "m" is a
+  # response and "z" is in no mediator model, so "c" comes before "x"
+  out <- .paths(list(c("x", "c"), c("m", "z", "c", "x")), c(m = "m", y = "y"))
+  expect_identical(out$treatment, "c")
 })
 
 
@@ -325,9 +349,25 @@ test_that("mediation, subsets of mediators", {
     c("effect_direct", "effect_indirect", "effect_mediator", "effect_total", "proportion_mediated")
   )
 
-  err <- tryCatch(mediation(m, centrality = "all"), error = function(e) e)
-  expect_s3_class(err, "error")
-  expect_match(conditionMessage(err), "needs one centrality index", fixed = TRUE)
+  # in the serial model, mediator = "m_a" keeps only the path through m_a
+  # alone: m_a -> m_b goes through m_b, which is not named
+  m_ser <- fit_d2("ser")
+  p_ser <- insight::get_parameters(m_ser)
+  out_ser_a <- mediation(m_ser, mediator = "m_a")
+  ind_ser_a <- p_ser$b_ma_x * p_ser$b_y_m_a
+  expect_identical(out_ser_a$Effect, out_a$Effect)
+  expect_equal(out_ser_a$Estimate[2], stats::median(ind_ser_a), tolerance = 1e-8)
+  expect_equal(
+    out_ser_a$Estimate[4],
+    stats::median(p_ser$b_y_x + ind_ser_a),
+    tolerance = 1e-8
+  )
+
+  for (cent in list("all", c("median", "mean"))) {
+    err <- tryCatch(mediation(m, centrality = cent), error = function(e) e)
+    expect_s3_class(err, "error")
+    expect_match(conditionMessage(err), "needs one centrality index", fixed = TRUE)
+  }
   for (treat in list(c("x", "m_a"), character(0))) {
     err <- tryCatch(mediation(m, treatment = treat), error = function(e) e)
     expect_s3_class(err, "error")
@@ -513,19 +553,6 @@ test_that("mediation, model structures with several mediators", {
   expect_identical(out$mediator, c("m_a", "m_b"))
   expect_identical(out$paths, list(c("m_a", "m_b")))
 
-  # mediators come in the order of the model formulas, not in alphabetical
-  # order or in the order of the outcome's predictors
-  out <- .paths(
-    list(c("x", "m_a", "m_b"), "x", "x"),
-    c(y = "y", mb = "m_b", ma = "m_a")
-  )
-  expect_identical(out$mediator, c("m_b", "m_a"))
-
-  # the treatment is the first suitable predictor of the outcome: "c" comes
-  # first in the outcome model, "x" in the mediator model
-  out <- .paths(list(c("x", "c"), c("c", "x", "m")), c(m = "m", y = "y"))
-  expect_identical(out$treatment, "c")
-
   # a `response` value can be a coefficient name, such as the level name of
   # a logical mediator
   out <- .paths(
@@ -534,6 +561,7 @@ test_that("mediation, model structures with several mediators", {
     coefs = "b_y_mbTRUE",
     mediator = "mbTRUE"
   )
+  expect_identical(out$outcome, "y")
   expect_identical(out$paths, list("mbTRUE"))
 })
 
