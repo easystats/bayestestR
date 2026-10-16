@@ -222,3 +222,31 @@ test_that("brms multivariate to freq, user data keeps rows with mi() terms", {
   m2 <- convert_bayesian_as_frequentist(m, response = "mpg", data = d)
   expect_identical(nobs(m2), nrow(d))
 })
+
+
+test_that("brms to freq, a failed refit gives one error with its cause", {
+  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("glmmTMB")
+
+  m <- insight::download_model("brms_1")
+  skip_if(is.null(m))
+
+  msg <- "(?s)Model\\s+could\\s+not\\s+be\\s+automatically\\s+converted.*refit\\s+broke"
+
+  # the refit can throw an error (lm(), glm()) or return one (other refits)
+  refit_throws <- function(...) stop("refit broke", call. = FALSE)
+  refit_returns <- function(...) simpleError("refit broke")
+
+  # gaussian family
+  local_mocked_bindings(.convert_bayesian_as_frequentist = refit_throws)
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+  local_mocked_bindings(.convert_bayesian_as_frequentist = refit_returns)
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+
+  # a brms family that is converted to a glmmTMB family
+  local_mocked_bindings(get_family = function(...) brms::Beta(), .package = "insight")
+  local_mocked_bindings(.convert_bayesian_as_frequentist = refit_throws)
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+  local_mocked_bindings(.convert_bayesian_as_frequentist = refit_returns)
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+})

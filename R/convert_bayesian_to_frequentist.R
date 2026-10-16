@@ -136,21 +136,16 @@ convert_bayesian_as_frequentist <- function(
     insight::format_error("Model could not be automatically converted to frequentist model.")
   }
 
-  # first attempt
+  # the refit either throws an error or returns one
   freq <- tryCatch(.convert_bayesian_as_frequentist(
     info = info, formula = model_formula, data = data, family = model_family, REML = REML
   ), error = function(e) e)
 
   if (inherits(freq, "error")) {
-    # try again to extract family, using generic approach
-    model_family <- get(model_family$family)(link = model_family$link)
-    freq <- .convert_bayesian_as_frequentist(
-      info = info, formula = model_formula, data = data, family = model_family, REML = REML
+    insight::format_error(
+      "Model could not be automatically converted to frequentist model.",
+      paste0("The refit failed with: ", conditionMessage(freq))
     )
-  }
-
-  if (inherits(freq, "error")) {
-    insight::format_error("Model could not be automatically converted to frequentist model.")
   }
 
   freq
