@@ -311,7 +311,8 @@ test_that("mediation, parallel mediators", {
   expect_identical(out$outcome, "x2")
   expect_identical(out$treatment, "x2")
   expect_identical(out$paths, list("m"))
-  # a coefficient that no formula has as a predictor adds no path
+  # a coefficient named after a variable adds no path where that variable is
+  # not a predictor: "b_mb_m_a" does not put "m_a" in the "mb" formula
   out <- .paths_brms(
     list(c("x", "m_a", "m_b"), "x", "x"),
     c(y = "y", ma = "m_a", mb = "m_b"),

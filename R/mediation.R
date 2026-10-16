@@ -481,10 +481,11 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   # a name is either a variable (a column of the model data) or a coefficient
   # term (e.g. `treatment = "xb"` for level "b" of a factor "x"). A variable is
   # in a model formula if it is a predictor there. A term is in a model formula
-  # if the formula has a coefficient named after it. brms coefficient names
-  # are unique within a formula but not across formulas, so a variable is
-  # never matched by coefficient name: the level "2" of a factor "w" gives
-  # "b_mb_w2" in one formula, while "w2" can be a variable of another
+  # if the formula has a coefficient named after it. The term part of a brms
+  # coefficient name (after "b_<formula>_") has one meaning within a formula,
+  # but the same term can mean different things in different formulas, so a
+  # variable is never matched by coefficient name: the level "2" of a factor
+  # "w" gives "b_mb_w2" in one formula, while "w2" can be a variable of another
   variables <- colnames(data)
   .in_formula <- function(variable, i) {
     if (variable %in% variables) {
