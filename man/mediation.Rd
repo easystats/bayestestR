@@ -35,8 +35,9 @@ treatment variable automatically, however, this may fail.}
 variables to be used for the mediation analysis. Usually can be \code{NULL},
 in which case these variables are retrieved automatically. If not \code{NULL},
 names must match the names of the model formulas. For \emph{brms} models,
-these are \code{names(insight::find_formula(model))}, one name per formula.
-For other models, they are
+these are \code{names(insight::find_formula(model))}, one name per formula,
+and the values are the left side of each formula without addition terms
+such as \code{cens()}. For other models, they are
 \code{names(insight::find_response(model, combine = TRUE))}. This can be
 useful if, for instance, the mediator variable used as predictor has a different
 name from the mediator variable used as response. This might occur when the

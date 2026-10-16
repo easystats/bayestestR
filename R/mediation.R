@@ -16,8 +16,9 @@
 #'   variables to be used for the mediation analysis. Usually can be `NULL`,
 #'   in which case these variables are retrieved automatically. If not `NULL`,
 #'   names must match the names of the model formulas. For *brms* models,
-#'   these are `names(insight::find_formula(model))`, one name per formula.
-#'   For other models, they are
+#'   these are `names(insight::find_formula(model))`, one name per formula,
+#'   and the values are the left side of each formula without addition terms
+#'   such as `cens()`. For other models, they are
 #'   `names(insight::find_response(model, combine = TRUE))`. This can be
 #'   useful if, for instance, the mediator variable used as predictor has a different
 #'   name from the mediator variable used as response. This might occur when the
@@ -261,7 +262,7 @@ mediation.stanmvreg <- function(
   if (length(coef_missing)) {
     insight::format_error(sprintf(
       "Could not find %s %s in the model. Please check the `treatment` and `mediator` arguments.",
-      ifelse(length(coef_missing) > 1, "the coefficients", "the coefficient"),
+      if (length(coef_missing) > 1) "the coefficients" else "the coefficient",
       toString(paste0("`", coef_missing, "`"))
     ))
   }
@@ -351,10 +352,18 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     return(insight::find_response(model, combine = TRUE))
   }
   # one response per model formula. find_response() also returns the
-  # variables of addition terms, like "cens" in "y | cens(cens)"
+  # variables of addition terms, like "cens" in "y | cens(cens)". We keep
+  # transformations, like "log(m)", so that a transformed mediator is not
+  # matched with the untransformed predictor
   vapply(
     insight::find_formula(model, verbose = FALSE),
-    function(f) all.vars(f$conditional[[2]])[1],
+    function(f) {
+      lhs <- f$conditional[[2]]
+      if (is.call(lhs) && identical(lhs[[1]], as.name("|"))) {
+        lhs <- lhs[[2]]
+      }
+      insight::safe_deparse(lhs)
+    },
     character(1)
   )
 }

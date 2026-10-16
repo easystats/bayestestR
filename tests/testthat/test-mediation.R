@@ -1,7 +1,7 @@
 skip_on_cran()
 skip_if_not_or_load_if_installed("brms")
 
-set.seed(123)
+withr::local_seed(123)
 n <- 300
 d <- data.frame(x = rnorm(n))
 d$m_a <- 0.5 * d$x + rnorm(n)
@@ -32,6 +32,18 @@ fit_brm <- function(f) {
   indirect <- p[[sprintf("b_%s_%s", mediator_resp, treatment)]] * med
   list(direct = direct, indirect = indirect, mediator = med, total = direct + indirect)
 }
+
+
+test_that("mediation, brms responses keep transformations, not addition terms", {
+  m <- brms::brm(
+    bf(log(m_pos) | cens(cens) ~ x) + bf(y ~ x + m_pos) + set_rescor(FALSE),
+    data = transform(d, m_pos = exp(m_a)),
+    empty = TRUE
+  )
+  out <- .mediation_response(m)
+  expect_identical(unname(out), c("log(m_pos)", "y"))
+  expect_identical(names(out), names(insight::find_formula(m)))
+})
 
 
 test_that("mediation, censored outcome", {
