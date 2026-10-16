@@ -138,7 +138,7 @@ convert_bayesian_as_frequentist <- function(
     insight::format_error("Model could not be automatically converted to frequentist model.")
   }
 
-  # the refit either throws an error or returns one
+  # a failed refit throws an error or returns one
   freq <- tryCatch(.convert_bayesian_as_frequentist(
     info = info, formula = model_formula, data = data, family = model_family, REML = REML
   ), error = function(e) e)
@@ -266,9 +266,9 @@ convert_bayesian_as_frequentist <- function(
 
 # brms fits a multivariate model only to the rows that are complete in the
 # variables of all its formulas. If user data are given, drop the same rows, so
-# that the refit of one response uses the rows brms used. With addition terms
-# (such as `y | mi()` or `y | subset(s)`), brms keeps or drops other rows, so
-# the data are used as given.
+# that the refit of one response uses the rows brms used. Addition terms
+# (`mi()`, `subset()`, `cens()`) can keep rows with missing values, so with any
+# addition term the data are used as given.
 .brms_mv_complete_rows <- function(model, data) {
   has_addition_terms <- vapply(
     model$formula$forms,
