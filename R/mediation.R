@@ -81,8 +81,10 @@
 #'  - one mediator effect for each mediator, which is its coefficient in the
 #'    outcome model,
 #'  - the total effect,
-#'  - the proportion mediated, which is the point estimate of the total
-#'    indirect effect divided by the point estimate of the total effect.
+#'  - the proportion mediated. Its estimate is the point estimate of the total
+#'    indirect effect divided by the point estimate of the total effect. Its
+#'    interval is this estimate plus or minus half the width of the interval
+#'    of the per-sample ratio of the total indirect effect to the total effect.
 #'
 #'  If `mediator` names only some of the mediators, `mediation()` uses only the
 #'  paths whose mediators are all among these. A path through any other
@@ -423,30 +425,32 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
   if (length(mediator) != 1) {
     insight::format_error(
-      "For this model class, `mediator` must be the name of one variable."
+      "For this model class, `mediation()` needs exactly one mediator. Give one name in `mediator`, or, if `mediator` is missing, one response must be a predictor in the other model formula."
     )
   }
 
   mediator.model <- which(response == mediator)
   treatment.model <- which(response != mediator)
+  if (length(mediator.model) != 1) {
+    insight::format_error(sprintf(
+      "`%s` is not a mediator. The mediator is the response of one model formula: %s.",
+      mediator,
+      toString(paste0("`", response, "`"))
+    ))
+  }
 
   if (fix_mediator) {
     mediator <- .fix_factor_name(model, mediator)
   }
 
-  # a mediator that is not a response has no path. The coefficient check
-  # then names the coefficients that are missing
   equation <- names(response)
   list(
     treatment = treatment,
     mediator = mediator,
-    equation = stats::setNames(
-      equation[mediator.model],
-      mediator[seq_along(mediator.model)]
-    ),
+    equation = stats::setNames(equation[mediator.model], mediator),
     outcome = equation[treatment.model],
     response = unname(response)[treatment.model],
-    paths = if (length(mediator.model)) list(mediator) else list()
+    paths = list(mediator)
   )
 }
 
@@ -622,7 +626,11 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
       insight::format_error(sprintf(
         "Could not find a path from the treatment `%s` through %s to the outcome `%s`.",
         treatment,
-        toString(paste0("`", off_path, "`")),
+        if (length(off_path) > 1) {
+          paste("any of", toString(paste0("`", off_path, "`")))
+        } else {
+          paste0("`", off_path, "`")
+        },
         response[[outcome]]
       ))
     }

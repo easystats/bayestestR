@@ -405,13 +405,15 @@ test_that("mediation, stanmvreg with two equations", {
   )
   expect_equal(out$Estimate[1:4], expected, tolerance = 1e-8)
 
-  # a mediator that is not a response: the error names the coefficients
-  err <- tryCatch(
-    suppressWarnings(mediation(m, treatment = "x", mediator = "zz")),
-    error = function(e) e
-  )
-  expect_s3_class(err, "error")
-  expect_match(conditionMessage(err), "`y2|zz`", fixed = TRUE)
+  # a mediator that is not a response
+  for (med in c("zz", "x")) {
+    err <- tryCatch(
+      suppressWarnings(mediation(m, treatment = "x", mediator = med)),
+      error = function(e) e
+    )
+    expect_s3_class(err, "error")
+    expect_match(conditionMessage(err), sprintf("`%s` is not a mediator", med), fixed = TRUE)
+  }
 
   # more than two model formulas are not supported
   err <- tryCatch(
@@ -467,7 +469,7 @@ test_that("mediation, model structures with several mediators", {
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "`mo_m` enters the `m_b` model", fixed = TRUE)
 
-  # a mo() term in a model that the chosen mediators do not use is no error
+  # a mo() term in the model of a mediator that is not chosen is no error
   out <- .paths(
     list(c("x", "m_a", "m_b"), "x", c("x", "m_a")),
     c(y = "y", ma = "m_a", mb = "m_b"),
