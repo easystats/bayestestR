@@ -15,7 +15,9 @@
 #' @param response A named character vector, indicating the names of the response
 #'   variables to be used for the mediation analysis. Usually can be `NULL`,
 #'   in which case these variables are retrieved automatically. If not `NULL`,
-#'   names should match the names of the model formulas,
+#'   names must match the names of the model formulas. For *brms* models,
+#'   these are `names(insight::find_formula(model))`, one name per formula.
+#'   For other models, they are
 #'   `names(insight::find_response(model, combine = TRUE))`. This can be
 #'   useful if, for instance, the mediator variable used as predictor has a different
 #'   name from the mediator variable used as response. This might occur when the
