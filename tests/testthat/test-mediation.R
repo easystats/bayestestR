@@ -185,7 +185,7 @@ test_that("mediation, parallel mediators", {
     numeric(1)
   )
   expect_equal(out$Estimate[1:7], expected, tolerance = 1e-8)
-  # proportion mediated: total indirect effect / total effect
+  # proportion mediated: median total indirect effect / median total effect
   expect_equal(out$Estimate[8], expected[4] / expected[7], tolerance = 1e-8)
 })
 
