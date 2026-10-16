@@ -20,6 +20,12 @@
 * `bayesian_as_frequentist()` gains a `resp` argument to convert one response
   of a multivariate *brms* model (easystats/performance#908).
 
+* `mediation()` now supports *brms* models with more than one mediator, in
+  parallel or in series (#586, #475). `mediator` can name several mediators.
+  The output has one indirect effect for each path from the treatment through
+  the mediators to the outcome. It also has the total indirect effect and one
+  mediator effect for each mediator.
+
 ## Bug fixes
 
 * `bayesian_as_frequentist()` now works for linear mixed models from

@@ -28,8 +28,9 @@ in a (multivariate response) mediator-model. If missing, \code{mediation()}
 tries to find the treatment variable automatically, however, this may fail.}
 
 \item{mediator}{Character, name of the mediator variable in a (multivariate
-response) mediator-model. If missing, \code{mediation()} tries to find the
-treatment variable automatically, however, this may fail.}
+response) mediator-model. For \emph{brms} models, this can be several names
+(see 'Details'). If missing, \code{mediation()} tries to find the mediator
+variable automatically, however, this may fail.}
 
 \item{response}{A named character vector, indicating the names of the response
 variables to be used for the mediation analysis. Usually can be \code{NULL},
@@ -93,11 +94,39 @@ specify these variables.
 The direct effect is also called \emph{average direct effect} (ADE),
 the indirect effect is also called \emph{average causal mediation effects}
 (ACME). See also \emph{Tingley et al. 2014} and \emph{Imai et al. 2010}.
+
+For \emph{brms} models, there can be more than one mediator, in parallel or in
+series (where one mediator is a predictor of another). The outcome is the
+one response that no other model formula uses as a predictor. If \code{mediator}
+is missing, the mediators are the other responses on a path from the
+treatment to the outcome. They are in the order of the model formulas. If
+\code{treatment} is missing, the treatment is the first suitable predictor of
+the outcome model. A suitable predictor is not a response, and it is a
+predictor in a mediator model. A path goes from the treatment through one or
+more mediators to the outcome. Its indirect effect is the product of the
+coefficients along the path, for each posterior sample. With several
+mediators, the rows are:
+\itemize{
+\item the direct effect,
+\item one indirect effect for each path, such as
+\verb{Indirect Effect (ACME): m1 -> m2},
+\item the total indirect effect,
+\item one mediator effect for each mediator, which is its coefficient in the
+outcome model,
+\item the total effect,
+\item the proportion mediated, which is the total indirect effect divided by
+the total effect.
+}
+
+If \code{mediator} names only some of the mediators, \code{mediation()} uses only the
+paths through these mediators. The total effect is then the direct effect
+plus the indirect effects of these paths.
 }
 \note{
 There is an \code{as.data.frame()} method that returns the posterior
 samples of the effects, which can be used for further processing in the
-\strong{bayestestR} package.
+\strong{bayestestR} package. With several mediators, each column has the name
+of its row in the summary.
 }
 \examples{
 \dontshow{if (require("mediation") && require("brms") && require("rstanarm")) withAutoprint(\{ # examplesIf}
