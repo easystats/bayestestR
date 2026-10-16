@@ -115,8 +115,8 @@ mediators, the rows are:
 \item one mediator effect for each mediator, which is its coefficient in the
 outcome model,
 \item the total effect,
-\item the proportion mediated, which is the total indirect effect divided by
-the total effect.
+\item the proportion mediated, which is the point estimate of the total
+indirect effect divided by the point estimate of the total effect.
 }
 
 If \code{mediator} names only some of the mediators, \code{mediation()} uses only the

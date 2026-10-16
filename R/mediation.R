@@ -81,8 +81,8 @@
 #'  - one mediator effect for each mediator, which is its coefficient in the
 #'    outcome model,
 #'  - the total effect,
-#'  - the proportion mediated, which is the total indirect effect divided by
-#'    the total effect.
+#'  - the proportion mediated, which is the point estimate of the total
+#'    indirect effect divided by the point estimate of the total effect.
 #'
 #'  If `mediator` names only some of the mediators, `mediation()` uses only the
 #'  paths whose mediators are all among these. A path through any other
@@ -237,6 +237,14 @@ mediation.stanmvreg <- function(
   if (missing(mediator)) {
     mediator <- NULL
   }
+  if (length(treatment) > 1) {
+    insight::format_error("`treatment` must be the name of one variable.")
+  }
+  if (length(centrality) != 1 || identical(tolower(centrality), "all")) {
+    insight::format_error(
+      "`mediation()` needs one centrality index, such as `centrality = \"median\"`."
+    )
+  }
 
   # treatment, mediators, outcome, and the paths from the treatment through
   # the mediators to the outcome
@@ -388,6 +396,11 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 # the response attribute, and the paths, each a vector of mediator names from
 # the treatment to the outcome.
 .mediation_paths_default <- function(model, treatment, mediator, response) {
+  if (length(response) != 2) {
+    insight::format_error(
+      "For this model class, `mediation()` supports two model formulas only, one for the mediator and one for the outcome."
+    )
+  }
   fix_mediator <- FALSE
 
   # find mediator, if not specified
@@ -408,6 +421,12 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     treatment <- .fix_factor_name(model, treatment)
   }
 
+  if (length(mediator) != 1) {
+    insight::format_error(
+      "For this model class, `mediator` must be the name of one variable."
+    )
+  }
+
   mediator.model <- which(response == mediator)
   treatment.model <- which(response != mediator)
 
@@ -415,14 +434,19 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     mediator <- .fix_factor_name(model, mediator)
   }
 
+  # a mediator that is not a response has no path. The coefficient check
+  # then names the coefficients that are missing
   equation <- names(response)
   list(
     treatment = treatment,
     mediator = mediator,
-    equation = stats::setNames(equation[mediator.model], mediator),
+    equation = stats::setNames(
+      equation[mediator.model],
+      mediator[seq_along(mediator.model)]
+    ),
     outcome = equation[treatment.model],
     response = unname(response)[treatment.model],
-    paths = list(mediator)
+    paths = if (length(mediator.model)) list(mediator) else list()
   )
 }
 
@@ -451,7 +475,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   )
   if (sum(is_outcome) != 1) {
     insight::format_error(sprintf(
-      "Could not find the outcome. The outcome is the one response that no other model formula uses as a predictor, and this model has %s.",
+      "Could not find the outcome. The outcome is the one response that no other model formula uses as a predictor, and this model has %s. If a mediator is transformed in its own model formula, such as `log(m)`, use `response` to give its name as a predictor.",
       if (any(is_outcome)) {
         sprintf(
           "%i such responses: %s",
@@ -544,13 +568,19 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   # <formula> is the formula name (e.g. "mb" for the response "m_b"). The
   # product of coefficients is not defined for them, so stop before the
   # mediator name is changed for factors
+  # only the models of the outcome and of the mediators are used
+  used_models <- c(outcome, mediator_models)
   for (m in mediator) {
-    coef_mo <- sprintf("bsp_%s_mo%s", equation, m) %in% colnames(params)
+    coef_mo <- sprintf("bsp_%s_mo%s", equation[used_models], m) %in% colnames(params)
     if (any(coef_mo)) {
       insight::format_error(sprintf(
         "The mediator `%s` enters the %s model as a monotonic effect with `mo()`. `mediation()` multiplies coefficients and does not support mediators modeled with `mo()`.",
         m,
-        if (coef_mo[outcome]) "outcome" else sprintf("`%s`", response[[which(coef_mo)[1]]])
+        if (coef_mo[1]) {
+          "outcome"
+        } else {
+          sprintf("`%s`", response[[used_models[which(coef_mo)[1]]]])
+        }
       ))
     }
   }
@@ -587,22 +617,34 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
         response[[outcome]]
       ))
     }
+    off_path <- mediator[setdiff(seq_along(mediator), unlist(paths))]
+    if (length(off_path)) {
+      insight::format_error(sprintf(
+        "Could not find a path from the treatment `%s` through %s to the outcome `%s`.",
+        treatment,
+        toString(paste0("`", off_path, "`")),
+        response[[outcome]]
+      ))
+    }
     # shorter paths first, then in the order of `mediator`
     path_order <- vapply(
       paths,
       function(p) paste(sprintf("%05i", c(length(p), p)), collapse = " "),
       character(1)
     )
-    paths <- paths[order(path_order)]
+    paths <- paths[order(path_order, method = "radix")]
   }
 
+  if (fix_treatment || fix_mediator) {
+    mf <- insight::get_data(model)
+  }
   if (fix_treatment) {
-    treatment <- .fix_factor_name(model, treatment)
+    treatment <- .fix_factor_name(model, treatment, mf)
   }
   if (fix_mediator) {
     mediator <- vapply(
       mediator,
-      function(m) .fix_factor_name(model, m),
+      function(m) .fix_factor_name(model, m, mf),
       character(1),
       USE.NAMES = FALSE
     )
@@ -641,13 +683,12 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 }
 
 
-.fix_factor_name <- function(model, variable) {
+.fix_factor_name <- function(model, variable, mf = insight::get_data(model)) {
   # check for categorical. if user has not specified a treatment variable
   # and this variable is categorical, the posterior samples contain the
   # samples from each category of the treatment variable - so we need to
   # fix the variable name
 
-  mf <- insight::get_data(model)
   if (variable %in% colnames(mf)) {
     check_fac <- mf[[variable]]
     if (is.factor(check_fac)) {

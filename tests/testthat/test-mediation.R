@@ -187,6 +187,26 @@ test_that("mediation, parallel mediators", {
   expect_equal(out$Estimate[1:7], expected, tolerance = 1e-8)
   # proportion mediated: median total indirect effect / median total effect
   expect_equal(out$Estimate[8], expected[4] / expected[7], tolerance = 1e-8)
+
+  draws <- list(
+    p$b_y_x,
+    ind_a,
+    ind_b,
+    ind_a + ind_b,
+    p$b_y_m_a,
+    p$b_y_m_b,
+    p$b_y_x + (ind_a + ind_b)
+  )
+  expect_equal(
+    out$CI_low[1:7],
+    vapply(draws, stats::quantile, numeric(1), probs = 0.025, names = FALSE),
+    tolerance = 1e-8
+  )
+  expect_equal(
+    out$CI_high[1:7],
+    vapply(draws, stats::quantile, numeric(1), probs = 0.975, names = FALSE),
+    tolerance = 1e-8
+  )
 })
 
 
@@ -300,6 +320,17 @@ test_that("mediation, subsets of mediators", {
   ind_a <- p$b_ma_x * p$b_y_m_a
   expect_equal(out_a$Estimate[2], stats::median(ind_a), tolerance = 1e-8)
   expect_equal(out_a$Estimate[4], stats::median(p$b_y_x + ind_a), tolerance = 1e-8)
+  expect_identical(
+    colnames(as.data.frame(out_a)),
+    c("effect_direct", "effect_indirect", "effect_mediator", "effect_total", "proportion_mediated")
+  )
+
+  err <- tryCatch(mediation(m, centrality = "all"), error = function(e) e)
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "needs one centrality index", fixed = TRUE)
+  err <- tryCatch(mediation(m, treatment = c("x", "m_a")), error = function(e) e)
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "must be the name of one variable", fixed = TRUE)
 
   err <- tryCatch(mediation(m, mediator = "x"), error = function(e) e)
   expect_s3_class(err, "error")
@@ -373,6 +404,22 @@ test_that("mediation, stanmvreg with two equations", {
     c("Direct Effect (ADE)", "Indirect Effect (ACME)", "Mediator Effect", "Total Effect")
   )
   expect_equal(out$Estimate[1:4], expected, tolerance = 1e-8)
+
+  # a mediator that is not a response: the error names the coefficients
+  err <- tryCatch(
+    suppressWarnings(mediation(m, treatment = "x", mediator = "zz")),
+    error = function(e) e
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "`y2|zz`", fixed = TRUE)
+
+  # more than two model formulas are not supported
+  err <- tryCatch(
+    .mediation_paths_default(m, NULL, NULL, c(y1 = "m1", y2 = "m2", y3 = "y")),
+    error = function(e) e
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "two model formulas only", fixed = TRUE)
 })
 
 
@@ -398,6 +445,7 @@ test_that("mediation, model structures with several mediators", {
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "Could not find the outcome", fixed = TRUE)
   expect_match(conditionMessage(err), "2\\s+such\\s+responses:\\s+`y`,\\s+`z`")
+  expect_match(conditionMessage(err), "use\\s+`response`")
 
   err <- .paths(list("m_a", "x"), c(y = "y", ma = "m_a"))
   expect_s3_class(err, "error")
@@ -418,6 +466,25 @@ test_that("mediation, model structures with several mediators", {
   )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "`mo_m` enters the `m_b` model", fixed = TRUE)
+
+  # a mo() term in a model that the chosen mediators do not use is no error
+  out <- .paths(
+    list(c("x", "m_a", "m_b"), "x", c("x", "m_a")),
+    c(y = "y", ma = "m_a", mb = "m_b"),
+    coefs = "bsp_mb_mom_a",
+    mediator = "m_a"
+  )
+  expect_identical(out$paths, list("m_a"))
+
+  # a named mediator on no path from the treatment to the outcome
+  err <- .paths(
+    list(c("x", "m_a", "z"), "x", "w"),
+    c(y = "y", ma = "m_a", z = "z"),
+    mediator = c("m_a", "z")
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "Could not find a path", fixed = TRUE)
+  expect_match(conditionMessage(err), "through `z` to", fixed = TRUE)
 
   # the controls give paths, not errors
   serial <- list(c("x", "m_a", "m_b"), "x", c("x", "m_a"))
