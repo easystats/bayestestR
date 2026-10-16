@@ -192,6 +192,7 @@ test_that("brms multivariate to freq, user data drops the rows brms dropped", {
   m1 <- lm(mpg ~ wt, data = complete_rows)
   m2 <- convert_bayesian_as_frequentist(m, response = "mpg", data = d)
   expect_identical(nobs(m2), nrow(insight::get_data(m)))
+  expect_identical(nobs(m2), nrow(m$data))
   expect_identical(nobs(m2), nrow(complete_rows))
   expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
 
