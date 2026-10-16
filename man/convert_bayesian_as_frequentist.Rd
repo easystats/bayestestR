@@ -26,6 +26,12 @@ ignore \code{resp}.}
 \description{
 Refit Bayesian model as frequentist. Can be useful for comparisons.
 }
+\details{
+Linear models from \emph{BayesFactor} with random factors (see \code{whichRandom} in
+\code{BayesFactor::lmBF()}) are refit with \code{lme4::lmer()}. A random term with only
+factors, such as \code{cyl:gear}, becomes \code{(1 | cyl:gear)}. A random term with a
+continuous variable, such as \code{Days:Subject}, becomes \code{(0 + Days | Subject)}.
+}
 \examples{
 \dontshow{if (require("rstanarm")) withAutoprint(\{ # examplesIf}
 \donttest{
