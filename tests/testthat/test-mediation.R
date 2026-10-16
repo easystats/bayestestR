@@ -115,3 +115,183 @@ test_that("mediation, two equations, and missing coefficients", {
   expect_match(conditionMessage(err), "b_y_w", fixed = TRUE)
   expect_match(conditionMessage(err), "b_ma_w", fixed = TRUE)
 })
+
+
+# several mediators ---------------------------------
+
+d2 <- withr::with_seed(456, {
+  x <- rnorm(n)
+  m_a <- 0.5 * x + rnorm(n)
+  m_b <- 0.4 * x + 0.5 * m_a + rnorm(n)
+  y <- 0.3 * x + 0.6 * m_a + 0.4 * m_b + rnorm(n)
+  data.frame(x, m_a, m_b, y)
+})
+
+# fit each model once, and only when a test needs it
+.fits_d2 <- new.env()
+fit_d2 <- function(type) {
+  if (is.null(.fits_d2[[type]])) {
+    f <- switch(
+      type,
+      par = bf(y ~ x + m_a + m_b) + bf(m_a ~ x) + bf(m_b ~ x) + set_rescor(FALSE),
+      ser = bf(y ~ x + m_a + m_b) + bf(m_a ~ x) + bf(m_b ~ x + m_a) + set_rescor(FALSE)
+    )
+    .fits_d2[[type]] <- skip_if_fit_failed(brms::brm(
+      f,
+      data = d2,
+      chains = 1,
+      seed = 123,
+      refresh = 0,
+      silent = 2
+    ))
+  }
+  .fits_d2[[type]]
+}
+
+test_that("mediation, parallel mediators", {
+  m <- fit_d2("par")
+  p <- insight::get_parameters(m)
+  ind_a <- p$b_ma_x * p$b_y_m_a
+  ind_b <- p$b_mb_x * p$b_y_m_b
+
+  out <- mediation(m)
+  expect_identical(attr(out, "treatment"), "x")
+  expect_identical(attr(out, "mediator"), c("m_a", "m_b"))
+  expect_identical(
+    out$Effect,
+    c(
+      "Direct Effect (ADE)",
+      "Indirect Effect (ACME): m_a",
+      "Indirect Effect (ACME): m_b",
+      "Total Indirect Effect",
+      "Mediator Effect: m_a",
+      "Mediator Effect: m_b",
+      "Total Effect",
+      "Proportion Mediated"
+    )
+  )
+  expected <- vapply(
+    list(
+      p$b_y_x,
+      ind_a,
+      ind_b,
+      ind_a + ind_b,
+      p$b_y_m_a,
+      p$b_y_m_b,
+      p$b_y_x + (ind_a + ind_b)
+    ),
+    stats::median,
+    numeric(1)
+  )
+  expect_equal(out$Estimate[1:7], expected, tolerance = 1e-8)
+})
+
+
+test_that("mediation, serial mediators", {
+  m <- fit_d2("ser")
+  p <- insight::get_parameters(m)
+  ind_a <- p$b_ma_x * p$b_y_m_a
+  ind_b <- p$b_mb_x * p$b_y_m_b
+  ind_ab <- p$b_ma_x * p$b_mb_m_a * p$b_y_m_b
+
+  out <- mediation(m)
+  ind_rows <- grep("^Indirect Effect", out$Effect)
+  expect_identical(
+    out$Effect[ind_rows],
+    c(
+      "Indirect Effect (ACME): m_a",
+      "Indirect Effect (ACME): m_b",
+      "Indirect Effect (ACME): m_a -> m_b"
+    )
+  )
+  expect_equal(
+    out$Estimate[ind_rows],
+    vapply(list(ind_a, ind_b, ind_ab), stats::median, numeric(1)),
+    tolerance = 1e-8
+  )
+  expect_equal(
+    out$Estimate[out$Effect == "Total Effect"],
+    stats::median(p$b_y_x + ind_a + ind_b + ind_ab),
+    tolerance = 1e-8
+  )
+})
+
+
+test_that("mediation, several mediators agree with lavaan", {
+  skip_if_not_installed("lavaan")
+  lavaan_models <- list(
+    par = "
+      y ~ c*x + b1*m_a + b2*m_b
+      m_a ~ a1*x
+      m_b ~ a2*x
+      ind_a := a1*b1
+      ind_b := a2*b2
+      total := c + a1*b1 + a2*b2
+    ",
+    ser = "
+      y ~ c*x + b1*m_a + b2*m_b
+      m_a ~ a1*x
+      m_b ~ a2*x + a12*m_a
+      ind_a := a1*b1
+      ind_b := a2*b2
+      ind_ab := a1*a12*b2
+      total := c + a1*b1 + a2*b2 + a1*a12*b2
+    "
+  )
+  rows <- list(
+    par = c(
+      c = "Direct Effect (ADE)",
+      ind_a = "Indirect Effect (ACME): m_a",
+      ind_b = "Indirect Effect (ACME): m_b",
+      total = "Total Effect"
+    ),
+    ser = c(
+      c = "Direct Effect (ADE)",
+      ind_a = "Indirect Effect (ACME): m_a",
+      ind_b = "Indirect Effect (ACME): m_b",
+      ind_ab = "Indirect Effect (ACME): m_a -> m_b",
+      total = "Total Effect"
+    )
+  )
+
+  for (type in c("par", "ser")) {
+    pe <- lavaan::parameterEstimates(lavaan::sem(lavaan_models[[type]], data = d2))
+    out <- mediation(fit_d2(type))
+    for (label in names(rows[[type]])) {
+      est_lavaan <- pe$est[pe$label == label][1]
+      est_brms <- out$Estimate[out$Effect == rows[[type]][[label]]]
+      expect_length(est_brms, 1)
+      expect_lt(abs(est_brms - est_lavaan), 0.05)
+    }
+  }
+})
+
+
+test_that("mediation, subsets of mediators", {
+  m <- fit_d2("par")
+  p <- insight::get_parameters(m)
+  out_auto <- mediation(m)
+
+  out_both <- mediation(m, mediator = c("m_a", "m_b"))
+  expect_identical(out_both$Effect, out_auto$Effect)
+  expect_identical(out_both$Estimate, out_auto$Estimate)
+
+  out_a <- mediation(m, mediator = "m_a")
+  expect_identical(
+    out_a$Effect,
+    c(
+      "Direct Effect (ADE)",
+      "Indirect Effect (ACME)",
+      "Mediator Effect",
+      "Total Effect",
+      "Proportion Mediated"
+    )
+  )
+  ind_a <- p$b_ma_x * p$b_y_m_a
+  expect_equal(out_a$Estimate[2], stats::median(ind_a), tolerance = 1e-8)
+  expect_equal(out_a$Estimate[4], stats::median(p$b_y_x + ind_a), tolerance = 1e-8)
+
+  err <- tryCatch(mediation(m, mediator = "x"), error = function(e) e)
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "not a mediator", fixed = TRUE)
+})
