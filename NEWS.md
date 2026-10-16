@@ -5,6 +5,23 @@
 * The `resp` argument of `bayesian_as_frequentist()` is renamed to `response`.
   `resp =` still works by partial matching.
 
+## Changes
+
+* `mediation()` now supports *brms* models with more than one mediator, in
+  parallel or in series (#586, #475). Each mediator must also be a predictor of
+  the outcome. `mediator` can name several mediators.
+  The output has one indirect effect for each path from the treatment through
+  the mediators to the outcome. It also has the total indirect effect and one
+  mediator effect for each mediator.
+
+## Bug fixes
+
+* `mediation()` now stops with an informative error for inputs that it does not
+  support. For all models, these are a `treatment` that is not one name, an
+  empty `mediator`, and several centrality indices (`centrality = "all"`
+  included). For *rstanarm* models, they also include more than one mediator
+  and more than two model formulas.
+
 # bayestestR 0.20.0
 
 ## Changes
@@ -19,13 +36,6 @@
 
 * `bayesian_as_frequentist()` gains a `resp` argument to convert one response
   of a multivariate *brms* model (easystats/performance#908).
-
-* `mediation()` now supports *brms* models with more than one mediator, in
-  parallel or in series (#586, #475). Each mediator must also be a predictor of
-  the outcome. `mediator` can name several mediators.
-  The output has one indirect effect for each path from the treatment through
-  the mediators to the outcome. It also has the total indirect effect and one
-  mediator effect for each mediator.
 
 ## Bug fixes
 
@@ -62,12 +72,6 @@
   an informative error (#576). If a coefficient for the `treatment` or
   `mediator` is not in the model, the error names it. Before, both cases failed
   with an indexing error, such as "undefined columns selected".
-
-* `mediation()` now stops with an informative error for inputs that it does not
-  support. For all models, these are a `treatment` that is not one name, an
-  empty `mediator`, and several centrality indices (`centrality = "all"`
-  included). For *rstanarm* models, they also include more than one mediator
-  and more than two model formulas.
 
 # bayestestR 0.19.0
 
