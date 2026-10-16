@@ -17,7 +17,7 @@
 ## Bug fixes
 
 * `mediation()` now stops with an informative error for inputs that it does not
-  support. For all models, these are a `treatment` that is not one name, an
+  support. Examples for all models are a `treatment` that is not one name, an
   empty `mediator`, and several centrality indices (`centrality = "all"`
   included). For *rstanarm* models, they also include more than one mediator
   and more than two model formulas.

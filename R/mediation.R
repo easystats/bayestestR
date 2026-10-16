@@ -29,6 +29,10 @@
 #'   second response variable (for the treatment model, with the mediator as
 #'   additional predictor), `y`, is not transformed. Then we could use
 #'   `response` like this: `mediation(model, response = c(m = "m_center", y = "y"))`.
+#' @param centrality The point-estimate (centrality index) of the effects,
+#'   such as `"median"` (the default), `"mean"`, or `"MAP"` (see
+#'   [`point_estimate()`]). `mediation()` takes one index only, not several
+#'   and not `"all"`.
 #' @param ... Not used.
 #' @inheritParams ci
 #' @inheritParams describe_posterior
@@ -69,7 +73,9 @@
 #'  treatment to the outcome. They are in the order of the model formulas. If
 #'  `treatment` is missing, the treatment is the first suitable predictor of
 #'  the outcome model. A suitable predictor is not a response, and it is a
-#'  predictor in a mediator model. A path goes from the treatment through one or
+#'  predictor in a mediator model. A `treatment` name that is not a variable in
+#'  the model data is read as a coefficient name, such as `xb` for level `b` of
+#'  a factor `x`. A path goes from the treatment through one or
 #'  more mediators to the outcome. Its indirect effect is the product of the
 #'  coefficients along the path, for each posterior sample. With several
 #'  mediators, the rows are:
@@ -462,7 +468,8 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   mediator,
   response,
   params,
-  predictors = NULL
+  predictors = NULL,
+  data = insight::get_data(model)
 ) {
   equation <- names(response)
   # predictors of each model formula, in the order of `response`
@@ -471,12 +478,20 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     predictors <- lapply(equation, function(i) all_predictors[[i]]$conditional)
   }
 
-  # a variable is in a model formula if it is a predictor there, or if the
-  # formula has a coefficient named after it (e.g. `treatment = "xb"` for
-  # level "b" of a factor "x")
+  # a name is either a variable (a column of the model data) or a coefficient
+  # term (e.g. `treatment = "xb"` for level "b" of a factor "x"). A variable is
+  # in a model formula if it is a predictor there. A term is in a model formula
+  # if the formula has a coefficient named after it. brms coefficient names
+  # are unique within a formula but not across formulas, so a variable is
+  # never matched by coefficient name: the level "2" of a factor "w" gives
+  # "b_mb_w2" in one formula, while "w2" can be a variable of another
+  variables <- colnames(data)
   .in_formula <- function(variable, i) {
-    variable %in% predictors[[i]] ||
+    if (variable %in% variables) {
+      variable %in% predictors[[i]]
+    } else {
       sprintf("b_%s_%s", equation[i], variable) %in% colnames(params)
+    }
   }
   .in_any <- function(variable, models) {
     any(vapply(models, .in_formula, logical(1), variable = variable))
@@ -652,16 +667,13 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     paths <- paths[order(path_order, method = "radix")]
   }
 
-  if (fix_treatment || fix_mediator) {
-    mf <- insight::get_data(model)
-  }
   if (fix_treatment) {
-    treatment <- .fix_factor_name(model, treatment, mf)
+    treatment <- .fix_factor_name(model, treatment, data)
   }
   if (fix_mediator) {
     mediator <- vapply(
       mediator,
-      function(m) .fix_factor_name(model, m, mf),
+      function(m) .fix_factor_name(model, m, data),
       character(1),
       USE.NAMES = FALSE
     )

@@ -49,10 +49,10 @@ second response variable (for the treatment model, with the mediator as
 additional predictor), \code{y}, is not transformed. Then we could use
 \code{response} like this: \code{mediation(model, response = c(m = "m_center", y = "y"))}.}
 
-\item{centrality}{The point-estimates (centrality indices) to compute. Character
-(vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"}
-(see \code{\link[=map_estimate]{map_estimate()}}), \code{"trimmed"} (which is just \code{mean(x, trim = threshold)}),
-\code{"mode"} or \code{"all"}.}
+\item{centrality}{The point-estimate (centrality index) of the effects,
+such as \code{"median"} (the default), \code{"mean"}, or \code{"MAP"} (see
+\code{\link[=point_estimate]{point_estimate()}}). \code{mediation()} takes one index only, not several
+and not \code{"all"}.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{0.95} (\verb{95\%}).}
@@ -103,7 +103,9 @@ is missing, the mediators are the other responses on a path from the
 treatment to the outcome. They are in the order of the model formulas. If
 \code{treatment} is missing, the treatment is the first suitable predictor of
 the outcome model. A suitable predictor is not a response, and it is a
-predictor in a mediator model. A path goes from the treatment through one or
+predictor in a mediator model. A \code{treatment} name that is not a variable in
+the model data is read as a coefficient name, such as \code{xb} for level \code{b} of
+a factor \code{x}. A path goes from the treatment through one or
 more mediators to the outcome. Its indirect effect is the product of the
 coefficients along the path, for each posterior sample. With several
 mediators, the rows are:
