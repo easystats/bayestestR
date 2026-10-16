@@ -10,7 +10,9 @@
 #'
 #' @param model A Bayesian model.
 #' @param data Data used by the model. If `NULL`, will try to extract it
-#'   from the model.
+#'   from the model. For multivariate *brms* models, rows with a missing value
+#'   in a variable of any response are dropped, as *brms* does. Models with
+#'   addition terms (such as `y | mi()`) use `data` as given.
 #' @param REML For mixed effects, should models be estimated using
 #'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
 #'   likelihood (`FALSE`)?

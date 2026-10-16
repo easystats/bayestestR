@@ -5,6 +5,16 @@
 * The `resp` argument of `bayesian_as_frequentist()` is renamed to `response`.
   `resp =` still works by partial matching.
 
+## Bug fixes
+
+* For multivariate *brms* models, `bayesian_as_frequentist()` with user-given
+  `data` now refits on the rows that *brms* used. Before, rows with a missing
+  value in a variable of another response were kept.
+
+* If `bayesian_as_frequentist()` cannot refit a model, the error now includes
+  the error of the refit. Before, some families failed with an unrelated error
+  from `beta()`.
+
 # bayestestR 0.20.0
 
 ## Changes
