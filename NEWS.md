@@ -37,13 +37,13 @@
   Before, it returned a column of `NA` with no warning.
 
 * For *brms* models with a censored outcome, such as `y | cens(censored)`,
-  `mediation()` now works (#631). Before, it failed with "subscript out of
-  bounds".
+  `mediation()` now works (#631). Before, it failed with an indexing error, such
+  as "subscript out of bounds".
 
 * If the mediator enters the outcome model with `mo()`, `mediation()` now gives
   an informative error (#576). If a coefficient for the `treatment` or
   `mediator` is not in the model, the error names it. Before, both cases failed
-  with "undefined columns selected".
+  with an indexing error, such as "undefined columns selected".
 
 # bayestestR 0.19.0
 
