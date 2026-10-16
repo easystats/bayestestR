@@ -63,6 +63,10 @@
   `mediator` is not in the model, the error names it. Before, both cases failed
   with an indexing error, such as "undefined columns selected".
 
+* `mediation()` now stops with an informative error for inputs that it does not
+  support. These are several `treatment` names, several centrality indices,
+  and *rstanarm* models with more than two model formulas.
+
 # bayestestR 0.19.0
 
 ## Breaking Changes

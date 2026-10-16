@@ -119,13 +119,13 @@ test_that("mediation, two equations, and missing coefficients", {
 
 # several mediators ---------------------------------
 
-d2 <- withr::with_seed(456, {
+d2 <- withr::with_seed(456, local({
   x <- rnorm(n)
   m_a <- 0.5 * x + rnorm(n)
   m_b <- 0.4 * x + 0.5 * m_a + rnorm(n)
   y <- 0.3 * x + 0.6 * m_a + 0.4 * m_b + rnorm(n)
   data.frame(x, m_a, m_b, y)
-})
+}))
 
 # fit each model once, and only when a test needs it
 .fits_d2 <- new.env()
@@ -328,9 +328,14 @@ test_that("mediation, subsets of mediators", {
   err <- tryCatch(mediation(m, centrality = "all"), error = function(e) e)
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "needs one centrality index", fixed = TRUE)
-  err <- tryCatch(mediation(m, treatment = c("x", "m_a")), error = function(e) e)
+  for (treat in list(c("x", "m_a"), character(0))) {
+    err <- tryCatch(mediation(m, treatment = treat), error = function(e) e)
+    expect_s3_class(err, "error")
+    expect_match(conditionMessage(err), "must be the name of one variable", fixed = TRUE)
+  }
+  err <- tryCatch(mediation(m, mediator = character(0)), error = function(e) e)
   expect_s3_class(err, "error")
-  expect_match(conditionMessage(err), "must be the name of one variable", fixed = TRUE)
+  expect_match(conditionMessage(err), "must name at least one variable", fixed = TRUE)
 
   err <- tryCatch(mediation(m, mediator = "x"), error = function(e) e)
   expect_s3_class(err, "error")
@@ -414,6 +419,14 @@ test_that("mediation, stanmvreg with two equations", {
     expect_s3_class(err, "error")
     expect_match(conditionMessage(err), sprintf("`%s` is not a mediator", med), fixed = TRUE)
   }
+
+  # one mediator only
+  err <- tryCatch(
+    suppressWarnings(mediation(m, treatment = "x", mediator = c("m_a", "y"))),
+    error = function(e) e
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "needs exactly one mediator", fixed = TRUE)
 
   # more than two model formulas are not supported
   err <- tryCatch(
@@ -499,6 +512,29 @@ test_that("mediation, model structures with several mediators", {
   out <- .paths(list(c("x", "m_b"), "x", "m_a"), serial_response)
   expect_identical(out$mediator, c("m_a", "m_b"))
   expect_identical(out$paths, list(c("m_a", "m_b")))
+
+  # mediators come in the order of the model formulas, not in alphabetical
+  # order or in the order of the outcome's predictors
+  out <- .paths(
+    list(c("x", "m_a", "m_b"), "x", "x"),
+    c(y = "y", mb = "m_b", ma = "m_a")
+  )
+  expect_identical(out$mediator, c("m_b", "m_a"))
+
+  # the treatment is the first suitable predictor of the outcome: "c" comes
+  # first in the outcome model, "x" in the mediator model
+  out <- .paths(list(c("x", "c"), c("c", "x", "m")), c(m = "m", y = "y"))
+  expect_identical(out$treatment, "c")
+
+  # a `response` value can be a coefficient name, such as the level name of
+  # a logical mediator
+  out <- .paths(
+    list(c("x", "mb"), "x"),
+    c(y = "y", mb = "mbTRUE"),
+    coefs = "b_y_mbTRUE",
+    mediator = "mbTRUE"
+  )
+  expect_identical(out$paths, list("mbTRUE"))
 })
 
 

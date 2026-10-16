@@ -82,9 +82,7 @@
 #'    outcome model,
 #'  - the total effect,
 #'  - the proportion mediated. Its estimate is the point estimate of the total
-#'    indirect effect divided by the point estimate of the total effect. Its
-#'    interval is this estimate plus or minus half the width of the interval
-#'    of the per-sample ratio of the total indirect effect to the total effect.
+#'    indirect effect divided by the point estimate of the total effect.
 #'
 #'  If `mediator` names only some of the mediators, `mediation()` uses only the
 #'  paths whose mediators are all among these. A path through any other
@@ -239,8 +237,11 @@ mediation.stanmvreg <- function(
   if (missing(mediator)) {
     mediator <- NULL
   }
-  if (length(treatment) > 1) {
+  if (!is.null(treatment) && length(treatment) != 1) {
     insight::format_error("`treatment` must be the name of one variable.")
+  }
+  if (!is.null(mediator) && !length(mediator)) {
+    insight::format_error("`mediator` must name at least one variable.")
   }
   if (length(centrality) != 1 || identical(tolower(centrality), "all")) {
     insight::format_error(
@@ -470,11 +471,22 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     predictors <- lapply(equation, function(i) all_predictors[[i]]$conditional)
   }
 
+  # a variable is in a model formula if it is a predictor there, or if the
+  # formula has a coefficient named after it (e.g. `treatment = "xb"` for
+  # level "b" of a factor "x")
+  .in_formula <- function(variable, i) {
+    variable %in% predictors[[i]] ||
+      sprintf("b_%s_%s", equation[i], variable) %in% colnames(params)
+  }
+  .in_any <- function(variable, models) {
+    any(vapply(models, .in_formula, logical(1), variable = variable))
+  }
+
   # the outcome is the one response that no other model formula uses as a
   # predictor
   is_outcome <- vapply(
     seq_along(response),
-    function(i) !response[[i]] %in% unlist(predictors[-i]),
+    function(i) !.in_any(response[[i]], seq_along(response)[-i]),
     logical(1)
   )
   if (sum(is_outcome) != 1) {
@@ -509,14 +521,6 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     }
   }
 
-  # a variable is in a model formula if it is a predictor there, or if the
-  # formula has a coefficient named after it (e.g. `treatment = "xb"` for
-  # level "b" of a factor "x")
-  .in_formula <- function(variable, i) {
-    variable %in% predictors[[i]] ||
-      sprintf("b_%s_%s", equation[i], variable) %in% colnames(params)
-  }
-
   # find treatment, if not specified: the first predictor of the outcome that
   # is not a response and is a predictor of a mediator
   fix_treatment <- is.null(treatment)
@@ -526,7 +530,12 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
       mediator_models <- others[response[others] %in% mediator]
     }
     treatment <- setdiff(predictors[[outcome]], response)
-    treatment <- treatment[treatment %in% unlist(predictors[mediator_models])]
+    treatment <- treatment[vapply(
+      treatment,
+      .in_any,
+      logical(1),
+      models = mediator_models
+    )]
     if (!length(treatment)) {
       insight::format_error(sprintf(
         "Could not find the treatment. The treatment is a predictor of the outcome `%s` that is also a predictor of a mediator. Please specify `treatment`.",
@@ -551,11 +560,11 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     }
     from_treatment <- .grow(
       others[vapply(others, .in_formula, logical(1), variable = treatment)],
-      function(i, models) any(response[models] %in% predictors[[i]])
+      function(i, models) any(vapply(response[models], .in_formula, logical(1), i = i))
     )
     to_outcome <- .grow(
-      others[response[others] %in% predictors[[outcome]]],
-      function(i, models) response[[i]] %in% unlist(predictors[models])
+      others[vapply(response[others], .in_formula, logical(1), i = outcome)],
+      function(i, models) .in_any(response[[i]], models)
     )
     mediator <- unname(response[others[others %in% intersect(from_treatment, to_outcome)]])
     if (!length(mediator)) {
@@ -599,11 +608,11 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     paths <- list()
     .extend <- function(path) {
       last <- path[length(path)]
-      if (mediator[last] %in% predictors[[outcome]]) {
+      if (.in_formula(mediator[last], outcome)) {
         paths[[length(paths) + 1]] <<- path
       }
       for (k in setdiff(seq_along(mediator), path)) {
-        if (mediator[last] %in% predictors[[mediator_models[k]]]) {
+        if (.in_formula(mediator[last], mediator_models[k])) {
           .extend(c(path, k))
         }
       }
