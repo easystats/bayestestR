@@ -14,9 +14,9 @@
 #' @param REML For mixed effects, should models be estimated using
 #'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
 #'   likelihood (`FALSE`)?
-#' @param resp For multivariate *brms* models, the name of the one response to
-#'   convert, as returned by `names(insight::find_formula(model))`. Other models
-#'   ignore `resp`.
+#' @param response For multivariate *brms* models, the name of the one response
+#'   to convert, as returned by `names(insight::find_formula(model))`. Other
+#'   models ignore `response`.
 #' @examplesIf require("rstanarm")
 #' \donttest{
 #' # Rstanarm ----------------------
@@ -51,7 +51,7 @@ convert_bayesian_as_frequentist <- function(
   model,
   data = NULL,
   REML = TRUE,
-  resp = NULL
+  response = NULL
 ) {
   if (is.null(data)) {
     data <- insight::get_data(model)
@@ -78,22 +78,22 @@ convert_bayesian_as_frequentist <- function(
   }
 
   if (inherits(model, "brmsfit") && insight::is_multivariate(model)) {
-    # multivariate brms models: convert only the response named in `resp`
+    # multivariate brms models: convert only the response named in `response`
     model_formulas <- insight::find_formula(model)
     responses <- names(model_formulas)
-    if (!is.character(resp) || length(resp) != 1 || !resp %in% responses) {
+    if (!is.character(response) || length(response) != 1 || !response %in% responses) {
       insight::format_error(
-        "For multivariate brms models, `resp` must name one response of the model.",
+        "For multivariate brms models, `response` must name one response of the model.",
         paste0("Possible responses are: ", toString(responses), ".")
       )
     }
     info <- insight::model_info(
       model,
-      response = which(responses == resp),
+      response = which(responses == response),
       verbose = FALSE
     )
-    model_formula <- model_formulas[[resp]]
-    model_family <- insight::get_family(model)[[resp]]
+    model_formula <- model_formulas[[response]]
+    model_family <- insight::get_family(model)[[response]]
   } else {
     info <- insight::model_info(model, verbose = FALSE)
     model_formula <- insight::find_formula(model)

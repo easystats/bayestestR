@@ -103,12 +103,12 @@ test_that("brms multivariate to freq, one response", {
   d <- insight::get_data(m)
 
   m1 <- lm(gear ~ wt + hp, data = d)
-  m2 <- convert_bayesian_as_frequentist(m, resp = "gear")
+  m2 <- convert_bayesian_as_frequentist(m, response = "gear")
   expect_s3_class(m2, "lm")
   expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
 
   m1 <- lm(cyl ~ wt + hp, data = d)
-  m2 <- bayesian_as_frequentist(m, resp = "cyl")
+  m2 <- bayesian_as_frequentist(m, response = "cyl")
   expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
 
   # brms removes the dot from response names, "Sepal.Length" is "SepalLength"
@@ -116,41 +116,54 @@ test_that("brms multivariate to freq, one response", {
   skip_if(is.null(m))
   d <- insight::get_data(m)
   m1 <- lm(Sepal.Length ~ Petal.Length + Sepal.Width + Species, data = d)
-  m2 <- convert_bayesian_as_frequentist(m, resp = "SepalLength")
+  m2 <- convert_bayesian_as_frequentist(m, response = "SepalLength")
   expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
 })
 
 
-test_that("brms multivariate to freq, invalid resp", {
+test_that("brms multivariate to freq, `resp` partially matches `response`", {
   skip_if_not_or_load_if_installed("brms")
 
   m <- insight::download_model("brms_mv_1")
   skip_if(is.null(m))
 
-  msg <- "(?s)`resp`\\s+must\\s+name\\s+one\\s+response.*cyl,\\s+gear,\\s+carb"
+  withr::local_options(warnPartialMatchArgs = FALSE)
+  m1 <- convert_bayesian_as_frequentist(m, response = "gear")
+  m2 <- convert_bayesian_as_frequentist(m, resp = "gear")
+  expect_identical(coef(m1), coef(m2))
+})
+
+
+test_that("brms multivariate to freq, invalid response", {
+  skip_if_not_or_load_if_installed("brms")
+
+  m <- insight::download_model("brms_mv_1")
+  skip_if(is.null(m))
+
+  msg <- "(?s)`response`\\s+must\\s+name\\s+one\\s+response.*cyl,\\s+gear,\\s+carb"
   expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
-  expect_error(convert_bayesian_as_frequentist(m, resp = "mpg"), msg, perl = TRUE)
+  expect_error(convert_bayesian_as_frequentist(m, response = "mpg"), msg, perl = TRUE)
   expect_error(
-    convert_bayesian_as_frequentist(m, resp = c("cyl", "gear")),
+    convert_bayesian_as_frequentist(m, response = c("cyl", "gear")),
     msg,
     perl = TRUE
   )
   # a factor would select a response by its integer code, not by its label
   expect_error(
-    convert_bayesian_as_frequentist(m, resp = factor("gear")),
+    convert_bayesian_as_frequentist(m, response = factor("gear")),
     msg,
     perl = TRUE
   )
 })
 
 
-test_that("brms univariate to freq, resp is ignored", {
+test_that("brms univariate to freq, response is ignored", {
   skip_if_not_or_load_if_installed("brms")
 
   m <- insight::download_model("brms_1")
   skip_if(is.null(m))
 
   m1 <- convert_bayesian_as_frequentist(m)
-  m2 <- convert_bayesian_as_frequentist(m, resp = "x")
+  m2 <- convert_bayesian_as_frequentist(m, response = "x")
   expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
 })
