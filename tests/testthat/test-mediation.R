@@ -134,7 +134,8 @@ fit_d2 <- function(type) {
     f <- switch(
       type,
       par = bf(y ~ x + m_a + m_b) + bf(m_a ~ x) + bf(m_b ~ x) + set_rescor(FALSE),
-      ser = bf(y ~ x + m_a + m_b) + bf(m_a ~ x) + bf(m_b ~ x + m_a) + set_rescor(FALSE)
+      ser = bf(y ~ x + m_a + m_b) + bf(m_a ~ x) + bf(m_b ~ x + m_a) + set_rescor(FALSE),
+      chain = bf(y ~ x + m_b) + bf(m_a ~ x) + bf(m_b ~ m_a) + set_rescor(FALSE)
     )
     .fits_d2[[type]] <- skip_if_fit_failed(brms::brm(
       f,
@@ -184,6 +185,8 @@ test_that("mediation, parallel mediators", {
     numeric(1)
   )
   expect_equal(out$Estimate[1:7], expected, tolerance = 1e-8)
+  # proportion mediated: total indirect effect / total effect
+  expect_equal(out$Estimate[8], expected[4] / expected[7], tolerance = 1e-8)
 })
 
 
@@ -214,6 +217,13 @@ test_that("mediation, serial mediators", {
     stats::median(p$b_y_x + ind_a + ind_b + ind_ab),
     tolerance = 1e-8
   )
+
+  # each mediator must be a predictor in the outcome model: here, m_a is not
+  m_chain <- fit_d2("chain")
+  err <- tryCatch(mediation(m_chain), error = function(e) e)
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "Could not find the coefficient", fixed = TRUE)
+  expect_match(conditionMessage(err), "`b_y_m_a`", fixed = TRUE)
 })
 
 
