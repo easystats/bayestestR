@@ -294,4 +294,74 @@ test_that("mediation, subsets of mediators", {
   err <- tryCatch(mediation(m, mediator = "x"), error = function(e) e)
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "not a mediator", fixed = TRUE)
+
+  err <- tryCatch(mediation(m, treatment = "w"), error = function(e) e)
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "Could not find a mediator", fixed = TRUE)
+
+  err <- tryCatch(
+    mediation(m, treatment = "w", mediator = c("m_a", "m_b")),
+    error = function(e) e
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "Could not find a path", fixed = TRUE)
 })
+
+
+test_that("mediation, model structures with several mediators", {
+  m <- fit_d2("par")
+  # predictors and coefficient names of other model structures, given by
+  # hand, with the variables of `m` for factor names
+  .paths <- function(predictors, response, coefs = character(0), mediator = NULL) {
+    params <- as.data.frame(stats::setNames(
+      rep(list(numeric(0)), length(coefs)),
+      coefs
+    ))
+    tryCatch(
+      .mediation_paths_brms(m, NULL, mediator, response, params, predictors),
+      error = function(e) e
+    )
+  }
+
+  err <- .paths(
+    list(c("x", "m_a"), "x", "x"),
+    c(y = "y", ma = "m_a", z = "z")
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "Could not find the outcome", fixed = TRUE)
+  expect_match(conditionMessage(err), "2\\s+such\\s+responses:\\s+`y`,\\s+`z`")
+
+  err <- .paths(list("m_a", "x"), c(y = "y", ma = "m_a"))
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "Could not find the treatment", fixed = TRUE)
+
+  err <- .paths(
+    list(c("x", "m_a", "mo_m"), "x", c("x", "m_a")),
+    c(y = "y", ma = "m_a", mom = "mo_m"),
+    coefs = "bsp_y_momo_m"
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "`mo_m` enters the outcome model", fixed = TRUE)
+
+  err <- .paths(
+    list(c("x", "m_b"), "x", c("x", "mo_m")),
+    c(y = "y", mom = "mo_m", mb = "m_b"),
+    coefs = "bsp_mb_momo_m"
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "`mo_m` enters the `m_b` model", fixed = TRUE)
+
+  # the controls give paths, not errors
+  serial <- list(c("x", "m_a", "m_b"), "x", c("x", "m_a"))
+  serial_response <- c(y = "y", ma = "m_a", mb = "m_b")
+  out <- .paths(serial, serial_response)
+  expect_identical(out$paths, list("m_a", "m_b", c("m_a", "m_b")))
+  out <- .paths(serial, serial_response, mediator = c("m_b", "m_a"))
+  expect_identical(out$paths, list("m_b", "m_a", c("m_a", "m_b")))
+  # a mediator that only the treatment reaches through another mediator
+  out <- .paths(list(c("x", "m_b"), "x", "m_a"), serial_response)
+  expect_identical(out$mediator, c("m_a", "m_b"))
+  expect_identical(out$paths, list(c("m_a", "m_b")))
+})
+
+
