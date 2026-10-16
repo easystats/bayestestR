@@ -167,3 +167,87 @@ test_that("brms univariate to freq, response is ignored", {
   m2 <- convert_bayesian_as_frequentist(m, response = "x")
   expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
 })
+
+
+test_that("brms multivariate to freq, user data drops the rows brms dropped", {
+  skip_if_not_or_load_if_installed("brms")
+
+  # missing values in the other response (qsec), in a variable of the other
+  # response (hp), and in a column that no formula uses (drat)
+  d <- mtcars
+  d$qsec[1:4] <- NA
+  d$hp[5:6] <- NA
+  d$drat[7] <- NA
+
+  set.seed(333)
+  m <- skip_if_fit_failed(brm(
+    bf(mpg ~ wt) + bf(qsec ~ 0 + Intercept + hp) + set_rescor(FALSE),
+    data = d,
+    chains = 1,
+    iter = 500,
+    refresh = 0
+  ))
+
+  complete_rows <- d[stats::complete.cases(d[c("mpg", "wt", "qsec", "hp")]), ]
+  m1 <- lm(mpg ~ wt, data = complete_rows)
+  m2 <- convert_bayesian_as_frequentist(m, response = "mpg", data = d)
+  expect_identical(nobs(m2), nrow(insight::get_data(m)))
+  expect_identical(nobs(m2), nrow(m$data))
+  expect_identical(nobs(m2), nrow(complete_rows))
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+
+  # `0 + Intercept` in one response of a multivariate model
+  m1 <- lm(qsec ~ 1 + hp, data = insight::get_data(m))
+  m2 <- convert_bayesian_as_frequentist(m, response = "qsec")
+  expect_named(coef(m2), c("(Intercept)", "hp"))
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+})
+
+
+test_that("brms multivariate to freq, user data keeps rows with mi() terms", {
+  skip_if_not_or_load_if_installed("brms")
+
+  # brms imputes the missing values of qsec, so it keeps all rows
+  d <- mtcars
+  d$qsec[1:4] <- NA
+
+  set.seed(333)
+  m <- skip_if_fit_failed(brm(
+    bf(mpg ~ wt) + bf(qsec | mi() ~ hp) + set_rescor(FALSE),
+    data = d,
+    chains = 1,
+    iter = 500,
+    refresh = 0
+  ))
+
+  m2 <- convert_bayesian_as_frequentist(m, response = "mpg", data = d)
+  expect_identical(nobs(m2), nrow(d))
+})
+
+
+test_that("brms to freq, a failed refit gives one error with its cause", {
+  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("glmmTMB")
+
+  m <- insight::download_model("brms_1")
+  skip_if(is.null(m))
+
+  msg <- "(?s)Model\\s+could\\s+not\\s+be\\s+automatically\\s+converted.*refit\\s+broke"
+
+  # the refit can throw an error (lm(), glm()) or return one (other refits)
+  refit_throws <- function(...) stop("refit broke", call. = FALSE)
+  refit_returns <- function(...) simpleError("refit broke")
+
+  # gaussian family
+  local_mocked_bindings(.convert_bayesian_as_frequentist = refit_throws)
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+  local_mocked_bindings(.convert_bayesian_as_frequentist = refit_returns)
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+
+  # a brms family that is converted to a glmmTMB family
+  local_mocked_bindings(get_family = function(...) brms::Beta(), .package = "insight")
+  local_mocked_bindings(.convert_bayesian_as_frequentist = refit_throws)
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+  local_mocked_bindings(.convert_bayesian_as_frequentist = refit_returns)
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+})

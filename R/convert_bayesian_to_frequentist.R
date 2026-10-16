@@ -10,7 +10,10 @@
 #'
 #' @param model A Bayesian model.
 #' @param data Data used by the model. If `NULL`, will try to extract it
-#'   from the model.
+#'   from the model. For multivariate *brms* models, rows with a missing value
+#'   in a variable of any response are dropped, as *brms* does. For
+#'   multivariate *brms* models with addition terms (such as `y | mi()`), `data`
+#'   is used as given.
 #' @param REML For mixed effects, should models be estimated using
 #'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
 #'   likelihood (`FALSE`)?
@@ -53,6 +56,7 @@ convert_bayesian_as_frequentist <- function(
   REML = TRUE,
   response = NULL
 ) {
+  user_data <- data
   if (is.null(data)) {
     data <- insight::get_data(model)
   }
@@ -94,6 +98,9 @@ convert_bayesian_as_frequentist <- function(
     )
     model_formula <- model_formulas[[response]]
     model_family <- insight::get_family(model)[[response]]
+    if (!is.null(user_data)) {
+      data <- .brms_mv_complete_rows(model, data)
+    }
   } else {
     info <- insight::model_info(model, verbose = FALSE)
     model_formula <- insight::find_formula(model)
@@ -132,21 +139,16 @@ convert_bayesian_as_frequentist <- function(
     insight::format_error("Model could not be automatically converted to frequentist model.")
   }
 
-  # first attempt
+  # a failed refit throws an error or returns one
   freq <- tryCatch(.convert_bayesian_as_frequentist(
     info = info, formula = model_formula, data = data, family = model_family, REML = REML
   ), error = function(e) e)
 
   if (inherits(freq, "error")) {
-    # try again to extract family, using generic approach
-    model_family <- get(model_family$family)(link = model_family$link)
-    freq <- .convert_bayesian_as_frequentist(
-      info = info, formula = model_formula, data = data, family = model_family, REML = REML
+    insight::format_error(
+      "Model could not be automatically converted to frequentist model.",
+      paste0("The refit failed with: ", conditionMessage(freq))
     )
-  }
-
-  if (inherits(freq, "error")) {
-    insight::format_error("Model could not be automatically converted to frequentist model.")
   }
 
   freq
@@ -261,6 +263,30 @@ convert_bayesian_as_frequentist <- function(
 
   fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
   stats::as.formula(paste(fixed_formula, random_formula, sep = " + "))
+}
+
+# brms fits a multivariate model only to the rows that are complete in the
+# variables of all its formulas. If user data are given, drop the same rows, so
+# that the refit of one response uses the rows brms used. Addition terms
+# (`mi()`, `subset()`, `cens()`) can keep rows with missing values, so with any
+# addition term the data are used as given.
+.brms_mv_complete_rows <- function(model, data) {
+  has_addition_terms <- vapply(
+    model$formula$forms,
+    function(x) {
+      lhs <- x$formula[[2]]
+      is.call(lhs) && identical(lhs[[1]], as.name("|"))
+    },
+    logical(1)
+  )
+  if (any(has_addition_terms)) {
+    return(data)
+  }
+  model_variables <- intersect(
+    insight::find_variables(model, flatten = TRUE),
+    colnames(data)
+  )
+  data[stats::complete.cases(data[model_variables]), , drop = FALSE]
 }
 
 .bf_mixed_formula <- function(model) {
