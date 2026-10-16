@@ -53,6 +53,7 @@ convert_bayesian_as_frequentist <- function(
   REML = TRUE,
   response = NULL
 ) {
+  user_data <- data
   if (is.null(data)) {
     data <- insight::get_data(model)
   }
@@ -94,6 +95,9 @@ convert_bayesian_as_frequentist <- function(
     )
     model_formula <- model_formulas[[response]]
     model_family <- insight::get_family(model)[[response]]
+    if (!is.null(user_data)) {
+      data <- .brms_mv_complete_rows(model, data)
+    }
   } else {
     info <- insight::model_info(model, verbose = FALSE)
     model_formula <- insight::find_formula(model)
@@ -261,6 +265,30 @@ convert_bayesian_as_frequentist <- function(
 
   fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
   stats::as.formula(paste(fixed_formula, random_formula, sep = " + "))
+}
+
+# brms fits a multivariate model only to the rows that are complete in the
+# variables of all its formulas. If user data are given, drop the same rows, so
+# that the refit of one response uses the rows brms used. With addition terms
+# (such as `y | mi()` or `y | subset(s)`), brms keeps or drops other rows, so
+# the data are used as given.
+.brms_mv_complete_rows <- function(model, data) {
+  has_addition_terms <- vapply(
+    model$formula$forms,
+    function(x) {
+      lhs <- x$formula[[2]]
+      is.call(lhs) && identical(lhs[[1]], as.name("|"))
+    },
+    logical(1)
+  )
+  if (any(has_addition_terms)) {
+    return(data)
+  }
+  model_variables <- intersect(
+    insight::find_variables(model, flatten = TRUE),
+    colnames(data)
+  )
+  data[stats::complete.cases(data[model_variables]), , drop = FALSE]
 }
 
 .bf_mixed_formula <- function(model) {

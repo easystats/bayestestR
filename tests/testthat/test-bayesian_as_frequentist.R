@@ -167,3 +167,58 @@ test_that("brms univariate to freq, response is ignored", {
   m2 <- convert_bayesian_as_frequentist(m, response = "x")
   expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
 })
+
+
+test_that("brms multivariate to freq, user data drops the rows brms dropped", {
+  skip_if_not_or_load_if_installed("brms")
+
+  # missing values in the other response (qsec), in a variable of the other
+  # response (hp), and in a column that no formula uses (drat)
+  d <- mtcars
+  d$qsec[1:4] <- NA
+  d$hp[5:6] <- NA
+  d$drat[7] <- NA
+
+  set.seed(333)
+  m <- skip_if_fit_failed(brm(
+    bf(mpg ~ wt) + bf(qsec ~ 0 + Intercept + hp) + set_rescor(FALSE),
+    data = d,
+    chains = 1,
+    iter = 500,
+    refresh = 0
+  ))
+
+  complete_rows <- d[stats::complete.cases(d[c("mpg", "wt", "qsec", "hp")]), ]
+  m1 <- lm(mpg ~ wt, data = complete_rows)
+  m2 <- convert_bayesian_as_frequentist(m, response = "mpg", data = d)
+  expect_identical(nobs(m2), nrow(insight::get_data(m)))
+  expect_identical(nobs(m2), nrow(complete_rows))
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+
+  # `0 + Intercept` in one response of a multivariate model
+  m1 <- lm(qsec ~ 1 + hp, data = insight::get_data(m))
+  m2 <- convert_bayesian_as_frequentist(m, response = "qsec")
+  expect_named(coef(m2), c("(Intercept)", "hp"))
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+})
+
+
+test_that("brms multivariate to freq, user data keeps rows with mi() terms", {
+  skip_if_not_or_load_if_installed("brms")
+
+  # brms imputes the missing values of qsec, so it keeps all rows
+  d <- mtcars
+  d$qsec[1:4] <- NA
+
+  set.seed(333)
+  m <- skip_if_fit_failed(brm(
+    bf(mpg ~ wt) + bf(qsec | mi() ~ hp) + set_rescor(FALSE),
+    data = d,
+    chains = 1,
+    iter = 500,
+    refresh = 0
+  ))
+
+  m2 <- convert_bayesian_as_frequentist(m, response = "mpg", data = d)
+  expect_identical(nobs(m2), nrow(d))
+})
