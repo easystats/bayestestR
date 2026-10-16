@@ -1,3 +1,10 @@
+# bayestestR (devel)
+
+## Breaking Changes
+
+* The `resp` argument of `bayesian_as_frequentist()` is renamed to `response`,
+  as in other easystats functions. `resp =` still works by partial matching.
+
 # bayestestR 0.20.0
 
 ## Changes
