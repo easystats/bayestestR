@@ -308,6 +308,64 @@ test_that("mediation, subsets of mediators", {
 })
 
 
+test_that("mediation, draws of several mediators", {
+  m <- fit_d2("par")
+  p <- insight::get_parameters(m)
+  out <- mediation(m)
+  draws <- as.data.frame(out)
+
+  expect_identical(colnames(draws), out$Effect)
+  expect_equal(
+    unname(vapply(draws[1:7], stats::median, numeric(1))),
+    out$Estimate[1:7],
+    tolerance = 1e-8
+  )
+  expect_equal(
+    draws[["Indirect Effect (ACME): m_a"]],
+    p$b_ma_x * p$b_y_m_a,
+    tolerance = 1e-8
+  )
+})
+
+
+test_that("mediation, stanmvreg with two equations", {
+  skip_if_not_installed("rstanarm")
+  d_grp <- transform(d, grp = factor(rep(1:10, length.out = n)))
+  m <- skip_if_fit_failed(rstanarm::stan_mvmer(
+    list(m_a ~ x + (1 | grp), y ~ x + m_a + (1 | grp)),
+    data = d_grp,
+    chains = 1,
+    iter = 1000,
+    seed = 123,
+    refresh = 0
+  ))
+  p <- insight::get_parameters(m)
+  indirect <- p[["y1|x"]] * p[["y2|m_a"]]
+  expected <- c(
+    stats::median(p[["y2|x"]]),
+    stats::median(indirect),
+    stats::median(p[["y2|m_a"]]),
+    stats::median(p[["y2|x"]] + indirect)
+  )
+
+  # insight does not find `d_grp` from inside the test and reads the data
+  # from the model frame instead
+  out <- withCallingHandlers(
+    mediation(m),
+    warning = function(w) {
+      if (grepl("Could not recover model data", conditionMessage(w), fixed = TRUE)) {
+        invokeRestart("muffleWarning")
+      }
+    }
+  )
+  expect_identical(
+    out$Effect[1:4],
+    c("Direct Effect (ADE)", "Indirect Effect (ACME)", "Mediator Effect", "Total Effect")
+  )
+  expect_equal(out$Estimate[1:4], expected, tolerance = 1e-8)
+})
+
+
 test_that("mediation, model structures with several mediators", {
   m <- fit_d2("par")
   # predictors and coefficient names of other model structures, given by
