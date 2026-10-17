@@ -223,6 +223,12 @@ mediation.stanmvreg <- function(
     ci <- ci[1]
   }
 
+  if (inherits(model, "brmsfit") && !insight::is_multivariate(model)) {
+    insight::format_error(
+      "`mediation()` needs a multivariate model, with one formula for the mediator and one for the outcome."
+    )
+  }
+
   # check for binary response. In this case, user should rescale variables
   modelinfo <- insight::model_info(model, verbose = FALSE)
   if (any(sapply(modelinfo, function(i) i$is_binomial, simplify = TRUE))) {
@@ -234,6 +240,14 @@ mediation.stanmvreg <- function(
   # model responses
   if (is.null(response)) {
     response <- .mediation_response(model)
+  } else if (inherits(model, "brmsfit")) {
+    formula_names <- names(insight::find_formula(model, verbose = FALSE))
+    if (is.null(names(response)) || !all(names(response) %in% formula_names)) {
+      insight::format_error(sprintf(
+        "The names of `response` must be the names of the model formulas: %s.",
+        toString(paste0("`", formula_names, "`"))
+      ))
+    }
   }
   params <- insight::get_parameters(model)
 
@@ -559,6 +573,22 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     ))
   }
   mediator_models <- match(mediator, response)
+
+  # the direct effect and the mediator effects are read from the outcome model
+  # by coefficient name. A variable that is not a predictor there can still
+  # share the name of a coefficient, such as "b_y_w2" for level "2" of a
+  # factor "w", so stop
+  for (v in c(treatment, mediator)) {
+    coef_outcome <- sprintf("b_%s_%s", equation[outcome], v)
+    if (v %in% variables && !.in_formula(v, outcome) && coef_outcome %in% colnames(params)) {
+      insight::format_error(sprintf(
+        "`%s` is not a predictor of the outcome `%s`, but the coefficient `%s` is in the model, for example as a level of a factor. `mediation()` does not use a coefficient of another variable.",
+        v,
+        response[[outcome]],
+        coef_outcome
+      ))
+    }
+  }
 
   # brms names monotonic effects "bsp_<formula>_mo<variable>", where
   # <formula> is the formula name (e.g. "mb" for the response "m_b"). The

@@ -516,6 +516,40 @@ test_that("mediation, draws of several mediators", {
 })
 
 
+test_that("mediation, input errors for brms models", {
+  # `response` is named by formula name ("ma"), not by response ("m_a")
+  m <- fit_d2("par")
+  err <- tryCatch(
+    mediation(
+      m,
+      treatment = "x",
+      mediator = c("m_a", "m_b"),
+      response = c(y = "y", m_a = "m_a", m_b = "m_b")
+    ),
+    error = function(e) e
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "names of `response`", fixed = TRUE)
+  expect_match(conditionMessage(err), "`y`,\\s+`ma`,\\s+`mb`")
+  # the control: formula names give the result
+  out <- mediation(
+    m,
+    treatment = "x",
+    mediator = c("m_a", "m_b"),
+    response = c(y = "y", ma = "m_a", mb = "m_b")
+  )
+  expect_identical(attr(out, "mediator"), c("m_a", "m_b"))
+
+  # a model with one formula
+  m1 <- fit_brm(bf(y ~ x + m_a))
+  for (args in list(list(), list(treatment = "x", mediator = "m_a"))) {
+    err <- tryCatch(do.call(mediation, c(list(m1), args)), error = function(e) e)
+    expect_s3_class(err, "error")
+    expect_match(conditionMessage(err), "needs a multivariate model", fixed = TRUE)
+  }
+})
+
+
 test_that("mediation, stanmvreg with two equations", {
   skip_if_not_installed("rstanarm")
   d_grp <- transform(d, grp = factor(rep(1:10, length.out = n)))
@@ -652,6 +686,46 @@ test_that("mediation, model structures with several mediators", {
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "Could not find a path", fixed = TRUE)
   expect_match(conditionMessage(err), "through `z` to", fixed = TRUE)
+
+  # a named variable that is not a predictor of the outcome model, while a
+  # coefficient of its name is there: "b_y_w2" is level "2" of the factor "w"
+  d_w <- data.frame(w = factor(1:2), w2 = 0, m_a = 0, m_b = 0, y = 0)
+  w_coefs <- c("b_y_w2", "b_y_m_a", "b_y_m_b", "b_ma_w2", "b_mb_w2")
+  w_response <- c(y = "y", ma = "m_a", mb = "m_b")
+  for (med in list(c("m_a", "m_b"), "m_a")) {
+    err <- .paths(
+      list(c("w", "m_a", "m_b"), "w2", "w2"),
+      w_response,
+      coefs = w_coefs,
+      treatment = "w2",
+      mediator = med,
+      data = d_w
+    )
+    expect_s3_class(err, "error")
+    expect_match(conditionMessage(err), "`w2` is not a predictor", fixed = TRUE)
+    expect_match(conditionMessage(err), "`b_y_w2`", fixed = TRUE)
+  }
+  # the same for a mediator: "b_y_m_b" is a level of the factor "m"
+  err <- .paths(
+    list(c("x", "m", "m_a"), c("x", "m_b"), "x"),
+    c(y = "y", ma = "m_a", mb = "m_b"),
+    coefs = c("b_y_x", "b_y_m_a", "b_y_m_b", "b_ma_x", "b_ma_m_b", "b_mb_x"),
+    treatment = "x",
+    mediator = "m_b",
+    data = data.frame(x = 0, m = factor(c("a", "_b")), m_a = 0, m_b = 0, y = 0)
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "`m_b` is not a predictor", fixed = TRUE)
+  # the control: with "w2" in the outcome model, there is no error
+  out <- .paths(
+    list(c("w2", "m_a", "m_b"), "w2", "w2"),
+    w_response,
+    coefs = w_coefs,
+    treatment = "w2",
+    mediator = c("m_a", "m_b"),
+    data = d_w
+  )
+  expect_identical(out$paths, list("m_a", "m_b"))
 
   # the controls give paths, not errors
   serial <- list(c("x", "m_a", "m_b"), "x", c("x", "m_a"))
