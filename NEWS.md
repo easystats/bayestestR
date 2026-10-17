@@ -22,8 +22,9 @@
   empty `mediator`, and several centrality indices (`centrality = "all"`
   included). For *rstanarm* models, they also include more than one mediator
   and more than two model formulas. For *brms* models, they also include a
-  model with one formula and `response` names that are not the names of the
-  model formulas.
+  model with one formula and a `response` that does not name each model
+  formula. With more than two model formulas, they also include a `treatment`
+  or `mediator` that only matches a coefficient of a factor level.
 
 # bayestestR 0.20.0
 

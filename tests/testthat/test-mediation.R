@@ -630,7 +630,7 @@ test_that("mediation, stanmvreg with two equations", {
     error = function(e) e
   )
   expect_s3_class(err, "error")
-  expect_match(conditionMessage(err), "needs exactly one mediator", fixed = TRUE)
+  expect_match(conditionMessage(err), "needs\\s+exactly\\s+one\\s+mediator")
 
   # the input errors for all models
   for (cent in list("all", c("median", "mean"))) {
@@ -750,6 +750,19 @@ test_that("mediation, model structures with several mediators", {
   )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "`m_b` is not a predictor", fixed = TRUE)
+  # the same for the treatment in the model of a single named mediator:
+  # "b_m_w2" is level "2" of the factor "w" in the `m` model
+  err <- .paths(
+    list(c("w2", "m", "z"), "w", "w2"),
+    c(y = "y", m = "m", z = "z"),
+    coefs = c("b_y_w2", "b_y_m", "b_y_z", "b_m_w2", "b_z_w2"),
+    treatment = "w2",
+    mediator = "m",
+    data = data.frame(w = factor(1:2), w2 = 0, m = 0, z = 0, y = 0)
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "`w2` is not a predictor", fixed = TRUE)
+  expect_match(conditionMessage(err), "`b_m_w2`", fixed = TRUE)
   # the control: with "w2" in the outcome model, there is no error
   out <- .paths(
     list(c("w2", "m_a", "m_b"), "w2", "w2"),

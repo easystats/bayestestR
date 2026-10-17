@@ -12,8 +12,8 @@
 #'   For *brms* models with more than two model formulas, `treatment` must be
 #'   given.
 #' @param mediator Character, name of the mediator variable in a (multivariate
-#'   response) mediator-model. For *brms* models, this can be several names
-#'   (see 'Details'). If missing, `mediation()` tries to find the mediator
+#'   response) mediator-model. For *brms* models with more than two model
+#'   formulas, this can be several names (see 'Details'). If missing, `mediation()` tries to find the mediator
 #'   variable automatically, however, this may fail. For *brms* models with
 #'   more than two model formulas, `mediator` must be given.
 #' @param response A named character vector, indicating the names of the response
@@ -479,7 +479,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
   if (length(mediator) != 1) {
     insight::format_error(
-      "For this model class, `mediation()` needs exactly one mediator. Give one name in `mediator`, or, if `mediator` is missing, one response must be a predictor in the other model formula."
+      "For models with two model formulas, `mediation()` needs exactly one mediator. Give one name in `mediator`, or, if `mediator` is missing, one response must be a predictor in the other model formula."
     )
   }
 
@@ -602,19 +602,24 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   mediator_models <- match(mediator, response)
 
   # the direct effect and the mediator effects are read from the outcome model
-  # by coefficient name. A variable that is not a predictor there can still
-  # share the name of a coefficient, such as "b_y_w2" for level "2" of a
-  # factor "w", so stop
-  for (v in c(treatment, mediator)) {
-    coef_outcome <- sprintf("b_%s_%s", equation[outcome], v)
-    if (
-      v %in% variables && !.in_formula(v, outcome) && coef_outcome %in% colnames(params)
-    ) {
+  # by coefficient name, and so is the effect of the treatment in the model of
+  # a single mediator, which has no path check below. A variable that is not a
+  # predictor there can still share the name of a coefficient, such as
+  # "b_y_w2" for level "2" of a factor "w", so stop
+  links <- lapply(c(treatment, mediator), function(v) list(v, outcome))
+  if (length(mediator) == 1) {
+    links <- c(links, list(list(treatment, mediator_models)))
+  }
+  for (link in links) {
+    v <- link[[1]]
+    i <- link[[2]]
+    coef_link <- sprintf("b_%s_%s", equation[i], v)
+    if (v %in% variables && !.in_formula(v, i) && coef_link %in% colnames(params)) {
       insight::format_error(sprintf(
-        "`%s` is not a predictor of the outcome `%s`, but the coefficient `%s` is in the model, for example as a level of a factor. `mediation()` does not use a coefficient of another variable.",
+        "`%s` is not a predictor in the model of `%s`, but the coefficient `%s` is in the model, for example as a level of a factor. `mediation()` does not use a coefficient of another variable.",
         v,
-        response[[outcome]],
-        coef_outcome
+        response[[i]],
+        coef_link
       ))
     }
   }

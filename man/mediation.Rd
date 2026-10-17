@@ -30,8 +30,8 @@ For \emph{brms} models with more than two model formulas, \code{treatment} must 
 given.}
 
 \item{mediator}{Character, name of the mediator variable in a (multivariate
-response) mediator-model. For \emph{brms} models, this can be several names
-(see 'Details'). If missing, \code{mediation()} tries to find the mediator
+response) mediator-model. For \emph{brms} models with more than two model
+formulas, this can be several names (see 'Details'). If missing, \code{mediation()} tries to find the mediator
 variable automatically, however, this may fail. For \emph{brms} models with
 more than two model formulas, \code{mediator} must be given.}
 
