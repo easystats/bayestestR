@@ -441,7 +441,13 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 # the coefficients, the model equations of the outcome and of each mediator,
 # the response attribute, and the paths, each a vector of mediator names from
 # the treatment to the outcome.
-.mediation_paths_default <- function(model, treatment, mediator, response, params = NULL) {
+.mediation_paths_default <- function(
+  model,
+  treatment,
+  mediator,
+  response,
+  params = NULL
+) {
   if (length(response) != 2) {
     insight::format_error(
       "For this model class, `mediation()` supports two model formulas only, one for the mediator and one for the outcome."
@@ -597,7 +603,9 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   # factor "w", so stop
   for (v in c(treatment, mediator)) {
     coef_outcome <- sprintf("b_%s_%s", equation[outcome], v)
-    if (v %in% variables && !.in_formula(v, outcome) && coef_outcome %in% colnames(params)) {
+    if (
+      v %in% variables && !.in_formula(v, outcome) && coef_outcome %in% colnames(params)
+    ) {
       insight::format_error(sprintf(
         "`%s` is not a predictor of the outcome `%s`, but the coefficient `%s` is in the model, for example as a level of a factor. `mediation()` does not use a coefficient of another variable.",
         v,

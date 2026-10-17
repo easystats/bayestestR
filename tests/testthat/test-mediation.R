@@ -119,23 +119,29 @@ test_that("mediation, two equations, and missing coefficients", {
 
 # several mediators ---------------------------------
 
-d2 <- withr::with_seed(456, local({
-  x <- rnorm(n)
-  m_a <- 0.5 * x + rnorm(n)
-  m_b <- 0.4 * x + 0.5 * m_a + rnorm(n)
-  y <- 0.3 * x + 0.6 * m_a + 0.4 * m_b + rnorm(n)
-  data.frame(x, m_a, m_b, y)
-}))
+d2 <- withr::with_seed(
+  456,
+  local({
+    x <- rnorm(n)
+    m_a <- 0.5 * x + rnorm(n)
+    m_b <- 0.4 * x + 0.5 * m_a + rnorm(n)
+    y <- 0.3 * x + 0.6 * m_a + 0.4 * m_b + rnorm(n)
+    data.frame(x, m_a, m_b, y)
+  })
+)
 
 # a factor treatment `g` and a logical mediator `mb`
-d_fac <- withr::with_seed(789, local({
-  g <- factor(sample(c("a", "b"), n, replace = TRUE))
-  x <- rnorm(n)
-  mb <- 0.8 * (g == "b") + 0.5 * x + rnorm(n) > 0
-  m_a <- 0.5 * (g == "b") + rnorm(n)
-  y2 <- 0.3 * (g == "b") + 0.6 * mb + 0.4 * m_a + rnorm(n)
-  data.frame(g, x, mb, m_a, y2)
-}))
+d_fac <- withr::with_seed(
+  789,
+  local({
+    g <- factor(sample(c("a", "b"), n, replace = TRUE))
+    x <- rnorm(n)
+    mb <- 0.8 * (g == "b") + 0.5 * x + rnorm(n) > 0
+    m_a <- 0.5 * (g == "b") + rnorm(n)
+    y2 <- 0.3 * (g == "b") + 0.6 * mb + 0.4 * m_a + rnorm(n)
+    data.frame(g, x, mb, m_a, y2)
+  })
+)
 
 # fit each model once, and only when a test needs it
 .fits_d2 <- new.env()
@@ -248,7 +254,12 @@ test_that("mediation, parallel mediators", {
   )
 
   # other centrality indices
-  out_mean <- mediation(m, treatment = "x", mediator = c("m_a", "m_b"), centrality = "mean")
+  out_mean <- mediation(
+    m,
+    treatment = "x",
+    mediator = c("m_a", "m_b"),
+    centrality = "mean"
+  )
   expect_equal(
     out_mean$Estimate[1:7],
     vapply(draws, mean, numeric(1)),
@@ -436,7 +447,13 @@ test_that("mediation, subsets of mediators", {
   expect_equal(out_a$Estimate[4], stats::median(p$b_y_x + ind_a), tolerance = 1e-8)
   expect_identical(
     colnames(as.data.frame(out_a)),
-    c("effect_direct", "effect_indirect", "effect_mediator", "effect_total", "proportion_mediated")
+    c(
+      "effect_direct",
+      "effect_indirect",
+      "effect_mediator",
+      "effect_total",
+      "proportion_mediated"
+    )
   )
 
   # in the serial model, mediator = "m_a" keeps only the path through m_a
@@ -593,7 +610,11 @@ test_that("mediation, stanmvreg with two equations", {
       error = function(e) e
     )
     expect_s3_class(err, "error")
-    expect_match(conditionMessage(err), sprintf("`%s` is not a mediator", med), fixed = TRUE)
+    expect_match(
+      conditionMessage(err),
+      sprintf("`%s` is not a mediator", med),
+      fixed = TRUE
+    )
   }
 
   # one mediator only
@@ -606,12 +627,18 @@ test_that("mediation, stanmvreg with two equations", {
 
   # the input errors for all models
   for (cent in list("all", c("median", "mean"))) {
-    err <- tryCatch(suppressWarnings(mediation(m, centrality = cent)), error = function(e) e)
+    err <- tryCatch(
+      suppressWarnings(mediation(m, centrality = cent)),
+      error = function(e) e
+    )
     expect_s3_class(err, "error")
     expect_match(conditionMessage(err), "needs one centrality index", fixed = TRUE)
   }
   for (treat in list(c("x", "m_a"), character(0))) {
-    err <- tryCatch(suppressWarnings(mediation(m, treatment = treat)), error = function(e) e)
+    err <- tryCatch(
+      suppressWarnings(mediation(m, treatment = treat)),
+      error = function(e) e
+    )
     expect_s3_class(err, "error")
     expect_match(conditionMessage(err), "must be the name of one variable", fixed = TRUE)
   }
@@ -779,5 +806,3 @@ test_that("mediation, model structures with several mediators", {
   )
   expect_identical(out$paths, list("m_pos", "m_a"))
 })
-
-
