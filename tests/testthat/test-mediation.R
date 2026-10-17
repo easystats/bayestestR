@@ -194,7 +194,7 @@ test_that("mediation, parallel mediators", {
   ind_a <- p$b_ma_x * p$b_y_m_a
   ind_b <- p$b_mb_x * p$b_y_m_b
 
-  out <- mediation(m)
+  out <- mediation(m, treatment = "x", mediator = c("m_a", "m_b"))
   expect_identical(attr(out, "treatment"), "x")
   expect_identical(attr(out, "mediator"), c("m_a", "m_b"))
   expect_identical(
@@ -248,115 +248,81 @@ test_that("mediation, parallel mediators", {
   )
 
   # other centrality indices
-  out_mean <- mediation(m, centrality = "mean")
+  out_mean <- mediation(m, treatment = "x", mediator = c("m_a", "m_b"), centrality = "mean")
   expect_equal(
     out_mean$Estimate[1:7],
     vapply(draws, mean, numeric(1)),
     tolerance = 1e-8
   )
-  out_map <- mediation(m, centrality = "MAP")
+  out_map <- mediation(m, treatment = "x", mediator = c("m_a", "m_b"), centrality = "MAP")
   expect_equal(
     out_map$Estimate[1:7],
     vapply(draws, function(i) as.numeric(map_estimate(i)), numeric(1)),
     tolerance = 1e-8
   )
 
-  # the detection rules on model structures where other rules would give
-  # other answers (predictors given by hand)
+  # the rules on model structures where other rules would give other answers
+  # (predictors given by hand)
   # the outcome is the response that no other formula uses, not the first
   # formula
   out <- .paths_brms(
     list("x", c("x", "m_a", "m_b"), "x"),
-    c(ma = "m_a", y = "y", mb = "m_b")
+    c(ma = "m_a", y = "y", mb = "m_b"),
+    treatment = "x",
+    mediator = c("m_a", "m_b")
   )
   expect_identical(out$outcome, "y")
-  # mediators come in the order of the model formulas, not in alphabetical
-  # order or in the order of the outcome's predictors
-  out <- .paths_brms(
-    list(c("x", "m_a", "m_b"), "x", "x"),
-    c(y = "y", mb = "m_b", ma = "m_a")
-  )
-  expect_identical(out$mediator, c("m_b", "m_a"))
-  # the treatment is the first suitable predictor of the outcome: "m" is a
-  # response and "z" is in no mediator model, so "c" comes before "x"
-  out <- .paths_brms(list(c("x", "c"), c("m", "z", "c", "x")), c(m = "m", y = "y"))
-  expect_identical(out$treatment, "c")
 
   # a variable is matched by its predictor name only, never by a coefficient
   # name: "b_mb_w2" is level "2" of the factor "w", not the variable "w2"
   d_w <- data.frame(x = 0, w = factor(1:2), w2 = 0, m = 0, mb = 0, y = 0)
-  for (med in list(NULL, c("w2", "mb"))) {
-    out <- .paths_brms(
-      list(c("x", "w2", "mb"), "x", c("x", "w")),
-      c(y = "y", w2 = "w2", mb = "mb"),
-      coefs = c("b_y_x", "b_y_w2", "b_y_mb", "b_w2_x", "b_mb_x", "b_mb_w2"),
-      mediator = med,
-      data = d_w
-    )
-    expect_identical(out$paths, list("w2", "mb"))
-  }
   out <- .paths_brms(
-    list(c("w2", "x", "m"), c("x", "w")),
-    c(y = "y", m = "m"),
-    coefs = c("b_y_w2", "b_y_x", "b_y_m", "b_m_x", "b_m_w2"),
+    list(c("x", "w2", "mb"), "x", c("x", "w")),
+    c(y = "y", w2 = "w2", mb = "mb"),
+    coefs = c("b_y_x", "b_y_w2", "b_y_mb", "b_w2_x", "b_mb_x", "b_mb_w2"),
+    treatment = "x",
+    mediator = c("w2", "mb"),
     data = d_w
   )
-  expect_identical(out$treatment, "x")
-  out <- .paths_brms(
-    list("x", c("x", "m")),
-    c(m = "m", x2 = "x2"),
-    coefs = c("b_m_x2", "b_x2_x2", "b_x2_m"),
-    data = data.frame(x = factor(1:2), m = 0, x2 = 0)
-  )
-  expect_identical(out$outcome, "x2")
-  expect_identical(out$treatment, "x2")
-  expect_identical(out$paths, list("m"))
+  expect_identical(out$paths, list("w2", "mb"))
   # a coefficient named after a variable adds no path where that variable is
   # not a predictor: "b_mb_m_a" does not put "m_a" in the "mb" formula
   out <- .paths_brms(
     list(c("x", "m_a", "m_b"), "x", "x"),
     c(y = "y", ma = "m_a", mb = "m_b"),
     coefs = "b_mb_m_a",
+    treatment = "x",
     mediator = c("m_a", "m_b")
   )
   expect_identical(out$paths, list("m_a", "m_b"))
 
   # a treatment name that is not a variable is a coefficient name: "gb" is
   # level "b" of the factor "g"
-  for (treat in list("gb", NULL)) {
-    out <- .paths_brms(
-      list(c("g", "m_a", "m_b"), "g", c("g", "m_a")),
-      c(y2 = "y2", ma = "m_a", mb = "m_b"),
-      coefs = c("b_y2_gb", "b_y2_m_a", "b_y2_m_b", "b_ma_gb", "b_mb_gb", "b_mb_m_a"),
-      treatment = treat,
-      data = data.frame(g = factor(c("a", "b")), m_a = 0, m_b = 0, y2 = 0)
-    )
-    expect_identical(out$treatment, "gb")
-    expect_identical(out$paths, list("m_a", "m_b", c("m_a", "m_b")))
-  }
+  out <- .paths_brms(
+    list(c("g", "m_a", "m_b"), "g", c("g", "m_a")),
+    c(y2 = "y2", ma = "m_a", mb = "m_b"),
+    coefs = c("b_y2_gb", "b_y2_m_a", "b_y2_m_b", "b_ma_gb", "b_mb_gb", "b_mb_m_a"),
+    treatment = "gb",
+    mediator = c("m_a", "m_b"),
+    data = data.frame(g = factor(c("a", "b")), m_a = 0, m_b = 0, y2 = 0)
+  )
+  expect_identical(out$treatment, "gb")
+  expect_identical(out$paths, list("m_a", "m_b", c("m_a", "m_b")))
 
-  # the coefficient names that brms gives a factor treatment and a logical
-  # mediator
+  # the coefficient name that brms gives a factor treatment
   m_fac <- fit_d2("fac")
   p_fac <- insight::get_parameters(m_fac)
-  out_fac <- suppressMessages(mediation(m_fac))
+  out_fac <- suppressMessages(mediation(m_fac, treatment = "gb", mediator = "m_a"))
   expect_identical(attr(out_fac, "treatment"), "gb")
-  expect_identical(attr(out_fac, "mediator"), c("mbTRUE", "m_a"))
   expect_equal(
-    out_fac$Estimate[1:3],
+    out_fac$Estimate[1:2],
     vapply(
-      list(
-        p_fac$b_y2_gb,
-        p_fac$b_mb_gb * p_fac$b_y2_mbTRUE,
-        p_fac$b_ma_gb * p_fac$b_y2_m_a
-      ),
+      list(p_fac$b_y2_gb, p_fac$b_ma_gb * p_fac$b_y2_m_a),
       stats::median,
       numeric(1)
     ),
     tolerance = 1e-8
   )
-  out_gb <- suppressMessages(mediation(m_fac, treatment = "gb"))
-  expect_identical(out_gb$Estimate, out_fac$Estimate)
 })
 
 
@@ -367,7 +333,7 @@ test_that("mediation, serial mediators", {
   ind_b <- p$b_mb_x * p$b_y_m_b
   ind_ab <- p$b_ma_x * p$b_mb_m_a * p$b_y_m_b
 
-  out <- mediation(m)
+  out <- mediation(m, treatment = "x", mediator = c("m_a", "m_b"))
   ind_rows <- grep("^Indirect Effect", out$Effect)
   expect_identical(
     out$Effect[ind_rows],
@@ -390,7 +356,10 @@ test_that("mediation, serial mediators", {
 
   # each mediator must be a predictor in the outcome model: here, m_a is not
   m_chain <- fit_d2("chain")
-  err <- tryCatch(mediation(m_chain), error = function(e) e)
+  err <- tryCatch(
+    mediation(m_chain, treatment = "x", mediator = c("m_a", "m_b")),
+    error = function(e) e
+  )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "Could not find the coefficient", fixed = TRUE)
   expect_match(conditionMessage(err), "`b_y_m_a`", fixed = TRUE)
@@ -436,7 +405,7 @@ test_that("mediation, several mediators agree with lavaan", {
 
   for (type in c("par", "ser")) {
     pe <- lavaan::parameterEstimates(lavaan::sem(lavaan_models[[type]], data = d2))
-    out <- mediation(fit_d2(type))
+    out <- mediation(fit_d2(type), treatment = "x", mediator = c("m_a", "m_b"))
     for (label in names(rows[[type]])) {
       est_lavaan <- pe$est[pe$label == label][1]
       est_brms <- out$Estimate[out$Effect == rows[[type]][[label]]]
@@ -450,13 +419,8 @@ test_that("mediation, several mediators agree with lavaan", {
 test_that("mediation, subsets of mediators", {
   m <- fit_d2("par")
   p <- insight::get_parameters(m)
-  out_auto <- mediation(m)
 
-  out_both <- mediation(m, mediator = c("m_a", "m_b"))
-  expect_identical(out_both$Effect, out_auto$Effect)
-  expect_identical(out_both$Estimate, out_auto$Estimate)
-
-  out_a <- mediation(m, mediator = "m_a")
+  out_a <- mediation(m, treatment = "x", mediator = "m_a")
   expect_identical(
     out_a$Effect,
     c(
@@ -479,7 +443,7 @@ test_that("mediation, subsets of mediators", {
   # alone: m_a -> m_b goes through m_b, which is not named
   m_ser <- fit_d2("ser")
   p_ser <- insight::get_parameters(m_ser)
-  out_ser_a <- mediation(m_ser, mediator = "m_a")
+  out_ser_a <- mediation(m_ser, treatment = "x", mediator = "m_a")
   ind_ser_a <- p_ser$b_ma_x * p_ser$b_y_m_a
   expect_identical(out_ser_a$Effect, out_a$Effect)
   expect_equal(out_ser_a$Estimate[2], stats::median(ind_ser_a), tolerance = 1e-8)
@@ -503,13 +467,25 @@ test_that("mediation, subsets of mediators", {
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "must name at least one variable", fixed = TRUE)
 
-  err <- tryCatch(mediation(m, mediator = "x"), error = function(e) e)
+  err <- tryCatch(
+    mediation(m, treatment = "x", mediator = "x"),
+    error = function(e) e
+  )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "not a mediator", fixed = TRUE)
 
-  err <- tryCatch(mediation(m, treatment = "w"), error = function(e) e)
-  expect_s3_class(err, "error")
-  expect_match(conditionMessage(err), "Could not find a mediator", fixed = TRUE)
+  # with more than two model formulas, `treatment` and `mediator` are not
+  # found automatically
+  calls <- list(
+    function() mediation(m),
+    function() mediation(m, treatment = "x"),
+    function() mediation(m, mediator = c("m_a", "m_b"))
+  )
+  for (f in calls) {
+    err <- tryCatch(f(), error = function(e) e)
+    expect_s3_class(err, "error")
+    expect_match(conditionMessage(err), "give both", fixed = TRUE)
+  }
 
   err <- tryCatch(
     mediation(m, treatment = "w", mediator = c("m_a", "m_b")),
@@ -523,7 +499,7 @@ test_that("mediation, subsets of mediators", {
 test_that("mediation, draws of several mediators", {
   m <- fit_d2("par")
   p <- insight::get_parameters(m)
-  out <- mediation(m)
+  out <- mediation(m, treatment = "x", mediator = c("m_a", "m_b"))
   draws <- as.data.frame(out)
 
   expect_identical(colnames(draws), out$Effect)
@@ -627,21 +603,21 @@ test_that("mediation, model structures with several mediators", {
 
   err <- .paths(
     list(c("x", "m_a"), "x", "x"),
-    c(y = "y", ma = "m_a", z = "z")
+    c(y = "y", ma = "m_a", z = "z"),
+    treatment = "x",
+    mediator = "m_a"
   )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "Could not find the outcome", fixed = TRUE)
   expect_match(conditionMessage(err), "2\\s+such\\s+responses:\\s+`y`,\\s+`z`")
   expect_match(conditionMessage(err), "use\\s+`response`")
 
-  err <- .paths(list("m_a", "x"), c(y = "y", ma = "m_a"))
-  expect_s3_class(err, "error")
-  expect_match(conditionMessage(err), "Could not find the treatment", fixed = TRUE)
-
   err <- .paths(
     list(c("x", "m_a", "mo_m"), "x", c("x", "m_a")),
     c(y = "y", ma = "m_a", mom = "mo_m"),
-    coefs = "bsp_y_momo_m"
+    coefs = "bsp_y_momo_m",
+    treatment = "x",
+    mediator = c("m_a", "mo_m")
   )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "`mo_m` enters the outcome model", fixed = TRUE)
@@ -649,7 +625,9 @@ test_that("mediation, model structures with several mediators", {
   err <- .paths(
     list(c("x", "m_b"), "x", c("x", "mo_m")),
     c(y = "y", mom = "mo_m", mb = "m_b"),
-    coefs = "bsp_mb_momo_m"
+    coefs = "bsp_mb_momo_m",
+    treatment = "x",
+    mediator = c("mo_m", "m_b")
   )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "`mo_m` enters the `m_b` model", fixed = TRUE)
@@ -659,6 +637,7 @@ test_that("mediation, model structures with several mediators", {
     list(c("x", "m_a", "m_b"), "x", c("x", "m_a")),
     c(y = "y", ma = "m_a", mb = "m_b"),
     coefs = "bsp_mb_mom_a",
+    treatment = "x",
     mediator = "m_a"
   )
   expect_identical(out$paths, list("m_a"))
@@ -667,6 +646,7 @@ test_that("mediation, model structures with several mediators", {
   err <- .paths(
     list(c("x", "m_a", "z"), "x", "w"),
     c(y = "y", ma = "m_a", z = "z"),
+    treatment = "x",
     mediator = c("m_a", "z")
   )
   expect_s3_class(err, "error")
@@ -676,67 +656,54 @@ test_that("mediation, model structures with several mediators", {
   # the controls give paths, not errors
   serial <- list(c("x", "m_a", "m_b"), "x", c("x", "m_a"))
   serial_response <- c(y = "y", ma = "m_a", mb = "m_b")
-  out <- .paths(serial, serial_response)
+  out <- .paths(serial, serial_response, treatment = "x", mediator = c("m_a", "m_b"))
   expect_identical(out$paths, list("m_a", "m_b", c("m_a", "m_b")))
-  out <- .paths(serial, serial_response, mediator = c("m_b", "m_a"))
+  out <- .paths(serial, serial_response, treatment = "x", mediator = c("m_b", "m_a"))
   expect_identical(out$paths, list("m_b", "m_a", c("m_a", "m_b")))
   # a mediator that the treatment reaches only through another mediator
-  out <- .paths(list(c("x", "m_b"), "x", "m_a"), serial_response)
-  expect_identical(out$mediator, c("m_a", "m_b"))
+  out <- .paths(
+    list(c("x", "m_b"), "x", "m_a"),
+    serial_response,
+    treatment = "x",
+    mediator = c("m_a", "m_b")
+  )
   expect_identical(out$paths, list(c("m_a", "m_b")))
 
-  # a logical mediator is found as the variable "mb" and named "mbTRUE" only
-  # at the end
-  d_mb <- data.frame(x = 0, mb = c(FALSE, TRUE), y = 0)
+  # a `response` value can be a coefficient name, such as the level name of a
+  # logical mediator
   out <- .paths(
-    list(c("x", "mb"), "x"),
-    c(y = "y", mb = "mb"),
-    coefs = c("b_y_x", "b_y_mbTRUE", "b_mb_x"),
-    data = d_mb
-  )
-  expect_identical(out$mediator, "mbTRUE")
-  expect_identical(out$equation, c(mbTRUE = "mb"))
-
-  # a `response` value can be the predictor name of a mediator
-  out <- .paths(
-    list("x", c("x", "m_center")),
-    c(m = "m_center", y = "y"),
-    coefs = c("b_m_x", "b_y_x", "b_y_m_center"),
-    data = data.frame(x = 0, m = 0, m_center = 0, y = 0)
+    list(c("x", "mb", "m_a"), "x", "x"),
+    c(y = "y", mb = "mbTRUE", ma = "m_a"),
+    coefs = c("b_y_x", "b_y_mbTRUE", "b_y_m_a", "b_mb_x", "b_ma_x"),
+    treatment = "x",
+    mediator = c("mbTRUE", "m_a"),
+    data = data.frame(x = 0, mb = c(FALSE, TRUE), m_a = 0, y = 0)
   )
   expect_identical(out$outcome, "y")
-  expect_identical(out$equation, c(m_center = "m"))
-
-  # a `response` value can also be a coefficient name, such as the level name
-  # of a logical mediator, in either order of the outcome's predictors
-  for (outcome_predictors in list(c("x", "mb"), c("mb", "x"))) {
-    for (med in list("mbTRUE", NULL)) {
-      out <- .paths(
-        list(outcome_predictors, "x"),
-        c(y = "y", mb = "mbTRUE"),
-        coefs = c("b_y_x", "b_y_mbTRUE", "b_mb_x"),
-        mediator = med,
-        data = d_mb
-      )
-      expect_identical(out$outcome, "y")
-      expect_identical(out$treatment, "x")
-      expect_identical(out$paths, list("mbTRUE"))
-    }
-  }
+  expect_identical(out$paths, list("mbTRUE", "m_a"))
 
   # a transformed mediator response is not its predictor name, so there are
   # two outcomes unless `response` gives the predictor name
-  d_pos <- data.frame(x = 0, m_pos = 1, y = 0)
+  d_pos <- data.frame(x = 0, m_pos = 1, m_a = 0, y = 0)
+  pos_predictors <- list("x", c("x", "m_pos", "m_a"), "x")
   err <- .paths(
-    list("x", c("x", "m_pos")),
-    c(mpos = "log(m_pos)", y = "y"),
+    pos_predictors,
+    c(mpos = "log(m_pos)", y = "y", ma = "m_a"),
+    treatment = "x",
+    mediator = c("m_pos", "m_a"),
     data = d_pos
   )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "Could not find the outcome", fixed = TRUE)
   expect_match(conditionMessage(err), "use\\s+`response`")
-  out <- .paths(list("x", c("x", "m_pos")), c(mpos = "m_pos", y = "y"), data = d_pos)
-  expect_identical(out$paths, list("m_pos"))
+  out <- .paths(
+    pos_predictors,
+    c(mpos = "m_pos", y = "y", ma = "m_a"),
+    treatment = "x",
+    mediator = c("m_pos", "m_a"),
+    data = d_pos
+  )
+  expect_identical(out$paths, list("m_pos", "m_a"))
 })
 
 
