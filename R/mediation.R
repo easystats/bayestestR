@@ -9,10 +9,13 @@
 #' @param treatment Character, name of the treatment variable (or direct effect)
 #'   in a (multivariate response) mediator-model. If missing, `mediation()`
 #'   tries to find the treatment variable automatically, however, this may fail.
+#'   For *brms* models with more than two model formulas, `treatment` must be
+#'   given.
 #' @param mediator Character, name of the mediator variable in a (multivariate
 #'   response) mediator-model. For *brms* models, this can be several names
 #'   (see 'Details'). If missing, `mediation()` tries to find the mediator
-#'   variable automatically, however, this may fail.
+#'   variable automatically, however, this may fail. For *brms* models with
+#'   more than two model formulas, `mediator` must be given.
 #' @param response A named character vector, indicating the names of the response
 #'   variables to be used for the mediation analysis. Usually can be `NULL`,
 #'   in which case these variables are retrieved automatically. If not `NULL`,
@@ -56,26 +59,23 @@
 #'  For all values, the 95% credible intervals are calculated by default.
 #'  Use `ci` to calculate a different interval.
 #'
-#'  The arguments `treatment` and `mediator` do not necessarily
-#'  need to be specified. If missing, `mediation()` tries to find the
-#'  treatment and mediator variable automatically. If this does not work,
-#'  specify these variables.
+#'  For models with two model formulas, the arguments `treatment` and
+#'  `mediator` do not necessarily need to be specified. If missing,
+#'  `mediation()` tries to find the treatment and mediator variable
+#'  automatically. If this does not work, specify these variables.
 #'
 #'  The direct effect is also called *average direct effect* (ADE),
 #'  the indirect effect is also called *average causal mediation effects*
 #'  (ACME). See also _Tingley et al. 2014_ and _Imai et al. 2010_.
 #'
 #'  For *brms* models, there can be more than one mediator, in parallel or in
-#'  series (where one mediator is a predictor of another). Each mediator must
-#'  also be a predictor in the outcome model. The outcome is the
-#'  one response that no other model formula uses as a predictor. If `mediator`
-#'  is missing, the mediators are the other responses on a path from the
-#'  treatment to the outcome. They are in the order of the model formulas. If
-#'  `treatment` is missing, the treatment is the first suitable predictor of
-#'  the outcome model. A suitable predictor is not a response, and it is a
-#'  predictor in a mediator model. A `treatment` name that is not a variable in
-#'  the model data is read as a coefficient name, such as `xb` for level `b` of
-#'  a factor `x`. A path goes from the treatment through one or
+#'  series (where one mediator is a predictor of another). For models with
+#'  more than two model formulas, give both `treatment` and `mediator`, which
+#'  can name several mediators. Each mediator must also be a predictor in the
+#'  outcome model. The outcome is the one response that no other model formula
+#'  uses as a predictor. A `treatment` name that is not a variable in the model
+#'  data is read as a coefficient name, such as `xb` for level `b` of a factor
+#'  `x`. A path goes from the treatment through one or
 #'  more mediators to the outcome. Its indirect effect is the product of the
 #'  coefficients along the path, for each posterior sample. With several
 #'  mediators, the rows are:
@@ -147,6 +147,23 @@
 #' summary(m1)
 #' mediation(m2, centrality = "mean", ci = 0.95)
 #' mediation(m3, centrality = "mean", ci = 0.95)
+#' }
+#' @examplesIf require("brms")
+#' \donttest{
+#' library(brms)
+#'
+#' # two mediators in series: m1 is also a predictor of m2
+#' set.seed(123)
+#' d <- data.frame(x = rnorm(200))
+#' d$m1 <- 0.5 * d$x + rnorm(200)
+#' d$m2 <- 0.4 * d$x + 0.5 * d$m1 + rnorm(200)
+#' d$y <- 0.3 * d$x + 0.6 * d$m1 + 0.4 * d$m2 + rnorm(200)
+#'
+#' f <- bf(y ~ x + m1 + m2) + bf(m1 ~ x) + bf(m2 ~ x + m1) + set_rescor(FALSE)
+#' m4 <- brm(f, data = d, refresh = 0)
+#'
+#' # with more than two model formulas, name the treatment and the mediators
+#' mediation(m4, treatment = "x", mediator = c("m1", "m2"))
 #' }
 #' @export
 mediation <- function(model, ...) {

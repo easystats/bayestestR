@@ -25,12 +25,15 @@ mediation(model, ...)
 
 \item{treatment}{Character, name of the treatment variable (or direct effect)
 in a (multivariate response) mediator-model. If missing, \code{mediation()}
-tries to find the treatment variable automatically, however, this may fail.}
+tries to find the treatment variable automatically, however, this may fail.
+For \emph{brms} models with more than two model formulas, \code{treatment} must be
+given.}
 
 \item{mediator}{Character, name of the mediator variable in a (multivariate
 response) mediator-model. For \emph{brms} models, this can be several names
 (see 'Details'). If missing, \code{mediation()} tries to find the mediator
-variable automatically, however, this may fail.}
+variable automatically, however, this may fail. For \emph{brms} models with
+more than two model formulas, \code{mediator} must be given.}
 
 \item{response}{A named character vector, indicating the names of the response
 variables to be used for the mediation analysis. Usually can be \code{NULL},
@@ -86,26 +89,23 @@ by the total effect.
 For all values, the 95\% credible intervals are calculated by default.
 Use \code{ci} to calculate a different interval.
 
-The arguments \code{treatment} and \code{mediator} do not necessarily
-need to be specified. If missing, \code{mediation()} tries to find the
-treatment and mediator variable automatically. If this does not work,
-specify these variables.
+For models with two model formulas, the arguments \code{treatment} and
+\code{mediator} do not necessarily need to be specified. If missing,
+\code{mediation()} tries to find the treatment and mediator variable
+automatically. If this does not work, specify these variables.
 
 The direct effect is also called \emph{average direct effect} (ADE),
 the indirect effect is also called \emph{average causal mediation effects}
 (ACME). See also \emph{Tingley et al. 2014} and \emph{Imai et al. 2010}.
 
 For \emph{brms} models, there can be more than one mediator, in parallel or in
-series (where one mediator is a predictor of another). Each mediator must
-also be a predictor in the outcome model. The outcome is the
-one response that no other model formula uses as a predictor. If \code{mediator}
-is missing, the mediators are the other responses on a path from the
-treatment to the outcome. They are in the order of the model formulas. If
-\code{treatment} is missing, the treatment is the first suitable predictor of
-the outcome model. A suitable predictor is not a response, and it is a
-predictor in a mediator model. A \code{treatment} name that is not a variable in
-the model data is read as a coefficient name, such as \code{xb} for level \code{b} of
-a factor \code{x}. A path goes from the treatment through one or
+series (where one mediator is a predictor of another). For models with
+more than two model formulas, give both \code{treatment} and \code{mediator}, which
+can name several mediators. Each mediator must also be a predictor in the
+outcome model. The outcome is the one response that no other model formula
+uses as a predictor. A \code{treatment} name that is not a variable in the model
+data is read as a coefficient name, such as \code{xb} for level \code{b} of a factor
+\code{x}. A path goes from the treatment through one or
 more mediators to the outcome. Its indirect effect is the product of the
 coefficients along the path, for each posterior sample. With several
 mediators, the rows are:
@@ -167,6 +167,24 @@ m3 <- suppressWarnings(stan_mvmer(
 summary(m1)
 mediation(m2, centrality = "mean", ci = 0.95)
 mediation(m3, centrality = "mean", ci = 0.95)
+}
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("brms")) withAutoprint(\{ # examplesIf}
+\donttest{
+library(brms)
+
+# two mediators in series: m1 is also a predictor of m2
+set.seed(123)
+d <- data.frame(x = rnorm(200))
+d$m1 <- 0.5 * d$x + rnorm(200)
+d$m2 <- 0.4 * d$x + 0.5 * d$m1 + rnorm(200)
+d$y <- 0.3 * d$x + 0.6 * d$m1 + 0.4 * d$m2 + rnorm(200)
+
+f <- bf(y ~ x + m1 + m2) + bf(m1 ~ x) + bf(m2 ~ x + m1) + set_rescor(FALSE)
+m4 <- brm(f, data = d, refresh = 0)
+
+# with more than two model formulas, name the treatment and the mediators
+mediation(m4, treatment = "x", mediator = c("m1", "m2"))
 }
 \dontshow{\}) # examplesIf}
 }

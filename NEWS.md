@@ -8,8 +8,9 @@
 ## Changes
 
 * `mediation()` now supports *brms* models with more than one mediator, in
-  parallel or in series (#586, #475). Each mediator must also be a predictor of
-  the outcome. `mediator` can name several mediators.
+  parallel or in series (#586, #475). For models with more than two model
+  formulas, give both `treatment` and `mediator`, which can name several
+  mediators. Each mediator must also be a predictor of the outcome.
   The output has one indirect effect for each path from the treatment through
   the mediators to the outcome. It also has the total indirect effect and one
   mediator effect for each mediator.
@@ -20,7 +21,9 @@
   support. Examples for all models are a `treatment` that is not one name, an
   empty `mediator`, and several centrality indices (`centrality = "all"`
   included). For *rstanarm* models, they also include more than one mediator
-  and more than two model formulas.
+  and more than two model formulas. For *brms* models, they also include a
+  model with one formula and `response` names that are not the names of the
+  model formulas.
 
 # bayestestR 0.20.0
 
