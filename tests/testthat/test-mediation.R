@@ -548,6 +548,13 @@ test_that("mediation, input errors for brms models", {
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "names of `response`", fixed = TRUE)
   expect_match(conditionMessage(err), "`y`,\\s+`ma`,\\s+`mb`")
+  # `response` names only some of the model formulas
+  err <- tryCatch(
+    mediation(m, response = c(y = "y", ma = "m_a")),
+    error = function(e) e
+  )
+  expect_s3_class(err, "error")
+  expect_match(conditionMessage(err), "names of `response`", fixed = TRUE)
   # the control: formula names give the result
   out <- mediation(
     m,

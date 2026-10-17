@@ -259,7 +259,11 @@ mediation.stanmvreg <- function(
     response <- .mediation_response(model)
   } else if (inherits(model, "brmsfit")) {
     formula_names <- names(insight::find_formula(model, verbose = FALSE))
-    if (is.null(names(response)) || !all(names(response) %in% formula_names)) {
+    if (
+      is.null(names(response)) ||
+        length(response) != length(formula_names) ||
+        !setequal(names(response), formula_names)
+    ) {
       insight::format_error(sprintf(
         "The names of `response` must be the names of the model formulas: %s.",
         toString(paste0("`", formula_names, "`"))
