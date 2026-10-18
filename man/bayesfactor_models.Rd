@@ -37,8 +37,8 @@ the denominator, or a model to be used as a denominator. Ignored for
 \item{verbose}{Toggle off warnings.}
 
 \item{bridge_options}{A named list of arguments passed to
-\code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}}, such as \code{repetitions} or \code{cores}.
-Not used for \code{blavaan} models (see details).}
+\code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}}, such as \code{repetitions}, \code{method},
+\code{cores}, or \code{maxiter}. Not used for \code{blavaan} models (see details).}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and

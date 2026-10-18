@@ -202,7 +202,8 @@ test_that("bayesfactor_models STAN, bridge sampling options", {
     .package = "bridgesampling"
   )
 
-  # any named option is passed on, and `silent` replaces the default
+  # every named option reaches bridge_sampler(), and `silent` replaces the
+  # default
   opts <- list(repetitions = 3, silent = FALSE, my_option = "x")
   .expect_bridge_calls <- function(calls) {
     expect_length(calls, 2)

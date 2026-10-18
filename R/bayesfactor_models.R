@@ -318,8 +318,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
         msg <- c(
           msg,
           paste(
-            "You can also set `repetitions` in `bridge_options` to repeat",
-            "bridge sampling and use the median estimate."
+            "Bridge sampling estimates also vary between runs. Set `repetitions`",
+            "in `bridge_options` to repeat it and use the median estimate."
           )
         )
       }
@@ -423,8 +423,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 
 #' @param bridge_options A named list of arguments passed to
-#'   [`bridgesampling::bridge_sampler()`], such as `repetitions` or `cores`.
-#'   Not used for `blavaan` models (see details).
+#'   [`bridgesampling::bridge_sampler()`], such as `repetitions`, `method`,
+#'   `cores`, or `maxiter`. Not used for `blavaan` models (see details).
 #' @rdname bayesfactor_models
 #' @export
 bayesfactor_models.stanreg <- function(
