@@ -220,7 +220,10 @@ test_that("bayesfactor_models STAN, bridge sampling options", {
   )))
   expect_length(env$calls, 2)
   for (call_args in env$calls) {
-    expect_identical(call_args[order(names(call_args))], bridge_options[order(names(bridge_options))])
+    expect_identical(
+      call_args[order(names(call_args))],
+      bridge_options[order(names(bridge_options))]
+    )
   }
   expect_identical(nrow(out), 2L)
   expect_identical(out$Model, c("Species", "1"))
