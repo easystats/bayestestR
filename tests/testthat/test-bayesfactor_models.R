@@ -207,7 +207,10 @@ test_that("bayesfactor_models STAN, bridge sampling options", {
   .expect_bridge_calls <- function(calls) {
     expect_length(calls, 2)
     for (call_args in calls) {
-      expect_identical(call_args[order(names(call_args))], opts[order(names(opts))])
+      expect_identical(
+        call_args[order(names(call_args))],
+        opts[order(names(opts))]
+      )
     }
   }
   out <- suppressWarnings(suppressMessages(bayesfactor_models(
@@ -350,7 +353,11 @@ test_that(".get_marglik uses a stored marglik criterion of brmsfit models", {
   )
   expect_identical(.get_marglik(fake_brmsfit, verbose = TRUE), -2.5)
   expect_identical(
-    .get_marglik(fake_brmsfit, verbose = TRUE, bridge_options = list(repetitions = 3)),
+    .get_marglik(
+      fake_brmsfit,
+      verbose = TRUE,
+      bridge_options = list(repetitions = 3)
+    ),
     -2.5
   )
 
@@ -374,7 +381,11 @@ test_that(".get_marglik passes options and uses the median of repeated estimates
     .package = "bridgesampling"
   )
   expect_identical(
-    .get_marglik(fake_stanreg, verbose = FALSE, bridge_options = list(repetitions = 4)),
+    .get_marglik(
+      fake_stanreg,
+      verbose = FALSE,
+      bridge_options = list(repetitions = 4)
+    ),
     -2
   )
   expect_identical(env$calls, list(list(silent = TRUE, repetitions = 4)))

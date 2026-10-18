@@ -290,7 +290,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   mods,
   denominator = 1,
   verbose = TRUE,
-  bridge_args = list()
+  bridge_options = list()
 ) {
   is_blavaan <- inherits(mods[[1]], "blavaan")
 
@@ -321,8 +321,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
         msg <- c(
           msg,
           paste(
-            "You can also set `repetitions` to repeat bridge sampling",
-            "and use the median estimate."
+            "You can also set `repetitions` in `bridge_options` to repeat",
+            "bridge sampling and use the median estimate."
           )
         )
       }
@@ -340,7 +340,12 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     bf_method <- "marginal likelihoods (Laplace approximation)"
     unsupported_models <- TRUE
   } else {
-    res <- .bayesfactor_models_stan_REG(mods, denominator, verbose, bridge_args)
+    res <- .bayesfactor_models_stan_REG(
+      mods,
+      denominator,
+      verbose,
+      bridge_options
+    )
     bf_method <- "marginal likelihoods (bridgesampling)"
     unsupported_models <- inherits(mods[[1]], c("stanfit", "CmdStanFit"))
   }
@@ -359,7 +364,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   mods,
   denominator,
   verbose = TRUE,
-  bridge_args = list()
+  bridge_options = list()
 ) {
   insight::check_if_installed("bridgesampling")
 
@@ -387,7 +392,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     .get_marglik,
     numeric(1),
     verbose = verbose,
-    bridge_args = bridge_args
+    bridge_options = bridge_options
   )
 
   mBFs <- mML - mML[denominator]
@@ -421,21 +426,20 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 
 #' @export
-bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
-  mods <- list(...)
-  cl <- match.call(expand.dots = FALSE)
-
-  # named options for bridgesampling::bridge_sampler() are not models
-  bridge_options <- c("repetitions", "method", "cores", "use_neff", "maxiter")
-  arg_names <- names(mods)
-  if (is.null(arg_names)) {
-    arg_names <- character(length(mods))
+bayesfactor_models.stanreg <- function(
+  ...,
+  denominator = 1,
+  verbose = TRUE,
+  bridge_options = list()
+) {
+  opt_names <- names(bridge_options)
+  if (
+    length(bridge_options) && (is.null(opt_names) || !all(nzchar(opt_names)))
+  ) {
+    insight::format_error("Every element of `bridge_options` needs a name.")
   }
-  is_option <- arg_names %in% bridge_options
-  bridge_args <- mods[is_option]
-  mods <- mods[!is_option]
-  cl[["..."]] <- cl[["..."]][!is_option]
 
+  mods <- list(...)
   if (inherits(mods[[1]], "stanreg")) {
     insight::check_if_installed("rstanarm")
   } else if (inherits(mods[[1]], "brmsfit")) {
@@ -447,6 +451,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models and their names
   denominator <- list(denominator)
 
+  cl <- match.call(expand.dots = FALSE)
   names(mods) <- sapply(cl[["..."]], insight::safe_deparse)
   names(denominator) <- insight::safe_deparse(cl$denominator)
 
@@ -457,7 +462,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
     mods,
     denominator = denominator,
     verbose = verbose,
-    bridge_args = bridge_args
+    bridge_options = bridge_options
   )
 }
 
@@ -651,7 +656,7 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 }
 
 #' @keywords internal
-.get_marglik <- function(mod, verbose, bridge_args = list(), ...) {
+.get_marglik <- function(mod, verbose, bridge_options = list(), ...) {
   # Add a check here for brmsfit object to avoid unnecessary computation of the ML
   if (inherits(mod, "brmsfit") && "marglik" %in% names(mod$criteria)) {
     return(stats::median(mod$criteria$marglik$logml, na.rm = TRUE))
@@ -663,10 +668,13 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
       "Computation of Marginal Likelihood: estimating marginal likelihood, please wait..."
     )
   }
+  # a `silent` element of `bridge_options` replaces the default
+  bridge_args <- c(list(silent = TRUE), bridge_options)
+  bridge_args <- bridge_args[!duplicated(names(bridge_args), fromLast = TRUE)]
   # `quote(mod)` keeps the model object out of the call that error messages print
   ml <- do.call(
     bridgesampling::bridge_sampler,
-    c(list(quote(mod), silent = TRUE), bridge_args)
+    c(list(quote(mod)), bridge_args)
   )
   # with `repetitions` > 1, `logml` holds one estimate per repetition
   stats::median(ml$logml, na.rm = TRUE)
