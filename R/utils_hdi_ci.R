@@ -2,7 +2,7 @@
 .check_hdi_method <- function(method, method_missing, dots) {
   # `ci_method = "spi"` in `...` is the older way to ask for the density
   # method, it is used only if `method` was not given
-  if (method_missing && identical(tolower(dots$ci_method), "spi")) {
+  if (method_missing && identical(dots$ci_method, "spi")) {
     method <- "density"
   }
   insight::validate_argument(method, c("empirical", "density"))

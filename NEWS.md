@@ -6,13 +6,16 @@
   `resp =` still works by partial matching.
 
 * `spi()` is deprecated. Use `hdi(method = "density")`, which returns the same
-  interval (#719).
+  interval (#719). `spi()` is no longer an S3 generic, so its methods (such as
+  `spi.numeric()`) are gone.
 
 ## Changes
 
 * `hdi()` gains a `method` argument. `method = "empirical"` (default) keeps
   the current algorithm, and `method = "density"` uses the SPIn algorithm of
   `spi()`. The help page of `hdi()` now describes both algorithms (#719, #519).
+  `hdi(ci_method = "spi")` now selects `method = "density"` for all objects,
+  not only for some model classes.
 
 # bayestestR 0.20.0
 

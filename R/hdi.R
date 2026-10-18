@@ -150,6 +150,9 @@
 #' hdi(bf, ci = c(0.80, 0.90, 0.95))
 #' }
 #' @author Credits go to **ggdistribute** and [**HDInterval**](https://github.com/mikemeredith/HDInterval).
+#' The code of `method = "density"` was adapted from the **SPIn** package, and
+#' slightly modified to be more robust for Stan models. Credits go to Ying Liu
+#' for the original SPI algorithm and R implementation.
 #'
 #' @references
 #' - Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS,

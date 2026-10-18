@@ -244,5 +244,8 @@ Other ci:
 }
 \author{
 Credits go to \strong{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{\strong{HDInterval}}.
+The code of \code{method = "density"} was adapted from the \strong{SPIn} package, and
+slightly modified to be more robust for Stan models. Credits go to Ying Liu
+for the original SPI algorithm and R implementation.
 }
 \concept{ci}

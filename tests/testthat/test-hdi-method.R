@@ -68,8 +68,8 @@ test_that("hdi() method = 'density' reaches each input path", {
   d <- data.frame(g = c("a", "b"))
   d$r <- posterior::rvar(draws)
   out <- hdi(d, ci = ci, rvar_col = "r", method = "density")
-  expect_equal(sort(out$CI_low), sort(expected$CI_low), tolerance = 1e-12)
-  expect_equal(sort(out$CI_high), sort(expected$CI_high), tolerance = 1e-12)
+  expect_identical(out$CI_low, expected$CI_low)
+  expect_identical(out$CI_high, expected$CI_high)
 
   # mcmc objects, built by hand because coda is not in Suggests; `mcpar` lets
   # coda's as.data.frame() method work when another test loaded coda
