@@ -188,46 +188,50 @@ test_that("bayesfactor_models STAN, bridge sampling options", {
   mods <- .fit_bf_stan_models()
   stan_bf_0 <- mods$m0
   stan_bf_1 <- mods$m1
+  stanfit_0 <- stan_bf_0$stanfit
+  stanfit_1 <- stan_bf_1$stanfit
 
-  # options are passed on, and are not taken as models
   env <- new.env()
   env$calls <- list()
   local_mocked_bindings(
     bridge_sampler = .mock_bridge_sampler(
-      list(stan_bf_0, stan_bf_1),
-      list(-20, -10),
+      list(stan_bf_0, stan_bf_1, stanfit_0, stanfit_1),
+      list(-20, -10, -20, -10),
       env
     ),
     .package = "bridgesampling"
   )
-  bridge_options <- list(
-    repetitions = 3,
-    method = "warp3",
-    cores = 2,
-    use_neff = FALSE,
-    maxiter = 500,
-    silent = TRUE
-  )
+
+  # any named option is passed on, and `silent` replaces the default
+  opts <- list(repetitions = 3, silent = FALSE, my_option = "x")
+  .expect_bridge_calls <- function(calls) {
+    expect_length(calls, 2)
+    for (call_args in calls) {
+      expect_identical(call_args[order(names(call_args))], opts[order(names(opts))])
+    }
+  }
   out <- suppressWarnings(suppressMessages(bayesfactor_models(
     stan_bf_1,
-    repetitions = 3,
-    method = "warp3",
     stan_bf_0,
-    cores = 2,
-    use_neff = FALSE,
-    maxiter = 500,
-    denominator = stan_bf_0
+    denominator = stan_bf_0,
+    bridge_options = opts
   )))
-  expect_length(env$calls, 2)
-  for (call_args in env$calls) {
-    expect_identical(
-      call_args[order(names(call_args))],
-      bridge_options[order(names(bridge_options))]
-    )
-  }
+  .expect_bridge_calls(env$calls)
   expect_identical(nrow(out), 2L)
   expect_identical(out$Model, c("Species", "1"))
   expect_identical(attr(out, "denominator"), 2L)
+  expect_identical(out$log_BF, c(10, 0))
+
+  # the same for stanfit objects
+  env$calls <- list()
+  out <- suppressWarnings(suppressMessages(bayesfactor_models(
+    stanfit_1,
+    stanfit_0,
+    denominator = stanfit_0,
+    bridge_options = opts
+  )))
+  .expect_bridge_calls(env$calls)
+  expect_identical(nrow(out), 2L)
   expect_identical(out$log_BF, c(10, 0))
 
   # without options, only `silent = TRUE` is passed, and log_BF is the
@@ -263,9 +267,12 @@ test_that("bayesfactor_models STAN, median of repeated estimates", {
     ),
     .package = "bridgesampling"
   )
-  out <- suppressWarnings(suppressMessages(
-    bayesfactor_models(stan_bf_1, stan_bf_0, denominator = 2, repetitions = 3)
-  ))
+  out <- suppressWarnings(suppressMessages(bayesfactor_models(
+    stan_bf_1,
+    stan_bf_0,
+    denominator = 2,
+    bridge_options = list(repetitions = 3)
+  )))
   expect_identical(out$log_BF, c(-11 - -21.5, 0))
 
   # missing estimates are left out
@@ -277,10 +284,37 @@ test_that("bayesfactor_models STAN, median of repeated estimates", {
     ),
     .package = "bridgesampling"
   )
-  out <- suppressWarnings(suppressMessages(
-    bayesfactor_models(stan_bf_1, stan_bf_0, denominator = 2, repetitions = 3)
-  ))
+  out <- suppressWarnings(suppressMessages(bayesfactor_models(
+    stan_bf_1,
+    stan_bf_0,
+    denominator = 2,
+    bridge_options = list(repetitions = 3)
+  )))
   expect_identical(out$log_BF, c(-11 - -21.5, 0))
+})
+
+test_that("bayesfactor_models STAN, bridge_options needs names", {
+  skip_if_not_installed("bridgesampling")
+
+  local_mocked_bindings(
+    bridge_sampler = function(...) stop("bridge_sampler() was called"),
+    .package = "bridgesampling"
+  )
+  fake_stanreg <- structure(list(), class = "stanreg")
+  expect_error(
+    bayesfactor_models(fake_stanreg, fake_stanreg, bridge_options = list(3)),
+    regexp = "Every element of `bridge_options` needs a name",
+    fixed = TRUE
+  )
+  expect_error(
+    bayesfactor_models(
+      fake_stanreg,
+      fake_stanreg,
+      bridge_options = list(repetitions = 3, 2)
+    ),
+    regexp = "Every element of `bridge_options` needs a name",
+    fixed = TRUE
+  )
 })
 
 test_that("bayesfactor_models STAN, precision warning names repetitions", {
@@ -295,10 +329,12 @@ test_that("bayesfactor_models STAN, precision warning names repetitions", {
     bridge_sampler = .mock_bridge_sampler(list(mods$m0, mods$m1), list(-20, -10), env),
     .package = "bridgesampling"
   )
-  expect_warning(
+  w <- expect_warning(
     suppressMessages(bayesfactor_models(mods$m0, mods$m1, verbose = TRUE)),
-    regexp = "repetitions"
+    regexp = "40,000"
   )
+  expect_match(conditionMessage(w), "repetitions")
+  expect_match(conditionMessage(w), "bridge_options")
 })
 
 test_that(".get_marglik uses a stored marglik criterion of brmsfit models", {
@@ -314,7 +350,7 @@ test_that(".get_marglik uses a stored marglik criterion of brmsfit models", {
   )
   expect_identical(.get_marglik(fake_brmsfit, verbose = TRUE), -2.5)
   expect_identical(
-    .get_marglik(fake_brmsfit, verbose = TRUE, bridge_args = list(repetitions = 3)),
+    .get_marglik(fake_brmsfit, verbose = TRUE, bridge_options = list(repetitions = 3)),
     -2.5
   )
 
@@ -338,10 +374,24 @@ test_that(".get_marglik passes options and uses the median of repeated estimates
     .package = "bridgesampling"
   )
   expect_identical(
-    .get_marglik(fake_stanreg, verbose = FALSE, bridge_args = list(repetitions = 4)),
+    .get_marglik(fake_stanreg, verbose = FALSE, bridge_options = list(repetitions = 4)),
     -2
   )
   expect_identical(env$calls, list(list(silent = TRUE, repetitions = 4)))
+
+  # a brmsfit without a stored marglik gets the options unchanged
+  env$calls <- list()
+  fake_brmsfit <- structure(list(criteria = list()), class = "brmsfit")
+  local_mocked_bindings(
+    bridge_sampler = .mock_bridge_sampler(list(fake_brmsfit), list(-5), env),
+    .package = "bridgesampling"
+  )
+  opts <- list(repetitions = 4, my_option = "x")
+  expect_identical(
+    .get_marglik(fake_brmsfit, verbose = FALSE, bridge_options = opts),
+    -5
+  )
+  expect_identical(env$calls, list(c(list(silent = TRUE), opts)))
 })
 
 test_that("precision warning has no repetitions hint for stored brms marglik", {
@@ -379,13 +429,13 @@ test_that("precision warning has no repetitions hint for stored brms marglik", {
   msg <- .precision_warning(list(a = fake_brmsfit, b = fake_brmsfit))
   expect_length(msg, 1)
   expect_match(msg, "40,000")
-  expect_no_match(msg, "repetitions")
+  expect_no_match(msg, "bridge_options")
 
   # control: models that use bridge sampling get the hint
   fake_stanreg <- structure(list(), class = "stanreg")
   msg <- .precision_warning(list(a = fake_stanreg, b = fake_stanreg))
   expect_length(msg, 1)
-  expect_match(msg, "repetitions")
+  expect_match(msg, "bridge_options")
 })
 
 test_that("bayesfactor_models BRMS", {
