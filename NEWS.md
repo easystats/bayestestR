@@ -7,10 +7,11 @@
 
 ## Changes
 
-* `bayesfactor_models()` passes the arguments `repetitions`, `method`, `cores`,
-  `use_neff`, and `maxiter` to `bridgesampling::bridge_sampler()` for *brms* and
-  *rstanarm* models. With `repetitions` larger than 1, the median of the
-  repeated log marginal likelihood estimates is used (#574).
+* `bayesfactor_models()` gains a `bridge_options` argument, a list of arguments
+  passed to `bridgesampling::bridge_sampler()` for `brmsfit`, `stanreg`,
+  `stanfit`, and `CmdStanFit` models (not used for `blavaan` models). With
+  `repetitions` larger than 1, the median of the repeated log marginal
+  likelihood estimates is used (#574).
 
 # bayestestR 0.20.0
 

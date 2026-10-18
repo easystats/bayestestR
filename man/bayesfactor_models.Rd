@@ -4,6 +4,7 @@
 \alias{bayesfactor_models}
 \alias{bf_models}
 \alias{bayesfactor_models.default}
+\alias{bayesfactor_models.stanreg}
 \title{Bayes Factors (BF) for model comparison}
 \usage{
 bayesfactor_models(..., denominator = 1, verbose = TRUE)
@@ -11,6 +12,13 @@ bayesfactor_models(..., denominator = 1, verbose = TRUE)
 bf_models(..., denominator = 1, verbose = TRUE)
 
 \method{bayesfactor_models}{default}(..., denominator = 1, verbose = TRUE)
+
+\method{bayesfactor_models}{stanreg}(
+  ...,
+  denominator = 1,
+  verbose = TRUE,
+  bridge_options = list()
+)
 }
 \arguments{
 \item{...}{Fitted models (see details), all fit on the same data, or a single
@@ -20,20 +28,17 @@ to \code{\link[insight:get_loglikelihood]{insight::get_loglikelihood()}} (see de
 \itemize{
 \item \code{estimator} (defaults to \code{"ML"})
 \item \code{check_response}  (defaults to \code{FALSE})
-}
-
-For \code{brmsfit} and \code{stanreg} models, the named arguments \code{repetitions},
-\code{method}, \code{cores}, \code{use_neff}, and \code{maxiter} are passed to
-\code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}} (see details). These arguments must be
-named in full and given after the first model, and the models must be
-passed one by one, not as a list. A model cannot be passed under one of
-these names.}
+}}
 
 \item{denominator}{Either an integer indicating which of the models to use as
 the denominator, or a model to be used as a denominator. Ignored for
 \code{BFBayesFactor}.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{bridge_options}{A named list of arguments passed to
+\code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}}, such as \code{repetitions} or \code{cores}.
+Not used for \code{blavaan} models (see details).}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and
@@ -60,12 +65,16 @@ terms will be extracted (allowing for follow-up analysis with \link{bayesfactor_
 \itemize{
 \item \code{brmsfit} models must have been fitted with \code{save_pars = save_pars(all = TRUE)}.
 \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
+\item Arguments for \code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}} can be passed as a
+named list in \code{bridge_options}, for \code{brmsfit}, \code{stanreg}, \code{stanfit}, and
+\code{CmdStanFit} models. \code{blavaan} models do not use \code{bridge_options}.
 \item Bridge sampling gives a slightly different estimate each time. With
-\code{repetitions} larger than 1, the bridge sampler runs several times, and
-the median of the log marginal likelihood estimates is used.
+\code{repetitions} larger than 1 in \code{bridge_options}, the bridge sampler runs
+several times, and the median of the log marginal likelihood estimates
+is used.
 \item A \code{brmsfit} model that already holds a \code{"marglik"} criterion (see
 \code{\link[brms:add_criterion]{brms::add_criterion()}}) uses the median of its stored estimates, and
-the arguments for \code{bridge_sampler()} are not used for it.
+\code{bridge_options} is not used for it.
 }
 \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is a wraparound \code{BayesFactor::extractBF()}.
 \item For all other model types, Bayes factors are computed using the BIC approximation.

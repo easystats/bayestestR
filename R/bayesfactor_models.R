@@ -15,13 +15,6 @@
 #'   to [`insight::get_loglikelihood()`] (see details):
 #'   - `estimator` (defaults to `"ML"`)
 #'   - `check_response`  (defaults to `FALSE`)
-#'
-#'   For `brmsfit` and `stanreg` models, the named arguments `repetitions`,
-#'   `method`, `cores`, `use_neff`, and `maxiter` are passed to
-#'   [`bridgesampling::bridge_sampler()`] (see details). These arguments must be
-#'   named in full and given after the first model, and the models must be
-#'   passed one by one, not as a list. A model cannot be passed under one of
-#'   these names.
 #' @param denominator Either an integer indicating which of the models to use as
 #'   the denominator, or a model to be used as a denominator. Ignored for
 #'   `BFBayesFactor`.
@@ -39,12 +32,16 @@
 #' - For `brmsfit` or `stanreg` models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 #'   - `brmsfit` models must have been fitted with `save_pars = save_pars(all = TRUE)`.
 #'   - `stanreg` models must have been fitted with a defined `diagnostic_file`.
+#'   - Arguments for [`bridgesampling::bridge_sampler()`] can be passed as a
+#'     named list in `bridge_options`, for `brmsfit`, `stanreg`, `stanfit`, and
+#'     `CmdStanFit` models. `blavaan` models do not use `bridge_options`.
 #'   - Bridge sampling gives a slightly different estimate each time. With
-#'     `repetitions` larger than 1, the bridge sampler runs several times, and
-#'     the median of the log marginal likelihood estimates is used.
+#'     `repetitions` larger than 1 in `bridge_options`, the bridge sampler runs
+#'     several times, and the median of the log marginal likelihood estimates
+#'     is used.
 #'   - A `brmsfit` model that already holds a `"marglik"` criterion (see
 #'     [`brms::add_criterion()`]) uses the median of its stored estimates, and
-#'     the arguments for `bridge_sampler()` are not used for it.
+#'     `bridge_options` is not used for it.
 #' - For `BFBayesFactor`, `bayesfactor_models()` is a wraparound `BayesFactor::extractBF()`.
 #' - For all other model types, Bayes factors are computed using the BIC approximation.
 #'   Note that BICs are extracted from using [insight::get_loglikelihood], see documentation
@@ -425,6 +422,10 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 }
 
 
+#' @param bridge_options A named list of arguments passed to
+#'   [`bridgesampling::bridge_sampler()`], such as `repetitions` or `cores`.
+#'   Not used for `blavaan` models (see details).
+#' @rdname bayesfactor_models
 #' @export
 bayesfactor_models.stanreg <- function(
   ...,
