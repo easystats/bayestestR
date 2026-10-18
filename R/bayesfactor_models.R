@@ -308,7 +308,13 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
         "Bayes factors might not be precise.",
         "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended."
       )
-      if (!is_blavaan) {
+      # `repetitions` does nothing for brmsfit models with a stored marglik
+      has_marglik <- vapply(
+        mods,
+        function(m) inherits(m, "brmsfit") && "marglik" %in% names(m$criteria),
+        logical(1)
+      )
+      if (!is_blavaan && !all(has_marglik)) {
         msg <- c(
           msg,
           "You can also set `repetitions` to repeat bridge sampling and use the median estimate."
