@@ -424,7 +424,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 #' @param bridge_options A named list of arguments passed to
 #'   [`bridgesampling::bridge_sampler()`], such as `repetitions`, `method`,
-#'   `cores`, or `maxiter`. Not used for `blavaan` models (see details).
+#'   `cores`, or `maxiter`. Give it by its full name, after the models. Not
+#'   used for `blavaan` models (see details).
 #' @rdname bayesfactor_models
 #' @export
 bayesfactor_models.stanreg <- function(
@@ -435,9 +436,13 @@ bayesfactor_models.stanreg <- function(
 ) {
   opt_names <- names(bridge_options)
   if (
-    length(bridge_options) && (is.null(opt_names) || !all(nzchar(opt_names)))
+    !is.list(bridge_options) ||
+      (length(bridge_options) &&
+        (is.null(opt_names) || !all(nzchar(opt_names))))
   ) {
-    insight::format_error("Every element of `bridge_options` needs a name.")
+    insight::format_error(
+      "`bridge_options` must be a list in which every element has a name."
+    )
   }
 
   mods <- list(...)
@@ -669,13 +674,14 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
       "Computation of Marginal Likelihood: estimating marginal likelihood, please wait..."
     )
   }
-  # a `silent` element of `bridge_options` replaces the default
-  bridge_args <- c(list(silent = TRUE), bridge_options)
-  bridge_args <- bridge_args[!duplicated(names(bridge_args), fromLast = TRUE)]
+  # `silent = TRUE`, unless `bridge_options` sets `silent`
+  if (!"silent" %in% names(bridge_options)) {
+    bridge_options <- c(list(silent = TRUE), bridge_options)
+  }
   # `quote(mod)` keeps the model object out of the call that error messages print
   ml <- do.call(
     bridgesampling::bridge_sampler,
-    c(list(quote(mod)), bridge_args)
+    c(list(quote(mod)), bridge_options)
   )
   # with `repetitions` > 1, `logml` holds one estimate per repetition
   stats::median(ml$logml, na.rm = TRUE)

@@ -266,7 +266,7 @@ test_that("bayesfactor_models STAN, median of repeated estimates", {
   local_mocked_bindings(
     bridge_sampler = .mock_bridge_sampler(
       list(stan_bf_0, stan_bf_1),
-      list(c(-20, -21, -23, -22), c(-10, -12, -11)),
+      list(c(-20, -21, -30, -22), c(-10, -12, -17)),
       env
     ),
     .package = "bridgesampling"
@@ -277,13 +277,13 @@ test_that("bayesfactor_models STAN, median of repeated estimates", {
     denominator = 2,
     bridge_options = list(repetitions = 3)
   )))
-  expect_identical(out$log_BF, c(-11 - -21.5, 0))
+  expect_identical(out$log_BF, c(-12 - -21.5, 0))
 
   # missing estimates are left out
   local_mocked_bindings(
     bridge_sampler = .mock_bridge_sampler(
       list(stan_bf_0, stan_bf_1),
-      list(c(-20, NA, -21, -23, -22), c(-10, -12, -11)),
+      list(c(-20, NA, -21, -30, -22), c(-10, -12, -17)),
       env
     ),
     .package = "bridgesampling"
@@ -294,7 +294,7 @@ test_that("bayesfactor_models STAN, median of repeated estimates", {
     denominator = 2,
     bridge_options = list(repetitions = 3)
   )))
-  expect_identical(out$log_BF, c(-11 - -21.5, 0))
+  expect_identical(out$log_BF, c(-12 - -21.5, 0))
 })
 
 test_that("bayesfactor_models STAN, bridge_options needs names", {
@@ -305,20 +305,15 @@ test_that("bayesfactor_models STAN, bridge_options needs names", {
     .package = "bridgesampling"
   )
   fake_stanreg <- structure(list(), class = "stanreg")
-  expect_error(
-    bayesfactor_models(fake_stanreg, fake_stanreg, bridge_options = list(3)),
-    regexp = "Every element of `bridge_options` needs a name",
-    fixed = TRUE
-  )
-  expect_error(
-    bayesfactor_models(
-      fake_stanreg,
-      fake_stanreg,
-      bridge_options = list(repetitions = 3, 2)
-    ),
-    regexp = "Every element of `bridge_options` needs a name",
-    fixed = TRUE
-  )
+  # an unnamed list, a partly named list, and a named vector
+  bad_options <- list(list(3), list(repetitions = 3, 2), c(repetitions = 3))
+  for (opts in bad_options) {
+    expect_error(
+      bayesfactor_models(fake_stanreg, fake_stanreg, bridge_options = opts),
+      regexp = "`bridge_options` must be a list in which every element has a name",
+      fixed = TRUE
+    )
+  }
 })
 
 test_that("bayesfactor_models STAN, precision warning names repetitions", {
@@ -376,7 +371,7 @@ test_that(".get_marglik passes options and uses the median of repeated estimates
   local_mocked_bindings(
     bridge_sampler = .mock_bridge_sampler(
       list(fake_stanreg),
-      list(c(-1, NA, -3, -2)),
+      list(c(-1, NA, -9, -2)),
       env
     ),
     .package = "bridgesampling"
