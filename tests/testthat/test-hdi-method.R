@@ -37,7 +37,7 @@ test_that("hdi() method = 'density' gives the old spi() results", {
 })
 
 
-test_that("hdi() method = 'density' reaches each input path", {
+test_that("hdi() method = 'density' works for data frame, draws, rvar and mcmc input", {
   skip_if_not_installed("quadprog")
   skip_if_not_installed("posterior")
   set.seed(123)
