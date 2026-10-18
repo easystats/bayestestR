@@ -22,6 +22,8 @@ test_that("hdi() method = 'density' gives the old spi() results", {
   ci <- c(0.8, 0.9, 0.95)
 
   out <- hdi(x, ci = ci, method = "density")
+  expect_length(out$CI_low, 3)
+  expect_length(out$CI_high, 3)
   expect_lt(
     max(abs(out$CI_low - c(-1.2705321018, -1.5797881308, -2.0789555251))),
     1e-6
