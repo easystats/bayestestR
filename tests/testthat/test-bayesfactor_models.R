@@ -317,6 +317,75 @@ test_that(".get_marglik uses a stored marglik criterion of brmsfit models", {
     .get_marglik(fake_brmsfit, verbose = TRUE, bridge_args = list(repetitions = 3)),
     -2.5
   )
+
+  # a failed repetition (NA) is left out
+  fake_brmsfit$criteria$marglik$logml <- c(-3, NA, -1, -2, -10)
+  expect_identical(.get_marglik(fake_brmsfit, verbose = TRUE), -2.5)
+})
+
+test_that(".get_marglik passes options and uses the median of repeated estimates", {
+  skip_if_not_installed("bridgesampling")
+
+  env <- new.env()
+  env$calls <- list()
+  fake_stanreg <- structure(list(), class = "stanreg")
+  local_mocked_bindings(
+    bridge_sampler = .mock_bridge_sampler(
+      list(fake_stanreg),
+      list(c(-1, NA, -3, -2)),
+      env
+    ),
+    .package = "bridgesampling"
+  )
+  expect_identical(
+    .get_marglik(fake_stanreg, verbose = FALSE, bridge_args = list(repetitions = 4)),
+    -2
+  )
+  expect_identical(env$calls, list(list(silent = TRUE, repetitions = 4)))
+})
+
+test_that("precision warning has no repetitions hint for stored brms marglik", {
+  skip_if_not_installed("bridgesampling")
+
+  local_mocked_bindings(
+    find_algorithm = function(x, ...) {
+      list(iterations = 1000, warmup = 500, chains = 1)
+    },
+    .package = "insight"
+  )
+  local_mocked_bindings(
+    bridge_sampler = function(...) structure(list(logml = -1), class = "bridge"),
+    .package = "bridgesampling"
+  )
+  # the precision warning of a call; the call itself may fail later on the
+  # fake models, which have no formula
+  .precision_warning <- function(mods) {
+    msg <- NULL
+    withCallingHandlers(
+      try(.bayesfactor_models_stan(mods, verbose = TRUE), silent = TRUE),
+      warning = function(w) {
+        msg <<- c(msg, conditionMessage(w))
+        invokeRestart("muffleWarning")
+      },
+      message = function(m) invokeRestart("muffleMessage")
+    )
+    msg
+  }
+
+  fake_brmsfit <- structure(
+    list(criteria = list(marglik = list(logml = c(-3, -1)))),
+    class = "brmsfit"
+  )
+  msg <- .precision_warning(list(a = fake_brmsfit, b = fake_brmsfit))
+  expect_length(msg, 1)
+  expect_match(msg, "40,000")
+  expect_no_match(msg, "repetitions")
+
+  # control: models that use bridge sampling get the hint
+  fake_stanreg <- structure(list(), class = "stanreg")
+  msg <- .precision_warning(list(a = fake_stanreg, b = fake_stanreg))
+  expect_length(msg, 1)
+  expect_match(msg, "repetitions")
 })
 
 test_that("bayesfactor_models BRMS", {

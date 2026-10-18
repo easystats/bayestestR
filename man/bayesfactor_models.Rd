@@ -24,7 +24,10 @@ to \code{\link[insight:get_loglikelihood]{insight::get_loglikelihood()}} (see de
 
 For \code{brmsfit} and \code{stanreg} models, the named arguments \code{repetitions},
 \code{method}, \code{cores}, \code{use_neff}, and \code{maxiter} are passed to
-\code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}} (see details).}
+\code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}} (see details). These arguments must be
+named in full and given after the first model, and the models must be
+passed one by one, not as a list. A model cannot be passed under one of
+these names.}
 
 \item{denominator}{Either an integer indicating which of the models to use as
 the denominator, or a model to be used as a denominator. Ignored for

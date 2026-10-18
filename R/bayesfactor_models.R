@@ -18,7 +18,10 @@
 #'
 #'   For `brmsfit` and `stanreg` models, the named arguments `repetitions`,
 #'   `method`, `cores`, `use_neff`, and `maxiter` are passed to
-#'   [`bridgesampling::bridge_sampler()`] (see details).
+#'   [`bridgesampling::bridge_sampler()`] (see details). These arguments must be
+#'   named in full and given after the first model, and the models must be
+#'   passed one by one, not as a list. A model cannot be passed under one of
+#'   these names.
 #' @param denominator Either an integer indicating which of the models to use as
 #'   the denominator, or a model to be used as a denominator. Ignored for
 #'   `BFBayesFactor`.
@@ -317,7 +320,10 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
       if (!is_blavaan && !all(has_marglik)) {
         msg <- c(
           msg,
-          "You can also set `repetitions` to repeat bridge sampling and use the median estimate."
+          paste(
+            "You can also set `repetitions` to repeat bridge sampling",
+            "and use the median estimate."
+          )
         )
       }
       do.call(insight::format_warning, as.list(msg))
@@ -648,7 +654,7 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 .get_marglik <- function(mod, verbose, bridge_args = list(), ...) {
   # Add a check here for brmsfit object to avoid unnecessary computation of the ML
   if (inherits(mod, "brmsfit") && "marglik" %in% names(mod$criteria)) {
-    return(stats::median(mod$criteria$marglik$logml))
+    return(stats::median(mod$criteria$marglik$logml, na.rm = TRUE))
   }
 
   # Else... Get marginal likelihood
