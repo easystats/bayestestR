@@ -10,9 +10,9 @@
 \usage{
 hdi(x, ...)
 
-\method{hdi}{numeric}(x, ci = 0.95, verbose = TRUE, method = "empirical", ...)
+\method{hdi}{numeric}(x, ci = 0.95, verbose = TRUE, method = "samples", ...)
 
-\method{hdi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, method = "empirical", ...)
+\method{hdi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, method = "samples", ...)
 
 \method{hdi}{brmsfit}(
   x,
@@ -21,7 +21,7 @@ hdi(x, ...)
   component = "conditional",
   parameters = NULL,
   verbose = TRUE,
-  method = "empirical",
+  method = "samples",
   ...
 )
 
@@ -41,7 +41,7 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{method}{The algorithm that finds the interval. Can be \code{"empirical"}
+\item{method}{The algorithm that finds the interval. Can be \code{"samples"}
 (default) or \code{"density"}. See section \emph{Algorithms}.}
 
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
@@ -177,7 +177,7 @@ Both methods return one continuous interval for each value of \code{ci}. For
 multimodal distributions, this interval can include values of low density
 between the modes.
 \itemize{
-\item \code{method = "empirical"} (default) sorts the \code{n} draws and takes the
+\item \code{method = "samples"} (default) sorts the \code{n} draws and takes the
 narrowest window of \code{ceiling(ci * n) + 1} neighboring sorted draws. The
 bounds are the first and the last draw of that window.
 \item \code{method = "density"} uses the SPIn algorithm of Liu, Gelman and Zheng
@@ -186,7 +186,7 @@ window of the sorted draws. Then it replaces each bound with a weighted
 average of the sorted draws near it. The weights come from quadratic
 programming, with an objective that uses a kernel density estimate
 (\code{\link[stats:density]{stats::density()}}). Liu et al. (2015) report that these bounds have a
-lower Monte Carlo error than the bounds of the empirical method. This
+lower Monte Carlo error than the bounds of the samples method. This
 method needs the \strong{quadprog} package. The deprecated \code{spi()} returns
 the same interval.
 }

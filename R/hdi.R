@@ -36,7 +36,7 @@
 #' iterations instead of the predictions. This only applies to models that return
 #' iterations for predicted values (e.g., `brmsfit` models).
 #' @param verbose Toggle off warnings.
-#' @param method The algorithm that finds the interval. Can be `"empirical"`
+#' @param method The algorithm that finds the interval. Can be `"samples"`
 #'   (default) or `"density"`. See section _Algorithms_.
 #' @param ... Currently not used.
 #' @inheritParams insight::get_parameters.BFBayesFactor
@@ -75,7 +75,7 @@
 #' multimodal distributions, this interval can include values of low density
 #' between the modes.
 #'
-#' - `method = "empirical"` (default) sorts the `n` draws and takes the
+#' - `method = "samples"` (default) sorts the `n` draws and takes the
 #'   narrowest window of `ceiling(ci * n) + 1` neighboring sorted draws. The
 #'   bounds are the first and the last draw of that window.
 #' - `method = "density"` uses the SPIn algorithm of Liu, Gelman and Zheng
@@ -84,7 +84,7 @@
 #'   average of the sorted draws near it. The weights come from quadratic
 #'   programming, with an objective that uses a kernel density estimate
 #'   ([stats::density()]). Liu et al. (2015) report that these bounds have a
-#'   lower Monte Carlo error than the bounds of the empirical method. This
+#'   lower Monte Carlo error than the bounds of the samples method. This
 #'   method needs the **quadprog** package. The deprecated `spi()` returns
 #'   the same interval.
 #'
@@ -181,7 +181,7 @@ hdi.default <- function(x, ...) {
 
 #' @rdname hdi
 #' @export
-hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, method = "samples", ...) {
   method <- .check_hdi_method(method, missing(method), list(...))
   hdi_fun <- if (method == "density") .spi else .hdi
   out <- do.call(
@@ -211,7 +211,7 @@ hdi.data.frame <- function(
   ci = 0.95,
   rvar_col = NULL,
   verbose = TRUE,
-  method = "empirical",
+  method = "samples",
   ...
 ) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
@@ -244,7 +244,7 @@ hdi.data.frame <- function(
 
 
 #' @export
-hdi.draws <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+hdi.draws <- function(x, ci = 0.95, verbose = TRUE, method = "samples", ...) {
   method <- .check_hdi_method(method, missing(method), list(...))
   dat <- .compute_interval_dataframe(
     x = .posterior_draws_to_df(x),
@@ -262,7 +262,7 @@ hdi.rvar <- hdi.draws
 
 
 #' @export
-hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, method = "samples", ...) {
   method <- .check_hdi_method(method, missing(method), list(...))
   nF <- x$Fixed$nfl
   d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
@@ -284,7 +284,7 @@ hdi.bamlss <- function(
   ci = 0.95,
   component = "all",
   verbose = TRUE,
-  method = "empirical",
+  method = "samples",
   ...
 ) {
   method <- .check_hdi_method(method, missing(method), list(...))
@@ -303,7 +303,7 @@ hdi.bamlss <- function(
 
 
 #' @export
-hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, method = "samples", ...) {
   method <- .check_hdi_method(method, missing(method), list(...))
   d <- as.data.frame(x)
   dat <- .compute_interval_dataframe(
@@ -319,7 +319,7 @@ hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
 
 
 #' @export
-hdi.bcplm <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+hdi.bcplm <- function(x, ci = 0.95, verbose = TRUE, method = "samples", ...) {
   method <- .check_hdi_method(method, missing(method), list(...))
   d <- insight::get_parameters(x, verbose = verbose)
   dat <- .compute_interval_dataframe(
@@ -353,7 +353,7 @@ hdi.sim.merMod <- function(
   effects = "fixed",
   parameters = NULL,
   verbose = TRUE,
-  method = "empirical",
+  method = "samples",
   ...
 ) {
   method <- .check_hdi_method(method, missing(method), list(...))
@@ -379,7 +379,7 @@ hdi.sim <- function(
   ci = 0.95,
   parameters = NULL,
   verbose = TRUE,
-  method = "empirical",
+  method = "samples",
   ...
 ) {
   method <- .check_hdi_method(method, missing(method), list(...))
@@ -433,7 +433,7 @@ hdi.stanreg <- function(
   component = "location",
   parameters = NULL,
   verbose = TRUE,
-  method = "empirical",
+  method = "samples",
   ...
 ) {
   method <- .check_hdi_method(method, missing(method), list(...))
@@ -487,7 +487,7 @@ hdi.brmsfit <- function(
   component = "conditional",
   parameters = NULL,
   verbose = TRUE,
-  method = "empirical",
+  method = "samples",
   ...
 ) {
   method <- .check_hdi_method(method, missing(method), list(...))

@@ -5,7 +5,7 @@
   if (method_missing && identical(dots$ci_method, "spi")) {
     method <- "density"
   }
-  insight::validate_argument(method, c("empirical", "density"))
+  insight::validate_argument(method, c("samples", "density"))
 }
 
 
@@ -47,7 +47,7 @@
 
 
 #' @keywords internal
-.compute_interval_dataframe <- function(x, ci, verbose, fun, method = "empirical") {
+.compute_interval_dataframe <- function(x, ci, verbose, fun, method = "samples") {
   numeric_variables <- vapply(x, is.numeric, TRUE)
   ci_fun <- get(fun, asNamespace("bayestestR"))
   # only hdi() has a `method` argument
@@ -90,7 +90,7 @@
   parameters,
   verbose,
   fun,
-  method = "empirical"
+  method = "samples"
 ) {
   fixed <- fixed.data <- NULL
   random <- random.data <- NULL
@@ -124,7 +124,7 @@
   parameters,
   verbose,
   fun,
-  method = "empirical"
+  method = "samples"
 ) {
   fixed.data <- insight::get_parameters(x, parameters = parameters, verbose = verbose)
   d <- .compute_interval_dataframe(fixed.data, ci, verbose, fun, method)

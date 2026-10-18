@@ -1,7 +1,7 @@
 # Values recorded from upstream/main 396471bf, before `method` was added:
-# the empirical bounds are order statistics of `x`, and the density bounds are
+# the samples bounds are order statistics of `x`, and the density bounds are
 # the results of the old `spi()`.
-test_that("hdi() method = 'empirical' keeps the old results", {
+test_that("hdi() method = 'samples' keeps the old results", {
   set.seed(123)
   x <- rnorm(1000)
   x_sorted <- sort(x)
@@ -10,7 +10,7 @@ test_that("hdi() method = 'empirical' keeps the old results", {
   out <- hdi(x, ci = ci)
   expect_identical(out$CI_low, x_sorted[c(101, 52, 21)])
   expect_identical(out$CI_high, x_sorted[c(901, 952, 971)])
-  expect_identical(hdi(x, ci = ci, method = "empirical"), out)
+  expect_identical(hdi(x, ci = ci, method = "samples"), out)
   expect_identical(capture.output(print(hdi(x))), "95% HDI: [-1.97, 1.98]")
 })
 
@@ -22,15 +22,13 @@ test_that("hdi() method = 'density' gives the old spi() results", {
   ci <- c(0.8, 0.9, 0.95)
 
   out <- hdi(x, ci = ci, method = "density")
-  expect_equal(
-    out$CI_low,
-    c(-1.2705321018, -1.5797881308, -2.0789555251),
-    tolerance = 1e-6
+  expect_lt(
+    max(abs(out$CI_low - c(-1.2705321018, -1.5797881308, -2.0789555251))),
+    1e-6
   )
-  expect_equal(
-    out$CI_high,
-    c(1.2571196872, 1.7331967093, 1.8809695750),
-    tolerance = 1e-6
+  expect_lt(
+    max(abs(out$CI_high - c(1.2571196872, 1.7331967093, 1.8809695750))),
+    1e-6
   )
   expect_identical(
     capture.output(print(hdi(x, method = "density"))),
@@ -111,15 +109,15 @@ test_that("ci(), describe_posterior() and ci_method = 'spi' use the density meth
   set.seed(123)
   x <- rnorm(1000)
   density_hdi <- hdi(x, method = "density")
-  empirical_hdi <- hdi(x)
+  samples_hdi <- hdi(x)
 
   expect_no_warning(out <- ci(x, method = "SPI"), class = "deprecatedWarning")
   expect_identical(out$CI_low, density_hdi$CI_low)
   expect_identical(out$CI_high, density_hdi$CI_high)
 
   out <- ci(x, method = "HDI")
-  expect_identical(out$CI_low, empirical_hdi$CI_low)
-  expect_identical(out$CI_high, empirical_hdi$CI_high)
+  expect_identical(out$CI_low, samples_hdi$CI_low)
+  expect_identical(out$CI_high, samples_hdi$CI_high)
 
   expect_no_warning(
     out <- describe_posterior(x, ci_method = "spi", test = "pd"),
@@ -133,9 +131,9 @@ test_that("ci(), describe_posterior() and ci_method = 'spi' use the density meth
   expect_identical(out$CI_high, density_hdi$CI_high)
 
   # an explicit `method` wins over `ci_method`
-  out <- hdi(x, method = "empirical", ci_method = "spi")
-  expect_identical(out$CI_low, empirical_hdi$CI_low)
-  expect_identical(out$CI_high, empirical_hdi$CI_high)
+  out <- hdi(x, method = "samples", ci_method = "spi")
+  expect_identical(out$CI_low, samples_hdi$CI_low)
+  expect_identical(out$CI_high, samples_hdi$CI_high)
 
   expect_no_warning(
     rope(x, range = c(-0.1, 0.1), ci_method = "SPI"),
@@ -147,9 +145,9 @@ test_that("ci(), describe_posterior() and ci_method = 'spi' use the density meth
 test_that("hdi() stops for an unknown method", {
   set.seed(123)
   x <- rnorm(1000)
-  expect_error(hdi(x, method = "foo"), "empirical.*density")
+  expect_error(hdi(x, method = "foo"), "samples.*density")
   expect_error(
     hdi(data.frame(a = x, b = x), method = "foo"),
-    "empirical.*density"
+    "samples.*density"
   )
 })

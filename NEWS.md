@@ -11,7 +11,7 @@
 
 ## Changes
 
-* `hdi()` gains a `method` argument. `method = "empirical"` (default) keeps
+* `hdi()` gains a `method` argument. `method = "samples"` (default) keeps
   the current algorithm, and `method = "density"` uses the SPIn algorithm of
   `spi()`. The help page of `hdi()` now describes both algorithms (#719, #519).
   `hdi(ci_method = "spi")` now selects `method = "density"` for all objects,
