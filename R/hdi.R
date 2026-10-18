@@ -36,6 +36,8 @@
 #' iterations instead of the predictions. This only applies to models that return
 #' iterations for predicted values (e.g., `brmsfit` models).
 #' @param verbose Toggle off warnings.
+#' @param method The algorithm that finds the interval. Can be `"empirical"`
+#'   (default) or `"density"`. See section _Algorithms_.
 #' @param ... Currently not used.
 #' @inheritParams insight::get_parameters.BFBayesFactor
 #' @inheritParams insight::get_parameters
@@ -67,12 +69,31 @@
 #' possible for the `component` argument, which are not all documented in detail
 #' here. See also [`?insight::find_parameters`](https://easystats.github.io/insight/reference/find_parameters.BGGM.html).
 #'
+#' @section Algorithms:
+#'
+#' Both methods return one continuous interval for each value of `ci`. For
+#' multimodal distributions, this interval can include values of low density
+#' between the modes.
+#'
+#' - `method = "empirical"` (default) sorts the `n` draws and takes the
+#'   narrowest window of `ceiling(ci * n) + 1` neighboring sorted draws. The
+#'   bounds are the first and the last draw of that window.
+#' - `method = "density"` uses the SPIn algorithm of Liu, Gelman and Zheng
+#'   (2015), adapted from the **SPIn** package. It starts from the narrowest
+#'   window of the sorted draws. Then it replaces each bound with a weighted
+#'   average of the sorted draws near it. The weights come from quadratic
+#'   programming, with an objective that uses a kernel density estimate
+#'   ([stats::density()]). Liu et al. (2015) report that these bounds have a
+#'   lower Monte Carlo error than the bounds of the empirical method. This
+#'   method needs the **quadprog** package. The deprecated `spi()` returns
+#'   the same interval.
+#'
 #' @details Unlike equal-tailed intervals (see [`eti()`]) that typically exclude
 #' 2.5% from each tail of the distribution and always include the median, the
 #' HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior
 #' distributions. While this can be useful to better represent the credibility
-#' mass of a distribution, the HDI also has some limitations. See [`spi()`] for
-#' details.
+#' mass of a distribution, the HDI also has some limitations. The section
+#' _Algorithms_ of [`hdi()`] explains how the HDI is computed.
 #'
 #' A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
 #' side of its limits. It indicates the 2.5th percentile and the 97.5th
@@ -100,7 +121,7 @@
 #'
 #' @family ci
 #' @seealso Other interval functions, such as [`hdi()`], [`eti()`], [`bci()`],
-#' [`spi()`], [`si()`].
+#' [`si()`].
 #'
 #' @examplesIf all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))
 #' library(bayestestR)
@@ -133,6 +154,9 @@
 #' @references
 #' - Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS,
 #'   and Stan. Academic Press.
+#' - Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest
+#'   probability intervals. Statistics and Computing, 25(4), 809–819.
+#'   https://doi.org/10.1007/s11222-015-9563-8
 #' - McElreath, R. (2015). Statistical rethinking: A Bayesian course with
 #'   examples in R and Stan. Chapman and Hall/CRC.
 #'
@@ -154,11 +178,13 @@ hdi.default <- function(x, ...) {
 
 #' @rdname hdi
 #' @export
-hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
+hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+  method <- .check_hdi_method(method, missing(method), list(...))
+  hdi_fun <- if (method == "density") .spi else .hdi
   out <- do.call(
     rbind,
     lapply(ci, function(i) {
-      .hdi(x, ci = i, verbose = verbose)
+      hdi_fun(x, ci = i, verbose = verbose)
     })
   )
   class(out) <- unique(c(
@@ -166,6 +192,7 @@ hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
     "see_hdi",
     "bayestestR_ci",
     "see_ci",
+    if (method == "density") "bayestestR_spi",
     class(out)
   ))
   attr(out, "data") <- x
@@ -176,8 +203,16 @@ hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @rdname hdi
 #' @inheritParams p_direction
 #' @export
-hdi.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
+hdi.data.frame <- function(
+  x,
+  ci = 0.95,
+  rvar_col = NULL,
+  verbose = TRUE,
+  method = "empirical",
+  ...
+) {
   obj_name <- insight::safe_deparse_symbol(substitute(x))
+  method <- .check_hdi_method(method, missing(method), list(...))
 
   x_rvar <- .possibly_extract_rvar_col(x, rvar_col)
   if (length(x_rvar) > 0L) {
@@ -185,6 +220,7 @@ hdi.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
     cl[[1]] <- bayestestR::hdi
     cl$x <- x_rvar
     cl$rvar_col <- NULL
+    cl$method <- method
     out <- eval.parent(cl)
 
     attr(out, "object_name") <- sprintf('%s[["%s"]]', obj_name, rvar_col)
@@ -192,19 +228,27 @@ hdi.data.frame <- function(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...) {
     return(.append_datagrid(out, x, long = length(ci) > 1L))
   }
 
-  dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "hdi")
+  dat <- .compute_interval_dataframe(
+    x = x,
+    ci = ci,
+    verbose = verbose,
+    fun = "hdi",
+    method = method
+  )
   attr(dat, "object_name") <- obj_name
   dat
 }
 
 
 #' @export
-hdi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
+hdi.draws <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+  method <- .check_hdi_method(method, missing(method), list(...))
   dat <- .compute_interval_dataframe(
     x = .posterior_draws_to_df(x),
     ci = ci,
     verbose = verbose,
-    fun = "hdi"
+    fun = "hdi",
+    method = method
   )
   attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -215,21 +259,40 @@ hdi.rvar <- hdi.draws
 
 
 #' @export
-hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  ci_fun <- .check_ci_fun(list(...))
+hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+  method <- .check_hdi_method(method, missing(method), list(...))
   nF <- x$Fixed$nfl
   d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
-  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
+  dat <- .compute_interval_dataframe(
+    x = d,
+    ci = ci,
+    verbose = verbose,
+    fun = "hdi",
+    method = method
+  )
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
 
 #' @export
-hdi.bamlss <- function(x, ci = 0.95, component = "all", verbose = TRUE, ...) {
-  ci_fun <- .check_ci_fun(list(...))
+hdi.bamlss <- function(
+  x,
+  ci = 0.95,
+  component = "all",
+  verbose = TRUE,
+  method = "empirical",
+  ...
+) {
+  method <- .check_hdi_method(method, missing(method), list(...))
   d <- insight::get_parameters(x, component = component, verbose = verbose)
-  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
+  dat <- .compute_interval_dataframe(
+    x = d,
+    ci = ci,
+    verbose = verbose,
+    fun = "hdi",
+    method = method
+  )
   dat <- .add_clean_parameters_attribute(dat, x)
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
@@ -237,20 +300,32 @@ hdi.bamlss <- function(x, ci = 0.95, component = "all", verbose = TRUE, ...) {
 
 
 #' @export
-hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  ci_fun <- .check_ci_fun(list(...))
+hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+  method <- .check_hdi_method(method, missing(method), list(...))
   d <- as.data.frame(x)
-  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
+  dat <- .compute_interval_dataframe(
+    x = d,
+    ci = ci,
+    verbose = verbose,
+    fun = "hdi",
+    method = method
+  )
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
 
 #' @export
-hdi.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  ci_fun <- .check_ci_fun(list(...))
+hdi.bcplm <- function(x, ci = 0.95, verbose = TRUE, method = "empirical", ...) {
+  method <- .check_hdi_method(method, missing(method), list(...))
   d <- insight::get_parameters(x, verbose = verbose)
-  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
+  dat <- .compute_interval_dataframe(
+    x = d,
+    ci = ci,
+    verbose = verbose,
+    fun = "hdi",
+    method = method
+  )
   attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
@@ -275,9 +350,10 @@ hdi.sim.merMod <- function(
   effects = "fixed",
   parameters = NULL,
   verbose = TRUE,
+  method = "empirical",
   ...
 ) {
-  ci_fun <- .check_ci_fun(list(...))
+  method <- .check_hdi_method(method, missing(method), list(...))
 
   dat <- .compute_interval_simMerMod(
     x = x,
@@ -285,7 +361,8 @@ hdi.sim.merMod <- function(
     effects = effects,
     parameters = parameters,
     verbose = verbose,
-    fun = ci_fun
+    fun = "hdi",
+    method = method
   )
   out <- dat$result
   attr(out, "data") <- dat$data
@@ -294,14 +371,22 @@ hdi.sim.merMod <- function(
 
 
 #' @export
-hdi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
-  ci_fun <- .check_ci_fun(list(...))
+hdi.sim <- function(
+  x,
+  ci = 0.95,
+  parameters = NULL,
+  verbose = TRUE,
+  method = "empirical",
+  ...
+) {
+  method <- .check_hdi_method(method, missing(method), list(...))
   dat <- .compute_interval_sim(
     x = x,
     ci = ci,
     parameters = parameters,
     verbose = verbose,
-    fun = ci_fun
+    fun = "hdi",
+    method = method
   )
   out <- dat$result
   attr(out, "data") <- dat$data
@@ -345,8 +430,10 @@ hdi.stanreg <- function(
   component = "location",
   parameters = NULL,
   verbose = TRUE,
+  method = "empirical",
   ...
 ) {
+  method <- .check_hdi_method(method, missing(method), list(...))
   cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
@@ -360,6 +447,7 @@ hdi.stanreg <- function(
       ),
       ci = ci,
       verbose = verbose,
+      method = method,
       ...
     ),
     cleaned_parameters,
@@ -368,7 +456,12 @@ hdi.stanreg <- function(
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
+  class(out) <- unique(c(
+    "bayestestR_hdi",
+    "see_hdi",
+    if (method == "density") "bayestestR_spi",
+    class(out)
+  ))
   out
 }
 
@@ -391,8 +484,10 @@ hdi.brmsfit <- function(
   component = "conditional",
   parameters = NULL,
   verbose = TRUE,
+  method = "empirical",
   ...
 ) {
+  method <- .check_hdi_method(method, missing(method), list(...))
   cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
   out <- .prepare_output(
@@ -406,6 +501,7 @@ hdi.brmsfit <- function(
       ),
       ci = ci,
       verbose = verbose,
+      method = method,
       ...
     ),
     cleaned_parameters
@@ -413,7 +509,12 @@ hdi.brmsfit <- function(
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
+  class(out) <- unique(c(
+    "bayestestR_hdi",
+    "see_hdi",
+    if (method == "density") "bayestestR_spi",
+    class(out)
+  ))
   out
 }
 

@@ -35,7 +35,7 @@ distribution.}
 to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
 \item{method}{Can be \link[=eti]{"ETI"} (default), \link[=hdi]{"HDI"}, \link[=bci]{"BCI"},
-\link[=spi]{"SPI"} or \link[=si]{"SI"}.}
+\code{"SPI"} (the \link[=hdi]{HDI} with \code{method = "density"}) or \link[=si]{"SI"}.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -181,7 +181,6 @@ Other ci:
 \code{\link[=bci]{bci()}},
 \code{\link[=eti]{eti()}},
 \code{\link[=hdi]{hdi()}},
-\code{\link[=si]{si()}},
-\code{\link[=spi]{spi()}}
+\code{\link[=si]{si()}}
 }
 \concept{ci}

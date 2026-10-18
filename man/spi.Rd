@@ -2,92 +2,15 @@
 % Please edit documentation in R/spi.R
 \name{spi}
 \alias{spi}
-\alias{spi.numeric}
-\alias{spi.data.frame}
-\alias{spi.brmsfit}
-\alias{spi.get_predicted}
 \title{Shortest Probability Interval (SPI)}
 \usage{
 spi(x, ...)
-
-\method{spi}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
-
-\method{spi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
-
-\method{spi}{brmsfit}(
-  x,
-  ci = 0.95,
-  effects = "fixed",
-  component = "conditional",
-  parameters = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{spi}{get_predicted}(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
-vectors. Can also be a Bayesian model. \strong{bayestestR} supports a wide range
-of models (see, for example, \code{methods("hdi")}) and not all of those are
-documented in the 'Usage' section, because methods for other classes mostly
-resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
+vectors. Can also be a Bayesian model. See \code{\link[=hdi]{hdi()}}.}
 
-\item{...}{Currently not used.}
-
-\item{ci}{Value or vector of probability of the (credible) interval - CI
-(between 0 and 1) to be estimated. Default to \code{.95} (95\%).}
-
-\item{verbose}{Toggle off warnings.}
-
-\item{rvar_col}{A single character - the name of an \code{rvar} column in the data
-frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
-
-\item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
-(\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
-be abbreviated.
-
-For models of from packages \strong{brms} or \strong{rstanarm} there are additional
-options:
-\itemize{
-\item \code{"fixed"} returns fixed effects.
-\item \code{"random_variance"} return random effects parameters (variance and
-correlation components, e.g. those parameters that start with \code{sd_} or
-\code{cor_}).
-\item \code{"grouplevel"} returns random effects group level estimates, i.e. those
-parameters that start with \code{r_}.
-\item \code{"random"} returns both \code{"random_variance"} and \code{"grouplevel"}.
-\item \code{"all"} returns fixed effects and random effects variances.
-\item \code{"full"} returns all parameters.
-}}
-
-\item{component}{Which type of parameters to return, such as parameters for
-the conditional model, the zero-inflated part of the model, the dispersion
-term, etc. See details in section \emph{Model Components}. May be abbreviated.
-Note that the \emph{conditional} component also refers to the \emph{count} or \emph{mean}
-component - names may differ, depending on the modeling package. There are
-three convenient shortcuts (not applicable to \emph{all} model classes):
-\itemize{
-\item \code{component = "all"} returns all possible parameters.
-\item If \code{component = "location"}, location parameters such as \code{conditional},
-\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned (everything
-that are fixed or random effects - depending on the \code{effects} argument -
-but no auxiliary parameters).
-\item For \code{component = "distributional"} (or \code{"auxiliary"}), components like
-\code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and other auxiliary
-parameters) are returned.
-}}
-
-\item{parameters}{Regular expression pattern that describes the parameters
-that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
-filtered by default, so only parameters that typically appear in the
-\code{summary()} are returned. Use \code{parameters} to select specific parameters
-for the output.}
-
-\item{use_iterations}{Logical, if \code{TRUE} and \code{x} is a \code{get_predicted} object,
-(returned by \code{\link[insight:get_predicted]{insight::get_predicted()}}), the function is applied to the
-iterations instead of the predictions. This only applies to models that return
-iterations for predicted values (e.g., \code{brmsfit} models).}
+\item{...}{Arguments passed to \code{\link[=hdi]{hdi()}}.}
 }
 \value{
 A data frame with following columns:
@@ -99,52 +22,18 @@ vector, this column is missing.
 }
 }
 \description{
-Compute the \strong{Shortest Probability Interval (SPI)} of posterior distributions.
-The SPI is a more computationally stable HDI. The implementation is based on
-the algorithm from the \strong{SPIn} package.
-}
-\details{
-The SPI is an alternative method to the HDI (\code{\link[=hdi]{hdi()}}) to quantify
-uncertainty of (posterior) distributions. The SPI is said to be more stable
-than the HDI, because, the \emph{"HDI can be noisy (that is, have a high Monte Carlo error)"}
-(Liu et al. 2015). Furthermore, the HDI is sensitive to additional assumptions,
-in particular assumptions related to the different estimation methods, which
-can make the HDI less accurate or reliable.
-}
-\note{
-The code to compute the SPI was adapted from the \strong{SPIn} package,
-and slightly modified to be more robust for Stan models. Thus, credits go
-to Ying Liu for the original SPI algorithm and R implementation.
+\code{spi()} is deprecated. Use \code{hdi(method = "density")} instead, which returns
+the same interval. See \code{\link[=hdi]{hdi()}} for how the interval is computed.
 }
 \examples{
-\dontshow{if (require("quadprog") && require("rstanarm")) withAutoprint(\{ # examplesIf}
+\dontshow{if (require("quadprog")) withAutoprint(\{ # examplesIf}
 library(bayestestR)
 
 posterior <- rnorm(1000)
-spi(posterior)
-spi(posterior, ci = c(0.80, 0.89, 0.95))
-
-df <- data.frame(replicate(4, rnorm(100)))
-spi(df)
-spi(df, ci = c(0.80, 0.89, 0.95))
-\donttest{
-library(rstanarm)
-model <- suppressWarnings(
-  stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-)
-spi(model)
-}
+# instead of spi(posterior), use:
+hdi(posterior, method = "density")
 \dontshow{\}) # examplesIf}
 }
 \references{
 Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest probability intervals. Statistics and Computing, 25(4), 809–819. https://doi.org/10.1007/s11222-015-9563-8
 }
-\seealso{
-Other ci:
-\code{\link[=bci]{bci()}},
-\code{\link[=ci]{ci()}},
-\code{\link[=eti]{eti()}},
-\code{\link[=hdi]{hdi()}},
-\code{\link[=si]{si()}}
-}
-\concept{ci}
