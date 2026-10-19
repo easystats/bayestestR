@@ -365,6 +365,17 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 ) {
   insight::check_if_installed("bridgesampling")
 
+  opt_names <- names(bridge_options)
+  if (
+    !is.list(bridge_options) ||
+      (length(bridge_options) &&
+        (is.null(opt_names) || !all(nzchar(opt_names))))
+  ) {
+    insight::format_error(
+      "`bridge_options` must be a list in which every element has a name."
+    )
+  }
+
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
   if (all(!sapply(resps, is.null))) {
@@ -434,17 +445,6 @@ bayesfactor_models.stanreg <- function(
   verbose = TRUE,
   bridge_options = list()
 ) {
-  opt_names <- names(bridge_options)
-  if (
-    !is.list(bridge_options) ||
-      (length(bridge_options) &&
-        (is.null(opt_names) || !all(nzchar(opt_names))))
-  ) {
-    insight::format_error(
-      "`bridge_options` must be a list in which every element has a name."
-    )
-  }
-
   mods <- list(...)
   if (inherits(mods[[1]], "stanreg")) {
     insight::check_if_installed("rstanarm")
@@ -674,9 +674,9 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
       "Computation of Marginal Likelihood: estimating marginal likelihood, please wait..."
     )
   }
-  # `silent = TRUE`, unless `bridge_options` sets `silent`
+  # `silent = !verbose`, unless `bridge_options` sets `silent`
   if (!"silent" %in% names(bridge_options)) {
-    bridge_options <- c(list(silent = TRUE), bridge_options)
+    bridge_options <- c(list(silent = !verbose), bridge_options)
   }
   # `quote(mod)` keeps the model object out of the call that error messages print
   ml <- do.call(
