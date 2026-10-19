@@ -107,9 +107,8 @@ described by reporting four types of indices:
     can be used to get them at once and can be run directly on models.
 - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
   - [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html)
-    for *Highest Density Intervals (HDI)*,
-    [`spi()`](https://easystats.github.io/bayestestR/reference/spi.html)
-    for *Shortest Probability Intervals (SPI)* or
+    for *Highest Density Intervals (HDI)* (with `hdi(method = "density")`
+    for *Shortest Probability Intervals (SPI)*) or
     [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)
     for *Equal-Tailed Intervals (ETI)*.
   - [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)

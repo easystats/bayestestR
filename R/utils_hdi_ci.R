@@ -1,10 +1,11 @@
 #' @keywords internal
-.check_ci_fun <- function(dots) {
-  ci_fun <- "hdi"
-  if (identical(dots$ci_method, "spi")) {
-    ci_fun <- "spi"
+.check_hdi_method <- function(method, method_missing, dots) {
+  # `ci_method = "spi"` in `...` is the older way to ask for the density
+  # method, it is used only if `method` was not given
+  if (method_missing && identical(dots$ci_method, "spi")) {
+    method <- "density"
   }
-  ci_fun
+  insight::validate_argument(method, c("samples", "density"))
 }
 
 
@@ -46,14 +47,21 @@
 
 
 #' @keywords internal
-.compute_interval_dataframe <- function(x, ci, verbose, fun) {
+.compute_interval_dataframe <- function(x, ci, verbose, fun, method = "samples") {
   numeric_variables <- vapply(x, is.numeric, TRUE)
+  ci_fun <- get(fun, asNamespace("bayestestR"))
+  # only hdi() has a `method` argument
+  is_hdi <- identical(fun, "hdi")
 
   out <- insight::compact_list(lapply(
     x[, numeric_variables, drop = FALSE],
-    get(fun, asNamespace("bayestestR")),
-    ci = ci,
-    verbose = verbose
+    function(i) {
+      if (is_hdi) {
+        ci_fun(i, ci = ci, verbose = verbose, method = method)
+      } else {
+        ci_fun(i, ci = ci, verbose = verbose)
+      }
+    }
   ))
 
   dat <- data.frame(
@@ -63,8 +71,8 @@
     row.names = NULL
   )
 
-  # rename for SPI, should be HDI
-  if (identical(fun, "spi")) {
+  # the density method keeps the SPI label when printed
+  if (is_hdi && identical(method, "density")) {
     class(dat) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_spi", class(dat)))
   } else {
     class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
@@ -75,19 +83,27 @@
 
 
 #' @keywords internal
-.compute_interval_simMerMod <- function(x, ci, effects, parameters, verbose, fun) {
+.compute_interval_simMerMod <- function(
+  x,
+  ci,
+  effects,
+  parameters,
+  verbose,
+  fun,
+  method = "samples"
+) {
   fixed <- fixed.data <- NULL
   random <- random.data <- NULL
 
   if (effects %in% c("fixed", "all")) {
     fixed.data <- insight::get_parameters(x, effects = "fixed", parameters = parameters, verbose = verbose)
-    fixed <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
+    fixed <- .compute_interval_dataframe(fixed.data, ci, verbose, fun, method)
     fixed$Group <- "fixed"
   }
 
   if (effects %in% c("random", "all")) {
     random.data <- insight::get_parameters(x, effects = "random", parameters = parameters, verbose = verbose)
-    random <- .compute_interval_dataframe(random.data, ci, verbose, fun)
+    random <- .compute_interval_dataframe(random.data, ci, verbose, fun, method)
     random$Group <- "random"
   }
 
@@ -102,8 +118,15 @@
 
 
 #' @keywords internal
-.compute_interval_sim <- function(x, ci, parameters, verbose, fun) {
+.compute_interval_sim <- function(
+  x,
+  ci,
+  parameters,
+  verbose,
+  fun,
+  method = "samples"
+) {
   fixed.data <- insight::get_parameters(x, parameters = parameters, verbose = verbose)
-  d <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
+  d <- .compute_interval_dataframe(fixed.data, ci, verbose, fun, method)
   list(result = d, data = fixed.data)
 }
