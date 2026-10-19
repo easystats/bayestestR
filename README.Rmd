@@ -291,7 +291,7 @@ ggplot(dat3, aes(x = x, y = y, fill = fill)) +
 
 [`rope()`](https://easystats.github.io/bayestestR/reference/rope.html) computes the proportion (in percentage) of the CI (default to the 95\% ETI) of a posterior distribution that lies within a region of practical equivalence.
 
-Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are *equivalent to the null* value for practical purposes [@kruschke2018bayesian, @kruschke2018rejecting].
+Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point nearing 100%). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are *equivalent to the null* value for practical purposes [@kruschke2018bayesian, @kruschke2018rejecting].
 
 Kruschke suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE range can be automatically computed for models using the [rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html) function.
 
