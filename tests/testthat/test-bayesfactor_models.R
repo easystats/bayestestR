@@ -203,7 +203,7 @@ test_that("bayesfactor_models STAN, bridge sampling options", {
   )
 
   # every named option reaches bridge_sampler(), and `silent` replaces the
-  # default
+  # default (`silent = !verbose`, TRUE here)
   opts <- list(repetitions = 3, silent = FALSE, my_option = "x")
   .expect_bridge_calls <- function(calls) {
     expect_length(calls, 2)
@@ -218,6 +218,7 @@ test_that("bayesfactor_models STAN, bridge sampling options", {
     stan_bf_1,
     stan_bf_0,
     denominator = stan_bf_0,
+    verbose = FALSE,
     bridge_options = opts
   )))
   .expect_bridge_calls(env$calls)
@@ -232,6 +233,7 @@ test_that("bayesfactor_models STAN, bridge sampling options", {
     stanfit_1,
     stanfit_0,
     denominator = stanfit_0,
+    verbose = FALSE,
     bridge_options = opts
   )))
   .expect_bridge_calls(env$calls)
@@ -299,7 +301,7 @@ test_that("bayesfactor_models STAN, median of repeated estimates", {
   expect_identical(out$log_BF, c(-12 - -21.5, 0))
 })
 
-test_that("bayesfactor_models STAN, bridge_options needs names", {
+test_that(".bayesfactor_models_stan_REG needs a list with every element named", {
   skip_if_not_installed("bridgesampling")
 
   local_mocked_bindings(
@@ -389,7 +391,7 @@ test_that(".get_marglik passes options and uses the median of repeated estimates
   )
   expect_identical(env$calls, list(list(silent = TRUE, repetitions = 4)))
 
-  # a brmsfit without a stored marglik gets the options unchanged
+  # a brmsfit without a stored marglik gets the options, after `silent = !verbose`
   env$calls <- list()
   fake_brmsfit <- structure(list(criteria = list()), class = "brmsfit")
   local_mocked_bindings(
