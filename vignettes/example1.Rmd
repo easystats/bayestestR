@@ -388,7 +388,7 @@ It makes you fat by around 51 grams (the median). However, the uncertainty is qu
 
 ### ROPE Percentage
 
-Testing whether this distribution is different from 0 doesn't make sense, as 0 is a single value (*and the probability that any distribution is different from a single value is infinite*).
+Testing whether this distribution is different from 0 doesn't make sense, as 0 is a single value (*and the probability that any distribution is different from a single value is nearly 100%*).
 
 However, one way to assess **significance** could be to define an area *around* 0,
 which will consider as *practically equivalent* to zero (*i.e.*, absence of, or
