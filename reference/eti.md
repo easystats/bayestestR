@@ -142,9 +142,9 @@ from each tail of the distribution and always include the median, the
 HDI is *not* equal-tailed and therefore always includes the mode(s) of
 posterior distributions. While this can be useful to better represent
 the credibility mass of a distribution, the HDI also has some
-limitations. See
-[`spi()`](https://easystats.github.io/bayestestR/reference/spi.md) for
-details.
+limitations. The section *Algorithms* of
+[`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.md)
+explains how the HDI is computed.
 
 A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
 side of its limits. It indicates the 2.5th percentile and the 97.5th
@@ -210,8 +210,7 @@ Other ci:
 [`bci()`](https://easystats.github.io/bayestestR/reference/bci.md),
 [`ci()`](https://easystats.github.io/bayestestR/reference/ci.md),
 [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.md),
-[`si()`](https://easystats.github.io/bayestestR/reference/si.md),
-[`spi()`](https://easystats.github.io/bayestestR/reference/spi.md)
+[`si()`](https://easystats.github.io/bayestestR/reference/si.md)
 
 ## Examples
 
@@ -281,8 +280,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 9e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 1: Gradient evaluation took 6e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -299,9 +298,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.012 seconds (Warm-up)
-#> Chain 1:                0.012 seconds (Sampling)
-#> Chain 1:                0.024 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.017 seconds (Warm-up)
+#> Chain 1:                0.017 seconds (Sampling)
+#> Chain 1:                0.034 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -324,9 +323,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
-#> Chain 2:                0.011 seconds (Sampling)
-#> Chain 2:                0.024 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 2:                0.015 seconds (Sampling)
+#> Chain 2:                0.033 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -349,15 +348,15 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.014 seconds (Warm-up)
-#> Chain 3:                0.012 seconds (Sampling)
-#> Chain 3:                0.026 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 3:                0.017 seconds (Sampling)
+#> Chain 3:                0.036 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 4e-06 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+#> Chain 4: Gradient evaluation took 3e-06 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -374,9 +373,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.014 seconds (Warm-up)
-#> Chain 4:                0.011 seconds (Sampling)
-#> Chain 4:                0.025 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 4:                0.016 seconds (Sampling)
+#> Chain 4:                0.035 seconds (Total)
 #> Chain 4: 
 eti(model)
 #> Equal-Tailed Interval

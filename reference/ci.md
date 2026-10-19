@@ -52,7 +52,9 @@ ci(
   (default),
   ["HDI"](https://easystats.github.io/bayestestR/reference/hdi.md),
   ["BCI"](https://easystats.github.io/bayestestR/reference/bci.md),
-  ["SPI"](https://easystats.github.io/bayestestR/reference/spi.md) or
+  `"SPI"` (the
+  [HDI](https://easystats.github.io/bayestestR/reference/hdi.md) with
+  `method = "density"`) or
   ["SI"](https://easystats.github.io/bayestestR/reference/si.md).
 
 - verbose:
@@ -197,8 +199,7 @@ Other ci:
 [`bci()`](https://easystats.github.io/bayestestR/reference/bci.md),
 [`eti()`](https://easystats.github.io/bayestestR/reference/eti.md),
 [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.md),
-[`si()`](https://easystats.github.io/bayestestR/reference/si.md),
-[`spi()`](https://easystats.github.io/bayestestR/reference/spi.md)
+[`si()`](https://easystats.github.io/bayestestR/reference/si.md)
 
 ## Examples
 

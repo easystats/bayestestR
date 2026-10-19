@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,6 +71,28 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.20.0" id="bayestestr-0200">bayestestR 0.20.0<a class="anchor" aria-label="anchor" href="#bayestestr-0200"></a></h2><p class="text-muted">CRAN release: 2026-10-16</p>
+<div class="section level3">
+<h3 id="changes-0-20-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-20-0"></a></h3>
+<ul><li><p><code><a href="../reference/sensitivity_to_prior.html">sensitivity_to_prior()</a></code> now supports models from package <em>brms</em>. All slopes need a normal, student_t, or cauchy prior.</p></li>
+<li><p><code><a href="../reference/rope.html">p_rope()</a></code> now actually is just a wrapper for <code>rope(ci = 1)</code>.</p></li>
+<li><p><code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> methods gain a <code>ci_method</code> argument passed to <code><a href="../reference/rope.html">rope()</a></code> to select the type of credible interval used in the ROPE calculation (<a href="https://github.com/easystats/bayestestR/issues/777" class="external-link">#777</a>).</p></li>
+<li><p><code><a href="../reference/convert_bayesian_as_frequentist.html">bayesian_as_frequentist()</a></code> gains a <code>resp</code> argument to convert one response of a multivariate <em>brms</em> model (easystats/performance#908).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-20-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-20-0"></a></h3>
+<ul><li><p><code><a href="../reference/convert_bayesian_as_frequentist.html">bayesian_as_frequentist()</a></code> now works for linear mixed models from <em>BayesFactor</em> (with random factors set in <code>whichRandom</code>). They are refit with <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code> (<a href="https://github.com/easystats/bayestestR/issues/505" class="external-link">#505</a>).</p></li>
+<li><p>If suggested packages are not installed, the Bayes factor vignette now builds. Before, its inline code ran and failed with “object not found”.</p></li>
+<li><p><code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> no longer prints “HDI” columns when using other CI methods (such as the default ETI).</p></li>
+<li><p>Fixed issue with printing wrong column order of multiple CI columns in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</p></li>
+<li><p>If the model formula transforms the response, for example with <code>scale(y)</code> or <code>sqrt(y)</code>, <code><a href="../reference/rope_range.html">rope_range()</a></code> now uses the standard deviation of the transformed response. For linear models, the default ROPE is then on the same scale as the model parameters.</p></li>
+<li><p>For multivariate <em>brms</em> models with <code><a href="https://paulbuerkner.com/brms/reference/addition-terms.html" class="external-link">resp_weights()</a></code> and ordinal responses, <code><a href="../reference/rope_range.html">rope_range()</a></code> now returns one ROPE per response, without a warning.</p></li>
+<li><p>If <code><a href="../reference/simulate_prior.html">simulate_prior()</a></code> or <code><a href="../reference/check_prior.html">check_prior()</a></code> cannot simulate a prior, for example a laplace or flat prior, it now gives a warning that names the parameters. Before, it returned a column of <code>NA</code> with no warning.</p></li>
+<li><p>For <em>brms</em> models with a censored outcome, such as <code>y | cens(censored)</code>, <code><a href="../reference/mediation.html">mediation()</a></code> now works (<a href="https://github.com/easystats/bayestestR/issues/631" class="external-link">#631</a>). Before, it failed with an indexing error, such as “subscript out of bounds”.</p></li>
+<li><p>If the mediator enters the outcome model with <code><a href="https://paulbuerkner.com/brms/reference/mo.html" class="external-link">mo()</a></code>, <code><a href="../reference/mediation.html">mediation()</a></code> now gives an informative error (<a href="https://github.com/easystats/bayestestR/issues/576" class="external-link">#576</a>). If a coefficient for the <code>treatment</code> or <code>mediator</code> is not in the model, the error names it. Before, both cases failed with an indexing error, such as “undefined columns selected”.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.19.0" id="bayestestr-0190">bayestestR 0.19.0<a class="anchor" aria-label="anchor" href="#bayestestr-0190"></a></h2><p class="text-muted">CRAN release: 2026-09-09</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-19-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-19-0"></a></h3>
@@ -110,7 +132,7 @@
 <ul><li><p>New docs at <code><a href="../reference/bayesfactor_methods.html">?bayesfactor_methods</a></code></p></li>
 <li><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> for <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>, to obtain a matrix of Bayes factors between all restricted models.</p></li>
 </ul></li>
-<li><p>Added support for <code>CmdStanFit</code> models from <code>{cmdstanr}</code> and expanded support for <code>stanfit</code> models from <code>rstan</code>.</p></li>
+<li><p>Added support for <code>CmdStanFit</code> models from <a href="https://mc-stan.org/cmdstanr/" class="external-link">cmdstanr</a> and expanded support for <code>stanfit</code> models from <code>rstan</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="changes-0-18-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-18-0"></a></h3>
@@ -124,7 +146,7 @@
 <h2 class="pkg-version" data-toc-text="0.17.0" id="bayestestr-0170">bayestestR 0.17.0<a class="anchor" aria-label="anchor" href="#bayestestr-0170"></a></h2><p class="text-muted">CRAN release: 2025-08-29</p>
 <div class="section level3">
 <h3 id="changes-0-17-0">Changes<a class="anchor" aria-label="anchor" href="#changes-0-17-0"></a></h3>
-<ul><li><p><code><a href="../reference/rope.html">rope()</a></code> (and by extension <code><a href="../reference/p_rope.html">p_rope()</a></code>) gain a new <code>complement</code> argument such that <code>rope(x, complement = TRUE)</code> returns the ROPE posterior probability together with the posterior probabilities above/below the ROPE (the <em>complementary</em> probabilities).</p></li>
+<ul><li><p><code><a href="../reference/rope.html">rope()</a></code> (and by extension <code><a href="../reference/rope.html">p_rope()</a></code>) gain a new <code>complement</code> argument such that <code>rope(x, complement = TRUE)</code> returns the ROPE posterior probability together with the posterior probabilities above/below the ROPE (the <em>complementary</em> probabilities).</p></li>
 <li><p>Added <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods for <em>bayestestR</em> objects. The <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods also get a new <code>format</code> option, <code>format = "tt"</code>, to produce tables with the <code>tinytable</code> package.</p></li>
 <li><p>The long deprecated <code>rnorm_perfect()</code> function has been removed. Use <code><a href="../reference/distribution.html">distribution_normal()</a></code> instead.</p></li>
 <li><p>Prepare for upcoming changes in <em>marginaleffects</em> (0.29.0).</p></li>
@@ -507,7 +529,7 @@
 <div class="section level3">
 <h3 id="breaking-changes-0-5-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-5-0"></a></h3>
 <ul><li><p><code><a href="../reference/point_estimate.html">point_estimate()</a></code>: argument <code>centrality</code> default value changed from ‘median’ to ‘all’.</p></li>
-<li><p><code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code>mhdior()</code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code>rope(..., ci = 1)</code> ( <a href="https://github.com/easystats/bayestestR/issues/258" class="external-link">#258</a> )</p></li>
+<li><p><code><a href="../reference/rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code>mhdior()</code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/rope.html">p_rope()</a></code> will refer to <code>rope(..., ci = 1)</code> ( <a href="https://github.com/easystats/bayestestR/issues/258" class="external-link">#258</a> )</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-5-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-0"></a></h3>

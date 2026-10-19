@@ -12,10 +12,10 @@ context of uncertainty characterisation of posterior distributions as
 hdi(x, ...)
 
 # S3 method for class 'numeric'
-hdi(x, ci = 0.95, verbose = TRUE, ...)
+hdi(x, ci = 0.95, verbose = TRUE, method = "samples", ...)
 
 # S3 method for class 'data.frame'
-hdi(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
+hdi(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, method = "samples", ...)
 
 # S3 method for class 'brmsfit'
 hdi(
@@ -25,6 +25,7 @@ hdi(
   component = "conditional",
   parameters = NULL,
   verbose = TRUE,
+  method = "samples",
   ...
 )
 
@@ -55,6 +56,11 @@ hdi(x, ci = 0.95, use_iterations = FALSE, verbose = TRUE, ...)
 - verbose:
 
   Toggle off warnings.
+
+- method:
+
+  The algorithm that finds the interval. Can be `"samples"` (default) or
+  `"density"`. See section *Algorithms*.
 
 - rvar_col:
 
@@ -143,9 +149,8 @@ typically exclude 2.5% from each tail of the distribution and always
 include the median, the HDI is *not* equal-tailed and therefore always
 includes the mode(s) of posterior distributions. While this can be
 useful to better represent the credibility mass of a distribution, the
-HDI also has some limitations. See
-[`spi()`](https://easystats.github.io/bayestestR/reference/spi.md) for
-details.
+HDI also has some limitations. The section *Algorithms* of `hdi()`
+explains how the HDI is computed.
 
 A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
 side of its limits. It indicates the 2.5th percentile and the 97.5th
@@ -209,10 +214,36 @@ possible for the `component` argument, which are not all documented in
 detail here. See also
 [`?insight::find_parameters`](https://easystats.github.io/insight/reference/find_parameters.BGGM.html).
 
+## Algorithms
+
+Both methods return one continuous interval for each value of `ci`. For
+multimodal distributions, this interval can include values of low
+density between the modes.
+
+- `method = "samples"` (default) sorts the `n` draws and takes the
+  narrowest window of `ceiling(ci * n) + 1` neighboring sorted draws.
+  The bounds are the first and the last draw of that window.
+
+- `method = "density"` uses the SPIn algorithm of Liu, Gelman and Zheng
+  (2015), adapted from the **SPIn** package. It starts from the
+  narrowest window of the sorted draws. Then it replaces each bound with
+  a weighted average of the sorted draws near it. The weights come from
+  quadratic programming, with an objective that uses a kernel density
+  estimate ([`stats::density()`](https://rdrr.io/r/stats/density.html)).
+  Liu et al. (2015) report that these bounds have a lower Monte Carlo
+  error than the bounds of the samples method. This method needs the
+  **quadprog** package. The deprecated
+  [`spi()`](https://easystats.github.io/bayestestR/reference/spi.md)
+  returns the same interval.
+
 ## References
 
 - Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R,
   JAGS, and Stan. Academic Press.
+
+- Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest
+  probability intervals. Statistics and Computing, 25(4), 809–819.
+  https://doi.org/10.1007/s11222-015-9563-8
 
 - McElreath, R. (2015). Statistical rethinking: A Bayesian course with
   examples in R and Stan. Chapman and Hall/CRC.
@@ -222,20 +253,21 @@ detail here. See also
 Other interval functions, such as `hdi()`,
 [`eti()`](https://easystats.github.io/bayestestR/reference/eti.md),
 [`bci()`](https://easystats.github.io/bayestestR/reference/bci.md),
-[`spi()`](https://easystats.github.io/bayestestR/reference/spi.md),
 [`si()`](https://easystats.github.io/bayestestR/reference/si.md).
 
 Other ci:
 [`bci()`](https://easystats.github.io/bayestestR/reference/bci.md),
 [`ci()`](https://easystats.github.io/bayestestR/reference/ci.md),
 [`eti()`](https://easystats.github.io/bayestestR/reference/eti.md),
-[`si()`](https://easystats.github.io/bayestestR/reference/si.md),
-[`spi()`](https://easystats.github.io/bayestestR/reference/spi.md)
+[`si()`](https://easystats.github.io/bayestestR/reference/si.md)
 
 ## Author
 
 Credits go to **ggdistribute** and
-[**HDInterval**](https://github.com/mikemeredith/HDInterval).
+[**HDInterval**](https://github.com/mikemeredith/HDInterval). The code
+of `method = "density"` was adapted from the **SPIn** package, and
+slightly modified to be more robust for Stan models. Credits go to Ying
+Liu for the original SPI algorithm and R implementation.
 
 ## Examples
 
@@ -312,8 +344,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 7e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
+#> Chain 1: Gradient evaluation took 6e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -330,15 +362,15 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.014 seconds (Warm-up)
-#> Chain 1:                0.011 seconds (Sampling)
-#> Chain 1:                0.025 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 1:                0.015 seconds (Sampling)
+#> Chain 1:                0.034 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 3e-06 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
+#> Chain 2: Gradient evaluation took 2e-06 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.02 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -355,9 +387,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
-#> Chain 2:                0.011 seconds (Sampling)
-#> Chain 2:                0.024 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 2:                0.016 seconds (Sampling)
+#> Chain 2:                0.034 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -380,15 +412,15 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.014 seconds (Warm-up)
-#> Chain 3:                0.011 seconds (Sampling)
-#> Chain 3:                0.025 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 3:                0.016 seconds (Sampling)
+#> Chain 3:                0.035 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 2e-06 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.02 seconds.
+#> Chain 4: Gradient evaluation took 3e-06 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -405,9 +437,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.013 seconds (Warm-up)
-#> Chain 4:                0.012 seconds (Sampling)
-#> Chain 4:                0.025 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 4:                0.017 seconds (Sampling)
+#> Chain 4:                0.035 seconds (Total)
 #> Chain 4: 
 hdi(model)
 #> Highest Density Interval 

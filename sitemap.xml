@@ -47,8 +47,13 @@
 <url><loc>https://easystats.github.io/bayestestR/reference/disgust.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/display.describe_posterior.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/distribution.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/dot-brms_cauchy_priors.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/dot-brms_check_refit_priors.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/dot-brms_priors.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/dot-brms_slope_info.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/dot-extract_priors_rstanarm.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/dot-prior_new_location.html</loc></url>
+<url><loc>https://easystats.github.io/bayestestR/reference/dot-refit_brms.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/dot-select_nums.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/effective_sample.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/equivalence_test.html</loc></url>
@@ -63,7 +68,6 @@
 <url><loc>https://easystats.github.io/bayestestR/reference/overlap.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/p_direction.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/p_map.html</loc></url>
-<url><loc>https://easystats.github.io/bayestestR/reference/p_rope.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/p_significance.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/p_to_bf.html</loc></url>
 <url><loc>https://easystats.github.io/bayestestR/reference/pd_to_p.html</loc></url>

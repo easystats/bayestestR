@@ -179,16 +179,16 @@ s <- sexit(rnorm(1000, -1, 1))
 s
 #> # Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large. The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.05| and |0.30|.
 #> 
-#> The effect (Median = -0.96, 95% CI [-2.80, 1.08]) has a 84.70% probability of being negative (< 0), 83.50% of being significant (< -0.05), and 76.70% of being large (< -0.30)
+#> The effect (Median = -1.00, 95% CI [-3.11, 0.98]) has a 84.20% probability of being negative (< 0), 83.10% of being significant (< -0.05), and 76.00% of being large (< -0.30)
 #> 
 #> Median |        95% CI | Direction | Significance (> |0.05|) | Large (> |0.30|)
 #> -------------------------------------------------------------------------------
-#>  -0.96 | [-2.80, 1.08] |      0.85 |                    0.83 |             0.77
+#>  -1.00 | [-3.11, 0.98] |      0.84 |                    0.83 |             0.76
 #> 
 print(s, summary = TRUE)
 #> # The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.05| and |0.30|.
 #> 
-#> The effect (Median = -0.96, 95% CI [-2.80, 1.08]) has 84.70%, 83.50% and 76.70% probability of being negative (< 0), significant (< -0.05) and large (< -0.30)
+#> The effect (Median = -1.00, 95% CI [-3.11, 0.98]) has 84.20%, 83.10% and 76.00% probability of being negative (< 0), significant (< -0.05) and large (< -0.30)
 
 s <- sexit(iris)
 s
@@ -225,9 +225,9 @@ if (require("rstanarm")) {
 }
 #> # The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.30| and |1.81| (corresponding respectively to 0.05 and 0.30 of the outcome's SD).
 #> 
-#> - (Intercept) (Median = 52.52, 95% CI [40.70, 64.08]) has 100.00%, 100.00% and 100.00% probability of being positive (> 0), significant (> 0.30) and large (> 1.81)
-#> - wt (Median = -8.04, 95% CI [-12.59, -3.18]) has 100.00%, 99.88% and 99.50% probability of being negative (< 0), significant (< -0.30) and large (< -1.81)
-#> - cyl (Median = -3.49, 95% CI [-5.59, -1.60]) has 100.00%, 99.88% and 96.00% probability of being negative (< 0), significant (< -0.30) and large (< -1.81)
-#> - wt:cyl (Median = 0.71, 95% CI [0.08, 1.32]) has 98.88%, 89.12% and 0.00% probability of being positive (> 0), significant (> 0.30) and large (> 1.81)
+#> - (Intercept) (Median = 53.08, 95% CI [38.99, 64.37]) has 100.00%, 100.00% and 100.00% probability of being positive (> 0), significant (> 0.30) and large (> 1.81)
+#> - wt (Median = -8.17, 95% CI [-12.33, -3.41]) has 99.88%, 99.88% and 99.25% probability of being negative (< 0), significant (< -0.30) and large (< -1.81)
+#> - cyl (Median = -3.63, 95% CI [-5.48, -1.42]) has 99.62%, 99.50% and 94.62% probability of being negative (< 0), significant (< -0.30) and large (< -1.81)
+#> - wt:cyl (Median = 0.73, 95% CI [3.51e-03, 1.36]) has 97.50%, 88.25% and 0.00% probability of being positive (> 0), significant (> 0.30) and large (> 1.81)
 # }
 ```

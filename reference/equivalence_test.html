@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,6 +87,7 @@
 <span>  <span class="va">x</span>,</span>
 <span>  range <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  ci_method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
 <span>  rvar_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -97,6 +98,7 @@
 <span>  <span class="va">x</span>,</span>
 <span>  range <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  ci_method <span class="op">=</span> <span class="st">"ETI"</span>,</span>
 <span>  effects <span class="op">=</span> <span class="st">"fixed"</span>,</span>
 <span>  component <span class="op">=</span> <span class="st">"conditional"</span>,</span>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -137,6 +139,11 @@ range is set to <code>c(-0.1, 0.1)</code>. If <code>"default"</code> and input i
 <dt id="arg-ci">ci<a class="anchor" aria-label="anchor" href="#arg-ci"></a></dt>
 <dd><p>The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.</p></dd>
+
+
+<dt id="arg-ci-method">ci_method<a class="anchor" aria-label="anchor" href="#arg-ci-method"></a></dt>
+<dd><p>The type of interval to use to quantify the percentage in
+ROPE. Can be 'HDI' or 'ETI' (default). See <code><a href="ci.html">ci()</a></code>.</p></dd>
 
 
 <dt id="arg-rvar-col">rvar_col<a class="anchor" aria-label="anchor" href="#arg-rvar-col"></a></dt>
@@ -193,11 +200,11 @@ for the output.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame with following columns:</p><ul><li><p><code>Parameter</code> The model parameter(s), if <code>x</code> is a model-object. If <code>x</code> is a vector, this column is missing.</p></li>
-<li><p><code>CI</code> The probability of the HDI.</p></li>
+<li><p><code>CI</code> The probability of the CI.</p></li>
 <li><p><code>ROPE_low</code>, <code>ROPE_high</code> The limits of the ROPE. These values are identical for all parameters.</p></li>
-<li><p><code>ROPE_Percentage</code> The proportion of the HDI that lies inside the ROPE.</p></li>
+<li><p><code>ROPE_Percentage</code> The proportion of the CI that lies inside the ROPE.</p></li>
 <li><p><code>ROPE_Equivalence</code> The "test result", as character. Either "rejected", "accepted" or "undecided".</p></li>
-<li><p><code>HDI_low</code> , <code>HDI_high</code> The lower and upper HDI limits for the parameters.</p></li>
+<li><p><code>CI_low</code> , <code>CI_high</code> The lower and upper CI limits for the parameters.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -207,21 +214,23 @@ for the output.</p></dd>
 <em>"HDI+ROPE decision rule"</em> (<cite>Kruschke, 2014, 2018</cite>) to check whether
 parameter values should be accepted or rejected against an explicitly
 formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the
-percentage of the 95% <a href="hdi.html">HDI</a> that is the null region (the ROPE). If
+percentage of the 95% <a href="ci.html">CI</a> that is the null region (the ROPE). If
 this percentage is sufficiently low, the null hypothesis is rejected. If this
 percentage is sufficiently high, the null hypothesis is accepted.</p>
-<p>Using the <a href="rope.html">ROPE</a> and the <a href="hdi.html">HDI</a>, <cite>Kruschke (2018)</cite>
+<p>Using the <a href="rope.html">ROPE</a> and the <a href="ci.html">CI</a>, <cite>Kruschke (2018)</cite>
 suggests using the percentage of the 95%
-HDI that falls within the ROPE as a decision rule. If the HDI
+CI that falls within the ROPE as a decision rule. If the CI
 is completely outside the ROPE, the "null hypothesis" for this parameter is
-"rejected". If the ROPE completely covers the HDI, i.e., all most credible
+"rejected". If the ROPE completely covers the CI, i.e., all most credible
 values of a parameter are inside the region of practical equivalence, the
 null hypothesis is accepted. Else, it is undecided whether to accept or
 reject the null hypothesis. If the full ROPE is used (i.e., 100% of the
-HDI), then the null hypothesis is rejected or accepted if the percentage
+CI), then the null hypothesis is rejected or accepted if the percentage
 of the posterior within the ROPE is smaller than to 2.5% or greater than
 97.5%. Desirable results are low proportions inside the ROPE  (the closer
 to zero the better).</p>
+<p>While Kruschke suggested using the 95% <em>HDI</em>, any CI can be used. Here we
+default to the 95% <em>ETI</em> (can be changed by setting the <code>ci_method</code> argument).</p>
 <p>Some attention is required for finding suitable values for the ROPE limits
 (argument <code>range</code>). See 'Details' in <code><a href="rope_range.html">rope_range()</a></code> for further
 information.</p>
@@ -290,7 +299,7 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-0.10 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |       95% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |       95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Accepted |    100.00 % | [-0.02, 0.02]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -300,7 +309,7 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-0.10 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |       95% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |       95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Undecided |      7.16 % | [-1.89, 2.02]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -310,7 +319,7 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-0.10 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |      95% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |      95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rejected |      0.00 % | [0.98, 1.02]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -320,12 +329,12 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-0.10 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |      50% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |      50% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rejected |      0.00 % | [0.30, 1.69]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |       99% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |       99% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Undecided |      5.25 % | [-1.49, 3.72]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -338,118 +347,18 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-0.1000 0.1000]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |          50% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H0       | inside ROPE |          50% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rejected |    0.0000 % | [0.2619, 1.6863]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |           99% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H0        | inside ROPE |           99% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Undecided |    6.1616 % | [-1.4735, 3.7163]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2.2e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.033 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.063 seconds (Total)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.032 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.03 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.062 seconds (Total)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Gradient evaluation took 1.1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Adjust your expectations accordingly!</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.03 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.03 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.06 seconds (Total)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 1.1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Adjust your expectations accordingly!</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.03 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.032 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.062 seconds (Total)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">equivalence_test</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between cyl and wt (r = 0.78). This might</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?equivalence_test'.</span>
@@ -457,7 +366,7 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-0.60 0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |       H0 | inside ROPE |        95% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |       H0 | inside ROPE |        95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Rejected |      0.00 % | [36.07, 43.16]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Rejected |      0.00 % | [-4.70, -1.67]</span>
@@ -470,7 +379,7 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?equivalence_test'.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Test for Practical Equivalence</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        H0 | inside ROPE |        95% HDI |           ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        H0 | inside ROPE |        95% ETI |           ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Undecided |     57.16 % | [36.07, 43.16] | [10.00, 40.00]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Undecided |     12.18 % | [-4.70, -1.67] | [-5.00, -4.00]</span>
@@ -483,7 +392,7 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   lead to inappropriate results. See 'Details' in '?equivalence_test'.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Test for Practical Equivalence</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        H0 | inside ROPE |        95% HDI |           ROPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        H0 | inside ROPE |        95% ETI |           ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | Undecided |     57.16 % | [36.07, 43.16] | [10.00, 40.00]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          | Undecided |     12.18 % | [-4.70, -1.67] | [-5.00, -4.00]</span>
@@ -504,7 +413,7 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-0.10 0.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1      |       H0 | inside ROPE |        95% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1      |       H0 | inside ROPE |        95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> overall | Rejected |      0.00 % | [-4.70, -1.67]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -516,8 +425,8 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 9e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -534,9 +443,9 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.011 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.024 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.019 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.017 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.036 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span>
@@ -559,9 +468,9 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.012 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.025 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.018 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.037 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).</span>
@@ -584,9 +493,9 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.012 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.012 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.024 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.018 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.018 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.036 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).</span>
@@ -609,9 +518,9 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.013 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.012 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.025 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.017 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.036 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">equivalence_test</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Possible multicollinearity between b_cyl and b_wt (r = 0.79). This might</span>
@@ -620,7 +529,7 @@ here. See also <a href="https://easystats.github.io/insight/reference/find_param
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-0.60 0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       H0 | inside ROPE |        95% HDI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       H0 | inside ROPE |        95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intercept | Rejected |      0.00 % | [36.23, 43.27]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt        | Rejected |      0.00 % | [-4.66, -1.65]</span>

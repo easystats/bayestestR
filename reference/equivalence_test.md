@@ -16,6 +16,7 @@ equivalence_test(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   rvar_col = NULL,
   verbose = TRUE,
   ...
@@ -26,6 +27,7 @@ equivalence_test(
   x,
   range = "default",
   ci = 0.95,
+  ci_method = "ETI",
   effects = "fixed",
   component = "conditional",
   parameters = NULL,
@@ -72,6 +74,12 @@ equivalence_test(
 
   The Credible Interval (CI) probability, corresponding to the
   proportion of HDI, to use for the percentage in ROPE.
+
+- ci_method:
+
+  The type of interval to use to quantify the percentage in ROPE. Can be
+  'HDI' or 'ETI' (default). See
+  [`ci()`](https://easystats.github.io/bayestestR/reference/ci.md).
 
 - rvar_col:
 
@@ -143,18 +151,17 @@ A data frame with following columns:
 - `Parameter` The model parameter(s), if `x` is a model-object. If `x`
   is a vector, this column is missing.
 
-- `CI` The probability of the HDI.
+- `CI` The probability of the CI.
 
 - `ROPE_low`, `ROPE_high` The limits of the ROPE. These values are
   identical for all parameters.
 
-- `ROPE_Percentage` The proportion of the HDI that lies inside the ROPE.
+- `ROPE_Percentage` The proportion of the CI that lies inside the ROPE.
 
 - `ROPE_Equivalence` The "test result", as character. Either "rejected",
   "accepted" or "undecided".
 
-- `HDI_low` , `HDI_high` The lower and upper HDI limits for the
-  parameters.
+- `CI_low` , `CI_high` The lower and upper CI limits for the parameters.
 
 ## Details
 
@@ -171,25 +178,29 @@ the *"HDI+ROPE decision rule"* (Kruschke, 2014, 2018) to check whether
 parameter values should be accepted or rejected against an explicitly
 formulated "null hypothesis" (i.e., a ROPE). In other words, it checks
 the percentage of the 95%
-[HDI](https://easystats.github.io/bayestestR/reference/hdi.md) that is
-the null region (the ROPE). If this percentage is sufficiently low, the
-null hypothesis is rejected. If this percentage is sufficiently high,
-the null hypothesis is accepted.
+[CI](https://easystats.github.io/bayestestR/reference/ci.md) that is the
+null region (the ROPE). If this percentage is sufficiently low, the null
+hypothesis is rejected. If this percentage is sufficiently high, the
+null hypothesis is accepted.
 
 Using the
 [ROPE](https://easystats.github.io/bayestestR/reference/rope.md) and the
-[HDI](https://easystats.github.io/bayestestR/reference/hdi.md), Kruschke
-(2018) suggests using the percentage of the 95% HDI that falls within
-the ROPE as a decision rule. If the HDI is completely outside the ROPE,
-the "null hypothesis" for this parameter is "rejected". If the ROPE
-completely covers the HDI, i.e., all most credible values of a parameter
+[CI](https://easystats.github.io/bayestestR/reference/ci.md), Kruschke
+(2018) suggests using the percentage of the 95% CI that falls within the
+ROPE as a decision rule. If the CI is completely outside the ROPE, the
+"null hypothesis" for this parameter is "rejected". If the ROPE
+completely covers the CI, i.e., all most credible values of a parameter
 are inside the region of practical equivalence, the null hypothesis is
 accepted. Else, it is undecided whether to accept or reject the null
-hypothesis. If the full ROPE is used (i.e., 100% of the HDI), then the
+hypothesis. If the full ROPE is used (i.e., 100% of the CI), then the
 null hypothesis is rejected or accepted if the percentage of the
 posterior within the ROPE is smaller than to 2.5% or greater than 97.5%.
 Desirable results are low proportions inside the ROPE (the closer to
 zero the better).
+
+While Kruschke suggested using the 95% *HDI*, any CI can be used. Here
+we default to the 95% *ETI* (can be changed by setting the `ci_method`
+argument).
 
 Some attention is required for finding suitable values for the ROPE
 limits (argument `range`). See 'Details' in
@@ -278,7 +289,7 @@ equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 #> 
 #>   ROPE: [-0.10 0.10]
 #> 
-#> H0       | inside ROPE |       95% HDI
+#> H0       | inside ROPE |       95% ETI
 #> --------------------------------------
 #> Accepted |    100.00 % | [-0.02, 0.02]
 #> 
@@ -288,7 +299,7 @@ equivalence_test(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 #> 
 #>   ROPE: [-0.10 0.10]
 #> 
-#> H0        | inside ROPE |       95% HDI
+#> H0        | inside ROPE |       95% ETI
 #> ---------------------------------------
 #> Undecided |      7.16 % | [-1.89, 2.02]
 #> 
@@ -298,7 +309,7 @@ equivalence_test(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #> 
 #>   ROPE: [-0.10 0.10]
 #> 
-#> H0       | inside ROPE |      95% HDI
+#> H0       | inside ROPE |      95% ETI
 #> -------------------------------------
 #> Rejected |      0.00 % | [0.98, 1.02]
 #> 
@@ -308,12 +319,12 @@ equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 #> 
 #>   ROPE: [-0.10 0.10]
 #> 
-#> H0       | inside ROPE |      50% HDI
+#> H0       | inside ROPE |      50% ETI
 #> -------------------------------------
 #> Rejected |      0.00 % | [0.30, 1.69]
 #> 
 #> 
-#> H0        | inside ROPE |       99% HDI
+#> H0        | inside ROPE |       99% ETI
 #> ---------------------------------------
 #> Undecided |      5.25 % | [-1.49, 3.72]
 #> 
@@ -326,118 +337,18 @@ print(test, digits = 4)
 #> 
 #>   ROPE: [-0.1000 0.1000]
 #> 
-#> H0       | inside ROPE |          50% HDI
+#> H0       | inside ROPE |          50% ETI
 #> -----------------------------------------
 #> Rejected |    0.0000 % | [0.2619, 1.6863]
 #> 
 #> 
-#> H0        | inside ROPE |           99% HDI
+#> H0        | inside ROPE |           99% ETI
 #> -------------------------------------------
 #> Undecided |    6.1616 % | [-1.4735, 3.7163]
 #> 
 #> 
 # \donttest{
-model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-#> 
-#> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
-#> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.2e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
-#> Chain 1: Adjust your expectations accordingly!
-#> Chain 1: 
-#> Chain 1: 
-#> Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-#> Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#> Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#> Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#> Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#> Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#> Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#> Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#> Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#> Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-#> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)
-#> Chain 1:                0.033 seconds (Sampling)
-#> Chain 1:                0.063 seconds (Total)
-#> Chain 1: 
-#> 
-#> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
-#> Chain 2: 
-#> Chain 2: Gradient evaluation took 1e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
-#> Chain 2: Adjust your expectations accordingly!
-#> Chain 2: 
-#> Chain 2: 
-#> Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-#> Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#> Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#> Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#> Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#> Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#> Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#> Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#> Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#> Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-#> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.032 seconds (Warm-up)
-#> Chain 2:                0.03 seconds (Sampling)
-#> Chain 2:                0.062 seconds (Total)
-#> Chain 2: 
-#> 
-#> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
-#> Chain 3: 
-#> Chain 3: Gradient evaluation took 1.1e-05 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
-#> Chain 3: Adjust your expectations accordingly!
-#> Chain 3: 
-#> Chain 3: 
-#> Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-#> Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#> Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#> Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#> Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#> Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#> Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#> Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#> Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#> Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-#> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.03 seconds (Warm-up)
-#> Chain 3:                0.03 seconds (Sampling)
-#> Chain 3:                0.06 seconds (Total)
-#> Chain 3: 
-#> 
-#> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
-#> Chain 4: 
-#> Chain 4: Gradient evaluation took 1.1e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
-#> Chain 4: Adjust your expectations accordingly!
-#> Chain 4: 
-#> Chain 4: 
-#> Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-#> Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-#> Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-#> Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-#> Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-#> Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-#> Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-#> Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-#> Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-#> Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-#> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-#> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-#> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.03 seconds (Warm-up)
-#> Chain 4:                0.032 seconds (Sampling)
-#> Chain 4:                0.062 seconds (Total)
-#> Chain 4: 
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 equivalence_test(model)
 #> Possible multicollinearity between cyl and wt (r = 0.78). This might
 #>   lead to inappropriate results. See 'Details' in '?equivalence_test'.
@@ -445,7 +356,7 @@ equivalence_test(model)
 #> 
 #>   ROPE: [-0.60 0.60]
 #> 
-#> Parameter   |       H0 | inside ROPE |        95% HDI
+#> Parameter   |       H0 | inside ROPE |        95% ETI
 #> -----------------------------------------------------
 #> (Intercept) | Rejected |      0.00 % | [36.07, 43.16]
 #> wt          | Rejected |      0.00 % | [-4.70, -1.67]
@@ -458,7 +369,7 @@ equivalence_test(model, range = list(c(10, 40), c(-5, -4), "default"))
 #>   lead to inappropriate results. See 'Details' in '?equivalence_test'.
 #> # Test for Practical Equivalence
 #> 
-#> Parameter   |        H0 | inside ROPE |        95% HDI |           ROPE
+#> Parameter   |        H0 | inside ROPE |        95% ETI |           ROPE
 #> -----------------------------------------------------------------------
 #> (Intercept) | Undecided |     57.16 % | [36.07, 43.16] | [10.00, 40.00]
 #> wt          | Undecided |     12.18 % | [-4.70, -1.67] | [-5.00, -4.00]
@@ -471,7 +382,7 @@ equivalence_test(model, range = list(wt = c(-5, -4), `(Intercept)` = c(10, 40)))
 #>   lead to inappropriate results. See 'Details' in '?equivalence_test'.
 #> # Test for Practical Equivalence
 #> 
-#> Parameter   |        H0 | inside ROPE |        95% HDI |           ROPE
+#> Parameter   |        H0 | inside ROPE |        95% ETI |           ROPE
 #> -----------------------------------------------------------------------
 #> (Intercept) | Undecided |     57.16 % | [36.07, 43.16] | [10.00, 40.00]
 #> wt          | Undecided |     12.18 % | [-4.70, -1.67] | [-5.00, -4.00]
@@ -492,7 +403,7 @@ equivalence_test(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 #> 
 #>   ROPE: [-0.10 0.10]
 #> 
-#> X1      |       H0 | inside ROPE |        95% HDI
+#> X1      |       H0 | inside ROPE |        95% ETI
 #> -------------------------------------------------
 #> overall | Rejected |      0.00 % | [-4.70, -1.67]
 #> 
@@ -504,8 +415,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 9e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 1: Gradient evaluation took 1e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -522,9 +433,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)
-#> Chain 1:                0.011 seconds (Sampling)
-#> Chain 1:                0.024 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 1:                0.017 seconds (Sampling)
+#> Chain 1:                0.036 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -547,9 +458,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
-#> Chain 2:                0.012 seconds (Sampling)
-#> Chain 2:                0.025 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 2:                0.018 seconds (Sampling)
+#> Chain 2:                0.037 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -572,9 +483,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.012 seconds (Warm-up)
-#> Chain 3:                0.012 seconds (Sampling)
-#> Chain 3:                0.024 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 3:                0.018 seconds (Sampling)
+#> Chain 3:                0.036 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -597,9 +508,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.013 seconds (Warm-up)
-#> Chain 4:                0.012 seconds (Sampling)
-#> Chain 4:                0.025 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 4:                0.017 seconds (Sampling)
+#> Chain 4:                0.036 seconds (Total)
 #> Chain 4: 
 equivalence_test(model)
 #> Possible multicollinearity between b_cyl and b_wt (r = 0.79). This might
@@ -608,7 +519,7 @@ equivalence_test(model)
 #> 
 #>   ROPE: [-0.60 0.60]
 #> 
-#> Parameter |       H0 | inside ROPE |        95% HDI
+#> Parameter |       H0 | inside ROPE |        95% ETI
 #> ---------------------------------------------------
 #> Intercept | Rejected |      0.00 % | [36.23, 43.27]
 #> wt        | Rejected |      0.00 % | [-4.66, -1.65]

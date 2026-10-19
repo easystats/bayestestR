@@ -111,8 +111,8 @@ describe_posterior(
   `"BCI"` (see
   [`bci()`](https://easystats.github.io/bayestestR/reference/bci.md)),
   `"SPI"` (see
-  [`spi()`](https://easystats.github.io/bayestestR/reference/spi.md)),
-  or `"SI"` (see
+  [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.md)
+  with `method = "density"`), or `"SI"` (see
   [`si()`](https://easystats.github.io/bayestestR/reference/si.md)).
 
 - test:

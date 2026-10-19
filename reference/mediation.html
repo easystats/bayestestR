@@ -11,7 +11,7 @@ causal mediation effects of multivariate response models."><meta property="og:im
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,7 +126,10 @@ treatment variable automatically, however, this may fail.</p></dd>
 <dd><p>A named character vector, indicating the names of the response
 variables to be used for the mediation analysis. Usually can be <code>NULL</code>,
 in which case these variables are retrieved automatically. If not <code>NULL</code>,
-names should match the names of the model formulas,
+names must match the names of the model formulas. For <em>brms</em> models,
+these are <code>names(insight::find_formula(model))</code>, one name per formula,
+and the values are the left side of each formula without addition terms
+such as <code>cens()</code>. For other models, they are
 <code>names(insight::find_response(model, combine = TRUE))</code>. This can be
 useful if, for instance, the mediator variable used as predictor has a different
 name from the mediator variable used as response. This might occur when the
@@ -152,7 +155,7 @@ to be estimated. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Can be <a href="eti.html">"ETI"</a> (default), <a href="hdi.html">"HDI"</a>, <a href="bci.html">"BCI"</a>,
-<a href="spi.html">"SPI"</a> or <a href="si.html">"SI"</a>.</p></dd>
+<code>"SPI"</code> (the <a href="hdi.html">HDI</a> with <code>method = "density"</code>) or <a href="si.html">"SI"</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">

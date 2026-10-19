@@ -213,7 +213,7 @@ p_significance(posterior)
 #> 
 #> Parameter |   ps
 #> ----------------
-#> Posterior | 0.80
+#> Posterior | 0.81
 
 # Simulate a dataframe of posterior distributions
 # -----------------------------------------------
@@ -224,9 +224,9 @@ p_significance(df)
 #> Parameter |   ps
 #> ----------------
 #> X1        | 0.51
-#> X2        | 0.55
-#> X3        | 0.47
-#> X4        | 0.47
+#> X2        | 0.49
+#> X3        | 0.50
+#> X4        | 0.52
 # \donttest{
 # rstanarm models
 # -----------------------------------------------

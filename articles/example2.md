@@ -322,13 +322,13 @@ distribution using our old pal
     > 
     > Parameter   | Median |          95% CI |     pd |          ROPE | % in ROPE
     > ---------------------------------------------------------------------------
-    > (Intercept) |  -6.12 | [-10.45, -2.25] | 99.92% | [-0.18, 0.18] |        0%
-    > Sepal.Width |   2.13 | [  0.79,  3.63] | 99.94% | [-0.18, 0.18] |        0%
+    > (Intercept) |  -6.13 | [-10.50, -2.27] | 99.95% | [-0.18, 0.18] |        0%
+    > Sepal.Width |   2.13 | [  0.80,  3.65] | 99.96% | [-0.18, 0.18] |        0%
     > 
     > Parameter   |    BF |  Rhat | ESS (tail)
     > ----------------------------------------
-    > (Intercept) | 13.38 | 1.000 |      22809
-    > Sepal.Width | 11.97 | 1.000 |      23303
+    > (Intercept) | 17.10 | 1.000 |      23140
+    > Sepal.Width | 15.15 | 1.000 |      23099
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`performance`](https://easystats.github.io/performance/)`)`\
@@ -339,11 +339,11 @@ distribution using our old pal
     > 
     > ELPD    | ELPD_SE | LOOIC | LOOIC_SE |  WAIC |    R2 |  RMSE | Sigma | Log_loss
     > -------------------------------------------------------------------------------
-    > -66.284 |   3.052 | 132.6 |    6.104 | 132.6 | 0.099 | 0.477 |     1 |    0.643
+    > -66.285 |   3.062 | 132.6 |    6.124 | 132.6 | 0.099 | 0.477 |     1 |    0.643
     > 
     > ELPD    | Score_log | Score_spherical
     > -------------------------------------
-    > -66.284 |   -35.436 |           0.014
+    > -66.285 |   -35.558 |           0.014
 
 ### Visualise the indices
 

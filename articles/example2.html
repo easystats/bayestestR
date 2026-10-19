@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -418,13 +418,13 @@ distribution using our old pal <code><a href="../reference/describe_posterior.ht
 &gt; 
 &gt; Parameter   | Median |          95% CI |     pd |          ROPE | % in ROPE
 &gt; ---------------------------------------------------------------------------
-&gt; (Intercept) |  -6.12 | [-10.45, -2.25] | 99.92% | [-0.18, 0.18] |        0%
-&gt; Sepal.Width |   2.13 | [  0.79,  3.63] | 99.94% | [-0.18, 0.18] |        0%
+&gt; (Intercept) |  -6.13 | [-10.50, -2.27] | 99.95% | [-0.18, 0.18] |        0%
+&gt; Sepal.Width |   2.13 | [  0.80,  3.65] | 99.96% | [-0.18, 0.18] |        0%
 &gt; 
 &gt; Parameter   |    BF |  Rhat | ESS (tail)
 &gt; ----------------------------------------
-&gt; (Intercept) | 13.38 | 1.000 |      22809
-&gt; Sepal.Width | 11.97 | 1.000 |      23303</code></pre>
+&gt; (Intercept) | 17.10 | 1.000 |      23140
+&gt; Sepal.Width | 15.15 | 1.000 |      23099</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/" class="external-link">performance</a></span><span class="op">)</span></span>
 <span></span>
@@ -433,11 +433,11 @@ distribution using our old pal <code><a href="../reference/describe_posterior.ht
 &gt; 
 &gt; ELPD    | ELPD_SE | LOOIC | LOOIC_SE |  WAIC |    R2 |  RMSE | Sigma | Log_loss
 &gt; -------------------------------------------------------------------------------
-&gt; -66.284 |   3.052 | 132.6 |    6.104 | 132.6 | 0.099 | 0.477 |     1 |    0.643
+&gt; -66.285 |   3.062 | 132.6 |    6.124 | 132.6 | 0.099 | 0.477 |     1 |    0.643
 &gt; 
 &gt; ELPD    | Score_log | Score_spherical
 &gt; -------------------------------------
-&gt; -66.284 |   -35.436 |           0.014</code></pre>
+&gt; -66.285 |   -35.558 |           0.014</code></pre>
 </div>
 <div class="section level3">
 <h3 id="visualise-the-indices">Visualise the indices<a class="anchor" aria-label="anchor" href="#visualise-the-indices"></a>

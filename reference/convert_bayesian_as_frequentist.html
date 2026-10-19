@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,9 +77,14 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">convert_bayesian_as_frequentist</span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, REML <span class="op">=</span> <span class="cn">TRUE</span>, resp <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">convert_bayesian_as_frequentist</span><span class="op">(</span></span>
+<span>  <span class="va">model</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  REML <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  response <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">bayesian_as_frequentist</span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, REML <span class="op">=</span> <span class="cn">TRUE</span>, resp <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">bayesian_as_frequentist</span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, REML <span class="op">=</span> <span class="cn">TRUE</span>, response <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -101,12 +106,19 @@ restricted maximum likelihood (REML) (<code>TRUE</code>, default) or maximum
 likelihood (<code>FALSE</code>)?</p></dd>
 
 
-<dt id="arg-resp">resp<a class="anchor" aria-label="anchor" href="#arg-resp"></a></dt>
-<dd><p>For multivariate <em>brms</em> models, the name of the one response to
-convert, as returned by <code>names(insight::find_formula(model))</code>. Other models
-ignore <code>resp</code>.</p></dd>
+<dt id="arg-response">response<a class="anchor" aria-label="anchor" href="#arg-response"></a></dt>
+<dd><p>For multivariate <em>brms</em> models, the name of the one response
+to convert, as returned by <code>names(insight::find_formula(model))</code>. Other
+models ignore <code>response</code>.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Linear models from <em>BayesFactor</em> with random factors (see <code>whichRandom</code> in
+<code><a href="https://rdrr.io/pkg/BayesFactor/man/lmBF.html" class="external-link">BayesFactor::lmBF()</a></code>) are refit with <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code>. A random term with only
+factors, such as <code>cyl:gear</code>, becomes <code>(1 | cyl:gear)</code>. A random term with a
+continuous variable, such as <code>Days:Subject</code>, becomes <code>(0 + Days | Subject)</code>.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

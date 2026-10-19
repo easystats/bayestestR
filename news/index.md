@@ -1,5 +1,84 @@
 # Changelog
 
+## bayestestR 0.20.0
+
+CRAN release: 2026-10-16
+
+### Changes
+
+- [`sensitivity_to_prior()`](https://easystats.github.io/bayestestR/reference/sensitivity_to_prior.md)
+  now supports models from package *brms*. All slopes need a normal,
+  student_t, or cauchy prior.
+
+- [`p_rope()`](https://easystats.github.io/bayestestR/reference/rope.md)
+  now actually is just a wrapper for `rope(ci = 1)`.
+
+- [`equivalence_test()`](https://easystats.github.io/bayestestR/reference/equivalence_test.md)
+  methods gain a `ci_method` argument passed to
+  [`rope()`](https://easystats.github.io/bayestestR/reference/rope.md)
+  to select the type of credible interval used in the ROPE calculation
+  ([\#777](https://github.com/easystats/bayestestR/issues/777)).
+
+- [`bayesian_as_frequentist()`](https://easystats.github.io/bayestestR/reference/convert_bayesian_as_frequentist.md)
+  gains a `resp` argument to convert one response of a multivariate
+  *brms* model (easystats/performance#908).
+
+### Bug fixes
+
+- [`bayesian_as_frequentist()`](https://easystats.github.io/bayestestR/reference/convert_bayesian_as_frequentist.md)
+  now works for linear mixed models from *BayesFactor* (with random
+  factors set in `whichRandom`). They are refit with
+  [`lme4::lmer()`](https://rdrr.io/pkg/lme4/man/lmer.html)
+  ([\#505](https://github.com/easystats/bayestestR/issues/505)).
+
+- If suggested packages are not installed, the Bayes factor vignette now
+  builds. Before, its inline code ran and failed with “object not
+  found”.
+
+- [`equivalence_test()`](https://easystats.github.io/bayestestR/reference/equivalence_test.md)
+  no longer prints “HDI” columns when using other CI methods (such as
+  the default ETI).
+
+- Fixed issue with printing wrong column order of multiple CI columns in
+  [`describe_posterior()`](https://easystats.github.io/bayestestR/reference/describe_posterior.md).
+
+- If the model formula transforms the response, for example with
+  `scale(y)` or `sqrt(y)`,
+  [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.md)
+  now uses the standard deviation of the transformed response. For
+  linear models, the default ROPE is then on the same scale as the model
+  parameters.
+
+- For multivariate *brms* models with
+  [`resp_weights()`](https://paulbuerkner.com/brms/reference/addition-terms.html)
+  and ordinal responses,
+  [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.md)
+  now returns one ROPE per response, without a warning.
+
+- If
+  [`simulate_prior()`](https://easystats.github.io/bayestestR/reference/simulate_prior.md)
+  or
+  [`check_prior()`](https://easystats.github.io/bayestestR/reference/check_prior.md)
+  cannot simulate a prior, for example a laplace or flat prior, it now
+  gives a warning that names the parameters. Before, it returned a
+  column of `NA` with no warning.
+
+- For *brms* models with a censored outcome, such as
+  `y | cens(censored)`,
+  [`mediation()`](https://easystats.github.io/bayestestR/reference/mediation.md)
+  now works
+  ([\#631](https://github.com/easystats/bayestestR/issues/631)). Before,
+  it failed with an indexing error, such as “subscript out of bounds”.
+
+- If the mediator enters the outcome model with
+  [`mo()`](https://paulbuerkner.com/brms/reference/mo.html),
+  [`mediation()`](https://easystats.github.io/bayestestR/reference/mediation.md)
+  now gives an informative error
+  ([\#576](https://github.com/easystats/bayestestR/issues/576)). If a
+  coefficient for the `treatment` or `mediator` is not in the model, the
+  error names it. Before, both cases failed with an indexing error, such
+  as “undefined columns selected”.
+
 ## bayestestR 0.19.0
 
 CRAN release: 2026-09-09
@@ -56,8 +135,9 @@ CRAN release: 2026-05-21
     [`bayesfactor_restricted()`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md),
     to obtain a matrix of Bayes factors between all restricted models.
 
-- Added support for `CmdStanFit` models from `{cmdstanr}` and expanded
-  support for `stanfit` models from `rstan`.
+- Added support for `CmdStanFit` models from
+  [cmdstanr](https://mc-stan.org/cmdstanr/) and expanded support for
+  `stanfit` models from `rstan`.
 
 ### Changes
 
@@ -89,7 +169,7 @@ CRAN release: 2025-08-29
 
 - [`rope()`](https://easystats.github.io/bayestestR/reference/rope.md)
   (and by extension
-  [`p_rope()`](https://easystats.github.io/bayestestR/reference/p_rope.md))
+  [`p_rope()`](https://easystats.github.io/bayestestR/reference/rope.md))
   gain a new `complement` argument such that
   `rope(x, complement = TRUE)` returns the ROPE posterior probability
   together with the posterior probabilities above/below the ROPE (the
@@ -793,10 +873,10 @@ CRAN release: 2020-01-18
 - [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.md):
   argument `centrality` default value changed from ‘median’ to ‘all’.
 
-- [`p_rope()`](https://easystats.github.io/bayestestR/reference/p_rope.md),
+- [`p_rope()`](https://easystats.github.io/bayestestR/reference/rope.md),
   previously as exploratory index, was renamed as `mhdior()` (for *Max
   HDI inside/outside ROPE*), as
-  [`p_rope()`](https://easystats.github.io/bayestestR/reference/p_rope.md)
+  [`p_rope()`](https://easystats.github.io/bayestestR/reference/rope.md)
   will refer to `rope(..., ci = 1)` (
   [\#258](https://github.com/easystats/bayestestR/issues/258) )
 

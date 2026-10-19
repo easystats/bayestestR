@@ -204,41 +204,41 @@ library(bayestestR)
 point_estimate(rnorm(1000))
 #> Point Estimate
 #> 
-#> Median   | Mean |  MAP
-#> ----------------------
-#> 5.58e-03 | 0.01 | 0.03
+#> Median |  Mean |  MAP
+#> ---------------------
+#> -0.02  | -0.03 | 0.07
 point_estimate(rnorm(1000), centrality = "all", dispersion = TRUE)
 #> Point Estimate
 #> 
-#> Median |  MAD |      Mean |   SD |  MAP
-#> ---------------------------------------
-#> -0.02  | 0.97 | -5.33e-03 | 1.00 | 0.05
+#> Median |  MAD | Mean |   SD |  MAP
+#> ----------------------------------
+#> 0.04   | 0.94 | 0.03 | 0.99 | 0.01
 point_estimate(rnorm(1000), centrality = c("median", "MAP"))
 #> Point Estimate
 #> 
 #> Median |   MAP
 #> --------------
-#> 0.03   | -0.07
+#> -0.03  | -0.06
 
 df <- data.frame(replicate(4, rnorm(100)))
 point_estimate(df, centrality = "all", dispersion = TRUE)
 #> Point Estimate
 #> 
-#> Parameter | Median |  MAD |  Mean |   SD |   MAP
-#> ------------------------------------------------
-#> X1        |  -0.02 | 1.21 |  0.02 | 1.12 |  0.85
-#> X2        |  -0.07 | 1.07 | -0.10 | 1.00 | -0.18
-#> X3        |  -0.29 | 1.02 | -0.33 | 0.89 | -0.10
-#> X4        |  -0.08 | 0.90 | -0.14 | 0.89 |  0.11
+#> Parameter | Median |  MAD |  Mean |   SD |      MAP
+#> ---------------------------------------------------
+#> X1        |  -0.04 | 0.93 | -0.08 | 0.90 |     0.07
+#> X2        |  -0.08 | 0.94 | -0.03 | 0.92 | 1.42e-03
+#> X3        |   0.18 | 1.08 |  0.22 | 0.97 |     0.10
+#> X4        |  -0.12 | 1.06 | -0.03 | 0.97 |    -0.33
 point_estimate(df, centrality = c("median", "MAP"))
 #> Point Estimate
 #> 
-#> Parameter | Median |   MAP
-#> --------------------------
-#> X1        |  -0.02 |  0.85
-#> X2        |  -0.07 | -0.18
-#> X3        |  -0.29 | -0.10
-#> X4        |  -0.08 |  0.11
+#> Parameter | Median |      MAP
+#> -----------------------------
+#> X1        |  -0.04 |     0.07
+#> X2        |  -0.08 | 1.42e-03
+#> X3        |   0.18 |     0.10
+#> X4        |  -0.12 |    -0.33
 # \donttest{
 # rstanarm models
 # -----------------------------------------------
@@ -246,8 +246,8 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 2.2e-05 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+#> Chain 1: Gradient evaluation took 2.1e-05 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -264,15 +264,15 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)
-#> Chain 1:                0.028 seconds (Sampling)
-#> Chain 1:                0.058 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.042 seconds (Warm-up)
+#> Chain 1:                0.034 seconds (Sampling)
+#> Chain 1:                0.076 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #> Chain 2: 
-#> Chain 2: Gradient evaluation took 1.1e-05 seconds
-#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+#> Chain 2: Gradient evaluation took 1e-05 seconds
+#> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 #> Chain 2: Adjust your expectations accordingly!
 #> Chain 2: 
 #> Chain 2: 
@@ -289,9 +289,9 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.031 seconds (Warm-up)
-#> Chain 2:                0.027 seconds (Sampling)
-#> Chain 2:                0.058 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.042 seconds (Warm-up)
+#> Chain 2:                0.039 seconds (Sampling)
+#> Chain 2:                0.081 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
@@ -314,15 +314,15 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.03 seconds (Warm-up)
-#> Chain 3:                0.034 seconds (Sampling)
-#> Chain 3:                0.064 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.041 seconds (Warm-up)
+#> Chain 3:                0.042 seconds (Sampling)
+#> Chain 3:                0.083 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 1e-05 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+#> Chain 4: Gradient evaluation took 1.1e-05 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -339,26 +339,26 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.031 seconds (Warm-up)
-#> Chain 4:                0.029 seconds (Sampling)
-#> Chain 4:                0.06 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.04 seconds (Warm-up)
+#> Chain 4:                0.04 seconds (Sampling)
+#> Chain 4:                0.08 seconds (Total)
 #> Chain 4: 
 point_estimate(model, centrality = "all", dispersion = TRUE)
 #> Point Estimate 
 #> 
 #> Parameter   | Median |  MAD |  Mean |   SD |   MAP
 #> --------------------------------------------------
-#> (Intercept) |  39.65 | 1.86 | 39.69 | 1.84 | 39.57
-#> wt          |  -3.19 | 0.81 | -3.18 | 0.82 | -3.19
-#> cyl         |  -1.51 | 0.44 | -1.52 | 0.44 | -1.54
+#> (Intercept) |  39.70 | 1.73 | 39.65 | 1.77 | 39.91
+#> wt          |  -3.18 | 0.74 | -3.18 | 0.77 | -3.14
+#> cyl         |  -1.51 | 0.41 | -1.51 | 0.42 | -1.52
 point_estimate(model, centrality = c("median", "MAP"))
 #> Point Estimate 
 #> 
 #> Parameter   | Median |   MAP
 #> ----------------------------
-#> (Intercept) |  39.65 | 39.57
-#> wt          |  -3.19 | -3.19
-#> cyl         |  -1.51 | -1.54
+#> (Intercept) |  39.70 | 39.91
+#> wt          |  -3.18 | -3.14
+#> cyl         |  -1.51 | -1.52
 
 
 # emmeans estimates
@@ -371,7 +371,7 @@ point_estimate(
 #> 
 #> X1      | Median |   MAP
 #> ------------------------
-#> overall |  -3.19 | -3.19
+#> overall |  -3.18 | -3.14
 
 # brms models
 # -----------------------------------------------
@@ -399,9 +399,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.014 seconds (Warm-up)
-#> Chain 1:                0.012 seconds (Sampling)
-#> Chain 1:                0.026 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 1:                0.015 seconds (Sampling)
+#> Chain 1:                0.033 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -424,9 +424,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
-#> Chain 2:                0.011 seconds (Sampling)
-#> Chain 2:                0.024 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)
+#> Chain 2:                0.014 seconds (Sampling)
+#> Chain 2:                0.033 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
@@ -449,9 +449,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.013 seconds (Warm-up)
-#> Chain 3:                0.013 seconds (Sampling)
-#> Chain 3:                0.026 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 3:                0.018 seconds (Sampling)
+#> Chain 3:                0.036 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -474,26 +474,26 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.014 seconds (Warm-up)
-#> Chain 4:                0.012 seconds (Sampling)
-#> Chain 4:                0.026 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.018 seconds (Warm-up)
+#> Chain 4:                0.015 seconds (Sampling)
+#> Chain 4:                0.033 seconds (Total)
 #> Chain 4: 
 point_estimate(model, centrality = "all", dispersion = TRUE)
 #> Point Estimate 
 #> 
 #> Parameter   | Median |  MAD |  Mean |   SD |   MAP
 #> --------------------------------------------------
-#> (Intercept) |  39.67 | 1.71 | 39.67 | 1.78 | 39.86
-#> wt          |  -3.22 | 0.78 | -3.20 | 0.80 | -3.32
-#> cyl         |  -1.49 | 0.44 | -1.50 | 0.43 | -1.46
+#> (Intercept) |  39.67 | 1.73 | 39.66 | 1.76 | 39.33
+#> wt          |  -3.19 | 0.76 | -3.19 | 0.78 | -3.17
+#> cyl         |  -1.50 | 0.41 | -1.51 | 0.43 | -1.50
 point_estimate(model, centrality = c("median", "MAP"))
 #> Point Estimate 
 #> 
 #> Parameter   | Median |   MAP
 #> ----------------------------
-#> (Intercept) |  39.67 | 39.86
-#> wt          |  -3.22 | -3.32
-#> cyl         |  -1.49 | -1.46
+#> (Intercept) |  39.67 | 39.33
+#> wt          |  -3.19 | -3.17
+#> cyl         |  -1.50 | -1.50
 
 # BayesFactor objects
 # -----------------------------------------------
@@ -503,12 +503,12 @@ point_estimate(bf, centrality = "all", dispersion = TRUE)
 #> 
 #> Parameter  | Median |  MAD | Mean |   SD |  MAP
 #> -----------------------------------------------
-#> Difference |   1.03 | 0.11 | 1.03 | 0.11 | 1.02
+#> Difference |   1.03 | 0.11 | 1.03 | 0.11 | 1.03
 point_estimate(bf, centrality = c("median", "MAP"))
 #> Point Estimate
 #> 
 #> Parameter  | Median |  MAP
 #> --------------------------
-#> Difference |   1.03 | 1.04
+#> Difference |   1.04 | 1.05
 # }
 ```

@@ -5,9 +5,14 @@ Refit Bayesian model as frequentist. Can be useful for comparisons.
 ## Usage
 
 ``` r
-convert_bayesian_as_frequentist(model, data = NULL, REML = TRUE, resp = NULL)
+convert_bayesian_as_frequentist(
+  model,
+  data = NULL,
+  REML = TRUE,
+  response = NULL
+)
 
-bayesian_as_frequentist(model, data = NULL, REML = TRUE, resp = NULL)
+bayesian_as_frequentist(model, data = NULL, REML = TRUE, response = NULL)
 ```
 
 ## Arguments
@@ -26,11 +31,21 @@ bayesian_as_frequentist(model, data = NULL, REML = TRUE, resp = NULL)
   For mixed effects, should models be estimated using restricted maximum
   likelihood (REML) (`TRUE`, default) or maximum likelihood (`FALSE`)?
 
-- resp:
+- response:
 
   For multivariate *brms* models, the name of the one response to
   convert, as returned by `names(insight::find_formula(model))`. Other
-  models ignore `resp`.
+  models ignore `response`.
+
+## Details
+
+Linear models from *BayesFactor* with random factors (see `whichRandom`
+in
+[`BayesFactor::lmBF()`](https://rdrr.io/pkg/BayesFactor/man/lmBF.html))
+are refit with [`lme4::lmer()`](https://rdrr.io/pkg/lme4/man/lmer.html).
+A random term with only factors, such as `cyl:gear`, becomes
+`(1 | cyl:gear)`. A random term with a continuous variable, such as
+`Days:Subject`, becomes `(0 + Days | Subject)`.
 
 ## Examples
 

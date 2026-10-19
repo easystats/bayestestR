@@ -2,11 +2,22 @@
 
 Compute the proportion of the CI (default to the 95% ETI) of a posterior
 distribution that lies within a region of practical equivalence.
+`p_rope()` is an alias for `rope(ci = 1)` convenient for computing the
+posterior probability of the ROPE.
 
 ## Usage
 
 ``` r
 rope(x, ...)
+
+p_rope(
+  x,
+  range = "default",
+  ci_method = "ETI",
+  complement = FALSE,
+  verbose = TRUE,
+  ...
+)
 
 # S3 method for class 'numeric'
 rope(
@@ -94,15 +105,10 @@ rope(
   [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.md)
   is used. See 'Examples'.
 
-- ci:
-
-  The Credible Interval (CI) probability, corresponding to the
-  proportion of HDI, to use for the percentage in ROPE.
-
 - ci_method:
 
   The type of interval to use to quantify the percentage in ROPE. Can be
-  'HDI' (default) or 'ETI'. See
+  'HDI' or 'ETI' (default). See
   [`ci()`](https://easystats.github.io/bayestestR/reference/ci.md).
 
 - complement:
@@ -115,6 +121,11 @@ rope(
 - verbose:
 
   Toggle off warnings.
+
+- ci:
+
+  The Credible Interval (CI) probability, corresponding to the
+  proportion of HDI, to use for the percentage in ROPE.
 
 - rvar_col:
 
@@ -327,7 +338,7 @@ rope(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 #> 
 #> Inside ROPE
 #> -----------
-#> 8.32 %     
+#> 8.53 %     
 #> 
 rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #> # Proportion of samples inside the ROPE [-0.10, 0.10]:
@@ -343,14 +354,14 @@ rope(x = rnorm(1000, 1, 1), ci = c(0.90, 0.95))
 #> 
 #> Inside ROPE
 #> -----------
-#> 4.89 %     
+#> 6.22 %     
 #> 
 #> 
 #> ROPE for the 95% HDI:
 #> 
 #> Inside ROPE
 #> -----------
-#> 4.63 %     
+#> 5.89 %     
 #> 
 #> 
 # \donttest{
@@ -396,7 +407,7 @@ rope(model, range = list(c(-10, 5), c(-0.2, 0.2), "default"))
 #> -------------------------
 #> (Intercept) |      0.00 %
 #> wt          |      0.00 %
-#> gear        |     10.53 %
+#> gear        |      5.79 %
 #> 
 
 # named ROPE ranges
@@ -432,7 +443,7 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars, refresh = 0)
 #> Compiling Stan program...
 #> Start sampling
 rope(model)
-#> Possible multicollinearity between b_cyl and b_wt (r = 0.78). This might
+#> Possible multicollinearity between b_cyl and b_wt (r = 0.77). This might
 #>   lead to inappropriate results. See 'Details' in '?rope'.
 #> # Proportion of samples inside the ROPE [-0.60, 0.60]:
 #> 
@@ -443,7 +454,7 @@ rope(model)
 #> cyl       |      0.00 %
 #> 
 rope(model, ci = c(0.90, 0.95))
-#> Possible multicollinearity between b_cyl and b_wt (r = 0.78). This might
+#> Possible multicollinearity between b_cyl and b_wt (r = 0.77). This might
 #>   lead to inappropriate results. See 'Details' in '?rope'.
 #> # Proportions of samples inside the ROPE [-0.60, 0.60]:
 #> 
@@ -475,7 +486,7 @@ model <- brms::brm(
 #> Start sampling
 rope(model)
 #> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),
-#>   b_disp_cyl and b_disp_wt (r = 0.79). This might lead to inappropriate
+#>   b_disp_cyl and b_disp_wt (r = 0.77). This might lead to inappropriate
 #>   results. See 'Details' in '?rope'.
 #> # Proportion of samples inside the ROPE.
 #> ROPE with depends on outcome variable.
@@ -491,7 +502,7 @@ rope(model)
 #> 
 rope(model, ci = c(0.90, 0.95))
 #> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),
-#>   b_disp_cyl and b_disp_wt (r = 0.79). This might lead to inappropriate
+#>   b_disp_cyl and b_disp_wt (r = 0.77). This might lead to inappropriate
 #>   results. See 'Details' in '?rope'.
 #> # Proportions of samples inside the ROPE.
 #> ROPE with depends on outcome variable.
@@ -532,7 +543,7 @@ rope(
   )
 )
 #> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),
-#>   b_disp_cyl and b_disp_wt (r = 0.79). This might lead to inappropriate
+#>   b_disp_cyl and b_disp_wt (r = 0.77). This might lead to inappropriate
 #>   results. See 'Details' in '?rope'.
 #> # Proportion of samples inside the ROPE.
 #> ROPE with depends on outcome variable.
@@ -541,7 +552,7 @@ rope(
 #> --------------------------------------------
 #> mpg_Intercept  |      0.00 % | [-0.10, 0.10]
 #> mpg_wt         |      0.00 % | [-1.00, 1.00]
-#> mpg_cyl        |     89.82 % | [-2.00, 2.00]
+#> mpg_cyl        |     88.47 % | [-2.00, 2.00]
 #> disp_Intercept |      0.00 % | [-0.10, 0.10]
 #> disp_wt        |      0.00 % | [-5.00, 5.00]
 #> disp_cyl       |      0.00 % | [-4.00, 4.00]
@@ -549,14 +560,14 @@ rope(
 
 bf <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 rope(bf)
-#> # Proportion of samples inside the ROPE [-0.10, 0.10]:
+#> # Proportion of samples inside the ROPE [-0.09, 0.09]:
 #> 
 #> Parameter  | Inside ROPE
 #> ------------------------
 #> Difference |      0.00 %
 #> 
 rope(bf, ci = c(0.90, 0.95))
-#> # Proportions of samples inside the ROPE [-0.10, 0.10]:
+#> # Proportions of samples inside the ROPE [-0.09, 0.09]:
 #> 
 #> ROPE for the 90% HDI:
 #> 

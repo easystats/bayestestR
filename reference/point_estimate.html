@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -251,41 +251,41 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Median   | Mean |  MAP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5.58e-03 | 0.01 | 0.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Median |  Mean |  MAP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.02  | -0.03 | 0.07</span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Median |  MAD |      Mean |   SD |  MAP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -0.02  | 0.97 | -5.33e-03 | 1.00 | 0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Median |  MAD | Mean |   SD |  MAP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.04   | 0.94 | 0.03 | 0.99 | 0.01</span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>, centrality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Median |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.03   | -0.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.03  | -0.06</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="va">df</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |  MAD |  Mean |   SD |   MAP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.02 | 1.21 |  0.02 | 1.12 |  0.85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.07 | 1.07 | -0.10 | 1.00 | -0.18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |  -0.29 | 1.02 | -0.33 | 0.89 | -0.10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.08 | 0.90 | -0.14 | 0.89 |  0.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |  MAD |  Mean |   SD |      MAP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.04 | 0.93 | -0.08 | 0.90 |     0.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.08 | 0.94 | -0.03 | 0.92 | 1.42e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |   0.18 | 1.08 |  0.22 | 0.97 |     0.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.12 | 1.06 | -0.03 | 0.97 |    -0.33</span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="va">df</span>, centrality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |   MAP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.02 |  0.85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.07 | -0.18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |  -0.29 | -0.10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.08 |  0.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |      MAP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.04 |     0.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.08 | 1.42e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |   0.18 |     0.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.12 |    -0.33</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># rstanarm models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -293,8 +293,8 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2.2e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2.1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -311,15 +311,15 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.03 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.028 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.058 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.042 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.034 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.076 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1.1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
@@ -336,9 +336,9 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.031 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.027 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.058 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.042 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.039 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.081 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).</span>
@@ -361,15 +361,15 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.03 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.034 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.064 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.041 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.042 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.083 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 1.1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
@@ -386,26 +386,26 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.031 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.029 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.06 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.04 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.04 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.08 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="va">model</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Point Estimate</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |  MAD |  Mean |   SD |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.65 | 1.86 | 39.69 | 1.84 | 39.57</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -3.19 | 0.81 | -3.18 | 0.82 | -3.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  -1.51 | 0.44 | -1.52 | 0.44 | -1.54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.70 | 1.73 | 39.65 | 1.77 | 39.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -3.18 | 0.74 | -3.18 | 0.77 | -3.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  -1.51 | 0.41 | -1.51 | 0.42 | -1.52</span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="va">model</span>, centrality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Point Estimate</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.65 | 39.57</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -3.19 | -3.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  -1.51 | -1.54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.70 | 39.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -3.18 | -3.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  -1.51 | -1.52</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># emmeans estimates</span></span></span>
@@ -418,7 +418,7 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X1      | Median |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> overall |  -3.19 | -3.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall |  -3.18 | -3.14</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># brms models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -446,9 +446,9 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.014 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.012 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.026 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.018 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.015 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.033 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span>
@@ -471,9 +471,9 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.011 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.024 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.014 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.033 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).</span>
@@ -496,9 +496,9 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.013 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.013 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.026 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.018 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.018 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.036 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).</span>
@@ -521,26 +521,26 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.014 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.012 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.026 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.018 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.015 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.033 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="va">model</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Point Estimate</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |  MAD |  Mean |   SD |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.67 | 1.71 | 39.67 | 1.78 | 39.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -3.22 | 0.78 | -3.20 | 0.80 | -3.32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  -1.49 | 0.44 | -1.50 | 0.43 | -1.46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.67 | 1.73 | 39.66 | 1.76 | 39.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -3.19 | 0.76 | -3.19 | 0.78 | -3.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  -1.50 | 0.41 | -1.51 | 0.43 | -1.50</span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="va">model</span>, centrality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Point Estimate</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.67 | 39.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -3.22 | -3.32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  -1.49 | -1.46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  39.67 | 39.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |  -3.19 | -3.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |  -1.50 | -1.50</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># BayesFactor objects</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -550,13 +550,13 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |  MAD | Mean |   SD |  MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.03 | 0.11 | 1.03 | 0.11 | 1.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.03 | 0.11 | 1.03 | 0.11 | 1.03</span>
 <span class="r-in"><span><span class="fu">point_estimate</span><span class="op">(</span><span class="va">bf</span>, centrality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |  MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.03 | 1.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.04 | 1.05</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

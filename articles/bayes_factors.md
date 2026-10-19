@@ -376,8 +376,8 @@ comes from the second model.
 
     >    Model weights pweights
     > 1 mod_H0       1  2.5e-05
-    > 2 mod_H1   31665  7.9e-01
-    > 3 mod_H2    8334  2.1e-01
+    > 2 mod_H1   31662  7.9e-01
+    > 3 mod_H2    8338  2.1e-01
 
 ### Order restricted models
 
@@ -442,7 +442,7 @@ Here too we can obtain a matrix of BFs between all models:
     >  Denominator\Numerator   |   [1] |   [positive] |   [strong]
     > -----------------------------------------------------------
     > [1] (Un-restricted)      |     1 |         2.00 |       4.70
-    > [positive] mom_hsyes > 0 | 0.499 |            1 |       2.35
+    > [positive] mom_hsyes > 0 | 0.500 |            1 |       2.35
     > [strong] mom_hsyes > 4   | 0.213 |        0.426 |          1
 
 We can see the “strong” model is preferred over both the un-restricted
@@ -465,10 +465,10 @@ BF comparing \mathcal{H}\_{2r} and \mathcal{H}\_0:
 \
 `(``BF_2r.0`` ``<-`` ``BF_2.0`` ``*`` ``BF_2r.2``)`
 
-    > [1] 54865
+    > [1] 54774
 
 So the data support the hypothesis that the difference is small but
-strictly positive 54864.55 times more than the hypothesis that the
+strictly positive 54774.05 times more than the hypothesis that the
 difference is exactly 0.
 
 **Because these restrictions are on the prior distribution, they are
@@ -548,7 +548,7 @@ the three conditions:
     > Bayes Factor (Order-Restriction)
     > 
     > Hypothesis                         P(Prior) P(Posterior)   BF
-    > lemon < control & control < sulfur     0.17         0.68 4.04
+    > lemon < control & control < sulfur     0.17         0.67 4.02
     > 
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
@@ -590,9 +590,9 @@ difference is negative*:
     > 
     >  Denominator\Numerator        |   [1] |   [positive] |   [negative]
     > ------------------------------------------------------------------
-    > [1] (Un-restricted)           |     1 |        0.050 |         1.97
-    > [positive] lemon - sulfur > 0 | 19.93 |            1 |        39.22
-    > [negative] lemon - sulfur < 0 | 0.508 |        0.025 |            1
+    > [1] (Un-restricted)           |     1 |        0.050 |         1.96
+    > [positive] lemon - sulfur > 0 | 19.99 |            1 |        39.19
+    > [negative] lemon - sulfur < 0 | 0.510 |        0.026 |            1
 
 The hypothesis that the lemon condition yields lower ratings than the
 sulfur condition is about 60 times more supported by the data than the
@@ -671,8 +671,8 @@ between the two groups is exactly 0:
     > 
     > Parameter   |       BF
     > ----------------------
-    > (Intercept) | 4.12e+60
-    > mom_hsyes   | 5.93e+03
+    > (Intercept) | 4.19e+60
+    > mom_hsyes   | 5.95e+03
     > 
     > * Evidence Against The Null: 0
 
@@ -738,8 +738,8 @@ by specifying a null-region instead of a point null:
     > 
     > Parameter   |       BF
     > ----------------------
-    > (Intercept) | 5.86e+57
-    > mom_hsyes   |   153.56
+    > (Intercept) | 5.67e+57
+    > mom_hsyes   |   153.01
     > 
     > * Evidence Against The Null: [-5.000, 5.000]
 
@@ -774,8 +774,8 @@ alternative will be restricted to the region to the right of the null
     > 
     > Parameter   |       BF
     > ----------------------
-    > (Intercept) | 5.88e+57
-    > mom_hsyes   |   301.66
+    > (Intercept) | 5.93e+57
+    > mom_hsyes   |   299.53
     > 
     > * Evidence Against The Null: [-5.000, 5.000]
     > *                 Direction: Right-Sided test
@@ -822,8 +822,8 @@ function:
     > 
     > Parameter   |      BF = 1 SI | Effects |   Component
     > ----------------------------------------------------
-    > (Intercept) | [74.33, 83.94] |   fixed | conditional
-    > mom_hsyes   | [ 6.07, 17.23] |   fixed | conditional
+    > (Intercept) | [74.38, 83.93] |   fixed | conditional
+    > mom_hsyes   | [ 5.95, 17.86] |   fixed | conditional
 
 The argument `BF = 1` indicates that we want the interval to contain
 values that have gained support by a factor of at least 1 (that is,
@@ -972,9 +972,9 @@ how do do so with [emmeans](https://rvlenth.github.io/emmeans/) above).
 
     > 
     >  condition Estimate 2.5 % 97.5 %
-    >    control     30.3 -2.94   63.4
-    >    lemon       30.3 -3.03   63.4
-    >    sulfur      30.3 -3.00   63.5
+    >    control     30.1 -2.95   63.2
+    >    lemon       30.2 -2.98   63.3
+    >    sulfur      30.0 -3.11   63.3
     > 
     > Type: response
 
@@ -986,9 +986,9 @@ how do do so with [emmeans](https://rvlenth.github.io/emmeans/) above).
 
     > 
     >  condition Estimate 2.5 % 97.5 %
-    >    control     30.1 -3.28   63.9
-    >    lemon       30.1 -3.37   63.8
-    >    sulfur      30.1 -3.31   64.0
+    >    control     30.1 -3.67   64.1
+    >    lemon       30.2 -3.82   64.1
+    >    sulfur      30.1 -3.72   64.3
     > 
     > Type: response
 
@@ -1000,9 +1000,9 @@ how do do so with [emmeans](https://rvlenth.github.io/emmeans/) above).
 
     > 
     >  condition Estimate 2.5 % 97.5 %
-    >    control     30.3 -3.10   64.0
-    >    lemon       30.2 -2.97   63.9
-    >    sulfur      30.2 -2.87   64.1
+    >    control     30.2 -3.31   63.8
+    >    lemon       30.3 -3.39   63.7
+    >    sulfur      30.3 -3.21   63.9
     > 
     > Type: response
 
@@ -1020,9 +1020,9 @@ this is not the case:
 
     > 
     >          Contrast Estimate 2.5 % 97.5 %
-    >  lemon - control  -0.00104 -3.92   3.91
-    >  sulfur - control -0.01706 -3.92   3.90
-    >  sulfur - lemon   -0.01666 -5.55   5.48
+    >  lemon - control    0.0235 -3.91   3.93
+    >  sulfur - control  -0.0153 -3.95   3.90
+    >  sulfur - lemon    -0.0215 -5.59   5.56
     > 
     > Term: condition
     > Type: response
@@ -1041,9 +1041,9 @@ difference is much narrower than the other two differences involving the
 
     > 
     >          Contrast Estimate 2.5 % 97.5 %
-    >  lemon - control   0.00866 -5.58   5.50
-    >  sulfur - control -0.02207 -8.78   8.69
-    >  sulfur - lemon   -0.00672 -8.80   8.81
+    >  lemon - control   0.00891 -5.58   5.63
+    >  sulfur - control  0.00897 -8.85   8.75
+    >  sulfur - lemon   -0.01434 -8.89   8.83
     > 
     > Term: condition
     > Type: response
@@ -1061,9 +1061,9 @@ the groups:
 
     > 
     >          Contrast Estimate 2.5 % 97.5 %
-    >  lemon - control  0.028964 -5.52   5.59
-    >  sulfur - control 0.030357 -5.55   5.58
-    >  sulfur - lemon   0.000774 -5.64   5.57
+    >  lemon - control   0.00523 -5.54   5.56
+    >  sulfur - control  0.00171 -5.56   5.54
+    >  sulfur - lemon   -0.00831 -5.57   5.57
     > 
     > Term: condition
     > Type: response
@@ -1083,7 +1083,7 @@ different across the three models:
     > Bayes Factor (Order-Restriction)
     > 
     > Hypothesis        P(Prior) P(Posterior)   BF
-    > b2 < b1 & b1 < b3     0.25         0.77 3.09
+    > b2 < b1 & b1 < b3     0.25         0.77 3.12
     > 
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
@@ -1099,7 +1099,7 @@ different across the three models:
     > Bayes Factor (Order-Restriction)
     > 
     > Hypothesis        P(Prior) P(Posterior)   BF
-    > b2 < b1 & b1 < b3     0.20         0.74 3.76
+    > b2 < b1 & b1 < b3     0.20         0.73 3.70
     > 
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
@@ -1115,7 +1115,7 @@ different across the three models:
     > Bayes Factor (Order-Restriction)
     > 
     > Hypothesis        P(Prior) P(Posterior)   BF
-    > b2 < b1 & b1 < b3     0.17         0.72 4.25
+    > b2 < b1 & b1 < b3     0.17         0.71 4.26
     > 
     > * Bayes factors for the restricted model vs. the un-restricted model.
 
@@ -1189,7 +1189,7 @@ savage–dickey method. *Cognitive Psychology*, *60*(3), 158–189.
     throughout this vignette, but `bayestestR` also supports
     [brms](https://github.com/paul-buerkner/brms),
     [blavaan](https://blavaan.org), [rstan](https://mc-stan.org/rstan/),
-    `{cmdstanr}`,
+    [cmdstanr](https://mc-stan.org/cmdstanr/),
     [BayesFactor](https://richarddmorey.github.io/BayesFactor/) and
     more.
 

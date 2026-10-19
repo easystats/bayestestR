@@ -71,13 +71,13 @@ summary(lm(V2 ~ V1, data = data))
 #> lm(formula = V2 ~ V1, data = data)
 #> 
 #> Residuals:
-#>     Min      1Q  Median      3Q     Max 
-#> -1.8566 -0.5694 -0.1116  0.5070  2.4567 
+#>      Min       1Q   Median       3Q      Max 
+#> -2.07226 -0.65675  0.06411  0.55903  1.91733 
 #> 
 #> Coefficients:
-#>              Estimate Std. Error t value Pr(>|t|)    
-#> (Intercept) 4.558e-17  8.704e-02   0.000        1    
-#> V1          5.000e-01  8.748e-02   5.715 1.18e-07 ***
+#>               Estimate Std. Error t value Pr(>|t|)    
+#> (Intercept) -1.630e-17  8.704e-02   0.000        1    
+#> V1           5.000e-01  8.748e-02   5.715 1.18e-07 ***
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #> 
@@ -112,7 +112,7 @@ summary(lm(V2 ~ V1, data = data))
 #> 
 #> Residuals:
 #>     Min      1Q  Median      3Q     Max 
-#> -3.2354 -0.9753 -0.0633  1.2648  3.3477 
+#> -3.9102 -1.1127  0.1926  1.0654  4.0502 
 #> 
 #> Coefficients:
 #>             Estimate Std. Error t value Pr(>|t|)    
@@ -149,11 +149,11 @@ summary(lm(y ~ x1, data = data))
 #> 
 #> Residuals:
 #>      Min       1Q   Median       3Q      Max 
-#> -2.12568 -0.76836 -0.08657  0.61647  2.76996 
+#> -2.47132 -0.58008 -0.01947  0.71625  1.87046 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)  
-#> (Intercept) -8.429e-19  9.848e-02   0.000    1.000  
+#> (Intercept) -2.775e-17  9.848e-02   0.000    1.000  
 #> x1           2.000e-01  9.897e-02   2.021    0.046 *
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -171,24 +171,24 @@ round(c(mean(data$V1), sd(data$V1)), 1)
 #> [1] 0 1
 diff(t.test(data$V1 ~ data$V0)$estimate)
 #> mean in group 1 
-#>      0.09185722 
+#>     -0.01258664 
 summary(lm(V1 ~ V0, data = data))
 #> 
 #> Call:
 #> lm(formula = V1 ~ V0, data = data)
 #> 
 #> Residuals:
-#>     Min      1Q  Median      3Q     Max 
-#> -2.0821 -0.6721  0.0000  0.6032  2.0821 
+#>      Min       1Q   Median       3Q      Max 
+#> -2.12175 -0.65540 -0.00629  0.64596  2.13434 
 #> 
 #> Coefficients:
-#>             Estimate Std. Error t value Pr(>|t|)
-#> (Intercept) -0.04593    0.26139  -0.176    0.862
-#> V01          0.09186    0.36966   0.248    0.806
+#>              Estimate Std. Error t value Pr(>|t|)
+#> (Intercept)  0.006293   0.261668   0.024    0.981
+#> V01         -0.012587   0.370055  -0.034    0.973
 #> 
-#> Residual standard error: 1.012 on 28 degrees of freedom
-#> Multiple R-squared:  0.0022, Adjusted R-squared:  -0.03344 
-#> F-statistic: 0.06175 on 1 and 28 DF,  p-value: 0.8056
+#> Residual standard error: 1.013 on 28 degrees of freedom
+#> Multiple R-squared:  4.132e-05,  Adjusted R-squared:  -0.03567 
+#> F-statistic: 0.001157 on 1 and 28 DF,  p-value: 0.9731
 #> 
 summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #> 
@@ -197,14 +197,14 @@ summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #> 
 #> Coefficients:
 #>               Estimate Std. Error z value Pr(>|z|)
-#> (Intercept) -6.812e-17  3.656e-01   0.000    1.000
-#> V1           9.601e-02  3.740e-01   0.257    0.797
+#> (Intercept)  6.204e-17  3.652e-01   0.000    1.000
+#> V1          -1.313e-02  3.730e-01  -0.035    0.972
 #> 
 #> (Dispersion parameter for binomial family taken to be 1)
 #> 
 #>     Null deviance: 41.589  on 29  degrees of freedom
-#> Residual deviance: 41.523  on 28  degrees of freedom
-#> AIC: 45.523
+#> Residual deviance: 41.588  on 28  degrees of freedom
+#> AIC: 45.588
 #> 
 #> Number of Fisher Scoring iterations: 3
 #> 
@@ -242,9 +242,9 @@ summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #> glm(formula = V0 ~ V1, family = "binomial", data = data)
 #> 
 #> Coefficients:
-#>              Estimate Std. Error z value Pr(>|z|)
-#> (Intercept) 2.221e-16  3.696e-01   0.000    1.000
-#> V1          3.251e-01  3.877e-01   0.839    0.402
+#>               Estimate Std. Error z value Pr(>|z|)
+#> (Intercept) -4.569e-17  3.696e-01   0.000    1.000
+#> V1           3.251e-01  3.877e-01   0.839    0.402
 #> 
 #> (Dispersion parameter for binomial family taken to be 1)
 #> 

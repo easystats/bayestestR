@@ -45,8 +45,6 @@ Functions for Bayesian Inference
   [`p_pointnull()`](https://easystats.github.io/bayestestR/reference/p_map.md)
   : Bayesian p-value based on the density at the Maximum A Posteriori
   (MAP)
-- [`p_rope()`](https://easystats.github.io/bayestestR/reference/p_rope.md)
-  : Probability of being in the ROPE
 - [`p_significance()`](https://easystats.github.io/bayestestR/reference/p_significance.md)
   : Practical Significance (ps)
 - [`p_to_bf()`](https://easystats.github.io/bayestestR/reference/p_to_bf.md)
@@ -56,6 +54,9 @@ Functions for Bayesian Inference
   [`convert_p_to_pd()`](https://easystats.github.io/bayestestR/reference/pd_to_p.md)
   [`convert_pd_to_p()`](https://easystats.github.io/bayestestR/reference/pd_to_p.md)
   : Convert between Probability of Direction (pd) and p-value.
+- [`rope()`](https://easystats.github.io/bayestestR/reference/rope.md)
+  [`p_rope()`](https://easystats.github.io/bayestestR/reference/rope.md)
+  : Region of Practical Equivalence (ROPE) Analysis
 - [`bayesfactor_parameters()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   [`bayesfactor_pointnull()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   [`bayesfactor_rope()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
@@ -63,8 +64,6 @@ Functions for Bayesian Inference
   [`bf_pointnull()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   [`bf_rope()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.md)
   : Bayes Factors (BF) for a Single Parameter
-- [`rope()`](https://easystats.github.io/bayestestR/reference/rope.md) :
-  Region of Practical Equivalence (ROPE) Analysis
 - [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.md)
   : Find Default Equivalence (ROPE) Region Bounds
 - [`equivalence_test()`](https://easystats.github.io/bayestestR/reference/equivalence_test.md)

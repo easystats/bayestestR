@@ -142,9 +142,9 @@ typically exclude 2.5% from each tail of the distribution and always
 include the median, the HDI is *not* equal-tailed and therefore always
 includes the mode(s) of posterior distributions. While this can be
 useful to better represent the credibility mass of a distribution, the
-HDI also has some limitations. See
-[`spi()`](https://easystats.github.io/bayestestR/reference/spi.md) for
-details.
+HDI also has some limitations. The section *Algorithms* of
+[`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.md)
+explains how the HDI is computed.
 
 A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
 side of its limits. It indicates the 2.5th percentile and the 97.5th
@@ -227,8 +227,7 @@ Other ci:
 [`ci()`](https://easystats.github.io/bayestestR/reference/ci.md),
 [`eti()`](https://easystats.github.io/bayestestR/reference/eti.md),
 [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.md),
-[`si()`](https://easystats.github.io/bayestestR/reference/si.md),
-[`spi()`](https://easystats.github.io/bayestestR/reference/spi.md)
+[`si()`](https://easystats.github.io/bayestestR/reference/si.md)
 
 ## Examples
 

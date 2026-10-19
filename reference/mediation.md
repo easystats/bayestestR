@@ -50,7 +50,10 @@ mediation(
   A named character vector, indicating the names of the response
   variables to be used for the mediation analysis. Usually can be
   `NULL`, in which case these variables are retrieved automatically. If
-  not `NULL`, names should match the names of the model formulas,
+  not `NULL`, names must match the names of the model formulas. For
+  *brms* models, these are `names(insight::find_formula(model))`, one
+  name per formula, and the values are the left side of each formula
+  without addition terms such as `cens()`. For other models, they are
   `names(insight::find_response(model, combine = TRUE))`. This can be
   useful if, for instance, the mediator variable used as predictor has a
   different name from the mediator variable used as response. This might
@@ -83,7 +86,9 @@ mediation(
   (default),
   ["HDI"](https://easystats.github.io/bayestestR/reference/hdi.md),
   ["BCI"](https://easystats.github.io/bayestestR/reference/bci.md),
-  ["SPI"](https://easystats.github.io/bayestestR/reference/spi.md) or
+  `"SPI"` (the
+  [HDI](https://easystats.github.io/bayestestR/reference/hdi.md) with
+  `method = "density"`) or
   ["SI"](https://easystats.github.io/bayestestR/reference/si.md).
 
 ## Value
