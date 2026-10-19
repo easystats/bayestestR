@@ -18,6 +18,8 @@
 #' on density approximation. Indirect relationship between mathematical
 #' definition and interpretation. Only suitable for weak / very diffused priors.
 #'
+#' @param method Density estimation method. Can be `"kernel"` (default), `"logspline"`
+#' or `"KernSmooth"`.
 #' @inheritParams hdi
 #' @inheritParams density_at
 #' @inheritParams pd

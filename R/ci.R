@@ -10,7 +10,7 @@
 #' @param x A `stanreg` or `brmsfit` model, or a vector representing a posterior
 #' distribution.
 #' @param method Can be ["ETI"][eti] (default), ["HDI"][hdi], ["BCI"][bci],
-#' ["SPI"][spi] or ["SI"][si].
+#' `"SPI"` (the [HDI][hdi] with `method = "density"`) or ["SI"][si].
 #' @param ci Value or vector of probability of the CI (between 0 and 1)
 #'   to be estimated. Default to `0.95` (`95%`).
 #' @inheritParams hdi
@@ -121,13 +121,14 @@ ci <- function(x, ...) {
     )
   } else if (tolower(method) == "spi") {
     return(
-      spi(
+      hdi(
         x,
         ci = ci,
         effects = effects,
         component = component,
         parameters = parameters,
         verbose = verbose,
+        method = "density",
         ...
       )
     )

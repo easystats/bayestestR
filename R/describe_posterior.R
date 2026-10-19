@@ -8,7 +8,7 @@
 #'   for other classes mostly resemble the arguments of the `.numeric` method.
 #' @param ci_method The type of index used for Credible Interval. Can be `"ETI"`
 #'   (default, see [`eti()`]), `"HDI"` (see [`hdi()`]), `"BCI"` (see [`bci()`]),
-#'   `"SPI"` (see [`spi()`]), or `"SI"` (see [`si()`]).
+#'   `"SPI"` (see [`hdi()`] with `method = "density"`), or `"SI"` (see [`si()`]).
 #' @param test The indices of effect existence to compute. Character (vector) or
 #'   list with one or more of these options: `"p_direction"` (or `"pd"`),
 #'   `"rope"`, `"p_map"`, `"p_significance"` (or `"ps"`), `"p_rope"`,
