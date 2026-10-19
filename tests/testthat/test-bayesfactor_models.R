@@ -238,17 +238,19 @@ test_that("bayesfactor_models STAN, bridge sampling options", {
   expect_identical(nrow(out), 2L)
   expect_identical(out$log_BF, c(10, 0))
 
-  # without options, only `silent = TRUE` is passed, and log_BF is the
+  # without options, only `silent = !verbose` is passed, and log_BF is the
   # difference of the log marginal likelihoods
-  env$calls <- list()
-  out <- suppressWarnings(suppressMessages(
-    bayesfactor_models(stan_bf_0, stan_bf_1)
-  ))
-  expect_length(env$calls, 2)
-  for (call_args in env$calls) {
-    expect_identical(call_args, list(silent = TRUE))
+  for (verbose in c(TRUE, FALSE)) {
+    env$calls <- list()
+    out <- suppressWarnings(suppressMessages(
+      bayesfactor_models(stan_bf_0, stan_bf_1, verbose = verbose)
+    ))
+    expect_length(env$calls, 2)
+    for (call_args in env$calls) {
+      expect_identical(call_args, list(silent = !verbose))
+    }
+    expect_identical(out$log_BF, c(0, 10))
   }
-  expect_identical(out$log_BF, c(0, 10))
 })
 
 test_that("bayesfactor_models STAN, median of repeated estimates", {
@@ -305,11 +307,12 @@ test_that("bayesfactor_models STAN, bridge_options needs names", {
     .package = "bridgesampling"
   )
   fake_stanreg <- structure(list(), class = "stanreg")
+  mods <- list(a = fake_stanreg, b = fake_stanreg)
   # an unnamed list, a partly named list, and a named vector
   bad_options <- list(list(3), list(repetitions = 3, 2), c(repetitions = 3))
   for (opts in bad_options) {
     expect_error(
-      bayesfactor_models(fake_stanreg, fake_stanreg, bridge_options = opts),
+      .bayesfactor_models_stan_REG(mods, denominator = 1, bridge_options = opts),
       regexp = "`bridge_options` must be a list in which every element has a name",
       fixed = TRUE
     )
