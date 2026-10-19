@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -441,15 +441,27 @@ more than the model <em>without</em> that term.</p>
 we can also average the <strong>posterior estimate</strong> across
 models.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ppp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weighted_posteriors.html">weighted_posteriors</a></span><span class="op">(</span><span class="va">mod_H0</span>, <span class="va">mod_H1</span>, <span class="va">mod_H2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">ppp</span><span class="op">$</span><span class="va">mom_hsyes</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<code class="sourceCode R"><span><span class="va">ppp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weighted_posteriors.html">weighted_posteriors</a></span><span class="op">(</span><span class="va">mod_H0</span>, <span class="va">mod_H1</span>, <span class="va">mod_H2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>&gt; Iteration: 1
+&gt; Iteration: 2
+&gt; Iteration: 3
+&gt; Iteration: 4</code></pre>
+<pre><code>&gt; Iteration: 1
+&gt; Iteration: 2
+&gt; Iteration: 3
+&gt; Iteration: 4</code></pre>
+<pre><code>&gt; Iteration: 1
+&gt; Iteration: 2
+&gt; Iteration: 3
+&gt; Iteration: 4</code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">ppp</span><span class="op">$</span><span class="va">mom_hsyes</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="100%"></p>
 <p>This looks a lot like the posterior obtained from the second model,
 which shouldn’t be surprising since about 80% of the averaged posterior
 comes from the second model.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">ppp</span>, <span class="st">"weights"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt;    Model weights pweights
 &gt; 1 mod_H0       1  2.5e-05
@@ -480,7 +492,7 @@ posterior samples, we can see how the probabilities of the restricted
 distributions <em>change</em> after observing the data - <a href="#bf-definitions">this change is a Bayes factor</a>. These can be
 achieved with <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>, that compute a
 Bayes factor for these restricted model vs the unrestricted model.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">mod_H2</span>, hypothesis <span class="op">=</span> <span class="st">"mom_hsyes &gt; 0"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
@@ -493,7 +505,7 @@ difference must be small <em>and positive</em>) twice as much as it fits
 the un-restricted model (where the difference must be small).</p>
 <p>We can compare multiple restricted hypotheses. For example: that the
 difference isn’t just positive, it’s larger than 4.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bf_rstr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span></span>
 <span>  <span class="va">mod_H2</span>,</span>
 <span>  hypothesis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -502,7 +514,7 @@ difference isn’t just positive, it’s larger than 4.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Here too we can obtain a matrix of BFs between all models:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">bf_rstr</span><span class="op">)</span>, show_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Restricted Models
 &gt; 
@@ -525,7 +537,7 @@ BF_{2r,0} &amp; = BF_{2,0} \times BF_{2r,2} \\
 &amp; =
 \frac{P(\mathcal{D}|\mathcal{H}_{2r})}{P(\mathcal{D}|\mathcal{H}_0)}
 \end{align}</span></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BF_2.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bfs</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="va">BF_2r.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bf_rstr</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span></span>
@@ -544,7 +556,7 @@ them to create complex restrictions.</p>
 dataset</a>, were 150 individuals rated “moral harshness” of
 undocumented migrants in one of three conditions: no odor, clean odor
 (lemon), or disgusting (sulfur) odor during questionnaire.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"disgust"</span>, package <span class="op">=</span> <span class="st">"bayestestR"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">disgust</span><span class="op">)</span></span></code></pre></div>
@@ -552,7 +564,7 @@ undocumented migrants in one of three conditions: no odor, clean odor
 &gt;  $ score    : int  13 26 30 23 34 37 33 34 35 33 ...
 &gt;  $ condition: Factor w/ 3 levels "control","lemon",..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <p>Let’s build our simple one-way-ANOVA-like model:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod_odor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span>
 <span>  <span class="va">score</span> <span class="op">~</span> <span class="va">condition</span>,</span>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -573,7 +585,7 @@ Factors with More Than 2 Levels</em> appendix below for more details on
 the contrast coding used here.</p>
 <p>Let’s obtain the prior and posterior distributions of the condition
 means using <code><a href="https://mc-stan.org/rstantools/reference/posterior_epred.html" class="external-link">posterior_epred()</a></code>.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod_odor.prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unupdate.html">unupdate</a></span><span class="op">(</span><span class="va">mod_odor</span><span class="op">)</span> <span class="co"># get the priors-only model</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span></span>
@@ -586,7 +598,7 @@ sulfur condition - in other words, there is an <em>order</em> of: <span class="m
 \text{sulfur}</span>.</p>
 <p>We can formalize this hypothesis as an order restriction on the means
 of the three conditions:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span></span>
 <span>  posterior <span class="op">=</span> <span class="va">disgust_means</span>,</span>
 <span>  prior <span class="op">=</span> <span class="va">disgust_means.prior</span>,</span>
@@ -617,7 +629,7 @@ BF_{+,-} &amp; = BF_{+,0} \times BF_{0,-} \\
 &amp; =
 \frac{P(\mathcal{D}|\mathcal{H}_{+})}{P(\mathcal{D}|\mathcal{H}_{-})}
 \end{align}</span></p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bf_div</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span></span>
 <span>  posterior <span class="op">=</span> <span class="va">disgust_means</span>,</span>
 <span>  prior <span class="op">=</span> <span class="va">disgust_means.prior</span>,</span>
@@ -697,7 +709,7 @@ observing the data.</p>
 <p>This can be done using the <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> -
 let’s use it to test the null hypothesis that the difference in IQ
 between the two groups is exactly 0:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">sddr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">mod_H2</span>, null <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Savage-Dickey density ratio)
 &gt; 
@@ -711,7 +723,7 @@ between the two groups is exactly 0:</p>
 <code>mom_hsyes</code> parameter, we can see that the null has become
 substantially less credible after observing the data - and therefore the
 alternative has become <em>more</em> credible.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sddr</span><span class="op">)</span></span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="100%"></p>
 <p>We can see that the center of the posterior distribution has shifted
@@ -723,7 +735,7 @@ that with other values overall.</p>
 <code>mom_hsyes</code> parameter with the Bayes factor comparing
 <code>mod_H2</code> (the alternative) and <code>mod_H0</code> (the
 null):</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">bfs</span>, subset <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, show_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
@@ -752,7 +764,7 @@ this, we combine the logic of the Savage-Dickey density ratio with the
 logic of the order-restricted Bayes factor!</p>
 <p>This too can be done with <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>, by
 specifying a null-region instead of a point null:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">sddr_region</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">mod_H2</span>, null <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Null-Interval)
 &gt; 
@@ -762,7 +774,7 @@ specifying a null-region instead of a point null:</p>
 &gt; mom_hsyes   |   153.01
 &gt; 
 &gt; * Evidence Against The Null: [-5.000, 5.000]</code></pre>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sddr_region</span><span class="op">)</span></span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="100%"></p>
 <p>We can see that the null-region has become much less credible by a
@@ -785,7 +797,7 @@ distributions <span class="citation">(Morey &amp; Wagenmakers,
 difference in IQ between the two groups is positive</em>, the
 alternative will be restricted to the region to the right of the null
 (point or interval):</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">sddr_directional</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">mod_H2</span>, null <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, direction <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Null-Interval)
 &gt; 
@@ -796,7 +808,7 @@ alternative will be restricted to the region to the right of the null
 &gt; 
 &gt; * Evidence Against The Null: [-5.000, 5.000]
 &gt; *                 Direction: Right-Sided test</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sddr_directional</span><span class="op">)</span></span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="100%"></p>
 <p>As we can see, given that we have an <em>a priori</em> assumption
@@ -826,7 +838,7 @@ posterior distributions and checking where the posterior densities are
 higher than the prior densities.</p>
 <p>In <code>bayestestR</code>, this can be achieved with the
 <code><a href="../reference/si.html">si()</a></code> function:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_first_si</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/si.html">si</a></span><span class="op">(</span><span class="va">mod_H2</span>, BF <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">my_first_si</span><span class="op">)</span></span></code></pre></div>
@@ -843,7 +855,7 @@ to contain values that have gained support by a factor of at least 1
 values that have high credibility in the posterior distribution,
 regardless of how much their credibility has changed from the prior
 distribution:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">mod_H2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Highest Density Interval
 &gt; 
@@ -854,7 +866,7 @@ distribution:</p>
 <p>Visually, we can see that the credibility of all the values within
 this interval has increased (and likewise the credibility of all the
 values outside this interval has decreased):</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">my_first_si</span><span class="op">)</span></span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" alt="" width="100%"></p>
 <p>We can also see the this support interval excludes the point null (0)
@@ -905,7 +917,7 @@ different implied priors regarding the possible <em>ordering</em> and
 <em>differences</em> between the factor’s levels.</p>
 <p>Let us fit 3 models with different contrast codings for a factor with
 3 levels:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span></span>
 <span></span>
@@ -963,7 +975,7 @@ different implied priors regarding the possible <em>ordering</em> and
 <p>Let’s use <a href="https://marginaleffects.com/" class="external-link">marginaleffects</a> to obtain estimates from
 these Bayesian (prior) models (after we already showed how do do so with
 <a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a> above).</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod_odor.treatment_prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unupdate.html">unupdate</a></span><span class="op">(</span><span class="va">mod_odor.treatment</span><span class="op">)</span></span>
 <span><span class="va">mod_odor.sum_prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unupdate.html">unupdate</a></span><span class="op">(</span><span class="va">mod_odor.sum</span><span class="op">)</span></span>
 <span><span class="va">mod_odor.equalprior_prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unupdate.html">unupdate</a></span><span class="op">(</span><span class="va">mod_odor.equalprior</span><span class="op">)</span></span>
@@ -979,7 +991,7 @@ these Bayesian (prior) models (after we already showed how do do so with
 &gt;    sulfur      30.0 -3.11   63.3
 &gt; 
 &gt; Type: response</code></pre>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">pr_sum_prior</span> <span class="op">&lt;-</span> <span class="fu">avg_predictions</span><span class="op">(</span></span>
 <span>  <span class="va">mod_odor.sum_prior</span>,</span>
 <span>  variables <span class="op">=</span> <span class="st">"condition"</span></span>
@@ -991,7 +1003,7 @@ these Bayesian (prior) models (after we already showed how do do so with
 &gt;    sulfur      30.1 -3.72   64.3
 &gt; 
 &gt; Type: response</code></pre>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">pr_equalprior_prior</span> <span class="op">&lt;-</span> <span class="fu">avg_predictions</span><span class="op">(</span></span>
 <span>  <span class="va">mod_odor.equalprior_prior</span>,</span>
 <span>  variables <span class="op">=</span> <span class="st">"condition"</span></span>
@@ -1008,7 +1020,7 @@ about the same prior distribution: <span class="math inline">Md=60</span>, <span
 +63]</span>.</p>
 <p>We might expect the same for the differences between the groups, but
 this is not the case:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">avg_comparisons</span><span class="op">(</span></span>
 <span>  <span class="va">mod_odor.treatment_prior</span>,</span>
 <span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"condition"</span> <span class="op">=</span> <span class="st">"pairwise"</span><span class="op">)</span></span>
@@ -1029,7 +1041,7 @@ much wider compared to the comparisons involving the
 priors for the differences between the groups, this time the
 <code>lemon - control</code> difference is much narrower than the other
 two differences involving the <code>sulfer</code> condition:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">avg_comparisons</span><span class="op">(</span><span class="va">mod_odor.sum_prior</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"condition"</span> <span class="op">=</span> <span class="st">"pairwise"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; 
 &gt;          Contrast Estimate 2.5 % 97.5 %
@@ -1041,7 +1053,7 @@ two differences involving the <code>sulfer</code> condition:</p>
 &gt; Type: response</code></pre>
 <p>But the <code><a href="../reference/contr.equalprior.html">contr.equalprior()</a></code> coding gives us the same
 prior distribution for all differences between the groups:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">avg_comparisons</span><span class="op">(</span></span>
 <span>  <span class="va">mod_odor.equalprior_prior</span>,</span>
 <span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"condition"</span> <span class="op">=</span> <span class="st">"pairwise"</span><span class="op">)</span></span>
@@ -1056,7 +1068,7 @@ prior distribution for all differences between the groups:</p>
 &gt; Type: response</code></pre>
 <p>Likewise, the implied priors for the ordering of the groups are
 different across the three models:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pr_treatment</span> <span class="op">&lt;-</span> <span class="fu">avg_predictions</span><span class="op">(</span><span class="va">mod_odor.treatment</span>, variables <span class="op">=</span> <span class="st">"condition"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span></span>
@@ -1070,7 +1082,7 @@ different across the three models:</p>
 &gt; b2 &lt; b1 &amp; b1 &lt; b3     0.25         0.77 3.12
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pr_sum</span> <span class="op">&lt;-</span> <span class="fu">avg_predictions</span><span class="op">(</span><span class="va">mod_odor.sum</span>, variables <span class="op">=</span> <span class="st">"condition"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span></span>
@@ -1084,7 +1096,7 @@ different across the three models:</p>
 &gt; b2 &lt; b1 &amp; b1 &lt; b3     0.20         0.73 3.70
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pr_equalprior</span> <span class="op">&lt;-</span> <span class="fu">avg_predictions</span><span class="op">(</span><span class="va">mod_odor.equalprior</span>, variables <span class="op">=</span> <span class="st">"condition"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span></span>

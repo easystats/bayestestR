@@ -360,7 +360,23 @@ Similar to how we can average evidence for a predictor across models, we
 can also average the **posterior estimate** across models.
 
 \
-`ppp`` ``<-`` `[`weighted_posteriors`](https://easystats.github.io/bayestestR/reference/weighted_posteriors.md)`(``mod_H0``, ``mod_H1``, ``mod_H2``)`\
+`ppp`` ``<-`` `[`weighted_posteriors`](https://easystats.github.io/bayestestR/reference/weighted_posteriors.md)`(``mod_H0``, ``mod_H1``, ``mod_H2``)`
+
+    > Iteration: 1
+    > Iteration: 2
+    > Iteration: 3
+    > Iteration: 4
+
+    > Iteration: 1
+    > Iteration: 2
+    > Iteration: 3
+    > Iteration: 4
+
+    > Iteration: 1
+    > Iteration: 2
+    > Iteration: 3
+    > Iteration: 4
+
 \
 [`plot`](https://rdrr.io/r/graphics/plot.default.html)`(`[`hdi`](https://easystats.github.io/bayestestR/reference/hdi.md)`(``ppp``$``mom_hsyes``)``)`` ``+`\
 `  `[`coord_cartesian`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html)`(``xlim ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``-``20``, ``20``)``)`
