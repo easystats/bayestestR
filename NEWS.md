@@ -11,6 +11,12 @@
 
 ## Changes
 
+* The `bayesfactor_models()` methods for `brmsfit`, `stanreg`, `stanfit`, and
+  `CmdStanFit` models gain a `bridge_options` argument. It is a named list of
+  arguments for `bridgesampling::bridge_sampler()`. If `repetitions` is
+  larger than 1, `bayesfactor_models()` uses the median of the repeated log
+  marginal likelihood estimates (#574).
+
 * `hdi()` gains a `method` argument. `method = "samples"` (default) keeps
   the current algorithm, and `method = "density"` uses the SPIn algorithm of
   `spi()`. The help page of `hdi()` now describes both algorithms (#719, #519).
