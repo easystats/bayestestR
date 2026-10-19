@@ -369,7 +369,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   if (
     !is.list(bridge_options) ||
       (length(bridge_options) &&
-        (is.null(opt_names) || !all(nzchar(opt_names))))
+        (is.null(opt_names) || anyNA(opt_names) || !all(nzchar(opt_names))))
   ) {
     insight::format_error(
       "`bridge_options` must be a list in which every element has a name."
@@ -435,8 +435,10 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 #' @param bridge_options A named list of arguments passed to
 #'   [`bridgesampling::bridge_sampler()`], such as `repetitions`, `method`,
-#'   `cores`, or `maxiter`. Give it by its full name, after the models. Not
-#'   used for `blavaan` models (see details).
+#'   `cores`, or `maxiter`. Give it by its full name, after the models. Unless
+#'   the list sets `silent`, `silent = !verbose` is passed, so the progress of
+#'   bridge sampling is printed when `verbose = TRUE`. Not used for `blavaan`
+#'   models (see details).
 #' @rdname bayesfactor_models
 #' @export
 bayesfactor_models.stanreg <- function(

@@ -310,15 +310,70 @@ test_that(".bayesfactor_models_stan_REG needs a list with every element named", 
   )
   fake_stanreg <- structure(list(), class = "stanreg")
   mods <- list(a = fake_stanreg, b = fake_stanreg)
-  # an unnamed list, a partly named list, and a named vector
-  bad_options <- list(list(3), list(repetitions = 3, 2), c(repetitions = 3))
+  # an unnamed list, a partly named list, a named vector, and an NA name
+  bad_options <- list(
+    list(3),
+    list(repetitions = 3, 2),
+    c(repetitions = 3),
+    stats::setNames(list(3), NA_character_)
+  )
   for (opts in bad_options) {
     expect_error(
-      .bayesfactor_models_stan_REG(mods, denominator = 1, bridge_options = opts),
+      .bayesfactor_models_stan_REG(
+        mods,
+        denominator = 1,
+        bridge_options = opts
+      ),
       regexp = "`bridge_options` must be a list in which every element has a name",
       fixed = TRUE
     )
   }
+
+  # the check is reached through bayesfactor_models()
+  local_mocked_bindings(
+    find_algorithm = function(x, ...) {
+      list(iterations = 1000, warmup = 500, chains = 1)
+    },
+    .package = "insight"
+  )
+  expect_error(
+    bayesfactor_models(
+      fake_stanreg,
+      fake_stanreg,
+      verbose = FALSE,
+      bridge_options = list(3)
+    ),
+    regexp = "`bridge_options` must be a list in which every element has a name",
+    fixed = TRUE
+  )
+})
+
+test_that("bayesfactor_models blavaan does not check bridge_options", {
+  skip_if_not_installed("blavaan")
+
+  local_mocked_bindings(
+    find_algorithm = function(x, ...) {
+      list(iterations = 1000, warmup = 500, chains = 1)
+    },
+    .package = "insight"
+  )
+  local_mocked_bindings(
+    .bayesfactor_models_stan_SEM = function(mods, denominator, verbose = TRUE) {
+      data.frame(
+        Model = names(mods),
+        log_BF = c(0, 1),
+        stringsAsFactors = FALSE
+      )
+    }
+  )
+  fake_blavaan <- structure(list(), class = "blavaan")
+  out <- bayesfactor_models(
+    fake_blavaan,
+    fake_blavaan,
+    verbose = FALSE,
+    bridge_options = list(3)
+  )
+  expect_identical(out$log_BF, c(0, 1))
 })
 
 test_that("bayesfactor_models STAN, precision warning names repetitions", {

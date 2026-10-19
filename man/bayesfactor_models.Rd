@@ -38,8 +38,10 @@ the denominator, or a model to be used as a denominator. Ignored for
 
 \item{bridge_options}{A named list of arguments passed to
 \code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}}, such as \code{repetitions}, \code{method},
-\code{cores}, or \code{maxiter}. Give it by its full name, after the models. Not
-used for \code{blavaan} models (see details).}
+\code{cores}, or \code{maxiter}. Give it by its full name, after the models. Unless
+the list sets \code{silent}, \code{silent = !verbose} is passed, so the progress of
+bridge sampling is printed when \code{verbose = TRUE}. Not used for \code{blavaan}
+models (see details).}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and
