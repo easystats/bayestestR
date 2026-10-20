@@ -234,7 +234,6 @@ Other ci:
 \code{\link[=bci]{bci()}},
 \code{\link[=ci]{ci()}},
 \code{\link[=eti]{eti()}},
-\code{\link[=hdi]{hdi()}},
-\code{\link[=spi]{spi()}}
+\code{\link[=hdi]{hdi()}}
 }
 \concept{ci}

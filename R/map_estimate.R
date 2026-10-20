@@ -8,6 +8,8 @@
 #' (`"SJ"`) compared to the legacy default implemented the base R [`density()`]
 #' function (`"nrd0"`).
 #'
+#' @param method Density estimation method. Can be `"kernel"` (default), `"logspline"`
+#' or `"KernSmooth"`.
 #' @inheritParams hdi
 #' @inheritParams estimate_density
 #'

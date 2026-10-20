@@ -110,8 +110,8 @@ Unlike equal-tailed intervals (see \code{\link[=eti]{eti()}}) that typically exc
 2.5\% from each tail of the distribution and always include the median, the
 HDI is \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
 distributions. While this can be useful to better represent the credibility
-mass of a distribution, the HDI also has some limitations. See \code{\link[=spi]{spi()}} for
-details.
+mass of a distribution, the HDI also has some limitations. The section
+\emph{Algorithms} of \code{\link[=hdi]{hdi()}} explains how the HDI is computed.
 
 A 95\% equal-tailed interval (ETI) has 2.5\% of the distribution on either
 side of its limits. It indicates the 2.5th percentile and the 97.5th
@@ -199,7 +199,6 @@ Other ci:
 \code{\link[=bci]{bci()}},
 \code{\link[=ci]{ci()}},
 \code{\link[=hdi]{hdi()}},
-\code{\link[=si]{si()}},
-\code{\link[=spi]{spi()}}
+\code{\link[=si]{si()}}
 }
 \concept{ci}

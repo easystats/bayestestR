@@ -4,6 +4,7 @@
 \alias{bayesfactor_models}
 \alias{bf_models}
 \alias{bayesfactor_models.default}
+\alias{bayesfactor_models.stanreg}
 \title{Bayes Factors (BF) for model comparison}
 \usage{
 bayesfactor_models(..., denominator = 1, verbose = TRUE)
@@ -11,6 +12,13 @@ bayesfactor_models(..., denominator = 1, verbose = TRUE)
 bf_models(..., denominator = 1, verbose = TRUE)
 
 \method{bayesfactor_models}{default}(..., denominator = 1, verbose = TRUE)
+
+\method{bayesfactor_models}{stanreg}(
+  ...,
+  denominator = 1,
+  verbose = TRUE,
+  bridge_options = list()
+)
 }
 \arguments{
 \item{...}{Fitted models (see details), all fit on the same data, or a single
@@ -27,6 +35,13 @@ the denominator, or a model to be used as a denominator. Ignored for
 \code{BFBayesFactor}.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{bridge_options}{A named list of arguments passed to
+\code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}}, such as \code{repetitions}, \code{method},
+\code{cores}, or \code{maxiter}. Give it by its full name, after the models. Unless
+the list sets \code{silent}, \code{silent = !verbose} is passed, so the progress of
+bridge sampling is printed when \code{verbose = TRUE}. Not used for \code{blavaan}
+models (see details).}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and
@@ -53,6 +68,16 @@ terms will be extracted (allowing for follow-up analysis with \link{bayesfactor_
 \itemize{
 \item \code{brmsfit} models must have been fitted with \code{save_pars = save_pars(all = TRUE)}.
 \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
+\item Arguments for \code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}} can be passed as a
+named list in \code{bridge_options}, for \code{brmsfit}, \code{stanreg}, \code{stanfit}, and
+\code{CmdStanFit} models. \code{blavaan} models do not use \code{bridge_options}.
+\item Bridge sampling gives a slightly different estimate each time. With
+\code{repetitions} larger than 1 in \code{bridge_options}, the bridge sampler runs
+several times, and the median of the log marginal likelihood estimates
+is used.
+\item A \code{brmsfit} model that already holds a \code{"marglik"} criterion (see
+\code{\link[brms:add_criterion]{brms::add_criterion()}}) uses the median of its stored estimates, and
+\code{bridge_options} is not used for it.
 }
 \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is a wraparound \code{BayesFactor::extractBF()}.
 \item For all other model types, Bayes factors are computed using the BIC approximation.

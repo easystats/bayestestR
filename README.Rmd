@@ -97,7 +97,7 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
   - [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.html) can be used to get them at once and can be run directly on models.
 
 - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-  - [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html) for *Highest Density Intervals (HDI)*, [`spi()`](https://easystats.github.io/bayestestR/reference/spi.html) for *Shortest Probability Intervals (SPI)* or [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html) for *Equal-Tailed Intervals (ETI)*.
+  - [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html) for *Highest Density Intervals (HDI)* (with `hdi(method = "density")` for *Shortest Probability Intervals (SPI)*) or [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html) for *Equal-Tailed Intervals (ETI)*.
   - [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html) can be used as a general method for Confidence and Credible Intervals (CI).
 
 - [**Effect Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html): whether an effect is different from 0.

@@ -10,9 +10,9 @@
 \usage{
 hdi(x, ...)
 
-\method{hdi}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
+\method{hdi}{numeric}(x, ci = 0.95, verbose = TRUE, method = "samples", ...)
 
-\method{hdi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, ...)
+\method{hdi}{data.frame}(x, ci = 0.95, rvar_col = NULL, verbose = TRUE, method = "samples", ...)
 
 \method{hdi}{brmsfit}(
   x,
@@ -21,6 +21,7 @@ hdi(x, ...)
   component = "conditional",
   parameters = NULL,
   verbose = TRUE,
+  method = "samples",
   ...
 )
 
@@ -39,6 +40,9 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 (between 0 and 1) to be estimated. Default to \code{.95} (95\%).}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{method}{The algorithm that finds the interval. Can be \code{"samples"}
+(default) or \code{"density"}. See section \emph{Algorithms}.}
 
 \item{rvar_col}{A single character - the name of an \code{rvar} column in the data
 frame to be processed. See example in \code{\link[=p_direction]{p_direction()}}.}
@@ -109,8 +113,8 @@ Unlike equal-tailed intervals (see \code{\link[=eti]{eti()}}) that typically exc
 2.5\% from each tail of the distribution and always include the median, the
 HDI is \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
 distributions. While this can be useful to better represent the credibility
-mass of a distribution, the HDI also has some limitations. See \code{\link[=spi]{spi()}} for
-details.
+mass of a distribution, the HDI also has some limitations. The section
+\emph{Algorithms} of \code{\link[=hdi]{hdi()}} explains how the HDI is computed.
 
 A 95\% equal-tailed interval (ETI) has 2.5\% of the distribution on either
 side of its limits. It indicates the 2.5th percentile and the 97.5th
@@ -166,6 +170,28 @@ possible for the \code{component} argument, which are not all documented in deta
 here. See also \href{https://easystats.github.io/insight/reference/find_parameters.BGGM.html}{\code{?insight::find_parameters}}.
 }
 
+\section{Algorithms}{
+
+
+Both methods return one continuous interval for each value of \code{ci}. For
+multimodal distributions, this interval can include values of low density
+between the modes.
+\itemize{
+\item \code{method = "samples"} (default) sorts the \code{n} draws and takes the
+narrowest window of \code{ceiling(ci * n) + 1} neighboring sorted draws. The
+bounds are the first and the last draw of that window.
+\item \code{method = "density"} uses the SPIn algorithm of Liu, Gelman and Zheng
+(2015), adapted from the \strong{SPIn} package. It starts from the narrowest
+window of the sorted draws. Then it replaces each bound with a weighted
+average of the sorted draws near it. The weights come from quadratic
+programming, with an objective that uses a kernel density estimate
+(\code{\link[stats:density]{stats::density()}}). Liu et al. (2015) report that these bounds have a
+lower Monte Carlo error than the bounds of the samples method. This
+method needs the \strong{quadprog} package. The deprecated \code{spi()} returns
+the same interval.
+}
+}
+
 \examples{
 \dontshow{if (all(insight::check_if_installed(c("rstanarm", "brms", "emmeans", "BayesFactor"), quietly = TRUE))) withAutoprint(\{ # examplesIf}
 library(bayestestR)
@@ -199,22 +225,27 @@ hdi(bf, ci = c(0.80, 0.90, 0.95))
 \itemize{
 \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS,
 and Stan. Academic Press.
+\item Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest
+probability intervals. Statistics and Computing, 25(4), 809–819.
+https://doi.org/10.1007/s11222-015-9563-8
 \item McElreath, R. (2015). Statistical rethinking: A Bayesian course with
 examples in R and Stan. Chapman and Hall/CRC.
 }
 }
 \seealso{
 Other interval functions, such as \code{\link[=hdi]{hdi()}}, \code{\link[=eti]{eti()}}, \code{\link[=bci]{bci()}},
-\code{\link[=spi]{spi()}}, \code{\link[=si]{si()}}.
+\code{\link[=si]{si()}}.
 
 Other ci:
 \code{\link[=bci]{bci()}},
 \code{\link[=ci]{ci()}},
 \code{\link[=eti]{eti()}},
-\code{\link[=si]{si()}},
-\code{\link[=spi]{spi()}}
+\code{\link[=si]{si()}}
 }
 \author{
 Credits go to \strong{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{\strong{HDInterval}}.
+The code of \code{method = "density"} was adapted from the \strong{SPIn} package, and
+slightly modified to be more robust for Stan models. Credits go to Ying Liu
+for the original SPI algorithm and R implementation.
 }
 \concept{ci}
