@@ -39,6 +39,24 @@ test_that("hdi() method = 'density' gives the old spi() results", {
 })
 
 
+test_that("hdi() method = 'density' drops missing values, as 'samples' does", {
+  skip_if_not_installed("quadprog")
+  set.seed(123)
+  x <- rnorm(1000)
+  x_na <- c(x[1:500], NA, NaN, x[501:1000])
+  ci <- c(0.8, 0.95)
+
+  out <- hdi(x_na, ci = ci, method = "density")
+  expected <- hdi(x, ci = ci, method = "density")
+  expect_identical(out$CI_low, expected$CI_low)
+  expect_identical(out$CI_high, expected$CI_high)
+  expect_identical(
+    hdi(x_na, ci = ci)$CI_low,
+    hdi(x, ci = ci)$CI_low
+  )
+})
+
+
 test_that("hdi() method = 'density' works for data frame, draws, rvar and mcmc input", {
   skip_if_not_installed("quadprog")
   skip_if_not_installed("posterior")
