@@ -37,3 +37,27 @@ test_that("BFBayesFactor methods pass verbose to insight::get_parameters()", {
     expect_identical(seen, list(FALSE), info = i)
   }
 })
+
+test_that("verbose = FALSE silences the message about multiple BFBayesFactor models", {
+  skip_if_not_or_load_if_installed("BayesFactor")
+  set.seed(123)
+  x <- suppressMessages(
+    BayesFactor::generalTestBF(mpg ~ wt + am, data = mtcars, progress = FALSE)
+  )
+
+  funs <- list(
+    hdi = hdi,
+    eti = eti,
+    bci = bci,
+    describe_posterior = describe_posterior,
+    equivalence_test = equivalence_test
+  )
+  for (i in names(funs)) {
+    expect_message(
+      suppressWarnings(funs[[i]](x)),
+      "Multiple `BFBayesFactor` models detected",
+      fixed = TRUE
+    )
+    expect_no_message(suppressWarnings(funs[[i]](x, verbose = FALSE)))
+  }
+})

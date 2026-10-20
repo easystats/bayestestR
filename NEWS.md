@@ -23,6 +23,8 @@
   `hdi(ci_method = "spi")` now selects `method = "density"` for all objects,
   not only for some model classes.
 
+## Bug fixes
+
 * `bayesfactor()` passes `verbose` to `bayesfactor_models()`, so
   `verbose = FALSE` also turns off the warning about models that were not fit
   to the same data. The `BFBayesFactor` methods of `hdi()`, `eti()`, `bci()`,
