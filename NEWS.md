@@ -21,7 +21,8 @@
   the current algorithm, and `method = "density"` uses the SPIn algorithm of
   `spi()`. The help page of `hdi()` now describes both algorithms (#719, #519).
   `hdi(ci_method = "spi")` now selects `method = "density"` for all objects,
-  not only for some model classes.
+  not only for some model classes. Like `method = "samples"`,
+  `method = "density"` drops missing values, where `spi()` failed on them.
 
 # bayestestR 0.20.0
 
