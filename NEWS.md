@@ -23,6 +23,12 @@
   `hdi(ci_method = "spi")` now selects `method = "density"` for all objects,
   not only for some model classes.
 
+* `bayesfactor()` passes `verbose` to `bayesfactor_models()`, so
+  `verbose = FALSE` also turns off the warning about models that were not fit
+  to the same data. The `BFBayesFactor` methods of `hdi()`, `eti()`, `bci()`,
+  `describe_posterior()`, and `equivalence_test()` pass `verbose` to
+  `insight::get_parameters()` (#743).
+
 # bayestestR 0.20.0
 
 ## Changes
