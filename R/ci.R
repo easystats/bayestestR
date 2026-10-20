@@ -391,7 +391,13 @@ ci.bamlss <- function(
 
 #' @export
 ci.bcplm <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, ...) {
-  ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
+  ci(
+    insight::get_parameters(x, verbose = verbose),
+    ci = ci,
+    method = method,
+    verbose = verbose,
+    ...
+  )
 }
 
 #' @export

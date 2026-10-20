@@ -160,7 +160,8 @@ map_estimate.stanreg <- function(x,
       x,
       effects = effects,
       component = component,
-      parameters = parameters
+      parameters = parameters,
+      verbose = verbose
     ),
     precision = precision,
     method = method,
@@ -194,7 +195,8 @@ map_estimate.brmsfit <- function(x,
       x,
       effects = effects,
       component = component,
-      parameters = parameters
+      parameters = parameters,
+      verbose = verbose
     ),
     precision = precision,
     method = method,

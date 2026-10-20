@@ -26,8 +26,8 @@
     insight::format_error(prior)
   }
 
-  prior <- insight::get_parameters(prior, ...)
-  posterior <- insight::get_parameters(posterior, ...)
+  prior <- insight::get_parameters(prior, verbose = verbose, ...)
+  posterior <- insight::get_parameters(posterior, verbose = verbose, ...)
 
   list(
     posterior = posterior,
@@ -48,8 +48,8 @@
 
   prior <- unupdate(prior, verbose = verbose)
 
-  prior <- insight::get_parameters(prior)
-  posterior <- insight::get_parameters(posterior)
+  prior <- insight::get_parameters(prior, verbose = verbose)
+  posterior <- insight::get_parameters(posterior, verbose = verbose)
 
   list(
     posterior = posterior,
@@ -113,8 +113,8 @@
     on.exit() # undo general error message
   }
 
-  prior <- insight::get_parameters(prior)
-  posterior <- insight::get_parameters(posterior)
+  prior <- insight::get_parameters(prior, verbose = verbose)
+  posterior <- insight::get_parameters(posterior, verbose = verbose)
 
   list(
     posterior = posterior,
@@ -199,11 +199,11 @@
 .clean_priors_and_posteriors.comparisons <- .clean_priors_and_posteriors.slopes
 
 .clean_priors_and_posteriors.stanfit <- function(posterior, prior, verbose = TRUE, ...) {
-  posterior <- insight::get_parameters(posterior)
+  posterior <- insight::get_parameters(posterior, verbose = verbose)
 
   # Get Priors
   if (!is.null(prior)) {
-    prior <- insight::get_parameters(prior)
+    prior <- insight::get_parameters(prior, verbose = verbose)
   }
 
   list(

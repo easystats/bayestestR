@@ -193,7 +193,8 @@ weighted_posteriors.stanreg <- function(
     insight::get_parameters,
     effects = effects,
     component = component,
-    parameters = parameters
+    parameters = parameters,
+    verbose = verbose
   )
 
   # Compute weighted number of samples

@@ -156,7 +156,7 @@ describe_posterior.default <- function(posterior, ...) {
     is_stanmvreg <- inherits(x, "stanmvreg")
     cleaned_parameters <- .get_cleaned_parameters(x)
     # rename to use `x` in bayes factor later
-    x_df <- insight::get_parameters(x, ...)
+    x_df <- insight::get_parameters(x, verbose = verbose, ...)
   } else {
     cleaned_parameters <- NULL
     x_df <- x
@@ -735,7 +735,7 @@ describe_posterior.bayesQR <- function(
   ...
 ) {
   out <- .describe_posterior(
-    insight::get_parameters(posterior),
+    insight::get_parameters(posterior, verbose = verbose),
     centrality = centrality,
     dispersion = dispersion,
     ci = ci,
@@ -942,7 +942,7 @@ describe_posterior.emmGrid <- function(
     bf_prior <- samps$prior
     posterior_samples <- samps$posterior
   } else {
-    posterior_samples <- insight::get_parameters(posterior)
+    posterior_samples <- insight::get_parameters(posterior, verbose = verbose)
   }
 
   out <- .describe_posterior(
@@ -1392,7 +1392,7 @@ describe_posterior.bcplm <- function(
   ...
 ) {
   out <- .describe_posterior(
-    insight::get_parameters(posterior),
+    insight::get_parameters(posterior, verbose = verbose),
     centrality = centrality,
     dispersion = dispersion,
     ci = ci,
@@ -1493,7 +1493,7 @@ describe_posterior.BFBayesFactor <- function(
     compute_bf <- FALSE
   }
 
-  draws <- insight::get_parameters(posterior)
+  draws <- insight::get_parameters(posterior, verbose = verbose)
   if (all(rope_range == "default")) {
     rope_range <- rope_range(posterior, verbose = verbose)
   }
@@ -1521,7 +1521,9 @@ describe_posterior.BFBayesFactor <- function(
   if (compute_bf) {
     tryCatch(
       {
-        out$log_BF <- as.data.frame(bayesfactor_models(posterior[1], ...))[-1, ]$log_BF
+        out$log_BF <- as.data.frame(
+          bayesfactor_models(posterior[1], verbose = verbose, ...)
+        )[-1, ]$log_BF
         out$BF <- exp(out$log_BF)
       },
       error = function(e) {

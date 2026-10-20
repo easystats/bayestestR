@@ -68,7 +68,8 @@ check_prior.brmsfit <- function(
     model,
     effects = effects,
     component = component,
-    parameters = parameters
+    parameters = parameters,
+    verbose = verbose
   )
 
   if (isTRUE(simulate_priors)) {
@@ -85,7 +86,8 @@ check_prior.brmsfit <- function(
       priors,
       effects = effects,
       component = component,
-      parameters = parameters
+      parameters = parameters,
+      verbose = verbose
     )
   }
 

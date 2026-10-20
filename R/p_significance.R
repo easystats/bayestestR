@@ -298,7 +298,8 @@ p_significance.stanreg <- function(x,
     x,
     effects = effects,
     component = component,
-    parameters = parameters
+    parameters = parameters,
+    verbose = verbose
   )
 
   threshold <- .select_threshold_ps(
@@ -344,6 +345,7 @@ p_significance.brmsfit <- function(x,
     effects = effects,
     component = component,
     parameters = parameters,
+    verbose = verbose,
     ...
   )
 
