@@ -27,13 +27,13 @@ mediation(model, ...)
 in a (multivariate response) mediator-model. If missing, \code{mediation()}
 tries to find the treatment variable automatically, however, this may fail.
 For \emph{brms} models with more than two model formulas, \code{treatment} must be
-given.}
+specified.}
 
 \item{mediator}{Character, name of the mediator variable in a (multivariate
-response) mediator-model. For \emph{brms} models with more than two model
-formulas, this can be several names (see 'Details'). If missing, \code{mediation()} tries to find the mediator
-variable automatically, however, this may fail. For \emph{brms} models with
-more than two model formulas, \code{mediator} must be given.}
+response) mediator-model. If missing, \code{mediation()} tries to find the
+mediator variable automatically, however, this may fail. For \emph{brms} models
+with more than two model formulas, \code{mediator} must be specified and can
+name several mediators (see 'Details').}
 
 \item{response}{A named character vector, indicating the names of the response
 variables to be used for the mediation analysis. Usually can be \code{NULL},
@@ -52,10 +52,9 @@ second response variable (for the treatment model, with the mediator as
 additional predictor), \code{y}, is not transformed. Then we could use
 \code{response} like this: \code{mediation(model, response = c(m = "m_center", y = "y"))}.}
 
-\item{centrality}{The point-estimate (centrality index) of the effects,
-such as \code{"median"} (the default), \code{"mean"}, or \code{"MAP"} (see
-\code{\link[=point_estimate]{point_estimate()}}). \code{mediation()} takes one index only, not several
-and not \code{"all"}.}
+\item{centrality}{The point-estimate (centrality index) of the effects.
+One of the options of \code{\link[=point_estimate]{point_estimate()}}, such as \code{"median"} (default),
+\code{"mean"} or \code{"MAP"}. Only one index is allowed.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{0.95} (\verb{95\%}).}
@@ -99,38 +98,24 @@ the indirect effect is also called \emph{average causal mediation effects}
 (ACME). See also \emph{Tingley et al. 2014} and \emph{Imai et al. 2010}.
 
 For \emph{brms} models, there can be more than one mediator, in parallel or in
-series (where one mediator is a predictor of another). For models with
-more than two model formulas, give both \code{treatment} and \code{mediator}, which
-can name several mediators. Each mediator must also be a predictor in the
-outcome model. The outcome is the one response that no other model formula
-uses as a predictor. A \code{treatment} name that is not a variable in the model
-data is read as a coefficient name, such as \code{xb} for level \code{b} of a factor
-\code{x}. A path goes from the treatment through one or
-more mediators to the outcome. Its indirect effect is the product of the
-coefficients along the path, for each posterior sample. With several
-mediators, the rows are:
-\itemize{
-\item the direct effect,
-\item one indirect effect for each path, such as
-\verb{Indirect Effect (ACME): m1 -> m2},
-\item the total indirect effect,
-\item one mediator effect for each mediator, which is its coefficient in the
-outcome model,
-\item the total effect,
-\item the proportion mediated. Its estimate is the point estimate of the total
-indirect effect divided by the point estimate of the total effect.
-}
-
-If \code{mediator} names only some of the mediators, \code{mediation()} uses only the
-paths whose mediators are all among these. A path through any other
-mediator is left out. The total effect is then the direct effect plus the
-indirect effects of the paths that are used.
+series. For models with more than two model formulas, \code{treatment} and
+\code{mediator} must be specified. Each mediator must be a predictor in the
+outcome model, which is the one model whose response is not a predictor in
+another model. \code{treatment} can also be a coefficient name, such as \code{xb} for
+level \code{b} of a factor \code{x}. The indirect effect of a path from the treatment
+through one or more mediators to the outcome is the product of the
+coefficients along that path. With several mediators, \code{mediation()} returns
+the direct effect, one indirect effect per path (e.g.
+\verb{Indirect Effect (ACME): m1 -> m2}), the total indirect effect, one mediator
+effect per mediator, the total effect and the proportion mediated. If
+\code{mediator} names only some of the mediators, only the paths through these
+mediators are used.
 }
 \note{
 There is an \code{as.data.frame()} method that returns the posterior
 samples of the effects, which can be used for further processing in the
-\strong{bayestestR} package. With several mediators, each column has the name
-of its row in the summary.
+\strong{bayestestR} package. With several mediators, the columns are named
+after the effects.
 }
 \examples{
 \dontshow{if (require("mediation") && require("brms") && require("rstanarm")) withAutoprint(\{ # examplesIf}
@@ -183,7 +168,7 @@ d$y <- 0.3 * d$x + 0.6 * d$m1 + 0.4 * d$m2 + rnorm(200)
 f <- bf(y ~ x + m1 + m2) + bf(m1 ~ x) + bf(m2 ~ x + m1) + set_rescor(FALSE)
 m4 <- brm(f, data = d, refresh = 0)
 
-# with more than two model formulas, name the treatment and the mediators
+# with more than two model formulas, specify treatment and mediators
 mediation(m4, treatment = "x", mediator = c("m1", "m2"))
 }
 \dontshow{\}) # examplesIf}

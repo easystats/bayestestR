@@ -10,12 +10,12 @@
 #'   in a (multivariate response) mediator-model. If missing, `mediation()`
 #'   tries to find the treatment variable automatically, however, this may fail.
 #'   For *brms* models with more than two model formulas, `treatment` must be
-#'   given.
+#'   specified.
 #' @param mediator Character, name of the mediator variable in a (multivariate
-#'   response) mediator-model. For *brms* models with more than two model
-#'   formulas, this can be several names (see 'Details'). If missing, `mediation()` tries to find the mediator
-#'   variable automatically, however, this may fail. For *brms* models with
-#'   more than two model formulas, `mediator` must be given.
+#'   response) mediator-model. If missing, `mediation()` tries to find the
+#'   mediator variable automatically, however, this may fail. For *brms* models
+#'   with more than two model formulas, `mediator` must be specified and can
+#'   name several mediators (see 'Details').
 #' @param response A named character vector, indicating the names of the response
 #'   variables to be used for the mediation analysis. Usually can be `NULL`,
 #'   in which case these variables are retrieved automatically. If not `NULL`,
@@ -32,10 +32,9 @@
 #'   second response variable (for the treatment model, with the mediator as
 #'   additional predictor), `y`, is not transformed. Then we could use
 #'   `response` like this: `mediation(model, response = c(m = "m_center", y = "y"))`.
-#' @param centrality The point-estimate (centrality index) of the effects,
-#'   such as `"median"` (the default), `"mean"`, or `"MAP"` (see
-#'   [`point_estimate()`]). `mediation()` takes one index only, not several
-#'   and not `"all"`.
+#' @param centrality The point-estimate (centrality index) of the effects.
+#'   One of the options of [`point_estimate()`], such as `"median"` (default),
+#'   `"mean"` or `"MAP"`. Only one index is allowed.
 #' @param ... Not used.
 #' @inheritParams ci
 #' @inheritParams describe_posterior
@@ -69,36 +68,23 @@
 #'  (ACME). See also _Tingley et al. 2014_ and _Imai et al. 2010_.
 #'
 #'  For *brms* models, there can be more than one mediator, in parallel or in
-#'  series (where one mediator is a predictor of another). For models with
-#'  more than two model formulas, give both `treatment` and `mediator`, which
-#'  can name several mediators. Each mediator must also be a predictor in the
-#'  outcome model. The outcome is the one response that no other model formula
-#'  uses as a predictor. A `treatment` name that is not a variable in the model
-#'  data is read as a coefficient name, such as `xb` for level `b` of a factor
-#'  `x`. A path goes from the treatment through one or
-#'  more mediators to the outcome. Its indirect effect is the product of the
-#'  coefficients along the path, for each posterior sample. With several
-#'  mediators, the rows are:
-#'
-#'  - the direct effect,
-#'  - one indirect effect for each path, such as
-#'    `Indirect Effect (ACME): m1 -> m2`,
-#'  - the total indirect effect,
-#'  - one mediator effect for each mediator, which is its coefficient in the
-#'    outcome model,
-#'  - the total effect,
-#'  - the proportion mediated. Its estimate is the point estimate of the total
-#'    indirect effect divided by the point estimate of the total effect.
-#'
-#'  If `mediator` names only some of the mediators, `mediation()` uses only the
-#'  paths whose mediators are all among these. A path through any other
-#'  mediator is left out. The total effect is then the direct effect plus the
-#'  indirect effects of the paths that are used.
+#'  series. For models with more than two model formulas, `treatment` and
+#'  `mediator` must be specified. Each mediator must be a predictor in the
+#'  outcome model, which is the one model whose response is not a predictor in
+#'  another model. `treatment` can also be a coefficient name, such as `xb` for
+#'  level `b` of a factor `x`. The indirect effect of a path from the treatment
+#'  through one or more mediators to the outcome is the product of the
+#'  coefficients along that path. With several mediators, `mediation()` returns
+#'  the direct effect, one indirect effect per path (e.g.
+#'  `Indirect Effect (ACME): m1 -> m2`), the total indirect effect, one mediator
+#'  effect per mediator, the total effect and the proportion mediated. If
+#'  `mediator` names only some of the mediators, only the paths through these
+#'  mediators are used.
 #'
 #' @note There is an `as.data.frame()` method that returns the posterior
 #'   samples of the effects, which can be used for further processing in the
-#'   **bayestestR** package. With several mediators, each column has the name
-#'   of its row in the summary.
+#'   **bayestestR** package. With several mediators, the columns are named
+#'   after the effects.
 #'
 #' @references
 #'
@@ -162,7 +148,7 @@
 #' f <- bf(y ~ x + m1 + m2) + bf(m1 ~ x) + bf(m2 ~ x + m1) + set_rescor(FALSE)
 #' m4 <- brm(f, data = d, refresh = 0)
 #'
-#' # with more than two model formulas, name the treatment and the mediators
+#' # with more than two model formulas, specify treatment and mediators
 #' mediation(m4, treatment = "x", mediator = c("m1", "m2"))
 #' }
 #' @export
@@ -290,13 +276,12 @@ mediation.stanmvreg <- function(
     )
   }
 
-  # treatment, mediators, outcome, and the paths from the treatment through
-  # the mediators to the outcome. With more than two brms model formulas,
-  # `treatment` and `mediator` are not found automatically
+  # find treatment, mediators, outcome and paths. With more than two brms
+  # model formulas, treatment and mediator must be specified
   if (inherits(model, "brmsfit") && length(response) > 2) {
     if (is.null(treatment) || is.null(mediator)) {
       insight::format_error(
-        "Please give both `treatment` and `mediator`. For brms models with more than two model formulas, `mediation()` does not find them automatically."
+        "For models with more than two model formulas, please specify both `treatment` and `mediator`."
       )
     }
     info <- .mediation_paths_brms(model, treatment, mediator, response, params)
@@ -304,8 +289,7 @@ mediation.stanmvreg <- function(
     info <- .mediation_paths_default(model, treatment, mediator, response, params)
   }
 
-  # the direct effect, each mediator effect, and each link of each path need
-  # a coefficient
+  # check that all coefficients exist
   coef_missing <- setdiff(
     unique(c(
       sprintf(pattern, info$outcome, info$treatment),
@@ -334,9 +318,7 @@ mediation.stanmvreg <- function(
   # Mediator effects: coef(mediator) from the outcome model
   effect_mediator <- lapply(info$mediator, function(m) .draws(info$outcome, m))
 
-  # Indirect effect of a path: the product of the coefficients along the path,
-  # e.g. coef(treatment) from the mediator model * coef(mediator) from the
-  # outcome model
+  # Indirect effect: product of the coefficients along each path
   effect_paths <- lapply(info$paths, function(p) {
     Reduce(`*`, Map(.draws, c(info$equation[p], info$outcome), c(info$treatment, p)))
   })
@@ -441,10 +423,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
 # helper ---------------------------------
 
-# Returns a list with the treatment and the mediators, as they are named in
-# the coefficients, the model equations of the outcome and of each mediator,
-# the response attribute, and the paths, each a vector of mediator names from
-# the treatment to the outcome.
+# returns treatment, mediators, model equations and paths
 .mediation_paths_default <- function(
   model,
   treatment,
@@ -454,7 +433,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 ) {
   if (length(response) != 2) {
     insight::format_error(
-      "For this model class, `mediation()` supports two model formulas only, one for the mediator and one for the outcome."
+      "For this model class, `mediation()` supports two model formulas only."
     )
   }
   fix_mediator <- FALSE
@@ -479,7 +458,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
   if (length(mediator) != 1) {
     insight::format_error(
-      "For models with two model formulas, `mediation()` needs exactly one mediator. Give one name in `mediator`, or, if `mediator` is missing, one response must be a predictor in the other model formula."
+      "For models with two model formulas, `mediation()` needs exactly one mediator."
     )
   }
 
@@ -543,14 +522,9 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     predictors <- lapply(equation, function(i) all_predictors[[i]]$conditional)
   }
 
-  # a name is either a variable (a column of the model data) or a coefficient
-  # term (e.g. `treatment = "xb"` for level "b" of a factor "x"). A variable is
-  # in a model formula if it is a predictor there. A term is in a model formula
-  # if the formula has a coefficient named after it. The term part of a brms
-  # coefficient name (after "b_<formula>_") has one meaning within a formula,
-  # but the same term can mean different things in different formulas, so a
-  # variable is never matched by coefficient name: the level "2" of a factor
-  # "w" gives "b_mb_w2" in one formula, while "w2" can be a variable of another
+  # a name is a variable if it is a column of the data, else a coefficient
+  # term (e.g. "xb" for level "b" of factor "x"). Variables are matched by
+  # predictor name only, because "b_mb_w2" can be level "2" of factor "w"
   variables <- colnames(data)
   .in_formula <- function(variable, i) {
     if (variable %in% variables) {
@@ -572,7 +546,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
   )
   if (sum(is_outcome) != 1) {
     insight::format_error(sprintf(
-      "Could not find the outcome. The outcome is the one response that no other model formula uses as a predictor, and this model has %s. If a mediator is transformed in its own model formula, such as `log(m)`, use `response` to give its name as a predictor.",
+      "Could not find the outcome, i.e. the one response that is not a predictor in another model (found %s). If a mediator is transformed, use `response` to give its predictor name.",
       if (any(is_outcome)) {
         sprintf(
           "%i such responses: %s",
@@ -593,19 +567,15 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     insight::format_error(paste(
       paste0("`", not_mediator, "` is not a mediator.", collapse = " "),
       sprintf(
-        "Mediators are the responses of the model formulas other than the outcome `%s`: %s.",
-        response[[outcome]],
+        "Available mediators are: %s.",
         toString(paste0("`", response[others], "`"))
       )
     ))
   }
   mediator_models <- match(mediator, response)
 
-  # the direct effect and the mediator effects are read from the outcome model
-  # by coefficient name, and so is the effect of the treatment in the model of
-  # a single mediator, which has no path check below. A variable that is not a
-  # predictor there can still share the name of a coefficient, such as
-  # "b_y_w2" for level "2" of a factor "w", so stop
+  # a variable that is not a predictor can still share the name of a
+  # coefficient (e.g. "b_y_w2" for level "2" of factor "w"), so stop
   links <- lapply(c(treatment, mediator), function(v) list(v, outcome))
   if (length(mediator) == 1) {
     links <- c(links, list(list(treatment, mediator_models)))
@@ -616,7 +586,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     coef_link <- sprintf("b_%s_%s", equation[i], v)
     if (v %in% variables && !.in_formula(v, i) && coef_link %in% colnames(params)) {
       insight::format_error(sprintf(
-        "`%s` is not a predictor in the model of `%s`, but the coefficient `%s` is in the model, for example as a level of a factor. `mediation()` does not use a coefficient of another variable.",
+        "`%s` is not a predictor in the model of `%s`. The coefficient `%s` belongs to another variable, e.g. a factor level.",
         v,
         response[[i]],
         coef_link
@@ -624,10 +594,8 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     }
   }
 
-  # brms names monotonic effects "bsp_<formula>_mo<variable>", where
-  # <formula> is the formula name (e.g. "mb" for the response "m_b"). The
-  # product of coefficients is not defined for them, so stop. Only the
-  # models of the outcome and of the mediators are used
+  # brms names monotonic effects "bsp_<formula>_mo<variable>". The product
+  # of coefficients is not defined for them, so stop
   used_models <- c(outcome, mediator_models)
   for (m in mediator) {
     coef_mo <- sprintf("bsp_%s_mo%s", equation[used_models], m) %in% colnames(params)
@@ -644,10 +612,8 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
     }
   }
 
-  # paths, as indices of `mediator`. A single mediator has one path. For
-  # several mediators, a path starts at a mediator whose model has the
-  # treatment, goes on to mediators whose models have the previous mediator,
-  # and ends at a mediator that is a predictor of the outcome
+  # paths from the treatment through one or more mediators to the outcome,
+  # as indices of `mediator`
   if (length(mediator) == 1) {
     paths <- list(1L)
   } else {

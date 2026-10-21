@@ -169,9 +169,7 @@ fit_d2 <- function(type) {
   .fits_d2[[type]]
 }
 
-# the detection rules on a model structure given by hand: the predictors of
-# each formula, the coefficient names, and the model data, whose columns are
-# the variables. By default, every predictor and response is a numeric column
+# model structure given by hand: predictors, coefficient names and data
 .paths_brms <- function(
   predictors,
   response,
@@ -272,10 +270,7 @@ test_that("mediation, parallel mediators", {
     tolerance = 1e-8
   )
 
-  # the rules on model structures where other rules would give other answers
-  # (predictors given by hand)
-  # the outcome is the response that no other formula uses, not the first
-  # formula
+  # the outcome is the response that no other formula uses, not the first one
   out <- .paths_brms(
     list("x", c("x", "m_a", "m_b"), "x"),
     c(ma = "m_a", y = "y", mb = "m_b"),
@@ -501,7 +496,7 @@ test_that("mediation, subsets of mediators", {
   for (f in calls) {
     err <- tryCatch(f(), error = function(e) e)
     expect_s3_class(err, "error")
-    expect_match(conditionMessage(err), "give both", fixed = TRUE)
+    expect_match(conditionMessage(err), "specify both", fixed = TRUE)
   }
 
   err <- tryCatch(
@@ -721,8 +716,7 @@ test_that("mediation, model structures with several mediators", {
   expect_match(conditionMessage(err), "Could not find a path", fixed = TRUE)
   expect_match(conditionMessage(err), "through `z` to", fixed = TRUE)
 
-  # a named variable that is not a predictor of the outcome model, while a
-  # coefficient of its name is there: "b_y_w2" is level "2" of the factor "w"
+  # "w2" is not a predictor of the outcome, but "b_y_w2" is level "2" of "w"
   d_w <- data.frame(w = factor(1:2), w2 = 0, m_a = 0, m_b = 0, y = 0)
   w_coefs <- c("b_y_w2", "b_y_m_a", "b_y_m_b", "b_ma_w2", "b_mb_w2")
   w_response <- c(y = "y", ma = "m_a", mb = "m_b")
@@ -750,8 +744,7 @@ test_that("mediation, model structures with several mediators", {
   )
   expect_s3_class(err, "error")
   expect_match(conditionMessage(err), "`m_b` is not a predictor", fixed = TRUE)
-  # the same for the treatment in the model of a single named mediator:
-  # "b_m_w2" is level "2" of the factor "w" in the `m` model
+  # the same for the treatment in the mediator model
   err <- .paths(
     list(c("w2", "m", "z"), "w", "w2"),
     c(y = "y", m = "m", z = "z"),
