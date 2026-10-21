@@ -241,7 +241,7 @@ si.get_predicted <- function(
     attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
   } else {
     out <- si(
-      insight::get_parameters(posterior, verbose = verbose),
+      insight::get_parameters(posterior),
       prior = prior,
       BF = BF,
       verbose = verbose,

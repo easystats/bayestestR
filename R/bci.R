@@ -285,12 +285,7 @@ bci.brmsfit <- function(x,
 
 #' @export
 bci.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  out <- bci(
-    insight::get_parameters(x, verbose = verbose),
-    ci = ci,
-    verbose = verbose,
-    ...
-  )
+  out <- bci(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

@@ -524,12 +524,7 @@ hdi.brmsfit <- function(
 
 #' @export
 hdi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  out <- hdi(
-    insight::get_parameters(x, verbose = verbose),
-    ci = ci,
-    verbose = verbose,
-    ...
-  )
+  out <- hdi(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }

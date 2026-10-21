@@ -324,7 +324,7 @@ equivalence_test.BFBayesFactor <- function(
   ...
 ) {
   out <- equivalence_test(
-    insight::get_parameters(x, verbose = verbose),
+    insight::get_parameters(x),
     range = range,
     ci = ci,
     ci_method = ci_method,
@@ -525,7 +525,7 @@ equivalence_test.bcplm <- function(
   ...
 ) {
   out <- .equivalence_test_models(
-    insight::get_parameters(x, verbose = verbose),
+    insight::get_parameters(x),
     range,
     ci,
     ci_method,
@@ -561,7 +561,7 @@ equivalence_test.bamlss <- function(
   ...
 ) {
   out <- .equivalence_test_models(
-    insight::get_parameters(x, component = component, verbose = verbose),
+    insight::get_parameters(x, component = component),
     range,
     ci,
     ci_method,
