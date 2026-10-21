@@ -638,3 +638,10 @@ test_that("bayesfactor_inclusion | LMM", {
     tolerance = 0.1
   )
 })
+
+test_that("bayesfactor() passes verbose to bayesfactor_models()", {
+  m1 <- lm(mpg ~ wt, data = mtcars)
+  m2 <- lm(qsec ~ wt, data = mtcars)
+  expect_warning(bayesfactor(m1, m2), "probably not all models were fit")
+  expect_no_warning(bayesfactor(m1, m2, verbose = FALSE))
+})
