@@ -10,10 +10,9 @@
 #'
 #' @param model A Bayesian model.
 #' @param data Data used by the model. If `NULL`, will try to extract it
-#'   from the model. For multivariate *brms* models, rows with a missing value
-#'   in a variable of any response are dropped, as *brms* does. For
-#'   multivariate *brms* models with addition terms (such as `y | mi()`), `data`
-#'   is used as given.
+#'   from the model. For multivariate *brms* models, rows with missing values
+#'   are dropped as in *brms*, unless the model has addition terms such as
+#'   `y | mi()`.
 #' @param REML For mixed effects, should models be estimated using
 #'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
 #'   likelihood (`FALSE`)?
@@ -265,11 +264,8 @@ convert_bayesian_as_frequentist <- function(
   stats::as.formula(paste(fixed_formula, random_formula, sep = " + "))
 }
 
-# brms fits a multivariate model only to the rows that are complete in the
-# variables of all its formulas. If user data are given, drop the same rows, so
-# that the refit of one response uses the rows brms used. Addition terms
-# (`mi()`, `subset()`, `cens()`) can keep rows with missing values, so with any
-# addition term the data are used as given.
+# brms drops rows with missing values in any formula of a multivariate model,
+# so we do the same for user data. Addition terms like mi() can keep such rows.
 .brms_mv_complete_rows <- function(model, data) {
   has_addition_terms <- vapply(
     model$formula$forms,

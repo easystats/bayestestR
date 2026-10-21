@@ -25,14 +25,11 @@
 
 ## Bug fixes
 
-* For multivariate *brms* models without addition terms,
-  `bayesian_as_frequentist()` with user-given `data` now refits on the rows that
-  *brms* used. Before, rows with a missing value in a variable of another
-  response were kept.
+* `bayesian_as_frequentist()` now drops the same rows with missing values as
+  *brms* when `data` is given for multivariate models.
 
-* If `bayesian_as_frequentist()` cannot refit a model, the error now includes
-  the error of the refit. Before, some families failed with an unrelated error
-  from `beta()`.
+* If `bayesian_as_frequentist()` cannot refit a model, the error message now
+  includes the reason.
 
 # bayestestR 0.20.0
 

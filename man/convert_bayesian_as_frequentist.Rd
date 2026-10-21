@@ -18,10 +18,9 @@ bayesian_as_frequentist(model, data = NULL, REML = TRUE, response = NULL)
 \item{model}{A Bayesian model.}
 
 \item{data}{Data used by the model. If \code{NULL}, will try to extract it
-from the model. For multivariate \emph{brms} models, rows with a missing value
-in a variable of any response are dropped, as \emph{brms} does. For
-multivariate \emph{brms} models with addition terms (such as \code{y | mi()}), \code{data}
-is used as given.}
+from the model. For multivariate \emph{brms} models, rows with missing values
+are dropped as in \emph{brms}, unless the model has addition terms such as
+\code{y | mi()}.}
 
 \item{REML}{For mixed effects, should models be estimated using
 restricted maximum likelihood (REML) (\code{TRUE}, default) or maximum
