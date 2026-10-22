@@ -167,3 +167,69 @@ test_that("brms univariate to freq, response is ignored", {
   m2 <- convert_bayesian_as_frequentist(m, response = "x")
   expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
 })
+
+
+test_that("brms multivariate to freq, user data drops the rows brms dropped", {
+  skip_if_not_or_load_if_installed("brms")
+
+  # NA in the other response, in its predictor, and in an unused column
+  d <- mtcars
+  d$qsec[1:4] <- NA
+  d$hp[5:6] <- NA
+  d$drat[7] <- NA
+
+  set.seed(333)
+  m <- skip_if_fit_failed(brm(
+    bf(mpg ~ wt) + bf(qsec ~ 0 + Intercept + hp) + set_rescor(FALSE),
+    data = d,
+    chains = 1,
+    iter = 500,
+    refresh = 0
+  ))
+
+  m1 <- lm(mpg ~ wt, data = m$data)
+  m2 <- convert_bayesian_as_frequentist(m, response = "mpg", data = d)
+  expect_identical(nobs(m2), nrow(m$data))
+  expect_equal(coef(m1), coef(m2), tolerance = 1e-8)
+})
+
+
+test_that("brms multivariate to freq, user data keeps rows with mi() terms", {
+  skip_if_not_or_load_if_installed("brms")
+
+  d <- mtcars
+  d$qsec[1:4] <- NA
+
+  set.seed(333)
+  m <- skip_if_fit_failed(brm(
+    bf(mpg ~ wt) + bf(qsec | mi() ~ hp) + set_rescor(FALSE),
+    data = d,
+    chains = 1,
+    iter = 500,
+    refresh = 0
+  ))
+
+  m2 <- convert_bayesian_as_frequentist(m, response = "mpg", data = d)
+  expect_identical(nobs(m2), nrow(d))
+})
+
+
+test_that("brms to freq, a failed refit gives one error with its cause", {
+  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("glmmTMB")
+
+  m <- insight::download_model("brms_1")
+  skip_if(is.null(m))
+
+  msg <- "(?s)Model\\s+could\\s+not\\s+be\\s+automatically\\s+converted.*refit\\s+broke"
+
+  # the refit can throw an error or return one
+  local_mocked_bindings(
+    .convert_bayesian_as_frequentist = function(...) stop("refit broke", call. = FALSE)
+  )
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+  local_mocked_bindings(
+    .convert_bayesian_as_frequentist = function(...) simpleError("refit broke")
+  )
+  expect_error(convert_bayesian_as_frequentist(m), msg, perl = TRUE)
+})
