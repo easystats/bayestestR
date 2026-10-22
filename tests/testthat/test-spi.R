@@ -52,11 +52,13 @@ test_that("ci", {
   m <- insight::download_model("stanreg_merMod_5")
   p <- insight::get_parameters(m, effects = "all")
 
+  out <- hdi(m, ci = c(0.5, 0.8), effects = "all", method = "density")
   expect_equal(
-    hdi(m, ci = c(0.5, 0.8), effects = "all", method = "density")$CI_low,
+    out$CI_low,
     hdi(p, ci = c(0.5, 0.8), method = "density")$CI_low,
     tolerance = 1e-3
   )
+  expect_s3_class(out, "bayestestR_spi")
 })
 
 test_that("hdi method density brms", {
@@ -111,54 +113,15 @@ test_that("ci - BayesFactor", {
 
 # deprecated spi() ----------------------
 
-# runs `expr` and returns its value and the deprecation warnings it gave
-.capture_deprecation <- function(expr) {
-  warnings <- list()
-  value <- withCallingHandlers(
-    expr,
-    deprecatedWarning = function(w) {
-      warnings[[length(warnings) + 1L]] <<- w
-      invokeRestart("muffleWarning")
-    }
-  )
-  list(value = value, warnings = warnings)
-}
-
-
 test_that("spi() is deprecated and returns hdi(method = 'density')", {
   skip_if_not_installed("quadprog")
   set.seed(123)
   x <- rnorm(1000)
-  d <- data.frame(a = x, b = rnorm(1000))
-
-  for (input in list(x, d)) {
-    out <- .capture_deprecation(spi(input, ci = c(0.8, 0.95)))
-    expect_length(out$warnings, 1)
-    expect_s3_class(out$warnings[[1]], "deprecatedWarning")
-    expect_match(
-      conditionMessage(out$warnings[[1]]),
-      "hdi(method = \"density\")",
-      fixed = TRUE
-    )
-    expected <- hdi(input, ci = c(0.8, 0.95), method = "density")
-    expect_identical(out$value$CI_low, expected$CI_low)
-    expect_identical(out$value$CI_high, expected$CI_high)
-  }
-})
-
-
-test_that("spi() is deprecated for models", {
-  skip_if_not_installed("curl")
-  skip_if_offline()
-  skip_if_not_installed("httr2")
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_installed("quadprog")
-
-  m <- insight::download_model("stanreg_merMod_5")
-  out <- .capture_deprecation(spi(m, ci = c(0.5, 0.8), effects = "all"))
-  expect_length(out$warnings, 1)
-  expect_s3_class(out$warnings[[1]], "deprecatedWarning")
-  expected <- hdi(m, ci = c(0.5, 0.8), effects = "all", method = "density")
-  expect_identical(out$value$CI_low, expected$CI_low)
-  expect_identical(out$value$CI_high, expected$CI_high)
+  expect_warning(
+    out <- spi(x, ci = c(0.8, 0.95)),
+    "hdi(method = \"density\")",
+    fixed = TRUE,
+    class = "deprecatedWarning"
+  )
+  expect_identical(out, hdi(x, ci = c(0.8, 0.95), method = "density"))
 })
