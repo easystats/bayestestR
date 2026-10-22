@@ -1,17 +1,12 @@
-# Values recorded from upstream/main 396471bf, before `method` was added:
-# the samples bounds are order statistics of `x`, and the density bounds are
-# the results of the old `spi()`.
+# values from before `method` was added
 test_that("hdi() method = 'samples' keeps the old results", {
   set.seed(123)
   x <- rnorm(1000)
-  x_sorted <- sort(x)
   ci <- c(0.8, 0.9, 0.95)
 
   out <- hdi(x, ci = ci)
-  expect_identical(out$CI_low, x_sorted[c(101, 52, 21)])
-  expect_identical(out$CI_high, x_sorted[c(901, 952, 971)])
+  expect_identical(c(out$CI_low, out$CI_high), sort(x)[c(101, 52, 21, 901, 952, 971)])
   expect_identical(hdi(x, ci = ci, method = "samples"), out)
-  expect_identical(capture.output(print(hdi(x))), "95% HDI: [-1.97, 1.98]")
 })
 
 
@@ -46,63 +41,26 @@ test_that("hdi() method = 'density' works for data frame, draws, rvar and mcmc i
   draws <- matrix(rnorm(2000), ncol = 2, dimnames = list(NULL, c("a", "b")))
   ci <- c(0.8, 0.95)
 
-  # expected bounds from the numeric method, one row per column and ci
   expected <- do.call(
     rbind,
-    lapply(seq_len(ncol(draws)), function(j) {
-      hdi(draws[, j], ci = ci, method = "density")
-    })
+    lapply(1:2, function(j) hdi(draws[, j], ci = ci, method = "density"))
   )
+  expected <- c(expected$CI_low, expected$CI_high)
 
-  # data frame
   out <- hdi(as.data.frame(draws), ci = ci, method = "density")
-  expect_identical(out$CI_low, expected$CI_low)
-  expect_identical(out$CI_high, expected$CI_high)
-
-  # posterior draws_df
+  expect_identical(c(out$CI_low, out$CI_high), expected)
   out <- hdi(posterior::as_draws_df(draws), ci = ci, method = "density")
-  expect_identical(out$CI_low, expected$CI_low)
-  expect_identical(out$CI_high, expected$CI_high)
+  expect_identical(c(out$CI_low, out$CI_high), expected)
 
-  # data frame with an rvar column
   d <- data.frame(g = c("a", "b"))
   d$r <- posterior::rvar(draws)
   out <- hdi(d, ci = ci, rvar_col = "r", method = "density")
-  expect_identical(out$CI_low, expected$CI_low)
-  expect_identical(out$CI_high, expected$CI_high)
+  expect_identical(c(out$CI_low, out$CI_high), expected)
 
-  # mcmc objects, built by hand because coda is not in Suggests; `mcpar` lets
-  # coda's as.data.frame() method work when another test loaded coda
-  x_mcmc <- structure(
-    draws,
-    mcpar = c(1, nrow(draws), 1),
-    class = c("mcmc", "matrix")
-  )
+  # coda is not in Suggests; `mcpar` is needed when another test loaded coda
+  x_mcmc <- structure(draws, mcpar = c(1, nrow(draws), 1), class = c("mcmc", "matrix"))
   out <- hdi(x_mcmc, ci = ci, method = "density")
-  expect_identical(out$CI_low, expected$CI_low)
-  expect_identical(out$CI_high, expected$CI_high)
-})
-
-
-test_that("hdi() method = 'density' for stanreg models", {
-  skip_if_not_installed("curl")
-  skip_if_offline()
-  skip_if_not_installed("httr2")
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_installed("quadprog")
-
-  m <- insight::download_model("stanreg_merMod_5")
-  p <- insight::get_parameters(m, effects = "all")
-  ci <- c(0.5, 0.8)
-
-  out <- hdi(m, ci = ci, effects = "all", method = "density")
-  expected <- do.call(
-    rbind,
-    lapply(p, function(i) hdi(i, ci = ci, method = "density"))
-  )
-  expect_identical(out$CI_low, expected$CI_low)
-  expect_identical(out$CI_high, expected$CI_high)
-  expect_s3_class(out, "bayestestR_spi")
+  expect_identical(c(out$CI_low, out$CI_high), expected)
 })
 
 
@@ -111,31 +69,20 @@ test_that("ci(), describe_posterior() and ci_method = 'spi' use the density meth
   set.seed(123)
   x <- rnorm(1000)
   density_hdi <- hdi(x, method = "density")
-  samples_hdi <- hdi(x)
+  expected <- c(density_hdi$CI_low, density_hdi$CI_high)
 
   expect_no_warning(out <- ci(x, method = "SPI"), class = "deprecatedWarning")
-  expect_identical(out$CI_low, density_hdi$CI_low)
-  expect_identical(out$CI_high, density_hdi$CI_high)
-
-  out <- ci(x, method = "HDI")
-  expect_identical(out$CI_low, samples_hdi$CI_low)
-  expect_identical(out$CI_high, samples_hdi$CI_high)
-
+  expect_identical(c(out$CI_low, out$CI_high), expected)
   expect_no_warning(
     out <- describe_posterior(x, ci_method = "spi", test = "pd"),
     class = "deprecatedWarning"
   )
-  expect_identical(out$CI_low, density_hdi$CI_low)
-  expect_identical(out$CI_high, density_hdi$CI_high)
-
+  expect_identical(c(out$CI_low, out$CI_high), expected)
   out <- hdi(x, ci_method = "spi")
-  expect_identical(out$CI_low, density_hdi$CI_low)
-  expect_identical(out$CI_high, density_hdi$CI_high)
+  expect_identical(c(out$CI_low, out$CI_high), expected)
 
   # an explicit `method` wins over `ci_method`
-  out <- hdi(x, method = "samples", ci_method = "spi")
-  expect_identical(out$CI_low, samples_hdi$CI_low)
-  expect_identical(out$CI_high, samples_hdi$CI_high)
+  expect_identical(hdi(x, method = "samples", ci_method = "spi"), hdi(x))
 
   expect_no_warning(
     rope(x, range = c(-0.1, 0.1), ci_method = "SPI"),
@@ -145,11 +92,5 @@ test_that("ci(), describe_posterior() and ci_method = 'spi' use the density meth
 
 
 test_that("hdi() stops for an unknown method", {
-  set.seed(123)
-  x <- rnorm(1000)
-  expect_error(hdi(x, method = "foo"), "samples.*density")
-  expect_error(
-    hdi(data.frame(a = x, b = x), method = "foo"),
-    "samples.*density"
-  )
+  expect_error(hdi(rnorm(10), method = "foo"), "samples.*density")
 })

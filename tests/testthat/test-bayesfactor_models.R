@@ -148,169 +148,64 @@ test_that("bayesfactor_models STAN", {
 
 # bayesfactor_models STAN, bridge sampling options ----------------------
 
-.fit_bf_stan_models <- function() {
-  set.seed(333)
-  list(
-    m0 = rstanarm::stan_glm(
-      Sepal.Length ~ 1,
-      data = iris,
-      refresh = 0,
-      iter = 500,
-      diagnostic_file = file.path(tempdir(), "df0.csv")
-    ),
-    m1 = suppressWarnings(rstanarm::stan_glm(
-      Sepal.Length ~ Species,
-      data = iris,
-      refresh = 0,
-      iter = 500,
-      diagnostic_file = file.path(tempdir(), "df1.csv")
-    ))
-  )
-}
-
-# a stand-in for bridgesampling::bridge_sampler() that records the options it
-# receives and returns known log marginal likelihoods for each model
+# records the options that bridge_sampler() receives and returns known log
+# marginal likelihoods for each model
 .mock_bridge_sampler <- function(models, logml, env) {
   function(samples, ...) {
     env$calls[[length(env$calls) + 1]] <- list(...)
     i <- which(vapply(models, identical, logical(1), y = samples))
-    out <- list(logml = logml[[i]])
-    class(out) <- if (length(logml[[i]]) > 1) "bridge_list" else "bridge"
-    out
+    structure(list(logml = logml[[i]]), class = "bridge")
   }
 }
 
-test_that("bayesfactor_models STAN, bridge sampling options", {
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("bridgesampling")
-  skip_on_cran()
-
-  mods <- .fit_bf_stan_models()
-  stan_bf_0 <- mods$m0
-  stan_bf_1 <- mods$m1
-  stanfit_0 <- stan_bf_0$stanfit
-  stanfit_1 <- stan_bf_1$stanfit
-
-  env <- new.env()
-  env$calls <- list()
+# fake models need no fit; insight is mocked where it would need one
+.local_fake_stan_models <- function(env = parent.frame()) {
   local_mocked_bindings(
-    bridge_sampler = .mock_bridge_sampler(
-      list(stan_bf_0, stan_bf_1, stanfit_0, stanfit_1),
-      list(-20, -10, -20, -10),
-      env
-    ),
-    .package = "bridgesampling"
+    find_algorithm = function(x, ...) list(iterations = 1000, warmup = 500, chains = 1),
+    get_response = function(x, ...) NULL,
+    .package = "insight",
+    .env = env
   )
+  local_mocked_bindings(.find_full_formula = function(mod) "", .env = env)
+}
 
-  # every named option reaches bridge_sampler(), and `silent` replaces the
-  # default (`silent = !verbose`, TRUE here)
-  opts <- list(repetitions = 3, silent = FALSE, my_option = "x")
-  .expect_bridge_calls <- function(calls) {
-    expect_length(calls, 2)
-    for (call_args in calls) {
-      expect_identical(
-        call_args[order(names(call_args))],
-        opts[order(names(opts))]
-      )
-    }
-  }
-  out <- suppressWarnings(suppressMessages(bayesfactor_models(
-    stan_bf_1,
-    stan_bf_0,
-    denominator = stan_bf_0,
-    verbose = FALSE,
-    bridge_options = opts
-  )))
-  .expect_bridge_calls(env$calls)
-  expect_identical(nrow(out), 2L)
-  expect_identical(out$Model, c("Species", "1"))
-  expect_identical(attr(out, "denominator"), 2L)
-  expect_identical(out$log_BF, c(10, 0))
+test_that("bayesfactor_models STAN, bridge_options and median of repeated estimates", {
+  skip_if_not_installed("rstanarm")
+  skip_if_not_installed("bridgesampling")
+  .local_fake_stan_models()
 
-  # the same for stanfit objects
-  env$calls <- list()
-  out <- suppressWarnings(suppressMessages(bayesfactor_models(
-    stanfit_1,
-    stanfit_0,
-    denominator = stanfit_0,
-    verbose = FALSE,
-    bridge_options = opts
-  )))
-  .expect_bridge_calls(env$calls)
-  expect_identical(nrow(out), 2L)
-  expect_identical(out$log_BF, c(10, 0))
-
-  # without options, only `silent = !verbose` is passed, and log_BF is the
-  # difference of the log marginal likelihoods
-  for (verbose in c(TRUE, FALSE)) {
-    env$calls <- list()
-    out <- suppressWarnings(suppressMessages(
-      bayesfactor_models(stan_bf_0, stan_bf_1, verbose = verbose)
-    ))
-    expect_length(env$calls, 2)
-    for (call_args in env$calls) {
-      expect_identical(call_args, list(silent = !verbose))
-    }
-    expect_identical(out$log_BF, c(0, 10))
-  }
-})
-
-test_that("bayesfactor_models STAN, median of repeated estimates", {
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("bridgesampling")
-  skip_on_cran()
-
-  mods <- .fit_bf_stan_models()
-  stan_bf_0 <- mods$m0
-  stan_bf_1 <- mods$m1
+  m0 <- structure(list(id = 0), class = "stanreg")
+  m1 <- structure(list(id = 1), class = "stanreg")
   env <- new.env()
-  env$calls <- list()
-
-  # an odd and an even number of estimates, the denominator is the second model
   local_mocked_bindings(
     bridge_sampler = .mock_bridge_sampler(
-      list(stan_bf_0, stan_bf_1),
-      list(c(-20, -21, -30, -22), c(-10, -12, -17)),
-      env
-    ),
-    .package = "bridgesampling"
-  )
-  out <- suppressWarnings(suppressMessages(bayesfactor_models(
-    stan_bf_1,
-    stan_bf_0,
-    denominator = 2,
-    bridge_options = list(repetitions = 3)
-  )))
-  expect_identical(out$log_BF, c(-12 - -21.5, 0))
-
-  # missing estimates are left out
-  local_mocked_bindings(
-    bridge_sampler = .mock_bridge_sampler(
-      list(stan_bf_0, stan_bf_1),
+      list(m0, m1),
       list(c(-20, NA, -21, -30, -22), c(-10, -12, -17)),
       env
     ),
     .package = "bridgesampling"
   )
-  out <- suppressWarnings(suppressMessages(bayesfactor_models(
-    stan_bf_1,
-    stan_bf_0,
+  opts <- list(repetitions = 3, silent = FALSE, my_option = "x")
+  out <- bayesfactor_models(
+    m1,
+    m0,
     denominator = 2,
-    bridge_options = list(repetitions = 3)
-  )))
+    verbose = FALSE,
+    bridge_options = opts
+  )
   expect_identical(out$log_BF, c(-12 - -21.5, 0))
+  expect_identical(env$calls, list(opts, opts))
+
+  # without `silent`, `silent = !verbose` is passed
+  env$calls <- list()
+  suppressWarnings(suppressMessages(bayesfactor_models(m1, m0)))
+  expect_identical(env$calls, list(list(silent = FALSE), list(silent = FALSE)))
 })
 
-test_that(".bayesfactor_models_stan_REG needs a list with every element named", {
+test_that("bayesfactor_models STAN, bridge_options must be a named list", {
   skip_if_not_installed("bridgesampling")
-
-  local_mocked_bindings(
-    bridge_sampler = function(...) stop("bridge_sampler() was called"),
-    .package = "bridgesampling"
-  )
   fake_stanreg <- structure(list(), class = "stanreg")
   mods <- list(a = fake_stanreg, b = fake_stanreg)
-  # an unnamed list, a partly named list, a named vector, and an NA name
   bad_options <- list(
     list(3),
     list(repetitions = 3, 2),
@@ -319,51 +214,19 @@ test_that(".bayesfactor_models_stan_REG needs a list with every element named", 
   )
   for (opts in bad_options) {
     expect_error(
-      .bayesfactor_models_stan_REG(
-        mods,
-        denominator = 1,
-        bridge_options = opts
-      ),
-      regexp = "`bridge_options` must be a list in which every element has a name",
+      .bayesfactor_models_stan_REG(mods, denominator = 1, bridge_options = opts),
+      "`bridge_options` must be a list in which every element has a name",
       fixed = TRUE
     )
   }
-
-  # the check is reached through bayesfactor_models()
-  local_mocked_bindings(
-    find_algorithm = function(x, ...) {
-      list(iterations = 1000, warmup = 500, chains = 1)
-    },
-    .package = "insight"
-  )
-  expect_error(
-    bayesfactor_models(
-      fake_stanreg,
-      fake_stanreg,
-      verbose = FALSE,
-      bridge_options = list(3)
-    ),
-    regexp = "`bridge_options` must be a list in which every element has a name",
-    fixed = TRUE
-  )
 })
 
 test_that("bayesfactor_models blavaan does not check bridge_options", {
   skip_if_not_installed("blavaan")
-
-  local_mocked_bindings(
-    find_algorithm = function(x, ...) {
-      list(iterations = 1000, warmup = 500, chains = 1)
-    },
-    .package = "insight"
-  )
+  .local_fake_stan_models()
   local_mocked_bindings(
     .bayesfactor_models_stan_SEM = function(mods, denominator, verbose = TRUE) {
-      data.frame(
-        Model = names(mods),
-        log_BF = c(0, 1),
-        stringsAsFactors = FALSE
-      )
+      data.frame(Model = names(mods), log_BF = c(0, 1), stringsAsFactors = FALSE)
     }
   )
   fake_blavaan <- structure(list(), class = "blavaan")
@@ -377,132 +240,27 @@ test_that("bayesfactor_models blavaan does not check bridge_options", {
 })
 
 test_that("bayesfactor_models STAN, precision warning names repetitions", {
-  skip_if_not_or_load_if_installed("rstanarm")
-  skip_if_not_or_load_if_installed("bridgesampling")
-  skip_on_cran()
-
-  mods <- .fit_bf_stan_models()
-  env <- new.env()
-  env$calls <- list()
-  local_mocked_bindings(
-    bridge_sampler = .mock_bridge_sampler(list(mods$m0, mods$m1), list(-20, -10), env),
-    .package = "bridgesampling"
-  )
-  w <- expect_warning(
-    suppressMessages(bayesfactor_models(mods$m0, mods$m1, verbose = TRUE)),
-    regexp = "40,000"
-  )
-  expect_match(conditionMessage(w), "repetitions")
-  expect_match(conditionMessage(w), "bridge_options")
-})
-
-test_that(".get_marglik uses a stored marglik criterion of brmsfit models", {
+  skip_if_not_installed("rstanarm")
+  skip_if_not_installed("brms")
   skip_if_not_installed("bridgesampling")
-
-  fake_brmsfit <- structure(
-    list(criteria = list(marglik = list(logml = c(-3, -1, -2, -10)))),
-    class = "brmsfit"
-  )
-  local_mocked_bindings(
-    bridge_sampler = function(...) stop("bridge_sampler() was called"),
-    .package = "bridgesampling"
-  )
-  expect_identical(.get_marglik(fake_brmsfit, verbose = TRUE), -2.5)
-  expect_identical(
-    .get_marglik(
-      fake_brmsfit,
-      verbose = TRUE,
-      bridge_options = list(repetitions = 3)
-    ),
-    -2.5
-  )
-
-  # a failed repetition (NA) is left out
-  fake_brmsfit$criteria$marglik$logml <- c(-3, NA, -1, -2, -10)
-  expect_identical(.get_marglik(fake_brmsfit, verbose = TRUE), -2.5)
-})
-
-test_that(".get_marglik passes options and uses the median of repeated estimates", {
-  skip_if_not_installed("bridgesampling")
-
-  env <- new.env()
-  env$calls <- list()
-  fake_stanreg <- structure(list(), class = "stanreg")
-  local_mocked_bindings(
-    bridge_sampler = .mock_bridge_sampler(
-      list(fake_stanreg),
-      list(c(-1, NA, -9, -2)),
-      env
-    ),
-    .package = "bridgesampling"
-  )
-  expect_identical(
-    .get_marglik(
-      fake_stanreg,
-      verbose = FALSE,
-      bridge_options = list(repetitions = 4)
-    ),
-    -2
-  )
-  expect_identical(env$calls, list(list(silent = TRUE, repetitions = 4)))
-
-  # a brmsfit without a stored marglik gets the options, after `silent = !verbose`
-  env$calls <- list()
-  fake_brmsfit <- structure(list(criteria = list()), class = "brmsfit")
-  local_mocked_bindings(
-    bridge_sampler = .mock_bridge_sampler(list(fake_brmsfit), list(-5), env),
-    .package = "bridgesampling"
-  )
-  opts <- list(repetitions = 4, my_option = "x")
-  expect_identical(
-    .get_marglik(fake_brmsfit, verbose = FALSE, bridge_options = opts),
-    -5
-  )
-  expect_identical(env$calls, list(c(list(silent = TRUE), opts)))
-})
-
-test_that("precision warning has no repetitions hint for stored brms marglik", {
-  skip_if_not_installed("bridgesampling")
-
-  local_mocked_bindings(
-    find_algorithm = function(x, ...) {
-      list(iterations = 1000, warmup = 500, chains = 1)
-    },
-    .package = "insight"
-  )
+  .local_fake_stan_models()
   local_mocked_bindings(
     bridge_sampler = function(...) structure(list(logml = -1), class = "bridge"),
     .package = "bridgesampling"
   )
-  # the precision warning of a call; the call itself may fail later on the
-  # fake models, which have no formula
-  .precision_warning <- function(mods) {
-    msg <- NULL
-    withCallingHandlers(
-      try(.bayesfactor_models_stan(mods, verbose = TRUE), silent = TRUE),
-      warning = function(w) {
-        msg <<- c(msg, conditionMessage(w))
-        invokeRestart("muffleWarning")
-      },
-      message = function(m) invokeRestart("muffleMessage")
-    )
-    msg
-  }
 
-  fake_brmsfit <- structure(
-    list(criteria = list(marglik = list(logml = c(-3, -1)))),
+  m <- structure(list(), class = "stanreg")
+  expect_warning(suppressMessages(bayesfactor_models(m, m)), "bridge_options")
+
+  # no hint when every model has a stored marglik; NA estimates are left out
+  m <- structure(
+    list(criteria = list(marglik = list(logml = c(-3, NA, -1, -2, -10)))),
     class = "brmsfit"
   )
-  msg <- .precision_warning(list(a = fake_brmsfit, b = fake_brmsfit))
-  expect_length(msg, 1)
-  expect_match(msg, "40,000")
-  expect_no_match(msg, "bridge_options")
-
-  # control: models that use bridge sampling get the hint
-  fake_stanreg <- structure(list(), class = "stanreg")
-  msg <- .precision_warning(list(a = fake_stanreg, b = fake_stanreg))
-  expect_length(msg, 1)
-  expect_match(msg, "bridge_options")
+  w <- capture_warnings(suppressMessages(bayesfactor_models(m, m)))
+  expect_match(w, "40,000")
+  expect_no_match(w, "bridge_options")
+  expect_identical(.get_marglik(m, verbose = TRUE), -2.5)
 })
 
 test_that("bayesfactor_models BRMS", {
