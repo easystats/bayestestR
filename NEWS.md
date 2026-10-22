@@ -23,6 +23,16 @@
   `hdi(ci_method = "spi")` now selects `method = "density"` for all objects,
   not only for some model classes.
 
+* `mediation()` now supports *brms* models with more than one mediator, in
+  parallel or in series. For models with more than two model formulas,
+  `treatment` and `mediator` must be specified (#475, #586).
+
+## Bug fixes
+
+* `mediation()` now gives informative errors for unsupported input, such as
+  more than one centrality index, or more than two model formulas for
+  *rstanarm* models.
+
 # bayestestR 0.20.0
 
 ## Changes
