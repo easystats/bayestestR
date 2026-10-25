@@ -23,6 +23,10 @@
   `hdi(ci_method = "spi")` now selects `method = "density"` for all objects,
   not only for some model classes.
 
+## Bug fixes
+
+* `bayesfactor()` now passes `verbose` to `bayesfactor_models()` (#743).
+
 # bayestestR 0.20.0
 
 ## Changes
