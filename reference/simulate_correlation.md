@@ -149,11 +149,11 @@ summary(lm(y ~ x1, data = data))
 #> 
 #> Residuals:
 #>      Min       1Q   Median       3Q      Max 
-#> -2.47132 -0.58008 -0.01947  0.71625  1.87046 
+#> -2.03979 -0.76880  0.00892  0.65430  2.51668 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)  
-#> (Intercept) -2.775e-17  9.848e-02   0.000    1.000  
+#> (Intercept) -1.344e-17  9.848e-02   0.000    1.000  
 #> x1           2.000e-01  9.897e-02   2.021    0.046 *
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -197,7 +197,7 @@ summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #> 
 #> Coefficients:
 #>               Estimate Std. Error z value Pr(>|z|)
-#> (Intercept)  6.204e-17  3.652e-01   0.000    1.000
+#> (Intercept)  7.684e-17  3.652e-01   0.000    1.000
 #> V1          -1.313e-02  3.730e-01  -0.035    0.972
 #> 
 #> (Dispersion parameter for binomial family taken to be 1)
@@ -243,7 +243,7 @@ summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #> 
 #> Coefficients:
 #>               Estimate Std. Error z value Pr(>|z|)
-#> (Intercept) -4.569e-17  3.696e-01   0.000    1.000
+#> (Intercept) -2.266e-16  3.696e-01   0.000    1.000
 #> V1           3.251e-01  3.877e-01   0.839    0.402
 #> 
 #> (Dispersion parameter for binomial family taken to be 1)

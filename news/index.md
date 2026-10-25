@@ -135,9 +135,8 @@ CRAN release: 2026-05-21
     [`bayesfactor_restricted()`](https://easystats.github.io/bayestestR/reference/bayesfactor_restricted.md),
     to obtain a matrix of Bayes factors between all restricted models.
 
-- Added support for `CmdStanFit` models from
-  [cmdstanr](https://mc-stan.org/cmdstanr/) and expanded support for
-  `stanfit` models from `rstan`.
+- Added support for `CmdStanFit` models from `{cmdstanr}` and expanded
+  support for `stanfit` models from `rstan`.
 
 ### Changes
 

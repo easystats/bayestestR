@@ -485,8 +485,8 @@ bayesfactor_parameters(brms_model, verbose = FALSE)
 #> 
 #> Parameter   |    BF
 #> -------------------
-#> (Intercept) |  6.58
-#> group1      | 11.41
+#> (Intercept) |  7.52
+#> group1      | 13.70
 #> 
 #> * Evidence Against The Null: 0
 #> 

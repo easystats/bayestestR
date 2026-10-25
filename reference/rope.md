@@ -485,8 +485,8 @@ model <- brms::brm(
 #> Compiling Stan program...
 #> Start sampling
 rope(model)
-#> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),
-#>   b_disp_cyl and b_disp_wt (r = 0.77). This might lead to inappropriate
+#> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.78),
+#>   b_disp_cyl and b_disp_wt (r = 0.78). This might lead to inappropriate
 #>   results. See 'Details' in '?rope'.
 #> # Proportion of samples inside the ROPE.
 #> ROPE with depends on outcome variable.
@@ -501,8 +501,8 @@ rope(model)
 #> disp_cyl       |      0.00 % | [-12.39, 12.39]
 #> 
 rope(model, ci = c(0.90, 0.95))
-#> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),
-#>   b_disp_cyl and b_disp_wt (r = 0.77). This might lead to inappropriate
+#> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.78),
+#>   b_disp_cyl and b_disp_wt (r = 0.78). This might lead to inappropriate
 #>   results. See 'Details' in '?rope'.
 #> # Proportions of samples inside the ROPE.
 #> ROPE with depends on outcome variable.
@@ -542,8 +542,8 @@ rope(
     disp = list(b_disp_wt = c(-5, 5), b_disp_cyl = c(-4, 4))
   )
 )
-#> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.79),
-#>   b_disp_cyl and b_disp_wt (r = 0.77). This might lead to inappropriate
+#> Possible multicollinearity between b_mpg_cyl and b_mpg_wt (r = 0.78),
+#>   b_disp_cyl and b_disp_wt (r = 0.78). This might lead to inappropriate
 #>   results. See 'Details' in '?rope'.
 #> # Proportion of samples inside the ROPE.
 #> ROPE with depends on outcome variable.
@@ -552,7 +552,7 @@ rope(
 #> --------------------------------------------
 #> mpg_Intercept  |      0.00 % | [-0.10, 0.10]
 #> mpg_wt         |      0.00 % | [-1.00, 1.00]
-#> mpg_cyl        |     88.47 % | [-2.00, 2.00]
+#> mpg_cyl        |     88.87 % | [-2.00, 2.00]
 #> disp_Intercept |      0.00 % | [-0.10, 0.10]
 #> disp_wt        |      0.00 % | [-5.00, 5.00]
 #> disp_cyl       |      0.00 % | [-4.00, 4.00]

@@ -119,6 +119,6 @@ bayesian_as_frequentist(model)
 #> Number of obs: 32, groups:  cyl, 3
 #> Fixed Effects:
 #> (Intercept)          mpg  
-#>     -3.9227       0.1723  
+#>     -3.9230       0.1723  
 # }
 ```

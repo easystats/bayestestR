@@ -208,12 +208,12 @@ mediation(m2, centrality = "mean", ci = 0.95)
 #> 
 #> Effect                 | Estimate |          95% ETI
 #> ----------------------------------------------------
-#> Direct Effect (ADE)    |   -0.040 | [-0.125,  0.045]
-#> Indirect Effect (ACME) |   -0.016 | [-0.041,  0.009]
-#> Mediator Effect        |   -0.240 | [-0.295, -0.183]
-#> Total Effect           |   -0.056 | [-0.139,  0.032]
+#> Direct Effect (ADE)    |   -0.040 | [-0.127,  0.041]
+#> Indirect Effect (ACME) |   -0.016 | [-0.040,  0.008]
+#> Mediator Effect        |   -0.240 | [-0.299, -0.182]
+#> Total Effect           |   -0.056 | [-0.144,  0.030]
 #> 
-#> Proportion mediated: 27.87% [-169.41%, 225.15%]
+#> Proportion mediated: 28.06% [-196.42%, 252.53%]
 #> 
 mediation(m3, centrality = "mean", ci = 0.95)
 #> # Causal Mediation Analysis for Stan Model
