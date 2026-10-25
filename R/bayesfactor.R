@@ -63,14 +63,14 @@ bayesfactor <- function(
   mods <- list(...)
 
   if (length(mods) > 1) {
-    bayesfactor_models(..., denominator = denominator)
+    bayesfactor_models(..., denominator = denominator, verbose = verbose)
   } else if (inherits(mods[[1]], "bayesfactor_models")) {
     bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
   } else if (inherits(mods[[1]], "BFBayesFactor")) {
     if (inherits(mods[[1]]@numerator[[1]], "BFlinearModel")) {
       bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
     } else {
-      bayesfactor_models(...)
+      bayesfactor_models(..., verbose = verbose)
     }
   } else if (is.null(hypothesis)) {
     bayesfactor_parameters(

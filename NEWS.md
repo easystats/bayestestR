@@ -24,6 +24,10 @@
   not only for some model classes. Like `method = "samples"`,
   `method = "density"` drops missing values, where `spi()` failed on them.
 
+## Bug fixes
+
+* `bayesfactor()` now passes `verbose` to `bayesfactor_models()` (#743).
+
 # bayestestR 0.20.0
 
 ## Changes
