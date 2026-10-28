@@ -9,9 +9,13 @@
 #' @param treatment Character, name of the treatment variable (or direct effect)
 #'   in a (multivariate response) mediator-model. If missing, `mediation()`
 #'   tries to find the treatment variable automatically, however, this may fail.
+#'   For *brms* models with more than two model formulas, `treatment` must be
+#'   specified.
 #' @param mediator Character, name of the mediator variable in a (multivariate
 #'   response) mediator-model. If missing, `mediation()` tries to find the
-#'   treatment variable automatically, however, this may fail.
+#'   mediator variable automatically, however, this may fail. For *brms* models
+#'   with more than two model formulas, `mediator` must be specified and can
+#'   name several mediators (see 'Details').
 #' @param response A named character vector, indicating the names of the response
 #'   variables to be used for the mediation analysis. Usually can be `NULL`,
 #'   in which case these variables are retrieved automatically. If not `NULL`,
@@ -28,6 +32,9 @@
 #'   second response variable (for the treatment model, with the mediator as
 #'   additional predictor), `y`, is not transformed. Then we could use
 #'   `response` like this: `mediation(model, response = c(m = "m_center", y = "y"))`.
+#' @param centrality The point-estimate (centrality index) of the effects.
+#'   One of the options of [`point_estimate()`], such as `"median"` (default),
+#'   `"mean"` or `"MAP"`. Only one index is allowed.
 #' @param ... Not used.
 #' @inheritParams ci
 #' @inheritParams describe_posterior
@@ -51,18 +58,33 @@
 #'  For all values, the 95% credible intervals are calculated by default.
 #'  Use `ci` to calculate a different interval.
 #'
-#'  The arguments `treatment` and `mediator` do not necessarily
-#'  need to be specified. If missing, `mediation()` tries to find the
-#'  treatment and mediator variable automatically. If this does not work,
-#'  specify these variables.
+#'  For models with two model formulas, the arguments `treatment` and
+#'  `mediator` do not necessarily need to be specified. If missing,
+#'  `mediation()` tries to find the treatment and mediator variable
+#'  automatically. If this does not work, specify these variables.
 #'
 #'  The direct effect is also called *average direct effect* (ADE),
 #'  the indirect effect is also called *average causal mediation effects*
 #'  (ACME). See also _Tingley et al. 2014_ and _Imai et al. 2010_.
 #'
+#'  For *brms* models, there can be more than one mediator, in parallel or in
+#'  series. For models with more than two model formulas, `treatment` and
+#'  `mediator` must be specified. Each mediator must be a predictor in the
+#'  outcome model, which is the one model whose response is not a predictor in
+#'  another model. `treatment` can also be a coefficient name, such as `xb` for
+#'  level `b` of a factor `x`. The indirect effect of a path from the treatment
+#'  through one or more mediators to the outcome is the product of the
+#'  coefficients along that path. With several mediators, `mediation()` returns
+#'  the direct effect, one indirect effect per path (e.g.
+#'  `Indirect Effect (ACME): m1 -> m2`), the total indirect effect, one mediator
+#'  effect per mediator, the total effect and the proportion mediated. If
+#'  `mediator` names only some of the mediators, only the paths through these
+#'  mediators are used.
+#'
 #' @note There is an `as.data.frame()` method that returns the posterior
 #'   samples of the effects, which can be used for further processing in the
-#'   **bayestestR** package.
+#'   **bayestestR** package. With several mediators, the columns are named
+#'   after the effects.
 #'
 #' @references
 #'
@@ -111,6 +133,23 @@
 #' summary(m1)
 #' mediation(m2, centrality = "mean", ci = 0.95)
 #' mediation(m3, centrality = "mean", ci = 0.95)
+#' }
+#' @examplesIf require("brms")
+#' \donttest{
+#' library(brms)
+#'
+#' # two mediators in series: m1 is also a predictor of m2
+#' set.seed(123)
+#' d <- data.frame(x = rnorm(200))
+#' d$m1 <- 0.5 * d$x + rnorm(200)
+#' d$m2 <- 0.4 * d$x + 0.5 * d$m1 + rnorm(200)
+#' d$y <- 0.3 * d$x + 0.6 * d$m1 + 0.4 * d$m2 + rnorm(200)
+#'
+#' f <- bf(y ~ x + m1 + m2) + bf(m1 ~ x) + bf(m2 ~ x + m1) + set_rescor(FALSE)
+#' m4 <- brm(f, data = d, refresh = 0)
+#'
+#' # with more than two model formulas, specify treatment and mediators
+#' mediation(m4, treatment = "x", mediator = c("m1", "m2"))
 #' }
 #' @export
 mediation <- function(model, ...) {
@@ -187,6 +226,12 @@ mediation.stanmvreg <- function(
     ci <- ci[1]
   }
 
+  if (inherits(model, "brmsfit") && !insight::is_multivariate(model)) {
+    insight::format_error(
+      "`mediation()` needs a multivariate model, with one formula for the mediator and one for the outcome."
+    )
+  }
+
   # check for binary response. In this case, user should rescale variables
   modelinfo <- insight::model_info(model, verbose = FALSE)
   if (any(sapply(modelinfo, function(i) i$is_binomial, simplify = TRUE))) {
@@ -198,65 +243,61 @@ mediation.stanmvreg <- function(
   # model responses
   if (is.null(response)) {
     response <- .mediation_response(model)
-  }
-  params <- insight::get_parameters(model)
-  fix_mediator <- FALSE
-
-  # find mediator, if not specified
-  if (missing(mediator)) {
-    predictors <- insight::find_predictors(model, flatten = TRUE)
-    mediator <- predictors[predictors %in% response]
-    fix_mediator <- TRUE
-  }
-
-  # find treatment, if not specified
-  if (missing(treatment)) {
-    predictors <- lapply(
-      insight::find_predictors(model),
-      function(.f) .f$conditional
-    )
-
-    treatment <- predictors[[1]][predictors[[1]] %in% predictors[[2]]][1]
-    treatment <- .fix_factor_name(model, treatment)
-  }
-
-  mediator.model <- which(response == mediator)
-  treatment.model <- which(response != mediator)
-
-  # brms names monotonic effects "bsp_<response>_mo<variable>". The product
-  # of coefficients is not defined for them, so stop before the mediator
-  # name is changed for factors
-  if (inherits(model, "brmsfit")) {
-    coef_mo <- sprintf("bsp_%s_mo%s", names(response)[treatment.model], mediator)
-    if (any(coef_mo %in% colnames(params))) {
+  } else if (inherits(model, "brmsfit")) {
+    formula_names <- names(insight::find_formula(model, verbose = FALSE))
+    if (
+      is.null(names(response)) ||
+        length(response) != length(formula_names) ||
+        !setequal(names(response), formula_names)
+    ) {
       insight::format_error(sprintf(
-        "The mediator `%s` enters the outcome model as a monotonic effect with `mo()`. `mediation()` multiplies coefficients and does not support mediators modeled with `mo()`.",
-        mediator
+        "The names of `response` must be the names of the model formulas: %s.",
+        toString(paste0("`", formula_names, "`"))
       ))
     }
   }
+  params <- insight::get_parameters(model)
 
-  if (fix_mediator) {
-    mediator <- .fix_factor_name(model, mediator)
+  if (missing(treatment)) {
+    treatment <- NULL
+  }
+  if (missing(mediator)) {
+    mediator <- NULL
+  }
+  if (!is.null(treatment) && length(treatment) != 1) {
+    insight::format_error("`treatment` must be the name of one variable.")
+  }
+  if (!is.null(mediator) && !length(mediator)) {
+    insight::format_error("`mediator` must name at least one variable.")
+  }
+  if (length(centrality) != 1 || identical(tolower(centrality), "all")) {
+    insight::format_error(
+      "`mediation()` needs one centrality index, such as `centrality = \"median\"`."
+    )
   }
 
-  if (inherits(model, "brmsfit")) {
-    response_name <- names(response)
+  # find treatment, mediators, outcome and paths. With more than two brms
+  # model formulas, treatment and mediator must be specified
+  if (inherits(model, "brmsfit") && length(response) > 2) {
+    if (is.null(treatment) || is.null(mediator)) {
+      insight::format_error(
+        "For models with more than two model formulas, please specify both `treatment` and `mediator`."
+      )
+    }
+    info <- .mediation_paths_brms(model, treatment, mediator, response, params)
   } else {
-    response_name <- unname(response)
+    info <- .mediation_paths_default(model, treatment, mediator, response, params)
   }
 
-  # brms removes underscores from variable names when naming estimates
-  # so we need to fix variable names here
-
-  response <- names(response)
-
-  coef_treatment <- sprintf(pattern, response[treatment.model], treatment)
-  coef_mediator <- sprintf(pattern, response[treatment.model], mediator)
-  coef_indirect <- sprintf(pattern, response[mediator.model], treatment)
-
+  # check that all coefficients exist
   coef_missing <- setdiff(
-    c(coef_treatment, coef_mediator, coef_indirect),
+    unique(c(
+      sprintf(pattern, info$outcome, info$treatment),
+      sprintf(pattern, info$outcome, info$mediator),
+      unlist(lapply(info$paths, function(p) {
+        sprintf(pattern, c(info$equation[p], info$outcome), c(info$treatment, p))
+      }))
+    )),
     colnames(params)
   )
   if (length(coef_missing)) {
@@ -267,17 +308,60 @@ mediation.stanmvreg <- function(
     ))
   }
 
-  # Direct effect: coef(treatment) from model_y_treatment
-  effect_direct <- params[[coef_treatment]]
+  .draws <- function(equation, variable) {
+    params[[sprintf(pattern, equation, variable)]]
+  }
 
-  # Mediator effect: coef(mediator) from model_y_treatment
-  effect_mediator <- params[[coef_mediator]]
+  # Direct effect: coef(treatment) from the outcome model
+  effect_direct <- .draws(info$outcome, info$treatment)
 
-  # Indirect effect: coef(treament) from model_m_mediator * coef(mediator) from model_y_treatment
-  effect_indirect <- params[[coef_indirect]] * effect_mediator
+  # Mediator effects: coef(mediator) from the outcome model
+  effect_mediator <- lapply(info$mediator, function(m) .draws(info$outcome, m))
+
+  # Indirect effect: product of the coefficients along each path
+  effect_paths <- lapply(info$paths, function(p) {
+    Reduce(`*`, Map(.draws, c(info$equation[p], info$outcome), c(info$treatment, p)))
+  })
+  effect_indirect <- Reduce(`+`, effect_paths)
 
   # Total effect
   effect_total <- effect_indirect + effect_direct
+
+  if (length(info$mediator) == 1) {
+    effects <- list(
+      effect_direct = effect_direct,
+      effect_indirect = effect_indirect,
+      effect_mediator = effect_mediator[[1]],
+      effect_total = effect_total
+    )
+    labels <- c(
+      "Direct Effect (ADE)",
+      "Indirect Effect (ACME)",
+      "Mediator Effect",
+      "Total Effect"
+    )
+    label_proportion <- "proportion_mediated"
+  } else {
+    labels <- c(
+      "Direct Effect (ADE)",
+      paste0(
+        "Indirect Effect (ACME): ",
+        vapply(info$paths, paste, character(1), collapse = " -> ")
+      ),
+      "Total Indirect Effect",
+      paste0("Mediator Effect: ", info$mediator),
+      "Total Effect"
+    )
+    effects <- c(
+      list(effect_direct),
+      effect_paths,
+      list(effect_indirect),
+      effect_mediator,
+      list(effect_total)
+    )
+    names(effects) <- labels
+    label_proportion <- "Proportion Mediated"
+  }
 
   # proportion mediated: indirect effect / total effect
   proportion_mediated <- as.numeric(point_estimate(
@@ -291,45 +375,37 @@ mediation.stanmvreg <- function(
 
   res <- cbind(
     data.frame(
-      Effect = c(
-        "Direct Effect (ADE)",
-        "Indirect Effect (ACME)",
-        "Mediator Effect",
-        "Total Effect",
-        "Proportion Mediated"
-      ),
+      Effect = c(labels, "Proportion Mediated"),
       Estimate = c(
-        as.numeric(point_estimate(effect_direct, centrality = centrality)),
-        as.numeric(point_estimate(effect_indirect, centrality = centrality)),
-        as.numeric(point_estimate(effect_mediator, centrality = centrality)),
-        as.numeric(point_estimate(effect_total, centrality = centrality)),
+        vapply(
+          effects,
+          function(e) as.numeric(point_estimate(e, centrality = centrality)),
+          numeric(1),
+          USE.NAMES = FALSE
+        ),
         proportion_mediated
       ),
       stringsAsFactors = FALSE
     ),
-    as.data.frame(rbind(
-      ci(effect_direct, ci = ci, method = method)[, -1],
-      ci(effect_indirect, ci = ci, method = method)[, -1],
-      ci(effect_mediator, ci = ci, method = method)[, -1],
-      ci(effect_total, ci = ci, method = method)[, -1],
-      prop_mediated_ci
+    as.data.frame(do.call(
+      rbind,
+      c(
+        lapply(effects, function(e) ci(e, ci = ci, method = method)[, -1]),
+        list(prop_mediated_ci)
+      )
     ))
   )
 
   colnames(res) <- c("Effect", "Estimate", "CI_low", "CI_high")
-  samples <- data.frame(
-    effect_direct,
-    effect_indirect,
-    effect_mediator,
-    effect_total,
-    proportion_mediated = effect_indirect / effect_total
-  )
+  rownames(res) <- NULL
+  samples <- data.frame(effects, check.names = FALSE)
+  samples[[label_proportion]] <- effect_indirect / effect_total
 
   attr(res, "ci") <- ci
   attr(res, "ci_method") <- method
-  attr(res, "treatment") <- treatment
-  attr(res, "mediator") <- mediator
-  attr(res, "response") <- response_name[treatment.model]
+  attr(res, "treatment") <- info$treatment
+  attr(res, "mediator") <- info$mediator
+  attr(res, "response") <- info$response
   attr(res, "data") <- samples
 
   class(res) <- c("bayestestR_mediation", "see_bayestestR_mediation", class(res))
@@ -346,6 +422,258 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
 
 # helper ---------------------------------
+
+# returns treatment, mediators, model equations and paths
+.mediation_paths_default <- function(
+  model,
+  treatment,
+  mediator,
+  response,
+  params = NULL
+) {
+  if (length(response) != 2) {
+    insight::format_error(
+      "For this model class, `mediation()` supports two model formulas only."
+    )
+  }
+  fix_mediator <- FALSE
+
+  # find mediator, if not specified
+  if (is.null(mediator)) {
+    predictors <- insight::find_predictors(model, flatten = TRUE)
+    mediator <- predictors[predictors %in% response]
+    fix_mediator <- TRUE
+  }
+
+  # find treatment, if not specified
+  if (is.null(treatment)) {
+    predictors <- lapply(
+      insight::find_predictors(model),
+      function(.f) .f$conditional
+    )
+
+    treatment <- predictors[[1]][predictors[[1]] %in% predictors[[2]]][1]
+    treatment <- .fix_factor_name(model, treatment)
+  }
+
+  if (length(mediator) != 1) {
+    insight::format_error(
+      "For models with two model formulas, `mediation()` needs exactly one mediator."
+    )
+  }
+
+  mediator.model <- which(response == mediator)
+  treatment.model <- which(response != mediator)
+  if (length(mediator.model) != 1) {
+    insight::format_error(sprintf(
+      "`%s` is not a mediator. The mediator is the response of one model formula: %s.",
+      mediator,
+      toString(paste0("`", response, "`"))
+    ))
+  }
+
+  equation <- names(response)
+
+  # brms names monotonic effects "bsp_<formula>_mo<variable>". The product
+  # of coefficients is not defined for them, so stop before the mediator
+  # name is changed for factors
+  if (inherits(model, "brmsfit")) {
+    coef_mo <- sprintf("bsp_%s_mo%s", equation[treatment.model], mediator)
+    if (coef_mo %in% colnames(params)) {
+      insight::format_error(sprintf(
+        "The mediator `%s` enters the outcome model as a monotonic effect with `mo()`. `mediation()` multiplies coefficients and does not support mediators modeled with `mo()`.",
+        mediator
+      ))
+    }
+  }
+
+  if (fix_mediator) {
+    mediator <- .fix_factor_name(model, mediator)
+  }
+
+  list(
+    treatment = treatment,
+    mediator = mediator,
+    equation = stats::setNames(equation[mediator.model], mediator),
+    outcome = equation[treatment.model],
+    response = if (inherits(model, "brmsfit")) {
+      equation[treatment.model]
+    } else {
+      unname(response)[treatment.model]
+    },
+    paths = list(mediator)
+  )
+}
+
+
+.mediation_paths_brms <- function(
+  model,
+  treatment,
+  mediator,
+  response,
+  params,
+  predictors = NULL,
+  data = insight::get_data(model)
+) {
+  equation <- names(response)
+  # predictors of each model formula, in the order of `response`
+  if (is.null(predictors)) {
+    all_predictors <- insight::find_predictors(model)
+    predictors <- lapply(equation, function(i) all_predictors[[i]]$conditional)
+  }
+
+  # a name is a variable if it is a column of the data, else a coefficient
+  # term (e.g. "xb" for level "b" of factor "x"). Variables are matched by
+  # predictor name only, because "b_mb_w2" can be level "2" of factor "w"
+  variables <- colnames(data)
+  .in_formula <- function(variable, i) {
+    if (variable %in% variables) {
+      variable %in% predictors[[i]]
+    } else {
+      sprintf("b_%s_%s", equation[i], variable) %in% colnames(params)
+    }
+  }
+  .in_any <- function(variable, models) {
+    any(vapply(models, .in_formula, logical(1), variable = variable))
+  }
+
+  # the outcome is the one response that no other model formula uses as a
+  # predictor
+  is_outcome <- vapply(
+    seq_along(response),
+    function(i) !.in_any(response[[i]], seq_along(response)[-i]),
+    logical(1)
+  )
+  if (sum(is_outcome) != 1) {
+    insight::format_error(sprintf(
+      "Could not find the outcome, i.e. the one response that is not a predictor in another model (found %s). If a mediator is transformed, use `response` to give its predictor name.",
+      if (any(is_outcome)) {
+        sprintf(
+          "%i such responses: %s",
+          sum(is_outcome),
+          toString(paste0("`", response[is_outcome], "`"))
+        )
+      } else {
+        "none"
+      }
+    ))
+  }
+  outcome <- which(is_outcome)
+  others <- seq_along(response)[-outcome]
+
+  mediator <- unique(mediator)
+  not_mediator <- setdiff(mediator, response[others])
+  if (length(not_mediator)) {
+    insight::format_error(paste(
+      paste0("`", not_mediator, "` is not a mediator.", collapse = " "),
+      sprintf(
+        "Available mediators are: %s.",
+        toString(paste0("`", response[others], "`"))
+      )
+    ))
+  }
+  mediator_models <- match(mediator, response)
+
+  # a variable that is not a predictor can still share the name of a
+  # coefficient (e.g. "b_y_w2" for level "2" of factor "w"), so stop
+  links <- lapply(c(treatment, mediator), function(v) list(v, outcome))
+  if (length(mediator) == 1) {
+    links <- c(links, list(list(treatment, mediator_models)))
+  }
+  for (link in links) {
+    v <- link[[1]]
+    i <- link[[2]]
+    coef_link <- sprintf("b_%s_%s", equation[i], v)
+    if (v %in% variables && !.in_formula(v, i) && coef_link %in% colnames(params)) {
+      insight::format_error(sprintf(
+        "`%s` is not a predictor in the model of `%s`. The coefficient `%s` belongs to another variable, e.g. a factor level.",
+        v,
+        response[[i]],
+        coef_link
+      ))
+    }
+  }
+
+  # brms names monotonic effects "bsp_<formula>_mo<variable>". The product
+  # of coefficients is not defined for them, so stop
+  used_models <- c(outcome, mediator_models)
+  for (m in mediator) {
+    coef_mo <- sprintf("bsp_%s_mo%s", equation[used_models], m) %in% colnames(params)
+    if (any(coef_mo)) {
+      insight::format_error(sprintf(
+        "The mediator `%s` enters the %s model as a monotonic effect with `mo()`. `mediation()` multiplies coefficients and does not support mediators modeled with `mo()`.",
+        m,
+        if (coef_mo[1]) {
+          "outcome"
+        } else {
+          sprintf("`%s`", response[[used_models[which(coef_mo)[1]]]])
+        }
+      ))
+    }
+  }
+
+  # paths from the treatment through one or more mediators to the outcome,
+  # as indices of `mediator`
+  if (length(mediator) == 1) {
+    paths <- list(1L)
+  } else {
+    paths <- list()
+    .extend <- function(path) {
+      last <- path[length(path)]
+      if (.in_formula(mediator[last], outcome)) {
+        paths[[length(paths) + 1]] <<- path
+      }
+      for (k in setdiff(seq_along(mediator), path)) {
+        if (.in_formula(mediator[last], mediator_models[k])) {
+          .extend(c(path, k))
+        }
+      }
+    }
+    for (k in seq_along(mediator)) {
+      if (.in_formula(treatment, mediator_models[k])) {
+        .extend(k)
+      }
+    }
+    if (!length(paths)) {
+      insight::format_error(sprintf(
+        "Could not find a path from the treatment `%s` through the mediators %s to the outcome `%s`.",
+        treatment,
+        toString(paste0("`", mediator, "`")),
+        response[[outcome]]
+      ))
+    }
+    off_path <- mediator[setdiff(seq_along(mediator), unlist(paths))]
+    if (length(off_path)) {
+      insight::format_error(sprintf(
+        "Could not find a path from the treatment `%s` through %s to the outcome `%s`.",
+        treatment,
+        if (length(off_path) > 1) {
+          paste("any of", toString(paste0("`", off_path, "`")))
+        } else {
+          paste0("`", off_path, "`")
+        },
+        response[[outcome]]
+      ))
+    }
+    # shorter paths first, then in the order of `mediator`
+    path_order <- vapply(
+      paths,
+      function(p) paste(sprintf("%05i", c(length(p), p)), collapse = " "),
+      character(1)
+    )
+    paths <- paths[order(path_order, method = "radix")]
+  }
+
+  list(
+    treatment = treatment,
+    mediator = mediator,
+    equation = stats::setNames(equation[mediator_models], mediator),
+    outcome = equation[outcome],
+    response = equation[outcome],
+    paths = lapply(paths, function(p) mediator[p])
+  )
+}
+
 
 .mediation_response <- function(model) {
   if (!inherits(model, "brmsfit")) {
@@ -399,7 +727,7 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   cat(sprintf(
     "  Treatment: %s\n  Mediator : %s\n  Response : %s\n\n",
     attr(x, "treatment", exact = TRUE),
-    attr(x, "mediator", exact = TRUE),
+    toString(attr(x, "mediator", exact = TRUE)),
     attr(x, "response", exact = TRUE)
   ))
 
