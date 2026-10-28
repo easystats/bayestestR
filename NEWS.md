@@ -38,8 +38,6 @@
   more than one centrality index, or more than two model formulas for
   *rstanarm* models.
 
-## Bug fixes
-
 * `bayesian_as_frequentist()` now drops the same rows with missing values as
   *brms* when `data` is given for multivariate models.
 
