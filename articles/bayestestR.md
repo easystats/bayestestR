@@ -222,7 +222,7 @@ bayesian methods in psychology. *British Journal of Mathematical and
 Statistical Psychology*, *66*(1), 1–7.
 
 Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A.,
-Wagenmakers, E.-J., Berk, R., et al.others. (2018). Redefine statistical
+Wagenmakers, E.-J., Berk, R., et al. (2018). Redefine statistical
 significance. *Nature Human Behaviour*, *2*(1), 6.
 
 Chambers, C. D., Feredoes, E., Muthukumaraswamy, S. D., & Etchells, P.
@@ -245,6 +245,6 @@ effect sizes and power in the recent cognitive neuroscience and
 psychology literature. *BioRxiv*, 071530.
 
 Wagenmakers, E.-J., Marsman, M., Jamil, T., Ly, A., Verhagen, J., Love,
-J., et al.others. (2018). Bayesian inference for psychology. Part i:
+J., et al. (2018). Bayesian inference for psychology. Part i:
 Theoretical advantages and practical ramifications. *Psychonomic
 Bulletin & Review*, *25*(1), 35–57.

@@ -23,7 +23,7 @@ called the **region of practical equivalence (ROPE)**.
 
 Indeed, statistically, the probability of a posterior distribution being
 different from 0 does not make much sense (the probability of it being
-different from a single point being infinite). Therefore, the idea
+different from a single point nearing 100%). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are **equivalent to the null** value for practical
 purposes (J. Kruschke, 2014; J. K. Kruschke, 2010; J. K. Kruschke,

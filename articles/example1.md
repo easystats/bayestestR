@@ -402,7 +402,7 @@ between the two feed types is between 14 and 91.**
 
 Testing whether this distribution is different from 0 doesn’t make
 sense, as 0 is a single value (*and the probability that any
-distribution is different from a single value is infinite*).
+distribution is different from a single value is nearly 100%*).
 
 However, one way to assess **significance** could be to define an area
 *around* 0, which will consider as *practically equivalent* to zero
