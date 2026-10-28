@@ -25,11 +25,15 @@ mediation(model, ...)
 
 \item{treatment}{Character, name of the treatment variable (or direct effect)
 in a (multivariate response) mediator-model. If missing, \code{mediation()}
-tries to find the treatment variable automatically, however, this may fail.}
+tries to find the treatment variable automatically, however, this may fail.
+For \emph{brms} models with more than two model formulas, \code{treatment} must be
+specified.}
 
 \item{mediator}{Character, name of the mediator variable in a (multivariate
 response) mediator-model. If missing, \code{mediation()} tries to find the
-treatment variable automatically, however, this may fail.}
+mediator variable automatically, however, this may fail. For \emph{brms} models
+with more than two model formulas, \code{mediator} must be specified and can
+name several mediators (see 'Details').}
 
 \item{response}{A named character vector, indicating the names of the response
 variables to be used for the mediation analysis. Usually can be \code{NULL},
@@ -48,10 +52,9 @@ second response variable (for the treatment model, with the mediator as
 additional predictor), \code{y}, is not transformed. Then we could use
 \code{response} like this: \code{mediation(model, response = c(m = "m_center", y = "y"))}.}
 
-\item{centrality}{The point-estimates (centrality indices) to compute. Character
-(vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"}
-(see \code{\link[=map_estimate]{map_estimate()}}), \code{"trimmed"} (which is just \code{mean(x, trim = threshold)}),
-\code{"mode"} or \code{"all"}.}
+\item{centrality}{The point-estimate (centrality index) of the effects.
+One of the options of \code{\link[=point_estimate]{point_estimate()}}, such as \code{"median"} (default),
+\code{"mean"} or \code{"MAP"}. Only one index is allowed.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{0.95} (\verb{95\%}).}
@@ -85,19 +88,34 @@ by the total effect.
 For all values, the 95\% credible intervals are calculated by default.
 Use \code{ci} to calculate a different interval.
 
-The arguments \code{treatment} and \code{mediator} do not necessarily
-need to be specified. If missing, \code{mediation()} tries to find the
-treatment and mediator variable automatically. If this does not work,
-specify these variables.
+For models with two model formulas, the arguments \code{treatment} and
+\code{mediator} do not necessarily need to be specified. If missing,
+\code{mediation()} tries to find the treatment and mediator variable
+automatically. If this does not work, specify these variables.
 
 The direct effect is also called \emph{average direct effect} (ADE),
 the indirect effect is also called \emph{average causal mediation effects}
 (ACME). See also \emph{Tingley et al. 2014} and \emph{Imai et al. 2010}.
+
+For \emph{brms} models, there can be more than one mediator, in parallel or in
+series. For models with more than two model formulas, \code{treatment} and
+\code{mediator} must be specified. Each mediator must be a predictor in the
+outcome model, which is the one model whose response is not a predictor in
+another model. \code{treatment} can also be a coefficient name, such as \code{xb} for
+level \code{b} of a factor \code{x}. The indirect effect of a path from the treatment
+through one or more mediators to the outcome is the product of the
+coefficients along that path. With several mediators, \code{mediation()} returns
+the direct effect, one indirect effect per path (e.g.
+\verb{Indirect Effect (ACME): m1 -> m2}), the total indirect effect, one mediator
+effect per mediator, the total effect and the proportion mediated. If
+\code{mediator} names only some of the mediators, only the paths through these
+mediators are used.
 }
 \note{
 There is an \code{as.data.frame()} method that returns the posterior
 samples of the effects, which can be used for further processing in the
-\strong{bayestestR} package.
+\strong{bayestestR} package. With several mediators, the columns are named
+after the effects.
 }
 \examples{
 \dontshow{if (require("mediation") && require("brms") && require("rstanarm")) withAutoprint(\{ # examplesIf}
@@ -134,6 +152,24 @@ m3 <- suppressWarnings(stan_mvmer(
 summary(m1)
 mediation(m2, centrality = "mean", ci = 0.95)
 mediation(m3, centrality = "mean", ci = 0.95)
+}
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("brms")) withAutoprint(\{ # examplesIf}
+\donttest{
+library(brms)
+
+# two mediators in series: m1 is also a predictor of m2
+set.seed(123)
+d <- data.frame(x = rnorm(200))
+d$m1 <- 0.5 * d$x + rnorm(200)
+d$m2 <- 0.4 * d$x + 0.5 * d$m1 + rnorm(200)
+d$y <- 0.3 * d$x + 0.6 * d$m1 + 0.4 * d$m2 + rnorm(200)
+
+f <- bf(y ~ x + m1 + m2) + bf(m1 ~ x) + bf(m2 ~ x + m1) + set_rescor(FALSE)
+m4 <- brm(f, data = d, refresh = 0)
+
+# with more than two model formulas, specify treatment and mediators
+mediation(m4, treatment = "x", mediator = c("m1", "m2"))
 }
 \dontshow{\}) # examplesIf}
 }
