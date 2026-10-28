@@ -629,6 +629,8 @@ hdi.get_predicted <- function(x, ci = 0.95, use_iterations = FALSE, verbose = TR
 # Code licensed under License: GPL (>= 2)
 .spi <- function(x, ci, verbose = TRUE) {
   insight::check_if_installed("quadprog")
+  # remove NA/NaN, as .hdi() does, because stats::density() fails on them
+  x <- x[!is.na(x)]
   check_ci <- .check_ci_argument(x, ci, verbose)
 
   if (!is.null(check_ci)) {

@@ -33,7 +33,7 @@ test_that("hdi method density", {
     5
   )
 
-  expect_error(hdi(c(2, 3, NA), method = "density"))
+  expect_warning(hdi(c(2, 3, NA), method = "density"), "too short")
   expect_warning(hdi(c(2, 3), method = "density"), "too short")
   expect_message(hdi(distribution_normal(1000), ci = 0.0000001, method = "density"))
   expect_warning(hdi(distribution_normal(1000), ci = 950, method = "density"))
