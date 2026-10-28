@@ -11,7 +11,7 @@ causal mediation effects of multivariate response models."><meta property="og:im
 
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,13 +113,17 @@ causal mediation effects of multivariate response models.</p>
 <dt id="arg-treatment">treatment<a class="anchor" aria-label="anchor" href="#arg-treatment"></a></dt>
 <dd><p>Character, name of the treatment variable (or direct effect)
 in a (multivariate response) mediator-model. If missing, <code>mediation()</code>
-tries to find the treatment variable automatically, however, this may fail.</p></dd>
+tries to find the treatment variable automatically, however, this may fail.
+For <em>brms</em> models with more than two model formulas, <code>treatment</code> must be
+specified.</p></dd>
 
 
 <dt id="arg-mediator">mediator<a class="anchor" aria-label="anchor" href="#arg-mediator"></a></dt>
 <dd><p>Character, name of the mediator variable in a (multivariate
 response) mediator-model. If missing, <code>mediation()</code> tries to find the
-treatment variable automatically, however, this may fail.</p></dd>
+mediator variable automatically, however, this may fail. For <em>brms</em> models
+with more than two model formulas, <code>mediator</code> must be specified and can
+name several mediators (see 'Details').</p></dd>
 
 
 <dt id="arg-response">response<a class="anchor" aria-label="anchor" href="#arg-response"></a></dt>
@@ -142,10 +146,9 @@ additional predictor), <code>y</code>, is not transformed. Then we could use
 
 
 <dt id="arg-centrality">centrality<a class="anchor" aria-label="anchor" href="#arg-centrality"></a></dt>
-<dd><p>The point-estimates (centrality indices) to compute. Character
-(vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code>
-(see <code><a href="map_estimate.html">map_estimate()</a></code>), <code>"trimmed"</code> (which is just <code>mean(x, trim = threshold)</code>),
-<code>"mode"</code> or <code>"all"</code>.</p></dd>
+<dd><p>The point-estimate (centrality index) of the effects.
+One of the options of <code><a href="point_estimate.html">point_estimate()</a></code>, such as <code>"median"</code> (default),
+<code>"mean"</code> or <code>"MAP"</code>. Only one index is allowed.</p></dd>
 
 
 <dt id="arg-ci">ci<a class="anchor" aria-label="anchor" href="#arg-ci"></a></dt>
@@ -179,19 +182,33 @@ effect). The <em>proportion mediated</em> is the indirect effect divided
 by the total effect.</p>
 <p>For all values, the 95% credible intervals are calculated by default.
 Use <code>ci</code> to calculate a different interval.</p>
-<p>The arguments <code>treatment</code> and <code>mediator</code> do not necessarily
-need to be specified. If missing, <code>mediation()</code> tries to find the
-treatment and mediator variable automatically. If this does not work,
-specify these variables.</p>
+<p>For models with two model formulas, the arguments <code>treatment</code> and
+<code>mediator</code> do not necessarily need to be specified. If missing,
+<code>mediation()</code> tries to find the treatment and mediator variable
+automatically. If this does not work, specify these variables.</p>
 <p>The direct effect is also called <em>average direct effect</em> (ADE),
 the indirect effect is also called <em>average causal mediation effects</em>
 (ACME). See also <em>Tingley et al. 2014</em> and <em>Imai et al. 2010</em>.</p>
+<p>For <em>brms</em> models, there can be more than one mediator, in parallel or in
+series. For models with more than two model formulas, <code>treatment</code> and
+<code>mediator</code> must be specified. Each mediator must be a predictor in the
+outcome model, which is the one model whose response is not a predictor in
+another model. <code>treatment</code> can also be a coefficient name, such as <code>xb</code> for
+level <code>b</code> of a factor <code>x</code>. The indirect effect of a path from the treatment
+through one or more mediators to the outcome is the product of the
+coefficients along that path. With several mediators, <code>mediation()</code> returns
+the direct effect, one indirect effect per path (e.g.
+<code>Indirect Effect (ACME): m1 -&gt; m2</code>), the total indirect effect, one mediator
+effect per mediator, the total effect and the proportion mediated. If
+<code>mediator</code> names only some of the mediators, only the paths through these
+mediators are used.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>There is an <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> method that returns the posterior
 samples of the effects, which can be used for further processing in the
-<strong>bayestestR</strong> package.</p>
+<strong>bayestestR</strong> package. With several mediators, the columns are named
+after the effects.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -294,6 +311,43 @@ the frequentist framework.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Effect           |   -0.059 | [-0.145,  0.029]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Proportion mediated: 30.30% [-216.03%, 276.63%]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># two mediators in series: m1 is also a predictor of m2</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">d</span><span class="op">$</span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">d</span><span class="op">$</span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fl">0.4</span> <span class="op">*</span> <span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">d</span><span class="op">$</span><span class="va">m1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">d</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">0.3</span> <span class="op">*</span> <span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="fl">0.6</span> <span class="op">*</span> <span class="va">d</span><span class="op">$</span><span class="va">m1</span> <span class="op">+</span> <span class="fl">0.4</span> <span class="op">*</span> <span class="va">d</span><span class="op">$</span><span class="va">m2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">m1</span> <span class="op">+</span> <span class="va">m2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">m1</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">m2</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">m1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brmsformula-helpers.html" class="external-link">set_rescor</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paulbuerkner.com/brms/reference/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">f</span>, data <span class="op">=</span> <span class="va">d</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compiling Stan program...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start sampling</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># with more than two model formulas, specify treatment and mediators</span></span></span>
+<span class="r-in"><span><span class="fu">mediation</span><span class="op">(</span><span class="va">m4</span>, treatment <span class="op">=</span> <span class="st">"x"</span>, mediator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="st">"m2"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Causal Mediation Analysis for Stan Model</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Treatment: x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mediator : m1, m2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Response : y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Effect                           | Estimate |        95% ETI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Direct Effect (ADE)              |    0.198 | [0.025, 0.369]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Indirect Effect (ACME): m1       |    0.310 | [0.199, 0.448]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Indirect Effect (ACME): m2       |    0.170 | [0.088, 0.269]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Indirect Effect (ACME): m1 -&gt; m2 |    0.090 | [0.048, 0.149]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Indirect Effect            |    0.575 | [0.424, 0.748]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mediator Effect: m1              |    0.666 | [0.507, 0.830]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mediator Effect: m2              |    0.436 | [0.287, 0.589]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Effect                     |    0.774 | [0.566, 0.986]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Proportion mediated: 74.28% [54.88%, 93.67%]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

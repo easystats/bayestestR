@@ -37,13 +37,16 @@ mediation(
   Character, name of the treatment variable (or direct effect) in a
   (multivariate response) mediator-model. If missing, `mediation()`
   tries to find the treatment variable automatically, however, this may
-  fail.
+  fail. For *brms* models with more than two model formulas, `treatment`
+  must be specified.
 
 - mediator:
 
   Character, name of the mediator variable in a (multivariate response)
-  mediator-model. If missing, `mediation()` tries to find the treatment
-  variable automatically, however, this may fail.
+  mediator-model. If missing, `mediation()` tries to find the mediator
+  variable automatically, however, this may fail. For *brms* models with
+  more than two model formulas, `mediator` must be specified and can
+  name several mediators (see 'Details').
 
 - response:
 
@@ -67,12 +70,11 @@ mediation(
 
 - centrality:
 
-  The point-estimates (centrality indices) to compute. Character
-  (vector) or list with one or more of these options: `"median"`,
-  `"mean"`, `"MAP"` (see
-  [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.md)),
-  `"trimmed"` (which is just `mean(x, trim = threshold)`), `"mode"` or
-  `"all"`.
+  The point-estimate (centrality index) of the effects. One of the
+  options of
+  [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.md),
+  such as `"median"` (default), `"mean"` or `"MAP"`. Only one index is
+  allowed.
 
 - ci:
 
@@ -113,21 +115,36 @@ indirect effect divided by the total effect.
 For all values, the 95% credible intervals are calculated by default.
 Use `ci` to calculate a different interval.
 
-The arguments `treatment` and `mediator` do not necessarily need to be
-specified. If missing, `mediation()` tries to find the treatment and
-mediator variable automatically. If this does not work, specify these
-variables.
+For models with two model formulas, the arguments `treatment` and
+`mediator` do not necessarily need to be specified. If missing,
+`mediation()` tries to find the treatment and mediator variable
+automatically. If this does not work, specify these variables.
 
 The direct effect is also called *average direct effect* (ADE), the
 indirect effect is also called *average causal mediation effects*
 (ACME). See also *Tingley et al. 2014* and *Imai et al. 2010*.
+
+For *brms* models, there can be more than one mediator, in parallel or
+in series. For models with more than two model formulas, `treatment` and
+`mediator` must be specified. Each mediator must be a predictor in the
+outcome model, which is the one model whose response is not a predictor
+in another model. `treatment` can also be a coefficient name, such as
+`xb` for level `b` of a factor `x`. The indirect effect of a path from
+the treatment through one or more mediators to the outcome is the
+product of the coefficients along that path. With several mediators,
+`mediation()` returns the direct effect, one indirect effect per path
+(e.g. `Indirect Effect (ACME): m1 -> m2`), the total indirect effect,
+one mediator effect per mediator, the total effect and the proportion
+mediated. If `mediator` names only some of the mediators, only the paths
+through these mediators are used.
 
 ## Note
 
 There is an
 [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html) method
 that returns the posterior samples of the effects, which can be used for
-further processing in the **bayestestR** package.
+further processing in the **bayestestR** package. With several
+mediators, the columns are named after the effects.
 
 ## References
 
@@ -230,6 +247,43 @@ mediation(m3, centrality = "mean", ci = 0.95)
 #> Total Effect           |   -0.059 | [-0.145,  0.029]
 #> 
 #> Proportion mediated: 30.30% [-216.03%, 276.63%]
+#> 
+# }
+# \donttest{
+library(brms)
+
+# two mediators in series: m1 is also a predictor of m2
+set.seed(123)
+d <- data.frame(x = rnorm(200))
+d$m1 <- 0.5 * d$x + rnorm(200)
+d$m2 <- 0.4 * d$x + 0.5 * d$m1 + rnorm(200)
+d$y <- 0.3 * d$x + 0.6 * d$m1 + 0.4 * d$m2 + rnorm(200)
+
+f <- bf(y ~ x + m1 + m2) + bf(m1 ~ x) + bf(m2 ~ x + m1) + set_rescor(FALSE)
+m4 <- brm(f, data = d, refresh = 0)
+#> Compiling Stan program...
+#> Start sampling
+
+# with more than two model formulas, specify treatment and mediators
+mediation(m4, treatment = "x", mediator = c("m1", "m2"))
+#> # Causal Mediation Analysis for Stan Model
+#> 
+#>   Treatment: x
+#>   Mediator : m1, m2
+#>   Response : y
+#> 
+#> Effect                           | Estimate |        95% ETI
+#> ------------------------------------------------------------
+#> Direct Effect (ADE)              |    0.198 | [0.025, 0.369]
+#> Indirect Effect (ACME): m1       |    0.310 | [0.199, 0.448]
+#> Indirect Effect (ACME): m2       |    0.170 | [0.088, 0.269]
+#> Indirect Effect (ACME): m1 -> m2 |    0.090 | [0.048, 0.149]
+#> Total Indirect Effect            |    0.575 | [0.424, 0.748]
+#> Mediator Effect: m1              |    0.666 | [0.507, 0.830]
+#> Mediator Effect: m2              |    0.436 | [0.287, 0.589]
+#> Total Effect                     |    0.774 | [0.566, 0.986]
+#> 
+#> Proportion mediated: 74.28% [54.88%, 93.67%]
 #> 
 # }
 ```

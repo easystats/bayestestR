@@ -329,13 +329,13 @@ p_direction(posterior)
 #> 
 #> Parameter |     pd
 #> ------------------
-#> Posterior | 84.50%
+#> Posterior | 81.80%
 p_direction(posterior, method = "kernel")
 #> Probability of Direction
 #> 
 #> Parameter |     pd
 #> ------------------
-#> Posterior | 83.17%
+#> Posterior | 81.31%
 
 # Simulate a dataframe of posterior distributions
 # -----------------------------------------------
@@ -345,19 +345,19 @@ p_direction(df)
 #> 
 #> Parameter |     pd
 #> ------------------
-#> X1        | 51.00%
+#> X1        | 62.00%
 #> X2        | 52.00%
-#> X3        | 51.00%
-#> X4        | 58.00%
+#> X3        | 52.00%
+#> X4        | 54.00%
 p_direction(df, method = "kernel")
 #> Probability of Direction
 #> 
 #> Parameter |     pd
 #> ------------------
-#> X1        | 51.24%
-#> X2        | 51.93%
-#> X3        | 50.15%
-#> X4        | 59.86%
+#> X1        | 59.94%
+#> X2        | 52.27%
+#> X3        | 53.25%
+#> X4        | 54.11%
 
 # \donttest{
 # rstanarm models
@@ -369,28 +369,28 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl,
 p_direction(model)
 #> Probability of Direction 
 #> 
-#> Parameter   |   pd
-#> ------------------
-#> (Intercept) | 100%
-#> wt          | 100%
-#> cyl         | 100%
+#> Parameter   |     pd
+#> --------------------
+#> (Intercept) |   100%
+#> wt          | 99.95%
+#> cyl         | 99.90%
 p_direction(model, method = "kernel")
 #> Probability of Direction 
 #> 
 #> Parameter   |      pd
 #> ---------------------
 #> (Intercept) | 100.00%
-#> wt          |  99.98%
-#> cyl         |  99.97%
+#> wt          |  99.95%
+#> cyl         |  99.92%
 
 # emmeans
 # -----------------------------------------------
 p_direction(emmeans::emtrends(model, ~1, "wt", data = mtcars))
 #> Probability of Direction
 #> 
-#> X1      |   pd
-#> --------------
-#> overall | 100%
+#> X1      |     pd
+#> ----------------
+#> overall | 99.95%
 
 # brms models
 # -----------------------------------------------
@@ -400,8 +400,8 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 9e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+#> Chain 1: Gradient evaluation took 7e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -418,9 +418,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 0.018 seconds (Warm-up)
-#> Chain 1:                0.016 seconds (Sampling)
-#> Chain 1:                0.034 seconds (Total)
+#> Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)
+#> Chain 1:                0.012 seconds (Sampling)
+#> Chain 1:                0.025 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -443,15 +443,15 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 0.017 seconds (Warm-up)
-#> Chain 2:                0.015 seconds (Sampling)
-#> Chain 2:                0.032 seconds (Total)
+#> Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
+#> Chain 2:                0.012 seconds (Sampling)
+#> Chain 2:                0.025 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 #> Chain 3: 
-#> Chain 3: Gradient evaluation took 3e-06 seconds
-#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
+#> Chain 3: Gradient evaluation took 2e-06 seconds
+#> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.02 seconds.
 #> Chain 3: Adjust your expectations accordingly!
 #> Chain 3: 
 #> Chain 3: 
@@ -468,9 +468,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 0.018 seconds (Warm-up)
-#> Chain 3:                0.015 seconds (Sampling)
-#> Chain 3:                0.033 seconds (Total)
+#> Chain 3:  Elapsed Time: 0.013 seconds (Warm-up)
+#> Chain 3:                0.014 seconds (Sampling)
+#> Chain 3:                0.027 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -493,9 +493,9 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 0.017 seconds (Warm-up)
-#> Chain 4:                0.015 seconds (Sampling)
-#> Chain 4:                0.032 seconds (Total)
+#> Chain 4:  Elapsed Time: 0.012 seconds (Warm-up)
+#> Chain 4:                0.012 seconds (Sampling)
+#> Chain 4:                0.024 seconds (Total)
 #> Chain 4: 
 p_direction(model)
 #> Probability of Direction 
@@ -504,15 +504,15 @@ p_direction(model)
 #> --------------------
 #> (Intercept) |   100%
 #> wt          |   100%
-#> cyl         | 99.98%
+#> cyl         | 99.95%
 p_direction(model, method = "kernel")
 #> Probability of Direction 
 #> 
 #> Parameter   |      pd
 #> ---------------------
-#> (Intercept) |    100%
-#> wt          | 100.00%
-#> cyl         |  99.97%
+#> (Intercept) | 100.00%
+#> wt          |    100%
+#> cyl         |  99.93%
 
 # BayesFactor objects
 # -----------------------------------------------
@@ -526,24 +526,24 @@ p_direction(bf)
 p_direction(bf, method = "kernel")
 #> Probability of Direction
 #> 
-#> Parameter  |   pd
-#> -----------------
-#> Difference | 100%
+#> Parameter  |      pd
+#> --------------------
+#> Difference | 100.00%
 # }
 # Using "rvar_col"
 x <- data.frame(mu = c(0, 0.5, 1), sigma = c(1, 0.5, 0.25))
 x$my_rvar <- posterior::rvar_rng(rnorm, 3, mean = x$mu, sd = x$sigma)
 x
 #>    mu sigma      my_rvar
-#> 1 0.0  1.00 -0.01 ± 0.98
-#> 2 0.5  0.50  0.49 ± 0.50
-#> 3 1.0  0.25  1.00 ± 0.25
+#> 1 0.0  1.00 0.045 ± 0.99
+#> 2 0.5  0.50 0.502 ± 0.50
+#> 3 1.0  0.25 1.003 ± 0.25
 p_direction(x, rvar_col = "my_rvar")
 #> Probability of Direction
 #> 
 #> mu   | sigma |     pd
 #> ---------------------
-#> 0.00 |  1.00 | 50.10%
-#> 0.50 |  0.50 | 83.90%
+#> 0.00 |  1.00 | 51.65%
+#> 0.50 |  0.50 | 84.05%
 #> 1.00 |  0.25 |   100%
 ```
