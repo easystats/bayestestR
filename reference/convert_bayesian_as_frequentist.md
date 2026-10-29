@@ -24,7 +24,9 @@ bayesian_as_frequentist(model, data = NULL, REML = TRUE, response = NULL)
 - data:
 
   Data used by the model. If `NULL`, will try to extract it from the
-  model.
+  model. For multivariate *brms* models, rows with missing values are
+  dropped as in *brms*, unless the model has addition terms such as
+  `y | mi()`.
 
 - REML:
 
