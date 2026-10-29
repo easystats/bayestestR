@@ -38,6 +38,12 @@
   more than one centrality index, or more than two model formulas for
   *rstanarm* models.
 
+* `bayesian_as_frequentist()` now drops the same rows with missing values as
+  *brms* when `data` is given for multivariate models.
+
+* If `bayesian_as_frequentist()` cannot refit a model, the error message now
+  includes the reason.
+
 # bayestestR 0.20.0
 
 ## Changes
