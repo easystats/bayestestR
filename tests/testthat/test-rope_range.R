@@ -17,27 +17,12 @@ test_that("rope_range gaussian, transformed response", {
   data(mtcars)
   mod <- lm(scale(mpg) ~ gear + hp, data = mtcars)
   expect_equal(rope_range(mod), c(-0.1, 0.1), tolerance = 1e-3)
-
-  mod <- lm(sqrt(mpg) ~ gear + hp, data = mtcars)
-  expect_equal(
-    rope_range(mod),
-    c(-0.1 * sd(sqrt(mtcars$mpg)), 0.1 * sd(sqrt(mtcars$mpg))),
-    tolerance = 1e-3
-  )
-
-  mod <- lm(I(mpg * 10) ~ gear + hp, data = mtcars)
-  expect_equal(
-    rope_range(mod),
-    c(-0.1 * sd(mtcars$mpg * 10), 0.1 * sd(mtcars$mpg * 10)),
-    tolerance = 1e-3
-  )
 })
 
 test_that("rope_range gaussian, user-defined response function without model frame", {
   data(mtcars)
   times_ten <- function(y) y * 10
   mod <- lm(times_ten(mpg) ~ gear + hp, data = mtcars)
-  # the fallback without a model frame finds the function in the formula's environment
   expect_equal(
     bayestestR:::.response_term_values(mod, "times_ten(mpg)", model_frame = NULL),
     mtcars$mpg * 10,

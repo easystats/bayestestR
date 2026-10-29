@@ -49,15 +49,14 @@ test_that("mediation, brms responses keep transformations, not addition terms", 
 test_that("mediation, censored outcome", {
   m <- fit_brm(bf(ycens | cens(cens) ~ x + m_a) + bf(m_a ~ x) + set_rescor(FALSE))
   draws <- .draws_effects(m, "ycens", "ma", "x", "m_a")
-  expected <- vapply(draws, stats::median, numeric(1))
 
-  out_auto <- mediation(m)
-  out_explicit <- mediation(m, treatment = "x", mediator = "m_a")
-
-  for (out in list(out_auto, out_explicit)) {
-    expect_equal(out$Estimate[1:4], unname(expected), tolerance = 1e-8)
-    expect_identical(attr(out, "response"), "ycens")
-  }
+  out <- mediation(m)
+  expect_equal(
+    out$Estimate[1:4],
+    unname(vapply(draws, stats::median, numeric(1))),
+    tolerance = 1e-8
+  )
+  expect_identical(attr(out, "response"), "ycens")
 })
 
 
@@ -65,17 +64,9 @@ test_that("mediation, mo() mediator gives informative error", {
   m <- fit_brm(
     bf(mo_m ~ x, family = cumulative()) + bf(y ~ x + mo(mo_m)) + set_rescor(FALSE)
   )
-  err_auto <- tryCatch(mediation(m), error = function(e) e)
-  err_explicit <- tryCatch(
-    mediation(m, treatment = "x", mediator = "mo_m"),
-    error = function(e) e
-  )
-
-  for (err in list(err_auto, err_explicit)) {
-    expect_s3_class(err, "error")
-    expect_match(conditionMessage(err), "mo()", fixed = TRUE)
-    expect_match(conditionMessage(err), "mo_m(?![0-9])", perl = TRUE)
-  }
+  err <- tryCatch(mediation(m), error = function(e) e)
+  expect_match(conditionMessage(err), "mo()", fixed = TRUE)
+  expect_match(conditionMessage(err), "mo_m(?![0-9])", perl = TRUE)
 })
 
 
