@@ -24,7 +24,9 @@ are dropped as in \emph{brms}, unless the model has addition terms such as
 
 \item{REML}{For mixed effects, should models be estimated using
 restricted maximum likelihood (REML) (\code{TRUE}, default) or maximum
-likelihood (\code{FALSE})?}
+likelihood (\code{FALSE})? Refits with \code{lme4::glmer()} always use maximum
+likelihood, and so does the \code{glmmTMB::glmmTMB()} refit that replaces it
+when \code{lme4::glmer()} fails.}
 
 \item{response}{For multivariate \emph{brms} models, the name of the one response
 to convert, as returned by \code{names(insight::find_formula(model))}. Other

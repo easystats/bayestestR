@@ -28,6 +28,23 @@ test_that("rstanarm to freq", {
 })
 
 
+test_that("rstanarm to freq, REML reaches lmer() and gamm4()", {
+  skip_if_not_or_load_if_installed("rstanarm")
+  skip_if_not_or_load_if_installed("lme4")
+  skip_if_not_or_load_if_installed("gamm4")
+
+  m <- insight::download_model("stanreg_lmerMod_1")
+  skip_if(is.null(m))
+  expect_true(lme4::isREML(convert_bayesian_as_frequentist(m)))
+  expect_false(lme4::isREML(convert_bayesian_as_frequentist(m, REML = FALSE)))
+
+  m <- insight::download_model("stanreg_gamm4_1")
+  skip_if(is.null(m))
+  expect_true(lme4::isREML(convert_bayesian_as_frequentist(m)$mer))
+  expect_false(lme4::isREML(convert_bayesian_as_frequentist(m, REML = FALSE)$mer))
+})
+
+
 test_that("brms beta to freq", {
   skip_if_not_or_load_if_installed("brms")
   skip_if_not_or_load_if_installed("glmmTMB")

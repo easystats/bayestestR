@@ -44,6 +44,10 @@
 * If `bayesian_as_frequentist()` cannot refit a model, the error message now
   includes the reason.
 
+* `bayesian_as_frequentist()` ignored `REML = FALSE` for models refit with
+  `lme4::lmer()` or `gamm4::gamm4()` and returned a REML fit. These models now
+  use maximum likelihood with `REML = FALSE`.
+
 # bayestestR 0.20.0
 
 ## Changes
