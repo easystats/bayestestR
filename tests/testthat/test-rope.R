@@ -277,6 +277,70 @@ test_that("rope (brms, multivariate)", {
   )
 })
 
+test_that("rope (brms, multivariate, weights and response as predictor)", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("brms")
+
+  d <- mtcars
+  d$w <- rep(1:2, 16)
+  model <- skip_if_fit_failed(brm(
+    bf(mpg | resp_weights(w) ~ wt + qsec) +
+      bf(qsec | resp_weights(w) ~ wt) +
+      set_rescor(FALSE),
+    data = d,
+    iter = 300,
+    chains = 1,
+    refresh = 0
+  ))
+
+  # the weights are not a response, and `b_mpg_qsec` only belongs to `mpg`
+  out <- rope(model, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c("b_mpg_Intercept", "b_mpg_wt", "b_mpg_qsec", "b_qsec_Intercept", "b_qsec_wt")
+  )
+  expect_equal(
+    out$ROPE_high,
+    0.1 * c(sd(d$mpg), sd(d$mpg), sd(d$mpg), sd(d$qsec), sd(d$qsec)),
+    tolerance = 1e-3
+  )
+
+  out <- rope(model, range = list(mpg = c(-1, 1), qsec = c(-2, 2)), verbose = FALSE)
+  expect_identical(out$ROPE_high, c(1, 1, 1, 2, 2))
+})
+
+test_that("rope (brms, multivariate, underscores and transformed response)", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("brms")
+
+  d <- mtcars
+  d$y_1 <- d$mpg
+  d$y_2 <- d$qsec
+  d$x_1 <- d$wt
+  model <- skip_if_fit_failed(brm(
+    bf(mvbind(y_1, sqrt(y_2)) ~ x_1) + set_rescor(FALSE),
+    data = d,
+    iter = 300,
+    chains = 1,
+    refresh = 0
+  ))
+
+  # brms removes underscores and brackets from the response names
+  out <- rope(model, verbose = FALSE)
+  expect_identical(
+    out$Parameter,
+    c("b_y1_Intercept", "b_y1_x_1", "b_sqrty2_Intercept", "b_sqrty2_x_1")
+  )
+  expect_equal(
+    out$ROPE_high,
+    0.1 * c(sd(d$y_1), sd(d$y_1), sd(sqrt(d$y_2)), sd(sqrt(d$y_2))),
+    tolerance = 1e-3
+  )
+
+  out <- rope(model, range = list(y_1 = c(-1, 1), y_2 = c(-2, 2)), verbose = FALSE)
+  expect_identical(out$ROPE_high, c(1, 1, 2, 2))
+})
+
 test_that("p_rope", {
   set.seed(1234)
   x <- rnorm(4000, sd = 5)

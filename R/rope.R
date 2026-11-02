@@ -627,10 +627,16 @@ rope.brmsfit <- function(
     # we expect a list with named vectors (length two) in the multivariate case.
     # Names state the response variable.
   } else if (insight::is_multivariate(x)) {
+    responses <- .brms_mv_responses(x)
+    # the names can be the response variables or the names brms uses for them
+    if (is.list(range)) {
+      is_variable <- names(range) %in% names(responses)
+      names(range)[is_variable] <- responses[names(range)[is_variable]]
+    }
     if (
       !is.list(range) ||
-        length(range) < length(insight::find_response(x)) ||
-        !all(names(range) %in% insight::find_response(x))
+        !all(responses %in% names(range)) ||
+        !all(names(range) %in% responses)
     ) {
       insight::format_error(
         "With a multivariate model, `range` should be 'default' or a list with multiple lists (one for each response) of named numeric vectors with length 2."
@@ -649,12 +655,12 @@ rope.brmsfit <- function(
 
   # calc rope
   if (insight::is_multivariate(x)) {
-    dv <- insight::find_response(x)
+    cleaned_parameters <- .get_cleaned_parameters(x, ...)
 
     # ROPE range / width differs between response varialbe. Thus ROPE is
     # calculated for every variable on its own.
     rope_data <- lapply(
-      dv,
+      .brms_mv_responses(x),
       function(dv_item) {
         ret <- rope(
           insight::get_parameters(
@@ -678,14 +684,17 @@ rope.brmsfit <- function(
         # away the unwanted results. However, performance impact should not be
         # too high and this way it is much easier to handle the `parameters`
         # argument.
-        ret[grepl(paste0("(.*)", dv_item), ret$Parameter), ]
+        dv_parameters <- cleaned_parameters$Parameter[
+          cleaned_parameters$Response == dv_item
+        ]
+        ret[ret$Parameter %in% dv_parameters, ]
       }
     )
     rope_data <- do.call(rbind, rope_data)
 
     out <- .prepare_output(
       rope_data,
-      .get_cleaned_parameters(x, ...),
+      cleaned_parameters,
       is_brms_mv = TRUE
     )
   } else {
@@ -881,6 +890,19 @@ rope.sim <- function(
   attr(rope, "CI_bounds") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
   class(rope) <- unique(c("rope", "see_rope", class(rope)))
   rope
+}
+
+
+#' @keywords internal
+.brms_mv_responses <- function(x) {
+  # `find_response()` also returns variables from addition terms, and brms
+  # removes underscores from the response names in its parameter names. Thus, we
+  # use the names of the model formulas, named by their response variables.
+  model_terms <- insight::find_terms(x, verbose = FALSE)
+  stats::setNames(
+    names(model_terms),
+    insight::clean_names(vapply(model_terms, function(i) i$response[1], character(1)))
+  )
 }
 
 

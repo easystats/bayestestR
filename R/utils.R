@@ -140,7 +140,9 @@
     remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
   } else if (isTRUE(is_brms_mv)) {
     # for models with multiple responses, we create a separate response column
-    temp$Response <- gsub("(.*)_(.*)_(.*)", "\\2", temp$Parameter)
+    temp$Response <- cleaned_parameters$Response[
+      match(temp$Parameter, cleaned_parameters$Parameter)
+    ]
     merge_by <- c("Parameter", "Effects", "Component", "Response")
     remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
   } else {
