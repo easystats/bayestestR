@@ -15,9 +15,9 @@
 #'   `y | mi()`.
 #' @param REML For mixed effects, should models be estimated using
 #'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
-#'   likelihood (`FALSE`)? Refits with `lme4::glmer()` always use maximum
-#'   likelihood, and so does the `glmmTMB::glmmTMB()` refit that replaces it
-#'   when `lme4::glmer()` fails.
+#'   likelihood (`FALSE`)? This has no effect on refits with `lme4::glmer()`, or
+#'   with `glmmTMB::glmmTMB()` when `lme4::glmer()` fails. Those always use
+#'   maximum likelihood.
 #' @param response For multivariate *brms* models, the name of the one response
 #'   to convert, as returned by `names(insight::find_formula(model))`. Other
 #'   models ignore `response`.
