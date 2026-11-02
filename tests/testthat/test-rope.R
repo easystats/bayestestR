@@ -339,6 +339,9 @@ test_that("rope (brms, multivariate, underscores and transformed response)", {
 
   out <- rope(model, range = list(y_1 = c(-1, 1), y_2 = c(-2, 2)), verbose = FALSE)
   expect_identical(out$ROPE_high, c(1, 1, 2, 2))
+
+  out <- rope(model, range = list(y1 = c(-1, 1), sqrty2 = c(-2, 2)), verbose = FALSE)
+  expect_identical(out$ROPE_high, c(1, 1, 2, 2))
 })
 
 test_that("p_rope", {
