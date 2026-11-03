@@ -32,6 +32,11 @@ bayesian_as_frequentist(model, data = NULL, REML = TRUE, response = NULL)
 
   For mixed effects, should models be estimated using restricted maximum
   likelihood (REML) (`TRUE`, default) or maximum likelihood (`FALSE`)?
+  This has no effect on refits with
+  [`lme4::glmer()`](https://rdrr.io/pkg/lme4/man/glmer.html), or with
+  [`glmmTMB::glmmTMB()`](https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html)
+  when [`lme4::glmer()`](https://rdrr.io/pkg/lme4/man/glmer.html) fails.
+  Those always use maximum likelihood.
 
 - response:
 
