@@ -48,6 +48,13 @@
   refit with `lme4::lmer()` or `gamm4::gamm4()`. It now returns a maximum
   likelihood fit.
 
+* `rope()` gave wrong results for multivariate *brms* models with addition
+  terms such as `resp_weights()`, a transformed response, or a response that
+  is a predictor in another formula: the ROPE range was wrong or rows were
+  duplicated. If a response or predictor name has a `_`, parameters were
+  missing. `rope()` now returns one row per parameter, with the ROPE of its
+  response. A `range` list must now name each response (#700).
+
 # bayestestR 0.20.0
 
 ## Changes
