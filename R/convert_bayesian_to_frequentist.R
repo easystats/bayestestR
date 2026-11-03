@@ -15,7 +15,9 @@
 #'   `y | mi()`.
 #' @param REML For mixed effects, should models be estimated using
 #'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
-#'   likelihood (`FALSE`)?
+#'   likelihood (`FALSE`)? This has no effect on refits with `lme4::glmer()`, or
+#'   with `glmmTMB::glmmTMB()` when `lme4::glmer()` fails. Those always use
+#'   maximum likelihood.
 #' @param response For multivariate *brms* models, the name of the one response
 #'   to convert, as returned by `names(insight::find_formula(model))`. Other
 #'   models ignore `response`.
@@ -195,7 +197,8 @@ convert_bayesian_as_frequentist <- function(
         formula = formula$conditional,
         random = formula$random,
         family = family,
-        data = data
+        data = data,
+        REML = REML
       ),
       error = function(e) e
     )
@@ -208,7 +211,8 @@ convert_bayesian_as_frequentist <- function(
       freq <- tryCatch(
         lme4::lmer(
           formula = cond_formula,
-          data = data
+          data = data,
+          REML = REML
         ),
         error = function(e) e
       )
