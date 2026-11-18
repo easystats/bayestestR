@@ -102,11 +102,36 @@ test_that("stanli_fit: diagnostics", {
 
   diag <- diagnostic_posterior(m)
   expect_identical(diag$Parameter, "theta")
-  expect_named(diag, c("Parameter", "ESS", "Rhat", "MCSE"))
-  expect_gt(diag$ESS, 100)
+  expect_named(diag, c("Parameter", "ESS_tail", "ESS_bulk", "Rhat", "MCSE"))
+  expect_gt(diag$ESS_tail, 100)
   expect_lt(diag$Rhat, 1.05)
-  expect_named(effective_sample(m), c("Parameter", "ESS", "ESS_tail"))
+  expect_named(effective_sample(m), c("Parameter", "ESS_bulk", "ESS_tail"))
+  expect_identical(effective_sample(m, parameters = "^th")$Parameter, "theta")
+  expect_identical(nrow(effective_sample(m, parameters = "^zzz")), 0L)
   expect_named(mcse(m), c("Parameter", "MCSE"))
+  summ <- posterior::summarize_draws(
+    stanli::as_draws_array(m),
+    ess_tail = posterior::ess_tail,
+    rhat = posterior::rhat,
+    mcse_mean = posterior::mcse_mean
+  )
+  expect_equal(diag$ESS_tail, round(summ$ess_tail), ignore_attr = TRUE)
+  expect_equal(diag$Rhat, summ$rhat, ignore_attr = TRUE)
+  expect_equal(
+    mcse(m, centrality = "mean")$MCSE,
+    summ$mcse_mean,
+    ignore_attr = TRUE
+  )
+  expect_equal(mcse(m, "mean")$MCSE, summ$mcse_mean, ignore_attr = TRUE)
+  expect_equal(
+    diagnostic_posterior(m, diagnostic = "MCSE", centrality = "mean")$MCSE,
+    summ$mcse_mean,
+    ignore_attr = TRUE
+  )
+  expect_named(diagnostic_posterior(m, diagnostic = "ESS"), c("Parameter", "ESS_tail"))
+  expect_identical(diagnostic_posterior(m, parameters = "^th")$Parameter, "theta")
+  expect_identical(nrow(diagnostic_posterior(m, parameters = "^zzz")), 0L)
+  expect_named(diagnostic_posterior(m, diagnostic = NULL), "Parameter")
 })
 
 test_that("stanli_fit: bayesfactor_models", {

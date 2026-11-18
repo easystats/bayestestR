@@ -81,8 +81,8 @@ test_that("rstanarm-2", {
       "ROPE_low",
       "ROPE_high",
       "ROPE_Percentage",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
   expect_equal(as.vector(s[1:4, 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
@@ -91,7 +91,22 @@ test_that("rstanarm-2", {
   out <- diagnostic_posterior(model)
   expect_named(
     out,
-    c("Parameter", "Rhat", "MCSE", "ESS_tail", "ESS_bulk")
+    c("Parameter", "ESS_tail", "ESS_bulk", "Rhat", "MCSE")
+  )
+  expect_named(
+    diagnostic_posterior(model, diagnostic = "ESS"),
+    c("Parameter", "ESS_tail")
+  )
+  expect_named(diagnostic_posterior(model, diagnostic = NULL), "Parameter")
+  mcse_out <- mcse(model, centrality = "mean")
+  mcse_ref <- posterior::summarise_draws(
+    posterior::as_draws_array(model),
+    MCSE = posterior::mcse_mean
+  )
+  expect_equal(
+    mcse_out$MCSE,
+    mcse_ref$MCSE[match(mcse_out$Parameter, mcse_ref$variable)],
+    ignore_attr = TRUE
   )
 })
 
@@ -126,8 +141,8 @@ test_that("rstanarm-3", {
       "ROPE_low",
       "ROPE_high",
       "ROPE_Percentage",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
   expect_equal(as.vector(s[c(1:4, 8), 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
@@ -171,12 +186,23 @@ test_that("rstanarm-4", {
       "CI",
       "CI_low",
       "CI_high",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
   expect_equal(as.vector(s[c(1:2, 5:7), 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
   expect_equal(as.vector(s[c(1:2, 5:7), 10, drop = TRUE]), out$Rhat, tolerance = 1e-1)
+
+  mcse_out <- mcse(model, centrality = "mean")
+  mcse_ref <- posterior::summarise_draws(
+    posterior::as_draws_array(model),
+    MCSE = posterior::mcse_mean
+  )
+  expect_equal(
+    mcse_out$MCSE,
+    mcse_ref$MCSE[match(mcse_out$Parameter, mcse_ref$variable)],
+    ignore_attr = TRUE
+  )
 })
 
 
@@ -207,8 +233,8 @@ test_that("rstanarm-5", {
       "CI",
       "CI_low",
       "CI_high",
-      "Rhat",
       "ESS_tail",
+      "Rhat",
       "Prior_Distribution",
       "Prior_Location",
       "Prior_Scale"

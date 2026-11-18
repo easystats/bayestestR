@@ -3,9 +3,8 @@
 #' This function returns the Monte Carlo Standard Error (MCSE).
 #'
 #' @param centrality The point-estimate (centrality index) for which to compute
-#' the MCSE. Can be `"median"` (default) or `"mean"`. To not break other
-#' functions like `describe_posterior()` or `diagnostic_posterior()`, all other
-#' values are silently converted to `"median"`.
+#' the MCSE. Can be `"median"` (default) or `"mean"`. Other values are
+#' silently converted to `"median"`.
 #' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams effective_sample
 #'
@@ -45,47 +44,25 @@ mcse.brmsfit <- function(
 ) {
   insight::check_if_installed("posterior")
 
-  # check arguments
-  if (
-    is.null(centrality) || length(centrality) > 1 || !centrality %in% c("median", "mean")
-  ) {
-    centrality <- "median"
-  }
-
-  params <- insight::get_parameters(
+  params <- insight::find_parameters(
     model,
     effects = effects,
     component = component,
-    parameters = parameters
+    parameters = parameters,
+    flatten = TRUE
   )
 
-  mcse <- switch(
-    centrality,
-    median = vapply(params, posterior::mcse_median, numeric(1)),
-    mean = vapply(params, posterior::mcse_mean, numeric(1))
-  )
-
-  data.frame(
-    Parameter = colnames(params),
-    MCSE = mcse,
-    stringsAsFactors = FALSE,
-    row.names = NULL
+  .mcse_draws(
+    posterior::as_draws_array(model),
+    centrality = centrality,
+    pars = params
   )
 }
 
 
 #' @rdname mcse
 #' @export
-mcse.stanreg <- function(
-  model,
-  effects = "fixed",
-  component = "location",
-  parameters = NULL,
-  centrality = "median",
-  ...
-) {
-  mcse.brmsfit(model, effects, component, parameters, centrality, ...)
-}
+mcse.stanreg <- mcse.brmsfit
 
 
 #' @export
@@ -98,53 +75,62 @@ mcse.blavaan <- function(
   effects = "fixed",
   component = "location",
   parameters = NULL,
+  centrality = "median",
   ...
 ) {
-  params <- insight::get_parameters(
+  insight::check_if_installed("blavaan")
+
+  params <- suppressWarnings(insight::find_parameters(
     model,
     effects = effects,
     component = component,
-    parameters = parameters
-  )
+    parameters = parameters,
+    flatten = TRUE
+  ))
 
-  ess <- effective_sample(
-    model,
-    effects = effects,
-    component = component,
-    parameters = parameters
+  .mcse_draws(
+    blavaan::blavInspect(model, what = "mcmc"),
+    centrality = centrality,
+    pars = params
   )
-
-  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
 }
 
 
-#' @keywords internal
-.mcse <- function(params, ess) {
-  # get standard deviations from posterior samples
-  stddev <- sapply(params, stats::sd)
+.mcse_draws <- function(
+  draws,
+  centrality = "median",
+  pars = NULL,
+  parameters = NULL
+) {
+  .diagnostic_posterior_draws(
+    draws,
+    diagnostic = "MCSE",
+    centrality = centrality,
+    pars = pars,
+    parameters = parameters
+  )
+}
 
-  # check proper length, and for unequal length, shorten all
-  # objects to common parameters
-  if (length(stddev) != length(ess)) {
-    common <- stats::na.omit(match(names(stddev), names(ess)))
-    stddev <- stddev[common]
-    ess <- ess[common]
-    params <- params[common]
-  }
 
-  # compute mcse
-  data.frame(
-    Parameter = colnames(params),
-    MCSE = stddev / sqrt(ess),
-    stringsAsFactors = FALSE,
-    row.names = NULL
+#' @export
+mcse.CmdStanFit <- function(model, centrality = "median", parameters = NULL, ...) {
+  insight::check_if_installed("cmdstanr")
+
+  .mcse_draws(
+    model$draws(),
+    centrality = centrality,
+    pars = insight::find_parameters(model, flatten = TRUE),
+    parameters = parameters
   )
 }
 
 #' @export
-mcse.CmdStanFit <- function(model, ...) {
-  diagnostic_posterior(model, diagnostic = "MCSE")
-}
+mcse.stanli_fit <- function(model, centrality = "median", parameters = NULL, ...) {
+  insight::check_if_installed("stanli")
 
-#' @export
-mcse.stanli_fit <- mcse.CmdStanFit
+  .mcse_draws(
+    stanli::as_draws_array(model),
+    centrality = centrality,
+    parameters = parameters
+  )
+}

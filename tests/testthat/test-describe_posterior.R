@@ -185,8 +185,8 @@ test_that("describe_posterior-2", {
       "ROPE_Percentage",
       "ROPE_Equivalence",
       "log_BF",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
   expect_warning(
@@ -256,8 +256,8 @@ test_that("describe_posterior-2", {
       "ROPE_low",
       "ROPE_high",
       "ROPE_Percentage",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
 

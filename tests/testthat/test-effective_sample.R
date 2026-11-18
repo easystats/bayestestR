@@ -14,7 +14,7 @@ test_that("effective_sample, brms", {
     res,
     data.frame(
       Parameter = c("b_Intercept", "b_wt", "b_cyl"),
-      ESS = c(5283, 2120, 2001),
+      ESS_bulk = c(5283, 2120, 2001),
       ESS_tail = c(3255, 2003, 2227),
       stringsAsFactors = FALSE
     ),
@@ -30,7 +30,7 @@ test_that("effective_sample, brms", {
     res,
     data.frame(
       Parameter = "b_Intercept",
-      ESS = 2912,
+      ESS_bulk = 2912,
       ESS_tail = 2388,
       stringsAsFactors = FALSE
     ),
@@ -46,7 +46,7 @@ test_that("effective_sample, brms", {
     res,
     data.frame(
       Parameter = "b_Intercept",
-      ESS = 1098,
+      ESS_bulk = 1098,
       ESS_tail = 954,
       stringsAsFactors = FALSE
     ),
@@ -72,7 +72,7 @@ test_that("effective_sample, stanreg", {
   expect_equal(
     res,
     data.frame(
-      PParameter = c("(Intercept)", "wt", "cyl"),
+      Parameter = c("(Intercept)", "wt", "cyl"),
       ESS_bulk = c(3265, 1628, 1616),
       ESS_tail = c(2228, 2035, 1870),
       stringsAsFactors = FALSE

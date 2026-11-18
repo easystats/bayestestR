@@ -51,8 +51,8 @@ test_that("brms mixed", {
       "ROPE_low",
       "ROPE_high",
       "ROPE_Percentage",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
   expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[1:2], tolerance = 1e-3)
@@ -98,12 +98,37 @@ test_that("brms standard", {
       "ROPE_low",
       "ROPE_high",
       "ROPE_Percentage",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
   expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[1:3], tolerance = 1e-3)
   expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat[1:3], tolerance = 1e-1)
+
+  expect_named(
+    diagnostic_posterior(model),
+    c("Parameter", "ESS_tail", "ESS_bulk", "Rhat", "MCSE")
+  )
+  mcse_out <- mcse(model)
+  mcse_ref <- posterior::summarise_draws(
+    posterior::as_draws_array(model),
+    MCSE = posterior::mcse_median
+  )
+  expect_equal(
+    mcse_out$MCSE,
+    mcse_ref$MCSE[match(mcse_out$Parameter, mcse_ref$variable)],
+    ignore_attr = TRUE
+  )
+  mcse_mean <- mcse(model, centrality = "mean")
+  mcse_mean_ref <- posterior::summarise_draws(
+    posterior::as_draws_array(model),
+    MCSE = posterior::mcse_mean
+  )
+  expect_equal(
+    mcse_mean$MCSE,
+    mcse_mean_ref$MCSE[match(mcse_mean$Parameter, mcse_mean_ref$variable)],
+    ignore_attr = TRUE
+  )
 
   # check for all ESS values
   out <- describe_posterior(model, diagnostic = "all")
@@ -123,14 +148,16 @@ test_that("brms standard", {
       "ROPE_low",
       "ROPE_high",
       "ROPE_Percentage",
-      "Rhat",
       "ESS_tail",
       "ESS_bulk",
+      "Rhat",
       "MCSE"
     )
   )
 
   out <- effective_sample(model)
+  expect_named(out, c("Parameter", "ESS_bulk", "ESS_tail"))
+  expect_identical(effective_sample(model, parameters = "^b_wt")$Parameter, "b_wt")
   ref <- posterior::summarise_draws(model)
   expect_equal(out$ESS_tail, round(ref$ess_tail[1:3]), tolerance = 1)
   expect_equal(out$ESS_bulk, round(ref$ess_bulk[1:3]), tolerance = 1)
@@ -173,8 +200,8 @@ test_that("brms multivariate", {
       "CI",
       "CI_low",
       "CI_high",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
 

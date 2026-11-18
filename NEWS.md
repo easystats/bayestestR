@@ -2,6 +2,10 @@
 
 ## Breaking Changes
 
+* `diagnostic_posterior()`, `mcse()` and `effective_sample()` methods now use
+  shared posterior-draw estimators across supported model classes, and return
+  consistent diagnostic columns across supported posterior input classes.
+
 * The `resp` argument of `bayesian_as_frequentist()` is renamed to `response`.
   `resp =` still works by partial matching.
 

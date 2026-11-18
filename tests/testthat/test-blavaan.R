@@ -104,6 +104,7 @@ test_that("blavaan, all", {
 
   x <- diagnostic_posterior(bfit)
   expect_identical(nrow(x), 10L)
+  expect_named(x, c("Parameter", "ESS_tail", "ESS_bulk", "Rhat", "MCSE"))
 
   ## FIXME: no longer 13, but now 9?
   x <- simulate_prior(bfit)

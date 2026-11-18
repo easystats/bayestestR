@@ -247,8 +247,8 @@ test_that("rope (brms)", {
       "ROPE_Percentage",
       "Superiority_Percentage",
       "Inferiority_Percentage",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
 })
