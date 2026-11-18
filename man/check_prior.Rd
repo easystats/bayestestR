@@ -19,7 +19,10 @@ check_prior(model, method = "gelman", simulate_priors = TRUE, ...)
 )
 }
 \arguments{
-\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
+\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{CmdStanFit}, \code{stanli_fit}, or
+\code{blavaan} object; a list of data frames or matrices representing MCMC chains
+(rows as samples, columns as parameters); or a 3D array (dimensions:
+samples, chains, parameters)}
 
 \item{method}{Can be \code{"gelman"} or \code{"lakeland"}. For the \code{"gelman"} method,
 if the SD of the posterior is more than 0.1 times the SD of the prior, then

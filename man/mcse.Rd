@@ -10,14 +10,17 @@ mcse(model, ...)
 \method{mcse}{stanreg}(
   model,
   effects = "fixed",
-  component = "location",
+  component = "conditional",
   parameters = NULL,
   centrality = "median",
   ...
 )
 }
 \arguments{
-\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
+\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{CmdStanFit}, \code{stanli_fit}, or
+\code{blavaan} object; a list of data frames or matrices representing MCMC chains
+(rows as samples, columns as parameters); or a 3D array (dimensions:
+samples, chains, parameters)}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
@@ -63,9 +66,8 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 
 \item{centrality}{The point-estimate (centrality index) for which to compute
-the MCSE. Can be \code{"median"} (default) or \code{"mean"}. To not break other
-functions like \code{describe_posterior()} or \code{diagnostic_posterior()}, all other
-values are silently converted to \code{"median"}.}
+the MCSE. Can be \code{"median"} (default) or \code{"mean"}. Other values are
+silently converted to \code{"median"}.}
 }
 \description{
 This function returns the Monte Carlo Standard Error (MCSE).

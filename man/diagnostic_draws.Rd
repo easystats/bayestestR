@@ -7,10 +7,10 @@
 diagnostic_draws(posterior, ...)
 }
 \arguments{
-\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{stanli_fit}, or \code{blavaan} object; a
-list of data frames or matrices representing MCMC chains (rows as samples,
-columns as parameters); or a 3D array (dimensions: samples, chains,
-parameters)}
+\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{CmdStanFit}, \code{stanli_fit}, or
+\code{blavaan} object; a list of data frames or matrices representing MCMC chains
+(rows as samples, columns as parameters); or a 3D array (dimensions:
+samples, chains, parameters)}
 
 \item{...}{Currently only used for models of class \code{brmsfit}, where a \code{variable}
 argument can be used, which is directly passed to the \code{as.data.frame()}
