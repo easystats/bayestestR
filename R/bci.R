@@ -93,6 +93,9 @@ bci.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 bci.rvar <- bci.draws
 
+#' @export
+bci.stanli_fit <- bci.draws
+
 
 #' @export
 bci.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {

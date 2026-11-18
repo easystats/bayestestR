@@ -185,6 +185,9 @@ p_significance.draws <- function(x, threshold = "default", ...) {
 #' @export
 p_significance.rvar <- p_significance.draws
 
+#' @export
+p_significance.stanli_fit <- p_significance.draws
+
 
 #' @export
 p_significance.parameters_simulate_model <- function(x, threshold = "default", ...) {

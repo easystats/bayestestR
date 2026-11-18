@@ -812,6 +812,9 @@ describe_posterior.draws <- function(
 #' @export
 describe_posterior.rvar <- describe_posterior.draws
 
+#' @export
+describe_posterior.stanli_fit <- describe_posterior.draws
+
 
 # easystats methods ------------------------
 

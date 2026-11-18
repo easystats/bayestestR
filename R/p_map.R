@@ -171,6 +171,9 @@ p_map.draws <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {
 #' @export
 p_map.rvar <- p_map.draws
 
+#' @export
+p_map.stanli_fit <- p_map.draws
+
 
 #' @export
 p_map.emmGrid <- function(x, null = 0, precision = 2^10, method = "kernel", ...) {

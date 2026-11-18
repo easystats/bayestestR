@@ -350,3 +350,6 @@ bayesfactor_restricted.draws <- function(posterior, hypothesis, prior = NULL, ..
 
 #' @export
 bayesfactor_restricted.rvar <- bayesfactor_restricted.draws
+
+#' @export
+bayesfactor_restricted.stanli_fit <- bayesfactor_restricted.draws

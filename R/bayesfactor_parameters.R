@@ -526,6 +526,9 @@ bayesfactor_parameters.draws <- function(
 #' @export
 bayesfactor_parameters.rvar <- bayesfactor_parameters.draws
 
+#' @export
+bayesfactor_parameters.stanli_fit <- bayesfactor_parameters.draws
+
 
 #' @keywords internal
 .logbayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0, ...) {

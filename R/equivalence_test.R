@@ -254,6 +254,9 @@ equivalence_test.draws <- function(
 #' @export
 equivalence_test.rvar <- equivalence_test.draws
 
+#' @export
+equivalence_test.stanli_fit <- equivalence_test.draws
+
 
 #' @export
 equivalence_test.emmGrid <- function(

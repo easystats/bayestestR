@@ -308,6 +308,9 @@ estimate_density.draws <- function(x,
 #' @export
 estimate_density.rvar <- estimate_density.draws
 
+#' @export
+estimate_density.stanli_fit <- estimate_density.draws
+
 
 #' @export
 estimate_density.grouped_df <- function(x,

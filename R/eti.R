@@ -102,6 +102,9 @@ eti.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 eti.rvar <- eti.draws
 
+#' @export
+eti.stanli_fit <- eti.draws
+
 
 #' @export
 eti.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {

@@ -331,6 +331,9 @@ si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 #' @export
 si.rvar <- si.draws
 
+#' @export
+si.stanli_fit <- si.draws
+
 
 # Helper ------------------------------------------------------------------
 

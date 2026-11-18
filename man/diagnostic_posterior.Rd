@@ -21,7 +21,7 @@ diagnostic_posterior(posterior, ...)
 )
 }
 \arguments{
-\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object; a
+\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{stanli_fit}, or \code{blavaan} object; a
 list of data frames or matrices representing MCMC chains (rows as samples,
 columns as parameters); or a 3D array (dimensions: samples, chains,
 parameters)}

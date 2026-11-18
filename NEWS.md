@@ -11,6 +11,8 @@
 
 ## Changes
 
+* Added support for `stanli_fit` objects (from the `{stanli}` package).
+
 * The `bayesfactor_models()` methods for `brmsfit`, `stanreg`, `stanfit`, and
   `CmdStanFit` models gain a `bridge_options` argument. It is a named list of
   arguments for `bridgesampling::bridge_sampler()`. If `repetitions` is

@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.20.0.8
+Version: 0.20.0.9
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -118,11 +118,13 @@ Suggests:
     rstan,
     rstanarm,
     see (>= 0.8.5),
+    stanli,
     testthat,
     tinytable,
     tweedie,
     withr
 License: GPL-3
+Additional_repositories: https://seantalts.r-universe.dev
 URL: https://easystats.github.io/bayestestR/
 BugReports: https://github.com/easystats/bayestestR/issues
 VignetteBuilder:

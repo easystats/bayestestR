@@ -207,6 +207,9 @@ ci.draws <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...) 
 #' @export
 ci.rvar <- ci.draws
 
+#' @export
+ci.stanli_fit <- ci.draws
+
 
 #' @export
 ci.emmGrid <- function(x, ci = NULL, ...) {

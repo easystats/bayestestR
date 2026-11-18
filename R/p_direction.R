@@ -286,6 +286,9 @@ p_direction.draws <- function(x,
 #' @export
 p_direction.rvar <- p_direction.draws
 
+#' @export
+p_direction.stanli_fit <- p_direction.draws
+
 
 #' @export
 p_direction.MCMCglmm <- function(x,

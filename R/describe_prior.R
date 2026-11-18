@@ -122,3 +122,6 @@ describe_prior.draws <- describe_prior.BGGM
 
 #' @export
 describe_prior.rvar <- describe_prior.BGGM
+
+#' @export
+describe_prior.stanli_fit <- describe_prior.BGGM

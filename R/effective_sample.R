@@ -157,6 +157,10 @@ effective_sample.CmdStanFit <- function(model, ...) {
 
 
 #' @export
+effective_sample.stanli_fit <- effective_sample.CmdStanFit
+
+
+#' @export
 effective_sample.blavaan <- function(model, parameters = NULL, ...) {
   insight::check_if_installed("blavaan")
 

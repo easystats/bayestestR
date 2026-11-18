@@ -362,6 +362,9 @@ rope.draws <- function(
 #' @export
 rope.rvar <- rope.draws
 
+#' @export
+rope.stanli_fit <- rope.draws
+
 
 #' @export
 rope.emmGrid <- function(

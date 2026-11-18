@@ -212,6 +212,9 @@ weighted_posteriors.blavaan <- weighted_posteriors.stanreg
 #' @export
 weighted_posteriors.CmdStanFit <- weighted_posteriors.stanreg
 
+#' @export
+weighted_posteriors.stanli_fit <- weighted_posteriors.stanreg
+
 #' @rdname weighted_posteriors
 #' @export
 weighted_posteriors.BFBayesFactor <- function(
