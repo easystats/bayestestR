@@ -190,8 +190,6 @@ diagnostic_posterior.stanmvreg <- function(
   centrality,
   add_response = FALSE
 ) {
-  insight::check_if_installed("posterior")
-
   out <- .diagnostic_posterior_draws(
     posterior,
     diagnostic = diagnostic,

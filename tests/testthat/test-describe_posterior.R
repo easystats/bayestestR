@@ -1,3 +1,19 @@
+test_that("describe_posterior computes diagnostics for draws", {
+  skip_if_not_installed("posterior")
+
+  draws <- posterior::as_draws_array(array(
+    rnorm(400),
+    dim = c(100, 4, 1),
+    dimnames = list(NULL, NULL, "Parameter")
+  ))
+  out <- describe_posterior(draws, test = NULL, verbose = FALSE)
+  expect_true(all(c("ESS_tail", "Rhat") %in% names(out)))
+
+  out <- describe_posterior(draws, test = NULL, diagnostic = NULL, verbose = FALSE)
+  expect_false(any(c("ESS_tail", "Rhat") %in% names(out)))
+})
+
+
 test_that("describe_posterior-1", {
   skip_if(getRversion() < "4.2")
   skip_if_not_installed("curl")

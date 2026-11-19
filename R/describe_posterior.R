@@ -35,6 +35,7 @@
 #' @inheritParams ci
 #' @inheritParams si
 #' @inheritParams hdi
+#' @inheritParams diagnostic_posterior
 #'
 #' @inheritSection hdi Model components
 #'
@@ -732,6 +733,7 @@ describe_posterior.bayesQR <- function(
   keep_iterations = FALSE,
   parameters = NULL,
   verbose = TRUE,
+  diagnostic = c("ESS", "Rhat"),
   ...
 ) {
   out <- .describe_posterior(
@@ -749,6 +751,15 @@ describe_posterior.bayesQR <- function(
     verbose = verbose,
     ...
   )
+
+  if (!is.null(diagnostic) && inherits(posterior, "mcmc.list")) {
+    diagnostic_out <- diagnostic_posterior(
+      as.array(posterior),
+      diagnostic,
+      centrality = centrality
+    )
+    out <- .merge_and_sort(out, diagnostic_out, by = "Parameter", all = TRUE)
+  }
 
   attr(out, "ci_method") <- ci_method
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(posterior))
@@ -787,6 +798,7 @@ describe_posterior.draws <- function(
   bf_prior = NULL,
   BF = 1,
   verbose = TRUE,
+  diagnostic = c("ESS", "Rhat"),
   ...
 ) {
   out <- .describe_posterior(
@@ -804,6 +816,16 @@ describe_posterior.draws <- function(
     verbose = verbose,
     ...
   )
+
+  if (!is.null(diagnostic)) {
+    diagnostic_out <- diagnostic_posterior(
+      posterior,
+      diagnostic,
+      centrality = centrality
+    )
+
+    out <- .merge_and_sort(out, diagnostic_out, by = "Parameter", all = TRUE)
+  }
 
   class(out) <- unique(c("describe_posterior", "see_describe_posterior", class(out)))
   out
@@ -1364,7 +1386,7 @@ describe_posterior.MCMCglmm <- function(
     ...
   )
 
-  if (!is.null(diagnostic) && diagnostic == "ESS") {
+  if (!is.null(diagnostic) && any(c("ESS", "all") %in% diagnostic)) {
     diagnostic <- effective_sample(
       posterior,
       effects = "fixed",
