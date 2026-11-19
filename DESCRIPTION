@@ -118,13 +118,12 @@ Suggests:
     rstan,
     rstanarm,
     see (>= 0.8.5),
-    stanli,
+    stanli (>= 0.28.0),
     testthat,
     tinytable,
     tweedie,
     withr
 License: GPL-3
-Additional_repositories: https://seantalts.r-universe.dev
 URL: https://easystats.github.io/bayestestR/
 BugReports: https://github.com/easystats/bayestestR/issues
 VignetteBuilder:
@@ -138,3 +137,5 @@ Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
 Config/roxygen2/version: 8.1.1
+Remotes:
+    seantalts/stanli/r@*release
