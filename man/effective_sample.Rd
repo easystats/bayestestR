@@ -16,7 +16,10 @@ effective_sample(model, ...)
 )
 }
 \arguments{
-\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
+\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{CmdStanFit}, \code{stanli_fit}, or
+\code{blavaan} object; a list of data frames or matrices representing MCMC chains
+(rows as samples, columns as parameters); or a 3D array (dimensions:
+samples, chains, parameters)}
 
 \item{...}{Currently not used.}
 
@@ -62,8 +65,8 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \value{
-A data frame with columns for the parameter name, bulk ESS (\code{ESS}),
-and (where available) tail ESS (\code{ESS_tail}).
+A data frame with columns for the parameter name, bulk ESS
+(\code{ESS_bulk}), and tail ESS (\code{ESS_tail}) for draw-based model classes.
 }
 \description{
 Effective Sample Size (ESS) is a measure of how much independent information
@@ -71,8 +74,8 @@ there is in autocorrelated chains. It is used to assess the quality of MCMC
 samples. A higher ESS indicates more reliable estimates. For most
 applications, an effective sample size greater than 1,000 is sufficient for
 stable estimates (Bürkner, 2017). This function returns the effective sample
-size (ESS) for various Bayesian model objects. For \code{brmsfit}, \code{stanreg}, and
-\code{stanfit} objects, both \strong{bulk-ESS} and \strong{tail-ESS} are returned.
+size (ESS) for various Bayesian model objects. For posterior draw-based
+classes, both \strong{bulk-ESS} and \strong{tail-ESS} are returned.
 }
 \details{
 \itemize{

@@ -260,6 +260,9 @@ hdi.draws <- function(x, ci = 0.95, verbose = TRUE, method = "samples", ...) {
 #' @export
 hdi.rvar <- hdi.draws
 
+#' @export
+hdi.stanli_fit <- hdi.draws
+
 
 #' @export
 hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, method = "samples", ...) {

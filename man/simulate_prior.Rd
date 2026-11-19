@@ -18,7 +18,10 @@ simulate_prior(model, n = 1000, ...)
 )
 }
 \arguments{
-\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
+\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{CmdStanFit}, \code{stanli_fit}, or
+\code{blavaan} object; a list of data frames or matrices representing MCMC chains
+(rows as samples, columns as parameters); or a 3D array (dimensions:
+samples, chains, parameters)}
 
 \item{n}{Size of the simulated prior distributions.}
 

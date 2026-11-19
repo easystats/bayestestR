@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.20.0.8
+Version: 0.20.0.10
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -118,6 +118,7 @@ Suggests:
     rstan,
     rstanarm,
     see (>= 0.8.5),
+    stanli (>= 0.28.0),
     testthat,
     tinytable,
     tweedie,
@@ -135,4 +136,6 @@ Config/testthat/parallel: true
 Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website: easystats/easystatstemplate
 Config/Needs/check: stan-dev/cmdstanr
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1
+Remotes:
+    seantalts/stanli/r@*release

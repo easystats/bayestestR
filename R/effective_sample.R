@@ -5,17 +5,20 @@
 #' samples. A higher ESS indicates more reliable estimates. For most
 #' applications, an effective sample size greater than 1,000 is sufficient for
 #' stable estimates (Bürkner, 2017). This function returns the effective sample
-#' size (ESS) for various Bayesian model objects. For `brmsfit`, `stanreg`, and
-#' `stanfit` objects, both **bulk-ESS** and **tail-ESS** are returned.
+#' size (ESS) for various Bayesian model objects. For posterior draw-based
+#' classes, both **bulk-ESS** and **tail-ESS** are returned.
 #'
-#' @param model A `stanreg`, `stanfit`, `brmsfit`, `blavaan`, or `MCMCglmm` object.
+#' @param model A `stanreg`, `stanfit`, `brmsfit`, `CmdStanFit`, `stanli_fit`, or
+#' `blavaan` object; a list of data frames or matrices representing MCMC chains
+#' (rows as samples, columns as parameters); or a 3D array (dimensions:
+#' samples, chains, parameters)
 #' @param ... Currently not used.
 #' @inheritParams hdi
 #'
 #' @inheritSection hdi Model components
 #'
-#' @return A data frame with columns for the parameter name, bulk ESS (`ESS`),
-#'   and (where available) tail ESS (`ESS_tail`).
+#' @return A data frame with columns for the parameter name, bulk ESS
+#'   (`ESS_bulk`), and tail ESS (`ESS_tail`) for draw-based model classes.
 #'
 #' @details
 #'   - **Effective Sample (ESS)** should be as large as possible, although
@@ -92,6 +95,8 @@ effective_sample.brmsfit <- function(
   parameters = NULL,
   ...
 ) {
+  insight::check_if_installed("posterior")
+
   pars <- insight::find_parameters(
     model,
     effects = effects,
@@ -100,18 +105,9 @@ effective_sample.brmsfit <- function(
     flatten = TRUE
   )
 
-  insight::check_if_installed("posterior")
-  idx <- as.data.frame(posterior::summarise_draws(model))
-  rows_to_keep <- idx$variable %in% pars
-  # ess_*() functions are defined in:
-  # https://github.com/stan-dev/posterior/blob/master/R/convergence.R
-
-  data.frame(
-    Parameter = idx$variable[rows_to_keep],
-    ESS_bulk = round(idx[rows_to_keep, "ess_bulk"]),
-    ESS_tail = round(idx[rows_to_keep, "ess_tail"]),
-    stringsAsFactors = FALSE,
-    row.names = NULL
+  .effective_sample_draws(
+    posterior::as_draws_array(model),
+    pars = pars
   )
 }
 
@@ -139,20 +135,48 @@ effective_sample.stanmvreg <- effective_sample.stanreg
 
 
 #' @export
-effective_sample.stanfit <- function(model, effects = "fixed", parameters = NULL, ...) {
-  effective_sample.brmsfit(
+effective_sample.stanfit <- function(
+  model,
+  effects = "fixed",
+  parameters = NULL,
+  ...
+) {
+  insight::check_if_installed("posterior")
+
+  pars <- insight::find_parameters(
     model,
     effects = effects,
-    component = "conditional",
     parameters = parameters,
-    ...
+    flatten = TRUE
+  )
+
+  .effective_sample_draws(
+    posterior::as_draws_array(model),
+    pars = pars
   )
 }
 
 
 #' @export
-effective_sample.CmdStanFit <- function(model, ...) {
-  diagnostic_posterior(model, diagnostic = c("ESS", "ESS_tail"))
+effective_sample.CmdStanFit <- function(model, parameters = NULL, ...) {
+  insight::check_if_installed("cmdstanr")
+
+  .effective_sample_draws(
+    model$draws(),
+    pars = insight::find_parameters(model, flatten = TRUE),
+    parameters = parameters
+  )
+}
+
+
+#' @export
+effective_sample.stanli_fit <- function(model, parameters = NULL, ...) {
+  insight::check_if_installed("stanli")
+
+  .effective_sample_draws(
+    stanli::as_draws_array(model),
+    parameters = parameters
+  )
 }
 
 
@@ -160,14 +184,24 @@ effective_sample.CmdStanFit <- function(model, ...) {
 effective_sample.blavaan <- function(model, parameters = NULL, ...) {
   insight::check_if_installed("blavaan")
 
-  ESS <- blavaan::blavInspect(model, what = "neff")
+  pars <- suppressWarnings(insight::find_parameters(model, flatten = TRUE))
 
-  data.frame(
-    Parameter = colnames(insight::get_parameters(model)),
-    ESS = ESS,
-    stringsAsFactors = FALSE,
-    row.names = NULL
+  .effective_sample_draws(
+    blavaan::blavInspect(model, what = "mcmc"),
+    pars = pars,
+    parameters = parameters
   )
+}
+
+
+.effective_sample_draws <- function(draws, pars = NULL, parameters = NULL) {
+  out <- .diagnostic_posterior_draws(
+    draws,
+    diagnostic = c("ESS_bulk", "ESS_tail"),
+    pars = pars,
+    parameters = parameters
+  )
+  out[, c("Parameter", "ESS_bulk", "ESS_tail"), drop = FALSE]
 }
 
 

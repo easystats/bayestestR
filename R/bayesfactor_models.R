@@ -33,8 +33,8 @@
 #'   - `brmsfit` models must have been fitted with `save_pars = save_pars(all = TRUE)`.
 #'   - `stanreg` models must have been fitted with a defined `diagnostic_file`.
 #'   - Arguments for [`bridgesampling::bridge_sampler()`] can be passed as a
-#'     named list in `bridge_options`, for `brmsfit`, `stanreg`, `stanfit`, and
-#'     `CmdStanFit` models. `blavaan` models do not use `bridge_options`.
+#'     named list in `bridge_options`, for `brmsfit`, `stanreg`, `stanfit`,
+#'     `CmdStanFit`, and `stanli_fit` models. `blavaan` models do not use `bridge_options`.
 #'   - Bridge sampling gives a slightly different estimate each time. With
 #'     `repetitions` larger than 1 in `bridge_options`, the bridge sampler runs
 #'     several times, and the median of the log marginal likelihood estimates
@@ -344,7 +344,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
       bridge_options
     )
     bf_method <- "marginal likelihoods (bridgesampling)"
-    unsupported_models <- inherits(mods[[1]], c("stanfit", "CmdStanFit"))
+    unsupported_models <- inherits(mods[[1]], c("stanfit", "CmdStanFit", "stanli_fit"))
   }
 
   .bf_models_output(
@@ -489,6 +489,11 @@ bayesfactor_models.stanfit <- bayesfactor_models.stanreg
 
 #' @export
 bayesfactor_models.CmdStanFit <- bayesfactor_models.stanreg
+
+
+#' @export
+bayesfactor_models.stanli_fit <- bayesfactor_models.stanreg
+
 
 #' @export
 bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {

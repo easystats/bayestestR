@@ -69,8 +69,8 @@ terms will be extracted (allowing for follow-up analysis with \link{bayesfactor_
 \item \code{brmsfit} models must have been fitted with \code{save_pars = save_pars(all = TRUE)}.
 \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
 \item Arguments for \code{\link[bridgesampling:bridge_sampler]{bridgesampling::bridge_sampler()}} can be passed as a
-named list in \code{bridge_options}, for \code{brmsfit}, \code{stanreg}, \code{stanfit}, and
-\code{CmdStanFit} models. \code{blavaan} models do not use \code{bridge_options}.
+named list in \code{bridge_options}, for \code{brmsfit}, \code{stanreg}, \code{stanfit},
+\code{CmdStanFit}, and \code{stanli_fit} models. \code{blavaan} models do not use \code{bridge_options}.
 \item Bridge sampling gives a slightly different estimate each time. With
 \code{repetitions} larger than 1 in \code{bridge_options}, the bridge sampler runs
 several times, and the median of the log marginal likelihood estimates

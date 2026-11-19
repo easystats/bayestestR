@@ -239,6 +239,9 @@ map_estimate.draws <- function(x, precision = 2^10, method = "kernel", ...) {
 #' @export
 map_estimate.rvar <- map_estimate.draws
 
+#' @export
+map_estimate.stanli_fit <- map_estimate.draws
+
 
 #' @export
 map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {

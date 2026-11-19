@@ -8,7 +8,7 @@
 \usage{
 diagnostic_posterior(posterior, ...)
 
-\method{diagnostic_posterior}{default}(posterior, diagnostic = "all", ...)
+\method{diagnostic_posterior}{default}(posterior, diagnostic = "all", centrality = "median", ...)
 
 \method{diagnostic_posterior}{stanreg}(
   posterior,
@@ -21,10 +21,10 @@ diagnostic_posterior(posterior, ...)
 )
 }
 \arguments{
-\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object; a
-list of data frames or matrices representing MCMC chains (rows as samples,
-columns as parameters); or a 3D array (dimensions: samples, chains,
-parameters)}
+\item{posterior}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{CmdStanFit}, \code{stanli_fit}, or
+\code{blavaan} object; a list of data frames or matrices representing MCMC chains
+(rows as samples, columns as parameters); or a 3D array (dimensions:
+samples, chains, parameters)}
 
 \item{...}{Currently only used for models of class \code{brmsfit}, where a \code{variable}
 argument can be used, which is directly passed to the \code{as.data.frame()}
@@ -39,6 +39,11 @@ tail-based quantities. \code{"ESS_bulk"} additionally returns the \strong{bulk-E
 (the effective sample size for the bulk of the posterior, useful for
 assessing the reliability of central tendency estimates such as the mean or
 median). \code{"all"} includes both tail and bulk \code{"ESS"}, \code{"Rhat"}, and \code{"MCSE"}.}
+
+\item{centrality}{The point-estimate (centrality index) for which to compute
+the MCSE. Can be \code{"median"} (default) or \code{"mean"}. To not break other
+functions like \code{describe_posterior()} or \code{diagnostic_posterior()}, all other
+values are silently converted to \code{"median"}.}
 
 \item{effects}{Should variables for fixed effects (\code{"fixed"}), random effects
 (\code{"random"}) or both (\code{"all"}) be returned? Only applies to mixed models. May
@@ -81,11 +86,6 @@ parameters) are returned.
 
 \item{parameters}{Regular expression pattern that describes the parameters that
 should be returned.}
-
-\item{centrality}{The point-estimate (centrality index) for which to compute
-the MCSE. Can be \code{"median"} (default) or \code{"mean"}. To not break other
-functions like \code{describe_posterior()} or \code{diagnostic_posterior()}, all other
-values are silently converted to \code{"median"}.}
 }
 \description{
 Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte

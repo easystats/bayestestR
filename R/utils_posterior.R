@@ -27,3 +27,8 @@
 .posterior_draws_to_df.draws_rvars <- .posterior_draws_to_df.draws_df
 
 .posterior_draws_to_df.rvar <- .posterior_draws_to_df.draws_df
+
+.posterior_draws_to_df.stanli_fit <- function(x) {
+  insight::check_if_installed("stanli")
+  .posterior_draws_to_df.draws_array(stanli::as_draws_array(x))
+}

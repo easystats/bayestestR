@@ -172,7 +172,7 @@ print.bayesfactor_matrix <- function(x, log = FALSE, show_names = FALSE, ...) {
 #'   model.
 #'
 #' @rdname bayesfactor_methods
-#' @export
+#' @exportS3Method stats::update
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {
     if (reference == "top") {

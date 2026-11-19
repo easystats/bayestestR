@@ -1,3 +1,19 @@
+test_that("describe_posterior computes diagnostics for draws", {
+  skip_if_not_installed("posterior")
+
+  draws <- posterior::as_draws_array(array(
+    rnorm(400),
+    dim = c(100, 4, 1),
+    dimnames = list(NULL, NULL, "Parameter")
+  ))
+  out <- describe_posterior(draws, test = NULL, verbose = FALSE)
+  expect_true(all(c("ESS_tail", "Rhat") %in% names(out)))
+
+  out <- describe_posterior(draws, test = NULL, diagnostic = NULL, verbose = FALSE)
+  expect_false(any(c("ESS_tail", "Rhat") %in% names(out)))
+})
+
+
 test_that("describe_posterior-1", {
   skip_if(getRversion() < "4.2")
   skip_if_not_installed("curl")
@@ -185,8 +201,8 @@ test_that("describe_posterior-2", {
       "ROPE_Percentage",
       "ROPE_Equivalence",
       "log_BF",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
   expect_warning(
@@ -256,8 +272,8 @@ test_that("describe_posterior-2", {
       "ROPE_low",
       "ROPE_high",
       "ROPE_Percentage",
-      "Rhat",
-      "ESS_tail"
+      "ESS_tail",
+      "Rhat"
     )
   )
 
