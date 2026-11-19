@@ -3,8 +3,11 @@
 ## Breaking Changes
 
 * `diagnostic_posterior()`, `mcse()` and `effective_sample()` methods now use
-  shared posterior-draw estimators across supported model classes, and return
-  consistent diagnostic columns across supported posterior input classes.
+  shared posterior-draw estimators across supported model classes (which for
+  some inputs replaces pulling these values from model summaries; e.g.,
+  `blavaan`), and return consistent diagnostic columns across supported
+  posterior input classes, with rows matching the model's order (not
+  alphabetical order).
 
 * The `resp` argument of `bayesian_as_frequentist()` is renamed to `response`.
   `resp =` still works by partial matching.
@@ -31,6 +34,12 @@
   `method = "density"` drops missing values, where `spi()` failed on them.
 
 ## Bug fixes
+
+* `diagnostic_posterior()`, `mcse()` and `effective_sample()`:
+  * For lists of data frames and 3D arrays: previously retuned ESSs that were
+    about half of the correct value (which also affected MCSEs).
+  * `brms` and `stanreg`: inputs no longer ignore chains when computing MCSE.
+  * `CmdStanFit`: the `parameters` argument correctly selects parameters.
 
 * `bayesfactor()` now passes `verbose` to `bayesfactor_models()` (#743).
 

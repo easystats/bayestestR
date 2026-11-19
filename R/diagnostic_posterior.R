@@ -383,13 +383,7 @@ diagnostic_posterior.stanli_fit <- function(
   out$ESS_bulk <- round(out$ESS_bulk)
 
   out <- .select_diagnostic_rows(out, pars, parameters)
-  out <- out[,
-    c(
-      "Parameter",
-      intersect(c("ESS_tail", "ESS_bulk", "Rhat", "MCSE"), diagnostic)
-    ),
-    drop = FALSE
-  ]
+  out <- out[, c("Parameter", diagnostic), drop = FALSE]
   row.names(out) <- NULL
   out
 }
