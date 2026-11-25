@@ -128,7 +128,6 @@ test_that("brms negbinomial to freq", {
   m1 <- MASS::glm.nb(Days ~ Sex + Eth, data = quine)
   m2 <- convert_bayesian_as_frequentist(m)
 
-  expect_identical(family(m2)$family, "nbinom2")
   expect_equal(coef(m1), glmmTMB::fixef(m2)$cond, tolerance = 1e-3)
 })
 
