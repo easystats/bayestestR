@@ -48,6 +48,11 @@
   refit with `lme4::lmer()` or `gamm4::gamm4()`. It now returns a maximum
   likelihood fit.
 
+* `bayesian_as_frequentist()` refit *brms* models with family `negbinomial()`
+  as `glmmTMB::nbinom1()` models, which have another variance function, so the
+  estimates were wrong. These models are now refit with `glmmTMB::nbinom2()`,
+  the same parameterization as in *brms*.
+
 * `rope()` gave wrong results for multivariate *brms* models with addition
   terms such as `resp_weights()`, a transformed response, or a response that
   is a predictor in another formula: the ROPE range was wrong or rows were
