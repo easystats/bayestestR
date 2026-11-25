@@ -127,7 +127,7 @@ convert_bayesian_as_frequentist <- function(
       model_family <- .safe(switch(model_family$family,
         beta = glmmTMB::beta_family(link = model_family$link),
         beta_binomial = glmmTMB::betabinomial(link = model_family$link),
-        negbinomial = glmmTMB::nbinom1(link = model_family$link),
+        negbinomial = glmmTMB::nbinom2(link = model_family$link),
         lognormal = glmmTMB::lognormal(link = model_family$link),
         student = glmmTMB::t_family(link = model_family$link),
         get(model_family$family)(link = model_family$link)

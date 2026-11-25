@@ -112,6 +112,26 @@ test_that("brms Interaction terms to freq", {
 })
 
 
+test_that("brms negbinomial to freq", {
+  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("glmmTMB")
+  skip_if_not_or_load_if_installed("MASS")
+
+  set.seed(333)
+  data(quine, package = "MASS")
+  m <- skip_if_fit_failed(brm(
+    Days ~ Sex + Eth,
+    data = quine,
+    family = negbinomial(),
+    refresh = 0
+  ))
+  m1 <- MASS::glm.nb(Days ~ Sex + Eth, data = quine)
+  m2 <- convert_bayesian_as_frequentist(m)
+
+  expect_equal(coef(m1), glmmTMB::fixef(m2)$cond, tolerance = 1e-3)
+})
+
+
 test_that("brms multivariate to freq, one response", {
   skip_if_not_or_load_if_installed("brms")
 
