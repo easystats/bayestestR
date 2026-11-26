@@ -24,13 +24,14 @@
   not only for some model classes. Like `method = "samples"`,
   `method = "density"` drops missing values, where `spi()` failed on them.
 
-## Bug fixes
-
 * `bayesfactor()` now passes `verbose` to `bayesfactor_models()` (#743).
 
 * `mediation()` now supports *brms* models with more than one mediator, in
   parallel or in series. For models with more than two model formulas,
   `treatment` and `mediator` must be specified (#475, #586).
+
+* `bayesian_as_frequentist()` now extracts *brms* `shape` and `phi`
+  formulas as `dispformula`.
 
 ## Bug fixes
 
