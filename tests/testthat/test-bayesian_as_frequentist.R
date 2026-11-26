@@ -132,6 +132,59 @@ test_that("brms negbinomial to freq", {
 })
 
 
+test_that("brms negbinomial to freq, shape formula", {
+  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("glmmTMB")
+  skip_if_not_or_load_if_installed("MASS")
+
+  set.seed(333)
+  data(quine, package = "MASS")
+  m <- skip_if_fit_failed(brm(
+    bf(Days ~ Sex + Eth, shape ~ Age),
+    data = quine,
+    family = negbinomial(),
+    refresh = 0
+  ))
+  m1 <- glmmTMB::glmmTMB(
+    Days ~ Sex + Eth,
+    dispformula = ~Age,
+    family = glmmTMB::nbinom2(),
+    data = quine
+  )
+  m2 <- convert_bayesian_as_frequentist(m)
+
+  expect_equal(glmmTMB::fixef(m1)$cond, glmmTMB::fixef(m2)$cond, tolerance = 1e-3)
+  expect_equal(glmmTMB::fixef(m1)$disp, glmmTMB::fixef(m2)$disp, tolerance = 1e-3)
+})
+
+
+test_that("brms beta to freq, phi formula", {
+  skip_if_not_or_load_if_installed("brms")
+  skip_if_not_or_load_if_installed("glmmTMB")
+  skip_if_not_or_load_if_installed("betareg")
+
+  set.seed(333)
+  data(FoodExpenditure, package = "betareg")
+  FoodExpenditure$y <- FoodExpenditure$food / FoodExpenditure$income
+  m <- skip_if_fit_failed(brm(
+    bf(y ~ income, phi ~ persons),
+    data = FoodExpenditure,
+    family = Beta(),
+    refresh = 0
+  ))
+  m1 <- glmmTMB::glmmTMB(
+    y ~ income,
+    dispformula = ~persons,
+    family = glmmTMB::beta_family(),
+    data = FoodExpenditure
+  )
+  m2 <- convert_bayesian_as_frequentist(m)
+
+  expect_equal(glmmTMB::fixef(m1)$cond, glmmTMB::fixef(m2)$cond, tolerance = 1e-3)
+  expect_equal(glmmTMB::fixef(m1)$disp, glmmTMB::fixef(m2)$disp, tolerance = 1e-3)
+})
+
+
 test_that("brms multivariate to freq, one response", {
   skip_if_not_or_load_if_installed("brms")
 

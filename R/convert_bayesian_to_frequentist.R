@@ -172,6 +172,13 @@ convert_bayesian_as_frequentist <- function(
     cond_formula <- .rebuild_cond_formula(formula)
     dispformula <- formula$dispersion
     if (is.null(dispformula)) dispformula <- formula$sigma
+    # brms `shape` (negbinomial) and `phi` (beta, beta_binomial) are glmmTMB's
+    # dispersion parameter, both with a log link by default. Not for Gamma(),
+    # whose brms `shape` is the inverse of glmmTMB's dispersion.
+    if (is.null(dispformula) && (info$is_negbin || info$is_beta || info$is_betabinomial)) {
+      dispformula <- formula$shape
+      if (is.null(dispformula)) dispformula <- formula$phi
+    }
     if (is.null(dispformula)) dispformula <- ~1
 
     ziformula <- formula$zero_inflated
