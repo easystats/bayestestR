@@ -669,7 +669,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
     # Estimate the SD
     sd_kde <- sqrt(my_df$y * Rk / (length(x) * h))
     # CI with estimated variance
-    z_alpha <- stats::qnorm(ci)
+    z_alpha <- stats::qnorm((1 + ci) / 2)
     my_df$CI_low <- my_df$y - z_alpha * sd_kde
     my_df$CI_high <- my_df$y + z_alpha * sd_kde
   }
