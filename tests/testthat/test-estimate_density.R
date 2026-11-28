@@ -34,3 +34,20 @@ test_that("estimate_density", {
   rez <- estimate_density(x, select = "Sepal.Length", by = c("Species", "Fac"), method = "KernSmooth")
   expect_identical(dim(rez), as.integer(c(1024 * 3 * 2, 5)))
 })
+
+test_that("estimate_density uses two-sided normal quantile for CI", {
+  x <- distribution_normal(1000)
+  h <- stats::density(x, bw = "SJ")$bw
+  rk <- 1 / (2 * sqrt(pi))
+
+  d95 <- estimate_density(x, ci = 0.95)
+  sd_kde <- sqrt(d95$y * rk / (length(x) * h))
+  expect_equal(d95$CI_low, d95$y - stats::qnorm(0.975) * sd_kde, tolerance = 1e-12)
+  expect_equal(d95$CI_high, d95$y + stats::qnorm(0.975) * sd_kde, tolerance = 1e-12)
+
+  d50 <- estimate_density(x, ci = 0.50)
+  expect_true(all(d50$CI_high > d50$CI_low))
+
+  d25 <- estimate_density(x, ci = 0.25)
+  expect_true(all(d25$CI_high > d25$CI_low))
+})
