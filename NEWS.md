@@ -35,6 +35,10 @@
 
 ## Bug fixes
 
+* Fixed an issue in `estimate_density()` where confidence intervals for kernel
+  density estimates were calculated using one-sided instead of two-sided normal
+  quantiles.
+
 * `mediation()` now gives informative errors for unsupported input, such as
   more than one centrality index, or more than two model formulas for
   *rstanarm* models.
